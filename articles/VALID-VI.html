@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="pointblank">
-<title>Introduction to the **R Markdown Document Validation** Workflow (**VALID-VI**) • pointblank</title>
+<title>Introduction to the R Markdown Document Validation Workflow (VALID-VI) • pointblank</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -17,7 +17,7 @@
 <link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to the **R Markdown Document Validation** Workflow (**VALID-VI**)">
+<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to the R Markdown Document Validation Workflow (VALID-VI)">
 <meta property="og:description" content="pointblank">
 <meta property="og:image" content="https://rich-iannone.github.io/pointblank/logo.svg">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pointblank</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -88,7 +88,7 @@
 
 <div class="row">
   <main id="main"><div class="page-header">
-      <img src="../logo.svg" class="logo" alt=""><h1>Introduction to the **R Markdown Document Validation** Workflow (**VALID-VI**)</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Introduction to the R Markdown Document Validation Workflow (VALID-VI)</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/HEAD/vignettes/VALID-VI.Rmd" class="external-link"><code>vignettes/VALID-VI.Rmd</code></a></small>
@@ -98,20 +98,49 @@
     
     
 <p><img src="images/VALID-VI.svg" width="100%"></p>
-<p>The <em>R Markdown Document Validation</em> workflow involves interspersing bits of different workflows in the larger R Markdown workflow. It’s great to use when doing data analysis work in the familiar <em>R Markdown</em> environment, striking a balance between checking your work and getting a bit out of the way when the document is rendered to HTML.</p>
-<div class="section level1">
-<h1 id="how-it-works">How It Works<a class="anchor" aria-label="anchor" href="#how-it-works"></a>
-</h1>
-<p>Using <strong>pointblank</strong> in the <strong>VALID-VI</strong> workflow is enabled by default once the <strong>pointblank</strong> library is loaded (best done in the <code>setup</code> chunk). The framework allows for validation testing within specialized validation code chunks where the <code>validate = TRUE</code> option is set. Using <strong>pointblank</strong> validation functions on data (the <a href="../articles/VALID-II.html"><strong>VALID-II</strong></a> workflow) in these marked code chunks will flag overall failure if the stop threshold is exceeded anywhere.</p>
-<p>All errors are shown after rendering the document to HTML. Green status buttons indicate that all validations succeeded, red buttons indicate that one or more validation failures occurred. Clicking any such button reveals the otherwise hidden validation statements and associated messaging.</p>
-<p>It’s much better to demonstrate how this workflow works in a series of examples, as the resulting output is interactive and varies quite a bit depending on the input. In all of the following examples, a code chunk will shown and the rendered result will be subsequently placed. The result will typically be a button that can be pressed to reveal the validation result and the code chunk itself is hidden upon rendering (so there’s no need to use <code>include = FALSE</code> as a chunk option).</p>
-<p>To start things off, here’s an example that uses an expression that takes the <code>small_table</code> dataset and pipes it to two validation functions: <code><a href="../reference/col_is_date.html">col_is_date()</a></code> and <code><a href="../reference/col_vals_in_set.html">col_vals_in_set()</a></code>. The <code><a href="../reference/col_is_date.html">col_is_date()</a></code> validation passes whereas the <code><a href="../reference/col_vals_in_set.html">col_vals_in_set()</a></code> validation fails (because the set of values in column <code>f</code> also has the <code>"high"</code> value.</p>
+<p>The <em>R Markdown Document Validation</em> workflow involves
+interspersing bits of different workflows in the larger R Markdown
+workflow. It’s great to use when doing data analysis work in the
+familiar <em>R Markdown</em> environment, striking a balance between
+checking your work and getting a bit out of the way when the document is
+rendered to HTML.</p>
+<div class="section level2">
+<h2 id="how-it-works">How It Works<a class="anchor" aria-label="anchor" href="#how-it-works"></a>
+</h2>
+<p>Using <strong>pointblank</strong> in the <strong>VALID-VI</strong>
+workflow is enabled by default once the <strong>pointblank</strong>
+library is loaded (best done in the <code>setup</code> chunk). The
+framework allows for validation testing within specialized validation
+code chunks where the <code>validate = TRUE</code> option is set. Using
+<strong>pointblank</strong> validation functions on data (the <a href="../articles/VALID-II.html"><strong>VALID-II</strong></a> workflow)
+in these marked code chunks will flag overall failure if the stop
+threshold is exceeded anywhere.</p>
+<p>All errors are shown after rendering the document to HTML. Green
+status buttons indicate that all validations succeeded, red buttons
+indicate that one or more validation failures occurred. Clicking any
+such button reveals the otherwise hidden validation statements and
+associated messaging.</p>
+<p>It’s much better to demonstrate how this workflow works in a series
+of examples, as the resulting output is interactive and varies quite a
+bit depending on the input. In all of the following examples, a code
+chunk will shown and the rendered result will be subsequently placed.
+The result will typically be a button that can be pressed to reveal the
+validation result and the code chunk itself is hidden upon rendering (so
+there’s no need to use <code>include = FALSE</code> as a chunk
+option).</p>
+<p>To start things off, here’s an example that uses an expression that
+takes the <code>small_table</code> dataset and pipes it to two
+validation functions: <code><a href="../reference/col_is_date.html">col_is_date()</a></code> and
+<code><a href="../reference/col_vals_in_set.html">col_vals_in_set()</a></code>. The <code><a href="../reference/col_is_date.html">col_is_date()</a></code>
+validation passes whereas the <code><a href="../reference/col_vals_in_set.html">col_vals_in_set()</a></code> validation
+fails (because the set of values in column <code>f</code> also has the
+<code>"high"</code> value.</p>
 <p><img src="images/code_block_1.png"></p>
 
 <div class="pointblank-badge-container-inner" style="text-align: center; padding-bottom: 12px; font-size: 16px;">
-  <span class="pointblank-badge label label-danger" data-toggle="collapse" data-target="#chunk-9852818" aria-expanded="false" aria-controls="chunk-9852818" style="cursor: pointer;">1 validation failed.</span>
+  <span class="pointblank-badge label label-danger" data-toggle="collapse" data-target="#chunk-2801148" aria-expanded="false" aria-controls="chunk-2801148" style="cursor: pointer;">1 validation failed.</span>
 </div>
-<div id="chunk-9852818" class="pointblank-chunk panel panel-danger collapse">
+<div id="chunk-2801148" class="pointblank-chunk panel panel-danger collapse">
   <div class="panel" style="margin-bottom: 0px;">
     <div class="panel-body" style="padding-left: 18px; padding-top: 18px; padding-right: 18px; padding-bottom: 0px; background: #FAFAFA;">
       <div class="panel panel-danger">
@@ -137,14 +166,25 @@
   </div>
 </div>
 
-<p>Clicking the above <code>1 validation failed.</code> button will reveal that the <em>expression</em> failed validation because of a validation function failing within it. If you break it down, really one validation step in the chain passed (the first one) and one failed (the second). If there were additional validation steps that would otherwise pass, we’d still get the same result and output because the failing step ends execution.</p>
-<p>Because this workflow is meant to stop an expression from executing at the first validation function that fails, it’s advisable to break down these validations to single steps. That way, each expression is a single validation that either passes or fails and is reported accordingly. Let’s rewrite the above example as two expressions, one per validation.</p>
+<p>Clicking the above <code>1 validation failed.</code> button will
+reveal that the <em>expression</em> failed validation because of a
+validation function failing within it. If you break it down, really one
+validation step in the chain passed (the first one) and one failed (the
+second). If there were additional validation steps that would otherwise
+pass, we’d still get the same result and output because the failing step
+ends execution.</p>
+<p>Because this workflow is meant to stop an expression from executing
+at the first validation function that fails, it’s advisable to break
+down these validations to single steps. That way, each expression is a
+single validation that either passes or fails and is reported
+accordingly. Let’s rewrite the above example as two expressions, one per
+validation.</p>
 <p><img src="images/code_block_2.png"></p>
 
 <div class="pointblank-badge-container-inner" style="text-align: center; padding-bottom: 12px; font-size: 16px;">
-  <span class="pointblank-badge label label-danger" data-toggle="collapse" data-target="#chunk-7030064" aria-expanded="false" aria-controls="chunk-7030064" style="cursor: pointer;">1 validation failed.</span>
+  <span class="pointblank-badge label label-danger" data-toggle="collapse" data-target="#chunk-1728212" aria-expanded="false" aria-controls="chunk-1728212" style="cursor: pointer;">1 validation failed.</span>
 </div>
-<div id="chunk-7030064" class="pointblank-chunk panel panel-danger collapse">
+<div id="chunk-1728212" class="pointblank-chunk panel panel-danger collapse">
   <div class="panel" style="margin-bottom: 0px;">
     <div class="panel-body" style="padding-left: 18px; padding-top: 18px; padding-right: 18px; padding-bottom: 0px; background: #FAFAFA;">
       <div class="panel panel-success">
@@ -178,14 +218,19 @@
   </div>
 </div>
 
-<p>It still says that <code>1 validation failed.</code> (this workflow focuses on the negatives) but pressing the button reveals that the first one passed and the second failed. This is much clearer and we don’t run the risk of not evaluating validations because a validation failed earlier in a pipeline.</p>
-<p>Here’s an example where all validations in individual expressions pass, showing us a green status button.</p>
+<p>It still says that <code>1 validation failed.</code> (this workflow
+focuses on the negatives) but pressing the button reveals that the first
+one passed and the second failed. This is much clearer and we don’t run
+the risk of not evaluating validations because a validation failed
+earlier in a pipeline.</p>
+<p>Here’s an example where all validations in individual expressions
+pass, showing us a green status button.</p>
 <p><img src="images/code_block_3.png"></p>
 
 <div class="pointblank-badge-container-inner" style="text-align: center; padding-bottom: 12px; font-size: 16px;">
-  <span class="pointblank-badge label label-success" data-toggle="collapse" data-target="#chunk-3022657" aria-expanded="false" aria-controls="chunk-3022657" style="cursor: pointer;">All validations passed.</span>
+  <span class="pointblank-badge label label-success" data-toggle="collapse" data-target="#chunk-0056269" aria-expanded="false" aria-controls="chunk-0056269" style="cursor: pointer;">All validations passed.</span>
 </div>
-<div id="chunk-3022657" class="pointblank-chunk panel panel-success collapse">
+<div id="chunk-0056269" class="pointblank-chunk panel panel-success collapse">
   <div class="panel" style="margin-bottom: 0px;">
     <div class="panel-body" style="padding-left: 18px; padding-top: 18px; padding-right: 18px; padding-bottom: 0px; background: #FAFAFA;">
       <div class="panel panel-success">
@@ -252,19 +297,40 @@
   </div>
 </div>
 
-<p>It’s worth reminding at this point that failed validations do not stop execution of the R Markdown rendering. Otherwise you wouldn’t see a document with any failing validations, and, you wouldn’t know where those failed validations occurred. The expectation for this workflow is to add in the relevant validation expressions at key junctures and should any failures occur, one can fix the underlying issues until all (or enough) validations pass.</p>
+<p>It’s worth reminding at this point that failed validations do not
+stop execution of the R Markdown rendering. Otherwise you wouldn’t see a
+document with any failing validations, and, you wouldn’t know where
+those failed validations occurred. The expectation for this workflow is
+to add in the relevant validation expressions at key junctures and
+should any failures occur, one can fix the underlying issues until all
+(or enough) validations pass.</p>
 </div>
-<div class="section level1">
-<h1 id="the-pointblank-stop_if_not-function">The <strong>pointblank</strong> <code>stop_if_not()</code> Function<a class="anchor" aria-label="anchor" href="#the-pointblank-stop_if_not-function"></a>
-</h1>
-<p>You may not want to use the set of validation functions for everything. Perhaps using <code><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot()</a></code> is sufficient for some validations. In that case, consider using <strong>pointblank</strong> variation on that: <code><a href="../reference/stop_if_not.html">stop_if_not()</a></code>. It works well enough as a standalone, replacement for <code><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot()</a></code> but the advantage here is that <code><a href="../reference/stop_if_not.html">stop_if_not()</a></code> is customized for use in the <strong>VALID-VI</strong> workflow (or in any situation where you’re using R Markdown to render to HTML, and <strong>pointblank</strong> is loaded via <code><a href="https://rdrr.io/r/base/library.html" class="external-link">library()</a></code>). Ultimately, using <code><a href="../reference/stop_if_not.html">stop_if_not()</a></code> in a code chunk where the <code>validate = TRUE</code> option is set will yield the correct reporting of successes and failures whereas <code><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot()</a></code> does not.</p>
-<p>Here’s a code chunk that uses <code><a href="../reference/stop_if_not.html">stop_if_not()</a></code> twice to check two different assertions on the <code>small_table</code> object. The first one passes whereas the second one fails.</p>
+<div class="section level2">
+<h2 id="the-pointblank-stop_if_not-function">The <strong>pointblank</strong> <code>stop_if_not()</code>
+Function<a class="anchor" aria-label="anchor" href="#the-pointblank-stop_if_not-function"></a>
+</h2>
+<p>You may not want to use the set of validation functions for
+everything. Perhaps using <code><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot()</a></code> is sufficient for
+some validations. In that case, consider using
+<strong>pointblank</strong> variation on that:
+<code><a href="../reference/stop_if_not.html">stop_if_not()</a></code>. It works well enough as a standalone,
+replacement for <code><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot()</a></code> but the advantage here is that
+<code><a href="../reference/stop_if_not.html">stop_if_not()</a></code> is customized for use in the
+<strong>VALID-VI</strong> workflow (or in any situation where you’re
+using R Markdown to render to HTML, and <strong>pointblank</strong> is
+loaded via <code><a href="https://rdrr.io/r/base/library.html" class="external-link">library()</a></code>). Ultimately, using
+<code><a href="../reference/stop_if_not.html">stop_if_not()</a></code> in a code chunk where the <code>validate =
+TRUE</code> option is set will yield the correct reporting of successes
+and failures whereas <code><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot()</a></code> does not.</p>
+<p>Here’s a code chunk that uses <code><a href="../reference/stop_if_not.html">stop_if_not()</a></code> twice to
+check two different assertions on the <code>small_table</code> object.
+The first one passes whereas the second one fails.</p>
 <p><img src="images/code_block_4.png"></p>
 
 <div class="pointblank-badge-container-inner" style="text-align: center; padding-bottom: 12px; font-size: 16px;">
-  <span class="pointblank-badge label label-danger" data-toggle="collapse" data-target="#chunk-5839504" aria-expanded="false" aria-controls="chunk-5839504" style="cursor: pointer;">1 validation failed.</span>
+  <span class="pointblank-badge label label-danger" data-toggle="collapse" data-target="#chunk-4277364" aria-expanded="false" aria-controls="chunk-4277364" style="cursor: pointer;">1 validation failed.</span>
 </div>
-<div id="chunk-5839504" class="pointblank-chunk panel panel-danger collapse">
+<div id="chunk-4277364" class="pointblank-chunk panel panel-danger collapse">
   <div class="panel" style="margin-bottom: 0px;">
     <div class="panel-body" style="padding-left: 18px; padding-top: 18px; padding-right: 18px; padding-bottom: 0px; background: #FAFAFA;">
       <div class="panel panel-success">
@@ -296,18 +362,30 @@
   </div>
 </div>
 
-<p>Keep in mind that <code><a href="../reference/stop_if_not.html">stop_if_not()</a></code> (like <code><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot()</a></code>) can be used for any type of assertion. It’s not limited to checking tables like the functions in <strong>pointblank</strong> are focused on.</p>
+<p>Keep in mind that <code><a href="../reference/stop_if_not.html">stop_if_not()</a></code> (like
+<code><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot()</a></code>) can be used for any type of assertion. It’s
+not limited to checking tables like the functions in
+<strong>pointblank</strong> are focused on.</p>
 <div class="section level4">
-<h4 id="including-data-quality-reporting-from-the-valid-i-workflow">Including Data Quality Reporting from the <strong>VALID-I</strong> Workflow<a class="anchor" aria-label="anchor" href="#including-data-quality-reporting-from-the-valid-i-workflow"></a>
+<h4 id="including-data-quality-reporting-from-the-valid-i-workflow">Including Data Quality Reporting from the <strong>VALID-I</strong>
+Workflow<a class="anchor" aria-label="anchor" href="#including-data-quality-reporting-from-the-valid-i-workflow"></a>
 </h4>
-<p>Code chunks can include data quality reporting expressions (i.e., the <em>agent</em>-based <a href="../articles/VALID-I.html"><strong>VALID-I</strong></a> workflow) but it’s important to ensure two things. Here’s the interesting thing about that: we can opt to use <code>validate = TRUE</code> as a chunk option or omit that entirely, each choice has different effect. If you’d like to hide the validation output (the <em>Agent Report</em>) behind a button (in this case, a light blue one) then <code>validate = TRUE</code> should be used.</p>
-<p>Here’s an example of a data quality validation workflow being executed in a single code chunk.</p>
+<p>Code chunks can include data quality reporting expressions (i.e., the
+<em>agent</em>-based <a href="../articles/VALID-I.html"><strong>VALID-I</strong></a> workflow)
+but it’s important to ensure two things. Here’s the interesting thing
+about that: we can opt to use <code>validate = TRUE</code> as a chunk
+option or omit that entirely, each choice has different effect. If you’d
+like to hide the validation output (the <em>Agent Report</em>) behind a
+button (in this case, a light blue one) then <code>validate =
+TRUE</code> should be used.</p>
+<p>Here’s an example of a data quality validation workflow being
+executed in a single code chunk.</p>
 <p><img src="images/code_block_5.png"></p>
 
 <div class="pointblank-badge-container-inner" style="text-align: center; padding-bottom: 12px; font-size: 16px;">
-  <span class="pointblank-badge label label-info" data-toggle="collapse" data-target="#chunk-9828781" aria-expanded="false" aria-controls="chunk-9828781" style="cursor: pointer;">Agent Report</span>
+  <span class="pointblank-badge label label-info" data-toggle="collapse" data-target="#chunk-6433839" aria-expanded="false" aria-controls="chunk-6433839" style="cursor: pointer;">Agent Report</span>
 </div>
-<div id="chunk-9828781" class="pointblank-chunk panel panel-info collapse">
+<div id="chunk-6433839" class="pointblank-chunk panel panel-info collapse">
   <div class="panel" style="margin-bottom: 0px;">
     <div class="panel-body" style="padding-left: 18px; padding-top: 18px; padding-right: 18px; padding-bottom: 0px; background: #FAFAFA;">
       
@@ -957,9 +1035,9 @@ html {
 </tbody>
 <tfoot class="gt_sourcenotes"><tr>
 <td class="gt_sourcenote" colspan="14">
-<span style="background-color:#FFF;color:#444;padding:0.5em 0.5em;position:inherit;text-transform:uppercase;margin-left:10px;border:solid 1px #999999;font-variant-numeric:tabular-nums;border-radius:0;padding:2px 10px 2px 10px;padding:2px 10px 2px 10px;">2022-01-19 22:59:34 EST</span>
+<span style="background-color:#FFF;color:#444;padding:0.5em 0.5em;position:inherit;text-transform:uppercase;margin-left:10px;border:solid 1px #999999;font-variant-numeric:tabular-nums;border-radius:0;padding:2px 10px 2px 10px;padding:2px 10px 2px 10px;">2022-01-23 23:01:06 EST</span>
 <span style="background-color:#FFF;color:#444;padding:0.5em 0.5em;position:inherit;margin:5px 1px 5px 0;border:solid 1px #999999;font-variant-numeric:tabular-nums;border-radius:0;padding:2px 10px 2px 10px;">&lt; 1 s</span>
-<span style="background-color:#FFF;color:#444;padding:0.5em 0.5em;position:inherit;text-transform:uppercase;margin:5px 1px 5px -1px;border:solid 1px #999999;font-variant-numeric:tabular-nums;border-radius:0;padding:2px 10px 2px 10px;">2022-01-19 22:59:35 EST</span>
+<span style="background-color:#FFF;color:#444;padding:0.5em 0.5em;position:inherit;text-transform:uppercase;margin:5px 1px 5px -1px;border:solid 1px #999999;font-variant-numeric:tabular-nums;border-radius:0;padding:2px 10px 2px 10px;">2022-01-23 23:01:06 EST</span>
 </td>
     </tr></tfoot>
 </table>
@@ -970,18 +1048,46 @@ html {
   </div>
 </div>
 
-<p>If this code chunk were to exclude the <code>validate = TRUE</code> option, then the output would appear as output normally does (where the input appears above output report table). Should you just want the output reporting table to shown without the input expressions, you could use the <code>include = FALSE</code> chunk option here.</p>
-<p>As a final note for this, it’s important not to use any other expressions that result in output, just stick to the typical <code><a href="../reference/create_agent.html">create_agent()</a></code> → <code>&lt;validation functions&gt;</code> → <code><a href="../reference/interrogate.html">interrogate()</a></code> pattern. In other words, dedicate this code chunk just to the <em>agent</em> and put other validation expressions elsewhere in the document.</p>
+<p>If this code chunk were to exclude the <code>validate = TRUE</code>
+option, then the output would appear as output normally does (where the
+input appears above output report table). Should you just want the
+output reporting table to shown without the input expressions, you could
+use the <code>include = FALSE</code> chunk option here.</p>
+<p>As a final note for this, it’s important not to use any other
+expressions that result in output, just stick to the typical
+<code><a href="../reference/create_agent.html">create_agent()</a></code> → <code>&lt;validation functions&gt;</code>
+→ <code><a href="../reference/interrogate.html">interrogate()</a></code> pattern. In other words, dedicate this code
+chunk just to the <em>agent</em> and put other validation expressions
+elsewhere in the document.</p>
 </div>
 </div>
-<div class="section level1">
-<h1 id="setting-up-options-with-the-validate_rmd-function">Setting Up Options with the <code>validate_rmd()</code> Function<a class="anchor" aria-label="anchor" href="#setting-up-options-with-the-validate_rmd-function"></a>
-</h1>
-<p>We can modify the <strong>pointblank</strong> validation testing options within R Markdown documents with the <code><a href="../reference/validate_rmd.html">validate_rmd()</a></code> function. While the framework for such testing is set up by default, using <code><a href="../reference/validate_rmd.html">validate_rmd()</a></code> offers an opportunity to set up UI and logging options.</p>
-<p>With the <code>summary</code> argument, if <code>TRUE</code> (the default), then there will be a leading summary of all validations in the rendered R Markdown document. With <code>FALSE</code>, this element is not shown. For this document, <code>validate_rmd(summary = FALSE)</code> was placed in the <code>setup</code> chunk (right after the <code><a href="https://rich-iannone.github.io/pointblank/">library(pointblank)</a></code> statement) and this resulted in suppressing the display of the overall summary of validation results.</p>
-<p>With the <code>log_to_file</code> argument, there’s the option to log errors to a text file. By default, no logging is done but setting <code>log_to_file == TRUE</code> will write log entries to the <code>"validation_errors.log"</code> file in the working directory (will be generated if non-existent, appended to if available). To both enable logging and specify the name of the file, include a path to a log file (with the desired name) to <code>log_to_file</code>.</p>
+<div class="section level2">
+<h2 id="setting-up-options-with-the-validate_rmd-function">Setting Up Options with the <code>validate_rmd()</code>
+Function<a class="anchor" aria-label="anchor" href="#setting-up-options-with-the-validate_rmd-function"></a>
+</h2>
+<p>We can modify the <strong>pointblank</strong> validation testing
+options within R Markdown documents with the <code><a href="../reference/validate_rmd.html">validate_rmd()</a></code>
+function. While the framework for such testing is set up by default,
+using <code><a href="../reference/validate_rmd.html">validate_rmd()</a></code> offers an opportunity to set up UI and
+logging options.</p>
+<p>With the <code>summary</code> argument, if <code>TRUE</code> (the
+default), then there will be a leading summary of all validations in the
+rendered R Markdown document. With <code>FALSE</code>, this element is
+not shown. For this document, <code>validate_rmd(summary = FALSE)</code>
+was placed in the <code>setup</code> chunk (right after the
+<code><a href="https://rich-iannone.github.io/pointblank/">library(pointblank)</a></code> statement) and this resulted in
+suppressing the display of the overall summary of validation
+results.</p>
+<p>With the <code>log_to_file</code> argument, there’s the option to log
+errors to a text file. By default, no logging is done but setting
+<code>log_to_file == TRUE</code> will write log entries to the
+<code>"validation_errors.log"</code> file in the working directory (will
+be generated if non-existent, appended to if available). To both enable
+logging and specify the name of the file, include a path to a log file
+(with the desired name) to <code>log_to_file</code>.</p>
 </div>
-  </main>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
@@ -993,7 +1099,8 @@ html {
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.1.9000.</p>
 </div>
 
     </footer>

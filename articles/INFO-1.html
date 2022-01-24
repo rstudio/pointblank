@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pointblank</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -97,12 +97,30 @@
 
     
     
-<p>With the <em>Information Management</em> workflow, table information can be synthesized, giving us a snapshot of a data table we care to collect information on. The <strong>pointblank</strong> <em>informant</em> is given a series of information functions to define portions of information about a table. This <em>info text</em> can pertain to individual columns, the table as a whole, and whatever additional information makes sense for your organization. We can even glean little snippets of information from the target table and mix them into the <em>info text</em> to make the overall information more dynamic.</p>
-<div class="section level1">
-<h1 id="starting-with-a-simple-example">Starting with a Simple Example<a class="anchor" aria-label="anchor" href="#starting-with-a-simple-example"></a>
-</h1>
-<p>This workflow is somewhat similar in concept and usage to the <strong>Data Quality Reporting</strong> Workflow (<strong>VALID-I</strong>). Instead of an <em>agent</em>, we use an <em>informant</em> and we get that informant with the <code><a href="../reference/create_informant.html">create_informant()</a></code> function. We point the <em>informant</em> to a target table and this can be a data frame, a tibble, a database table (as a <code>tbl_dbi</code> object), or a Spark DataFrame (as a <code>tbl_spark</code> object).</p>
-<p>The <code>small_table</code> dataset is included in the <strong>pointblank</strong> package. It’s a small, uninteresting dataset but it’s useful for simple examples. This is what it looks like:</p>
+<p>With the <em>Information Management</em> workflow, table information
+can be synthesized, giving us a snapshot of a data table we care to
+collect information on. The <strong>pointblank</strong>
+<em>informant</em> is given a series of information functions to define
+portions of information about a table. This <em>info text</em> can
+pertain to individual columns, the table as a whole, and whatever
+additional information makes sense for your organization. We can even
+glean little snippets of information from the target table and mix them
+into the <em>info text</em> to make the overall information more
+dynamic.</p>
+<div class="section level2">
+<h2 id="starting-with-a-simple-example">Starting with a Simple Example<a class="anchor" aria-label="anchor" href="#starting-with-a-simple-example"></a>
+</h2>
+<p>This workflow is somewhat similar in concept and usage to the
+<strong>Data Quality Reporting</strong> Workflow
+(<strong>VALID-I</strong>). Instead of an <em>agent</em>, we use an
+<em>informant</em> and we get that informant with the
+<code><a href="../reference/create_informant.html">create_informant()</a></code> function. We point the
+<em>informant</em> to a target table and this can be a data frame, a
+tibble, a database table (as a <code>tbl_dbi</code> object), or a Spark
+DataFrame (as a <code>tbl_spark</code> object).</p>
+<p>The <code>small_table</code> dataset is included in the
+<strong>pointblank</strong> package. It’s a small, uninteresting dataset
+but it’s useful for simple examples. This is what it looks like:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">small_table</span></code></pre></div>
 <pre><code><span class="co">## <span style="color: #949494;"># A tibble: 13 × 8</span></span>
@@ -121,42 +139,53 @@
 <span class="co">## <span style="color: #BCBCBC;">11</span> 2016-01-26 <span style="color: #949494;">20:07:00</span> 2016-01-26     4 2-dmx-010     7   834. TRUE  low  </span>
 <span class="co">## <span style="color: #BCBCBC;">12</span> 2016-01-28 <span style="color: #949494;">02:51:00</span> 2016-01-28     2 7-dmx-010     8   108. FALSE low  </span>
 <span class="co">## <span style="color: #BCBCBC;">13</span> 2016-01-30 <span style="color: #949494;">11:23:00</span> 2016-01-30     1 3-dka-303    <span style="color: #BB0000;">NA</span>  <span style="text-decoration: underline;">2</span>230. TRUE  high</span></code></pre>
-<p>Let’s use the <code>small_table</code> object and see what results from introducing it to the <em>informant</em>.</p>
+<p>Let’s use the <code>small_table</code> object and see what results
+from introducing it to the <em>informant</em>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">informant</span> <span class="op">&lt;-</span> 
   <span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span>
-    read_fn <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,
+    tbl <span class="op">=</span> <span class="va">small_table</span>,
     tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,
     label <span class="op">=</span> <span class="st">"Example No. 1"</span>
   <span class="op">)</span></code></pre></div>
-<p>Printing the <em>informant</em> will show us the automatically-generated information on the <code>small_table</code> dataset, adding the <em>Columns</em> section.</p>
+<p>Printing the <em>informant</em> will show us the
+automatically-generated information on the <code>small_table</code>
+dataset, adding the <em>Columns</em> section.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">informant</span></code></pre></div>
 <div style="text-align: center;">
 <img src="https://silly-jackson-b3dec8.netlify.app/informant_report_1.png" alt="This is a tabular report entitled 'Pointblank Information'. The header contains information about the input table (identifying it as a tibble called 'small_table') and includes the number of rows (13) and columns (8). In the table body, the section entitled 'Columns' has a row for each column that has been identified in 'small_table'. Each row consists of the column name (enclosed in a box) and the column type (for example, 'Date', 'integer', etc.). There are 8 columns in the input table so there are 8 rows in this reporting table ('date_time', 'date', and 'a' through to 'f')." width="80%">
 </div>
 <p><br></p>
-<p>Alternatively we can get the same report with <code><a href="../reference/get_informant_report.html">get_informant_report()</a></code> and have access to additional output options, like producing a narrower version of the output.</p>
+<p>Alternatively we can get the same report with
+<code><a href="../reference/get_informant_report.html">get_informant_report()</a></code> and have access to additional output
+options, like producing a narrower version of the output.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/get_informant_report.html">get_informant_report</a></span><span class="op">(</span><span class="va">informant</span>, size <span class="op">=</span> <span class="st">"small"</span><span class="op">)</span></code></pre></div>
 <div style="text-align: center;">
 <img src="https://silly-jackson-b3dec8.netlify.app/informant_report_2.png" alt="This is a tabular report entitled 'Pointblank Information'. This report has the same content as in the previous figure (with 8 rows, one for each column in 'small_table'). The difference here is that the table is narrower (i.e., width reduced by 30%) and the text is slightly smaller in size." width="50%">
 </div>
 <p><br></p>
-<p>Either way, what we get in the initial reporting is very basic. What should be done next is to add information with the following set of <code>info_*()</code> functions:</p>
+<p>Either way, what we get in the initial reporting is very basic. What
+should be done next is to add information with the following set of
+<code>info_*()</code> functions:</p>
 <ul>
 <li>
-<code><a href="../reference/info_tabular.html">info_tabular()</a></code>: Add information that focuses on aspects of the data table as a whole</li>
+<code><a href="../reference/info_tabular.html">info_tabular()</a></code>: Add information that focuses on aspects
+of the data table as a whole</li>
 <li>
-<code><a href="../reference/info_columns.html">info_columns()</a></code>: Add information that focuses on aspects of a data table’s columns</li>
+<code><a href="../reference/info_columns.html">info_columns()</a></code>: Add information that focuses on aspects
+of a data table’s columns</li>
 <li>
-<code><a href="../reference/info_section.html">info_section()</a></code>: Add information that focuses on some key aspect of the data table</li>
+<code><a href="../reference/info_section.html">info_section()</a></code>: Add information that focuses on some
+key aspect of the data table</li>
 </ul>
-<p>Let’s try adding some information with each of these functions and then look at the resulting report.</p>
+<p>Let’s try adding some information with each of these functions and
+then look at the resulting report.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">informant</span> <span class="op">&lt;-</span>
   <span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span>
-    read_fn <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,
+    tbl <span class="op">=</span> <span class="va">small_table</span>,
     tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,
     label <span class="op">=</span> <span class="st">"Example No. 2"</span>
   <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
@@ -179,12 +208,30 @@
 <img src="https://silly-jackson-b3dec8.netlify.app/informant_report_3.png" alt="This is a tabular report entitled 'Pointblank Information'. The header contains information about the input table (identifying it as a tibble called 'small_table') and includes the number of rows (13) and columns (8). In the table body, the section entitled 'Columns' has a row for each column that has been identified in 'small_table'. Each row consists of the column name (enclosed in a box) and the column type (for example, 'Date', 'integer', etc.). There are 8 columns in the input table so there are 8 rows in this reporting table ('date_time', 'date', and 'a' through to 'f'). The first row (corresponding to the 'date_time' column in 'small_table') contains the following descriptive text: 'This column is full of timestamps'. This is preceded by a label with the word 'INFO'. Another table section is at the bottom, called 'Further Information'. It contains a subsection called 'Examples and Documentation', and, within that, there is the text 'Examples for how to use the info_* functions (and many more) are available at the pointblank site'." width="80%">
 </div>
 <p><br></p>
-<p>As can be seen, the report is a bit more filled out with information. The <strong>TABLE</strong> and <strong>COLUMNS</strong> sections are in their prescribed order and the new section we named <strong>FURTHER INFORMATION</strong> follows those (and it has one subsection called <strong>EXAMPLES and DOCUMENTATION</strong>). Let’s explore how each of the three different <code>info_*()</code> functions work.</p>
+<p>As can be seen, the report is a bit more filled out with information.
+The <strong>TABLE</strong> and <strong>COLUMNS</strong> sections are in
+their prescribed order and the new section we named <strong>FURTHER
+INFORMATION</strong> follows those (and it has one subsection called
+<strong>EXAMPLES and DOCUMENTATION</strong>). Let’s explore how each of
+the three different <code>info_*()</code> functions work.</p>
 </div>
-<div class="section level1">
-<h1 id="the-table-section-and-info_tabular">The <strong>TABLE</strong> Section and <code>info_tabular()</code><a class="anchor" aria-label="anchor" href="#the-table-section-and-info_tabular"></a>
-</h1>
-<p>The <code><a href="../reference/info_tabular.html">info_tabular()</a></code> function adds information to the <strong>TABLE</strong> section. We use named arguments to define subsection names and their content. In the previous example <code>info_tabular(description = "This table is included in the **pointblank** pkg.")</code> was used to make the <strong>DESCRIPTION</strong> subsection (all section titles are automatically capitalized), and the <em>info text</em> is the Markdown text <code>"This table is included in the **pointblank** pkg."</code>. We can define as many subsections to the <strong>TABLE</strong> section as we need, either in the same <code><a href="../reference/info_tabular.html">info_tabular()</a></code> call or across multiple calls. If we want to use more complicated subsection names than a single word, then we can enclose that text in back ticks. For example, why not put some emoji in your subsection name?</p>
+<div class="section level2">
+<h2 id="the-table-section-and-info_tabular">The <strong>TABLE</strong> Section and
+<code>info_tabular()</code><a class="anchor" aria-label="anchor" href="#the-table-section-and-info_tabular"></a>
+</h2>
+<p>The <code><a href="../reference/info_tabular.html">info_tabular()</a></code> function adds information to the
+<strong>TABLE</strong> section. We use named arguments to define
+subsection names and their content. In the previous example
+<code>info_tabular(description = "This table is included in the
+**pointblank** pkg.")</code> was used to make the
+<strong>DESCRIPTION</strong> subsection (all section titles are
+automatically capitalized), and the <em>info text</em> is the Markdown
+text <code>"This table is included in the **pointblank** pkg."</code>.
+We can define as many subsections to the <strong>TABLE</strong> section
+as we need, either in the same <code><a href="../reference/info_tabular.html">info_tabular()</a></code> call or
+across multiple calls. If we want to use more complicated subsection
+names than a single word, then we can enclose that text in back ticks.
+For example, why not put some emoji in your subsection name?</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">informant</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/info_tabular.html">info_tabular</a></span><span class="op">(</span>`🔄 updates` <span class="op">=</span> <span class="st">"This table is not regularly updated."</span><span class="op">)</span></code></pre></div>
@@ -192,27 +239,44 @@
 <img src="https://silly-jackson-b3dec8.netlify.app/informant_report_4.png" alt="This is the same tabular report entitled 'Pointblank Information' as in previous figures. This is an excerpt of the full output, showing the header and the first section (newly added). The header contains information about the input table (identifying it as a tibble called 'small_table') and includes the number of rows (13) and columns (8). In the table body, there is a section entitled 'Table' (the 'Columns' section, available in the full output, is not presented here). The 'Table' section (the first in the reporting table) contains subsections called 'Description' and 'Updates'. Within the 'Description' section there is the text 'This table is included in the pointblank package'. Within the 'Updates' section, we have the text 'This table is not regularly updated'." width="80%">
 </div>
 <p align="center">
-This is an excerpt of the complete report, showing just the report header and the <strong>TABLE</strong> section.
+This is an excerpt of the complete report, showing just the report
+header and the <strong>TABLE</strong> section.
 </p>
 <p><br></p>
-<p>The <strong>TABLE</strong> section is a great place to put all the information about the table that needs to be front and center. Examples of some useful topics for this section might include:</p>
+<p>The <strong>TABLE</strong> section is a great place to put all the
+information about the table that needs to be front and center. Examples
+of some useful topics for this section might include:</p>
 <ul>
-<li>a high-level summary of the table, stating its purpose and importance</li>
+<li>a high-level summary of the table, stating its purpose and
+importance</li>
 <li>what each row of the table represents</li>
 <li>the main users of the table within an organization</li>
 <li>description of how the table is generated</li>
 <li>information on the frequency of updates</li>
 </ul>
 </div>
-<div class="section level1">
-<h1 id="the-columns-section-and-info_columns">The <strong>COLUMNS</strong> Section and <code>info_columns()</code><a class="anchor" aria-label="anchor" href="#the-columns-section-and-info_columns"></a>
-</h1>
-<p>The section that follows the <strong>TABLE</strong> section is <strong>COLUMNS</strong>. This section provides an opportunity to describe each table column in as much detail as necessary. Here, individual columns serve as subsections (automatically generated upon using <code><a href="../reference/create_informant.html">create_informant()</a></code>) and there can be subsections within each column as well.</p>
-<p>The interesting thing about the information provided here via <code><a href="../reference/info_columns.html">info_columns()</a></code> is that the information is additive. We can make multiple calls of <code><a href="../reference/info_columns.html">info_columns()</a></code> and disperse common pieces of <em>info text</em> to multiple columns and append the text to any existing. Let’s take a look at this in practice with the far more interesting <code><a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html" class="external-link">palmerpenguins::penguins</a></code> dataset. Here, we fill in information for each column by adapting <a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html" class="external-link">documentation</a> from the <strong>palmerpenguins</strong> package.</p>
+<div class="section level2">
+<h2 id="the-columns-section-and-info_columns">The <strong>COLUMNS</strong> Section and
+<code>info_columns()</code><a class="anchor" aria-label="anchor" href="#the-columns-section-and-info_columns"></a>
+</h2>
+<p>The section that follows the <strong>TABLE</strong> section is
+<strong>COLUMNS</strong>. This section provides an opportunity to
+describe each table column in as much detail as necessary. Here,
+individual columns serve as subsections (automatically generated upon
+using <code><a href="../reference/create_informant.html">create_informant()</a></code>) and there can be subsections
+within each column as well.</p>
+<p>The interesting thing about the information provided here via
+<code><a href="../reference/info_columns.html">info_columns()</a></code> is that the information is additive. We can
+make multiple calls of <code><a href="../reference/info_columns.html">info_columns()</a></code> and disperse common
+pieces of <em>info text</em> to multiple columns and append the text to
+any existing. Let’s take a look at this in practice with the far more
+interesting <code><a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html" class="external-link">palmerpenguins::penguins</a></code> dataset. Here, we fill
+in information for each column by adapting <a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html" class="external-link">documentation</a>
+from the <strong>palmerpenguins</strong> package.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">informant_pp</span> <span class="op">&lt;-</span> 
   <span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span>
-    read_fn <span class="op">=</span> <span class="op">~</span> <span class="fu">palmerpenguins</span><span class="fu">::</span><span class="va"><a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html" class="external-link">penguins</a></span>,
+    tbl <span class="op">=</span> <span class="fu">palmerpenguins</span><span class="fu">::</span><span class="va"><a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html" class="external-link">penguins</a></span>,
     tbl_name <span class="op">=</span> <span class="st">"penguins"</span>,
     label <span class="op">=</span> <span class="st">"The `penguins` dataset from the **palmerpenguins** 📦."</span>
   <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
@@ -260,24 +324,41 @@ This is an excerpt of the complete report, showing just the report header and th
 species, A factor denoting penguin species (Adélie, Chinstrap, and Gentoo); (2) island, A factor denoting island in Palmer Archipelago, Antarctica (Biscoe, Dream, or Torgersen); (3) bill_length_mm, A number denoting bill length (in units of millimeters); (4) bill_depth_mm, A number denoting bill depth (in units of millimeters); (5) flipper_length_mm, An integer denoting flipper length (in units of millimeters); (6) body_mass_g, An integer denoting body mass (grams).; (7) sex, A factor denoting penguin sex (female, male); and (8) year, The study year (e.g., 2007, 2008, 2009)." width="80%">
 </div>
 <p><br></p>
-<p>We are able to provide subsections with the name <code>ℹ️</code> and, furthermore, use <strong>tidyselect</strong> functions like <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code> to append <em>info text</em> to a common subsection that exists across multiple columns. This was useful for stating the units which were common across three columns: <code>bill_length_mm</code>, <code>bill_depth_mm</code>, and <code>flipper_length_mm</code>. The following <strong>tidyselect</strong> functions are available in <strong>pointblank</strong> to make this process easier:</p>
+<p>We are able to provide subsections with the name <code>ℹ️</code> and,
+furthermore, use <strong>tidyselect</strong> functions like
+<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code> to append <em>info text</em> to a common
+subsection that exists across multiple columns. This was useful for
+stating the units which were common across three columns:
+<code>bill_length_mm</code>, <code>bill_depth_mm</code>, and
+<code>flipper_length_mm</code>. The following
+<strong>tidyselect</strong> functions are available in
+<strong>pointblank</strong> to make this process easier:</p>
 <ul>
 <li>
-<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>: Match columns that start with a prefix.</li>
+<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>: Match columns that start with a
+prefix.</li>
 <li>
 <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>: Match columns that end with a suffix.</li>
 <li>
-<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>: Match columns that contain a literal string.</li>
+<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>: Match columns that contain a literal
+string.</li>
 <li>
-<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches()</a></code>: Perform matching with a regular expression.</li>
+<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches()</a></code>: Perform matching with a regular
+expression.</li>
 <li>
 <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>: Select all columns.</li>
 </ul>
 </div>
-<div class="section level1">
-<h1 id="extra-sections-and-info_section">Extra Sections and <code>info_section()</code><a class="anchor" aria-label="anchor" href="#extra-sections-and-info_section"></a>
-</h1>
-<p>For all that information that we can’t or don’t want to put in the <strong>TABLE</strong> or <strong>COLUMNS</strong> sections, we can place it extra sections (and their subsections) with the <code><a href="../reference/info_section.html">info_section()</a></code> function. These sections go below the aforementioned sections in the order of creation. Let’s put together some extra sections that further describe the <code><a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html" class="external-link">palmerpenguins::penguins</a></code> dataset.</p>
+<div class="section level2">
+<h2 id="extra-sections-and-info_section">Extra Sections and <code>info_section()</code><a class="anchor" aria-label="anchor" href="#extra-sections-and-info_section"></a>
+</h2>
+<p>For all that information that we can’t or don’t want to put in the
+<strong>TABLE</strong> or <strong>COLUMNS</strong> sections, we can
+place it extra sections (and their subsections) with the
+<code><a href="../reference/info_section.html">info_section()</a></code> function. These sections go below the
+aforementioned sections in the order of creation. Let’s put together
+some extra sections that further describe the
+<code><a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html" class="external-link">palmerpenguins::penguins</a></code> dataset.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">informant_pp</span> <span class="op">&lt;-</span> 
   <span class="va">informant_pp</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
@@ -315,23 +396,36 @@ Dimorphism and Environmental Variability within a Community of Antarctic Penguin
 <img src="https://silly-jackson-b3dec8.netlify.app/informant_report_6.png" alt="This is an excerpt of tabular report entitled 'Pointblank Information'. The header is not presented here. Instead the 'Source' section in the report table body is presented (it is the final section in the report table). The 'Source' section contains two subsections: 'References' and 'Note'. The 'References' subsection contains three journal citations that are present in the previous code listing. In the 'Note' subsection, there is a note concerning the original publication of the data in the penguins dataset, which is in Gorman et al. (2014)." width="80%">
 </div>
 <p align="center">
-This is an excerpt of the complete report, showing just the <strong>SOURCE</strong> section and the footer.
+This is an excerpt of the complete report, showing just the
+<strong>SOURCE</strong> section and the footer.
 </p>
 <p><br></p>
-<p>What other types of information go well in these separate sections? Some ideas are:</p>
+<p>What other types of information go well in these separate sections?
+Some ideas are:</p>
 <ul>
-<li>any info related to the source of the data table (e.g., references, background, etc.)</li>
+<li>any info related to the source of the data table (e.g., references,
+background, etc.)</li>
 <li>definitions/explanations of terms used above</li>
-<li>persons responsible for the data table, perhaps with contact information</li>
+<li>persons responsible for the data table, perhaps with contact
+information</li>
 <li>further details on how the table is produced</li>
-<li>any important issues with the table and notes on upcoming changes</li>
+<li>any important issues with the table and notes on upcoming
+changes</li>
 <li>links to other information artifacts that pertain to the table</li>
-<li>information to do with the report itself (how meta!); this might include things like the update history, persons responsible, instructions on how to contribute, etc.</li>
+<li>information to do with the report itself (how meta!); this might
+include things like the update history, persons responsible,
+instructions on how to contribute, etc.</li>
 </ul>
-<p>Really, the sky is the limit here! We can incorporate a great deal of useful information here and use this process to generate reports on all of the important tables within an organization. But there’s more that can be done. To do that you have to go on to the the next phase (the <a href="../articles/INFO-2.html"><em>Advanced Information Management</em></a> article).</p>
-<p><em>You have to go all the way now, total transformation. Do you think you’re ready?</em></p>
+<p>Really, the sky is the limit here! We can incorporate a great deal of
+useful information here and use this process to generate reports on all
+of the important tables within an organization. But there’s more that
+can be done. To do that you have to go on to the the next phase (the <a href="../articles/INFO-2.html"><em>Advanced Information
+Management</em></a> article).</p>
+<p><em>You have to go all the way now, total transformation. Do you
+think you’re ready?</em></p>
 </div>
-  </main>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
@@ -343,7 +437,8 @@ This is an excerpt of the complete report, showing just the <strong>SOURCE</stro
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.1.9000.</p>
 </div>
 
     </footer>

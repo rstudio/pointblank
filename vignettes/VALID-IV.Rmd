@@ -1,5 +1,5 @@
 ---
-title: "Introduction to the **Data Tests for Conditionals** Workflow (**VALID-IV**)"
+title: "Introduction to the Data Tests for Conditionals Workflow (VALID-IV)"
 output: html_document
 ---
 

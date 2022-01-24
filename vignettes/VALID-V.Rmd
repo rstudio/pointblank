@@ -1,5 +1,5 @@
 ---
-title: "Introduction to the **Table Scan** Workflow (**VALID-V**)"
+title: "Introduction to the Table Scan Workflow (VALID-V)"
 output: html_document
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: "Introduction to the **Expectations in Unit Tests** Workflow (**VALID-III**)"
+title: "Introduction to the Expectations in Unit Tests Workflow (VALID-III)"
 output: html_document
 ---
 

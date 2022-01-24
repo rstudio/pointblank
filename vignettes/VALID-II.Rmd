@@ -1,5 +1,5 @@
 ---
-title: "Introduction to the **Pipeline Data Validation** Workflow (**VALID-II**)"
+title: "Introduction to the Pipeline Data Validation Workflow (VALID-II)"
 output: html_document
 ---
 

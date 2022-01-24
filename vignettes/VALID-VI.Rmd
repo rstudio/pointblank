@@ -1,5 +1,5 @@
 ---
-title: "Introduction to the **R Markdown Document Validation** Workflow (**VALID-VI**)"
+title: "Introduction to the R Markdown Document Validation Workflow (VALID-VI)"
 output: html_document
 ---
 

@@ -9,7 +9,7 @@ library(pointblank)
 
 In the [*Intro to Information Management*](../articles/INFO-1.html) article, we learned all about how to synthesize information on a table, giving us a useful report that can be published and widely shared. We used a **pointblank** *informant* with a set of information functions to generate *info text* and put that text into the appropriate report sections. We're going to take this a few steps further and look into some more functionality makes *info text* more dynamic and also include a finalizing step in this workflow that accounts for evolving data. 
 
-# Getting Snippets of Useful Text With the `info_snippet()` Function
+## Getting Snippets of Useful Text With the `info_snippet()` Function
 
 A great source of information about the table can be the table itself. Suppose you want to show some categorical values from a particular column. Maybe you'd like to display the range of values in an important numeric column. Perhaps show some KPI values that can be calculated using data in the table? This can all be done with the `info_snippet()` function. You give the snippet a name and you give it a function call. Let's do this for the `small_table` dataset available in **pointblank**. This is what that table looks like:
 
@@ -28,7 +28,7 @@ Inside of an `info_snippet()` call, which is used after creating the *informant*
 ```{r eval=FALSE}
 informant <- 
   create_informant(
-    read_fn = ~ small_table,
+    tbl = small_table,
     tbl_name = "small_table",
     label = "Example No. 2"
   ) %>%
@@ -38,7 +38,7 @@ informant <-
   )
 ```
 
-The `small_table` dataset is associated with the `informant` as the target table, so, it's represented as the leading `.` in the functional sequence given to `fn`. It's important to note that there's a leading `~`, making this expression a RHS formula (we don't want to execute anything here, at this time). Lastly, the snippet has been given the name `"mean_d"`. We know that this snippet will produce the value `2304.7` so what can we do with that? We should put that value into some *info text* and use the `snippet_name` as the key. It works similarly to how the **glue** package does text interpolation, and here's the continuation of the above example:
+The `small_table` dataset is associated with the `informant` as the target table, so, it's represented as the leading `.` in the functional sequence given to `fn` inside of `info_snippet()`. It's important to note that there's a leading `~`, making this expression a RHS formula (i.e., we don't want to execute anything here, at this time). Lastly, the snippet has been given the name `"mean_d"`. We know that this snippet will produce the value `2304.7` so what can we do with that? We should put that value into some *info text* and use the `snippet_name` as the key. It works similarly to how the **glue** package does text interpolation, and here's the continuation of the above example:
 
 ```{r eval=FALSE}
 informant <- 
@@ -51,7 +51,7 @@ informant <-
   )
 ```
 
-Within the text, there's the use of curly braces and the name of the snippet. That's where the `2304.7` value will be inserted. This methodology for inserting the computed values of snippets can be performed wherever *info text* is provided (in either of the `info_tabular()`, `info_columns()`, and `info_section()` functions). Let's take a look at the report by printing the `informant` object
+Within the text, there's the use of curly braces and the name of the snippet (`{mean_d}`). That's where the `2304.7` value will be inserted. This methodology for inserting the computed values of snippets can be performed wherever *info text* is provided (in either of the `info_tabular()`, `info_columns()`, and `info_section()` functions). Let's take a look at the report by printing the `informant` object
 
 ```{r eval=FALSE}
 informant
@@ -67,7 +67,7 @@ Hmm. There is `"... {mean_d} ..."` text in the report that should have been repl
 ```{r eval=FALSE}
 informant <- 
   create_informant(
-    read_fn = ~ small_table,
+    tbl = small_table,
     tbl_name = "small_table",
     label = "Example No. 2"
   ) %>%
@@ -93,7 +93,7 @@ width=80%></div>
 
 This time, sweet success. The value appears and the overall formatting looks great! This is a very useful thing, so long as we remember to use the `incorporate()` function to make it happen (more on that in the next section). 
 
-# Ensuring That Snippets (and Other Table Metadata Element) Are Up-to-Date
+## Ensuring That Snippets (and Other Table Metadata Element) Are Up-to-Date
 
 Tables can change with time. Whether that data source is a public dataset, an organization's data table, or a continually-updated Excel file (😱), we should be ready for change. In the previous example, we used the `incorporate()` function to finalize the report. Without it, our snippet didn't work. There are two major things that `incorporate()` does for you in the *Information Management* workflow.
 
@@ -111,12 +111,12 @@ target_table <- small_table
 dim(target_table)
 ```
 
-Let's allow an informant to access the `target_table` through the `read_fn` argument. In this case, the expression is `~ target_table` (it simply gets the table from the global workspace). After using `incorporate()` and printing the `informant_tt` object, let's just examine the header.
+Let's allow an informant to access the `target_table` through the `tbl` argument but, in this case, the expression is `~ target_table` (it simply gets the table from the global workspace). After using `incorporate()` and printing the `informant_tt` object, let's just examine the header.
 
 ```{r eval=FALSE}
 informant_tt <- 
   create_informant(
-    read_fn = ~ target_table,
+    tbl = ~ target_table,
     tbl_name = "target_table",
     label = "Example No. 3"
   ) %>%
@@ -155,11 +155,11 @@ width=80%></div>
 <p align="center">This is an excerpt of the complete report, showing just the header.</p>
 <br>
 
-Great! Using `incorporate()` has accurately updated the reporting of row and column counts in the header. And it's also very much worth noting that the use of a `read_fn` is important here. Had `target_table` been given to the `tbl` argument of `create_informant()`, that table would be bound to the informant in its initial state (with 13 rows and 8 columns) and any updates to the table wouldn't be reflected in the reporting upon using `incorporate()`. The table-reading function is meant for obtaining the table each and every time the table is needed. 
+Great! Using `incorporate()` has accurately updated the reporting of row and column counts in the header. And it's also very much worth noting that the use of `tbl = ~ target_table` rather than `tbl = target_table` is important here. Had the latter been used in `create_informant()`, that table would be bound to the informant in its initial state (with 13 rows and 8 columns) and any updates to the table wouldn't be reflected in the reporting upon using `incorporate()`. The table-prep formula used here is meant for re-obtaining the table each and every time the table is needed.
 
 In short, unless you have no uses of `info_snippet()` and the table isn't expected to change, it's recommended to use `incorporate()` as the final call in this workflow.
 
-# Helpful **pointblank** Functions that Work Exceedingly Well with `info_snippet()`
+## Helpful **pointblank** Functions that Work Exceedingly Well with `info_snippet()`
 
 There are a few functions available in **pointblank** that make it much easier to get commonly-used text snippets. All of them begin with the `snip_` prefix and they are:
 
@@ -169,14 +169,14 @@ There are a few functions available in **pointblank** that make it much easier t
 
 Each of these functions can be used directly as a `fn` value and we don't have to specify the table since its assumed that the target table is where we'll be snipping data from. Let's have a look at each of these in action.
 
-## The `snip_list()` Function
+### The `snip_list()` Function
 
 When describing some aspect of the target table, we may want to extract some values from a column and include them as a piece of info text. We'd want the values to be nicely formatted as a list (with commas) and we'd probably prefer that this be constrained to a certain size (so as to not potentially generate massive amounts of text). This can be efficiently done with `snip_list()`. Let's experiment with the combination of `snip_list()` and `info_snippet()`, extending the **palmerpenguins** example from the [*Intro to Information Management*](../articles/INFO-I.html) article.
 
 ```{r eval=FALSE}
 informant_pp <- 
   create_informant(
-    read_fn = ~ palmerpenguins::penguins,
+    tbl = ~ palmerpenguins::penguins,
     tbl_name = "penguins",
     label = "The `penguins` dataset from the **palmerpenguins** 📦."
   ) %>% 
@@ -236,7 +236,7 @@ width=80%></div>
 
 Again, no issues with the formatting and display of values. We got the *info text* `"The study year ("2007", "2008", and "2009" )."` for our efforts here and it saved us from having to determine this, plus, should the data be updated with new `year` values, that will be reflected in this info text upon using `incorporate()`. Refreshed *info text* really provides huge benefits, especially when the data changes a lot (e.g., database tables).
 
-## The `snip_lowest()` and `snip_highest()` Functions
+### The `snip_lowest()` and `snip_highest()` Functions
 
 We can get the lowest and highest values from a column and inject those formatted values into some *info_text*. Let's do that for some of the measured values in the `penguins` dataset with `snip_lowest()` and `snip_highest()`.
 
@@ -289,11 +289,11 @@ width=80%></div>
 
 We can see from the report output that we can creatively use the lowest and highest values obtained by `snip_lowest()` and `snip_highest()` to specify a range or simply show some maximum value. While the ordering of the `info_columns()` calls in the example affects the overall layout of the text (through the text appending behavior), the placement of `info_snippet()` calls *does not* matter. And, again, we must use `incorporate()` to update all of the text snippets and render them in their appropriate locations (inside each `{<snippet_name>}`).
 
-# *Text Tricks*
+## *Text Tricks*
 
 While your *info text* can be jazzed up with Markdown, there are a few extra tricks that make authoring the text a bit more pleasurable. Once you know about these *text tricks* you'll be able to express information in many more interesting ways.
 
-## Links and Dates
+### Links and Dates
 
 If you have links in your text, **pointblank** will try to identify them and style them nicely. This amounts to using a pleasing, light-blue color and underlines that appear on hover. It doesn't take much to style links but it does require *something*. So, Markdown links written as `< link url >` or `[ link text ]( link url )` will both get the transformation treatment.
 
@@ -327,7 +327,7 @@ width=80%></div>
 <p align="center">This is an excerpt of the complete report, showing just the <strong>TABLE</strong> section and the header.</p>
 <br>
 
-## Labels
+### Labels
 
 We can take portions of text and present them as labels. These will help you call out important attributes in short form and may eliminate the need for oft-repeated statements. You might apply to labels to signify priority, category, or any other information you find useful. To do this we have two options,
 
@@ -360,7 +360,7 @@ width=80%></div>
 <p align="center">This is an excerpt of the complete report, showing just the <strong>COLUMNS</strong> and <strong>ADDITIONAL NOTES</strong> sections.</p>
 <br>
 
-## Get Stylin'
+### Get Stylin'
 
 If you want to use CSS styles on spans of *info text*, it's possible with the following construction:
 

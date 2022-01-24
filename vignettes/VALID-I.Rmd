@@ -12,9 +12,9 @@ library(glue)
 
 When trying to assess the state of data quality for tabular data, we want to perform a full accounting of assertions on the data without stopping anywhere in the interrogation of the data. We use an object called an *agent* to collect our validation instructions, perform the interrogation, and then serve as an artifact for reporting or further analysis. We give that agent the name or a function that retrieves the target table. The types of data tables that can be used include data frames, tibbles, database tables (`tbl_dbi`), and Spark DataFrames (`tbl_spark`).
 
-# The Elements of this Workflow: an *agent*, validation functions, and `interrogate()`
+## The Elements of this Workflow: an *agent*, validation functions, and `interrogate()`
 
-The *agent* that we need for this workflow is created with the `create_agent()` function. An agent can handle one target table at any given time and two different arguments can be used to specify that table. The first is `tbl`, where the input table is directly supplied to the *agent*. Alternatively, a function can be used to read in the input data table with the `read_fn` argument in one of two ways: (1) using a function (e.g., `function() { <table reading code> }`) or, (2) with an **R** formula expression (e.g., `~ <table reading code>`).
+The *agent* that we need for this workflow is created with the `create_agent()` function. An agent can handle one target table at any given time and the `tbl` argument is where the target is specified. We can supply the input table directly to the *agent* by giving `tbl` the table object. Alternatively, we can make it such that the table is only read in at interrogation-time. This is useful in situations where we might deploy an agent from a YAML file. This 'lazy reading' of a target table can be accomplished in two ways: (1) using a 'table-prep formula', which is a one-sided **R** formula expression (e.g., `~ <table reading code>`), or (2) providing a function (e.g., `function() { <table reading code> }`).
 
 The *agent* needs directives on what to do with the table, so, we provide validation functions. Some check for the existence or type of column (`col_exists()` or the group of `col_is_*()` functions). Others check each cell in a column for satisfying a specific condition (the `col_vals_*()` functions). We can use as many of these as necessary for satisfactory validation testing of the table in question. There are certainly quite a few of them, so here's a list of the validation functions with a questioning phrase for each function's purpose:
 
@@ -56,7 +56,7 @@ The *agent* needs directives on what to do with the table, so, we provide valida
 
 The final function that needs to be called is the `interrogate()` function. The validation functions, when called on an *agent* object, don't act on the target table until `interrogate()` is used. In fact, until interrogation, the usage of validation functions serves as instructions (building up an interrogation plan). During the interrogation phase (i.e., when calling `interrogate()`) those instructions turn into actions, with the *agent* then carrying out all the validation steps of the interrogation plan.
 
-# A Simple Example with the Basics
+## A Simple Example with the Basics
 
 For our examples going forward, we'll use the `small_table` dataset. It's included in the **pointblank** package. It isn't very large, which makes it great for simple examples. Here it is in its entirety:
 
@@ -120,27 +120,20 @@ get_data_extracts(agent, i = 5)
 
 Recall that validation *step 5* asserted that all values in column `d` should be between `0` and `5000`, however, this extract of `small_table` shows that column `d` has a value of `10000` which lies outside the specified range.
 
-# Using Threshold Levels and Actions
+## Using Threshold Levels and Actions
 
 It can be useful to gauge data quality by setting failure thresholds for validation steps. For example, it may be acceptable at some point in time to tolerate up to 5% of failing test units for a given validation. Or, having several levels of data quality might be useful and instructive, where failing test units across validations are grouped into the 0-5%, 5-10%, and 10%- bands.
 
 We can specify failure threshold levels with the `action_levels()` function. Using the function generates an `action_levels` object that can be passed to the `actions` argument of `create_agent()` (thereby creating a default for every validation step). In the following, we use relative values (as real numbers between `0` and `1`) to define thresholds for the `WARN` and `STOP` conditions. 
 
-```{r action_levels_set_1, eval=FALSE}
+```{r action_levels_set_1}
 al <- action_levels(warn_at = 0.1, stop_at = 0.2)
 ```
 
 Printing the `al` object gives us a summary of the settings.
 
-```{r action_levels_print_1, eval=FALSE}
+```{r action_levels_print_1}
 al
-```
-
-```
-── The `action_levels` settings ────────────────────────────────────────────
-WARN failure threshold of 0.1 of all test units.
-STOP failure threshold of 0.2 of all test units.
-──────────────────────────────────────────────────────────────────────────
 ```
 
 Let's use the `action_levels` object in a new validation. It's similar to the last one but the parameters for some of the validation functions will result in more failing test units. We'll see that the interrogation messages show mention of `STOP` and `WARNING` conditions being met.
@@ -182,7 +175,7 @@ agent
 
 It's possible to invoke a function when a particular failure condition is met and this can be set in the `action_levels()` function and made part of the `action_levels` object. One example of a function that can be used is the included `log4r_step()` function for logging failure conditions across validation steps. Let's make a new `action_levels` object and include the logging function in the `WARN` and `STOP` failure conditions. Note that the function calls must be written as one-sided **R** formulas.
 
-```{r action_levels_set_2, eval=FALSE}
+```{r action_levels_set_2}
 al <- 
   action_levels(
     warn_at = 0.1,
@@ -196,17 +189,8 @@ al <-
 
 Printing this new `al` object will show us the failure threshold settings and the associated actions for the failure conditions.
 
-```{r action_levels_print_2, eval=FALSE}
+```{r action_levels_print_2}
 al
-```
-
-```
-── The `action_levels` settings ────────────────────────────────────────────
-WARN failure threshold of 0.1 of all test units.
-\fns\ ~ log4r_step(x)
-STOP failure threshold of 0.2 of all test units.
-\fns\ ~ log4r_step(x)
-──────────────────────────────────────────────────────────────────────────
 ```
 
 Using this new `al` object with our validation workflow will result in failures at certain validation steps to be logged. By default, this is to a file named `"pb_log_file"` in the working directory but the `log4r_step()` function is flexible for allowing any **log4r** *appender* to be used. Running the following data validation code
@@ -290,4 +274,3 @@ In Step 2, there were 13 test units and 46.154% failed. STOP condition met: true
 ```
 
 This is a great way to test a function for use as a validation step 'action' because when invoked it will undergo evaluation in an environment that contains `x` (which will have the same structure).
-

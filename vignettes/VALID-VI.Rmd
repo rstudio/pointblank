@@ -12,7 +12,7 @@ validate_rmd(summary = FALSE)
 
 The *R Markdown Document Validation* workflow involves interspersing bits of different workflows in the larger R Markdown workflow. It's great to use when doing data analysis work in the familiar *R Markdown* environment, striking a balance between checking your work and getting a bit out of the way when the document is rendered to HTML. 
 
-# How It Works
+## How It Works
 
 Using **pointblank** in the **VALID-VI** workflow is enabled by default once the **pointblank** library is loaded (best done in the `setup` chunk). The framework allows for validation testing within specialized validation code chunks where the `validate = TRUE` option is set. Using **pointblank** validation functions on data (the [**VALID-II**](../articles/VALID-II.html) workflow) in these marked code chunks will flag overall failure if the stop threshold is exceeded anywhere.
 
@@ -58,7 +58,7 @@ col_vals_between(small_table, vars(d), left = 0, right = 10000)
 
 It's worth reminding at this point that failed validations do not stop execution of the R Markdown rendering. Otherwise you wouldn't see a document with any failing validations, and, you wouldn't know where those failed validations occurred. The expectation for this workflow is to add in the relevant validation expressions at key junctures and should any failures occur, one can fix the underlying issues until all (or enough) validations pass.
 
-# The **pointblank** `stop_if_not()` Function
+## The **pointblank** `stop_if_not()` Function
 
 You may not want to use the set of validation functions for everything. Perhaps using `stopifnot()` is sufficient for some validations. In that case, consider using **pointblank** variation on that: `stop_if_not()`. It works well enough as a standalone, replacement for `stopifnot()` but the advantage here is that `stop_if_not()` is customized for use in the **VALID-VI** workflow (or in any situation where you're using R Markdown to render to HTML, and **pointblank** is loaded via `library()`). Ultimately, using `stop_if_not()` in a code chunk where the `validate = TRUE` option is set will yield the correct reporting of successes and failures whereas `stopifnot()` does not.
 
@@ -104,7 +104,7 @@ If this code chunk were to exclude the `validate = TRUE` option, then the output
 
 As a final note for this, it's important not to use any other expressions that result in output, just stick to the typical `create_agent()` &rarr; `<validation functions>` &rarr; `interrogate()` pattern. In other words, dedicate this code chunk just to the *agent* and put other validation expressions elsewhere in the document.
 
-# Setting Up Options with the `validate_rmd()` Function
+## Setting Up Options with the `validate_rmd()` Function
 
 We can modify the **pointblank** validation testing options within R Markdown documents with the `validate_rmd()` function. While the framework for such testing is set up by default, using `validate_rmd()` offers an opportunity to set up UI and logging options.
 

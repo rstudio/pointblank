@@ -37,7 +37,7 @@ The *VALID-IV: Data Tests for Conditionals* workflow is probably not much of a w
 - `test_col_exists()`: Test whether one or more columns actually exist.
 - `test_col_schema_match()`: Test whether columns in the table (and their types) match a predefined schema.
 
-# Exactly Like the `expect_*()` Functions Except You Get a `TRUE` or `FALSE`
+## Exactly Like the `expect_*()` Functions Except You Get a `TRUE` or `FALSE`
 
 The interface of each `test_*()` function is an exact match to the `expect_*()` counterpart. If you haven't used either of those but have used the standard validation functions, here's a quick rundown.
 
@@ -55,7 +55,7 @@ The rules for threshold setting (in `action_levels()`, `warn_on_fail()`, and `st
 
 We can use the `preconditions` argument in cases where we'd like to transform the input data before evaluation of the test. If you would like to do things to the input table like summarize it, perform filtering, mutate one or more columns, perform table joins, etc., then this is a good way to go about that.
 
-# Here's Several Examples Quick Snap
+## Here's Several Examples Quick Snap
 
 Let's have some examples before leaving this article. They will all use our `small_table`:
 

@@ -9,7 +9,7 @@ library(pointblank)
 
 With the *Information Management* workflow, table information can be synthesized, giving us a snapshot of a data table we care to collect information on. The **pointblank** *informant* is given a series of information functions to define portions of information about a table. This *info text* can pertain to individual columns, the table as a whole, and whatever additional information makes sense for your organization. We can even glean little snippets of information from the target table and mix them into the *info text* to make the overall information more dynamic.
 
-# Starting with a Simple Example
+## Starting with a Simple Example
 
 This workflow is somewhat similar in concept and usage to the **Data Quality Reporting** Workflow (**VALID-I**). Instead of an *agent*, we use an *informant* and we get that informant with the `create_informant()` function. We point the *informant* to a target table and this can be a data frame, a tibble, a database table (as a `tbl_dbi` object), or a Spark DataFrame (as a `tbl_spark` object).
 
@@ -24,7 +24,7 @@ Let's use the `small_table` object and see what results from introducing it to t
 ```{r eval=FALSE}
 informant <- 
   create_informant(
-    read_fn = ~ small_table,
+    tbl = small_table,
     tbl_name = "small_table",
     label = "Example No. 1"
   )
@@ -63,7 +63,7 @@ Let's try adding some information with each of these functions and then look at 
 ```{r eval=FALSE}
 informant <-
   create_informant(
-    read_fn = ~ small_table,
+    tbl = small_table,
     tbl_name = "small_table",
     label = "Example No. 2"
   ) %>%
@@ -91,7 +91,7 @@ width=80%></div>
 
 As can be seen, the report is a bit more filled out with information. The **TABLE** and **COLUMNS** sections are in their prescribed order and the new section we named **FURTHER INFORMATION** follows those (and it has one subsection called **EXAMPLES and DOCUMENTATION**). Let's explore how each of the three different `info_*()` functions work.
 
-# The **TABLE** Section and `info_tabular()`
+## The **TABLE** Section and `info_tabular()`
 
 The `info_tabular()` function adds information to the **TABLE** section. We use named arguments to define subsection names and their content. In the previous example `info_tabular(description = "This table is included in the **pointblank** pkg.")` was used to make the **DESCRIPTION** subsection (all section titles are automatically capitalized), and the *info text* is the Markdown text `"This table is included in the **pointblank** pkg."`. We can define as many subsections to the **TABLE** section as we need, either in the same `info_tabular()` call or across multiple calls. If we want to use more complicated subsection names than a single word, then we can enclose that text in back ticks. For example, why not put some emoji in your subsection name?
 
@@ -114,7 +114,7 @@ The **TABLE** section is a great place to put all the information about the tabl
 - description of how the table is generated
 - information on the frequency of updates
 
-# The **COLUMNS** Section and `info_columns()`
+## The **COLUMNS** Section and `info_columns()`
 
 The section that follows the **TABLE** section is **COLUMNS**. This section provides an opportunity to describe each table column in as much detail as necessary. Here, individual columns serve as subsections (automatically generated upon using `create_informant()`) and there can be subsections within each column as well.
 
@@ -123,7 +123,7 @@ The interesting thing about the information provided here via `info_columns()` i
 ```{r eval=FALSE}
 informant_pp <- 
   create_informant(
-    read_fn = ~ palmerpenguins::penguins,
+    tbl = palmerpenguins::penguins,
     tbl_name = "penguins",
     label = "The `penguins` dataset from the **palmerpenguins** 📦."
   ) %>% 
@@ -182,7 +182,7 @@ We are able to provide subsections with the name `ℹ️` and, furthermore, use 
 - `matches()`: Perform matching with a regular expression.
 - `everything()`: Select all columns.
 
-# Extra Sections and `info_section()`
+## Extra Sections and `info_section()`
 
 For all that information that we can't or don't want to put in the **TABLE** or **COLUMNS** sections, we can place it extra sections (and their subsections) with the `info_section()` function. These sections go below the aforementioned sections in the order of creation. Let's put together some extra sections that further describe the `palmerpenguins::penguins` dataset.
 

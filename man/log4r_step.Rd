@@ -35,6 +35,48 @@ function in every failure condition that should produce a log (i.e., \code{warn}
 given validation step will produce a log entry (skipping failure conditions
 with lower severity) so long as the call to \code{log4r_step()} is present.
 }
+\section{YAML}{
+
+A \strong{pointblank} agent can be written to YAML with \code{\link[=yaml_write]{yaml_write()}} and the
+resulting YAML can be used to regenerate an agent (with \code{\link[=yaml_read_agent]{yaml_read_agent()}})
+or interrogate the target table (via \code{\link[=yaml_agent_interrogate]{yaml_agent_interrogate()}}). Here is an
+example of how \code{log4r_step()} can be expressed in R code (within
+\code{\link[=action_levels]{action_levels()}}, itself inside \code{\link[=create_agent]{create_agent()}}) and in the corresponding
+YAML representation.\preformatted{# R statement
+create_agent(
+  tbl = ~ small_table,
+  tbl_name = "small_table",
+  label = "An example.",
+  actions = action_levels(
+    warn_at = 1,
+    fns = list(
+      warn = ~ log4r_step(
+        x, append_to = "example_log"
+      )
+    )
+  )
+)
+
+# YAML representation
+type: agent
+tbl: ~small_table
+tbl_name: small_table
+label: An example.
+lang: en
+locale: en
+actions:
+  warn_count: 1.0
+  fns:
+    warn: ~log4r_step(x, append_to = "example_log")
+}
+
+Should you need to preview the transformation of an \emph{agent} to YAML (without
+any committing anything to disk), use the \code{\link[=yaml_agent_string]{yaml_agent_string()}} function. If
+you already have a \code{.yml} file that holds an \emph{agent}, you can get a glimpse
+of the R expressions that are used to regenerate that agent with
+\code{\link[=yaml_agent_show_exprs]{yaml_agent_show_exprs()}}.
+}
+
 \section{Function ID}{
 
 5-1

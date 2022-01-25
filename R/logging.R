@@ -28,6 +28,49 @@
 #' given validation step will produce a log entry (skipping failure conditions
 #' with lower severity) so long as the call to `log4r_step()` is present.
 #' 
+#' @section YAML: 
+#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
+#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
+#' or interrogate the target table (via [yaml_agent_interrogate()]). Here is an
+#' example of how `log4r_step()` can be expressed in R code (within
+#' [action_levels()], itself inside [create_agent()]) and in the corresponding
+#' YAML representation.
+#' 
+#' ```
+#' # R statement
+#' create_agent(
+#'   tbl = ~ small_table,
+#'   tbl_name = "small_table",
+#'   label = "An example.",
+#'   actions = action_levels(
+#'     warn_at = 1,
+#'     fns = list(
+#'       warn = ~ log4r_step(
+#'         x, append_to = "example_log"
+#'       )
+#'     )
+#'   )
+#' )
+#' 
+#' # YAML representation
+#' type: agent
+#' tbl: ~small_table
+#' tbl_name: small_table
+#' label: An example.
+#' lang: en
+#' locale: en
+#' actions:
+#'   warn_count: 1.0
+#'   fns:
+#'     warn: ~log4r_step(x, append_to = "example_log")
+#' ```
+#' 
+#' Should you need to preview the transformation of an *agent* to YAML (without
+#' any committing anything to disk), use the [yaml_agent_string()] function. If
+#' you already have a `.yml` file that holds an *agent*, you can get a glimpse
+#' of the R expressions that are used to regenerate that agent with
+#' [yaml_agent_show_exprs()].
+#' 
 #' @param x A reference to the x-list object prepared by the `agent`. This
 #'   version of the x-list is the same as that generated via
 #'   `get_agent_x_list(<agent>, i = <step>)` except this version is internally

@@ -461,7 +461,7 @@ tbl_source <- function(tbl,
   tbl_entry <- 
     tbl_store(
       .list = list(
-        as.formula(
+        stats::as.formula(
           paste0(names(store)[this_entry_idx], " ", tbl_entry_str)
         )
       )

@@ -212,6 +212,7 @@ tbl_store <- function(...,
   
   # Collect a fully or partially named list of tables
   tbl_list <- .list
+  
   # Check that every list element is a formula
   for (i in seq_along(tbl_list)) {
     
@@ -223,13 +224,10 @@ tbl_store <- function(...,
     }
   }
   
-  # If there is an `.init` entry, pull that out of `tbl_list`
-  if (".init" %in% names(tbl_list)) {
-    
-    init_stmts <- tbl_list[[".init"]]
-    tbl_list[[".init"]] <- NULL
-    
-    attr(tbl_list, which = "pb_init") <- init_stmts
+  # If there is anything provided for `.init`, put that 
+  # into an attribute of `tbl_list`
+  if (!is.null(.init)) {
+    attr(tbl_list, which = "pb_init") <- .init
   }
   
   # Get names for every entry in the list
@@ -425,10 +423,10 @@ tbl_source <- function(tbl,
   tbl_entry_str <- capture_formula(formula = tbl_entry)[2]
   
   Sys.sleep(0.25)
+  
+  this_entry_idx <- which(names(store) == tbl)
 
   if (has_substitutions(tbl_entry_str)) {
-    
-    this_entry_idx <- which(names(store) == tbl)
     
     if (this_entry_idx == 1) {
       stop(
@@ -452,20 +450,22 @@ tbl_source <- function(tbl,
           capture_formula(formula = store[[prev_tbl_entries[i]]])[2]
         )
       
+      Sys.sleep(0.25)
+      
       tbl_entry_str <-
         gsub(pattern = pattern, replacement = replacement, tbl_entry_str)
       
     }
-    
-    tbl_entry <- 
-      tbl_store(
-        .list = list(
-          as.formula(
-            paste0(names(store)[this_entry_idx], " ", tbl_entry_str)
-          )
-        )
-      )[[1]]
   }
+  
+  tbl_entry <- 
+    tbl_store(
+      .list = list(
+        as.formula(
+          paste0(names(store)[this_entry_idx], " ", tbl_entry_str)
+        )
+      )
+    )[[1]]
   
   tbl_entry
 }
@@ -560,6 +560,13 @@ tbl_get <- function(tbl,
   # Get the table-prep formula with the `tbl_source()` function
   tbl_entry <- tbl_source(tbl = tbl, store = store)
   
+  if (!is.null(attr(store, which = "pb_init", exact = TRUE))) {
+    
+    init_stmt <- attr(store, which = "pb_init", exact = TRUE)
+    
+    rlang::eval_tidy(rlang::f_rhs(init_stmt))
+  }
+
   # Obtain the table object
   tbl_obj <- 
     rlang::f_rhs(tbl_entry) %>%

@@ -4,7 +4,7 @@
 \alias{tbl_store}
 \title{Define a store of tables with table-prep formulas: a table store}
 \usage{
-tbl_store(..., .list = list2(...))
+tbl_store(..., .list = list2(...), .init = NULL)
 }
 \arguments{
 \item{...}{Expressions that contain table-prep formulas and table names for
@@ -13,6 +13,10 @@ where the left-hand side is a given name and the right-hand is the portion
 that is is used to obtain the table.}
 
 \item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
+
+\item{.init}{Optionally provide statements (in a one-sided formula) that
+should initially be executed when materializing \emph{any} of tables in the
+table store.}
 }
 \value{
 A \code{tbl_store} object that contains table-prep formulas.

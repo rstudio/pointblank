@@ -678,12 +678,19 @@ yaml_read_tbl_store <- function(filename) {
   
   statements <- paste(table_names, table_formulas)
   
+  # If there is an init statement, obtain that
+  if ("init" %in% names(y)) {
+    init <- y$init
+  } else {
+    init <- NULL
+  }
+  
   # Generate the expression string
   expr_str <-
     paste0(
       "tbl_store(\n",
-      paste(paste0("  ", statements), collapse = ",\n"), "\n",
-      ")"
+      paste(paste0("  ", statements), collapse = ",\n"),
+      if (is.null(init)) "\n)" else paste0(",\n  .init = ", init, "\n)")
     )
 
   tbl_store <- 

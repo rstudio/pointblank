@@ -15,10 +15,11 @@ is omitted then an identifier will be generated for you.}
 
 \item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
 
-\item{.init}{Optionally provide statements (in a one-sided formula) that
-should initially be executed when materializing \emph{any} of tables in the
-table store. This is useful for inclusion of \code{library()} calls that can
-be beneficial for the table-prep formulas.}
+\item{.init}{We can optionally provide an initialization statement (in a
+one-sided formula) that should be executed whenever \emph{any} of tables in the
+table store are obtained. This is useful, for instance, for including a
+\code{library()} call that can be executed before any table-prep formulas in
+\code{...}.}
 }
 \value{
 A \code{tbl_store} object that contains table-prep formulas.
@@ -116,14 +117,17 @@ written to YAML (if no filename is given then the YAML is written to
 \code{"tbl_store.yml"}).\preformatted{# R statement for generating the "tbl_store.yml" file
 tbl_store(
   tbl_duckdb ~ db_tbl(small_table, dbname = ":memory:", dbtype = "duckdb"),
-  sml_table_high ~ small_table \%>\% dplyr::filter(f == "high")
+  sml_table_high ~ small_table \%>\% dplyr::filter(f == "high"),
+  .init = ~ library(tidyverse)
 ) \%>\%
   yaml_write()
 
 # YAML representation ("tbl_store.yml")
+type: tbl_store
 tbls:
   tbl_duckdb: ~ db_tbl(small_table, dbname = ":memory:", dbtype = "duckdb")
   sml_table_high: ~ small_table \%>\% dplyr::filter(f == "high")
+init: ~library(tidyverse)
 }
 
 This is useful when you want to get fresh pulls of prepared data from a

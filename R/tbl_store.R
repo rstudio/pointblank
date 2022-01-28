@@ -19,22 +19,25 @@
 
 #' Define a store of tables with table-prep formulas: a table store
 #' 
-#' @description 
+#' @description
 #' It can be useful to set up all the data sources you need and just draw from
 #' them when necessary. This upfront configuration with `tbl_store()` lets us
 #' define the methods for obtaining tabular data from mixed sources (e.g.,
-#' database tables, tables generated from flat files, etc.) and provide names
-#' for these data preparation procedures. Then we have a convenient way to
-#' access the materialized tables with [tbl_get()], or, the table-prep formulas
-#' with [tbl_source()]. Table-prep formulas can be as simple as getting a table
-#' from a location, or, it can involve as much mutation as is necessary (imagine
-#' procuring several mutated variations of the same source table, generating a
-#' table from multiple sources, or pre-filtering a database table according to
-#' the system time). Another nice aspect of organizing table-prep formulas in a
-#' single object is supplying it to the `tbl` argument of [create_agent()] or
-#' [create_informant()] via `$` notation (e.g, `create_agent(tbl =
-#' <tbl_store>$<name>)`) or with [tbl_source()] (e.g., `create_agent(tbl = ~
-#' tbl_source("<name>", <tbl_store>))`).
+#' database tables, tables generated from flat files, etc.) and provide
+#' identifiers for these data preparation procedures.
+#' 
+#' What results from this work is a convenient way to materialize tables with
+#' [tbl_get()]. We can also get any table-prep formula from the table store
+#' with [tbl_source()]. The content of a table-prep formulas can involve reading
+#' a table from a location, or, it can involve data transformation. One can
+#' imagine scenarios where we might (1) procure several mutated variations of
+#' the same source table, (2) generate a table using disparate data sources, or
+#' (3) filter the rows of a database table according to the system time. Another
+#' nice aspect of organizing table-prep formulas in a single object is supplying
+#' it to the `tbl` argument of [create_agent()] or [create_informant()] via `$`
+#' notation (e.g, `create_agent(tbl = <tbl_store>$<name>)`) or with
+#' [tbl_source()] (e.g.,
+#' `create_agent(tbl = ~ tbl_source("<name>", <tbl_store>))`).
 #' 
 #' @section YAML:
 #' A **pointblank** table store can be written to YAML with [yaml_write()] and
@@ -96,12 +99,14 @@
 #' 
 #' @param ... Expressions that contain table-prep formulas and table names for
 #'   data retrieval. Two-sided formulas (e.g, `<LHS> ~ <RHS>`) are to be used,
-#'   where the left-hand side is a given name and the right-hand is the portion
-#'   that is is used to obtain the table.
+#'   where the left-hand side is an identifier and the right-hand contains a
+#'   statement that obtains a table (i.e., the table-prep formula). If the LHS
+#'   is omitted then an identifier will be generated for you.
 #' @param .list Allows for the use of a list as an input alternative to `...`.
 #' @param .init Optionally provide statements (in a one-sided formula) that
 #'   should initially be executed when materializing *any* of tables in the
-#'   table store.
+#'   table store. This is useful for inclusion of `library()` calls that can
+#'   be beneficial for the table-prep formulas.
 #' 
 #' @return A `tbl_store` object that contains table-prep formulas.
 #' 

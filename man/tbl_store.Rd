@@ -9,14 +9,16 @@ tbl_store(..., .list = list2(...), .init = NULL)
 \arguments{
 \item{...}{Expressions that contain table-prep formulas and table names for
 data retrieval. Two-sided formulas (e.g, \verb{<LHS> ~ <RHS>}) are to be used,
-where the left-hand side is a given name and the right-hand is the portion
-that is is used to obtain the table.}
+where the left-hand side is an identifier and the right-hand contains a
+statement that obtains a table (i.e., the table-prep formula). If the LHS
+is omitted then an identifier will be generated for you.}
 
 \item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
 
 \item{.init}{Optionally provide statements (in a one-sided formula) that
 should initially be executed when materializing \emph{any} of tables in the
-table store.}
+table store. This is useful for inclusion of \code{library()} calls that can
+be beneficial for the table-prep formulas.}
 }
 \value{
 A \code{tbl_store} object that contains table-prep formulas.
@@ -25,16 +27,21 @@ A \code{tbl_store} object that contains table-prep formulas.
 It can be useful to set up all the data sources you need and just draw from
 them when necessary. This upfront configuration with \code{tbl_store()} lets us
 define the methods for obtaining tabular data from mixed sources (e.g.,
-database tables, tables generated from flat files, etc.) and provide names
-for these data preparation procedures. Then we have a convenient way to
-access the materialized tables with \code{\link[=tbl_get]{tbl_get()}}, or, the table-prep formulas
-with \code{\link[=tbl_source]{tbl_source()}}. Table-prep formulas can be as simple as getting a table
-from a location, or, it can involve as much mutation as is necessary (imagine
-procuring several mutated variations of the same source table, generating a
-table from multiple sources, or pre-filtering a database table according to
-the system time). Another nice aspect of organizing table-prep formulas in a
-single object is supplying it to the \code{tbl} argument of \code{\link[=create_agent]{create_agent()}} or
-\code{\link[=create_informant]{create_informant()}} via \code{$} notation (e.g, \verb{create_agent(tbl = <tbl_store>$<name>)}) or with \code{\link[=tbl_source]{tbl_source()}} (e.g., \verb{create_agent(tbl = ~ tbl_source("<name>", <tbl_store>))}).
+database tables, tables generated from flat files, etc.) and provide
+identifiers for these data preparation procedures.
+
+What results from this work is a convenient way to materialize tables with
+\code{\link[=tbl_get]{tbl_get()}}. We can also get any table-prep formula from the table store
+with \code{\link[=tbl_source]{tbl_source()}}. The content of a table-prep formulas can involve reading
+a table from a location, or, it can involve data transformation. One can
+imagine scenarios where we might (1) procure several mutated variations of
+the same source table, (2) generate a table using disparate data sources, or
+(3) filter the rows of a database table according to the system time. Another
+nice aspect of organizing table-prep formulas in a single object is supplying
+it to the \code{tbl} argument of \code{\link[=create_agent]{create_agent()}} or \code{\link[=create_informant]{create_informant()}} via \code{$}
+notation (e.g, \verb{create_agent(tbl = <tbl_store>$<name>)}) or with
+\code{\link[=tbl_source]{tbl_source()}} (e.g.,
+\verb{create_agent(tbl = ~ tbl_source("<name>", <tbl_store>))}).
 }
 \section{YAML}{
 

@@ -39,6 +39,76 @@
 #' [tbl_source()] (e.g.,
 #' `create_agent(tbl = ~ tbl_source("<name>", <tbl_store>))`).
 #' 
+#' @section Syntax:
+#' The table store provides a way to get the tables we need fairly easily. Think
+#' of an identifier for the table you'd like and then provide the code necessary
+#' to obtain that table. Then repeat as many times as you like!
+#'
+#' Here we'll define two tables that can be materialized later: `tbl_duckdb` (an
+#' in-memory DuckDB database table with **pointblank**'s `small_table` dataset)
+#' and `sml_table_high` (a filtered version of `tbl_duckdb`):
+#' 
+#' ```
+#' tbls_1 <-
+#'   tbl_store(
+#'     tbl_duckdb ~ 
+#'       db_tbl(
+#'         pointblank::small_table,
+#'         dbname = ":memory:",
+#'         dbtype = "duckdb"
+#'       ),
+#'     sml_table_high ~ 
+#'       db_tbl(
+#'         pointblank::small_table,
+#'         dbname = ":memory:",
+#'         dbtype = "duckdb"
+#'       ) %>%
+#'       dplyr::filter(f == "high")
+#'   )
+#' ```
+#' 
+#' It's good to check that the tables can be obtained without error. We can do
+#' this with [tbl_get()]:
+#' 
+#' ```
+#' tbl_get("tbl_duckdb", store = tbls_1)
+#' tbl_get("sml_table_high", store = tbls_1)
+#' ```
+#' 
+#' We can shorten the `tbl_store()` statement with some syntax that
+#' **pointblank** provides. The `sml_table_high` table-prep is simply a
+#' transformation of `tbl_duckdb`, so, we can use `{{ tbl_duckdb }}` in place of
+#' the repeated statement. Additionally, we can provide a `library()` call to
+#' the `.init` argument of `tbl_store()` so that **dplyr** is available (thus
+#' allowing us to use `filter(...)` instead of `dplyr::filter(...)`). Here is
+#' the revised `tbl_store()` call:
+#' 
+#' ```
+#' tbls_2 <- 
+#'   tbl_store(
+#'     tbl_duckdb ~ 
+#'       db_tbl(
+#'         pointblank::small_table,
+#'         dbname = ":memory:",
+#'         dbtype = "duckdb"
+#'       ),
+#'     sml_table_high ~ 
+#'       {{ tbl_duckdb }} %>%
+#'       filter(f == "high"),
+#'     .init = ~ library(tidyverse)
+#'   )
+#' ```
+#' 
+#' Checking again with [tbl_get()] should provide the same tables as before:
+#' 
+#' ```
+#' tbl_get("tbl_duckdb", store = tbls_2)
+#' tbl_get("sml_table_high", store = tbls_2)
+#' ```
+#' 
+#' This is a great way to make table-prep more concise, readable, and less
+#' prone to errors.
+#' 
 #' @section YAML:
 #' A **pointblank** table store can be written to YAML with [yaml_write()] and
 #' the resulting YAML can be used in several ways. The ideal scenario is to have

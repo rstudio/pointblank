@@ -176,10 +176,11 @@
 #'   statement that obtains a table (i.e., the table-prep formula). If the LHS
 #'   is omitted then an identifier will be generated for you.
 #' @param .list Allows for the use of a list as an input alternative to `...`.
-#' @param .init Optionally provide statements (in a one-sided formula) that
-#'   should initially be executed when materializing *any* of tables in the
-#'   table store. This is useful for inclusion of `library()` calls that can
-#'   be beneficial for the table-prep formulas.
+#' @param .init We can optionally provide an initialization statement (in a
+#'   one-sided formula) that should be executed whenever *any* of tables in the
+#'   table store are obtained. This is useful, for instance, for including a
+#'   `library()` call that can be executed before any table-prep formulas in
+#'   `...`.
 #' 
 #' @return A `tbl_store` object that contains table-prep formulas.
 #' 

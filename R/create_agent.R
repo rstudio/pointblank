@@ -86,7 +86,16 @@
 #'   actions = action_levels(
 #'     warn_at = 0.10,
 #'     stop_at = 0.25,
-#'     notify_at = 0.35
+#'     notify_at = 0.35,
+#'     fns = list(notify = ~ email_blast(
+#'       x,
+#'       to = "joe_public@example.com",
+#'       from = "pb_notif@example.com",
+#'       msg_subject = "Table Validation",
+#'       credentials = blastula::creds_key(
+#'         id = "smtp2go"
+#'       )
+#'     ))
 #'   ), 
 #'   end_fns = list(
 #'     ~ beepr::beep(2),
@@ -106,15 +115,21 @@
 #' locale: fr_CA
 #' actions:
 #'   warn_fraction: 0.1
-#' stop_fraction: 0.25
-#' notify_fraction: 0.35
+#'   stop_fraction: 0.25
+#'   notify_fraction: 0.35
+#'   fns:
+#'     notify: ~email_blast(x, to = "joe_public@example.com",
+#'       from = "pb_notif@example.com",
+#'       msg_subject = "Table Validation",
+#'       credentials = blastula::creds_key(id = "smtp2go"))
 #' end_fns:
 #' - ~beepr::beep(2)
 #' - ~Sys.sleep(1)
 #' embed_report: true
+#' steps: []
 #' ```
 #' 
-#' In practice, this block of YAML will be shorter since arguments with default
+#' In practice, this YAML file will be shorter since arguments with default
 #' values won't be written to YAML when using [yaml_write()] (though it is
 #' acceptable to include them with their default when generating the YAML by
 #' other means). The only requirement for writing the YAML representation of an

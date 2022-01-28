@@ -43,6 +43,66 @@ notation (e.g, \verb{create_agent(tbl = <tbl_store>$<name>)}) or with
 \code{\link[=tbl_source]{tbl_source()}} (e.g.,
 \verb{create_agent(tbl = ~ tbl_source("<name>", <tbl_store>))}).
 }
+\section{Syntax}{
+
+The table store provides a way to get the tables we need fairly easily. Think
+of an identifier for the table you'd like and then provide the code necessary
+to obtain that table. Then repeat as many times as you like!
+
+Here we'll define two tables that can be materialized later: \code{tbl_duckdb} (an
+in-memory DuckDB database table with \strong{pointblank}'s \code{small_table} dataset)
+and \code{sml_table_high} (a filtered version of \code{tbl_duckdb}):\preformatted{tbls_1 <-
+  tbl_store(
+    tbl_duckdb ~ 
+      db_tbl(
+        pointblank::small_table,
+        dbname = ":memory:",
+        dbtype = "duckdb"
+      ),
+    sml_table_high ~ 
+      db_tbl(
+        pointblank::small_table,
+        dbname = ":memory:",
+        dbtype = "duckdb"
+      ) \%>\%
+      dplyr::filter(f == "high")
+  )
+}
+
+It's good to check that the tables can be obtained without error. We can do
+this with \code{\link[=tbl_get]{tbl_get()}}:\preformatted{tbl_get("tbl_duckdb", store = tbls_1)
+tbl_get("sml_table_high", store = tbls_1)
+}
+
+We can shorten the \code{tbl_store()} statement with some syntax that
+\strong{pointblank} provides. The \code{sml_table_high} table-prep is simply a
+transformation of \code{tbl_duckdb}, so, we can use \code{{{ tbl_duckdb }}} in place of
+the repeated statement. Additionally, we can provide a \code{library()} call to
+the \code{.init} argument of \code{tbl_store()} so that \strong{dplyr} is available (thus
+allowing us to use \code{filter(...)} instead of \code{dplyr::filter(...)}). Here is
+the revised \code{tbl_store()} call:\preformatted{tbls_2 <- 
+  tbl_store(
+    tbl_duckdb ~ 
+      db_tbl(
+        pointblank::small_table,
+        dbname = ":memory:",
+        dbtype = "duckdb"
+      ),
+    sml_table_high ~ 
+      \{\{ tbl_duckdb \}\} \%>\%
+      filter(f == "high"),
+    .init = ~ library(tidyverse)
+  )
+}
+
+Checking again with \code{\link[=tbl_get]{tbl_get()}} should provide the same tables as before:\preformatted{tbl_get("tbl_duckdb", store = tbls_2)
+tbl_get("sml_table_high", store = tbls_2)
+}
+
+This is a great way to make table-prep more concise, readable, and less
+prone to errors.
+}
+
 \section{YAML}{
 
 A \strong{pointblank} table store can be written to YAML with \code{\link[=yaml_write]{yaml_write()}} and

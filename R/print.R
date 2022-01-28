@@ -751,6 +751,8 @@ print.tbl_store <- function(x, ...) {
   
   n_tbls <- length(tbl_names)
   
+  has_init_stmt <- !is.null(attr(x, which = "pb_init", exact = TRUE))
+  
   has_given_name <- 
     vapply(
       x,
@@ -789,6 +791,18 @@ print.tbl_store <- function(x, ...) {
     )
   }
   
+  if (has_init_stmt) {
+    
+    cli::cli_rule()
+    
+    init_stmt <- attr(x, which = "pb_init", exact = TRUE)
+    init_stmt <- capture_formula(init_stmt)[2]
+    
+    Sys.sleep(0.1)
+    
+    cli::cli_text(paste0("{.blue INIT} // ", init_stmt))
+  }
+  
   cli::cli_rule()
 }
 
@@ -807,6 +821,8 @@ knit_print.tbl_store <- function(x, ...) {
   tbl_names <- names(x)
   
   n_tbls <- length(tbl_names)
+  
+  has_init_stmt <- !is.null(attr(x, which = "pb_init", exact = TRUE))
   
   has_given_name <- 
     vapply(
@@ -841,6 +857,20 @@ knit_print.tbl_store <- function(x, ...) {
   
   top_rule <- "-- The `table_store` table-prep formulas"
   bottom_rule <- "----"
+  
+  if (has_init_stmt) {
+    
+    init_stmt <- attr(x, which = "pb_init", exact = TRUE)
+    init_stmt <- capture_formula(init_stmt)[2]
+    
+    Sys.sleep(0.1)
+    
+    tbl_store_lines <- 
+      paste(
+        tbl_store_lines,
+        paste0("\n", bottom_rule, "\nINIT // ", init_stmt)
+      )
+  }
   
   tbl_store_str <-
     glue::glue(

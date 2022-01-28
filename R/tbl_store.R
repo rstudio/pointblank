@@ -124,14 +124,17 @@
 #' # R statement for generating the "tbl_store.yml" file
 #' tbl_store(
 #'   tbl_duckdb ~ db_tbl(small_table, dbname = ":memory:", dbtype = "duckdb"),
-#'   sml_table_high ~ small_table %>% dplyr::filter(f == "high")
+#'   sml_table_high ~ small_table %>% dplyr::filter(f == "high"),
+#'   .init = ~ library(tidyverse)
 #' ) %>%
 #'   yaml_write()
 #' 
 #' # YAML representation ("tbl_store.yml")
+#' type: tbl_store
 #' tbls:
 #'   tbl_duckdb: ~ db_tbl(small_table, dbname = ":memory:", dbtype = "duckdb")
 #'   sml_table_high: ~ small_table %>% dplyr::filter(f == "high")
+#' init: ~library(tidyverse)
 #' ```
 #' 
 #' This is useful when you want to get fresh pulls of prepared data from a

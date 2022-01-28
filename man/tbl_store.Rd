@@ -4,15 +4,22 @@
 \alias{tbl_store}
 \title{Define a store of tables with table-prep formulas: a table store}
 \usage{
-tbl_store(..., .list = list2(...))
+tbl_store(..., .list = list2(...), .init = NULL)
 }
 \arguments{
 \item{...}{Expressions that contain table-prep formulas and table names for
 data retrieval. Two-sided formulas (e.g, \verb{<LHS> ~ <RHS>}) are to be used,
-where the left-hand side is a given name and the right-hand is the portion
-that is is used to obtain the table.}
+where the left-hand side is an identifier and the right-hand contains a
+statement that obtains a table (i.e., the table-prep formula). If the LHS
+is omitted then an identifier will be generated for you.}
 
 \item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
+
+\item{.init}{We can optionally provide an initialization statement (in a
+one-sided formula) that should be executed whenever \emph{any} of tables in the
+table store are obtained. This is useful, for instance, for including a
+\code{library()} call that can be executed before any table-prep formulas in
+\code{...}.}
 }
 \value{
 A \code{tbl_store} object that contains table-prep formulas.
@@ -21,17 +28,82 @@ A \code{tbl_store} object that contains table-prep formulas.
 It can be useful to set up all the data sources you need and just draw from
 them when necessary. This upfront configuration with \code{tbl_store()} lets us
 define the methods for obtaining tabular data from mixed sources (e.g.,
-database tables, tables generated from flat files, etc.) and provide names
-for these data preparation procedures. Then we have a convenient way to
-access the materialized tables with \code{\link[=tbl_get]{tbl_get()}}, or, the table-prep formulas
-with \code{\link[=tbl_source]{tbl_source()}}. Table-prep formulas can be as simple as getting a table
-from a location, or, it can involve as much mutation as is necessary (imagine
-procuring several mutated variations of the same source table, generating a
-table from multiple sources, or pre-filtering a database table according to
-the system time). Another nice aspect of organizing table-prep formulas in a
-single object is supplying it to the \code{tbl} argument of \code{\link[=create_agent]{create_agent()}} or
-\code{\link[=create_informant]{create_informant()}} via \code{$} notation (e.g, \verb{create_agent(tbl = <tbl_store>$<name>)}) or with \code{\link[=tbl_source]{tbl_source()}} (e.g., \verb{create_agent(tbl = ~ tbl_source("<name>", <tbl_store>))}).
+database tables, tables generated from flat files, etc.) and provide
+identifiers for these data preparation procedures.
+
+What results from this work is a convenient way to materialize tables with
+\code{\link[=tbl_get]{tbl_get()}}. We can also get any table-prep formula from the table store
+with \code{\link[=tbl_source]{tbl_source()}}. The content of a table-prep formulas can involve reading
+a table from a location, or, it can involve data transformation. One can
+imagine scenarios where we might (1) procure several mutated variations of
+the same source table, (2) generate a table using disparate data sources, or
+(3) filter the rows of a database table according to the system time. Another
+nice aspect of organizing table-prep formulas in a single object is supplying
+it to the \code{tbl} argument of \code{\link[=create_agent]{create_agent()}} or \code{\link[=create_informant]{create_informant()}} via \code{$}
+notation (e.g, \verb{create_agent(tbl = <tbl_store>$<name>)}) or with
+\code{\link[=tbl_source]{tbl_source()}} (e.g.,
+\verb{create_agent(tbl = ~ tbl_source("<name>", <tbl_store>))}).
 }
+\section{Syntax}{
+
+The table store provides a way to get the tables we need fairly easily. Think
+of an identifier for the table you'd like and then provide the code necessary
+to obtain that table. Then repeat as many times as you like!
+
+Here we'll define two tables that can be materialized later: \code{tbl_duckdb} (an
+in-memory DuckDB database table with \strong{pointblank}'s \code{small_table} dataset)
+and \code{sml_table_high} (a filtered version of \code{tbl_duckdb}):\preformatted{tbls_1 <-
+  tbl_store(
+    tbl_duckdb ~ 
+      db_tbl(
+        pointblank::small_table,
+        dbname = ":memory:",
+        dbtype = "duckdb"
+      ),
+    sml_table_high ~ 
+      db_tbl(
+        pointblank::small_table,
+        dbname = ":memory:",
+        dbtype = "duckdb"
+      ) \%>\%
+      dplyr::filter(f == "high")
+  )
+}
+
+It's good to check that the tables can be obtained without error. We can do
+this with \code{\link[=tbl_get]{tbl_get()}}:\preformatted{tbl_get("tbl_duckdb", store = tbls_1)
+tbl_get("sml_table_high", store = tbls_1)
+}
+
+We can shorten the \code{tbl_store()} statement with some syntax that
+\strong{pointblank} provides. The \code{sml_table_high} table-prep is simply a
+transformation of \code{tbl_duckdb}, so, we can use \code{{{ tbl_duckdb }}} in place of
+the repeated statement. Additionally, we can provide a \code{library()} call to
+the \code{.init} argument of \code{tbl_store()} so that \strong{dplyr} is available (thus
+allowing us to use \code{filter(...)} instead of \code{dplyr::filter(...)}). Here is
+the revised \code{tbl_store()} call:\preformatted{tbls_2 <- 
+  tbl_store(
+    tbl_duckdb ~ 
+      db_tbl(
+        pointblank::small_table,
+        dbname = ":memory:",
+        dbtype = "duckdb"
+      ),
+    sml_table_high ~ 
+      \{\{ tbl_duckdb \}\} \%>\%
+      filter(f == "high"),
+    .init = ~ library(tidyverse)
+  )
+}
+
+Checking again with \code{\link[=tbl_get]{tbl_get()}} should provide the same tables as before:\preformatted{tbl_get("tbl_duckdb", store = tbls_2)
+tbl_get("sml_table_high", store = tbls_2)
+}
+
+This is a great way to make table-prep more concise, readable, and less
+prone to errors.
+}
+
 \section{YAML}{
 
 A \strong{pointblank} table store can be written to YAML with \code{\link[=yaml_write]{yaml_write()}} and
@@ -45,14 +117,17 @@ written to YAML (if no filename is given then the YAML is written to
 \code{"tbl_store.yml"}).\preformatted{# R statement for generating the "tbl_store.yml" file
 tbl_store(
   tbl_duckdb ~ db_tbl(small_table, dbname = ":memory:", dbtype = "duckdb"),
-  sml_table_high ~ small_table \%>\% dplyr::filter(f == "high")
+  sml_table_high ~ small_table \%>\% dplyr::filter(f == "high"),
+  .init = ~ library(tidyverse)
 ) \%>\%
   yaml_write()
 
 # YAML representation ("tbl_store.yml")
+type: tbl_store
 tbls:
   tbl_duckdb: ~ db_tbl(small_table, dbname = ":memory:", dbtype = "duckdb")
   sml_table_high: ~ small_table \%>\% dplyr::filter(f == "high")
+init: ~library(tidyverse)
 }
 
 This is useful when you want to get fresh pulls of prepared data from a

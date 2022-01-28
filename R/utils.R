@@ -1066,16 +1066,25 @@ tidy_gsub <- function(x,
   gsub(pattern, replacement, x, fixed = fixed)
 }
 
-capture_formula <- function(formula, separate = TRUE) {
+capture_formula <- function(formula,
+                            separate = TRUE,
+                            remove_whitespace = TRUE,
+                            oneline = TRUE) {
   
   # TODO: add option to use `htmltools::htmlEscape()`
   
   attributes(formula) <- NULL
   
-  output <- utils::capture.output(formula) %>% 
-    gsub("^\\s+", "", .) %>%
-    paste(collapse = "")
-
+  output <- utils::capture.output(formula)
+  
+  if (remove_whitespace) {
+    output <- gsub("^\\s+", "", output)
+  }
+  
+  if (oneline) {
+    output <- paste(output, collapse = "")
+  }
+  
   if (separate) {
     if (grepl("^~", output)) {
       output <- c(NA_character_, output)

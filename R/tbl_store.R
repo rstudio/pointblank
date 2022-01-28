@@ -19,22 +19,95 @@
 
 #' Define a store of tables with table-prep formulas: a table store
 #' 
-#' @description 
+#' @description
 #' It can be useful to set up all the data sources you need and just draw from
 #' them when necessary. This upfront configuration with `tbl_store()` lets us
 #' define the methods for obtaining tabular data from mixed sources (e.g.,
-#' database tables, tables generated from flat files, etc.) and provide names
-#' for these data preparation procedures. Then we have a convenient way to
-#' access the materialized tables with [tbl_get()], or, the table-prep formulas
-#' with [tbl_source()]. Table-prep formulas can be as simple as getting a table
-#' from a location, or, it can involve as much mutation as is necessary (imagine
-#' procuring several mutated variations of the same source table, generating a
-#' table from multiple sources, or pre-filtering a database table according to
-#' the system time). Another nice aspect of organizing table-prep formulas in a
-#' single object is supplying it to the `tbl` argument of [create_agent()] or
-#' [create_informant()] via `$` notation (e.g, `create_agent(tbl =
-#' <tbl_store>$<name>)`) or with [tbl_source()] (e.g., `create_agent(tbl = ~
-#' tbl_source("<name>", <tbl_store>))`).
+#' database tables, tables generated from flat files, etc.) and provide
+#' identifiers for these data preparation procedures.
+#' 
+#' What results from this work is a convenient way to materialize tables with
+#' [tbl_get()]. We can also get any table-prep formula from the table store
+#' with [tbl_source()]. The content of a table-prep formulas can involve reading
+#' a table from a location, or, it can involve data transformation. One can
+#' imagine scenarios where we might (1) procure several mutated variations of
+#' the same source table, (2) generate a table using disparate data sources, or
+#' (3) filter the rows of a database table according to the system time. Another
+#' nice aspect of organizing table-prep formulas in a single object is supplying
+#' it to the `tbl` argument of [create_agent()] or [create_informant()] via `$`
+#' notation (e.g, `create_agent(tbl = <tbl_store>$<name>)`) or with
+#' [tbl_source()] (e.g.,
+#' `create_agent(tbl = ~ tbl_source("<name>", <tbl_store>))`).
+#' 
+#' @section Syntax:
+#' The table store provides a way to get the tables we need fairly easily. Think
+#' of an identifier for the table you'd like and then provide the code necessary
+#' to obtain that table. Then repeat as many times as you like!
+#'
+#' Here we'll define two tables that can be materialized later: `tbl_duckdb` (an
+#' in-memory DuckDB database table with **pointblank**'s `small_table` dataset)
+#' and `sml_table_high` (a filtered version of `tbl_duckdb`):
+#' 
+#' ```
+#' tbls_1 <-
+#'   tbl_store(
+#'     tbl_duckdb ~ 
+#'       db_tbl(
+#'         pointblank::small_table,
+#'         dbname = ":memory:",
+#'         dbtype = "duckdb"
+#'       ),
+#'     sml_table_high ~ 
+#'       db_tbl(
+#'         pointblank::small_table,
+#'         dbname = ":memory:",
+#'         dbtype = "duckdb"
+#'       ) %>%
+#'       dplyr::filter(f == "high")
+#'   )
+#' ```
+#' 
+#' It's good to check that the tables can be obtained without error. We can do
+#' this with [tbl_get()]:
+#' 
+#' ```
+#' tbl_get("tbl_duckdb", store = tbls_1)
+#' tbl_get("sml_table_high", store = tbls_1)
+#' ```
+#' 
+#' We can shorten the `tbl_store()` statement with some syntax that
+#' **pointblank** provides. The `sml_table_high` table-prep is simply a
+#' transformation of `tbl_duckdb`, so, we can use `{{ tbl_duckdb }}` in place of
+#' the repeated statement. Additionally, we can provide a `library()` call to
+#' the `.init` argument of `tbl_store()` so that **dplyr** is available (thus
+#' allowing us to use `filter(...)` instead of `dplyr::filter(...)`). Here is
+#' the revised `tbl_store()` call:
+#' 
+#' ```
+#' tbls_2 <- 
+#'   tbl_store(
+#'     tbl_duckdb ~ 
+#'       db_tbl(
+#'         pointblank::small_table,
+#'         dbname = ":memory:",
+#'         dbtype = "duckdb"
+#'       ),
+#'     sml_table_high ~ 
+#'       {{ tbl_duckdb }} %>%
+#'       filter(f == "high"),
+#'     .init = ~ library(tidyverse)
+#'   )
+#' ```
+#' 
+#' Checking again with [tbl_get()] should provide the same tables as before:
+#' 
+#' ```
+#' tbl_get("tbl_duckdb", store = tbls_2)
+#' tbl_get("sml_table_high", store = tbls_2)
+#' ```
+#' 
+#' This is a great way to make table-prep more concise, readable, and less
+#' prone to errors.
 #' 
 #' @section YAML:
 #' A **pointblank** table store can be written to YAML with [yaml_write()] and
@@ -51,14 +124,17 @@
 #' # R statement for generating the "tbl_store.yml" file
 #' tbl_store(
 #'   tbl_duckdb ~ db_tbl(small_table, dbname = ":memory:", dbtype = "duckdb"),
-#'   sml_table_high ~ small_table %>% dplyr::filter(f == "high")
+#'   sml_table_high ~ small_table %>% dplyr::filter(f == "high"),
+#'   .init = ~ library(tidyverse)
 #' ) %>%
 #'   yaml_write()
 #' 
 #' # YAML representation ("tbl_store.yml")
+#' type: tbl_store
 #' tbls:
 #'   tbl_duckdb: ~ db_tbl(small_table, dbname = ":memory:", dbtype = "duckdb")
 #'   sml_table_high: ~ small_table %>% dplyr::filter(f == "high")
+#' init: ~library(tidyverse)
 #' ```
 #' 
 #' This is useful when you want to get fresh pulls of prepared data from a
@@ -96,9 +172,15 @@
 #' 
 #' @param ... Expressions that contain table-prep formulas and table names for
 #'   data retrieval. Two-sided formulas (e.g, `<LHS> ~ <RHS>`) are to be used,
-#'   where the left-hand side is a given name and the right-hand is the portion
-#'   that is is used to obtain the table.
+#'   where the left-hand side is an identifier and the right-hand contains a
+#'   statement that obtains a table (i.e., the table-prep formula). If the LHS
+#'   is omitted then an identifier will be generated for you.
 #' @param .list Allows for the use of a list as an input alternative to `...`.
+#' @param .init We can optionally provide an initialization statement (in a
+#'   one-sided formula) that should be executed whenever *any* of tables in the
+#'   table store are obtained. This is useful, for instance, for including a
+#'   `library()` call that can be executed before any table-prep formulas in
+#'   `...`.
 #' 
 #' @return A `tbl_store` object that contains table-prep formulas.
 #' 
@@ -204,7 +286,8 @@
 #' 
 #' @export
 tbl_store <- function(...,
-                      .list = list2(...)) {
+                      .list = list2(...),
+                      .init = NULL) {
   
   # Collect a fully or partially named list of tables
   tbl_list <- .list
@@ -218,6 +301,12 @@ tbl_store <- function(...,
         call. = FALSE
       )
     }
+  }
+  
+  # If there is anything provided for `.init`, put that 
+  # into an attribute of `tbl_list`
+  if (!is.null(.init)) {
+    attr(tbl_list, which = "pb_init") <- .init
   }
   
   # Get names for every entry in the list
@@ -410,7 +499,59 @@ tbl_source <- function(tbl,
     tbl_entry <- tbl
   }
   
+  tbl_entry_str <- capture_formula(formula = tbl_entry)[2]
+  
+  Sys.sleep(0.25)
+  
+  this_entry_idx <- which(names(store) == tbl)
+
+  if (has_substitutions(tbl_entry_str)) {
+    
+    if (this_entry_idx == 1) {
+      stop(
+        "There cannot be a substitution with other table-prep formulas since ",
+        "this is the first entry.",
+        call. = FALSE
+      )
+    }
+    
+    prev_tbl_entries <- names(store)[1:(this_entry_idx - 1)]
+    
+    # Make substitutions where specified in `tbl_entry_str`; use only
+    # previous entries to perform the replacement
+    for (i in seq_along(prev_tbl_entries)) {
+      
+      pattern <- paste0("\\{\\{\\s*?", prev_tbl_entries[i], "\\s*?\\}\\}")
+      
+      replacement <- 
+        gsub(
+          "^~\\s+", "",
+          capture_formula(formula = store[[prev_tbl_entries[i]]])[2]
+        )
+      
+      Sys.sleep(0.25)
+      
+      tbl_entry_str <-
+        gsub(pattern = pattern, replacement = replacement, tbl_entry_str)
+      
+    }
+  }
+  
+  tbl_entry <- 
+    tbl_store(
+      .list = list(
+        stats::as.formula(
+          paste0(names(store)[this_entry_idx], " ", tbl_entry_str)
+        )
+      )
+    )[[1]]
+  
   tbl_entry
+}
+
+has_substitutions <- function(x) {
+
+  grepl("\\{\\{\\s*?[a-zA-Z0-9_\\.]*?\\s*?\\}\\}", x)
 }
 
 #' Obtain a materialized table via a table store
@@ -498,6 +639,13 @@ tbl_get <- function(tbl,
   # Get the table-prep formula with the `tbl_source()` function
   tbl_entry <- tbl_source(tbl = tbl, store = store)
   
+  if (!is.null(attr(store, which = "pb_init", exact = TRUE))) {
+    
+    init_stmt <- attr(store, which = "pb_init", exact = TRUE)
+    
+    rlang::eval_tidy(rlang::f_rhs(init_stmt))
+  }
+
   # Obtain the table object
   tbl_obj <- 
     rlang::f_rhs(tbl_entry) %>%
@@ -534,12 +682,19 @@ yaml_read_tbl_store <- function(filename) {
   
   statements <- paste(table_names, table_formulas)
   
+  # If there is an init statement, obtain that
+  if ("init" %in% names(y)) {
+    init <- y$init
+  } else {
+    init <- NULL
+  }
+  
   # Generate the expression string
   expr_str <-
     paste0(
       "tbl_store(\n",
-      paste(paste0("  ", statements), collapse = ",\n"), "\n",
-      ")"
+      paste(paste0("  ", statements), collapse = ",\n"),
+      if (is.null(init)) "\n)" else paste0(",\n  .init = ", init, "\n)")
     )
 
   tbl_store <- 

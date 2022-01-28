@@ -1308,8 +1308,22 @@ as_tbl_store_yaml_list <- function(tbl_store) {
   
   lst_tbls <- list(tbls = tbl_list)
   
+  if (!is.null(attr(tbl_store, which = "pb_init", exact = TRUE))) {
+    
+    init_stmt <- attr(tbl_store, which = "pb_init", exact = TRUE)
+    init_stmt <- capture_formula(init_stmt)[2]
+    
+    Sys.sleep(0.1)
+    
+    lst_init <- list(init = init_stmt)
+    
+  } else {
+    lst_init <- NULL
+  }
+  
   c(
     type = "tbl_store",           # YAML type: `tbl_store`
-    lst_tbls                      # table store list of table-prep formulas
+    lst_tbls,                     # table store list of table-prep formulas
+    lst_init                      # initialization statement
   )
 }

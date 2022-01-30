@@ -92,6 +92,23 @@ the \emph{agent} has intel. Calling the \emph{agent} itself will result in a rep
 table. This reporting of the interrogation can also be accessed with the
 \code{\link[=get_agent_report]{get_agent_report()}} function, where there are more reporting options.
 }
+\section{The Agent Report}{
+
+While printing an \emph{agent} (a \code{ptblank_agent} object) will display its
+reporting in the Viewer, we can alternatively use the \code{\link[=get_agent_report]{get_agent_report()}} to
+take advantage of other options (e.g., overriding the language, modifying the
+arrangement of report rows, etc.), and to return the report as independent
+objects. For example, with the \code{display_table = TRUE} option (the default),
+\code{\link[=get_agent_report]{get_agent_report()}} will return a \code{ptblank_agent_report} object. If
+\code{display_table} is set to \code{FALSE}, we'll get a data frame back instead.
+
+Exporting the report as standalone HTML file can be accomplished by using the
+\code{\link[=export_report]{export_report()}} function. This function can accept either the
+\code{ptblank_agent} object or the \code{ptblank_agent_report} as input. Each HTML
+document written to disk in this way is self-contained and easily viewable in
+a web browser.
+}
+
 \section{Data Products Obtained from an Agent}{
 
 A very detailed list object, known as an x-list, can be obtained by using the
@@ -117,14 +134,6 @@ If we just need to know whether all validations completely passed (i.e., all
 steps had no failing test units), the \code{\link[=all_passed]{all_passed()}} function could be used
 on the \emph{agent}. However, in practice, it's not often the case that all data
 validation steps are free from any failing units.
-
-While printing an \emph{agent} will display the \emph{agent} report in the Viewer, we
-can alternatively use the \code{\link[=get_agent_report]{get_agent_report()}} to take advantage of other
-options (e.g., overriding the language, modifying the arrangement of report
-rows, etc.), and to return the report as independent objects. For example,
-with the \code{display_table = TRUE} option (the default), \code{\link[=get_agent_report]{get_agent_report()}}
-will return a \strong{gt} table object (\code{"gt_tbl"}). If \code{display_table} is set to
-\code{FALSE}, we'll get a data frame back instead.
 }
 
 \section{YAML}{

@@ -81,8 +81,10 @@ generate useful reporting information for assessing the level of data quality
 for the target table. We can supply as many validation functions as the user
 wishes to write, thereby increasing the level of validation coverage for that
 table. The \emph{agent} assigned by the \code{create_agent()} call takes validation
-functions, which expand to validation steps (each one is numbered). This
-process is known as developing a \emph{validation plan}.
+functions (e.g., \code{\link[=col_vals_between]{col_vals_between()}}, \code{\link[=rows_distinct]{rows_distinct()}}, etc.), which
+translate to discrete validation steps (each one is numbered and will later
+provide its own set of results). This process is known as developing a
+\emph{validation plan}.
 
 The validation functions, when called on an \emph{agent}, are merely instructions
 up to the point the \code{\link[=interrogate]{interrogate()}} function is called. That kicks off the
@@ -92,6 +94,44 @@ the \emph{agent} has intel. Calling the \emph{agent} itself will result in a rep
 table. This reporting of the interrogation can also be accessed with the
 \code{\link[=get_agent_report]{get_agent_report()}} function, where there are more reporting options.
 }
+\section{The Use of an Agent for Validation Is Just One Option of Several}{
+
+There are a few validation workflows and using an \emph{agent} is the one that
+provides the most options. It is probably the best choice for assessing the
+state of data quality since it yields detailed reporting, has options for
+further exploration of root causes, and allows for granular definition of
+actions to be taken based on the severity of validation failures (e.g.,
+emailing, logging, etc.).
+
+Different situations, however, call for different validation workflows. You
+use validation functions (the same ones you would with an \emph{agent}) directly
+on the data. This acts as a sort of data filter in that the input table will
+become output data (without modification), but there may be warnings, errors,
+or other side effects that you can define if validation fails. Basically,
+instead of this\preformatted{create_agent(tbl = small_table) \%>\% rows_distinct() \%>\% interrogate()
+}
+
+you would use this:\preformatted{small_table \%>\% rows_distinct()
+}
+
+This results in an error (with the default failure threshold settings),
+displaying the reason for the error in the console. Notably, the data is not
+passed though.
+
+We can use variants of the validation functions, the \emph{test} (\verb{test_*()}) and
+\emph{expectation} (\verb{expect_*()}) versions, directly on the data for different
+workflows. The first returns to us a logical value. So this\preformatted{small_table \%>\% test_rows_distinct()
+}
+
+returns \code{FALSE} instead of an error.
+
+In a unit testing scenario, we can use \emph{expectation} functions exactly as we
+would with \strong{testthat}'s library of \verb{expect_*()} functions:\preformatted{small_table \%>\% expect_rows_distinct()
+}
+
+This test of \code{small_table} would be counted as a failure.
+}
+
 \section{The Agent Report}{
 
 While printing an \emph{agent} (a \code{ptblank_agent} object) will display its

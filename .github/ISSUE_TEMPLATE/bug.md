@@ -8,7 +8,7 @@ assignees: rich-iannone
 
 ## Prework
 
-* [ ] Read and agree to the [code of conduct](https://www.contributor-covenant.org/version/2/0/code_of_conduct/) and [contributing guidelines](https://github.com/rich-iannone/pointblank/blob/master/.github/CONTRIBUTING.md).
+* [ ] Read and agree to the [code of conduct](https://www.contributor-covenant.org/version/2/0/code_of_conduct/) and [contributing guidelines](https://github.com/rich-iannone/pointblank/blob/main/.github/CONTRIBUTING.md).
 * [ ] If there is [already a relevant issue](https://github.com/rich-iannone/pointblank/issues), whether open or closed, comment on the existing thread instead of posting a new issue.
 * [ ] Post a [minimal reproducible example](https://www.tidyverse.org/help/) so the maintainer can troubleshoot the problems you identify. A reproducible example is:
     * [ ] **Runnable**: post enough R code and data so any onlooker can create the error on their own computer.
@@ -32,4 +32,4 @@ What should have happened? Please be as specific as possible.
 
 ## Session info
 
-End the reproducible example with a call to `sessionInfo()` in the same session (e.g. `reprex(si = TRUE)`) and include the output.
+End the reproducible example with a call to `sessionInfo()` in the same session (e.g. `reprex(session_info = TRUE)`) and include the output.

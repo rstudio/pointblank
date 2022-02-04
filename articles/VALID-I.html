@@ -101,90 +101,162 @@
     
     
 <p><img src="images/VALID-I.svg" width="100%"></p>
-<p>When trying to assess the state of data quality for tabular data, we want to perform a full accounting of assertions on the data without stopping anywhere in the interrogation of the data. We use an object called an <em>agent</em> to collect our validation instructions, perform the interrogation, and then serve as an artifact for reporting or further analysis. We give that agent the name or a function that retrieves the target table. The types of data tables that can be used include data frames, tibbles, database tables (<code>tbl_dbi</code>), and Spark DataFrames (<code>tbl_spark</code>).</p>
+<p>When trying to assess the state of data quality for tabular data, we
+want to perform a full accounting of assertions on the data without
+stopping anywhere in the interrogation of the data. We use an object
+called an <em>agent</em> to collect our validation instructions, perform
+the interrogation, and then serve as an artifact for reporting or
+further analysis. We give that agent the name or a function that
+retrieves the target table. The types of data tables that can be used
+include data frames, tibbles, database tables (<code>tbl_dbi</code>),
+and Spark DataFrames (<code>tbl_spark</code>).</p>
 <div class="section level2">
-<h2 id="the-elements-of-this-workflow-an-agent-validation-functions-and-interrogate">The Elements of this Workflow: an <em>agent</em>, validation functions, and <code>interrogate()</code><a class="anchor" aria-label="anchor" href="#the-elements-of-this-workflow-an-agent-validation-functions-and-interrogate"></a>
+<h2 id="the-elements-of-this-workflow-an-agent-validation-functions-and-interrogate">The Elements of this Workflow: an <em>agent</em>, validation
+functions, and <code>interrogate()</code><a class="anchor" aria-label="anchor" href="#the-elements-of-this-workflow-an-agent-validation-functions-and-interrogate"></a>
 </h2>
-<p>The <em>agent</em> that we need for this workflow is created with the <code><a href="../reference/create_agent.html">create_agent()</a></code> function. An agent can handle one target table at any given time and the <code>tbl</code> argument is where the target is specified. We can supply the input table directly to the <em>agent</em> by giving <code>tbl</code> the table object. Alternatively, we can make it such that the table is only read in at interrogation-time. This is useful in situations where we might deploy an agent from a YAML file. This ‘lazy reading’ of a target table can be accomplished in two ways: (1) using a ‘table-prep formula’, which is a one-sided <strong>R</strong> formula expression (e.g., <code>~ &lt;table reading code&gt;</code>), or (2) providing a function (e.g., <code>function() { &lt;table reading code&gt; }</code>).</p>
-<p>The <em>agent</em> needs directives on what to do with the table, so, we provide validation functions. Some check for the existence or type of column (<code><a href="../reference/col_exists.html">col_exists()</a></code> or the group of <code>col_is_*()</code> functions). Others check each cell in a column for satisfying a specific condition (the <code>col_vals_*()</code> functions). We can use as many of these as necessary for satisfactory validation testing of the table in question. There are certainly quite a few of them, so here’s a list of the validation functions with a questioning phrase for each function’s purpose:</p>
+<p>The <em>agent</em> that we need for this workflow is created with the
+<code><a href="../reference/create_agent.html">create_agent()</a></code> function. An agent can handle one target
+table at any given time and the <code>tbl</code> argument is where the
+target is specified. We can supply the input table directly to the
+<em>agent</em> by giving <code>tbl</code> the table object.
+Alternatively, we can make it such that the table is only read in at
+interrogation-time. This is useful in situations where we might deploy
+an agent from a YAML file. This ‘lazy reading’ of a target table can be
+accomplished in two ways: (1) using a ‘table-prep formula’, which is a
+one-sided <strong>R</strong> formula expression (e.g., <code>~ &lt;table
+reading code&gt;</code>), or (2) providing a function (e.g.,
+<code>function() { &lt;table reading code&gt; }</code>).</p>
+<p>The <em>agent</em> needs directives on what to do with the table, so,
+we provide validation functions. Some check for the existence or type of
+column (<code><a href="../reference/col_exists.html">col_exists()</a></code> or the group of
+<code>col_is_*()</code> functions). Others check each cell in a column
+for satisfying a specific condition (the <code>col_vals_*()</code>
+functions). We can use as many of these as necessary for satisfactory
+validation testing of the table in question. There are certainly quite a
+few of them, so here’s a list of the validation functions with a
+questioning phrase for each function’s purpose:</p>
 <ul>
 <li>
-<code><a href="../reference/col_vals_lt.html">col_vals_lt()</a></code>: Are column data less than a specified value?</li>
+<code><a href="../reference/col_vals_lt.html">col_vals_lt()</a></code>: Are column data less than a specified
+value?</li>
 <li>
-<code><a href="../reference/col_vals_lte.html">col_vals_lte()</a></code>: Are column data less than or equal to a specified value?</li>
+<code><a href="../reference/col_vals_lte.html">col_vals_lte()</a></code>: Are column data less than or equal to a
+specified value?</li>
 <li>
-<code><a href="../reference/col_vals_equal.html">col_vals_equal()</a></code>: Are column data equal to a specified value?</li>
+<code><a href="../reference/col_vals_equal.html">col_vals_equal()</a></code>: Are column data equal to a specified
+value?</li>
 <li>
-<code><a href="../reference/col_vals_not_equal.html">col_vals_not_equal()</a></code>: Are column data not equal to a specified value?</li>
+<code><a href="../reference/col_vals_not_equal.html">col_vals_not_equal()</a></code>: Are column data not equal to a
+specified value?</li>
 <li>
-<code><a href="../reference/col_vals_gte.html">col_vals_gte()</a></code>: Are column data greater than or equal to a specified value?</li>
+<code><a href="../reference/col_vals_gte.html">col_vals_gte()</a></code>: Are column data greater than or equal
+to a specified value?</li>
 <li>
-<code><a href="../reference/col_vals_gt.html">col_vals_gt()</a></code>: Are column data greater than a specified value?</li>
+<code><a href="../reference/col_vals_gt.html">col_vals_gt()</a></code>: Are column data greater than a specified
+value?</li>
 <li>
-<code><a href="../reference/col_vals_between.html">col_vals_between()</a></code>: Are column data between two specified values?</li>
+<code><a href="../reference/col_vals_between.html">col_vals_between()</a></code>: Are column data between two
+specified values?</li>
 <li>
-<code><a href="../reference/col_vals_not_between.html">col_vals_not_between()</a></code>: Are column data not between two specified values?</li>
+<code><a href="../reference/col_vals_not_between.html">col_vals_not_between()</a></code>: Are column data not between two
+specified values?</li>
 <li>
-<code><a href="../reference/col_vals_in_set.html">col_vals_in_set()</a></code>: Are column data part of a specified set of values?</li>
+<code><a href="../reference/col_vals_in_set.html">col_vals_in_set()</a></code>: Are column data part of a specified
+set of values?</li>
 <li>
-<code><a href="../reference/col_vals_not_in_set.html">col_vals_not_in_set()</a></code>: Are data not part of a specified set of values?</li>
+<code><a href="../reference/col_vals_not_in_set.html">col_vals_not_in_set()</a></code>: Are data not part of a specified
+set of values?</li>
 <li>
-<code><a href="../reference/col_vals_make_set.html">col_vals_make_set()</a></code>: Is a set of values entirely accounted for in a column of values?</li>
+<code><a href="../reference/col_vals_make_set.html">col_vals_make_set()</a></code>: Is a set of values entirely
+accounted for in a column of values?</li>
 <li>
-<code><a href="../reference/col_vals_make_subset.html">col_vals_make_subset()</a></code>: Is a set of values a subset of a column of values?</li>
+<code><a href="../reference/col_vals_make_subset.html">col_vals_make_subset()</a></code>: Is a set of values a subset of
+a column of values?</li>
 <li>
-<code><a href="../reference/col_vals_increasing.html">col_vals_increasing()</a></code>: Are column data increasing by row?</li>
+<code><a href="../reference/col_vals_increasing.html">col_vals_increasing()</a></code>: Are column data increasing by
+row?</li>
 <li>
-<code><a href="../reference/col_vals_decreasing.html">col_vals_decreasing()</a></code>: Are column data decreasing by row?</li>
+<code><a href="../reference/col_vals_decreasing.html">col_vals_decreasing()</a></code>: Are column data decreasing by
+row?</li>
 <li>
-<code><a href="../reference/col_vals_null.html">col_vals_null()</a></code>: Are column data <code>NULL</code>/<code>NA</code>?</li>
+<code><a href="../reference/col_vals_null.html">col_vals_null()</a></code>: Are column data
+<code>NULL</code>/<code>NA</code>?</li>
 <li>
-<code><a href="../reference/col_vals_not_null.html">col_vals_not_null()</a></code>: Are column data not <code>NULL</code>/<code>NA</code>?</li>
+<code><a href="../reference/col_vals_not_null.html">col_vals_not_null()</a></code>: Are column data not
+<code>NULL</code>/<code>NA</code>?</li>
 <li>
-<code><a href="../reference/col_vals_regex.html">col_vals_regex()</a></code>: Do strings in column data match a regex pattern?</li>
+<code><a href="../reference/col_vals_regex.html">col_vals_regex()</a></code>: Do strings in column data match a
+regex pattern?</li>
 <li>
-<code><a href="../reference/col_vals_within_spec.html">col_vals_within_spec()</a></code>: Do values in column data fit within a specification?</li>
+<code><a href="../reference/col_vals_within_spec.html">col_vals_within_spec()</a></code>: Do values in column data fit
+within a specification?</li>
 <li>
-<code><a href="../reference/col_vals_expr.html">col_vals_expr()</a></code>: Do column data agree with a predicate expression?</li>
+<code><a href="../reference/col_vals_expr.html">col_vals_expr()</a></code>: Do column data agree with a predicate
+expression?</li>
 <li>
 <code><a href="../reference/rows_distinct.html">rows_distinct()</a></code>: Are row data distinct?</li>
 <li>
 <code><a href="../reference/rows_complete.html">rows_complete()</a></code>: Are row data complete?</li>
 <li>
-<code><a href="../reference/col_is_character.html">col_is_character()</a></code>: Do the columns contain character/string data?</li>
+<code><a href="../reference/col_is_character.html">col_is_character()</a></code>: Do the columns contain
+character/string data?</li>
 <li>
-<code><a href="../reference/col_is_numeric.html">col_is_numeric()</a></code>: Do the columns contain numeric values?</li>
+<code><a href="../reference/col_is_numeric.html">col_is_numeric()</a></code>: Do the columns contain numeric
+values?</li>
 <li>
-<code><a href="../reference/col_is_integer.html">col_is_integer()</a></code>: Do the columns contain integer values?</li>
+<code><a href="../reference/col_is_integer.html">col_is_integer()</a></code>: Do the columns contain integer
+values?</li>
 <li>
-<code><a href="../reference/col_is_logical.html">col_is_logical()</a></code>: Do the columns contain logical values?</li>
+<code><a href="../reference/col_is_logical.html">col_is_logical()</a></code>: Do the columns contain logical
+values?</li>
 <li>
-<code><a href="../reference/col_is_date.html">col_is_date()</a></code>: Do the columns contain R <code>Date</code> objects?</li>
+<code><a href="../reference/col_is_date.html">col_is_date()</a></code>: Do the columns contain R
+<code>Date</code> objects?</li>
 <li>
-<code><a href="../reference/col_is_posix.html">col_is_posix()</a></code>: Do the columns contain <code>POSIXct</code> dates?</li>
+<code><a href="../reference/col_is_posix.html">col_is_posix()</a></code>: Do the columns contain
+<code>POSIXct</code> dates?</li>
 <li>
-<code><a href="../reference/col_is_factor.html">col_is_factor()</a></code>: Do the columns contain R <code>factor</code> objects?</li>
+<code><a href="../reference/col_is_factor.html">col_is_factor()</a></code>: Do the columns contain R
+<code>factor</code> objects?</li>
 <li>
-<code><a href="../reference/col_exists.html">col_exists()</a></code>: Do one or more columns actually exist?</li>
+<code><a href="../reference/col_exists.html">col_exists()</a></code>: Do one or more columns actually
+exist?</li>
 <li>
-<code><a href="../reference/col_schema_match.html">col_schema_match()</a></code>: Do columns in the table (and their types) match a predefined schema?</li>
+<code><a href="../reference/col_schema_match.html">col_schema_match()</a></code>: Do columns in the table (and their
+types) match a predefined schema?</li>
 <li>
-<code><a href="../reference/row_count_match.html">row_count_match()</a></code>: Does the row count match that of a different table?</li>
+<code><a href="../reference/row_count_match.html">row_count_match()</a></code>: Does the row count match that of a
+different table?</li>
 <li>
-<code><a href="../reference/tbl_match.html">tbl_match()</a></code>: Does the target table match a comparison table?</li>
+<code><a href="../reference/tbl_match.html">tbl_match()</a></code>: Does the target table match a comparison
+table?</li>
 <li>
-<code><a href="../reference/conjointly.html">conjointly()</a></code>: Do multiple rowwise validations result in joint validity?</li>
+<code><a href="../reference/conjointly.html">conjointly()</a></code>: Do multiple rowwise validations result in
+joint validity?</li>
 <li>
-<code><a href="../reference/serially.html">serially()</a></code>: Run several tests and a final validation in a serial manner</li>
+<code><a href="../reference/serially.html">serially()</a></code>: Run several tests and a final validation in
+a serial manner</li>
 <li>
-<code><a href="../reference/specially.html">specially()</a></code>: Perform a specialized validation with a user-defined function</li>
+<code><a href="../reference/specially.html">specially()</a></code>: Perform a specialized validation with a
+user-defined function</li>
 </ul>
-<p>The final function that needs to be called is the <code><a href="../reference/interrogate.html">interrogate()</a></code> function. The validation functions, when called on an <em>agent</em> object, don’t act on the target table until <code><a href="../reference/interrogate.html">interrogate()</a></code> is used. In fact, until interrogation, the usage of validation functions serves as instructions (building up an interrogation plan). During the interrogation phase (i.e., when calling <code><a href="../reference/interrogate.html">interrogate()</a></code>) those instructions turn into actions, with the <em>agent</em> then carrying out all the validation steps of the interrogation plan.</p>
+<p>The final function that needs to be called is the
+<code><a href="../reference/interrogate.html">interrogate()</a></code> function. The validation functions, when
+called on an <em>agent</em> object, don’t act on the target table until
+<code><a href="../reference/interrogate.html">interrogate()</a></code> is used. In fact, until interrogation, the
+usage of validation functions serves as instructions (building up an
+interrogation plan). During the interrogation phase (i.e., when calling
+<code><a href="../reference/interrogate.html">interrogate()</a></code>) those instructions turn into actions, with
+the <em>agent</em> then carrying out all the validation steps of the
+interrogation plan.</p>
 </div>
 <div class="section level2">
 <h2 id="a-simple-example-with-the-basics">A Simple Example with the Basics<a class="anchor" aria-label="anchor" href="#a-simple-example-with-the-basics"></a>
 </h2>
-<p>For our examples going forward, we’ll use the <code>small_table</code> dataset. It’s included in the <strong>pointblank</strong> package. It isn’t very large, which makes it great for simple examples. Here it is in its entirety:</p>
+<p>For our examples going forward, we’ll use the
+<code>small_table</code> dataset. It’s included in the
+<strong>pointblank</strong> package. It isn’t very large, which makes it
+great for simple examples. Here it is in its entirety:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">small_table</span></code></pre></div>
 <pre><code><span class="co">## <span style="color: #949494;"># A tibble: 13 × 8</span></span>
@@ -206,14 +278,20 @@
 <p>What follows is a very simple validation plan. We will test that:</p>
 <ol style="list-style-type: decimal">
 <li>the <code>date_time</code> column is indeed a date-time column</li>
-<li>column <code>f</code> only has the values <code>"low"</code>, <code>"mid"</code>, and <code>"high"</code>
+<li>column <code>f</code> only has the values <code>"low"</code>,
+<code>"mid"</code>, and <code>"high"</code>
 </li>
-<li>the values in column <code>a</code> are all less than <code>10</code>
+<li>the values in column <code>a</code> are all less than
+<code>10</code>
 </li>
-<li>The strings in column <code>b</code> fit a particular regex pattern (<code>"^[0-9]-[a-z]{3}-[0-9]{3}$"</code>)</li>
-<li>column <code>d</code> has values in the range of <code>0</code> to <code>5000</code> (this is not entirely true!)</li>
+<li>The strings in column <code>b</code> fit a particular regex pattern
+(<code>"^[0-9]-[a-z]{3}-[0-9]{3}$"</code>)</li>
+<li>column <code>d</code> has values in the range of <code>0</code> to
+<code>5000</code> (this is not entirely true!)</li>
 </ol>
-<p>This is how the validation plan is written and interrogated. When carried out interactively, you’ll get status messages that describe how the interrogation is going.</p>
+<p>This is how the validation plan is written and interrogated. When
+carried out interactively, you’ll get status messages that describe how
+the interrogation is going.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">agent</span> <span class="op">&lt;-</span> 
   <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>
@@ -235,36 +313,93 @@
 ✓ Step 5: OK.
 
 ── Interrogation Completed ─────────────────────────────────────────────────</code></pre>
-<p>The five <code>OK</code> messages means that all of the individual validations in each of those five validation steps passed within the failure threshold levels. Since failure thresholds actually weren’t set, these steps will always display <code>OK</code> unless an evaluation error occurred (e.g., attempting to interrogate a column that isn’t present in the target table). Printing the <code>agent</code> object gives a step-by-step breakdown of the interrogation process.</p>
+<p>The five <code>OK</code> messages means that all of the individual
+validations in each of those five validation steps passed within the
+failure threshold levels. Since failure thresholds actually weren’t set,
+these steps will always display <code>OK</code> unless an evaluation
+error occurred (e.g., attempting to interrogate a column that isn’t
+present in the target table). Printing the <code>agent</code> object
+gives a step-by-step breakdown of the interrogation process.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">agent</span></code></pre></div>
 <p><img src="images/agent_report_1.png" width="100%"></p>
-<p>Let’s have a look at how to interpret this report. The bright green color strips at the left of each validation step indicates that all test units passed validation. The lighter green color in the final step means that there was at least one failing unit.</p>
-<p>The <code>STEP</code> column provides the name of the validation function used as a basis for a validation step. <code>COLUMNS</code> shows us the target column for each validation step. The <code>VALUES</code> column lists any values required for a validation step. What is <code>TBL</code>? That indicates whether the table was mutated just before interrogation in that validation step (via the <code>preconditions</code> argument, available in every validation function). The right-facing arrows indicate that the table didn’t undergo any transformation, so we are working with the identity table in every step. <code>EVAL</code> lets us know whether there would be issues in evaluating the table itself (catching <strong>R</strong> errors and warnings); the checkmarks down this column show us that there were no issues during interrogation.</p>
-<p>The total number of test units is provided next in the <code>...</code> column, then the absolute number and fraction of passing test units (<code>PASS</code>) and failing test units (<code>FAIL</code>). The <code>W</code>, <code>S</code>, <code>N</code> indicators tell us whether we have entered either of the <code>WARN</code>, <code>STOP</code>, or <code>NOTIFY</code> states for each these validation steps. Because we didn’t set any threshold levels for these states (that can be done with the <code>actions</code> argument, more on that later), they are irrelevant for this report. Finally, the <code>EXT</code> column provides an opportunity to download any data extract rows as a CSV. These rows represent the rows with failed test units. For <em>step 5</em>, the <code><a href="../reference/col_vals_between.html">col_vals_between()</a></code> validation step, there is a data extract available (with <code>1</code> row). We can either download the CSV from the report or examine that extract in <strong>R</strong> with the <code><a href="../reference/get_data_extracts.html">get_data_extracts()</a></code> function:</p>
+<p>Let’s have a look at how to interpret this report. The bright green
+color strips at the left of each validation step indicates that all test
+units passed validation. The lighter green color in the final step means
+that there was at least one failing unit.</p>
+<p>The <code>STEP</code> column provides the name of the validation
+function used as a basis for a validation step. <code>COLUMNS</code>
+shows us the target column for each validation step. The
+<code>VALUES</code> column lists any values required for a validation
+step. What is <code>TBL</code>? That indicates whether the table was
+mutated just before interrogation in that validation step (via the
+<code>preconditions</code> argument, available in every validation
+function). The right-facing arrows indicate that the table didn’t
+undergo any transformation, so we are working with the identity table in
+every step. <code>EVAL</code> lets us know whether there would be issues
+in evaluating the table itself (catching <strong>R</strong> errors and
+warnings); the checkmarks down this column show us that there were no
+issues during interrogation.</p>
+<p>The total number of test units is provided next in the
+<code>...</code> column, then the absolute number and fraction of
+passing test units (<code>PASS</code>) and failing test units
+(<code>FAIL</code>). The <code>W</code>, <code>S</code>, <code>N</code>
+indicators tell us whether we have entered either of the
+<code>WARN</code>, <code>STOP</code>, or <code>NOTIFY</code> states for
+each these validation steps. Because we didn’t set any threshold levels
+for these states (that can be done with the <code>actions</code>
+argument, more on that later), they are irrelevant for this report.
+Finally, the <code>EXT</code> column provides an opportunity to download
+any data extract rows as a CSV. These rows represent the rows with
+failed test units. For <em>step 5</em>, the
+<code><a href="../reference/col_vals_between.html">col_vals_between()</a></code> validation step, there is a data extract
+available (with <code>1</code> row). We can either download the CSV from
+the report or examine that extract in <strong>R</strong> with the
+<code><a href="../reference/get_data_extracts.html">get_data_extracts()</a></code> function:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/get_data_extracts.html">get_data_extracts</a></span><span class="op">(</span><span class="va">agent</span>, i <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## <span style="color: #949494;"># A tibble: 1 × 8</span></span>
 <span class="co">##   date_time           date           a b             c      d e     f    </span>
 <span class="co">##   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
 <span class="co">## <span style="color: #BCBCBC;">1</span> 2016-01-04 <span style="color: #949494;">00:32:00</span> 2016-01-04     3 5-egh-163     8 <span style="text-decoration: underline;">10</span>000. TRUE  low</span></code></pre>
-<p>Recall that validation <em>step 5</em> asserted that all values in column <code>d</code> should be between <code>0</code> and <code>5000</code>, however, this extract of <code>small_table</code> shows that column <code>d</code> has a value of <code>10000</code> which lies outside the specified range.</p>
+<p>Recall that validation <em>step 5</em> asserted that all values in
+column <code>d</code> should be between <code>0</code> and
+<code>5000</code>, however, this extract of <code>small_table</code>
+shows that column <code>d</code> has a value of <code>10000</code> which
+lies outside the specified range.</p>
 </div>
 <div class="section level2">
 <h2 id="using-threshold-levels-and-actions">Using Threshold Levels and Actions<a class="anchor" aria-label="anchor" href="#using-threshold-levels-and-actions"></a>
 </h2>
-<p>It can be useful to gauge data quality by setting failure thresholds for validation steps. For example, it may be acceptable at some point in time to tolerate up to 5% of failing test units for a given validation. Or, having several levels of data quality might be useful and instructive, where failing test units across validations are grouped into the 0-5%, 5-10%, and 10%- bands.</p>
-<p>We can specify failure threshold levels with the <code><a href="../reference/action_levels.html">action_levels()</a></code> function. Using the function generates an <code>action_levels</code> object that can be passed to the <code>actions</code> argument of <code><a href="../reference/create_agent.html">create_agent()</a></code> (thereby creating a default for every validation step). In the following, we use relative values (as real numbers between <code>0</code> and <code>1</code>) to define thresholds for the <code>WARN</code> and <code>STOP</code> conditions.</p>
+<p>It can be useful to gauge data quality by setting failure thresholds
+for validation steps. For example, it may be acceptable at some point in
+time to tolerate up to 5% of failing test units for a given validation.
+Or, having several levels of data quality might be useful and
+instructive, where failing test units across validations are grouped
+into the 0-5%, 5-10%, and 10%- bands.</p>
+<p>We can specify failure threshold levels with the
+<code><a href="../reference/action_levels.html">action_levels()</a></code> function. Using the function generates an
+<code>action_levels</code> object that can be passed to the
+<code>actions</code> argument of <code><a href="../reference/create_agent.html">create_agent()</a></code> (thereby
+creating a default for every validation step). In the following, we use
+relative values (as real numbers between <code>0</code> and
+<code>1</code>) to define thresholds for the <code>WARN</code> and
+<code>STOP</code> conditions.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">al</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span>warn_at <span class="op">=</span> <span class="fl">0.1</span>, stop_at <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></code></pre></div>
-<p>Printing the <code>al</code> object gives us a summary of the settings.</p>
+<p>Printing the <code>al</code> object gives us a summary of the
+settings.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">al</span></code></pre></div>
 <pre><code><span class="co">## -- The `action_levels` settings</span>
 <span class="co">## WARN failure threshold of 0.1 of all test units.</span>
 <span class="co">## STOP failure threshold of 0.2 of all test units.</span>
 <span class="co">## ----</span></code></pre>
-<p>Let’s use the <code>action_levels</code> object in a new validation. It’s similar to the last one but the parameters for some of the validation functions will result in more failing test units. We’ll see that the interrogation messages show mention of <code>STOP</code> and <code>WARNING</code> conditions being met.</p>
+<p>Let’s use the <code>action_levels</code> object in a new validation.
+It’s similar to the last one but the parameters for some of the
+validation functions will result in more failing test units. We’ll see
+that the interrogation messages show mention of <code>STOP</code> and
+<code>WARNING</code> conditions being met.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">agent</span> <span class="op">&lt;-</span> 
   <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>
@@ -287,11 +422,21 @@ x Step 4: STOP condition met.
 ! Step 5: WARNING condition met.
 
 ── Interrogation Completed ─────────────────────────────────────────────────</code></pre>
-<p>Printing the agent will provide a very different agent report than seen previously, one that’s rife with yellow and red color strips to the left and matching colors in the far right columns.</p>
+<p>Printing the agent will provide a very different agent report than
+seen previously, one that’s rife with yellow and red color strips to the
+left and matching colors in the far right columns.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">agent</span></code></pre></div>
 <p><img src="images/agent_report_2.png" width="100%"></p>
-<p>It’s possible to invoke a function when a particular failure condition is met and this can be set in the <code><a href="../reference/action_levels.html">action_levels()</a></code> function and made part of the <code>action_levels</code> object. One example of a function that can be used is the included <code><a href="../reference/log4r_step.html">log4r_step()</a></code> function for logging failure conditions across validation steps. Let’s make a new <code>action_levels</code> object and include the logging function in the <code>WARN</code> and <code>STOP</code> failure conditions. Note that the function calls must be written as one-sided <strong>R</strong> formulas.</p>
+<p>It’s possible to invoke a function when a particular failure
+condition is met and this can be set in the <code><a href="../reference/action_levels.html">action_levels()</a></code>
+function and made part of the <code>action_levels</code> object. One
+example of a function that can be used is the included
+<code><a href="../reference/log4r_step.html">log4r_step()</a></code> function for logging failure conditions across
+validation steps. Let’s make a new <code>action_levels</code> object and
+include the logging function in the <code>WARN</code> and
+<code>STOP</code> failure conditions. Note that the function calls must
+be written as one-sided <strong>R</strong> formulas.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">al</span> <span class="op">&lt;-</span> 
   <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span>
@@ -302,7 +447,9 @@ x Step 4: STOP condition met.
       stop <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="../reference/log4r_step.html">log4r_step</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
     <span class="op">)</span>
   <span class="op">)</span></code></pre></div>
-<p>Printing this new <code>al</code> object will show us the failure threshold settings and the associated actions for the failure conditions.</p>
+<p>Printing this new <code>al</code> object will show us the failure
+threshold settings and the associated actions for the failure
+conditions.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">al</span></code></pre></div>
 <pre><code><span class="co">## -- The `action_levels` settings</span>
@@ -311,7 +458,12 @@ x Step 4: STOP condition met.
 <span class="co">## STOP failure threshold of 0.2 of all test units.</span>
 <span class="co">## \fns\ ~ log4r_step(x)</span>
 <span class="co">## ----</span></code></pre>
-<p>Using this new <code>al</code> object with our validation workflow will result in failures at certain validation steps to be logged. By default, this is to a file named <code>"pb_log_file"</code> in the working directory but the <code><a href="../reference/log4r_step.html">log4r_step()</a></code> function is flexible for allowing any <strong>log4r</strong> <em>appender</em> to be used. Running the following data validation code</p>
+<p>Using this new <code>al</code> object with our validation workflow
+will result in failures at certain validation steps to be logged. By
+default, this is to a file named <code>"pb_log_file"</code> in the
+working directory but the <code><a href="../reference/log4r_step.html">log4r_step()</a></code> function is flexible
+for allowing any <strong>log4r</strong> <em>appender</em> to be used.
+Running the following data validation code</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">agent</span> <span class="op">&lt;-</span> 
   <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>
@@ -326,7 +478,8 @@ x Step 4: STOP condition met.
   <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>, regex <span class="op">=</span> <span class="st">"^[0-9]-[a-w]{3}-[2-9]{3}$"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, left <span class="op">=</span> <span class="fl">0</span>, right <span class="op">=</span> <span class="fl">4000</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p>will show us the same messages as before in the <strong>R</strong> console</p>
+<p>will show us the same messages as before in the <strong>R</strong>
+console</p>
 <pre><code>── Interrogation Started - there are 5 steps ──────────────────────────────────
 ✓ Step 1: OK.
 x Step 2: STOP condition met.
@@ -335,15 +488,27 @@ x Step 4: STOP condition met.
 ! Step 5: WARNING condition met.
 
 ── Interrogation Completed ─────────────────────────────────────────────────</code></pre>
-<p>and the file <code>"pb_log_file"</code> can be looked at with <code><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines()</a></code>, showing us four entries (one for each validation step with at least a <code>WARN</code> condition).</p>
+<p>and the file <code>"pb_log_file"</code> can be looked at with
+<code><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines()</a></code>, showing us four entries (one for each
+validation step with at least a <code>WARN</code> condition).</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="st">"pb_log_file"</span><span class="op">)</span></code></pre></div>
 <pre><code>[1] "ERROR [2020-11-06 01:26:07] Step 2 exceeded the STOP failure threshold (f_failed = 0.46154) ['col_vals_in_set']" 
 [2] "WARN  [2020-11-06 01:26:07] Step 3 exceeded the WARN failure threshold (f_failed = 0.15385) ['col_vals_lt']"     
 [3] "ERROR [2020-11-06 01:26:07] Step 4 exceeded the STOP failure threshold (f_failed = 0.53846) ['col_vals_regex']"  
 [4] "WARN  [2020-11-06 01:26:07] Step 5 exceeded the WARN failure threshold (f_failed = 0.07692) ['col_vals_between']"</code></pre>
-<p>The <code><a href="../reference/log4r_step.html">log4r_step()</a></code> function is a bit special in that it only provides the most severe condition in a given validation step, so long as the function call is present in multiple conditions of the <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> given to <code><a href="../reference/action_levels.html">action_levels()</a></code>’s <code>fns</code> argument.</p>
-<p>It’s possible to provide any custom-made function that generates some side effect in the same way as <code><a href="../reference/log4r_step.html">log4r_step()</a></code> is used. Just like <code><a href="../reference/log4r_step.html">log4r_step()</a></code>, the custom function can take advantage of the <code>x</code> variable, which is the x-list for the validation step. Let’s take a look at what that is for step 2 (the <code>col_vals_in_set</code> validation step) by using the <code><a href="../reference/get_agent_x_list.html">get_agent_x_list()</a></code> function:</p>
+<p>The <code><a href="../reference/log4r_step.html">log4r_step()</a></code> function is a bit special in that it
+only provides the most severe condition in a given validation step, so
+long as the function call is present in multiple conditions of the
+<code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> given to <code><a href="../reference/action_levels.html">action_levels()</a></code>’s
+<code>fns</code> argument.</p>
+<p>It’s possible to provide any custom-made function that generates some
+side effect in the same way as <code><a href="../reference/log4r_step.html">log4r_step()</a></code> is used. Just
+like <code><a href="../reference/log4r_step.html">log4r_step()</a></code>, the custom function can take advantage
+of the <code>x</code> variable, which is the x-list for the validation
+step. Let’s take a look at what that is for step 2 (the
+<code>col_vals_in_set</code> validation step) by using the
+<code><a href="../reference/get_agent_x_list.html">get_agent_x_list()</a></code> function:</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_agent_x_list.html">get_agent_x_list</a></span><span class="op">(</span><span class="va">agent</span>, i <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
 <span class="va">x</span></code></pre></div>
@@ -359,14 +524,22 @@ $n $n_passed $n_failed $f_passed $f_failed (num [1])
 $warn $stop $notify (lgl [1])
 $lang (chr [1])
 ─────────────────────────────────────────────────────────────────</code></pre>
-<p>The message in the console shows us what’s available in <code>x</code>, with some indication of the output types. If we wanted to know the number of test units, the fraction of those that failed, and whether the <code>STOP</code> condition was entered, we can access those and even put them into a character string (along with other info from the x-list).</p>
+<p>The message in the console shows us what’s available in
+<code>x</code>, with some indication of the output types. If we wanted
+to know the number of test units, the fraction of those that failed, and
+whether the <code>STOP</code> condition was entered, we can access those
+and even put them into a character string (along with other info from
+the x-list).</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span>
   <span class="st">"In Step {x$i}, there were {x$n} test units and {x$f_failed * 100}% \\
   failed. STOP condition met: {tolower(x$stop)}."</span>
   <span class="op">)</span></code></pre></div>
 <pre><code>In Step 2, there were 13 test units and 46.154% failed. STOP condition met: true.</code></pre>
-<p>This is a great way to test a function for use as a validation step ‘action’ because when invoked it will undergo evaluation in an environment that contains <code>x</code> (which will have the same structure).</p>
+<p>This is a great way to test a function for use as a validation step
+‘action’ because when invoked it will undergo evaluation in an
+environment that contains <code>x</code> (which will have the same
+structure).</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
@@ -381,7 +554,8 @@ $lang (chr [1])
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.</p>
 </div>
 
     </footer>

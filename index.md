@@ -26,7 +26,6 @@ data, and by selective mutations of the target table. The suite of validation
 functions ensures that *everything just works* no matter whether your table is
 a data frame or a database table.
 
-
 Sometimes we want to maintain table *information* and update it when the table
 goes through changes. For that, we can use an *informant* object plus associated
 functions to define the metadata entries and present it as a data dictionary.

@@ -21,14 +21,17 @@ up-to-date with the information that *defines* your tables.
 
 For table *validation*, the *agent* object works with a large collection of
 simple (yet powerful!) validation functions. We can enable much more
-sophisticated validation checks by using custom expressions and also through
-stepwise mutation of the target table (through something we call
-`preconditions`).
+sophisticated validation checks by using custom expressions, segmenting the
+data, and by selective mutations of the target table. The suite of validation
+functions ensures that everything just works no matter whether your table is
+a data frame or a database table.
+
 
 Sometimes we want to maintain table *information* and update it when the table
-goes through changes. For that, we can use an *informant* object + associated
-functions to help define the metadata entries and present it in a way that suits
-you.
+goes through changes. For that, we can use an *informant* object plus associated
+functions to define the metadata entries and present it as a data dictionary.
+Just like we can with validation, **pointblank** offers easy ways to have the
+metadata updated so that this important documentation doesn't become stale.
 
 <hr>
 <div style="text-align: center;">

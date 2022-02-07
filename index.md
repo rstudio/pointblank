@@ -23,7 +23,7 @@ For table *validation*, the *agent* object works with a large collection of
 simple (yet powerful!) validation functions. We can enable much more
 sophisticated validation checks by using custom expressions, segmenting the
 data, and by selective mutations of the target table. The suite of validation
-functions ensures that everything just works no matter whether your table is
+functions ensures that *everything just works* no matter whether your table is
 a data frame or a database table.
 
 

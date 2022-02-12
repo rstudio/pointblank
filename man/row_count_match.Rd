@@ -8,36 +8,44 @@
 \usage{
 row_count_match(
   x,
-  tbl_compare,
+  count,
   preconditions = NULL,
   segments = NULL,
   actions = NULL,
   step_id = NULL,
   label = NULL,
   brief = NULL,
-  active = TRUE
+  active = TRUE,
+  tbl_compare = NULL
 )
 
 expect_row_count_match(
   object,
-  tbl_compare,
+  count,
   preconditions = NULL,
-  threshold = 1
+  threshold = 1,
+  tbl_compare = NULL
 )
 
-test_row_count_match(object, tbl_compare, preconditions = NULL, threshold = 1)
+test_row_count_match(
+  object,
+  count,
+  preconditions = NULL,
+  threshold = 1,
+  tbl_compare = NULL
+)
 }
 \arguments{
 \item{x}{A data frame, tibble (\code{tbl_df} or \code{tbl_dbi}), Spark DataFrame
 (\code{tbl_spark}), or, an \emph{agent} object of class \code{ptblank_agent} that is
 created with \code{\link[=create_agent]{create_agent()}}.}
 
-\item{tbl_compare}{A table to compare against the target table in terms of
-row count values. This can either be a table object, a table-prep
-formula.This can be a table object such as a data frame, a tibble, a
-\code{tbl_dbi} object, or a \code{tbl_spark} object. Alternatively, a table-prep
-formula (\verb{~ <table reading code>}) or a function (\verb{function() <table reading code>}) can be used to lazily read in the table at interrogation
-time.}
+\item{count}{Either a literal value for the number of rows, or, a table to
+compare against the target table in terms of row count values. If supplying
+a comparison table, it can either be a table object such as a data frame, a
+tibble, a \code{tbl_dbi} object, or a \code{tbl_spark} object. Alternatively, a
+table-prep formula (\verb{~ <table reading code>}) or a function (`function()  <table reading code>`) can be used to lazily read in the comparison table
+  at interrogation time.}
 
 \item{preconditions}{An optional expression for mutating the input table
 before proceeding with the validation. This can either be provided as a
@@ -210,7 +218,7 @@ a validation step is expressed in R code and in the corresponding YAML
 representation.\preformatted{# R statement
 agent \%>\% 
   row_count_match(
-    tbl_compare = ~ file_tbl(
+    count = ~ file_tbl(
       file = from_github(
         file = "all_revenue_large.rds",
         repo = "rich-iannone/intendo",
@@ -227,7 +235,7 @@ agent \%>\%
 # YAML representation
 steps:
 - row_count_match:
-    tbl_compare: ~ file_tbl(
+    count: ~ file_tbl(
       file = from_github(
         file = "all_revenue_large.rds",
         repo = "rich-iannone/intendo",
@@ -286,7 +294,7 @@ tbl_2 <-
 # (`tbl_2`)
 agent <-
   create_agent(tbl = tbl) \%>\%
-  row_count_match(tbl_compare = tbl_2) \%>\%
+  row_count_match(count = tbl_2) \%>\%
   interrogate()
 
 # Determine if this validation passed
@@ -308,7 +316,7 @@ all_passed(agent)
 # behavior of side effects can be
 # customized with the `actions` option
 tbl \%>\%
-  row_count_match(tbl_compare = tbl_2)
+  row_count_match(count = tbl_2)
 
 # C: Using the expectation function
 
@@ -317,7 +325,7 @@ tbl \%>\%
 # time; this is primarily used in
 # testthat tests
 expect_row_count_match(
-  tbl, tbl_compare = tbl_2
+  tbl, count = tbl_2
 )
 
 # D: Using the test function
@@ -327,7 +335,7 @@ expect_row_count_match(
 # to us
 tbl \%>\% 
   row_count_match(
-    tbl_compare = tbl_2
+    count = tbl_2
   )
 
 }

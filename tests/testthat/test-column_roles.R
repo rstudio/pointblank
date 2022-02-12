@@ -295,8 +295,8 @@ test_that("column roles can be satisfactorily determined", {
       "string.ordinal",
       "integer.discrete",
       "integer.discrete",
-      "numeric.continuous",
-      "numeric.continuous"
+      "integer.discrete",
+      "integer.discrete"
     )
   )
   

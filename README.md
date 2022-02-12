@@ -35,7 +35,7 @@ a data frame or a database table.
 
 Sometimes, we want to maintain table *information* and update it when the table
 goes through changes. For that, we can use an *informant* object plus associated
-functions to help define the metadata entries and present it as data dictionary.
+functions to help define the metadata entries and present it as a data dictionary.
 Just like we can with validation, **pointblank** offers easy ways to have the
 metadata updated so that this important documentation doesn't become stale.
 

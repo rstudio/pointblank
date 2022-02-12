@@ -9,10 +9,11 @@
 <a href="https://www.repostatus.org/#active"><img src="https://www.repostatus.org/badges/latest/active.svg" alt="The project has reached a stable, usable state and is being actively developed." /></a>
 <a href="https://CRAN.R-project.org/package=pointblank"><img src="https://cranlogs.r-pkg.org/badges/pointblank" alt="Monthly Downloads"></a>
 <a href="https://CRAN.R-project.org/package=pointblank"><img src="https://cranlogs.r-pkg.org/badges/grand-total/pointblank" alt="Total Downloads"></a>
+[![RStudio community](https://img.shields.io/badge/RStudio%20Cloud-pointblank%20Test%20Drive-blue?style=social&logo=rstudio&logoColor=75AADB)](https://rstudio.cloud/project/3411822)
 <a href="https://www.contributor-covenant.org/version/2/0/code_of_conduct/"><img src="https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg" alt="Contributor Covenant" /></a>
 <!-- badges: end -->
 
-
+<br />
 With the **pointblank** package it’s really easy to methodically validate your
 data whether in the form of data frames or as database tables. On top of the
 validation toolset, the package gives you the means to provide and keep
@@ -20,14 +21,16 @@ up-to-date with the information that *defines* your tables.
 
 For table *validation*, the *agent* object works with a large collection of
 simple (yet powerful!) validation functions. We can enable much more
-sophisticated validation checks by using custom expressions and also through
-stepwise mutation of the target table (through something we call
-`preconditions`).
+sophisticated validation checks by using custom expressions, segmenting the
+data, and by selective mutations of the target table. The suite of validation
+functions ensures that *everything just works* no matter whether your table is
+a data frame or a database table.
 
 Sometimes we want to maintain table *information* and update it when the table
-goes through changes. For that, we can use an *informant* object + associated
-functions to help define the metadata entries and present it in a way that suits
-you.
+goes through changes. For that, we can use an *informant* object plus associated
+functions to define the metadata entries and present it as a data dictionary.
+Just like we can with validation, **pointblank** offers easy ways to have the
+metadata updated so that this important documentation doesn't become stale.
 
 <hr>
 <div style="text-align: center;">

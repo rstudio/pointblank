@@ -88,7 +88,7 @@ test_that("Interrogating with an agent yields the correct results", {
   # a validation step, then, `interrogate()`
   validation <-
     create_agent(tbl = small_table) %>%
-    row_count_match(tbl_compare = small_table) %>%
+    row_count_match(count = small_table) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`

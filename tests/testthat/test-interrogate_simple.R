@@ -1475,7 +1475,7 @@ test_that("Interrogating simply returns the expected results", {
   tbl_result <- 
     small_table %>%
     row_count_match(
-      tbl_compare = pointblank::small_table,
+      count = pointblank::small_table,
       actions = warn_on_fail()
     )
   
@@ -1486,7 +1486,7 @@ test_that("Interrogating simply returns the expected results", {
   # another simple validation step
   tbl_result <- 
     small_table %>%
-    row_count_match(tbl_compare = ~ pointblank::small_table)
+    row_count_match(count = ~ pointblank::small_table)
   
   # Expect that `tbl_result` is equivalent to `small_table`
   expect_equivalent(small_table, tbl_result)
@@ -1496,7 +1496,7 @@ test_that("Interrogating simply returns the expected results", {
     tbl_result <- 
       tbl_complete_yes %>%
       row_count_match(
-        tbl_compare = pointblank::small_table,
+        count = pointblank::small_table,
         actions = warn_on_fail()
       )
   )

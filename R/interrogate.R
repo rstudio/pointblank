@@ -2471,21 +2471,26 @@ interrogate_row_count_match <- function(agent,
                                         idx,
                                         table) {
   
-  # Get the comparison table (this is user-supplied)
-  tbl_compare <- materialize_table(tbl = agent$validation_set$values[[idx]])
-  
   # Create function for validating the `row_count_match()` step function
-  tbl_row_count_match <- function(table,
-                                  tbl_compare) {
+  tbl_row_count_match <- function(table) {
     
-    # Ensure that the input `table` and `tbl_compare` objects
-    # are actually table objects
-    # TODO: improve failure message for check of `tbl_compare`
     tbl_validity_check(table = table)
-    tbl_validity_check(table = tbl_compare)
+    
+    count <- agent$validation_set$values[[idx]]
+    
+    if (!is.numeric(count)) {
+      
+      # Get the comparison table (this is user-supplied)
+      tbl_compare <- materialize_table(tbl = agent$validation_set$values[[idx]])
+      
+      # TODO: improve failure message for check of `tbl_compare`
+      tbl_validity_check(table = tbl_compare)
+      
+      count <- get_table_total_rows(tbl_compare)
+    } 
     
     # Check for exact matching in row counts between the two tables
-    if (get_table_total_rows(table) == get_table_total_rows(tbl_compare)) {
+    if (get_table_total_rows(table) == count) {
       dplyr::tibble(pb_is_good_ = TRUE)
     } else {
       dplyr::tibble(pb_is_good_ = FALSE)
@@ -2494,10 +2499,7 @@ interrogate_row_count_match <- function(agent,
   
   # Perform the validation of the table 
   pointblank_try_catch(
-    tbl_row_count_match(
-      table = table,
-      tbl_compare = tbl_compare
-    )
+    tbl_row_count_match(table = table)
   )
 }
 

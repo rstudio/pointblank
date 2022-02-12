@@ -109,7 +109,7 @@
 #' # R statement
 #' agent %>% 
 #'   row_count_match(
-#'     tbl_compare = ~ file_tbl(
+#'     count = ~ file_tbl(
 #'       file = from_github(
 #'         file = "all_revenue_large.rds",
 #'         repo = "rich-iannone/intendo",
@@ -126,7 +126,7 @@
 #' # YAML representation
 #' steps:
 #' - row_count_match:
-#'     tbl_compare: ~ file_tbl(
+#'     count: ~ file_tbl(
 #'       file = from_github(
 #'         file = "all_revenue_large.rds",
 #'         repo = "rich-iannone/intendo",
@@ -150,13 +150,13 @@
 #' function.
 #'
 #' @inheritParams col_vals_gt
-#' @param tbl_compare A table to compare against the target table in terms of
-#'   row count values. This can either be a table object, a table-prep
-#'   formula.This can be a table object such as a data frame, a tibble, a
-#'   `tbl_dbi` object, or a `tbl_spark` object. Alternatively, a table-prep
-#'   formula (`~ <table reading code>`) or a function (`function() <table
-#'   reading code>`) can be used to lazily read in the table at interrogation
-#'   time.
+#' @param count Either a literal value for the number of rows, or, a table to
+#'   compare against the target table in terms of row count values. If supplying
+#'   a comparison table, it can either be a table object such as a data frame, a
+#'   tibble, a `tbl_dbi` object, or a `tbl_spark` object. Alternatively, a
+#'   table-prep formula (`~ <table reading code>`) or a function (`function()
+#'   <table reading code>`) can be used to lazily read in the comparison table
+#'   at interrogation time.
 #'   
 #' @return For the validation function, the return value is either a
 #'   `ptblank_agent` object or a table object (depending on whether an agent
@@ -195,7 +195,7 @@
 #' # (`tbl_2`)
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
-#'   row_count_match(tbl_compare = tbl_2) %>%
+#'   row_count_match(count = tbl_2) %>%
 #'   interrogate()
 #' 
 #' # Determine if this validation passed
@@ -217,7 +217,7 @@
 #' # behavior of side effects can be
 #' # customized with the `actions` option
 #' tbl %>%
-#'   row_count_match(tbl_compare = tbl_2)
+#'   row_count_match(count = tbl_2)
 #' 
 #' # C: Using the expectation function
 #' 
@@ -226,7 +226,7 @@
 #' # time; this is primarily used in
 #' # testthat tests
 #' expect_row_count_match(
-#'   tbl, tbl_compare = tbl_2
+#'   tbl, count = tbl_2
 #' )
 #' 
 #' # D: Using the test function
@@ -236,7 +236,7 @@
 #' # to us
 #' tbl %>% 
 #'   row_count_match(
-#'     tbl_compare = tbl_2
+#'     count = tbl_2
 #'   )
 #' 
 #' @family validation functions
@@ -250,14 +250,31 @@ NULL
 #' @import rlang
 #' @export
 row_count_match <- function(x,
-                            tbl_compare,
+                            count,
                             preconditions = NULL,
                             segments = NULL,
                             actions = NULL,
                             step_id = NULL,
                             label = NULL,
                             brief = NULL,
-                            active = TRUE) {
+                            active = TRUE,
+                            tbl_compare = NULL) {
+  
+  # The `tbl_compare` argument is undergoing soft deprecation so if it is
+  # not missing, issue a warning and migrate the supplied value over to
+  # the `count` argument
+  if (!is.null(tbl_compare)) {
+    
+    count <- tbl_compare
+    
+    warning(
+      "Use `count` to specify a comparison table (`tbl_compare` is now ",
+      "undergoing deprecation):\n",
+      " * The `count` argument can accept a literal numeric value in addition ",
+      "to a comparison table",
+      call. = FALSE
+    )
+  }
   
   # Resolve segments into list
   segments_list <-
@@ -272,7 +289,7 @@ row_count_match <- function(x,
     secret_agent <- 
       create_agent(x, label = "::QUIET::") %>%
       row_count_match(
-        tbl_compare = tbl_compare,
+        count = count,
         preconditions = preconditions,
         segments = segments,
         label = label,
@@ -320,7 +337,7 @@ row_count_match <- function(x,
         i_o = i_o,
         columns_expr = NA_character_,
         column = NA_character_,
-        values = tbl_compare,
+        values = count,
         preconditions = preconditions,
         seg_expr = segments,
         seg_col = seg_col,
@@ -340,16 +357,33 @@ row_count_match <- function(x,
 #' @import rlang
 #' @export
 expect_row_count_match <- function(object,
-                                   tbl_compare,
+                                   count,
                                    preconditions = NULL,
-                                   threshold = 1) {
+                                   threshold = 1,
+                                   tbl_compare = NULL) {
+  
+  # The `tbl_compare` argument is undergoing soft deprecation so if it is
+  # not missing, issue a warning and migrate the supplied value over to
+  # the `count` argument
+  if (!is.null(tbl_compare)) {
+    
+    count <- tbl_compare
+    
+    warning(
+      "Use `count` to specify a comparison table (`tbl_compare` is now ",
+      "undergoing deprecation):\n",
+      " * The `count` argument can accept a literal numeric value in addition ",
+      "to a comparison table",
+      call. = FALSE
+    )
+  }
   
   fn_name <- "expect_row_count_match"
   
   vs <- 
     create_agent(tbl = object, label = "::QUIET::") %>%
     row_count_match(
-      tbl_compare = {{ tbl_compare }},
+      count = {{ count }},
       preconditions = {{ preconditions }},
       actions = action_levels(notify_at = threshold)
     ) %>%
@@ -393,14 +427,31 @@ expect_row_count_match <- function(object,
 #' @import rlang
 #' @export
 test_row_count_match <- function(object,
-                                 tbl_compare,
+                                 count,
                                  preconditions = NULL,
-                                 threshold = 1) {
+                                 threshold = 1,
+                                 tbl_compare = NULL) {
+  
+  # The `tbl_compare` argument is undergoing soft deprecation so if it is
+  # not missing, issue a warning and migrate the supplied value over to
+  # the `count` argument
+  if (!is.null(tbl_compare)) {
+    
+    count <- tbl_compare
+    
+    warning(
+      "Use `count` to specify a comparison table (`tbl_compare` is now ",
+      "undergoing deprecation):\n",
+      " * The `count` argument can accept a literal numeric value in addition ",
+      "to a comparison table",
+      call. = FALSE
+    )
+  }
   
   vs <- 
     create_agent(tbl = object, label = "::QUIET::") %>%
     row_count_match(
-      tbl_compare = {{ tbl_compare }},
+      count = {{ count }},
       preconditions = {{ preconditions }},
       actions = action_levels(notify_at = threshold)
     ) %>%

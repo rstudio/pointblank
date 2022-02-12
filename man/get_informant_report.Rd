@@ -16,7 +16,10 @@ get_informant_report(
 \item{informant}{An informant object of class \code{ptblank_informant}.}
 
 \item{size}{The size of the display table, which can be either \code{"standard"}
-(the default, with a width of 875px) or \code{"small"} (width of 575px).}
+(the default, with a width of 875px), \code{"small"} (width of 575px), or, a
+pixel- or percent-based width of your choosing (supply an integer value for
+the width in pixels, or values with \code{"px"} or \code{"\%"} appended, like \code{"75\%"},
+\code{"500px"}, etc.).}
 
 \item{title}{Options for customizing the title of the report. The default is
 the keyword \code{":default:"} which produces generic title text that refers to

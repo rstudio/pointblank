@@ -27,7 +27,7 @@ below to see their documentation.
 
   \item{dplyr}{\code{\link[dplyr]{between}}, \code{\link[dplyr]{case_when}}, \code{\link[dplyr]{vars}}}
 
-  \item{rlang}{\code{\link[rlang:nse-defuse]{expr}}}
+  \item{rlang}{\code{\link[rlang]{expr}}}
 
   \item{tidyselect}{\code{\link[tidyselect:starts_with]{contains}}, \code{\link[tidyselect:starts_with]{ends_with}}, \code{\link[tidyselect]{everything}}, \code{\link[tidyselect:starts_with]{matches}}, \code{\link[tidyselect]{starts_with}}}
 }}

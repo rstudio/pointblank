@@ -157,6 +157,8 @@
 #'   table-prep formula (`~ <table reading code>`) or a function (`function()
 #'   <table reading code>`) can be used to lazily read in the comparison table
 #'   at interrogation time.
+#' @param tbl_compare The `tbl_compare` argument is deprecated. Instead, use
+#'   `count`.
 #'   
 #' @return For the validation function, the return value is either a
 #'   `ptblank_agent` object or a table object (depending on whether an agent

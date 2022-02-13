@@ -100,6 +100,9 @@ validation step active on the basis of one or more columns existing in the
 table (e.g., \code{~ . \%>\% has_columns(vars(d, e))}). The default for \code{active}
 is \code{TRUE}.}
 
+\item{tbl_compare}{The \code{tbl_compare} argument is deprecated. Instead, use
+\code{count}.}
+
 \item{object}{A data frame, tibble (\code{tbl_df} or \code{tbl_dbi}), or Spark
 DataFrame (\code{tbl_spark}) that serves as the target table for the expectation
 function or the test function.}

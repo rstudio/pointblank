@@ -29,7 +29,10 @@
 #' 
 #' @param informant An informant object of class `ptblank_informant`.
 #' @param size The size of the display table, which can be either `"standard"`
-#'   (the default, with a width of 875px) or `"small"` (width of 575px).
+#'   (the default, with a width of 875px), `"small"` (width of 575px), or, a
+#'   pixel- or percent-based width of your choosing (supply an integer value for
+#'   the width in pixels, or values with `"px"` or `"%"` appended, like `"75%"`,
+#'   `"500px"`, etc.).
 #' @param title Options for customizing the title of the report. The default is
 #'   the keyword `":default:"` which produces generic title text that refers to
 #'   the **pointblank** package in the language governed by the `lang` option.
@@ -542,13 +545,22 @@ get_informant_report <- function(informant,
     gt_informant_report <-
       gt_informant_report %>% 
       gt::cols_width(gt::everything() ~ gt::px(575))
+  }
+  
+  if (size != "small") {
     
-  } else {
+    if (size == "standard") {
+      width_px <- 650
+    } else {
+      width_px <- size
+    }
     
     gt_informant_report <-
-      gt_informant_report %>% 
-      gt::cols_width(gt::everything() ~ gt::px(875)) %>%
-      gt::tab_options(table.font.size = gt::pct(130)) %>%
+      gt_informant_report %>%
+      gt::tab_options(
+        table.width = width_px,
+        table.font.size = gt::pct(130)
+      ) %>%
       gt::opt_table_font(font = gt::google_font("IBM Plex Sans")) %>%
       gt::opt_css(
         css = "

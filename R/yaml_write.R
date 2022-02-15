@@ -1101,15 +1101,33 @@ as_agent_yaml_list <- function(agent,
       
     } else if (validation_fn == "row_count_match") {
       
-      # TODO: disallow YAML writing if value obtained from
-      # `get_arg_value(step_list$values)` is a table object or is
-      # not a function or table-prep formula
-      tbl_compare <- step_list$values
+      count <- step_list$values[[1]]
       
+      # Disallow YAML writing if value obtained is a table object
+      if (is_a_table_object(count)) {
+        stop(
+          "We cannot write a table object supplied as `count` to YAML:\n",
+          "* Use a table-prep formula or a function that instead",
+          call. = FALSE
+        )
+      }
+      
+      if (is.function(count)) {
+        count <- capture_function(fn = count)
+      }
+      
+      if (rlang::is_formula(count)) {
+        count <- capture_formula(count, separate = FALSE)
+      }
+      
+      if (is.numeric(count)) {
+        count <- as.integer(count)
+      }
+        
       lst_step <- 
         list(
           validation_fn = list(
-            count = as_list_preconditions(tbl_compare),
+            count = count,
             preconditions = as_list_preconditions(step_list$preconditions),
             segments = as_list_segments(step_list$seg_expr),
             actions = as_action_levels(

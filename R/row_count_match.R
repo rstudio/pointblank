@@ -309,7 +309,8 @@ row_count_match <- function(x,
     brief <-
       create_autobrief(
         agent = agent,
-        assertion_type = "row_count_match"
+        assertion_type = "row_count_match",
+        values = count
       )
   }
   

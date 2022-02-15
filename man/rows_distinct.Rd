@@ -299,18 +299,14 @@ tbl \%>\%
 # typically perform one validation at a
 # time; this is primarily used in
 # testthat tests
-expect_rows_distinct(
-  tbl, vars(a, b)
-)
+expect_rows_distinct(tbl, vars(a, b))
 
 # D: Using the test function
 
 # With the `test_*()` form, we should
 # get a single logical value returned
 # to us
-test_rows_distinct(
-  tbl, vars(a, b)
-)
+test_rows_distinct(tbl, vars(a, b))
 
 }
 \seealso{

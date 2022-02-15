@@ -85,10 +85,11 @@ test_that("Interrogating with an agent yields the correct results", {
   
   
   # Use the `row_count_match()` function to create
-  # a validation step, then, `interrogate()`
+  # a validation step with a comparison table,
+  # then, `interrogate()`
   validation <-
     create_agent(tbl = small_table) %>%
-    row_count_match(tbl_compare = small_table) %>%
+    row_count_match(count = small_table) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -104,6 +105,26 @@ test_that("Interrogating with an agent yields the correct results", {
   expect_equivalent(validation$validation_set$f_failed, 0)
   expect_equivalent(nrow(validation$validation_set), 1)
   
+  # Use the `row_count_match()` function to create
+  # a validation step with a literal `count` value,
+  # then, `interrogate()`
+  validation <-
+    create_agent(tbl = small_table) %>%
+    row_count_match(count = 13) %>%
+    interrogate()
+  
+  # Expect certain values in `validation$validation_set`
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$validation_set$assertion_type, "row_count_match")
+  expect_true(is.na(validation$validation_set$column %>% unlist()))
+  expect_true(is.numeric(validation$validation_set[["values"]][[1]]))
+  expect_true(validation$validation_set$all_passed)
+  expect_equivalent(validation$validation_set$n, 1)
+  expect_equivalent(validation$validation_set$n_passed, 1)
+  expect_equivalent(validation$validation_set$n_failed, 0)
+  expect_equivalent(validation$validation_set$f_passed, 1)
+  expect_equivalent(validation$validation_set$f_failed, 0)
+  expect_equivalent(nrow(validation$validation_set), 1)
   
   # Use the `tbl_match()` function to create
   # a validation step, then, `interrogate()`

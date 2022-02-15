@@ -1371,29 +1371,48 @@ test_that("pointblank expectation function produce the correct results", {
   # expect_row_count_match()
   #
   
-  expect_row_count_match(tbl, tbl_compare = tbl)
-  expect_row_count_match(tbl, tbl_compare = pointblank::small_table)
-  expect_row_count_match(tbl, tbl_compare = ~ pointblank::small_table)
-  expect_row_count_match(tbl, tbl_compare = function() pointblank::small_table)
+  expect_row_count_match(tbl, count = tbl)
+  expect_row_count_match(tbl, count = pointblank::small_table)
+  expect_row_count_match(tbl, count = ~ pointblank::small_table)
+  expect_row_count_match(tbl, count = function() pointblank::small_table)
+  expect_row_count_match(tbl, count = 13)
+  expect_row_count_match(tbl, count = 13L)
   
   expect_failure(
-    expect_row_count_match(tbl, tbl_compare = tbl_conjointly),
+    expect_row_count_match(tbl, count = tbl_conjointly),
+    "failure level \\(1\\) >= failure threshold \\(1\\)"
+  )
+  
+  expect_failure(
+    expect_row_count_match(tbl, count = 14),
+    "failure level \\(1\\) >= failure threshold \\(1\\)"
+  )
+  
+  expect_failure(
+    expect_row_count_match(tbl, count = 13.1),
+    "failure level \\(1\\) >= failure threshold \\(1\\)"
+  )
+  
+  expect_failure(
+    expect_row_count_match(tbl, count = Inf),
     "failure level \\(1\\) >= failure threshold \\(1\\)"
   )
   
   expect_error(
-    expect_row_count_match(tbl, tbl_compare = tbl_conjointly),
+    expect_row_count_match(tbl, count = tbl_conjointly),
     class = "expectation_failure"
   )
   
-  expect_row_count_match(tbl_conjointly, tbl_compare = tbl_complete_yes)
-  expect_row_count_match(tbl_complete_yes, tbl_compare = tbl_conjointly)
+  expect_row_count_match(tbl_conjointly, count = tbl_complete_yes)
+  expect_row_count_match(tbl_complete_yes, count = tbl_conjointly)
   
-  expect_row_count_match(tbl_complete_no, tbl_compare = tbl_complete_yes)
-  expect_row_count_match(tbl_complete_yes, tbl_compare = tbl_complete_no)
+  expect_row_count_match(tbl_complete_no, count = tbl_complete_yes)
+  expect_row_count_match(tbl_complete_yes, count = tbl_complete_no)
   
-  expect_row_count_match(increasing_tbl, tbl_compare = decreasing_tbl)
-  expect_row_count_match(decreasing_tbl, tbl_compare = increasing_tbl)
+  expect_row_count_match(increasing_tbl, count = decreasing_tbl)
+  expect_row_count_match(decreasing_tbl, count = increasing_tbl)
+  expect_row_count_match(increasing_tbl, count = 6)
+  expect_row_count_match(decreasing_tbl, count = 6)
   
   
   #

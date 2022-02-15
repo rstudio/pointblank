@@ -232,9 +232,7 @@
 #' # get a single logical value returned
 #' # to us
 #' tbl %>% 
-#'   tbl_match(
-#'     tbl_compare = tbl_2
-#'   )
+#'   test_tbl_match(tbl_compare = tbl_2)
 #' 
 #' @family validation functions
 #' @section Function ID:

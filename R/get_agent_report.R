@@ -855,7 +855,20 @@ get_agent_report <- function(agent,
           }
         }
         
-        if (assertion_str %in% c("row_count_match", "tbl_match")) {
+        if (assertion_str == "row_count_match") {
+          
+          if (!is.numeric(values_i)) {
+            
+            return(
+              paste0(
+                "<div><p style=\"margin-top: 0px; margin-bottom: 0px; ",
+                "font-size: 0.75rem;\">EXTERNAL TABLE</p></div>"
+              )
+            )
+          }
+        }
+        
+        if (assertion_str == "tbl_match") {
           
           return(
             paste0(

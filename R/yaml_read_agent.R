@@ -564,9 +564,18 @@ make_validation_steps <- function(steps) {
             seq_along(step_i[[1]]),
             FUN.VALUE = character(1), 
             FUN = function(x) {
+              
               arg_name <- names(step_i[[1]][x])
               val <- step_i[[1]][[x]]
+              
               others <- c("preconditions", "segments", "expr", "schema")
+              
+              if (step_fn == "row_count_match") {
+                
+                if (arg_name == "count") {
+                  return(paste("  count =", val, collapse = ",\n"))
+                }
+              }
               
               if (arg_name == "fns") {
                 return(paste("  ", val, collapse = ",\n"))
@@ -603,12 +612,15 @@ make_validation_steps <- function(steps) {
                   return(paste("  active =", val[1]))
                 }
               }
+              
               if (arg_name == "preconditions" && is.null(val)) {
                 return("")
               }
+              
               if (arg_name == "na_pass" && !val) {
                 return("")
               }
+              
               if (arg_name == "inclusive" && all(val)) {
                 return("")
               }

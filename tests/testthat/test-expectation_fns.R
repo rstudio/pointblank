@@ -1375,9 +1375,26 @@ test_that("pointblank expectation function produce the correct results", {
   expect_row_count_match(tbl, count = pointblank::small_table)
   expect_row_count_match(tbl, count = ~ pointblank::small_table)
   expect_row_count_match(tbl, count = function() pointblank::small_table)
+  expect_row_count_match(tbl, count = 13)
+  expect_row_count_match(tbl, count = 13L)
   
   expect_failure(
     expect_row_count_match(tbl, count = tbl_conjointly),
+    "failure level \\(1\\) >= failure threshold \\(1\\)"
+  )
+  
+  expect_failure(
+    expect_row_count_match(tbl, count = 14),
+    "failure level \\(1\\) >= failure threshold \\(1\\)"
+  )
+  
+  expect_failure(
+    expect_row_count_match(tbl, count = 13.1),
+    "failure level \\(1\\) >= failure threshold \\(1\\)"
+  )
+  
+  expect_failure(
+    expect_row_count_match(tbl, count = Inf),
     "failure level \\(1\\) >= failure threshold \\(1\\)"
   )
   
@@ -1394,6 +1411,8 @@ test_that("pointblank expectation function produce the correct results", {
   
   expect_row_count_match(increasing_tbl, count = decreasing_tbl)
   expect_row_count_match(decreasing_tbl, count = increasing_tbl)
+  expect_row_count_match(increasing_tbl, count = 6)
+  expect_row_count_match(decreasing_tbl, count = 6)
   
   
   #

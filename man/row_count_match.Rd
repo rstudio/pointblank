@@ -44,8 +44,9 @@ created with \code{\link[=create_agent]{create_agent()}}.}
 compare against the target table in terms of row count values. If supplying
 a comparison table, it can either be a table object such as a data frame, a
 tibble, a \code{tbl_dbi} object, or a \code{tbl_spark} object. Alternatively, a
-table-prep formula (\verb{~ <table reading code>}) or a function (`function()  <table reading code>`) can be used to lazily read in the comparison table
-  at interrogation time.}
+table-prep formula (\verb{~ <table reading code>}) or a function
+(\verb{function() <table reading code>}) can be used to lazily read in the
+comparison table at interrogation time.}
 
 \item{preconditions}{An optional expression for mutating the input table
 before proceeding with the validation. This can either be provided as a
@@ -337,9 +338,7 @@ expect_row_count_match(
 # get a single logical value returned
 # to us
 tbl \%>\% 
-  row_count_match(
-    count = tbl_2
-  )
+  test_row_count_match(count = 4)
 
 }
 \seealso{

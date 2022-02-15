@@ -1511,7 +1511,7 @@ test_that("Interrogating simply returns the expected results", {
     tbl_result <- 
       tbl_complete_yes %>%
       row_count_match(
-        tbl_compare = pointblank::small_table,
+        count = pointblank::small_table,
         actions = stop_on_fail()
       )
   )

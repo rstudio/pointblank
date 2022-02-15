@@ -350,6 +350,7 @@ test_that("Utility functions won't fail us", {
       "across_row_complete_expectation_text", "across_row_complete_failure_text", 
       "col_schema_match_expectation_text", "col_schema_match_failure_text",
       "row_count_match_expectation_text", "row_count_match_failure_text",
+      "row_count_match_n_expectation_text", "row_count_match_n_failure_text",
       "tbl_match_expectation_text", "tbl_match_failure_text"
     )
   )

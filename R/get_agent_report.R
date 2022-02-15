@@ -858,6 +858,7 @@ get_agent_report <- function(agent,
         if (assertion_str == "row_count_match") {
           
           if (!is.numeric(values_i)) {
+            
             return(
               paste0(
                 "<div><p style=\"margin-top: 0px; margin-bottom: 0px; ",

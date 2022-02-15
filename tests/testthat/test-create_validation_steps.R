@@ -1090,6 +1090,20 @@ test_that("Creating a `row_count_match()` step is possible", {
     row_count_match(count = function() small_table)
   expect_is(validation, "ptblank_agent")
   expect_true(is.function(validation$validation_set[["values"]][[1]]))
+  
+  validation <-
+    create_agent(tbl = small_table) %>%
+    row_count_match(count = 13)
+  expect_is(validation, "ptblank_agent")
+  expect_true(is.numeric(validation$validation_set[["values"]][[1]]))
+  expect_equal(validation$validation_set[["values"]][[1]], 13)
+  
+  validation <-
+    create_agent(tbl = small_table) %>%
+    row_count_match(count = 13L)
+  expect_is(validation, "ptblank_agent")
+  expect_true(is.numeric(validation$validation_set[["values"]][[1]]))
+  expect_equal(validation$validation_set[["values"]][[1]], 13)
 })
 
 test_that("Creating a `tbl_match()` step is possible", {

@@ -1138,6 +1138,45 @@ as_agent_yaml_list <- function(agent,
             active = as_list_active(step_list$active)
           )
         )
+      
+    } else if (validation_fn == "col_count_match") {
+      
+      count <- step_list$values[[1]]
+      
+      # Disallow YAML writing if value obtained is a table object
+      if (is_a_table_object(count)) {
+        stop(
+          "We cannot write a table object supplied as `count` to YAML:\n",
+          "* Use a table-prep formula or a function that instead",
+          call. = FALSE
+        )
+      }
+      
+      if (is.function(count)) {
+        count <- capture_function(fn = count)
+      }
+      
+      if (rlang::is_formula(count)) {
+        count <- capture_formula(count, separate = FALSE)
+      }
+      
+      if (is.numeric(count)) {
+        count <- as.integer(count)
+      }
+      
+      lst_step <- 
+        list(
+          validation_fn = list(
+            count = count,
+            preconditions = as_list_preconditions(step_list$preconditions),
+            actions = as_action_levels(
+              step_list$actions[[1]],
+              action_levels_default
+            ),
+            label = step_list$label,
+            active = as_list_active(step_list$active)
+          )
+        )
     
     } else if (validation_fn == "tbl_match") {
       

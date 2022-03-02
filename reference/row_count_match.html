@@ -102,24 +102,32 @@ applied).</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">row_count_match</span><span class="op">(</span>
   <span class="va">x</span>,
-  <span class="va">tbl_compare</span>,
+  <span class="va">count</span>,
   preconditions <span class="op">=</span> <span class="cn">NULL</span>,
   segments <span class="op">=</span> <span class="cn">NULL</span>,
   actions <span class="op">=</span> <span class="cn">NULL</span>,
   step_id <span class="op">=</span> <span class="cn">NULL</span>,
   label <span class="op">=</span> <span class="cn">NULL</span>,
   brief <span class="op">=</span> <span class="cn">NULL</span>,
-  active <span class="op">=</span> <span class="cn">TRUE</span>
+  active <span class="op">=</span> <span class="cn">TRUE</span>,
+  tbl_compare <span class="op">=</span> <span class="cn">NULL</span>
 <span class="op">)</span>
 
 <span class="fu">expect_row_count_match</span><span class="op">(</span>
   <span class="va">object</span>,
-  <span class="va">tbl_compare</span>,
+  <span class="va">count</span>,
   preconditions <span class="op">=</span> <span class="cn">NULL</span>,
-  threshold <span class="op">=</span> <span class="fl">1</span>
+  threshold <span class="op">=</span> <span class="fl">1</span>,
+  tbl_compare <span class="op">=</span> <span class="cn">NULL</span>
 <span class="op">)</span>
 
-<span class="fu">test_row_count_match</span><span class="op">(</span><span class="va">object</span>, <span class="va">tbl_compare</span>, preconditions <span class="op">=</span> <span class="cn">NULL</span>, threshold <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+<span class="fu">test_row_count_match</span><span class="op">(</span>
+  <span class="va">object</span>,
+  <span class="va">count</span>,
+  preconditions <span class="op">=</span> <span class="cn">NULL</span>,
+  threshold <span class="op">=</span> <span class="fl">1</span>,
+  tbl_compare <span class="op">=</span> <span class="cn">NULL</span>
+<span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -128,13 +136,14 @@ applied).</p>
 <dd><p>A data frame, tibble (<code>tbl_df</code> or <code>tbl_dbi</code>), Spark DataFrame
 (<code>tbl_spark</code>), or, an <em>agent</em> object of class <code>ptblank_agent</code> that is
 created with <code><a href="create_agent.html">create_agent()</a></code>.</p></dd>
-<dt>tbl_compare</dt>
-<dd><p>A table to compare against the target table in terms of
-row count values. This can either be a table object, a table-prep
-formula.This can be a table object such as a data frame, a tibble, a
-<code>tbl_dbi</code> object, or a <code>tbl_spark</code> object. Alternatively, a table-prep
-formula (<code>~ &lt;table reading code&gt;</code>) or a function (<code>function() &lt;table reading code&gt;</code>) can be used to lazily read in the table at interrogation
-time.</p></dd>
+<dt>count</dt>
+<dd><p>Either a literal value for the number of rows, or, a table to
+compare against the target table in terms of row count values. If supplying
+a comparison table, it can either be a table object such as a data frame, a
+tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spark</code> object. Alternatively, a
+table-prep formula (<code>~ &lt;table reading code&gt;</code>) or a function
+(<code>function() &lt;table reading code&gt;</code>) can be used to lazily read in the
+comparison table at interrogation time.</p></dd>
 <dt>preconditions</dt>
 <dd><p>An optional expression for mutating the input table
 before proceeding with the validation. This can either be provided as a
@@ -188,6 +197,9 @@ function <code><a href="has_columns.html">has_columns()</a></code> can be used t
 validation step active on the basis of one or more columns existing in the
 table (e.g., <code>~ . %&gt;% has_columns(vars(d, e))</code>). The default for <code>active</code>
 is <code>TRUE</code>.</p></dd>
+<dt>tbl_compare</dt>
+<dd><p>The <code>tbl_compare</code> argument is deprecated. Instead, use
+<code>count</code>.</p></dd>
 <dt>object</dt>
 <dd><p>A data frame, tibble (<code>tbl_df</code> or <code>tbl_dbi</code>), or Spark
 DataFrame (<code>tbl_spark</code>) that serves as the target table for the expectation
@@ -297,7 +309,7 @@ a validation step is expressed in R code and in the corresponding YAML
 representation.</p><div class="sourceCode"><pre><code># R statement
 agent %&gt;% 
   row_count_match(
-    tbl_compare = ~ file_tbl(
+    count = ~ file_tbl(
       file = from_github(
         file = "all_revenue_large.rds",
         repo = "rich-iannone/intendo",
@@ -314,7 +326,7 @@ agent %&gt;%
 # YAML representation
 steps:
 - row_count_match:
-    tbl_compare: ~ file_tbl(
+    count: ~ file_tbl(
       file = from_github(
         file = "all_revenue_large.rds",
         repo = "rich-iannone/intendo",
@@ -346,6 +358,7 @@ function.</p>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other validation functions: 
+<code><a href="col_count_match.html">col_count_match</a>()</code>,
 <code><a href="col_exists.html">col_exists</a>()</code>,
 <code><a href="col_is_character.html">col_is_character</a>()</code>,
 <code><a href="col_is_date.html">col_is_date</a>()</code>,
@@ -420,7 +433,7 @@ function.</p>
 <span class="r-in"><span class="co"># (`tbl_2`)</span></span>
 <span class="r-in"><span class="va">agent</span> <span class="op">&lt;-</span></span>
 <span class="r-in">  <span class="fu"><a href="create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">tbl</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">row_count_match</span><span class="op">(</span>tbl_compare <span class="op">=</span> <span class="va">tbl_2</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu">row_count_match</span><span class="op">(</span>count <span class="op">=</span> <span class="va">tbl_2</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Determine if this validation passed</span></span>
@@ -443,7 +456,7 @@ function.</p>
 <span class="r-in"><span class="co"># behavior of side effects can be</span></span>
 <span class="r-in"><span class="co"># customized with the `actions` option</span></span>
 <span class="r-in"><span class="va">tbl</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">row_count_match</span><span class="op">(</span>tbl_compare <span class="op">=</span> <span class="va">tbl_2</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu">row_count_match</span><span class="op">(</span>count <span class="op">=</span> <span class="va">tbl_2</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 3</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       a     b     c</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -459,7 +472,7 @@ function.</p>
 <span class="r-in"><span class="co"># time; this is primarily used in</span></span>
 <span class="r-in"><span class="co"># testthat tests</span></span>
 <span class="r-in"><span class="fu">expect_row_count_match</span><span class="op">(</span></span>
-<span class="r-in">  <span class="va">tbl</span>, tbl_compare <span class="op">=</span> <span class="va">tbl_2</span></span>
+<span class="r-in">  <span class="va">tbl</span>, count <span class="op">=</span> <span class="va">tbl_2</span></span>
 <span class="r-in"><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># D: Using the test function</span></span>
@@ -468,16 +481,8 @@ function.</p>
 <span class="r-in"><span class="co"># get a single logical value returned</span></span>
 <span class="r-in"><span class="co"># to us</span></span>
 <span class="r-in"><span class="va">tbl</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu">row_count_match</span><span class="op">(</span></span>
-<span class="r-in">    tbl_compare <span class="op">=</span> <span class="va">tbl_2</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       a     b     c</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     5     7     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>     7     1     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>     6     0     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>     5     0     3</span>
+<span class="r-in">  <span class="fu">test_row_count_match</span><span class="op">(</span>count <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>
@@ -490,8 +495,7 @@ function.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
     </footer></div>

@@ -104,20 +104,9 @@
 
 <!-- badges: start -->
 
-<p><br> With the <strong>pointblank</strong> package it’s really easy
-to methodically validate your data whether in the form of data frames or
-as database tables. On top of the validation toolset, the package gives
-you the means to provide and keep up-to-date with the information that
-<em>defines</em> your tables.</p>
-<p>For table <em>validation</em>, the <em>agent</em> object works with a
-large collection of simple (yet powerful!) validation functions. We can
-enable much more sophisticated validation checks by using custom
-expressions and also through stepwise mutation of the target table
-(through something we call <code>preconditions</code>).</p>
-<p>Sometimes we want to maintain table <em>information</em> and update
-it when the table goes through changes. For that, we can use an
-<em>informant</em> object + associated functions to help define the
-metadata entries and present it in a way that suits you.</p>
+<p><br> With the <strong>pointblank</strong> package it’s really easy to methodically validate your data whether in the form of data frames or as database tables. On top of the validation toolset, the package gives you the means to provide and keep up-to-date with the information that <em>defines</em> your tables.</p>
+<p>For table <em>validation</em>, the <em>agent</em> object works with a large collection of simple (yet powerful!) validation functions. We can enable much more sophisticated validation checks by using custom expressions, segmenting the data, and by selective mutations of the target table. The suite of validation functions ensures that <em>everything just works</em> no matter whether your table is a data frame or a database table.</p>
+<p>Sometimes we want to maintain table <em>information</em> and update it when the table goes through changes. For that, we can use an <em>informant</em> object plus associated functions to define the metadata entries and present it as a data dictionary. Just like we can with validation, <strong>pointblank</strong> offers easy ways to have the metadata updated so that this important documentation doesn’t become stale.</p>
 <hr>
 <div style="text-align: center;">
 <section id="video"><div class="videoUiWrapper thumbnail">
@@ -130,43 +119,33 @@ metadata entries and present it in a way that suits you.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>Want to try this out? The <strong>pointblank</strong> package is
-available on <strong>CRAN</strong>:</p>
+<p>Want to try this out? The <strong>pointblank</strong> package is available on <strong>CRAN</strong>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"pointblank"</span><span class="op">)</span></code></pre></div>
-<p>You can also install the development version of
-<strong>pointblank</strong> from <strong>GitHub</strong>:</p>
+<p>You can also install the development version of <strong>pointblank</strong> from <strong>GitHub</strong>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/remote-reexports.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"rich-iannone/pointblank"</span><span class="op">)</span></code></pre></div>
-<p>If you encounter a bug, have usage questions, or want to share ideas
-to make this package better, feel free to file an <a href="https://github.com/rich-iannone/pointblank/issues" class="external-link">issue</a>.</p>
+<p>If you encounter a bug, have usage questions, or want to share ideas to make this package better, feel free to file an <a href="https://github.com/rich-iannone/pointblank/issues" class="external-link">issue</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="lets-discuss">Let’s Discuss!<a class="anchor" aria-label="anchor" href="#lets-discuss"></a>
 </h2>
-<p>Let’s talk about data validation and data documentation in <a href="https://github.com/rich-iannone/pointblank/discussions" class="external-link"><strong>pointblank</strong>
-Discussions</a>! It’s a great place to ask questions about how to use
-the package, discuss some ideas, engage with others, and much more!</p>
+<p>Let’s talk about data validation and data documentation in <a href="https://github.com/rich-iannone/pointblank/discussions" class="external-link"><strong>pointblank</strong> Discussions</a>! It’s a great place to ask questions about how to use the package, discuss some ideas, engage with others, and much more!</p>
 </div>
 <div class="section level2">
 <h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
 </h2>
-<p>Please note that the pointblank project is released with a <a href="https://www.contributor-covenant.org/version/2/0/code_of_conduct/" class="external-link">contributor
-code of conduct</a>. By participating in this project you agree to abide
-by its terms.</p>
+<p>Please note that the pointblank project is released with a <a href="https://www.contributor-covenant.org/version/2/0/code_of_conduct/" class="external-link">contributor code of conduct</a>. By participating in this project you agree to abide by its terms.</p>
 </div>
 <div class="section level2">
 <h2 id="-license">📄 License<a class="anchor" aria-label="anchor" href="#-license"></a>
 </h2>
-<p><strong>pointblank</strong> is licensed under the MIT license. See
-the <a href="LICENSE.html"><code>LICENSE.md</code></a> file for more
-details.</p>
+<p><strong>pointblank</strong> is licensed under the MIT license. See the <a href="LICENSE.html"><code>LICENSE.md</code></a> file for more details.</p>
 </div>
 <div class="section level2">
 <h2 id="️-governance">🏛️ Governance<a class="anchor" aria-label="anchor" href="#%EF%B8%8F-governance"></a>
 </h2>
-<p>This project is primarily maintained by <a href="https://www.twitter.com/riannone" class="external-link">Rich Iannone</a>. Other authors
-may occasionally assist with some of these duties.</p>
+<p>This project is primarily maintained by <a href="https://www.twitter.com/riannone" class="external-link">Rich Iannone</a>. Other authors may occasionally assist with some of these duties.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
@@ -236,8 +215,7 @@ may occasionally assist with some of these duties.</p>
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
     </footer>

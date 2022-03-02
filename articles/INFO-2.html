@@ -100,29 +100,11 @@
 
     
     
-<p>In the <a href="../articles/INFO-1.html"><em>Intro to Information
-Management</em></a> article, we learned all about how to synthesize
-information on a table, giving us a useful report that can be published
-and widely shared. We used a <strong>pointblank</strong>
-<em>informant</em> with a set of information functions to generate
-<em>info text</em> and put that text into the appropriate report
-sections. We’re going to take this a few steps further and look into
-some more functionality makes <em>info text</em> more dynamic and also
-include a finalizing step in this workflow that accounts for evolving
-data.</p>
+<p>In the <a href="../articles/INFO-1.html"><em>Intro to Information Management</em></a> article, we learned all about how to synthesize information on a table, giving us a useful report that can be published and widely shared. We used a <strong>pointblank</strong> <em>informant</em> with a set of information functions to generate <em>info text</em> and put that text into the appropriate report sections. We’re going to take this a few steps further and look into some more functionality makes <em>info text</em> more dynamic and also include a finalizing step in this workflow that accounts for evolving data.</p>
 <div class="section level2">
-<h2 id="getting-snippets-of-useful-text-with-the-info_snippet-function">Getting Snippets of Useful Text With the <code>info_snippet()</code>
-Function<a class="anchor" aria-label="anchor" href="#getting-snippets-of-useful-text-with-the-info_snippet-function"></a>
+<h2 id="getting-snippets-of-useful-text-with-the-info_snippet-function">Getting Snippets of Useful Text With the <code>info_snippet()</code> Function<a class="anchor" aria-label="anchor" href="#getting-snippets-of-useful-text-with-the-info_snippet-function"></a>
 </h2>
-<p>A great source of information about the table can be the table
-itself. Suppose you want to show some categorical values from a
-particular column. Maybe you’d like to display the range of values in an
-important numeric column. Perhaps show some KPI values that can be
-calculated using data in the table? This can all be done with the
-<code><a href="../reference/info_snippet.html">info_snippet()</a></code> function. You give the snippet a name and
-you give it a function call. Let’s do this for the
-<code>small_table</code> dataset available in
-<strong>pointblank</strong>. This is what that table looks like:</p>
+<p>A great source of information about the table can be the table itself. Suppose you want to show some categorical values from a particular column. Maybe you’d like to display the range of values in an important numeric column. Perhaps show some KPI values that can be calculated using data in the table? This can all be done with the <code><a href="../reference/info_snippet.html">info_snippet()</a></code> function. You give the snippet a name and you give it a function call. Let’s do this for the <code>small_table</code> dataset available in <strong>pointblank</strong>. This is what that table looks like:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">small_table</span></code></pre></div>
 <pre><code><span class="co">## <span style="color: #949494;"># A tibble: 13 × 8</span></span>
@@ -141,15 +123,11 @@ you give it a function call. Let’s do this for the
 <span class="co">## <span style="color: #BCBCBC;">11</span> 2016-01-26 <span style="color: #949494;">20:07:00</span> 2016-01-26     4 2-dmx-010     7   834. TRUE  low  </span>
 <span class="co">## <span style="color: #BCBCBC;">12</span> 2016-01-28 <span style="color: #949494;">02:51:00</span> 2016-01-28     2 7-dmx-010     8   108. FALSE low  </span>
 <span class="co">## <span style="color: #BCBCBC;">13</span> 2016-01-30 <span style="color: #949494;">11:23:00</span> 2016-01-30     1 3-dka-303    <span style="color: #BB0000;">NA</span>  <span style="text-decoration: underline;">2</span>230. TRUE  high</span></code></pre>
-<p>If you wanted the mean value of data in column <code>d</code> rounded
-to one decimal place, one such way we could do it is with this
-expression:</p>
+<p>If you wanted the mean value of data in column <code>d</code> rounded to one decimal place, one such way we could do it is with this expression:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="va">.</span><span class="op">$</span><span class="va">d</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 2304.7</span></code></pre>
-<p>Inside of an <code><a href="../reference/info_snippet.html">info_snippet()</a></code> call, which is used after
-creating the <em>informant</em> object, the expression would look like
-this:</p>
+<p>Inside of an <code><a href="../reference/info_snippet.html">info_snippet()</a></code> call, which is used after creating the <em>informant</em> object, the expression would look like this:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">informant</span> <span class="op">&lt;-</span> 
   <span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span>
@@ -161,18 +139,7 @@ this:</p>
     snippet_name <span class="op">=</span> <span class="st">"mean_d"</span>,
     fn <span class="op">=</span> <span class="op">~</span> <span class="va">.</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="va">.</span><span class="op">$</span><span class="va">d</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
   <span class="op">)</span></code></pre></div>
-<p>The <code>small_table</code> dataset is associated with the
-<code>informant</code> as the target table, so, it’s represented as the
-leading <code>.</code> in the functional sequence given to
-<code>fn</code> inside of <code><a href="../reference/info_snippet.html">info_snippet()</a></code>. It’s important to
-note that there’s a leading <code>~</code>, making this expression a RHS
-formula (i.e., we don’t want to execute anything here, at this time).
-Lastly, the snippet has been given the name <code>"mean_d"</code>. We
-know that this snippet will produce the value <code>2304.7</code> so
-what can we do with that? We should put that value into some <em>info
-text</em> and use the <code>snippet_name</code> as the key. It works
-similarly to how the <strong>glue</strong> package does text
-interpolation, and here’s the continuation of the above example:</p>
+<p>The <code>small_table</code> dataset is associated with the <code>informant</code> as the target table, so, it’s represented as the leading <code>.</code> in the functional sequence given to <code>fn</code> inside of <code><a href="../reference/info_snippet.html">info_snippet()</a></code>. It’s important to note that there’s a leading <code>~</code>, making this expression a RHS formula (i.e., we don’t want to execute anything here, at this time). Lastly, the snippet has been given the name <code>"mean_d"</code>. We know that this snippet will produce the value <code>2304.7</code> so what can we do with that? We should put that value into some <em>info text</em> and use the <code>snippet_name</code> as the key. It works similarly to how the <strong>glue</strong> package does text interpolation, and here’s the continuation of the above example:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">informant</span> <span class="op">&lt;-</span> 
   <span class="va">informant</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
@@ -182,27 +149,14 @@ interpolation, and here’s the continuation of the above example:</p>
     those numbers in column `a`. The mean value is {mean_d}, which is
     far greater than any number in that other column."</span>
   <span class="op">)</span></code></pre></div>
-<p>Within the text, there’s the use of curly braces and the name of the
-snippet (<code>{mean_d}</code>). That’s where the <code>2304.7</code>
-value will be inserted. This methodology for inserting the computed
-values of snippets can be performed wherever <em>info text</em> is
-provided (in either of the <code><a href="../reference/info_tabular.html">info_tabular()</a></code>,
-<code><a href="../reference/info_columns.html">info_columns()</a></code>, and <code><a href="../reference/info_section.html">info_section()</a></code> functions).
-Let’s take a look at the report by printing the <code>informant</code>
-object</p>
+<p>Within the text, there’s the use of curly braces and the name of the snippet (<code>{mean_d}</code>). That’s where the <code>2304.7</code> value will be inserted. This methodology for inserting the computed values of snippets can be performed wherever <em>info text</em> is provided (in either of the <code><a href="../reference/info_tabular.html">info_tabular()</a></code>, <code><a href="../reference/info_columns.html">info_columns()</a></code>, and <code><a href="../reference/info_section.html">info_section()</a></code> functions). Let’s take a look at the report by printing the <code>informant</code> object</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">informant</span></code></pre></div>
 <div style="text-align: center;">
 <img src="https://silly-jackson-b3dec8.netlify.app/informant_report_7.png" alt="This is a tabular report entitled 'Pointblank Information'. The header contains information about the input table (identifying it as a tibble called 'small_table') and includes the number of rows (13) and columns (8). In the table body, the section entitled 'Columns' has a row for each column that has been identified in 'small_table'. Each row consists of the column name (enclosed in a box) and the column type (for example, 'Date', 'integer', etc.). There are 8 columns in the input table so there are 8 rows in this reporting table ('date_time', 'date', and 'a' through to 'f'). The row concerning column 'd' contains the text: 'This column contains fairly large numbers (much larger than those numbers in column 'a'. The mean value is {mean_d}, which is far greater than any number in that other column.'" width="80%">
 </div>
 <p><br></p>
-<p>Hmm. There is <code>"... {mean_d} ..."</code> text in the report that
-should have been replaced with the mean value of column <code>d</code>.
-What gives? Well, there’s one finalizing step that needs to be done and
-should always be done to wrap up the <em>Information Management</em>
-workflow and that is the use of the <code><a href="../reference/incorporate.html">incorporate()</a></code> function.
-Let’s write the whole thing again and finish it off with a call to
-<code><a href="../reference/incorporate.html">incorporate()</a></code>.</p>
+<p>Hmm. There is <code>"... {mean_d} ..."</code> text in the report that should have been replaced with the mean value of column <code>d</code>. What gives? Well, there’s one finalizing step that needs to be done and should always be done to wrap up the <em>Information Management</em> workflow and that is the use of the <code><a href="../reference/incorporate.html">incorporate()</a></code> function. Let’s write the whole thing again and finish it off with a call to <code><a href="../reference/incorporate.html">incorporate()</a></code>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">informant</span> <span class="op">&lt;-</span> 
   <span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span>
@@ -227,53 +181,24 @@ Let’s write the whole thing again and finish it off with a call to
 <img src="https://silly-jackson-b3dec8.netlify.app/informant_report_8.png" alt="This is a tabular report entitled 'Pointblank Information'. Which is similar to the table presented just before. The key difference is that the row concerning column 'd' now contains the text: 'This column contains fairly large numbers (much larger than those numbers in column 'a'. The mean value is 2304.70, which is far greater than any number in that other column.' This revised text now contains a numeric figure instead of the placeholder for it." width="80%">
 </div>
 <p><br></p>
-<p>This time, sweet success. The value appears and the overall
-formatting looks great! This is a very useful thing, so long as we
-remember to use the <code><a href="../reference/incorporate.html">incorporate()</a></code> function to make it
-happen (more on that in the next section).</p>
+<p>This time, sweet success. The value appears and the overall formatting looks great! This is a very useful thing, so long as we remember to use the <code><a href="../reference/incorporate.html">incorporate()</a></code> function to make it happen (more on that in the next section).</p>
 </div>
 <div class="section level2">
-<h2 id="ensuring-that-snippets-and-other-table-metadata-element-are-up-to-date">Ensuring That Snippets (and Other Table Metadata Element) Are
-Up-to-Date<a class="anchor" aria-label="anchor" href="#ensuring-that-snippets-and-other-table-metadata-element-are-up-to-date"></a>
+<h2 id="ensuring-that-snippets-and-other-table-metadata-element-are-up-to-date">Ensuring That Snippets (and Other Table Metadata Element) Are Up-to-Date<a class="anchor" aria-label="anchor" href="#ensuring-that-snippets-and-other-table-metadata-element-are-up-to-date"></a>
 </h2>
-<p>Tables can change with time. Whether that data source is a public
-dataset, an organization’s data table, or a continually-updated Excel
-file (😱), we should be ready for change. In the previous example, we
-used the <code><a href="../reference/incorporate.html">incorporate()</a></code> function to finalize the report.
-Without it, our snippet didn’t work. There are two major things that
-<code><a href="../reference/incorporate.html">incorporate()</a></code> does for you in the <em>Information
-Management</em> workflow.</p>
+<p>Tables can change with time. Whether that data source is a public dataset, an organization’s data table, or a continually-updated Excel file (😱), we should be ready for change. In the previous example, we used the <code><a href="../reference/incorporate.html">incorporate()</a></code> function to finalize the report. Without it, our snippet didn’t work. There are two major things that <code><a href="../reference/incorporate.html">incorporate()</a></code> does for you in the <em>Information Management</em> workflow.</p>
 <ol style="list-style-type: decimal">
-<li><p>Evaluation of text snippets in all <code><a href="../reference/info_snippet.html">info_snippet()</a></code>
-calls, and, insertion of snippets in <em>info text</em> within
-<code>"{&lt;snippet_name&gt;}"</code>.</p></li>
-<li><p>Updating of table row and column counts in the header of the
-report.</p></li>
+<li><p>Evaluation of text snippets in all <code><a href="../reference/info_snippet.html">info_snippet()</a></code> calls, and, insertion of snippets in <em>info text</em> within <code>"{&lt;snippet_name&gt;}"</code>.</p></li>
+<li><p>Updating of table row and column counts in the header of the report.</p></li>
 </ol>
-<p>We really are incorporating aspects of the table into the report with
-<code><a href="../reference/incorporate.html">incorporate()</a></code> but might might also think of it as
-regenerating, refreshing, or renewing the table. It gives
-<strong>pointblank</strong> license to access the table the same way
-that <code><a href="../reference/interrogate.html">interrogate()</a></code> does in the <a href="(../articles/VALID-I.html)"><strong>VALID-I</strong></a>
-validation workflow. On the first use of <code><a href="../reference/incorporate.html">incorporate()</a></code>, all
-text snippets will be put in their places; subsequent uses of
-<code><a href="../reference/incorporate.html">incorporate()</a></code> will replace the appropriate text as
-necessary. Every use of <code><a href="../reference/incorporate.html">incorporate()</a></code> will update the row
-and column counts in the header.</p>
-<p>Here’s a short demo of the header changing, because it’s pretty
-instructive. Let’s use our <code>small_table</code> object as
-<code>target_table</code>. With <code><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim()</a></code> we can be totally
-sure of the table dimensions.</p>
+<p>We really are incorporating aspects of the table into the report with <code><a href="../reference/incorporate.html">incorporate()</a></code> but might might also think of it as regenerating, refreshing, or renewing the table. It gives <strong>pointblank</strong> license to access the table the same way that <code><a href="../reference/interrogate.html">interrogate()</a></code> does in the <a href="(../articles/VALID-I.html)"><strong>VALID-I</strong></a> validation workflow. On the first use of <code><a href="../reference/incorporate.html">incorporate()</a></code>, all text snippets will be put in their places; subsequent uses of <code><a href="../reference/incorporate.html">incorporate()</a></code> will replace the appropriate text as necessary. Every use of <code><a href="../reference/incorporate.html">incorporate()</a></code> will update the row and column counts in the header.</p>
+<p>Here’s a short demo of the header changing, because it’s pretty instructive. Let’s use our <code>small_table</code> object as <code>target_table</code>. With <code><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim()</a></code> we can be totally sure of the table dimensions.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">target_table</span> <span class="op">&lt;-</span> <span class="va">small_table</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">target_table</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 13  8</span></code></pre>
-<p>Let’s allow an informant to access the <code>target_table</code>
-through the <code>tbl</code> argument but, in this case, the expression
-is <code>~ target_table</code> (it simply gets the table from the global
-workspace). After using <code><a href="../reference/incorporate.html">incorporate()</a></code> and printing the
-<code>informant_tt</code> object, let’s just examine the header.</p>
+<p>Let’s allow an informant to access the <code>target_table</code> through the <code>tbl</code> argument but, in this case, the expression is <code>~ target_table</code> (it simply gets the table from the global workspace). After using <code><a href="../reference/incorporate.html">incorporate()</a></code> and printing the <code>informant_tt</code> object, let’s just examine the header.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">informant_tt</span> <span class="op">&lt;-</span> 
   <span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span>
@@ -291,10 +216,8 @@ workspace). After using <code><a href="../reference/incorporate.html">incorporat
 This is an excerpt of the complete report, showing just the header.
 </p>
 <p><br></p>
-<p>The number of rows and columns reported in the header checks out: 13
-rows and 8 columns.</p>
-<p>Now, let’s manually enlarge the <code>target_table</code> and print
-the new row and column counts.</p>
+<p>The number of rows and columns reported in the header checks out: 13 rows and 8 columns.</p>
+<p>Now, let’s manually enlarge the <code>target_table</code> and print the new row and column counts.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">target_table</span> <span class="op">&lt;-</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="va">small_table</span>, <span class="va">small_table</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
@@ -302,8 +225,7 @@ the new row and column counts.</p>
 
 <span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">target_table</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 26  9</span></code></pre>
-<p>We’ve got our informant object, let’s see how
-<code><a href="../reference/incorporate.html">incorporate()</a></code> keeps pace with the change.</p>
+<p>We’ve got our informant object, let’s see how <code><a href="../reference/incorporate.html">incorporate()</a></code> keeps pace with the change.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">informant_tt</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/incorporate.html">incorporate</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div style="text-align: center;">
@@ -313,53 +235,26 @@ the new row and column counts.</p>
 This is an excerpt of the complete report, showing just the header.
 </p>
 <p><br></p>
-<p>Great! Using <code><a href="../reference/incorporate.html">incorporate()</a></code> has accurately updated the
-reporting of row and column counts in the header. And it’s also very
-much worth noting that the use of <code>tbl = ~ target_table</code>
-rather than <code>tbl = target_table</code> is important here. Had the
-latter been used in <code><a href="../reference/create_informant.html">create_informant()</a></code>, that table would be
-bound to the informant in its initial state (with 13 rows and 8 columns)
-and any updates to the table wouldn’t be reflected in the reporting upon
-using <code><a href="../reference/incorporate.html">incorporate()</a></code>. The table-prep formula used here is
-meant for re-obtaining the table each and every time the table is
-needed.</p>
-<p>In short, unless you have no uses of <code><a href="../reference/info_snippet.html">info_snippet()</a></code> and
-the table isn’t expected to change, it’s recommended to use
-<code><a href="../reference/incorporate.html">incorporate()</a></code> as the final call in this workflow.</p>
+<p>Great! Using <code><a href="../reference/incorporate.html">incorporate()</a></code> has accurately updated the reporting of row and column counts in the header. And it’s also very much worth noting that the use of <code>tbl = ~ target_table</code> rather than <code>tbl = target_table</code> is important here. Had the latter been used in <code><a href="../reference/create_informant.html">create_informant()</a></code>, that table would be bound to the informant in its initial state (with 13 rows and 8 columns) and any updates to the table wouldn’t be reflected in the reporting upon using <code><a href="../reference/incorporate.html">incorporate()</a></code>. The table-prep formula used here is meant for re-obtaining the table each and every time the table is needed.</p>
+<p>In short, unless you have no uses of <code><a href="../reference/info_snippet.html">info_snippet()</a></code> and the table isn’t expected to change, it’s recommended to use <code><a href="../reference/incorporate.html">incorporate()</a></code> as the final call in this workflow.</p>
 </div>
 <div class="section level2">
-<h2 id="helpful-pointblank-functions-that-work-exceedingly-well-with-info_snippet">Helpful <strong>pointblank</strong> Functions that Work Exceedingly
-Well with <code>info_snippet()</code><a class="anchor" aria-label="anchor" href="#helpful-pointblank-functions-that-work-exceedingly-well-with-info_snippet"></a>
+<h2 id="helpful-pointblank-functions-that-work-exceedingly-well-with-info_snippet">Helpful <strong>pointblank</strong> Functions that Work Exceedingly Well with <code>info_snippet()</code><a class="anchor" aria-label="anchor" href="#helpful-pointblank-functions-that-work-exceedingly-well-with-info_snippet"></a>
 </h2>
-<p>There are a few functions available in <strong>pointblank</strong>
-that make it much easier to get commonly-used text snippets. All of them
-begin with the <code>snip_</code> prefix and they are:</p>
+<p>There are a few functions available in <strong>pointblank</strong> that make it much easier to get commonly-used text snippets. All of them begin with the <code>snip_</code> prefix and they are:</p>
 <ul>
 <li>
 <code><a href="../reference/snip_list.html">snip_list()</a></code>: Gets a list of column categories</li>
 <li>
 <code><a href="../reference/snip_lowest.html">snip_lowest()</a></code>: Gets the lowest value from a column</li>
 <li>
-<code><a href="../reference/snip_highest.html">snip_highest()</a></code>: Gets the highest value from a
-column</li>
+<code><a href="../reference/snip_highest.html">snip_highest()</a></code>: Gets the highest value from a column</li>
 </ul>
-<p>Each of these functions can be used directly as a <code>fn</code>
-value and we don’t have to specify the table since its assumed that the
-target table is where we’ll be snipping data from. Let’s have a look at
-each of these in action.</p>
+<p>Each of these functions can be used directly as a <code>fn</code> value and we don’t have to specify the table since its assumed that the target table is where we’ll be snipping data from. Let’s have a look at each of these in action.</p>
 <div class="section level3">
 <h3 id="the-snip_list-function">The <code>snip_list()</code> Function<a class="anchor" aria-label="anchor" href="#the-snip_list-function"></a>
 </h3>
-<p>When describing some aspect of the target table, we may want to
-extract some values from a column and include them as a piece of info
-text. We’d want the values to be nicely formatted as a list (with
-commas) and we’d probably prefer that this be constrained to a certain
-size (so as to not potentially generate massive amounts of text). This
-can be efficiently done with <code><a href="../reference/snip_list.html">snip_list()</a></code>. Let’s experiment
-with the combination of <code><a href="../reference/snip_list.html">snip_list()</a></code> and
-<code><a href="../reference/info_snippet.html">info_snippet()</a></code>, extending the
-<strong>palmerpenguins</strong> example from the <a href="../articles/INFO-I.html"><em>Intro to Information
-Management</em></a> article.</p>
+<p>When describing some aspect of the target table, we may want to extract some values from a column and include them as a piece of info text. We’d want the values to be nicely formatted as a list (with commas) and we’d probably prefer that this be constrained to a certain size (so as to not potentially generate massive amounts of text). This can be efficiently done with <code><a href="../reference/snip_list.html">snip_list()</a></code>. Let’s experiment with the combination of <code><a href="../reference/snip_list.html">snip_list()</a></code> and <code><a href="../reference/info_snippet.html">info_snippet()</a></code>, extending the <strong>palmerpenguins</strong> example from the <a href="../articles/INFO-I.html"><em>Intro to Information Management</em></a> article.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">informant_pp</span> <span class="op">&lt;-</span> 
   <span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span>
@@ -391,17 +286,11 @@ Management</em></a> article.</p>
 <img src="https://silly-jackson-b3dec8.netlify.app/informant_report_11.png" alt="This is a tabular report entitled 'Pointblank Information'. The header contains information about the input table, which is the 'penguins' dataset). Information on the row and column count is available (344 rows and 8 columns). In the table body, the section entitled 'Columns' has a row for each column that has been identified in 'penguins'. Presented are only the first two rows, corresponding to the first two columns in the penguins dataset: 'species' and 'island'. The 'species' row contains the text: 'A factor denoting penguin species (Adelie, Gentoo, and Chinstrap)'. The 'island' row contains this text: 'A factor denoting island in Palmer Archipelago, Antarctica (Torgersen, Biscoe, and Dream)'." width="80%">
 </div>
 <p align="center">
-This is an excerpt of the complete report, showing just the header and
-part of the <strong>COLUMNS</strong> section.
+This is an excerpt of the complete report, showing just the header and part of the <strong>COLUMNS</strong> section.
 </p>
 <p><br></p>
-<p>This seemed to work out quite well. No need for determining what
-these strings are and then hardcoding them to the <em>info text</em>,
-<code><a href="../reference/snip_list.html">snip_list()</a></code> did all the work here.</p>
-<p>This also works for numeric values. Let’s use
-<code><a href="../reference/snip_list.html">snip_list()</a></code> to provide a text snippet based on values in
-the <code>year</code> column (which is an <code>integer</code>
-column):</p>
+<p>This seemed to work out quite well. No need for determining what these strings are and then hardcoding them to the <em>info text</em>, <code><a href="../reference/snip_list.html">snip_list()</a></code> did all the work here.</p>
+<p>This also works for numeric values. Let’s use <code><a href="../reference/snip_list.html">snip_list()</a></code> to provide a text snippet based on values in the <code>year</code> column (which is an <code>integer</code> column):</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">informant_pp</span> <span class="op">&lt;-</span>
   <span class="va">informant_pp</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
@@ -420,27 +309,15 @@ column):</p>
 <img src="https://silly-jackson-b3dec8.netlify.app/informant_report_12.png" alt="This is an except of the tabular report entitled 'Pointblank Information', based on the 'penguins' dataset. Presented is only the row that corresponds to the 'year' column in the penguins dataset. The 'year' row contains the text: 'The study year (2007, 2008, and 2009)'." width="80%">
 </div>
 <p align="center">
-This is an excerpt of the complete report, showing just the bottom of
-the <strong>COLUMNS</strong> section and the footer.
+This is an excerpt of the complete report, showing just the bottom of the <strong>COLUMNS</strong> section and the footer.
 </p>
 <p><br></p>
-<p>Again, no issues with the formatting and display of values. We got
-the <em>info text</em> <code>"The study year ("2007", "2008", and "2009"
-)."</code> for our efforts here and it saved us from having to determine
-this, plus, should the data be updated with new <code>year</code>
-values, that will be reflected in this info text upon using
-<code><a href="../reference/incorporate.html">incorporate()</a></code>. Refreshed <em>info text</em> really provides
-huge benefits, especially when the data changes a lot (e.g., database
-tables).</p>
+<p>Again, no issues with the formatting and display of values. We got the <em>info text</em> <code>"The study year ("2007", "2008", and "2009" )."</code> for our efforts here and it saved us from having to determine this, plus, should the data be updated with new <code>year</code> values, that will be reflected in this info text upon using <code><a href="../reference/incorporate.html">incorporate()</a></code>. Refreshed <em>info text</em> really provides huge benefits, especially when the data changes a lot (e.g., database tables).</p>
 </div>
 <div class="section level3">
-<h3 id="the-snip_lowest-and-snip_highest-functions">The <code>snip_lowest()</code> and <code>snip_highest()</code>
-Functions<a class="anchor" aria-label="anchor" href="#the-snip_lowest-and-snip_highest-functions"></a>
+<h3 id="the-snip_lowest-and-snip_highest-functions">The <code>snip_lowest()</code> and <code>snip_highest()</code> Functions<a class="anchor" aria-label="anchor" href="#the-snip_lowest-and-snip_highest-functions"></a>
 </h3>
-<p>We can get the lowest and highest values from a column and inject
-those formatted values into some <em>info_text</em>. Let’s do that for
-some of the measured values in the <code>penguins</code> dataset with
-<code><a href="../reference/snip_lowest.html">snip_lowest()</a></code> and <code><a href="../reference/snip_highest.html">snip_highest()</a></code>.</p>
+<p>We can get the lowest and highest values from a column and inject those formatted values into some <em>info_text</em>. Let’s do that for some of the measured values in the <code>penguins</code> dataset with <code><a href="../reference/snip_lowest.html">snip_lowest()</a></code> and <code><a href="../reference/snip_highest.html">snip_highest()</a></code>.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">informant_pp</span> <span class="op">&lt;-</span>
   <span class="va">informant_pp</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
@@ -485,43 +362,20 @@ some of the measured values in the <code>penguins</code> dataset with
 species, A factor denoting penguin species (Adélie, Chinstrap, and Gentoo); (2) island, A factor denoting island in Palmer Archipelago, Antarctica (Biscoe, Dream, or Torgersen); (3) bill_length_mm, A number denoting bill length (in units of millimeters); (4) bill_depth_mm, A number denoting bill depth (in the range of 13.1 to 21.5 millimeters); (5) flipper_length_mm, An integer denoting flipper length (in units of millimeters), largest observed is 231 mm.; (6) body_mass_g has no descriptive text and neither does the row (7), which corresponds to the sex column; however, (8) year, has the text of The study year (e.g., 2007, 2008, 2009)." width="80%">
 </div>
 <p><br></p>
-<p>We can see from the report output that we can creatively use the
-lowest and highest values obtained by <code><a href="../reference/snip_lowest.html">snip_lowest()</a></code> and
-<code><a href="../reference/snip_highest.html">snip_highest()</a></code> to specify a range or simply show some
-maximum value. While the ordering of the <code><a href="../reference/info_columns.html">info_columns()</a></code>
-calls in the example affects the overall layout of the text (through the
-text appending behavior), the placement of <code><a href="../reference/info_snippet.html">info_snippet()</a></code>
-calls <em>does not</em> matter. And, again, we must use
-<code><a href="../reference/incorporate.html">incorporate()</a></code> to update all of the text snippets and render
-them in their appropriate locations (inside each
-<code>{&lt;snippet_name&gt;}</code>).</p>
+<p>We can see from the report output that we can creatively use the lowest and highest values obtained by <code><a href="../reference/snip_lowest.html">snip_lowest()</a></code> and <code><a href="../reference/snip_highest.html">snip_highest()</a></code> to specify a range or simply show some maximum value. While the ordering of the <code><a href="../reference/info_columns.html">info_columns()</a></code> calls in the example affects the overall layout of the text (through the text appending behavior), the placement of <code><a href="../reference/info_snippet.html">info_snippet()</a></code> calls <em>does not</em> matter. And, again, we must use <code><a href="../reference/incorporate.html">incorporate()</a></code> to update all of the text snippets and render them in their appropriate locations (inside each <code>{&lt;snippet_name&gt;}</code>).</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="text-tricks">
 <em>Text Tricks</em><a class="anchor" aria-label="anchor" href="#text-tricks"></a>
 </h2>
-<p>While your <em>info text</em> can be jazzed up with Markdown, there
-are a few extra tricks that make authoring the text a bit more
-pleasurable. Once you know about these <em>text tricks</em> you’ll be
-able to express information in many more interesting ways.</p>
+<p>While your <em>info text</em> can be jazzed up with Markdown, there are a few extra tricks that make authoring the text a bit more pleasurable. Once you know about these <em>text tricks</em> you’ll be able to express information in many more interesting ways.</p>
 <div class="section level3">
 <h3 id="links-and-dates">Links and Dates<a class="anchor" aria-label="anchor" href="#links-and-dates"></a>
 </h3>
-<p>If you have links in your text, <strong>pointblank</strong> will try
-to identify them and style them nicely. This amounts to using a
-pleasing, light-blue color and underlines that appear on hover. It
-doesn’t take much to style links but it does require <em>something</em>.
-So, Markdown links written as <code>&lt; link url &gt;</code> or <code>[
-link text ]( link url )</code> will both get the transformation
-treatment.</p>
-<p>Sometimes you want dates to stand out from text. Try enclosing a date
-expressed in the ISO-8601 standard with parentheses, like this:
-<code>(2004-12-01)</code>. What will happen is that date will be set in
-a monospaced variation of the reporting font, and, it will be underlined
-in a striking shade of purple.</p>
-<p>Here’s how we might use these features while otherwise adding more
-information to the <strong>palmerpenguins</strong> reporting:</p>
+<p>If you have links in your text, <strong>pointblank</strong> will try to identify them and style them nicely. This amounts to using a pleasing, light-blue color and underlines that appear on hover. It doesn’t take much to style links but it does require <em>something</em>. So, Markdown links written as <code>&lt; link url &gt;</code> or <code>[ link text ]( link url )</code> will both get the transformation treatment.</p>
+<p>Sometimes you want dates to stand out from text. Try enclosing a date expressed in the ISO-8601 standard with parentheses, like this: <code>(2004-12-01)</code>. What will happen is that date will be set in a monospaced variation of the reporting font, and, it will be underlined in a striking shade of purple.</p>
+<p>Here’s how we might use these features while otherwise adding more information to the <strong>palmerpenguins</strong> reporting:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">informant_pp</span> <span class="op">&lt;-</span>
   <span class="va">informant_pp</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
@@ -544,25 +398,18 @@ information to the <strong>palmerpenguins</strong> reporting:</p>
 <img src="https://silly-jackson-b3dec8.netlify.app/informant_report_14.png" alt="This is a tabular report entitled 'Pointblank Information'. The header contains information about the input table (identifying it as a tibble called 'penguins') and includes the number of rows (344) and columns (8). In the table body, there is a section called 'Table' and three subsections: (1) 'R Dataset', (2) 'Data Collection', and (3) 'Citation'. The text for each of these subsections is available in (and taken verbatim from) the previous code listing. Notably, the date presented in the first subsection (2020-07-25) is prominently underlined and the text is styled with a monospaced variant of the report font." width="80%">
 </div>
 <p align="center">
-This is an excerpt of the complete report, showing just the
-<strong>TABLE</strong> section and the header.
+This is an excerpt of the complete report, showing just the <strong>TABLE</strong> section and the header.
 </p>
 <p><br></p>
 </div>
 <div class="section level3">
 <h3 id="labels">Labels<a class="anchor" aria-label="anchor" href="#labels"></a>
 </h3>
-<p>We can take portions of text and present them as labels. These will
-help you call out important attributes in short form and may eliminate
-the need for oft-repeated statements. You might apply to labels to
-signify priority, category, or any other information you find useful. To
-do this we have two options,</p>
+<p>We can take portions of text and present them as labels. These will help you call out important attributes in short form and may eliminate the need for oft-repeated statements. You might apply to labels to signify priority, category, or any other information you find useful. To do this we have two options,</p>
 <ol style="list-style-type: decimal">
-<li>Use double parentheses around text to capture it in a rectangular
-label: <code>((label text))</code>
+<li>Use double parentheses around text to capture it in a rectangular label: <code>((label text))</code>
 </li>
-<li>Use triple parentheses to capture text into a rounded-rectangular
-label: <code>(((label text)))</code>
+<li>Use triple parentheses to capture text into a rounded-rectangular label: <code>(((label text)))</code>
 </li>
 </ol>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
@@ -587,51 +434,38 @@ label: <code>(((label text)))</code>
 <img src="https://silly-jackson-b3dec8.netlify.app/informant_report_15.png" alt="This is an except of a tabular report entitled 'Pointblank Information'. The header is not presented but, instead, there are two sections in the report: 'Columns' and 'Additional Notes'. The first section contains information on each of the columns from the penguins dataset. Notably, some of the information entries are adorned with a 'Measured' label (they appear at the end of the descriptive text entries, enclosed in a box). These labels occur in the rows describing the 'bill_length_mm', 'bill_depth_mm', 'flipper_length_mm', and 'body_mass_g' columns. In the 'Additional Notes' section of the report table (at the bottom), there is a subsection called 'Data Types'. Within that there are three labels enclosed in rounded boxes; these labels are 'factor', 'numeric', and 'integer'." width="80%">
 </div>
 <p align="center">
-This is an excerpt of the complete report, showing just the
-<strong>COLUMNS</strong> and <strong>ADDITIONAL NOTES</strong> sections.
+This is an excerpt of the complete report, showing just the <strong>COLUMNS</strong> and <strong>ADDITIONAL NOTES</strong> sections.
 </p>
 <p><br></p>
 </div>
 <div class="section level3">
 <h3 id="get-stylin">Get Stylin’<a class="anchor" aria-label="anchor" href="#get-stylin"></a>
 </h3>
-<p>If you want to use CSS styles on spans of <em>info text</em>, it’s
-possible with the following construction:</p>
+<p>If you want to use CSS styles on spans of <em>info text</em>, it’s possible with the following construction:</p>
 <p><code>[[ info text ]]&lt;&lt; CSS style rules &gt;&gt;</code></p>
-<p>It’s important to ensure that each CSS rule is concluded with a
-<code>;</code> character in this syntax. Styling the word
-<code>factor</code> inside a piece of <em>info text</em> might look like
-this:</p>
-<p><code>This is a [[factor]]&lt;&lt;color: red; font-weight:
-300;&gt;&gt; value.</code></p>
+<p>It’s important to ensure that each CSS rule is concluded with a <code>;</code> character in this syntax. Styling the word <code>factor</code> inside a piece of <em>info text</em> might look like this:</p>
+<p><code>This is a [[factor]]&lt;&lt;color: red; font-weight: 300;&gt;&gt; value.</code></p>
 <p>Where the result looks something like this:</p>
 <div style="text-align: center;">
 <img src="https://silly-jackson-b3dec8.netlify.app/info_text_styled.png" alt="This is a snippet of text that reads 'This is a factor value.' Moreover, the word 'factor' is written in red whereas the rest of the text is in a dark gray." width="40%">
 </div>
 <p><br></p>
-<p>There are many CSS style rules that can be used. Here’s a sample of a
-few useful ones:</p>
+<p>There are many CSS style rules that can be used. Here’s a sample of a few useful ones:</p>
 <ul>
 <li>
 <code>color: &lt;a color value&gt;;</code> (text color)</li>
 <li>
-<code>background-color: &lt;a color value&gt;;</code> (the text’s
-background color)</li>
-<li><code>text-decoration: (overline | line-through |
-underline);</code></li>
-<li><code>text-transform: (uppercase | lowercase |
-capitalize);</code></li>
+<code>background-color: &lt;a color value&gt;;</code> (the text’s background color)</li>
+<li><code>text-decoration: (overline | line-through | underline);</code></li>
+<li><code>text-transform: (uppercase | lowercase | capitalize);</code></li>
 <li><code>letter-spacing: &lt;a +/- length value&gt;;</code></li>
 <li><code>word-spacing: &lt;a +/- length value&gt;;</code></li>
 <li><code>font-style: (normal | italic | oblique);</code></li>
 <li><code>font-weight: (normal | bold | 100-900);</code></li>
 <li><code>font-variant: (normal | bold | 100-900);</code></li>
-<li><code>border: &lt;a color value&gt; &lt;a length value&gt; (solid |
-dashed | dotted);</code></li>
+<li><code>border: &lt;a color value&gt; &lt;a length value&gt; (solid | dashed | dotted);</code></li>
 </ul>
-<p>Continuing with our <strong>palmerpenguins</strong> reporting, we’ll
-add some more <em>info text</em> and take the opportunity to add CSS
-style rules using the <code>[[ ]]&lt;&lt; &gt;&gt;</code> syntax.</p>
+<p>Continuing with our <strong>palmerpenguins</strong> reporting, we’ll add some more <em>info text</em> and take the opportunity to add CSS style rules using the <code>[[ ]]&lt;&lt; &gt;&gt;</code> syntax.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">informant_pp</span> <span class="op">&lt;-</span>
   <span class="va">informant_pp</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
@@ -655,22 +489,11 @@ style rules using the <code>[[ ]]&lt;&lt; &gt;&gt;</code> syntax.</p>
 <img src="https://silly-jackson-b3dec8.netlify.app/informant_report_16.png" alt="This is an except of a tabular report entitled 'Pointblank Information'. The header is not presented but, instead, there is one section displayed from the full report: 'Additional Notes'. There are two subsections in that: 'Data Types' and 'Keywords'. Within the 'Data Types' subsection there are three labels enclosed in rounded boxes; these labels are 'factor', 'numeric', and 'integer'. Within the 'Keyword' subsection there are three different labels enclosed in square boxes; these labels are 'penguins', 'Antarctica', and 'measurements'. These last three labels have customs colors for their box borders and their background fill." width="80%">
 </div>
 <p align="center">
-This is an excerpt of the complete report, showing just the bottom of
-the <strong>COLUMNS</strong> section, the <strong>ADDITIONAL
-NOTES</strong> section, and the footer.
+This is an excerpt of the complete report, showing just the bottom of the <strong>COLUMNS</strong> section, the <strong>ADDITIONAL NOTES</strong> section, and the footer.
 </p>
 <p><br></p>
-<p>With the above <code><a href="../reference/info_columns.html">info_columns()</a></code> and
-<code><a href="../reference/info_section.html">info_section()</a></code> function calls, we are able to style a
-single word (with an underline) and even style labels (changing the
-border and background colors). The syntax here is somewhat forgiving,
-allowing you to put line breaks between <code>]]</code> and
-<code>&lt;&lt;</code> and between style rules so that lines of markup
-don’t have to be overly long.</p>
-<p>So, what do you think of all these <em>text tricks</em>? You got to
-admit they can spice up the proceedings. More of them will inevitably be
-added as development on <strong>pointblank</strong> proceeds. But that’s
-it for now. <em>Don’t you think you’ve had enough?</em></p>
+<p>With the above <code><a href="../reference/info_columns.html">info_columns()</a></code> and <code><a href="../reference/info_section.html">info_section()</a></code> function calls, we are able to style a single word (with an underline) and even style labels (changing the border and background colors). The syntax here is somewhat forgiving, allowing you to put line breaks between <code>]]</code> and <code>&lt;&lt;</code> and between style rules so that lines of markup don’t have to be overly long.</p>
+<p>So, what do you think of all these <em>text tricks</em>? You got to admit they can spice up the proceedings. More of them will inevitably be added as development on <strong>pointblank</strong> proceeds. But that’s it for now. <em>Don’t you think you’ve had enough?</em></p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -686,8 +509,7 @@ it for now. <em>Don’t you think you’ve had enough?</em></p>
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
     </footer>

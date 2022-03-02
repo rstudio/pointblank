@@ -22,15 +22,15 @@
 #' @description
 #' The `col_count_match()` validation function, the `expect_col_count_match()`
 #' expectation function, and the `test_col_count_match()` test function all
-#' check whether the column count in the target table matches that of a comparison
-#' table. The validation function can be used directly on a data table or with
-#' an *agent* object (technically, a `ptblank_agent` object) whereas the
-#' expectation and test functions can only be used with a data table. The types
-#' of data tables that can be used include data frames, tibbles, database tables
-#' (`tbl_dbi`), and Spark DataFrames (`tbl_spark`). As a validation step or as
-#' an expectation, there is a single test unit that hinges on whether the column
-#' counts for the two tables are the same (after any `preconditions` have been
-#' applied).
+#' check whether the column count in the target table matches that of a
+#' comparison table. The validation function can be used directly on a data
+#' table or with an *agent* object (technically, a `ptblank_agent` object)
+#' whereas the expectation and test functions can only be used with a data
+#' table. The types of data tables that can be used include data frames,
+#' tibbles, database tables (`tbl_dbi`), and Spark DataFrames (`tbl_spark`). As
+#' a validation step or as an expectation, there is a single test unit that
+#' hinges on whether the column counts for the two tables are the same (after
+#' any `preconditions` have been applied).
 #' 
 #' @section Preconditions:
 #' Providing expressions as `preconditions` means **pointblank** will preprocess

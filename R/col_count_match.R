@@ -17,27 +17,29 @@
 #
 
 
-#' Does the target table match a comparison table?
+#' Does the column count match that of a different table?
 #'
 #' @description
-#' The `tbl_match()` validation function, the `expect_tbl_match()` expectation
-#' function, and the `test_tbl_match()` test function all check whether the
-#' target table's composition matches that of a comparison table. The validation
-#' function can be used directly on a data table or with an *agent* object
-#' (technically, a `ptblank_agent` object) whereas the expectation and test
-#' functions can only be used with a data table. The types of data tables that
-#' can be used include data frames, tibbles, database tables (`tbl_dbi`), and
-#' Spark DataFrames (`tbl_spark`). As a validation step or as an expectation,
-#' there is a single test unit that hinges on whether the two tables are the
-#' same (after any `preconditions` have been applied).
+#' The `col_count_match()` validation function, the `expect_col_count_match()`
+#' expectation function, and the `test_col_count_match()` test function all
+#' check whether the column count in the target table matches that of a
+#' comparison table. The validation function can be used directly on a data
+#' table or with an *agent* object (technically, a `ptblank_agent` object)
+#' whereas the expectation and test functions can only be used with a data
+#' table. The types of data tables that can be used include data frames,
+#' tibbles, database tables (`tbl_dbi`), and Spark DataFrames (`tbl_spark`). As
+#' a validation step or as an expectation, there is a single test unit that
+#' hinges on whether the column counts for the two tables are the same (after
+#' any `preconditions` have been applied).
 #' 
 #' @section Preconditions:
 #' Providing expressions as `preconditions` means **pointblank** will preprocess
 #' the target table during interrogation as a preparatory step. It might happen
 #' that this particular validation requires some operation on the target table
-#' before the comparison takes place. Using `preconditions` can be useful at
-#' times since since we can develop a large validation plan with a single target
-#' table and make minor adjustments to it, as needed, along the way.
+#' before the column count comparison takes place. Using `preconditions` can be
+#' useful at times since since we can develop a large validation plan with a
+#' single target table and make minor adjustments to it, as needed, along the
+#' way.
 #'
 #' The table mutation is totally isolated in scope to the validation step(s)
 #' where `preconditions` is used. Using **dplyr** code is suggested here since
@@ -46,33 +48,6 @@
 #' **R** formula (using a leading `~`). In the formula representation, the `.`
 #' serves as the input data table to be transformed. Alternatively, a function
 #' could instead be supplied.
-#' 
-#' @section Segments:
-#' By using the `segments` argument, it's possible to define a particular
-#' validation with segments (or row slices) of the target table. An optional
-#' expression or set of expressions that serve to segment the target table by
-#' column values. Each expression can be given in one of two ways: (1) as column
-#' names, or (2) as a two-sided formula where the LHS holds a column name and
-#' the RHS contains the column values to segment on.
-#' 
-#' As an example of the first type of expression that can be used,
-#' `vars(a_column)` will segment the target table in however many unique values
-#' are present in the column called `a_column`. This is great if every unique
-#' value in a particular column (like different locations, or different dates)
-#' requires it's own repeating validation.
-#'
-#' With a formula, we can be more selective with which column values should be
-#' used for segmentation. Using `a_column ~ c("group_1", "group_2")` will
-#' attempt to obtain two segments where one is a slice of data where the value
-#' `"group_1"` exists in the column named `"a_column"`, and, the other is a
-#' slice where `"group_2"` exists in the same column. Each group of rows
-#' resolved from the formula will result in a separate validation step.
-#'
-#' Segmentation will always occur after `preconditions` (i.e., statements that
-#' mutate the target table), if any, are applied. With this type of one-two
-#' combo, it's possible to generate labels for segmentation using an expression
-#' for `preconditions` and refer to those labels in `segments` without having to
-#' generate a separate version of the target table.
 #' 
 #' @section Actions:
 #' Often, we will want to specify `actions` for the validation. This argument,
@@ -97,17 +72,17 @@
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
 #' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
 #' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `tbl_match()` is represented in YAML (under the top-level `steps` key as a
-#' list member), the syntax closely follows the signature of the validation
-#' function. Here is an example of how a complex call of `tbl_match()` as a
-#' validation step is expressed in R code and in the corresponding YAML
+#' `col_count_match()` is represented in YAML (under the top-level `steps` key
+#' as a list member), the syntax closely follows the signature of the validation
+#' function. Here is an example of how a complex call of `col_count_match()` as
+#' a validation step is expressed in R code and in the corresponding YAML
 #' representation.
 #' 
 #' ```
 #' # R statement
 #' agent %>% 
-#'   tbl_match(
-#'     tbl_compare = ~ file_tbl(
+#'   col_count_match(
+#'     count = ~ file_tbl(
 #'       file = from_github(
 #'         file = "all_revenue_large.rds",
 #'         repo = "rich-iannone/intendo",
@@ -115,16 +90,15 @@
 #'         )
 #'       ),
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
-#'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-#'     label = "The `tbl_match()` step.",
+#'     label = "The `col_count_match()` step.",
 #'     active = FALSE
 #'   )
 #' 
 #' # YAML representation
 #' steps:
-#' - tbl_match:
-#'     tbl_compare: ~ file_tbl(
+#' - col_count_match:
+#'     count: ~ file_tbl(
 #'       file = from_github(
 #'         file = "all_revenue_large.rds",
 #'         repo = "rich-iannone/intendo",
@@ -132,11 +106,10 @@
 #'         )
 #'       )
 #'     preconditions: ~. %>% dplyr::filter(a < 10)
-#'     segments: b ~ c("group_1", "group_2")
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2
-#'     label: The `tbl_match()` step.
+#'     label: The `col_count_match()` step.
 #'     active: false
 #' ```
 #' 
@@ -148,12 +121,13 @@
 #' function.
 #'
 #' @inheritParams col_vals_gt
-#' @param tbl_compare A table to compare against the target table. This can
-#'   either be a table object, a table-prep formula. This can be a table object
-#'   such as a data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark`
-#'   object. Alternatively, a table-prep formula (`~ <table reading code>`) or a
+#' @param count Either a literal value for the number of columns, or, a table to
+#'   compare against the target table in terms of column count values. If
+#'   supplying a comparison table, it can either be a table object such as a
+#'   data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
+#'   Alternatively, a table-prep formula (`~ <table reading code>`) or a
 #'   function (`function() <table reading code>`) can be used to lazily read in
-#'   the table at interrogation time.
+#'   the comparison table at interrogation time.
 #'   
 #' @return For the validation function, the return value is either a
 #'   `ptblank_agent` object or a table object (depending on whether an agent
@@ -164,35 +138,36 @@
 #'   
 #' @examples
 #' # Create a simple table with three
-#' # columns and four rows of values
+#' # columns and three rows of values
 #' tbl <-
 #'   dplyr::tibble(
-#'     a = c(5, 7, 6, 5),
-#'     b = c(7, 1, 0, 0),
-#'     c = c(1, 1, 1, 3)
+#'     a = c(5, 7, 6),
+#'     b = c(7, 1, 0),
+#'     c = c(1, 1, 1)
 #'   )
 #' 
 #' tbl
 #'
-#' # Create a second table which is 
-#' # the same as `tbl`
+#' # Create a second table which is
+#' # quite different but has the
+#' # same number of columns as `tbl`
 #' tbl_2 <-
 #'   dplyr::tibble(
-#'     a = c(5, 7, 6, 5),
-#'     b = c(7, 1, 0, 0),
-#'     c = c(1, 1, 1, 3)
+#'     e = c("a", NA, "a", "c"),
+#'     f = c(2.6, 1.2, 0, NA),
+#'     g = c("f", "g", "h", "i")
 #'   )
 #' 
 #' # A: Using an `agent` with validation
 #' #    functions and then `interrogate()` 
 #' 
-#' # Validate that the target table
-#' # (`tbl`) and the comparison table
-#' # (`tbl_2`) are equivalent in terms
-#' # of content
+#' # Validate that the count of columns
+#' # in the target table (`tbl`) matches
+#' # that of the comparison table
+#' # (`tbl_2`)
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
-#'   tbl_match(tbl_compare = tbl_2) %>%
+#'   col_count_match(count = tbl_2) %>%
 #'   interrogate()
 #' 
 #' # Determine if this validation passed
@@ -214,7 +189,7 @@
 #' # behavior of side effects can be
 #' # customized with the `actions` option
 #' tbl %>%
-#'   tbl_match(tbl_compare = tbl_2)
+#'   col_count_match(count = tbl_2)
 #' 
 #' # C: Using the expectation function
 #' 
@@ -222,8 +197,8 @@
 #' # typically perform one validation at a
 #' # time; this is primarily used in
 #' # testthat tests
-#' expect_tbl_match(
-#'   tbl, tbl_compare = tbl_2
+#' expect_col_count_match(
+#'   tbl, count = tbl_2
 #' )
 #' 
 #' # D: Using the test function
@@ -232,44 +207,34 @@
 #' # get a single logical value returned
 #' # to us
 #' tbl %>% 
-#'   test_tbl_match(tbl_compare = tbl_2)
+#'   test_col_count_match(count = 3)
 #' 
 #' @family validation functions
 #' @section Function ID:
-#' 2-33
+#' 2-32
 #' 
-#' @name tbl_match
+#' @name col_count_match
 NULL
 
-#' @rdname tbl_match
+#' @rdname col_count_match
 #' @import rlang
 #' @export
-tbl_match <- function(x,
-                      tbl_compare,
-                      preconditions = NULL,
-                      segments = NULL,
-                      actions = NULL,
-                      step_id = NULL,
-                      label = NULL,
-                      brief = NULL,
-                      active = TRUE) {
-  
-  # Resolve segments into list
-  segments_list <-
-    resolve_segments(
-      x = x,
-      seg_expr = segments,
-      preconditions = preconditions
-    )
+col_count_match <- function(x,
+                            count,
+                            preconditions = NULL,
+                            actions = NULL,
+                            step_id = NULL,
+                            label = NULL,
+                            brief = NULL,
+                            active = TRUE) {
   
   if (is_a_table_object(x)) {
     
     secret_agent <- 
       create_agent(x, label = "::QUIET::") %>%
-      tbl_match(
-        tbl_compare = tbl_compare,
+      col_count_match(
+        count = count,
         preconditions = preconditions,
-        segments = segments,
         label = label,
         brief = brief,
         actions = prime_actions(actions),
@@ -287,7 +252,8 @@ tbl_match <- function(x,
     brief <-
       create_autobrief(
         agent = agent,
-        assertion_type = "tbl_match"
+        assertion_type = "col_count_match",
+        values = count
       )
   }
   
@@ -301,50 +267,40 @@ tbl_match <- function(x,
   # values in earlier validation steps
   check_step_id_duplicates(step_id, agent)
   
-  # Add one or more validation steps based on the
-  # length of `segments`
-  for (i in seq_along(segments_list)) {
+  # Add the validation step
+  agent <-
+    create_validation_step(
+      agent = agent,
+      assertion_type = "col_count_match",
+      i_o = i_o,
+      columns_expr = NA_character_,
+      column = NA_character_,
+      values = count,
+      preconditions = preconditions,
+      actions = covert_actions(actions, agent),
+      step_id = step_id,
+      label = label,
+      brief = brief,
+      active = active
+    )
     
-    seg_col <- names(segments_list[i])
-    seg_val <- unname(unlist(segments_list[i]))
-    
-    agent <-
-      create_validation_step(
-        agent = agent,
-        assertion_type = "tbl_match",
-        i_o = i_o,
-        columns_expr = NA_character_,
-        column = NA_character_,
-        values = tbl_compare,
-        preconditions = preconditions,
-        seg_expr = segments,
-        seg_col = seg_col,
-        seg_val = seg_val,
-        actions = covert_actions(actions, agent),
-        step_id = step_id,
-        label = label,
-        brief = brief,
-        active = active
-      )
-  }
-  
   agent
 }
 
-#' @rdname tbl_match
+#' @rdname col_count_match
 #' @import rlang
 #' @export
-expect_tbl_match <- function(object,
-                             tbl_compare,
-                             preconditions = NULL,
-                             threshold = 1) {
+expect_col_count_match <- function(object,
+                                   count,
+                                   preconditions = NULL,
+                                   threshold = 1) {
   
-  fn_name <- "expect_tbl_match"
+  fn_name <- "expect_col_count_match"
   
   vs <- 
     create_agent(tbl = object, label = "::QUIET::") %>%
-    tbl_match(
-      tbl_compare = {{ tbl_compare }},
+    col_count_match(
+      count = {{ count }},
       preconditions = {{ preconditions }},
       actions = action_levels(notify_at = threshold)
     ) %>%
@@ -384,18 +340,18 @@ expect_tbl_match <- function(object,
   invisible(act$val)
 }
 
-#' @rdname tbl_match
+#' @rdname col_count_match
 #' @import rlang
 #' @export
-test_tbl_match <- function(object,
-                           tbl_compare,
-                           preconditions = NULL,
-                           threshold = 1) {
+test_col_count_match <- function(object,
+                                 count,
+                                 preconditions = NULL,
+                                 threshold = 1) {
   
   vs <- 
     create_agent(tbl = object, label = "::QUIET::") %>%
-    tbl_match(
-      tbl_compare = {{ tbl_compare }},
+    col_count_match(
+      count = {{ count }},
       preconditions = {{ preconditions }},
       actions = action_levels(notify_at = threshold)
     ) %>%

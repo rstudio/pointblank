@@ -308,7 +308,7 @@ col_schema_match <- function(x,
   # values in earlier validation steps
   check_step_id_duplicates(step_id, agent)
   
-  # Add a validation step
+  # Add the validation step
   agent <-
     create_validation_step(
       agent = agent,

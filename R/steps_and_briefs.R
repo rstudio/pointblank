@@ -448,6 +448,23 @@ create_autobrief <- function(agent,
     }
   }
   
+  if (assertion_type == "col_count_match") {
+    
+    if (!is.numeric(values)) {
+      
+      expectation_text <- prep_col_count_match_expectation_text(lang = lang)
+      autobrief <- finalize_autobrief(expectation_text, precondition_text) 
+      
+    } else {
+      
+      values_text <- prep_values_text(values = values, lang = lang)
+      
+      expectation_text <- 
+        prep_col_count_match_n_expectation_text(values_text, lang = lang)
+      autobrief <- finalize_autobrief(expectation_text, precondition_text) 
+    }
+  }
+  
   if (assertion_type == "conjointly") {
 
     values_text <- 
@@ -811,6 +828,16 @@ prep_row_count_match_n_expectation_text <- function(values_text, lang) {
   glue::glue(get_lsv("autobriefs/row_count_match_n_expectation_text")[[lang]])
 }
 
+prep_col_count_match_expectation_text <- function(lang) {
+  
+  glue::glue(get_lsv("autobriefs/col_count_match_expectation_text")[[lang]])
+}
+
+prep_col_count_match_n_expectation_text <- function(values_text, lang) {
+  
+  glue::glue(get_lsv("autobriefs/col_count_match_n_expectation_text")[[lang]])
+}
+
 prep_tbl_match_expectation_text <- function(lang) {
   
   glue::glue(get_lsv("autobriefs/tbl_match_expectation_text")[[lang]])
@@ -865,6 +892,7 @@ failure_message_gluestring <- function(fn_name,
       "expect_rows_complete" = get_lsv("autobriefs/all_row_complete_failure_text")[[lang]],
       "expect_col_schema_match" = get_lsv("autobriefs/col_schema_match_failure_text")[[lang]],
       "expect_row_count_match" = get_lsv("autobriefs/row_count_match_failure_text")[[lang]],
+      "expect_col_count_match" = get_lsv("autobriefs/col_count_match_failure_text")[[lang]],
       "expect_tbl_match" = get_lsv("autobriefs/tbl_match_failure_text")[[lang]]
     )
   

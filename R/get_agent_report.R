@@ -855,7 +855,7 @@ get_agent_report <- function(agent,
           }
         }
         
-        if (assertion_str == "row_count_match") {
+        if (assertion_str %in% c("row_count_match", "col_count_match")) {
           
           if (!is.numeric(values_i)) {
             

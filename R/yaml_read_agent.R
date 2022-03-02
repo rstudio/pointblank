@@ -570,7 +570,7 @@ make_validation_steps <- function(steps) {
               
               others <- c("preconditions", "segments", "expr", "schema")
               
-              if (step_fn == "row_count_match") {
+              if (step_fn %in% c("row_count_match", "col_count_match")) {
                 
                 if (arg_name == "count") {
                   return(paste("  count =", val, collapse = ",\n"))

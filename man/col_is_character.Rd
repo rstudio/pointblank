@@ -236,6 +236,7 @@ tbl \%>\% test_col_is_character(vars(b))
 }
 \seealso{
 Other validation functions: 
+\code{\link{col_count_match}()},
 \code{\link{col_exists}()},
 \code{\link{col_is_date}()},
 \code{\link{col_is_factor}()},

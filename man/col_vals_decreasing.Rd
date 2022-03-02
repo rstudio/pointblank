@@ -397,6 +397,7 @@ The analogous function that moves in the opposite direction:
 \code{\link[=col_vals_increasing]{col_vals_increasing()}}.
 
 Other validation functions: 
+\code{\link{col_count_match}()},
 \code{\link{col_exists}()},
 \code{\link{col_is_character}()},
 \code{\link{col_is_date}()},

@@ -362,6 +362,7 @@ test_col_vals_gt(
 The analogous function with a left-closed bound: \code{\link[=col_vals_gte]{col_vals_gte()}}.
 
 Other validation functions: 
+\code{\link{col_count_match}()},
 \code{\link{col_exists}()},
 \code{\link{col_is_character}()},
 \code{\link{col_is_date}()},

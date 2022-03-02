@@ -356,6 +356,7 @@ test_col_vals_lt(tbl, vars(c), 5)
 The analogous function with a right-closed bound: \code{\link[=col_vals_lte]{col_vals_lte()}}.
 
 Other validation functions: 
+\code{\link{col_count_match}()},
 \code{\link{col_exists}()},
 \code{\link{col_is_character}()},
 \code{\link{col_is_date}()},

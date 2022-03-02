@@ -357,6 +357,7 @@ test_col_vals_gte(tbl, vars(a), 5)
 The analogous function with a left-open bound: \code{\link[=col_vals_gt]{col_vals_gt()}}.
 
 Other validation functions: 
+\code{\link{col_count_match}()},
 \code{\link{col_exists}()},
 \code{\link{col_is_character}()},
 \code{\link{col_is_date}()},

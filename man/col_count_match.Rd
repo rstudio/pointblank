@@ -106,15 +106,15 @@ The test function returns a logical value.
 \description{
 The \code{col_count_match()} validation function, the \code{expect_col_count_match()}
 expectation function, and the \code{test_col_count_match()} test function all
-check whether the column count in the target table matches that of a comparison
-table. The validation function can be used directly on a data table or with
-an \emph{agent} object (technically, a \code{ptblank_agent} object) whereas the
-expectation and test functions can only be used with a data table. The types
-of data tables that can be used include data frames, tibbles, database tables
-(\code{tbl_dbi}), and Spark DataFrames (\code{tbl_spark}). As a validation step or as
-an expectation, there is a single test unit that hinges on whether the column
-counts for the two tables are the same (after any \code{preconditions} have been
-applied).
+check whether the column count in the target table matches that of a
+comparison table. The validation function can be used directly on a data
+table or with an \emph{agent} object (technically, a \code{ptblank_agent} object)
+whereas the expectation and test functions can only be used with a data
+table. The types of data tables that can be used include data frames,
+tibbles, database tables (\code{tbl_dbi}), and Spark DataFrames (\code{tbl_spark}). As
+a validation step or as an expectation, there is a single test unit that
+hinges on whether the column counts for the two tables are the same (after
+any \code{preconditions} have been applied).
 }
 \section{Preconditions}{
 

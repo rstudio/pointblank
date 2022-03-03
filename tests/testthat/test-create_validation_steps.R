@@ -1106,6 +1106,61 @@ test_that("Creating a `row_count_match()` step is possible", {
   expect_equal(validation$validation_set[["values"]][[1]], 13)
 })
 
+test_that("Creating a `col_count_match()` step is possible", {
+  
+  # Use `col_count_match()` function to create a validation step
+  validation <-
+    create_agent(tbl = small_table) %>%
+    col_count_match(count = small_table)
+  expect_is(validation, "ptblank_agent")
+  
+  # Expect elements of the object to be equivalent
+  # to specific parameters
+  expect_true(inherits(validation$validation_set[["values"]][[1]], "tbl_df"))
+  expect_true(is.na(validation$validation_set$all_passed))
+  expect_true(is.na(validation$validation_set$n))
+  expect_true(is.na(validation$validation_set$n_passed))
+  expect_true(is.na(validation$validation_set$n_failed))
+  expect_true(is.na(validation$validation_set$f_passed))
+  expect_true(is.na(validation$validation_set$f_failed))
+  expect_true(is.na(validation$validation_set$warn))
+  expect_true(is.na(validation$validation_set$notify))
+  expect_true(is.na(validation$validation_set$row_sample))
+  
+  # Use different inputs for `tbl` in `col_count_match()`
+  validation <-
+    create_agent(tbl = small_table) %>%
+    col_count_match(count = ~ small_table)
+  expect_is(validation, "ptblank_agent")
+  expect_true(rlang::is_formula(validation$validation_set[["values"]][[1]]))
+  
+  validation <-
+    create_agent(tbl = small_table) %>%
+    col_count_match(count = small_table ~ pointblank::small_table)
+  expect_is(validation, "ptblank_agent")
+  expect_true(rlang::is_formula(validation$validation_set[["values"]][[1]]))
+  
+  validation <-
+    create_agent(tbl = small_table) %>%
+    col_count_match(count = function() small_table)
+  expect_is(validation, "ptblank_agent")
+  expect_true(is.function(validation$validation_set[["values"]][[1]]))
+  
+  validation <-
+    create_agent(tbl = small_table) %>%
+    col_count_match(count = 8)
+  expect_is(validation, "ptblank_agent")
+  expect_true(is.numeric(validation$validation_set[["values"]][[1]]))
+  expect_equal(validation$validation_set[["values"]][[1]], 8)
+  
+  validation <-
+    create_agent(tbl = small_table) %>%
+    col_count_match(count = 8L)
+  expect_is(validation, "ptblank_agent")
+  expect_true(is.numeric(validation$validation_set[["values"]][[1]]))
+  expect_equal(validation$validation_set[["values"]][[1]], 8)
+})
+
 test_that("Creating a `tbl_match()` step is possible", {
   
   # Use `tbl_match()` function to create a validation step

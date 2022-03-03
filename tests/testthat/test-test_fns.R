@@ -695,6 +695,26 @@ test_that("pointblank expectation functions produce the correct results", {
   expect_true(test_row_count_match(decreasing_tbl, count = increasing_tbl))
   
   #
+  # test_col_count_match()
+  #
+  
+  expect_true(test_col_count_match(tbl, count = tbl))
+  expect_true(test_col_count_match(small_table, count = pointblank::small_table))
+  expect_true(test_col_count_match(small_table, count = ~ pointblank::small_table))
+  expect_true(test_col_count_match(small_table, count = function() pointblank::small_table))
+  expect_true(test_col_count_match(small_table, count = 8))
+  expect_true(test_col_count_match(small_table, count = 8L))
+  expect_false(test_col_count_match(tbl, count = tbl_conjointly))
+  expect_false(test_col_count_match(tbl, count = 15))
+  expect_false(test_col_count_match(tbl_conjointly, count = tbl))
+  expect_true(test_col_count_match(tbl_conjointly, count = tbl_complete_yes))
+  expect_true(test_col_count_match(tbl_complete_yes, count = tbl_conjointly))
+  expect_true(test_col_count_match(tbl_complete_no, count = tbl_complete_yes))
+  expect_true(test_col_count_match(tbl_complete_yes, count = tbl_complete_no))
+  expect_false(test_col_count_match(tbl_complete_yes, count = decreasing_tbl))
+  expect_false(test_col_count_match(tbl_complete_yes, count = increasing_tbl))
+  
+  #
   # test_tbl_match()
   #
   

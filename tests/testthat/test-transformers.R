@@ -35,6 +35,12 @@ test_that("the `tt_summary_stats()` function works", {
   
   # Expect an error if the `tbl` object is not a table
   expect_error(tt_summary_stats(as.matrix(small_table)))
+  
+  # Expect that infinite values will result in `NA` stats
+  tbl_inf <- dplyr::tibble(a = c(Inf, Inf, Inf))
+  summary_stats_tbl_na <- tt_summary_stats(tbl_inf)
+  
+  expect_equal(unique(summary_stats_tbl_na$a), NA_real_)
 })
 
 test_that("the `tt_string_info()` function works", {

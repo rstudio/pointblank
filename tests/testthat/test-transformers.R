@@ -127,6 +127,31 @@ test_that("the `tt_tbl_dims()` function works", {
   expect_error(tt_tbl_dims(as.matrix(small_table)))
 })
 
+test_that("the `tt_tbl_colnames()` function works", {
+  
+  # Generate a colnames table based on `game_revenue`
+  colnames_tbl <- tt_tbl_colnames(game_revenue)
+  
+  # Expect a fixed schema for the colnames table
+  expect_col_schema_match(
+    colnames_tbl,
+    schema = col_schema(
+      .param. = "integer",
+      value = "character"
+    )
+  )
+  
+  # Expect that the info table has 11 rows
+  expect_equal(nrow(colnames_tbl), ncol(game_revenue))
+  
+  # Expect a fixed sequence of integer values in the first column
+  expect_equal(colnames_tbl$.param., 1:11)
+  
+  # Expect the column names of `game_revenue` to be in the
+  # `value` column of the colnames table
+  expect_equal(colnames_tbl$value, colnames(game_revenue))
+})
+
 test_that("the `tt_time_shift()` function works", {
   
   # Shift the `game_revenue` table forward 6 years using
@@ -481,4 +506,88 @@ test_that("the `tt_time_slice()` function works", {
     nrow(tt_time_slice(game_revenue, time_column = "start_day", slice_point = 0)),
     0
   )
+})
+
+test_that("the `get_tt_param()` function works", {
+  
+  # Generate a summary table based on `game_revenue`
+  summary_stats_tbl <- tt_summary_stats(game_revenue)
+  
+  expect_equal(
+    get_tt_param(summary_stats_tbl, param = "max", column = "item_revenue"),
+    142.99
+  )
+  expect_equal(
+    get_tt_param(summary_stats_tbl, param = "iqr", column = "session_duration"),
+    15.32
+  )
+  expect_error(
+    get_tt_param(summary_stats_tbl, param = "iqr")
+  )
+  expect_error(
+    get_tt_param(summary_stats_tbl, param = "iqrb")
+  )
+  expect_error(
+    get_tt_param(summary_stats_tbl, param = "iqr", column = "session_start")
+  )
+  
+  # Generate a string info table based on `game_revenue`
+  string_info_tbl <- tt_string_info(game_revenue)
+  
+  expect_equal(
+    get_tt_param(string_info_tbl, param = "length_mean", column = "player_id"),
+    15
+  )
+  expect_equal(
+    get_tt_param(string_info_tbl, param = "length_min", column = "country"),
+    5
+  )
+  expect_error(
+    get_tt_param(string_info_tbl, param = "length_min")
+  )
+  expect_error(
+    get_tt_param(string_info_tbl, param = "lengtha")
+  )
+  expect_error(
+    get_tt_param(string_info_tbl, param = "iqr", column = "time")
+  )
+  
+  # Generate a dimensions table based on `game_revenue`
+  dims_tbl <- tt_tbl_dims(game_revenue)
+  
+  expect_equal(
+    get_tt_param(dims_tbl, param = "rows"),
+    2000
+  )
+  expect_equal(
+    get_tt_param(dims_tbl, param = "columns"),
+    11
+  )
+  expect_equal(
+    get_tt_param(dims_tbl, param = "rows", column = "value"),
+    2000
+  )
+  expect_equal(
+    get_tt_param(dims_tbl, param = "columns", column = "value"),
+    11
+  )
+  expect_equal(
+    get_tt_param(dims_tbl, param = "columns", column = "valua"),
+    11
+  )
+  
+  # Generate a colnames table based on `game_revenue`
+  colnames_tbl <- tt_tbl_colnames(game_revenue)
+  
+  for (i in seq_along(colnames(game_revenue))) {
+  
+    expect_equal(
+      get_tt_param(colnames_tbl, param = i),
+      colnames(game_revenue)[i]
+    )  
+  }
+  
+  expect_error(get_tt_param(colnames_tbl, param = "one"))
+  expect_error(get_tt_param(colnames_tbl, param = 12))
+  expect_error(get_tt_param(colnames_tbl))
 })

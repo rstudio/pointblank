@@ -178,13 +178,15 @@ NULL
 #' @rdname col_exists
 #' @import rlang
 #' @export
-col_exists <- function(x,
-                       columns,
-                       actions = NULL,
-                       step_id = NULL,
-                       label = NULL,
-                       brief = NULL,
-                       active = TRUE) {
+col_exists <- function(
+    x,
+    columns,
+    actions = NULL,
+    step_id = NULL,
+    label = NULL,
+    brief = NULL,
+    active = TRUE
+) {
 
   preconditions <- NULL
   values <- NULL
@@ -265,9 +267,11 @@ col_exists <- function(x,
 #' @rdname col_exists
 #' @import rlang
 #' @export
-expect_col_exists <- function(object,
-                              columns,
-                              threshold = 1) {
+expect_col_exists <- function(
+    object,
+    columns,
+    threshold = 1
+) {
 
   fn_name <- "expect_col_exists"
   
@@ -335,9 +339,11 @@ expect_col_exists <- function(object,
 #' @rdname col_exists
 #' @import rlang
 #' @export
-test_col_exists <- function(object,
-                            columns,
-                            threshold = 1) {
+test_col_exists <- function(
+    object,
+    columns,
+    threshold = 1
+) {
   
   vs <- 
     create_agent(tbl = object, label = "::QUIET::") %>%

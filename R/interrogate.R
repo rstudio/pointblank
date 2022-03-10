@@ -78,12 +78,14 @@
 #' 6-1
 #' 
 #' @export
-interrogate <- function(agent,
-                        extract_failed = TRUE,
-                        get_first_n = NULL,
-                        sample_n = NULL,
-                        sample_frac = NULL,
-                        sample_limit = 5000) {
+interrogate <- function(
+    agent,
+    extract_failed = TRUE,
+    get_first_n = NULL,
+    sample_n = NULL,
+    sample_frac = NULL,
+    sample_limit = 5000
+) {
   
   #
   # INITIAL PROCESSING OF AGENT
@@ -743,10 +745,12 @@ create_cli_footer_a <- function(quiet) {
   cli::cli_h1(interrogation_progress_footer)
 }
 
-create_post_step_cli_output_a <- function(agent,
-                                          i,
-                                          time_diff_s,
-                                          quiet) {
+create_post_step_cli_output_a <- function(
+    agent,
+    i,
+    time_diff_s,
+    quiet
+) {
   
   if (quiet) return()
   
@@ -849,10 +853,12 @@ create_post_step_cli_output_a <- function(agent,
 
 # nocov end
 
-check_table_with_assertion <- function(agent,
-                                       idx,
-                                       table,
-                                       assertion_type) {
+check_table_with_assertion <- function(
+    agent,
+    idx,
+    table,
+    assertion_type
+) {
   
   # nolint start
   
@@ -974,10 +980,12 @@ check_table_with_assertion <- function(agent,
   # nolint end
 }
 
-interrogate_comparison <- function(agent,
-                                   idx,
-                                   table,
-                                   assertion_type) {
+interrogate_comparison <- function(
+    agent,
+    idx,
+    table,
+    assertion_type
+) {
 
   # Get operator values for all assertion types involving
   # simple operator comparisons
@@ -1025,11 +1033,13 @@ interrogate_comparison <- function(agent,
 }
 
 # Function for validating comparison step functions
-tbl_val_comparison <- function(table,
-                               column,
-                               operator,
-                               value,
-                               na_pass) {
+tbl_val_comparison <- function(
+    table,
+    column,
+    operator,
+    value,
+    na_pass
+) {
   
   # Ensure that the input `table` is actually a table object
   tbl_validity_check(table = table)
@@ -1063,10 +1073,12 @@ tbl_val_comparison <- function(table,
   }
 }
 
-interrogate_between <- function(agent,
-                                idx,
-                                table,
-                                assertion_type) {
+interrogate_between <- function(
+    agent,
+    idx,
+    table,
+    assertion_type
+) {
   
   # Get the set values for the expression
   set <- get_values_at_idx(agent = agent, idx = idx)
@@ -1111,13 +1123,16 @@ interrogate_between <- function(agent,
   tbl_evaled
 }
 
-tbl_vals_between <- function(table,
-                             column,
-                             left,
-                             right,
-                             inclusive,
-                             na_pass,
-                             assertion_type) {
+tbl_vals_between <- function(
+    table,
+    column,
+    left,
+    right,
+    inclusive,
+    na_pass,
+    assertion_type
+) {
+  
   # Ensure that the input `table` is actually a table object
   tbl_validity_check(table = table)
   
@@ -1253,10 +1268,12 @@ tbl_vals_between <- function(table,
     ))
 }
 
-interrogate_set <- function(agent,
-                            idx,
-                            table,
-                            assertion_type) {
+interrogate_set <- function(
+    agent,
+    idx,
+    table,
+    assertion_type
+) {
 
   # Get the set values for the expression
   set <- get_values_at_idx(agent = agent, idx = idx)
@@ -1483,10 +1500,12 @@ interrogate_set <- function(agent,
   tbl_evaled
 }
 
-interrogate_direction <- function(agent,
-                                  idx,
-                                  table,
-                                  assertion_type) {
+interrogate_direction <- function(
+    agent,
+    idx,
+    table,
+    assertion_type
+) {
   
   # Obtain the target column as a symbol
   column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
@@ -1625,9 +1644,11 @@ interrogate_direction <- function(agent,
     )
 }
 
-interrogate_regex <- function(agent,
-                              idx,
-                              table) {
+interrogate_regex <- function(
+    agent,
+    idx,
+    table
+) {
   
   # Get the regex matching statement
   regex <- get_values_at_idx(agent = agent, idx = idx)
@@ -1741,9 +1762,11 @@ interrogate_regex <- function(agent,
   )
 }
 
-interrogate_within_spec <- function(agent,
-                                    idx,
-                                    table) {
+interrogate_within_spec <- function(
+    agent,
+    idx,
+    table
+) {
   
   # Get the specification text
   spec <- get_values_at_idx(agent = agent, idx = idx)
@@ -1954,9 +1977,11 @@ interrogate_within_spec <- function(agent,
   )
 }
 
-interrogate_expr <- function(agent,
-                             idx,
-                             table) {
+interrogate_expr <- function(
+    agent,
+    idx,
+    table
+) {
   
   # Get the expression
   expr <- get_values_at_idx(agent = agent, idx = idx)
@@ -1979,9 +2004,11 @@ interrogate_expr <- function(agent,
   pointblank_try_catch(tbl_val_expr(table = table, expr = expr))
 }
 
-interrogate_specially <- function(agent,
-                                  idx,
-                                  x) {
+interrogate_specially <- function(
+    agent,
+    idx,
+    x
+) {
   
   # Get the user-defined function
   fn <- get_values_at_idx(agent = agent, idx = idx)[[1]]
@@ -2033,9 +2060,11 @@ interrogate_specially <- function(agent,
   pointblank_try_catch(val_with_fn(x = x, fn = fn))
 }
 
-interrogate_null <- function(agent,
-                             idx,
-                             table) {
+interrogate_null <- function(
+    agent,
+    idx,
+    table
+) {
   
   # Obtain the target column as a symbol
   column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
@@ -2064,9 +2093,11 @@ interrogate_null <- function(agent,
   pointblank_try_catch(tbl_val_null(table = table, column = {{ column }}))
 }
 
-interrogate_not_null <- function(agent,
-                                 idx,
-                                 table) {
+interrogate_not_null <- function(
+    agent,
+    idx,
+    table
+) {
 
   # Obtain the target column as a symbol
   column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
@@ -2095,9 +2126,11 @@ interrogate_not_null <- function(agent,
   pointblank_try_catch(tbl_val_not_null(table = table, column = {{ column }}))
 }
 
-interrogate_col_exists <- function(agent,
-                                   idx,
-                                   table) {
+interrogate_col_exists <- function(
+    agent,
+    idx,
+    table
+) {
 
   # Get the column names for the table
   column_names <- get_all_cols(agent = agent)
@@ -2126,10 +2159,12 @@ interrogate_col_exists <- function(agent,
   )
 }
 
-interrogate_col_type <- function(agent,
-                                 idx,
-                                 table,
-                                 assertion_type) {
+interrogate_col_type <- function(
+    agent,
+    idx,
+    table,
+    assertion_type
+) {
   
   # Obtain the target column as a symbol
   column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
@@ -2180,9 +2215,11 @@ interrogate_col_type <- function(agent,
   )
 }
 
-interrogate_distinct <- function(agent,
-                                 idx,
-                                 table) {
+interrogate_distinct <- function(
+    agent,
+    idx,
+    table
+) {
   
   # Determine if grouping columns are provided in the test
   # for distinct rows and parse the column names
@@ -2266,9 +2303,11 @@ interrogate_distinct <- function(agent,
   # nocov end
 }
 
-interrogate_complete <- function(agent,
-                                 idx,
-                                 table) {
+interrogate_complete <- function(
+    agent,
+    idx,
+    table
+) {
   
   # Determine if grouping columns are provided in the test
   # for distinct rows and parse the column names
@@ -2331,9 +2370,11 @@ interrogate_complete <- function(agent,
   )
 }
 
-interrogate_col_schema_match <- function(agent,
-                                         idx,
-                                         table) {
+interrogate_col_schema_match <- function(
+    agent,
+    idx,
+    table
+) {
 
   # Get the reference `col_schema` object (this is user-supplied)
   table_schema_y <- agent$validation_set$values[[idx]]
@@ -2472,9 +2513,11 @@ interrogate_col_schema_match <- function(agent,
   )
 }
 
-interrogate_row_count_match <- function(agent,
-                                        idx,
-                                        table) {
+interrogate_row_count_match <- function(
+    agent,
+    idx,
+    table
+) {
   
   # Create function for validating the `row_count_match()` step function
   tbl_row_count_match <- function(table) {
@@ -2508,9 +2551,11 @@ interrogate_row_count_match <- function(agent,
   )
 }
 
-interrogate_col_count_match <- function(agent,
-                                        idx,
-                                        table) {
+interrogate_col_count_match <- function(
+    agent,
+    idx,
+    table
+) {
   
   # Create function for validating the `col_count_match()` step function
   tbl_col_count_match <- function(table) {
@@ -2544,9 +2589,11 @@ interrogate_col_count_match <- function(agent,
   )
 }
 
-interrogate_tbl_match <- function(agent,
-                                  idx,
-                                  table) {
+interrogate_tbl_match <- function(
+    agent,
+    idx,
+    table
+) {
   
   # Get the comparison table (this is user-supplied)
   tbl_compare <- materialize_table(tbl = agent$validation_set$values[[idx]])
@@ -2652,9 +2699,11 @@ tbl_validity_check <- function(table) {
 # nolint start
 
 # Validity checks for the column and value 
-column_validity_checks_column_value <- function(table,
-                                                column,
-                                                value) {
+column_validity_checks_column_value <- function(
+    table,
+    column,
+    value
+) {
   
   table_colnames <- colnames(table)
   
@@ -2682,8 +2731,10 @@ column_validity_checks_column_value <- function(table,
 # nolint end
 
 # Validity check for the column
-column_validity_checks_column <- function(table,
-                                          column) {
+column_validity_checks_column <- function(
+    table,
+    column
+) {
   
   table_colnames <- colnames(table)
   
@@ -2697,10 +2748,12 @@ column_validity_checks_column <- function(table,
 }
 
 # Validity checks for `tbl_val_ib_*()` functions
-column_validity_checks_ib_nb <- function(table,
-                                         column,
-                                         left,
-                                         right) {
+column_validity_checks_ib_nb <- function(
+    table,
+    column,
+    left,
+    right
+) {
   
   table_colnames <- colnames(table)
   
@@ -2757,9 +2810,11 @@ pointblank_try_catch <- function(expr) {
   eval_list
 }
 
-add_reporting_data <- function(agent,
-                               idx,
-                               tbl_checked) {
+add_reporting_data <- function(
+    agent,
+    idx,
+    tbl_checked
+) {
   
   if (!inherits(tbl_checked, "table_eval")) {
     
@@ -2860,9 +2915,11 @@ add_reporting_data <- function(agent,
   determine_action(agent = agent, idx = idx, false_count = n_failed)
 }
 
-perform_action <- function(agent,
-                           idx,
-                           type) {
+perform_action <- function(
+    agent,
+    idx,
+    type
+) {
 
   actions <- 
     agent$validation_set[[idx, "actions"]] %>%
@@ -3055,14 +3112,16 @@ perform_end_action <- function(agent) {
   return(NULL)
 }
 
-add_table_extract <- function(agent,
-                              idx,
-                              tbl_checked,
-                              extract_failed,
-                              get_first_n,
-                              sample_n,
-                              sample_frac,
-                              sample_limit) {
+add_table_extract <- function(
+    agent,
+    idx,
+    tbl_checked,
+    extract_failed,
+    get_first_n,
+    sample_n,
+    sample_frac,
+    sample_limit
+) {
 
   if (!extract_failed) {
     return(agent)
@@ -3151,9 +3210,11 @@ add_table_extract <- function(agent,
   agent
 }
 
-determine_action <- function(agent,
-                             idx,
-                             false_count) {
+determine_action <- function(
+    agent,
+    idx,
+    false_count
+) {
 
   al <- agent$validation_set[[idx, "actions"]] %>% unlist(recursive = FALSE)
   n <- agent$validation_set[[idx, "n"]]

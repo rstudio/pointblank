@@ -182,15 +182,17 @@
 #' 4-1
 #' 
 #' @export 
-email_blast <- function(x,
-                        to,
-                        from,
-                        credentials = NULL,
-                        msg_subject = NULL,
-                        msg_header = NULL,
-                        msg_body = stock_msg_body(),
-                        msg_footer = stock_msg_footer(),
-                        send_condition = ~TRUE %in% x$notify) {
+email_blast <- function(
+    x,
+    to,
+    from,
+    credentials = NULL,
+    msg_subject = NULL,
+    msg_header = NULL,
+    msg_body = stock_msg_body(),
+    msg_footer = stock_msg_footer(),
+    send_condition = ~TRUE %in% x$notify
+) {
 
   # nocov start
   
@@ -336,10 +338,12 @@ email_blast <- function(x,
 #' 4-2
 #' 
 #' @export 
-email_create <- function(x,
-                         msg_header = NULL,
-                         msg_body = stock_msg_body(),
-                         msg_footer = stock_msg_footer()) {
+email_create <- function(
+    x,
+    msg_header = NULL,
+    msg_body = stock_msg_body(),
+    msg_footer = stock_msg_footer()
+) {
   
   if (!is_ptblank_agent(x) &&
       !is_ptblank_x_list(x) &&

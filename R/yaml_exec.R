@@ -123,12 +123,14 @@
 #' 11-8
 #' 
 #' @export
-yaml_exec <- function(path = NULL,
-                      files = NULL,
-                      write_to_disk = TRUE, 
-                      output_path = file.path(path, "output"),
-                      keep_tbl = FALSE,
-                      keep_extracts = FALSE) {
+yaml_exec <- function(
+    path = NULL,
+    files = NULL,
+    write_to_disk = TRUE, 
+    output_path = file.path(path, "output"),
+    keep_tbl = FALSE,
+    keep_extracts = FALSE
+) {
   
   # If `path` isn't provided then the working directory
   # is the path containing the input files

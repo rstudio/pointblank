@@ -295,15 +295,17 @@ NULL
 #' @import rlang
 #' 
 #' @export
-serially <- function(x,
-                     ...,
-                     .list = list2(...),
-                     preconditions = NULL,
-                     actions = NULL,
-                     step_id = NULL,
-                     label = NULL,
-                     brief = NULL,
-                     active = TRUE) {
+serially <- function(
+    x,
+    ...,
+    .list = list2(...),
+    preconditions = NULL,
+    actions = NULL,
+    step_id = NULL,
+    label = NULL,
+    brief = NULL,
+    active = TRUE
+) {
   
   segments <- NULL
   
@@ -625,11 +627,13 @@ serially <- function(x,
 #' @rdname serially
 #' @import rlang
 #' @export
-expect_serially <- function(object,
-                            ...,
-                            .list = list2(...),
-                            preconditions = NULL,
-                            threshold = 1) {
+expect_serially <- function(
+    object,
+    ...,
+    .list = list2(...),
+    preconditions = NULL,
+    threshold = 1
+) {
   
   fn_name <- "expect_serially"
   
@@ -676,11 +680,13 @@ expect_serially <- function(object,
 #' @rdname serially
 #' @import rlang
 #' @export
-test_serially <- function(object,
-                          ...,
-                          .list = list2(...),
-                          preconditions = NULL,
-                          threshold = 1) {
+test_serially <- function(
+    object,
+    ...,
+    .list = list2(...),
+    preconditions = NULL,
+    threshold = 1
+) {
   
   vs <- 
     create_agent(tbl = object, label = "::QUIET::") %>%

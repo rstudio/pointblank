@@ -192,13 +192,15 @@
 #' 1-3
 #' 
 #' @export
-create_informant <- function(tbl = NULL,
-                             tbl_name = NULL,
-                             label = NULL,
-                             agent = NULL,
-                             lang = NULL,
-                             locale = NULL,
-                             read_fn = NULL) {
+create_informant <- function(
+    tbl = NULL,
+    tbl_name = NULL,
+    label = NULL,
+    agent = NULL,
+    lang = NULL,
+    locale = NULL,
+    read_fn = NULL
+) {
   
   # If nothing is provided for either `tbl`, `read_fn`, or `agent`,
   # this function needs to be stopped

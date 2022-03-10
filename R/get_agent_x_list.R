@@ -144,8 +144,10 @@
 #' 8-1
 #' 
 #' @export
-get_agent_x_list <- function(agent,
-                             i = NULL) {
+get_agent_x_list <- function(
+    agent,
+    i = NULL
+) {
   
   if (!is.null(i)) {
     

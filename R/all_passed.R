@@ -73,8 +73,10 @@
 #' 8-4
 #' 
 #' @export
-all_passed <- function(agent,
-                       i = NULL) {
+all_passed <- function(
+    agent,
+    i = NULL
+) {
   
   # Stop function if the agent did not interrogate the target data
   if (!has_agent_intel(agent)) {

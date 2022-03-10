@@ -249,16 +249,18 @@ NULL
 #' @rdname row_count_match
 #' @import rlang
 #' @export
-row_count_match <- function(x,
-                            count,
-                            preconditions = NULL,
-                            segments = NULL,
-                            actions = NULL,
-                            step_id = NULL,
-                            label = NULL,
-                            brief = NULL,
-                            active = TRUE,
-                            tbl_compare = NULL) {
+row_count_match <- function(
+    x,
+    count,
+    preconditions = NULL,
+    segments = NULL,
+    actions = NULL,
+    step_id = NULL,
+    label = NULL,
+    brief = NULL,
+    active = TRUE,
+    tbl_compare = NULL
+) {
   
   # The `tbl_compare` argument is undergoing soft deprecation so if it is
   # not missing, issue a warning and migrate the supplied value over to
@@ -357,11 +359,13 @@ row_count_match <- function(x,
 #' @rdname row_count_match
 #' @import rlang
 #' @export
-expect_row_count_match <- function(object,
-                                   count,
-                                   preconditions = NULL,
-                                   threshold = 1,
-                                   tbl_compare = NULL) {
+expect_row_count_match <- function(
+    object,
+    count,
+    preconditions = NULL,
+    threshold = 1,
+    tbl_compare = NULL
+) {
   
   # The `tbl_compare` argument is undergoing soft deprecation so if it is
   # not missing, issue a warning and migrate the supplied value over to
@@ -427,11 +431,13 @@ expect_row_count_match <- function(object,
 #' @rdname row_count_match
 #' @import rlang
 #' @export
-test_row_count_match <- function(object,
-                                 count,
-                                 preconditions = NULL,
-                                 threshold = 1,
-                                 tbl_compare = NULL) {
+test_row_count_match <- function(
+    object,
+    count,
+    preconditions = NULL,
+    threshold = 1,
+    tbl_compare = NULL
+) {
   
   # The `tbl_compare` argument is undergoing soft deprecation so if it is
   # not missing, issue a warning and migrate the supplied value over to

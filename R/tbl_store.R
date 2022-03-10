@@ -285,9 +285,11 @@
 #' 1-8
 #' 
 #' @export
-tbl_store <- function(...,
-                      .list = list2(...),
-                      .init = NULL) {
+tbl_store <- function(
+    ...,
+    .list = list2(...),
+    .init = NULL
+) {
   
   # Collect a fully or partially named list of tables
   tbl_list <- .list
@@ -365,9 +367,11 @@ tbl_store <- function(...,
   tbl_list
 }
 
-add_to_name_list <- function(name_list,
-                             tbl_name,
-                             duplicate_strategy = c("stop", "rename")) {
+add_to_name_list <- function(
+    name_list,
+    tbl_name,
+    duplicate_strategy = c("stop", "rename")
+) {
 
   duplicate_strategy <- match.arg(duplicate_strategy)
   
@@ -484,8 +488,10 @@ add_to_name_list <- function(name_list,
 #' 1-9
 #' 
 #' @export
-tbl_source <- function(tbl,
-                       store = NULL) {
+tbl_source <- function(
+    tbl,
+    store = NULL
+) {
   
   # If `store` is supplied as a character vector,
   # assume it is a file path to a YAML file
@@ -550,7 +556,6 @@ tbl_source <- function(tbl,
 }
 
 has_substitutions <- function(x) {
-
   grepl("\\{\\{\\s*?[a-zA-Z0-9_\\.]*?\\s*?\\}\\}", x)
 }
 
@@ -633,8 +638,10 @@ has_substitutions <- function(x) {
 #' 1-10
 #' 
 #' @export
-tbl_get <- function(tbl,
-                    store = NULL) {
+tbl_get <- function(
+    tbl,
+    store = NULL
+) {
   
   # Get the table-prep formula with the `tbl_source()` function
   tbl_entry <- tbl_source(tbl = tbl, store = store)

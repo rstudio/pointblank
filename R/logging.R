@@ -165,9 +165,11 @@
 #' 5-1
 #' 
 #' @export
-log4r_step <- function(x,
-                       message = NULL,
-                       append_to = "pb_log_file") {
+log4r_step <- function(
+    x,
+    message = NULL,
+    append_to = "pb_log_file"
+) {
   
   if (!requireNamespace("log4r", quietly = TRUE)) {
     

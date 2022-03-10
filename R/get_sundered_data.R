@@ -133,10 +133,12 @@
 #' 8-3
 #' 
 #' @export
-get_sundered_data <- function(agent,
-                              type = c("pass", "fail", "combined"),
-                              pass_fail = c("pass", "fail"),
-                              id_cols = NULL) {
+get_sundered_data <- function(
+    agent,
+    type = c("pass", "fail", "combined"),
+    pass_fail = c("pass", "fail"),
+    id_cols = NULL
+) {
 
   # Match to one of the three choices (`pass`, `fail`, `combined`)
   # while still allowing for the NULL optiona

@@ -51,8 +51,10 @@ test_options <- new.env(parent = emptyenv())
 #' 1-4
 #' 
 #' @export
-validate_rmd <- function(summary = TRUE,
-                         log_to_file = NULL) {
+validate_rmd <- function(
+    summary = TRUE,
+    log_to_file = NULL
+) {
   
   
   knitr::opts_hooks$set(

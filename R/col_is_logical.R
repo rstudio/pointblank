@@ -175,13 +175,15 @@ NULL
 #' @rdname col_is_logical
 #' @import rlang
 #' @export
-col_is_logical <- function(x,
-                           columns,
-                           actions = NULL,
-                           step_id = NULL,
-                           label = NULL,
-                           brief = NULL,
-                           active = TRUE) {
+col_is_logical <- function(
+    x,
+    columns,
+    actions = NULL,
+    step_id = NULL,
+    label = NULL,
+    brief = NULL,
+    active = TRUE
+) {
   
   preconditions <- NULL
   values <- NULL
@@ -258,9 +260,11 @@ col_is_logical <- function(x,
 #' @rdname col_is_logical
 #' @import rlang
 #' @export
-expect_col_is_logical <- function(object,
-                                  columns,
-                                  threshold = 1) {
+expect_col_is_logical <- function(
+    object,
+    columns,
+    threshold = 1
+) {
   
   fn_name <- "expect_col_is_logical"
   
@@ -331,9 +335,11 @@ expect_col_is_logical <- function(object,
 #' @rdname col_is_logical
 #' @import rlang
 #' @export
-test_col_is_logical <- function(object,
-                                columns,
-                                threshold = 1) {
+test_col_is_logical <- function(
+    object,
+    columns,
+    threshold = 1
+) {
   
   vs <- 
     create_agent(tbl = object, label = "::QUIET::") %>%

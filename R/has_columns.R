@@ -104,7 +104,10 @@
 #' 13-2
 #'
 #' @export
-has_columns <- function(x, columns) {
+has_columns <- function(
+    x,
+    columns
+) {
 
   if (!is_a_table_object(x)) {
     stop(

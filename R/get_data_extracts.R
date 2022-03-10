@@ -91,8 +91,10 @@
 #' 8-2
 #' 
 #' @export
-get_data_extracts <- function(agent,
-                              i = NULL) {
+get_data_extracts <- function(
+    agent,
+    i = NULL
+) {
 
   # Stop function if the agent hasn't
   # yet performed an interrogation

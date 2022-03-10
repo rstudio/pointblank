@@ -383,15 +383,17 @@
 #' 1-2
 #'   
 #' @export
-create_agent <- function(tbl = NULL,
-                         tbl_name = NULL,
-                         label = NULL,
-                         actions = NULL,
-                         end_fns = NULL,
-                         embed_report = FALSE,
-                         lang = NULL,
-                         locale = NULL,
-                         read_fn = NULL) {
+create_agent <- function(
+    tbl = NULL,
+    tbl_name = NULL,
+    label = NULL,
+    actions = NULL,
+    end_fns = NULL,
+    embed_report = FALSE,
+    lang = NULL,
+    locale = NULL,
+    read_fn = NULL
+) {
   
   # Try to infer the table name if one isn't
   # explicitly given in `tbl_name`

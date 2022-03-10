@@ -198,14 +198,16 @@
 #' 6-2
 #' 
 #' @export
-get_agent_report <- function(agent,
-                             arrange_by = c("i", "severity"),
-                             keep = c("all", "fail_states"),
-                             display_table = TRUE,
-                             size = "standard",
-                             title = ":default:",
-                             lang = NULL,
-                             locale = NULL) {
+get_agent_report <- function(
+    agent,
+    arrange_by = c("i", "severity"),
+    keep = c("all", "fail_states"),
+    display_table = TRUE,
+    size = "standard",
+    title = ":default:",
+    lang = NULL,
+    locale = NULL
+) {
   
   arrange_by <- match.arg(arrange_by)
   keep <- match.arg(keep)
@@ -1869,10 +1871,12 @@ get_default_title_text <- function(report_type,
   title_text
 }
 
-process_title_text <- function(title,
-                               tbl_name,
-                               report_type,
-                               lang) {
+process_title_text <- function(
+    title,
+    tbl_name,
+    report_type,
+    lang
+) {
   
   if (report_type == "multiagent:wide") {
     if (title == ":tbl_name:") {
@@ -1905,10 +1909,12 @@ process_title_text <- function(title,
   title_text
 }
 
-create_table_time_html <- function(time_start,
-                                   time_end,
-                                   size = "standard",
-                                   locale = NULL) {
+create_table_time_html <- function(
+    time_start,
+    time_end,
+    size = "standard",
+    locale = NULL
+) {
   
   if (length(time_start) < 1) {
     return("")
@@ -1976,8 +1982,10 @@ create_table_time_html <- function(time_start,
   )
 }
 
-print_time_duration_report <- function(time_diff_s,
-                                       locale = NULL) {
+print_time_duration_report <- function(
+    time_diff_s,
+    locale = NULL
+) {
   
   if (time_diff_s < 1) {
     "< 1 s"
@@ -2012,7 +2020,10 @@ create_agent_label_html <- function(agent) {
   )
 }
 
-create_table_type_html <- function(tbl_src, tbl_name) {
+create_table_type_html <- function(
+    tbl_src,
+    tbl_name
+) {
 
   if (is.null(tbl_src)) {
     
@@ -2088,7 +2099,10 @@ create_table_type_html <- function(tbl_src, tbl_name) {
   }
 }
 
-make_action_levels_html <- function(agent, locale) {
+make_action_levels_html <- function(
+    agent,
+    locale
+) {
   
   actions <- agent$actions
   
@@ -2208,17 +2222,19 @@ make_action_levels_html <- function(agent, locale) {
   )
 }
 
-make_boxed_text_html <- function(x,
-                                 size = "standard",
-                                 color = "#333333",
-                                 background = "transparent",
-                                 font_size = "15px",
-                                 padding = "5px",
-                                 tt_text = NULL,
-                                 tt_position = "left",
-                                 tt_text_size = NULL,
-                                 border_radius = NULL,
-                                 v_align = "middle") {
+make_boxed_text_html <- function(
+    x,
+    size = "standard",
+    color = "#333333",
+    background = "transparent",
+    font_size = "15px",
+    padding = "5px",
+    tt_text = NULL,
+    tt_position = "left",
+    tt_text_size = NULL,
+    border_radius = NULL,
+    v_align = "middle"
+) {
   
   if (!is.null(tt_position) && size == "standard") {
     text_type <- "aria-label"
@@ -2286,10 +2302,12 @@ initialize_footnotes_tbl <- function() {
 }
 
 # Function for adding a footnote to the `footnotes_tbl`
-store_footnote <- function(footnotes_tbl,
-                           note,
-                           col_idx,
-                           row_idx) {
+store_footnote <- function(
+    footnotes_tbl,
+    note,
+    col_idx,
+    row_idx
+) {
   
   dplyr::bind_rows(
     footnotes_tbl,

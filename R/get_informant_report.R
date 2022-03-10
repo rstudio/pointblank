@@ -83,11 +83,13 @@
 #' 7-2
 #' 
 #' @export
-get_informant_report <- function(informant,
-                                 size = "standard",
-                                 title = ":default:",
-                                 lang = NULL,
-                                 locale = NULL) {
+get_informant_report <- function(
+    informant,
+    size = "standard",
+    title = ":default:",
+    lang = NULL,
+    locale = NULL
+) {
   
   # nocov start
   time_start <- Sys.time()
@@ -344,7 +346,6 @@ get_informant_report <- function(informant,
       }
     }
   }
-  
   
   # Modify `tbl` so that `group` values correspond to the set `lang`
   tbl <-
@@ -655,11 +656,13 @@ add_to_tbl <- function(tbl, item, group) {
 }
 
 # Process titles and text
-title_text_md <- function(item,
-                          use_title = TRUE,
-                          title_level = 4,
-                          title_code = FALSE,
-                          elements = "vertical") {
+title_text_md <- function(
+    item,
+    use_title = TRUE,
+    title_level = 4,
+    title_code = FALSE,
+    elements = "vertical"
+) {
   
   title <- names(item)
   item <- unname(unlist(item))
@@ -898,10 +901,12 @@ make_info_label_html <- function(info_label) {
   ) %>% as.character()
 }
 
-make_table_dims_html <- function(columns = NULL,
-                                 rows = NULL,
-                                 lang = NULL,
-                                 locale = NULL) {
+make_table_dims_html <- function(
+    columns = NULL,
+    rows = NULL,
+    lang = NULL,
+    locale = NULL
+) {
   
   if (is.null(columns) && is.null(rows)) {
     return("")

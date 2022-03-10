@@ -172,9 +172,11 @@
 #' 10-1
 #'
 #' @export
-create_multiagent <- function(...,
-                              lang = NULL,
-                              locale = NULL) {
+create_multiagent <- function(
+    ...,
+    lang = NULL,
+    locale = NULL
+) {
   
   agent_list <- list(...)
     

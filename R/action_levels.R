@@ -207,10 +207,12 @@ NULL
 
 #' @rdname action_levels
 #' @export
-action_levels <- function(warn_at = NULL,
-                          stop_at = NULL,
-                          notify_at = NULL,
-                          fns = NULL) {
+action_levels <- function(
+    warn_at = NULL,
+    stop_at = NULL,
+    notify_at = NULL,
+    fns = NULL
+) {
   
   fns <- normalize_fns_list(fns = fns)
   

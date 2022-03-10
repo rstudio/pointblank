@@ -105,11 +105,13 @@
 #'   produces a date-time string by default.
 #' 
 #' @export
-affix_date <- function(filename,
-                       position = c("end", "start"),
-                       format = "%Y-%m-%d",
-                       delimiter = "_",
-                       utc_time = TRUE) {
+affix_date <- function(
+    filename,
+    position = c("end", "start"),
+    format = "%Y-%m-%d",
+    delimiter = "_",
+    utc_time = TRUE
+) {
   
   position <- match.arg(position)
   
@@ -224,12 +226,14 @@ affix_date <- function(filename,
 #'   produces a date string by default.
 #' 
 #' @export
-affix_datetime <- function(filename,
-                           position = c("end", "start"),
-                           format = "%Y-%m-%d_%H-%M-%S",
-                           delimiter = "_",
-                           utc_time = TRUE,
-                           add_tz = FALSE) {
+affix_datetime <- function(
+    filename,
+    position = c("end", "start"),
+    format = "%Y-%m-%d_%H-%M-%S",
+    delimiter = "_",
+    utc_time = TRUE,
+    add_tz = FALSE
+) {
   
   position <- match.arg(position)
   
@@ -243,12 +247,14 @@ affix_datetime <- function(filename,
   )
 }
 
-affix_time_to_filename <- function(filename,
-                                   position,
-                                   format,
-                                   delimiter,
-                                   utc_time,
-                                   add_tz) {
+affix_time_to_filename <- function(
+    filename,
+    position,
+    format,
+    delimiter,
+    utc_time,
+    add_tz
+) {
   
   curr_time <- Sys.time()
   

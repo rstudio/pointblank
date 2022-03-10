@@ -461,8 +461,10 @@ tt_tbl_colnames <- function(tbl) {
 #' 12-5
 #' 
 #' @export
-tt_time_shift <- function(tbl,
-                          time_shift = "0y 0m 0d 0H 0M 0S") {
+tt_time_shift <- function(
+    tbl,
+    time_shift = "0y 0m 0d 0H 0M 0S"
+) {
   
   # nocov start
   
@@ -641,11 +643,13 @@ tt_time_shift <- function(tbl,
 #' 12-6
 #' 
 #' @export
-tt_time_slice <- function(tbl,
-                          time_column = NULL,
-                          slice_point = 0,
-                          keep = c("left", "right"),
-                          arrange = FALSE) {
+tt_time_slice <- function(
+    tbl,
+    time_column = NULL,
+    slice_point = 0,
+    keep = c("left", "right"),
+    arrange = FALSE
+) {
   
   # nocov start
   
@@ -826,9 +830,11 @@ tt_time_slice <- function(tbl,
 #' 12-7
 #' 
 #' @export
-get_tt_param <- function(tbl,
-                         param,
-                         column = NULL) {
+get_tt_param <- function(
+    tbl,
+    param,
+    column = NULL
+) {
   
   # Stop function if the `tt_type` attribute isn't present
   # in the table object

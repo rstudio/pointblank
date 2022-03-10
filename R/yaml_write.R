@@ -162,12 +162,14 @@
 #' 11-1
 #' 
 #' @export
-yaml_write <- function(...,
-                       .list = list2(...),
-                       filename = NULL,
-                       path = NULL,
-                       expanded = FALSE,
-                       quiet = FALSE) {
+yaml_write <- function(
+    ...,
+    .list = list2(...),
+    filename = NULL,
+    path = NULL,
+    expanded = FALSE,
+    quiet = FALSE
+) {
 
   # Collect a list of pointblank objects
   obj_list <- .list
@@ -414,10 +416,12 @@ yaml_write <- function(...,
 #' 11-5
 #' 
 #' @export
-yaml_agent_string <- function(agent = NULL,
-                              filename = NULL,
-                              path = NULL,
-                              expanded = FALSE) {
+yaml_agent_string <- function(
+    agent = NULL,
+    filename = NULL,
+    path = NULL,
+    expanded = FALSE
+) {
   
   if (is.null(agent) && is.null(filename)) {
     stop(

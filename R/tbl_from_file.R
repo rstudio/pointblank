@@ -194,11 +194,13 @@
 #' 1-7
 #'
 #' @export
-file_tbl <- function(file,
-                     type = NULL,
-                     ...,
-                     keep = FALSE,
-                     verify = TRUE) {
+file_tbl <- function(
+    file,
+    type = NULL,
+    ...,
+    keep = FALSE,
+    verify = TRUE
+) {
   
   if (!requireNamespace("readr", quietly = TRUE)) {
     stop(
@@ -407,10 +409,12 @@ file_tbl <- function(file,
 #' 13-6
 #' 
 #' @export
-from_github <- function(file,
-                        repo,
-                        subdir = NULL,
-                        default_branch = "main") {
+from_github <- function(
+    file,
+    repo,
+    subdir = NULL,
+    default_branch = "main"
+) {
   
   # get the username, repo, subdir component
   u_r_s <- gsub("(@|#).*", "", repo)
@@ -491,8 +495,7 @@ from_github <- function(file,
   url
 }
 
-download_remote_file <- function(url,
-                                 ...) {
+download_remote_file <- function(url, ...) {
   
   if (grepl("^https?://", url)) {
     
@@ -561,8 +564,7 @@ load_rda_object <- function(file) {
   env[[nm]]
 }
 
-get_attr_file_tbl <- function(x,
-                              attr) {
+get_attr_file_tbl <- function(x, attr) {
 
   # Possible `attr` values are:
   # * "tbl_name"

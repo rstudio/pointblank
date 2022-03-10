@@ -287,16 +287,18 @@ NULL
 #' @rdname conjointly
 #' @import rlang
 #' @export
-conjointly <- function(x,
-                       ...,
-                       .list = list2(...),
-                       preconditions = NULL,
-                       segments = NULL,
-                       actions = NULL,
-                       step_id = NULL,
-                       label = NULL,
-                       brief = NULL,
-                       active = TRUE) {
+conjointly <- function(
+    x,
+    ...,
+    .list = list2(...),
+    preconditions = NULL,
+    segments = NULL,
+    actions = NULL,
+    step_id = NULL,
+    label = NULL,
+    brief = NULL,
+    active = TRUE
+) {
 
   # Obtain all of the group's elements
   list_elements <- .list
@@ -396,11 +398,13 @@ conjointly <- function(x,
 #' @rdname conjointly
 #' @import rlang
 #' @export
-expect_conjointly <- function(object,
-                              ...,
-                              .list = list2(...),
-                              preconditions = NULL,
-                              threshold = 1) {
+expect_conjointly <- function(
+    object,
+    ...,
+    .list = list2(...),
+    preconditions = NULL,
+    threshold = 1
+) {
   
   fn_name <- "expect_conjointly"
   
@@ -447,11 +451,13 @@ expect_conjointly <- function(object,
 #' @rdname conjointly
 #' @import rlang
 #' @export
-test_conjointly <- function(object,
-                            ...,
-                            .list = list2(...),
-                            preconditions = NULL,
-                            threshold = 1) {
+test_conjointly <- function(
+    object,
+    ...,
+    .list = list2(...),
+    preconditions = NULL,
+    threshold = 1
+) {
   
   vs <- 
     create_agent(tbl = object, label = "::QUIET::") %>%

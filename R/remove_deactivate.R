@@ -73,8 +73,10 @@
 #' @seealso For the opposite behavior, use the [deactivate_steps()] function.
 #'
 #' @export
-activate_steps <- function(agent,
-                           i = NULL) {
+activate_steps <- function(
+    agent,
+    i = NULL
+) {
   
   if (!is.null(i)) {
     agent$validation_set <- 
@@ -142,8 +144,10 @@ activate_steps <- function(agent,
 #' @seealso For the opposite behavior, use the [activate_steps()] function.
 #'
 #' @export
-deactivate_steps <- function(agent,
-                             i = NULL) {
+deactivate_steps <- function(
+    agent,
+    i = NULL
+) {
   
   if (!is.null(i)) {
     agent$validation_set <- 
@@ -212,8 +216,10 @@ deactivate_steps <- function(agent,
 #'   [activate_steps()] will do the opposite).
 #'
 #' @export
-remove_steps <- function(agent,
-                         i = NULL) {
+remove_steps <- function(
+    agent,
+    i = NULL
+) {
   
   # TODO: Allow for removal of multiple steps (e.g., `i = 1:3`)
   if (!is.null(i)) {

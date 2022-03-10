@@ -385,8 +385,10 @@ incorporate <- function(informant) {
   informant
 }
 
-create_cli_header_i <- function(snippets_to_process,
-                                quiet) {
+create_cli_header_i <- function(
+    snippets_to_process,
+    quiet
+) {
   
   if (quiet) return()
   

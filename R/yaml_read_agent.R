@@ -146,8 +146,10 @@
 #' 11-2
 #' 
 #' @export
-yaml_read_agent <- function(filename,
-                            path = NULL) {
+yaml_read_agent <- function(
+    filename,
+    path = NULL
+) {
   
   if (!is.null(path)) {
     filename <- file.path(path, filename)
@@ -295,8 +297,10 @@ yaml_read_agent <- function(filename,
 #' 11-4
 #'
 #' @export
-yaml_agent_interrogate <- function(filename,
-                                   path = NULL) {
+yaml_agent_interrogate <- function(
+    filename,
+    path = NULL
+) {
 
   if (!is.null(path)) {
     filename <- file.path(path, filename)
@@ -386,8 +390,10 @@ yaml_agent_interrogate <- function(filename,
 #' 11-6
 #'
 #' @export
-yaml_agent_show_exprs <- function(filename,
-                                  path = NULL) {
+yaml_agent_show_exprs <- function(
+    filename,
+    path = NULL
+) {
   
   if (!is.null(path)) {
     filename <- file.path(path, filename)
@@ -732,8 +738,7 @@ make_validation_steps <- function(steps) {
   str_exprs
 }
 
-agent_get_exprs <- function(agent,
-                            expanded) {
+agent_get_exprs <- function(agent, expanded) {
   
   temp_dir <- tempdir()
   

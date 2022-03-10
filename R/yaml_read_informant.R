@@ -139,8 +139,10 @@
 #' 11-3
 #' 
 #' @export
-yaml_read_informant <- function(filename,
-                                path = NULL) {
+yaml_read_informant <- function(
+    filename,
+    path = NULL
+) {
 
   if (!is.null(path)) {
     filename <- file.path(path, filename)
@@ -287,8 +289,10 @@ yaml_read_informant <- function(filename,
 #' 11-7
 #'
 #' @export
-yaml_informant_incorporate <- function(filename,
-                                       path = NULL) {
+yaml_informant_incorporate <- function(
+    filename,
+    path = NULL
+) {
   
   if (!is.null(path)) {
     filename <- file.path(path, filename)

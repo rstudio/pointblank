@@ -176,8 +176,10 @@
 #' 3-1
 #'
 #' @export
-info_tabular <- function(x,
-                         ...) {
+info_tabular <- function(
+    x,
+    ...
+) {
   
   metadata_items <- list(...)
   
@@ -404,10 +406,12 @@ info_tabular <- function(x,
 #' 3-2
 #'
 #' @export
-info_columns <- function(x,
-                         columns,
-                         ...,
-                         .add = TRUE) {
+info_columns <- function(
+    x,
+    columns,
+    ...,
+    .add = TRUE
+) {
   
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
@@ -563,9 +567,11 @@ info_columns <- function(x,
 #'   *info text*.
 #'
 #' @export
-info_columns_from_tbl <- function(x,
-                                  tbl,
-                                  .add = TRUE) {
+info_columns_from_tbl <- function(
+    x,
+    tbl,
+    .add = TRUE
+) {
 
   # Ensure that `tbl` passes a validation check 
   tbl <- check_info_columns_tbl(tbl = tbl)
@@ -799,9 +805,11 @@ check_info_columns_tbl <- function(tbl) {
 #' 3-4
 #'
 #' @export
-info_section <- function(x,
-                         section_name,
-                         ...) {
+info_section <- function(
+    x,
+    section_name,
+    ...
+) {
   
   metadata_items <- list(...)
   
@@ -997,9 +1005,11 @@ info_section <- function(x,
 #' 3-5
 #' 
 #' @export
-info_snippet <- function(x,
-                         snippet_name,
-                         fn) {
+info_snippet <- function(
+    x,
+    snippet_name,
+    fn
+) {
   
   metadata <- x
 
@@ -1102,16 +1112,18 @@ info_snippet <- function(x,
 #' 3-6
 #' 
 #' @export
-snip_list <- function(column,
-                      limit = 5,
-                      sorting = c("inorder", "infreq", "inseq"),
-                      reverse = FALSE,
-                      sep = ",",
-                      and_or = NULL,
-                      oxford = TRUE,
-                      as_code = TRUE,
-                      quot_str = NULL,
-                      lang = NULL) {
+snip_list <- function(
+    column,
+    limit = 5,
+    sorting = c("inorder", "infreq", "inseq"),
+    reverse = FALSE,
+    sep = ",",
+    and_or = NULL,
+    oxford = TRUE,
+    as_code = TRUE,
+    quot_str = NULL,
+    lang = NULL
+) {
 
   sorting <- match.arg(sorting)
   
@@ -1311,8 +1323,10 @@ snip_list <- function(column,
 #' 3-7
 #' 
 #' @export
-snip_stats <- function(column,
-                       type = c("5num", "7num", "bowley")) {
+snip_stats <- function(
+    column,
+    type = c("5num", "7num", "bowley")
+) {
   
   type <- match.arg(type)
   

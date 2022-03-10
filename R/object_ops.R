@@ -257,12 +257,14 @@
 #' 9-1
 #' 
 #' @export
-x_write_disk <- function(x,
-                         filename,
-                         path = NULL,
-                         keep_tbl = FALSE,
-                         keep_extracts = FALSE,
-                         quiet = FALSE) {
+x_write_disk <- function(
+    x,
+    filename,
+    path = NULL,
+    keep_tbl = FALSE,
+    keep_extracts = FALSE,
+    quiet = FALSE
+) {
 
   if (
     !any(
@@ -437,9 +439,11 @@ x_write_disk <- function(x,
 #' 9-2
 #' 
 #' @export
-x_read_disk <- function(filename,
-                        path = NULL,
-                        quiet = FALSE) {
+x_read_disk <- function(
+    filename,
+    path = NULL,
+    quiet = FALSE
+) {
   
   if (!is.null(path)) {
     filename <- file.path(path, filename)
@@ -650,10 +654,13 @@ x_read_disk <- function(filename,
 #' 9-3
 #' 
 #' @export
-export_report <- function(x,
-                          filename,
-                          path = NULL,
-                          quiet = FALSE) {
+export_report <- function(
+    x,
+    filename,
+    path = NULL,
+    quiet = FALSE
+) {
+  
   if (
     !any(
       inherits(x, "ptblank_agent") |
@@ -823,10 +830,12 @@ export_report <- function(x,
 #' 9-4
 #' 
 #' @export
-set_tbl <- function(x,
-                    tbl,
-                    tbl_name = NULL,
-                    label = NULL) {
+set_tbl <- function(
+    x,
+    tbl,
+    tbl_name = NULL,
+    label = NULL
+) {
   
   tbl_list <- process_table_input(tbl = tbl, tbl_name = tbl_name)
   

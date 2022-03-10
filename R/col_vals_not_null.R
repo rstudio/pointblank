@@ -237,15 +237,17 @@ NULL
 #' @rdname col_vals_not_null
 #' @import rlang
 #' @export
-col_vals_not_null <- function(x,
-                              columns,
-                              preconditions = NULL,
-                              segments = NULL,
-                              actions = NULL,
-                              step_id = NULL,
-                              label = NULL,
-                              brief = NULL,
-                              active = TRUE) {
+col_vals_not_null <- function(
+    x,
+    columns,
+    preconditions = NULL,
+    segments = NULL,
+    actions = NULL,
+    step_id = NULL,
+    label = NULL,
+    brief = NULL,
+    active = TRUE
+) {
   
   values <- NULL
   
@@ -344,10 +346,12 @@ col_vals_not_null <- function(x,
 #' @rdname col_vals_not_null
 #' @import rlang
 #' @export
-expect_col_vals_not_null <- function(object,
-                                     columns,
-                                     preconditions = NULL,
-                                     threshold = 1) {
+expect_col_vals_not_null <- function(
+    object,
+    columns,
+    preconditions = NULL,
+    threshold = 1
+) {
   
   fn_name <- "expect_col_vals_not_null"
   
@@ -418,10 +422,12 @@ expect_col_vals_not_null <- function(object,
 #' @rdname col_vals_not_null
 #' @import rlang
 #' @export
-test_col_vals_not_null <- function(object,
-                                   columns,
-                                   preconditions = NULL,
-                                   threshold = 1) {
+test_col_vals_not_null <- function(
+    object,
+    columns,
+    preconditions = NULL,
+    threshold = 1
+) {
 
   vs <- 
     create_agent(tbl = object, label = "::QUIET::") %>%

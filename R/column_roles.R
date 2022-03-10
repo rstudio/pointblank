@@ -57,11 +57,13 @@ get_column_roles <- function(data) {
 
 # This returns a `data_column` with NULL values removed using the
 # sampling procedure of `first_n` or `random_n`
-get_non_null_col_sample <- function(data_column,
-                                    sample_type = c("first_n", "random_n"),
-                                    sample_n = 1000,
-                                    sample_min_n = 1,
-                                    make_distinct = FALSE) {
+get_non_null_col_sample <- function(
+    data_column,
+    sample_type = c("first_n", "random_n"),
+    sample_n = 1000,
+    sample_min_n = 1,
+    make_distinct = FALSE
+) {
   
   sample_type <- match.arg(sample_type)
   
@@ -104,8 +106,10 @@ get_non_null_col_sample <- function(data_column,
 
 # This provides the cardinality of a column and we may choose
 # include the exclude any NA group from this count
-get_column_cardinality <- function(data_column,
-                                   include_na = TRUE) {
+get_column_cardinality <- function(
+    data_column,
+    include_na = TRUE
+) {
   
   data_column_groups <-
     data_column %>%

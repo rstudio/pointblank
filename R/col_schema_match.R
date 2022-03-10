@@ -229,16 +229,18 @@ NULL
 #' @rdname col_schema_match
 #' @import rlang
 #' @export
-col_schema_match <- function(x,
-                             schema,
-                             complete = TRUE,
-                             in_order = TRUE,
-                             is_exact = TRUE,
-                             actions = NULL,
-                             step_id = NULL,
-                             label = NULL,
-                             brief = NULL,
-                             active = TRUE) {
+col_schema_match <- function(
+    x,
+    schema,
+    complete = TRUE,
+    in_order = TRUE,
+    is_exact = TRUE,
+    actions = NULL,
+    step_id = NULL,
+    label = NULL,
+    brief = NULL,
+    active = TRUE
+) {
 
   if (!inherits(schema, "col_schema")) {
     
@@ -329,12 +331,14 @@ col_schema_match <- function(x,
 #' @rdname col_schema_match
 #' @import rlang
 #' @export
-expect_col_schema_match <- function(object,
-                                    schema,
-                                    complete = TRUE,
-                                    in_order = TRUE,
-                                    is_exact = TRUE,
-                                    threshold = 1) {
+expect_col_schema_match <- function(
+    object,
+    schema,
+    complete = TRUE,
+    in_order = TRUE,
+    is_exact = TRUE,
+    threshold = 1
+) {
   
   fn_name <- "expect_col_schema_match"
   
@@ -386,12 +390,14 @@ expect_col_schema_match <- function(object,
 #' @rdname col_schema_match
 #' @import rlang
 #' @export
-test_col_schema_match <- function(object,
-                                  schema,
-                                  complete = TRUE,
-                                  in_order = TRUE,
-                                  is_exact = TRUE,
-                                  threshold = 1) {
+test_col_schema_match <- function(
+    object,
+    schema,
+    complete = TRUE,
+    in_order = TRUE,
+    is_exact = TRUE,
+    threshold = 1
+) {
   
   vs <- 
     create_agent(tbl = object, label = "::QUIET::") %>%
@@ -500,9 +506,11 @@ test_col_schema_match <- function(object,
 #' 13-1
 #' 
 #' @export
-col_schema <- function(...,
-                       .tbl = NULL,
-                       .db_col_types = c("r", "sql")) {
+col_schema <- function(
+    ...,
+    .tbl = NULL,
+    .db_col_types = c("r", "sql")
+) {
   
   db_col_types <- match.arg(.db_col_types)
 
@@ -573,14 +581,11 @@ create_col_schema_from_df <- function(tbl) {
       tbl %>%
       utils::head(1) %>%
       dplyr::collect()
-    
   }
   
   lapply(tbl, class)
 }
 
-col_schema_from_names_types <- function(names,
-                                        types) {
-  
+col_schema_from_names_types <- function(names, types) {
   as.list(stats::setNames(types, names))
 }

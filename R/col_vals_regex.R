@@ -251,17 +251,19 @@ NULL
 #' @rdname col_vals_regex
 #' @import rlang
 #' @export
-col_vals_regex <- function(x,
-                           columns,
-                           regex,
-                           na_pass = FALSE,
-                           preconditions = NULL,
-                           segments = NULL,
-                           actions = NULL,
-                           step_id = NULL,
-                           label = NULL,
-                           brief = NULL,
-                           active = TRUE) {
+col_vals_regex <- function(
+    x,
+    columns,
+    regex,
+    na_pass = FALSE,
+    preconditions = NULL,
+    segments = NULL,
+    actions = NULL,
+    step_id = NULL,
+    label = NULL,
+    brief = NULL,
+    active = TRUE
+) {
   
   # Get `columns` as a label
   columns_expr <- 
@@ -362,12 +364,14 @@ col_vals_regex <- function(x,
 #' @rdname col_vals_regex
 #' @import rlang
 #' @export
-expect_col_vals_regex <- function(object,
-                                  columns,
-                                  regex,
-                                  na_pass = FALSE,
-                                  preconditions = NULL,
-                                  threshold = 1) {
+expect_col_vals_regex <- function(
+    object,
+    columns,
+    regex,
+    na_pass = FALSE,
+    preconditions = NULL,
+    threshold = 1
+) {
   
   fn_name <- "expect_col_vals_regex"
   
@@ -442,12 +446,14 @@ expect_col_vals_regex <- function(object,
 #' @rdname col_vals_regex
 #' @import rlang
 #' @export
-test_col_vals_regex <- function(object,
-                                columns,
-                                regex,
-                                na_pass = FALSE,
-                                preconditions = NULL,
-                                threshold = 1) {
+test_col_vals_regex <- function(
+    object,
+    columns,
+    regex,
+    na_pass = FALSE,
+    preconditions = NULL,
+    threshold = 1
+) {
   
   vs <- 
     create_agent(tbl = object, label = "::QUIET::") %>%

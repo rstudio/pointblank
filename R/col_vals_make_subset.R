@@ -246,16 +246,18 @@ NULL
 #' @rdname col_vals_make_subset
 #' @import rlang
 #' @export
-col_vals_make_subset <- function(x,
-                                 columns,
-                                 set,
-                                 preconditions = NULL,
-                                 segments = NULL,
-                                 actions = NULL,
-                                 step_id = NULL,
-                                 label = NULL,
-                                 brief = NULL,
-                                 active = TRUE) {
+col_vals_make_subset <- function(
+    x,
+    columns,
+    set,
+    preconditions = NULL,
+    segments = NULL,
+    actions = NULL,
+    step_id = NULL,
+    label = NULL,
+    brief = NULL,
+    active = TRUE
+) {
   
   # Get `columns` as a label
   columns_expr <- 
@@ -354,11 +356,13 @@ col_vals_make_subset <- function(x,
 #' @rdname col_vals_make_subset
 #' @import rlang
 #' @export
-expect_col_vals_make_subset <- function(object,
-                                        columns,
-                                        set,
-                                        preconditions = NULL,
-                                        threshold = 1) {
+expect_col_vals_make_subset <- function(
+    object,
+    columns,
+    set,
+    preconditions = NULL,
+    threshold = 1
+) {
   
   fn_name <- "expect_col_vals_make_subset"
   
@@ -432,11 +436,13 @@ expect_col_vals_make_subset <- function(object,
 #' @rdname col_vals_make_subset
 #' @import rlang
 #' @export
-test_col_vals_make_subset <- function(object,
-                                      columns,
-                                      set,
-                                      preconditions = NULL,
-                                      threshold = 1) {
+test_col_vals_make_subset <- function(
+    object,
+    columns,
+    set,
+    preconditions = NULL,
+    threshold = 1
+) {
   
   vs <- 
     create_agent(tbl = object, label = "::QUIET::") %>%

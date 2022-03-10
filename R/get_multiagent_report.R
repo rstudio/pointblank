@@ -239,12 +239,14 @@
 #' 10-3
 #'
 #' @export
-get_multiagent_report <- function(multiagent,
-                                  display_table = TRUE,
-                                  display_mode = c("long", "wide"),
-                                  title = ":default:",
-                                  lang = NULL,
-                                  locale = NULL) {
+get_multiagent_report <- function(
+    multiagent,
+    display_table = TRUE,
+    display_mode = c("long", "wide"),
+    title = ":default:",
+    lang = NULL,
+    locale = NULL
+) {
 
   if (is.null(lang)) {
     lang <- "en"
@@ -894,8 +896,10 @@ get_multiagent_report <- function(multiagent,
   report_tbl
 }
 
-generate_cell_content <- function(layout_type,
-                                  vals_step) {
+generate_cell_content <- function(
+    layout_type,
+    vals_step
+) {
 
   if (!vals_step$eval_active) {
     border_indicator <- "#777777"

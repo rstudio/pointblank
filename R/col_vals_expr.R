@@ -255,15 +255,17 @@ NULL
 #' @rdname col_vals_expr
 #' @import rlang
 #' @export
-col_vals_expr <- function(x,
-                          expr,
-                          preconditions = NULL,
-                          segments = NULL,
-                          actions = NULL,
-                          step_id = NULL,
-                          label = NULL,
-                          brief = NULL,
-                          active = TRUE) {
+col_vals_expr <- function(
+    x,
+    expr,
+    preconditions = NULL,
+    segments = NULL,
+    actions = NULL,
+    step_id = NULL,
+    label = NULL,
+    brief = NULL,
+    active = TRUE
+) {
   
   if (!inherits(expr, "call")) {
     
@@ -362,10 +364,12 @@ col_vals_expr <- function(x,
 #' @rdname col_vals_expr
 #' @import rlang
 #' @export
-expect_col_vals_expr <- function(object,
-                                 expr,
-                                 preconditions = NULL,
-                                 threshold = 1) {
+expect_col_vals_expr <- function(
+    object,
+    expr,
+    preconditions = NULL,
+    threshold = 1
+) {
   
   fn_name <- "expect_col_vals_expr"
   
@@ -415,10 +419,12 @@ expect_col_vals_expr <- function(object,
 #' @rdname col_vals_expr
 #' @import rlang
 #' @export
-test_col_vals_expr <- function(object,
-                               expr,
-                               preconditions = NULL,
-                               threshold = 1) {
+test_col_vals_expr <- function(
+    object,
+    expr,
+    preconditions = NULL,
+    threshold = 1
+) {
   
   vs <- 
     create_agent(tbl = object, label = "::QUIET::") %>%

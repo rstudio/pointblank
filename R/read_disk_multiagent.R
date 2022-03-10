@@ -43,9 +43,11 @@
 #' 10-2
 #'
 #' @export
-read_disk_multiagent <- function(filenames = NULL,
-                                 pattern = NULL,
-                                 path = NULL) {
+read_disk_multiagent <- function(
+    filenames = NULL,
+    pattern = NULL,
+    path = NULL
+) {
   
   if (!is.null(pattern)) {
     

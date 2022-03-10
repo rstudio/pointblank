@@ -244,15 +244,17 @@ NULL
 #' @rdname tbl_match
 #' @import rlang
 #' @export
-tbl_match <- function(x,
-                      tbl_compare,
-                      preconditions = NULL,
-                      segments = NULL,
-                      actions = NULL,
-                      step_id = NULL,
-                      label = NULL,
-                      brief = NULL,
-                      active = TRUE) {
+tbl_match <- function(
+    x,
+    tbl_compare,
+    preconditions = NULL,
+    segments = NULL,
+    actions = NULL,
+    step_id = NULL,
+    label = NULL,
+    brief = NULL,
+    active = TRUE
+) {
   
   # Resolve segments into list
   segments_list <-
@@ -334,10 +336,12 @@ tbl_match <- function(x,
 #' @rdname tbl_match
 #' @import rlang
 #' @export
-expect_tbl_match <- function(object,
-                             tbl_compare,
-                             preconditions = NULL,
-                             threshold = 1) {
+expect_tbl_match <- function(
+    object,
+    tbl_compare,
+    preconditions = NULL,
+    threshold = 1
+) {
   
   fn_name <- "expect_tbl_match"
   
@@ -387,10 +391,12 @@ expect_tbl_match <- function(object,
 #' @rdname tbl_match
 #' @import rlang
 #' @export
-test_tbl_match <- function(object,
-                           tbl_compare,
-                           preconditions = NULL,
-                           threshold = 1) {
+test_tbl_match <- function(
+    object,
+    tbl_compare,
+    preconditions = NULL,
+    threshold = 1
+) {
   
   vs <- 
     create_agent(tbl = object, label = "::QUIET::") %>%

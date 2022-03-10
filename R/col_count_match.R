@@ -219,14 +219,16 @@ NULL
 #' @rdname col_count_match
 #' @import rlang
 #' @export
-col_count_match <- function(x,
-                            count,
-                            preconditions = NULL,
-                            actions = NULL,
-                            step_id = NULL,
-                            label = NULL,
-                            brief = NULL,
-                            active = TRUE) {
+col_count_match <- function(
+    x,
+    count,
+    preconditions = NULL,
+    actions = NULL,
+    step_id = NULL,
+    label = NULL,
+    brief = NULL,
+    active = TRUE
+) {
   
   if (is_a_table_object(x)) {
     
@@ -290,10 +292,12 @@ col_count_match <- function(x,
 #' @rdname col_count_match
 #' @import rlang
 #' @export
-expect_col_count_match <- function(object,
-                                   count,
-                                   preconditions = NULL,
-                                   threshold = 1) {
+expect_col_count_match <- function(
+    object,
+    count,
+    preconditions = NULL,
+    threshold = 1
+) {
   
   fn_name <- "expect_col_count_match"
   
@@ -343,10 +347,12 @@ expect_col_count_match <- function(object,
 #' @rdname col_count_match
 #' @import rlang
 #' @export
-test_col_count_match <- function(object,
-                                 count,
-                                 preconditions = NULL,
-                                 threshold = 1) {
+test_col_count_match <- function(
+    object,
+    count,
+    preconditions = NULL,
+    threshold = 1
+) {
   
   vs <- 
     create_agent(tbl = object, label = "::QUIET::") %>%

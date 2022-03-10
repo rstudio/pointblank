@@ -266,14 +266,16 @@ NULL
 #' @import rlang
 #' 
 #' @export
-specially <- function(x,
-                      fn,
-                      preconditions = NULL,
-                      actions = NULL,
-                      step_id = NULL,
-                      label = NULL,
-                      brief = NULL,
-                      active = TRUE) {
+specially <- function(
+    x,
+    fn,
+    preconditions = NULL,
+    actions = NULL,
+    step_id = NULL,
+    label = NULL,
+    brief = NULL,
+    active = TRUE
+) {
   
   segments <- NULL
   
@@ -357,10 +359,12 @@ specially <- function(x,
 #' @rdname specially
 #' @import rlang
 #' @export
-expect_specially <- function(object,
-                             fn,
-                             preconditions = NULL,
-                             threshold = 1) {
+expect_specially <- function(
+    object,
+    fn,
+    preconditions = NULL,
+    threshold = 1
+) {
   
   fn_name <- "expect_specially"
   
@@ -405,10 +409,12 @@ expect_specially <- function(object,
 #' @rdname specially
 #' @import rlang
 #' @export
-test_specially <- function(object,
-                           fn,
-                           preconditions = NULL,
-                           threshold = 1) {
+test_specially <- function(
+    object,
+    fn,
+    preconditions = NULL,
+    threshold = 1
+) {
   
   vs <- 
     create_agent(tbl = object, label = "::QUIET::") %>%

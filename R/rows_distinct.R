@@ -226,15 +226,17 @@ NULL
 #' @rdname rows_distinct
 #' @import rlang
 #' @export
-rows_distinct <- function(x,
-                          columns = NULL,
-                          preconditions = NULL,
-                          segments = NULL,
-                          actions = NULL,
-                          step_id = NULL,
-                          label = NULL,
-                          brief = NULL,
-                          active = TRUE) {
+rows_distinct <- function(
+    x,
+    columns = NULL,
+    preconditions = NULL,
+    segments = NULL,
+    actions = NULL,
+    step_id = NULL,
+    label = NULL,
+    brief = NULL,
+    active = TRUE
+) {
   
   # Get `columns` as a label
   columns_expr <- 
@@ -340,10 +342,12 @@ rows_distinct <- function(x,
 #' @rdname rows_distinct
 #' @import rlang
 #' @export
-expect_rows_distinct <- function(object,
-                                 columns = NULL,
-                                 preconditions = NULL,
-                                 threshold = 1) {
+expect_rows_distinct <- function(
+    object,
+    columns = NULL,
+    preconditions = NULL,
+    threshold = 1
+) {
   
   fn_name <- "expect_rows_distinct"
   
@@ -393,10 +397,12 @@ expect_rows_distinct <- function(object,
 #' @rdname rows_distinct
 #' @import rlang
 #' @export
-test_rows_distinct <- function(object,
-                               columns = NULL,
-                               preconditions = NULL,
-                               threshold = 1) {
+test_rows_distinct <- function(
+    object,
+    columns = NULL,
+    preconditions = NULL,
+    threshold = 1
+) {
   
   vs <- 
     create_agent(tbl = object, label = "::QUIET::") %>%

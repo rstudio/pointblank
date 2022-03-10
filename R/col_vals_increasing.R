@@ -274,18 +274,20 @@ NULL
 #' @rdname col_vals_increasing
 #' @import rlang
 #' @export
-col_vals_increasing <- function(x,
-                                columns,
-                                allow_stationary = FALSE,
-                                decreasing_tol = NULL,
-                                na_pass = FALSE,
-                                preconditions = NULL,
-                                segments = NULL,
-                                actions = NULL,
-                                step_id = NULL,
-                                label = NULL,
-                                brief = NULL,
-                                active = TRUE) {
+col_vals_increasing <- function(
+    x,
+    columns,
+    allow_stationary = FALSE,
+    decreasing_tol = NULL,
+    na_pass = FALSE,
+    preconditions = NULL,
+    segments = NULL,
+    actions = NULL,
+    step_id = NULL,
+    label = NULL,
+    brief = NULL,
+    active = TRUE
+) {
   
   # Get `columns` as a label
   columns_expr <- 
@@ -396,13 +398,15 @@ col_vals_increasing <- function(x,
 #' @rdname col_vals_increasing
 #' @import rlang
 #' @export
-expect_col_vals_increasing <- function(object,
-                                       columns,
-                                       allow_stationary = FALSE,
-                                       decreasing_tol = NULL,
-                                       na_pass = FALSE,
-                                       preconditions = NULL,
-                                       threshold = 1) {
+expect_col_vals_increasing <- function(
+    object,
+    columns,
+    allow_stationary = FALSE,
+    decreasing_tol = NULL,
+    na_pass = FALSE,
+    preconditions = NULL,
+    threshold = 1
+) {
   
   fn_name <- "expect_col_vals_increasing"
   
@@ -482,13 +486,15 @@ expect_col_vals_increasing <- function(object,
 #' @rdname col_vals_increasing
 #' @import rlang
 #' @export
-test_col_vals_increasing <- function(object,
-                                     columns,
-                                     allow_stationary = FALSE,
-                                     decreasing_tol = NULL,
-                                     na_pass = FALSE,
-                                     preconditions = NULL,
-                                     threshold = 1) {
+test_col_vals_increasing <- function(
+    object,
+    columns,
+    allow_stationary = FALSE,
+    decreasing_tol = NULL,
+    na_pass = FALSE,
+    preconditions = NULL,
+    threshold = 1
+) {
   
   vs <- 
     create_agent(tbl = object, label = "::QUIET::") %>%

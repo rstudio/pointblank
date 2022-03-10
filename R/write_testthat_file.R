@@ -218,12 +218,14 @@
 #' 8-5
 #' 
 #' @export
-write_testthat_file <- function(agent,
-                                name = NULL,
-                                path = NULL,
-                                overwrite = FALSE,
-                                skips = NULL,
-                                quiet = FALSE) {
+write_testthat_file <- function(
+    agent,
+    name = NULL,
+    path = NULL,
+    overwrite = FALSE,
+    skips = NULL,
+    quiet = FALSE
+) {
 
   # Enforce that the agent must have a `read_fn`
   # TODO: Improve the content of the `stop()` message
@@ -436,8 +438,10 @@ get_thresholds <- function(agent, type) {
   )
 }
 
-insert_threshold_values <- function(agent_exprs_raw,
-                                    threshold_vals) {
+insert_threshold_values <- function(
+    agent_exprs_raw,
+    threshold_vals
+) {
   
   vapply(
     seq_along(agent_exprs_raw),
@@ -466,8 +470,7 @@ insert_threshold_values <- function(agent_exprs_raw,
   )
 }
 
-resolve_test_filename <- function(agent,
-                                  name) {
+resolve_test_filename <- function(agent, name) {
   
   if (is.null(name)) {
     if (is.null(agent$tbl_name) ||
@@ -551,10 +554,12 @@ process_skips_text <- function(skips) {
   paste0(paste0(skips_text, collapse = ""), "\n")
 }
 
-pb_write_file <- function(path,
-                          lines,
-                          append = FALSE,
-                          line_ending = NULL) {
+pb_write_file <- function(
+    path,
+    lines,
+    append = FALSE,
+    line_ending = NULL
+) {
   
   stopifnot(is.character(path))
   stopifnot(is.character(lines))

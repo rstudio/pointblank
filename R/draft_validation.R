@@ -78,15 +78,17 @@
 #' 1-11
 #' 
 #' @export
-draft_validation <- function(tbl,
-                             tbl_name = NULL,
-                             file_name = tbl_name,
-                             path = NULL,
-                             lang = NULL,
-                             output_type = c("R", "Rmd"),
-                             add_comments = TRUE,
-                             overwrite = FALSE,
-                             quiet = FALSE) {
+draft_validation <- function(
+    tbl,
+    tbl_name = NULL,
+    file_name = tbl_name,
+    path = NULL,
+    lang = NULL,
+    output_type = c("R", "Rmd"),
+    add_comments = TRUE,
+    overwrite = FALSE,
+    quiet = FALSE
+) {
   
   output_type <- match.arg(output_type)
   
@@ -117,7 +119,6 @@ draft_validation <- function(tbl,
         column_role = column_roles[i]
       )
   }
-  
   
   # Add the `rows_distinct()` validation step if all rows in the
   # table are distinct

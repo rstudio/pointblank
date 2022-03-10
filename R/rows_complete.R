@@ -229,15 +229,17 @@ NULL
 #' @rdname rows_complete
 #' @import rlang
 #' @export
-rows_complete <- function(x,
-                          columns = NULL,
-                          preconditions = NULL,
-                          segments = NULL,
-                          actions = NULL,
-                          step_id = NULL,
-                          label = NULL,
-                          brief = NULL,
-                          active = TRUE) {
+rows_complete <- function(
+    x,
+    columns = NULL,
+    preconditions = NULL,
+    segments = NULL,
+    actions = NULL,
+    step_id = NULL,
+    label = NULL,
+    brief = NULL,
+    active = TRUE
+) {
   
   # Get `columns` as a label
   columns_expr <- 
@@ -343,10 +345,12 @@ rows_complete <- function(x,
 #' @rdname rows_complete
 #' @import rlang
 #' @export
-expect_rows_complete <- function(object,
-                                 columns = NULL,
-                                 preconditions = NULL,
-                                 threshold = 1) {
+expect_rows_complete <- function(
+    object,
+    columns = NULL,
+    preconditions = NULL,
+    threshold = 1
+) {
   
   fn_name <- "expect_rows_complete"
   
@@ -396,10 +400,12 @@ expect_rows_complete <- function(object,
 #' @rdname rows_complete
 #' @import rlang
 #' @export
-test_rows_complete <- function(object,
-                               columns = NULL,
-                               preconditions = NULL,
-                               threshold = 1) {
+test_rows_complete <- function(
+    object,
+    columns = NULL,
+    preconditions = NULL,
+    threshold = 1
+) {
   
   vs <- 
     create_agent(tbl = object, label = "::QUIET::") %>%

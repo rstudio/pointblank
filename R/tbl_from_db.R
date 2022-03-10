@@ -176,13 +176,15 @@
 #' 1-6
 #'
 #' @export
-db_tbl <- function(table,
-                   dbname,
-                   dbtype,
-                   host = NULL,
-                   port = NULL,
-                   user = NULL,
-                   password = NULL) {
+db_tbl <- function(
+    table,
+    dbname,
+    dbtype,
+    host = NULL,
+    port = NULL,
+    user = NULL,
+    password = NULL
+) {
   
   force(table)
   

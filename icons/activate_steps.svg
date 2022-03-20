@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="67px" height="67px" viewBox="0 0 67 67" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>activate_steps</title>
+    <g id="All-Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="activate_steps" transform="translate(0.000000, 0.793103)">
+            <path d="M56.876942,1 C59.3622234,1 61.6122234,2.00735931 63.240903,3.63603897 C64.8695827,5.26471863 65.876942,7.51471863 65.876942,10 L65.876942,10 L65.876942,65 L10.876942,65 C8.39166064,65 6.14166064,63.9926407 4.51298099,62.363961 C2.88430133,60.7352814 1.87694202,58.4852814 1.87694202,56 L1.87694202,56 L1.87694202,10 C1.87694202,7.51471863 2.88430133,5.26471863 4.51298099,3.63603897 C6.14166064,2.00735931 8.39166064,1 10.876942,1 L10.876942,1 Z" id="rectangle" stroke="#000000" stroke-width="2" fill="#FFFFFF"></path>
+            <polygon id="play-green" fill="#7ED321" transform="translate(55.087611, 23.803506) rotate(45.000000) translate(-55.087611, -23.803506) " points="56.0876111 20.8035055 52.0876111 20.8035055 52.0876111 22.8035055 56.0876111 22.8035055 56.0876111 26.8035055 58.0876111 26.8035055 58.0876111 22.8035055 58.0876111 20.8035055"></polygon>
+            <polygon id="play-green" fill="#7ED321" transform="translate(55.087611, 42.196494) rotate(45.000000) translate(-55.087611, -42.196494) " points="56.0876111 39.1964945 52.0876111 39.1964945 52.0876111 41.1964945 56.0876111 41.1964945 56.0876111 45.1964945 58.0876111 45.1964945 58.0876111 41.1964945 58.0876111 39.1964945"></polygon>
+            <line x1="11.8768338" y1="14.6070111" x2="49.8768338" y2="14.6070111" id="line" stroke="#000000" stroke-width="2" stroke-linecap="square"></line>
+            <line x1="11.8768338" y1="23.8035055" x2="49.8768338" y2="23.8035055" id="line" stroke="#7ED321" stroke-width="2" stroke-linecap="square"></line>
+            <line x1="11.8768338" y1="33" x2="49.8768338" y2="33" id="line" stroke="#000000" stroke-width="2" stroke-linecap="square"></line>
+            <line x1="11.8768338" y1="42.1964945" x2="49.8768338" y2="42.1964945" id="line" stroke="#7ED321" stroke-width="2" stroke-linecap="square"></line>
+            <line x1="11.8768338" y1="51.3929889" x2="49.8768338" y2="51.3929889" id="line" stroke="#000000" stroke-width="2" stroke-linecap="square"></line>
+        </g>
+    </g>
+</svg>

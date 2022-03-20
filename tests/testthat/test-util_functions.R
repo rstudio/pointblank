@@ -682,13 +682,42 @@ test_that("Utility functions won't fail us", {
 
   function_icons <-
     c(
-      "col_exists", "col_is_character", "col_is_date", "col_is_factor",
-      "col_is_integer", "col_is_logical", "col_is_numeric", "col_is_posix",
-      "col_schema_match", "col_vals_between", "col_vals_equal", "col_vals_expr",
-      "col_vals_gt", "col_vals_gte", "col_vals_in_set", "col_vals_lt",
-      "col_vals_lte", "col_vals_not_between", "col_vals_not_equal",
-      "col_vals_not_in_set", "col_vals_not_null", "col_vals_null",
-      "col_vals_regex", "conjointly", "rows_distinct"
+      "col_vals_lt",
+      "col_vals_lte",
+      "col_vals_equal",
+      "col_vals_not_equal",
+      "col_vals_gte",
+      "col_vals_gt",
+      "col_vals_between",
+      "col_vals_not_between",
+      "col_vals_in_set",
+      "col_vals_not_in_set",
+      "col_vals_make_set",
+      "col_vals_make_subset",
+      "col_vals_increasing",
+      "col_vals_decreasing",
+      "col_vals_null",
+      "col_vals_not_null",
+      "col_vals_regex",
+      "col_vals_within_spec",
+      "col_vals_expr",
+      "rows_distinct",
+      "rows_complete",
+      "col_is_character",
+      "col_is_numeric",
+      "col_is_integer",
+      "col_is_logical",
+      "col_is_date",
+      "col_is_posix",
+      "col_is_factor",
+      "col_exists",
+      "col_schema_match",
+      "row_count_match",
+      "col_count_match",
+      "tbl_match",
+      "conjointly",
+      "serially",
+      "specially"
     )
 
   for (i in seq(function_icons)) {
@@ -705,7 +734,7 @@ test_that("Utility functions won't fail us", {
       add_icon_svg(icon = function_icons[i]),
       regexp = paste0(
         "<div style=\"margin:0;padding:0;display:inline-block;height:30px;",
-        "vertical-align:middle;\"><svg width=\"30px\" height=\"30px\".*",
+        "vertical-align:middle;\">.*<svg width=\"30px\" height=\"30px\".*",
         "</svg></div>"
       )
     )

@@ -9,6 +9,7 @@
 ^_pkgdown\.yml$
 ^docs$
 ^scripts$
+^icons$
 ^pkgdown$
 ^CRAN-RELEASE$
 ^data-raw$

@@ -107,9 +107,9 @@ test_that("sundered data can be generated and retrieved with a `tbl_df`", {
   
   # Expect that both tables are of the same type as the
   # input data
-  expect_is(small_table, "tbl_df")
-  expect_is(pass_data_tbl, "tbl_df")
-  expect_is(fail_data_tbl, "tbl_df")
+  expect_s3_class(small_table, "tbl_df")
+  expect_s3_class(pass_data_tbl, "tbl_df")
+  expect_s3_class(fail_data_tbl, "tbl_df")
   
   # Expect certain dimensions for each table
   expect_equal(dim(pass_data_tbl), c(9, 8))
@@ -143,7 +143,7 @@ test_that("sundered data can be generated and retrieved with a `tbl_df`", {
   
   # Expect the resulting list to hold the
   # same two data pieces as before
-  expect_is(data_tbl_list, "list")
+  expect_type(data_tbl_list, "list")
   expect_equal(names(data_tbl_list), c("pass", "fail"))
   expect_equal(length(data_tbl_list), 2)
   expect_equal(data_tbl_list$pass, pass_data_tbl)
@@ -179,9 +179,9 @@ test_that("sundered data can be combined to a single `tbl_df` with a single flag
   # Use the `"combined"` option in `get_sundered_data()`
   combined_data_tbl <- get_sundered_data(agent, type = "combined")
   
-  # Expect that the table ius of the same type as the input data
-  expect_is(small_table, "tbl_df")
-  expect_is(combined_data_tbl, "tbl_df")
+  # Expect that the table is of the same type as the input data
+  expect_s3_class(small_table, "tbl_df")
+  expect_s3_class(combined_data_tbl, "tbl_df")
   
   # Expect there to be the same number of rows as the
   # input table but one more column
@@ -201,10 +201,10 @@ test_that("sundered data can be combined to a single `tbl_df` with a single flag
   c_2 <- get_sundered_data(agent, type = "combined", pass_fail = c(TRUE, FALSE))
   c_3 <- get_sundered_data(agent, type = "combined", pass_fail = c("good", "bad"))
   c_4 <- get_sundered_data(agent, type = "combined", pass_fail = c(1L, 0L))
-  expect_is(c_1$.pb_combined, "numeric")
-  expect_is(c_2$.pb_combined, "logical")
-  expect_is(c_3$.pb_combined, "character")
-  expect_is(c_4$.pb_combined, "integer")
+  expect_true(inherits(c_1$.pb_combined, "numeric"))
+  expect_true(inherits(c_2$.pb_combined, "logical"))
+  expect_true(inherits(c_3$.pb_combined, "character"))
+  expect_true(inherits(c_4$.pb_combined, "integer"))
   expect_equal(unique(c_1$.pb_combined), c(1, 0))
   expect_equal(unique(c_2$.pb_combined), c(TRUE, FALSE))
   expect_equal(unique(c_3$.pb_combined), c("good", "bad"))
@@ -228,9 +228,9 @@ test_that("sundered data can be generated and retrieved with a `tbl_df` (one ste
   
   # Expect that both tables are of the same type as the
   # input data
-  expect_is(small_table, "tbl_df")
-  expect_is(pass_data_tbl, "tbl_df")
-  expect_is(fail_data_tbl, "tbl_df")
+  expect_s3_class(small_table, "tbl_df")
+  expect_s3_class(pass_data_tbl, "tbl_df")
+  expect_s3_class(fail_data_tbl, "tbl_df")
   
   # Expect certain dimensions for each table
   expect_equal(dim(pass_data_tbl), c(7, 8))
@@ -264,7 +264,7 @@ test_that("sundered data can be generated and retrieved with a `tbl_df` (one ste
   
   # Expect the resulting list to hold the
   # same two data pieces as before
-  expect_is(data_tbl_list, "list")
+  expect_type(data_tbl_list, "list")
   expect_equal(names(data_tbl_list), c("pass", "fail"))
   expect_equal(length(data_tbl_list), 2)
   expect_equal(data_tbl_list$pass, pass_data_tbl)
@@ -293,9 +293,9 @@ test_that("sundered data can be generated and retrieved with a `tbl_df` (no step
   
   # Expect that both tables are of the same type as the
   # input data
-  expect_is(small_table, "tbl_df")
-  expect_is(pass_data_tbl, "tbl_df")
-  expect_is(fail_data_tbl, "tbl_df")
+  expect_s3_class(small_table, "tbl_df")
+  expect_s3_class(pass_data_tbl, "tbl_df")
+  expect_s3_class(fail_data_tbl, "tbl_df")
   
   # Expect certain dimensions for each table
   expect_equal(dim(pass_data_tbl %>% dplyr::collect()), c(13, 8))
@@ -329,7 +329,7 @@ test_that("sundered data can be generated and retrieved with a `tbl_df` (no step
   
   # Expect the resulting list to hold the
   # same two data pieces as before
-  expect_is(data_tbl_list, "list")
+  expect_type(data_tbl_list, "list")
   expect_equal(names(data_tbl_list), c("pass", "fail"))
   expect_equal(length(data_tbl_list), 2)
   expect_equal(data_tbl_list$pass, pass_data_tbl)
@@ -359,10 +359,10 @@ test_that("sundering can occur (with exceptions) when there are preconditions", 
   
   # Expect that all tables are of the same type as the
   # input data
-  expect_is(small_table, "tbl_df")
-  expect_is(pass_data_tbl, "tbl_df")
-  expect_is(fail_data_tbl, "tbl_df")
-  expect_is(combined_data_tbl, "tbl_df")
+  expect_s3_class(small_table, "tbl_df")
+  expect_s3_class(pass_data_tbl, "tbl_df")
+  expect_s3_class(fail_data_tbl, "tbl_df")
+  expect_s3_class(combined_data_tbl, "tbl_df")
   
   # Expect certain dimensions for each table
   expect_equal(dim(pass_data_tbl), c(4, 8))
@@ -411,7 +411,7 @@ test_that("sundering can occur (with exceptions) when there are preconditions", 
   
   # Expect the resulting list to hold the
   # same two data pieces as before
-  expect_is(data_tbl_list, "list")
+  expect_type(data_tbl_list, "list")
   expect_equal(names(data_tbl_list), c("pass", "fail"))
   expect_equal(length(data_tbl_list), 2)
   expect_equal(data_tbl_list$pass, pass_data_tbl)
@@ -454,9 +454,9 @@ test_that("sundering can occur (with exceptions) when there are preconditions", 
   
   # Expect that all tables are of the same type as the
   # input data
-  expect_is(pass_data_tbl_u, "tbl_df")
-  expect_is(fail_data_tbl_u, "tbl_df")
-  expect_is(combined_data_tbl_u, "tbl_df")
+  expect_s3_class(pass_data_tbl_u, "tbl_df")
+  expect_s3_class(fail_data_tbl_u, "tbl_df")
+  expect_s3_class(combined_data_tbl_u, "tbl_df")
   
   # Expect certain dimensions for each table
   expect_equal(dim(pass_data_tbl_u), c(9, 8))
@@ -476,9 +476,9 @@ test_that("sundered data can be generated and retrieved with a `tbl_dbi` (SQLite
 
   # Expect that both tables are of the same type as the
   # input data
-  expect_is(tbl_sqlite, "tbl_dbi")
-  expect_is(pass_data_tbl, "tbl_dbi")
-  expect_is(fail_data_tbl, "tbl_dbi")
+  expect_s3_class(tbl_sqlite, "tbl_dbi")
+  expect_s3_class(pass_data_tbl, "tbl_dbi")
+  expect_s3_class(fail_data_tbl, "tbl_dbi")
 
   # Expect certain dimensions for each table
   expect_equal(dim(pass_data_tbl %>% dplyr::collect()), c(8, 8))
@@ -507,7 +507,7 @@ test_that("sundered data can be generated and retrieved with a `tbl_dbi` (SQLite
 
   # Expect the resulting list to hold the
   # same two data pieces as before
-  expect_is(data_tbl_list, "list")
+  expect_type(data_tbl_list, "list")
   expect_equal(names(data_tbl_list), c("pass", "fail"))
   expect_equal(length(data_tbl_list), 2)
   expect_equal(data_tbl_list$pass, pass_data_tbl)

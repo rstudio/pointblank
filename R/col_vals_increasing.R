@@ -128,8 +128,9 @@
 #' `col_vals_increasing()` as a validation step is expressed in R code and in
 #' the corresponding YAML representation.
 #' 
-#' ```
-#' # R statement
+#' R statement:
+#' 
+#' ```r
 #' agent %>% 
 #'   col_vals_increasing(
 #'     columns = vars(a),
@@ -142,8 +143,11 @@
 #'     label = "The `col_vals_increasing()` step.",
 #'     active = FALSE
 #'   )
+#' ```
 #' 
-#' # YAML representation
+#' YAML representation:
+#' 
+#' ```yaml
 #' steps:
 #' - col_vals_increasing:
 #'     columns: vars(a)

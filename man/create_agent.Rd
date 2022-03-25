@@ -108,11 +108,11 @@ use validation functions (the same ones you would with an \emph{agent}) directly
 on the data. This acts as a sort of data filter in that the input table will
 become output data (without modification), but there may be warnings, errors,
 or other side effects that you can define if validation fails. Basically,
-instead of this\preformatted{create_agent(tbl = small_table) \%>\% rows_distinct() \%>\% interrogate()
-}
+instead of this\if{html}{\out{<div class="sourceCode r">}}\preformatted{create_agent(tbl = small_table) \%>\% rows_distinct() \%>\% interrogate()
+}\if{html}{\out{</div>}}
 
-you would use this:\preformatted{small_table \%>\% rows_distinct()
-}
+you would use this:\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% rows_distinct()
+}\if{html}{\out{</div>}}
 
 This results in an error (with the default failure threshold settings),
 displaying the reason for the error in the console. Notably, the data is not
@@ -120,14 +120,14 @@ passed though.
 
 We can use variants of the validation functions, the \emph{test} (\verb{test_*()}) and
 \emph{expectation} (\verb{expect_*()}) versions, directly on the data for different
-workflows. The first returns to us a logical value. So this\preformatted{small_table \%>\% test_rows_distinct()
-}
+workflows. The first returns to us a logical value. So this\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% test_rows_distinct()
+}\if{html}{\out{</div>}}
 
 returns \code{FALSE} instead of an error.
 
 In a unit testing scenario, we can use \emph{expectation} functions exactly as we
-would with \strong{testthat}'s library of \verb{expect_*()} functions:\preformatted{small_table \%>\% expect_rows_distinct()
-}
+would with \strong{testthat}'s library of \verb{expect_*()} functions:\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% expect_rows_distinct()
+}\if{html}{\out{</div>}}
 
 This test of \code{small_table} would be counted as a failure.
 }
@@ -182,8 +182,9 @@ A \strong{pointblank} agent can be written to YAML with \code{\link[=yaml_write]
 resulting YAML can be used to regenerate an agent (with \code{\link[=yaml_read_agent]{yaml_read_agent()}})
 or interrogate the target table (via \code{\link[=yaml_agent_interrogate]{yaml_agent_interrogate()}}). Here is an
 example of how a complex call of \code{create_agent()} is expressed in R code and
-in the corresponding YAML representation.\preformatted{# R statement
-create_agent(
+in the corresponding YAML representation.
+
+R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{create_agent(
   tbl = ~ small_table,
   tbl_name = "small_table",
   label = "An example.",
@@ -209,9 +210,9 @@ create_agent(
   lang = "fr", 
   locale = "fr_CA"
 )
+}\if{html}{\out{</div>}}
 
-# YAML representation
-type: agent
+YAML representation:\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{type: agent
 tbl: ~small_table
 tbl_name: small_table
 label: An example.
@@ -231,7 +232,7 @@ end_fns:
 - ~Sys.sleep(1)
 embed_report: true
 steps: []
-}
+}\if{html}{\out{</div>}}
 
 In practice, this YAML file will be shorter since arguments with default
 values won't be written to YAML when using \code{\link[=yaml_write]{yaml_write()}} (though it is

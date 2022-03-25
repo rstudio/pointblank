@@ -125,8 +125,9 @@
 #' validation step is expressed in R code and in the corresponding YAML
 #' representation.
 #' 
+#' R statement:
+#' 
 #' ```
-#' # R statement
 #' agent %>% 
 #'   col_vals_regex(
 #'     columns = vars(a),
@@ -138,8 +139,11 @@
 #'     label = "The `col_vals_regex()` step.",
 #'     active = FALSE
 #'   )
+#' ```
 #' 
-#' # YAML representation
+#' YAML representation:
+#' 
+#' ```yaml
 #' steps:
 #' - col_vals_regex:
 #'     columns: vars(a)

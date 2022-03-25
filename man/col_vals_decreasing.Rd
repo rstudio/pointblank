@@ -258,8 +258,9 @@ or interrogate the target table (via \code{\link[=yaml_agent_interrogate]{yaml_a
 key as a list member), the syntax closely follows the signature of the
 validation function. Here is an example of how a complex call of
 \code{col_vals_decreasing()} as a validation step is expressed in R code and in
-the corresponding YAML representation.\preformatted{# R statement
-agent \%>\% 
+the corresponding YAML representation.
+
+R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
   col_vals_decreasing(
     columns = vars(a),
     allow_stationary = TRUE,
@@ -270,10 +271,10 @@ agent \%>\%
     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
     label = "The `col_vals_decreasing()` step.",
     active = FALSE
-  ) \%>\% yaml_agent_string()
+  )
+}\if{html}{\out{</div>}}
 
-# YAML representation
-steps:
+YAML representation:\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
 - col_vals_decreasing:
     columns: vars(a)
     allow_stationary: true
@@ -286,7 +287,7 @@ steps:
       stop_fraction: 0.2
     label: The `col_vals_decreasing()` step.
     active: false
-}
+}\if{html}{\out{</div>}}
 
 In practice, both of these will often be shorter as only the \code{columns}
 argument requires a value. Arguments with default values won't be written to

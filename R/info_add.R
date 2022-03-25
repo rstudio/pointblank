@@ -81,15 +81,19 @@
 #' `table` key. Here is an example of how a call of `info_tabular()` is
 #' expressed in R code and in the corresponding YAML representation.
 #' 
-#' ```
-#' # R statement
+#' R statement:
+#' 
+#' ```r
 #' informant %>% 
 #'   info_tabular(
 #'     section_1 = "*info text* 1.",
 #'     `section 2` = "*info text* 2 and {snippet_1}"
 #'   )
+#' ```
 #' 
-#' # YAML representation
+#' YAML representation:
+#' 
+#' ```yaml
 #' table:
 #'   _columns: 23
 #'   _rows: 205.0

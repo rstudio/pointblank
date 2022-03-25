@@ -241,8 +241,9 @@ or interrogate the target table (via \code{\link[=yaml_agent_interrogate]{yaml_a
 list member), the syntax closely follows the signature of the validation
 function. Here is an example of how a complex call of \code{conjointly()} as a
 validation step is expressed in R code and in the corresponding YAML
-representation.\preformatted{# R statement
-agent \%>\% 
+representation.
+
+R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
   conjointly(
     ~ col_vals_lt(., vars(a), 8),
     ~ col_vals_gt(., vars(c), vars(a)),
@@ -253,9 +254,9 @@ agent \%>\%
     label = "The `conjointly()` step.",
     active = FALSE
   )
+}\if{html}{\out{</div>}}
 
-# YAML representation
-steps:
+YAML representation:\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
 - conjointly:
     fns:
     - ~col_vals_lt(., vars(a), 8)
@@ -268,7 +269,7 @@ steps:
       stop_fraction: 0.2
     label: The `conjointly()` step.
     active: false
-}
+}\if{html}{\out{</div>}}
 
 In practice, both of these will often be shorter as only the expressions for
 validation steps are necessary. Arguments with default values won't be

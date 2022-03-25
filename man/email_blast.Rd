@@ -63,8 +63,9 @@ resulting YAML can be used to regenerate an agent (with \code{\link[=yaml_read_a
 or interrogate the target table (via \code{\link[=yaml_agent_interrogate]{yaml_agent_interrogate()}}). Here is an
 example of how the use of \code{email_blast()} inside the \code{end_fns} argument of
 \code{\link[=create_agent]{create_agent()}} is expressed in R code and in the corresponding YAML
-representation.\preformatted{# R statement
-create_agent(
+representation.
+
+R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{create_agent(
   tbl = ~ small_table,
   tbl_name = "small_table",
   label = "An example.",
@@ -83,9 +84,9 @@ create_agent(
 ) \%>\%
   col_vals_gt(vars(a), 1) \%>\%
   col_vals_lt(vars(a), 7) 
+}\if{html}{\out{</div>}}
 
-# YAML representation
-type: agent
+YAML representation:\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{type: agent
 tbl: ~small_table
 tbl_name: small_table
 label: An example.
@@ -100,13 +101,13 @@ end_fns: ~email_blast(x, to = "joe_public@example.com",
   )
 embed_report: true
 steps:
-  - col_vals_gt:
+- col_vals_gt:
     columns: vars(a)
     value: 1.0
-  - col_vals_lt:
+- col_vals_lt:
     columns: vars(a)
     value: 7.0
-}
+}\if{html}{\out{</div>}}
 }
 
 \section{Function ID}{

@@ -42,8 +42,9 @@ resulting YAML can be used to regenerate an agent (with \code{\link[=yaml_read_a
 or interrogate the target table (via \code{\link[=yaml_agent_interrogate]{yaml_agent_interrogate()}}). Here is an
 example of how \code{log4r_step()} can be expressed in R code (within
 \code{\link[=action_levels]{action_levels()}}, itself inside \code{\link[=create_agent]{create_agent()}}) and in the corresponding
-YAML representation.\preformatted{# R statement
-create_agent(
+YAML representation.
+
+R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{create_agent(
   tbl = ~ small_table,
   tbl_name = "small_table",
   label = "An example.",
@@ -56,9 +57,9 @@ create_agent(
     )
   )
 )
+}\if{html}{\out{</div>}}
 
-# YAML representation
-type: agent
+YAML representation:\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{type: agent
 tbl: ~small_table
 tbl_name: small_table
 label: An example.
@@ -68,7 +69,8 @@ actions:
   warn_count: 1.0
   fns:
     warn: ~log4r_step(x, append_to = "example_log")
-}
+steps: []
+}\if{html}{\out{</div>}}
 
 Should you need to preview the transformation of an \emph{agent} to YAML (without
 any committing anything to disk), use the \code{\link[=yaml_agent_string]{yaml_agent_string()}} function. If

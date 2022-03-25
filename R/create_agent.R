@@ -54,13 +54,13 @@
 #' or other side effects that you can define if validation fails. Basically,
 #' instead of this
 #' 
-#' ```
+#' ```r
 #' create_agent(tbl = small_table) %>% rows_distinct() %>% interrogate()
 #' ````
 #' 
 #' you would use this:
 #' 
-#' ```
+#' ```r
 #' small_table %>% rows_distinct()
 #' ```
 #' 
@@ -72,7 +72,7 @@
 #' *expectation* (`expect_*()`) versions, directly on the data for different
 #' workflows. The first returns to us a logical value. So this
 #' 
-#' ```
+#' ```r
 #' small_table %>% test_rows_distinct()
 #' ```
 #' 
@@ -81,7 +81,7 @@
 #' In a unit testing scenario, we can use *expectation* functions exactly as we
 #' would with **testthat**'s library of `expect_*()` functions:
 #' 
-#' ```
+#' ```r
 #' small_table %>% expect_rows_distinct()
 #' ```
 #' 
@@ -134,8 +134,9 @@
 #' example of how a complex call of `create_agent()` is expressed in R code and
 #' in the corresponding YAML representation.
 #' 
-#' ```
-#' # R statement
+#' R statement:
+#' 
+#' ```r
 #' create_agent(
 #'   tbl = ~ small_table,
 #'   tbl_name = "small_table",
@@ -162,8 +163,11 @@
 #'   lang = "fr", 
 #'   locale = "fr_CA"
 #' )
+#' ```
 #' 
-#' # YAML representation
+#' YAML representation:
+#' 
+#' ```yaml
 #' type: agent
 #' tbl: ~small_table
 #' tbl_name: small_table

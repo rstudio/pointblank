@@ -113,8 +113,9 @@
 #' validation step is expressed in R code and in the corresponding YAML
 #' representation.
 #' 
-#' ```
-#' # R statement
+#' R statement:
+#' 
+#' ```r
 #' agent %>% 
 #'   rows_distinct(
 #'     columns = vars(a, b),
@@ -124,8 +125,11 @@
 #'     label = "The `rows_distinct()` step.",
 #'     active = FALSE
 #'   )
+#' ```
 #' 
-#' # YAML representation
+#' YAML representation:
+#' 
+#' ```
 #' steps:
 #' - rows_distinct:
 #'     columns: vars(a, b)

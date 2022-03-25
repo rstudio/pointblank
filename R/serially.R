@@ -123,8 +123,9 @@
 #' validation step is expressed in R code and in the corresponding YAML
 #' representation.
 #' 
-#' ```
-#' # R statement
+#' R statement:
+#' 
+#' ```r
 #' agent %>% 
 #'   serially(
 #'     ~ col_vals_lt(., vars(a), 8),
@@ -135,8 +136,11 @@
 #'     label = "The `serially()` step.",
 #'     active = FALSE
 #'   )
+#' ```
 #' 
-#' # YAML representation
+#' YAML representation:
+#' 
+#' ```yaml
 #' steps:
 #' - serially:
 #'     fns:

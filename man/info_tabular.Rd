@@ -79,21 +79,22 @@ resulting YAML can be used to regenerate an informant (with
 table (via \code{\link[=yaml_informant_incorporate]{yaml_informant_incorporate()}}). When \code{info_tabular()} is
 represented in YAML, \emph{info text} goes into subsections of the top-level
 \code{table} key. Here is an example of how a call of \code{info_tabular()} is
-expressed in R code and in the corresponding YAML representation.\preformatted{# R statement
-informant \%>\% 
+expressed in R code and in the corresponding YAML representation.
+
+R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant \%>\% 
   info_tabular(
     section_1 = "*info text* 1.",
     `section 2` = "*info text* 2 and \{snippet_1\}"
   )
+}\if{html}{\out{</div>}}
 
-# YAML representation
-table:
+YAML representation:\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{table:
   _columns: 23
   _rows: 205.0
   _type: tbl_df
   section_1: '*info text* 1.'
   section 2: '*info text* 2 and \{snippet_1\}'
-}
+}\if{html}{\out{</div>}}
 
 Subsection titles as defined in \code{info_tabular()} can be set in backticks if
 they are not syntactically correct as an argument name without them (e.g.,

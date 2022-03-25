@@ -40,8 +40,9 @@
 #' [create_agent()] is expressed in R code and in the corresponding YAML
 #' representation.
 #' 
-#' ```
-#' # R statement
+#' R statement:
+#' 
+#' ```r
 #' create_agent(
 #'   tbl = ~ small_table,
 #'   tbl_name = "small_table",
@@ -61,8 +62,11 @@
 #' ) %>%
 #'   col_vals_gt(vars(a), 1) %>%
 #'   col_vals_lt(vars(a), 7) 
+#' ```
 #' 
-#' # YAML representation
+#' YAML representation:
+#' 
+#' ```yaml
 #' type: agent
 #' tbl: ~small_table
 #' tbl_name: small_table
@@ -78,10 +82,10 @@
 #'   )
 #' embed_report: true
 #' steps:
-#'   - col_vals_gt:
+#' - col_vals_gt:
 #'     columns: vars(a)
 #'     value: 1.0
-#'   - col_vals_lt:
+#' - col_vals_lt:
 #'     columns: vars(a)
 #'     value: 7.0
 #' ```

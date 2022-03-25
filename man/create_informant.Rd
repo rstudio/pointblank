@@ -93,17 +93,18 @@ resulting YAML can be used to regenerate an informant (with
 \code{\link[=yaml_read_informant]{yaml_read_informant()}}) or perform the 'incorporate' action using the target
 table (via \code{\link[=yaml_informant_incorporate]{yaml_informant_incorporate()}}). Here is an example of how a
 complex call of \code{create_informant()} is expressed in R code and in the
-corresponding YAML representation.\preformatted{# R statement
-create_informant(
+corresponding YAML representation.
+
+R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{create_informant(
   tbl = ~ small_table,
   tbl_name = "small_table",
   label = "An example.",
   lang = "fr", 
   locale = "fr_CA"
 )
+}\if{html}{\out{</div>}}
 
-# YAML representation
-type: informant
+YAML representation:\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{type: informant
 tbl: ~small_table
 tbl_name: small_table
 info_label: An example.
@@ -131,7 +132,7 @@ columns:
     _type: logical
   f:
     _type: character
-}
+}\if{html}{\out{</div>}}
 
 The generated YAML includes some top-level keys where \code{type} and \code{tbl} are
 mandatory, and, two metadata sections: \code{table} and \code{columns}. Keys that begin

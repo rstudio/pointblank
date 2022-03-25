@@ -58,8 +58,9 @@
 #' complex call of `create_informant()` is expressed in R code and in the
 #' corresponding YAML representation.
 #' 
-#' ```
-#' # R statement
+#' R statement:
+#' 
+#' ```r
 #' create_informant(
 #'   tbl = ~ small_table,
 #'   tbl_name = "small_table",
@@ -67,8 +68,11 @@
 #'   lang = "fr", 
 #'   locale = "fr_CA"
 #' )
+#' ```
 #' 
-#' # YAML representation
+#' YAML representation:
+#' 
+#' ```yaml
 #' type: informant
 #' tbl: ~small_table
 #' tbl_name: small_table

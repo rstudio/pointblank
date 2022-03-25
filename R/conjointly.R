@@ -130,8 +130,9 @@
 #' validation step is expressed in R code and in the corresponding YAML
 #' representation.
 #' 
-#' ```
-#' # R statement
+#' R statement:
+#' 
+#' ```r
 #' agent %>% 
 #'   conjointly(
 #'     ~ col_vals_lt(., vars(a), 8),
@@ -143,8 +144,11 @@
 #'     label = "The `conjointly()` step.",
 #'     active = FALSE
 #'   )
+#' ```
 #' 
-#' # YAML representation
+#' YAML representation:
+#' 
+#' ```yaml
 #' steps:
 #' - conjointly:
 #'     fns:

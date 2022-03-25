@@ -16,6 +16,7 @@
 # https://rich-iannone.github.io/pointblank/LICENSE.html
 #
 
+
 #' Are column data decreasing by row?
 #'
 #' @description
@@ -128,8 +129,9 @@
 #' `col_vals_decreasing()` as a validation step is expressed in R code and in
 #' the corresponding YAML representation.
 #' 
-#' ```
-#' # R statement
+#' R statement:
+#' 
+#' ```r
 #' agent %>% 
 #'   col_vals_decreasing(
 #'     columns = vars(a),
@@ -141,9 +143,12 @@
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
 #'     label = "The `col_vals_decreasing()` step.",
 #'     active = FALSE
-#'   ) %>% yaml_agent_string()
+#'   )
+#' ```
 #' 
-#' # YAML representation
+#' YAML representation:
+#' 
+#' ```yaml
 #' steps:
 #' - col_vals_decreasing:
 #'     columns: vars(a)

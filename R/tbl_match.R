@@ -103,8 +103,9 @@
 #' validation step is expressed in R code and in the corresponding YAML
 #' representation.
 #' 
-#' ```
-#' # R statement
+#' R statement:
+#' 
+#' ```r
 #' agent %>% 
 #'   tbl_match(
 #'     tbl_compare = ~ file_tbl(
@@ -120,8 +121,11 @@
 #'     label = "The `tbl_match()` step.",
 #'     active = FALSE
 #'   )
+#' ```
 #' 
-#' # YAML representation
+#' YAML representation:
+#' 
+#' ```yaml
 #' steps:
 #' - tbl_match:
 #'     tbl_compare: ~ file_tbl(

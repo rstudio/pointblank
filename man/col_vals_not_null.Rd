@@ -214,8 +214,9 @@ or interrogate the target table (via \code{\link[=yaml_agent_interrogate]{yaml_a
 as a list member), the syntax closely follows the signature of the validation
 function. Here is an example of how a complex call of \code{col_vals_not_null()}
 as a validation step is expressed in R code and in the corresponding YAML
-representation.\preformatted{# R statement
-agent \%>\% 
+representation.
+
+R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
   col_vals_not_null(
     vars(a),
     preconditions = ~ . \%>\% dplyr::filter(a < 10),
@@ -224,9 +225,9 @@ agent \%>\%
     label = "The `col_vals_not_null()` step.",
     active = FALSE
   )
+}\if{html}{\out{</div>}}
 
-# YAML representation
-steps:
+YAML representation:\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
 - col_vals_not_null:
     columns: vars(a)
     preconditions: ~. \%>\% dplyr::filter(a < 10)
@@ -236,7 +237,7 @@ steps:
       stop_fraction: 0.2
     label: The `col_vals_not_null()` step.
     active: false
-}
+}\if{html}{\out{</div>}}
 
 In practice, both of these will often be shorter as only the \code{columns}
 argument requires a value. Arguments with default values won't be written to

@@ -209,8 +209,9 @@ or interrogate the target table (via \code{\link[=yaml_agent_interrogate]{yaml_a
 a list member), the syntax closely follows the signature of the validation
 function. Here is an example of how a complex call of \code{rows_distinct()} as a
 validation step is expressed in R code and in the corresponding YAML
-representation.\preformatted{# R statement
-agent \%>\% 
+representation.
+
+R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
   rows_distinct(
     columns = vars(a, b),
     preconditions = ~ . \%>\% dplyr::filter(a < 10),
@@ -219,9 +220,9 @@ agent \%>\%
     label = "The `rows_distinct()` step.",
     active = FALSE
   )
+}\if{html}{\out{</div>}}
 
-# YAML representation
-steps:
+YAML representation:\preformatted{steps:
 - rows_distinct:
     columns: vars(a, b)
     preconditions: ~. \%>\% dplyr::filter(a < 10)

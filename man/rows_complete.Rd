@@ -208,8 +208,9 @@ or interrogate the target table (via \code{\link[=yaml_agent_interrogate]{yaml_a
 a list member), the syntax closely follows the signature of the validation
 function. Here is an example of how a complex call of \code{rows_complete()} as a
 validation step is expressed in R code and in the corresponding YAML
-representation.\preformatted{# R statement
-agent \%>\% 
+representation.
+
+R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
   rows_complete(
     columns = vars(a, b),
     preconditions = ~ . \%>\% dplyr::filter(a < 10),
@@ -218,9 +219,9 @@ agent \%>\%
     label = "The `rows_complete()` step.",
     active = FALSE
   )
+}\if{html}{\out{</div>}}
 
-# YAML representation
-steps:
+YAML representation:\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
 - rows_complete:
     columns: vars(a, b)
     preconditions: ~. \%>\% dplyr::filter(a < 10)
@@ -230,7 +231,7 @@ steps:
       stop_fraction: 0.2
     label: The `rows_complete()` step.
     active: false
-}
+}\if{html}{\out{</div>}}
 
 In practice, both of these will often be shorter. A value for \code{columns} is
 only necessary if checking for unique values across a subset of columns.

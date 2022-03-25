@@ -36,8 +36,9 @@
 #' [action_levels()], itself inside [create_agent()]) and in the corresponding
 #' YAML representation.
 #' 
-#' ```
-#' # R statement
+#' R statement:
+#' 
+#' ```r
 #' create_agent(
 #'   tbl = ~ small_table,
 #'   tbl_name = "small_table",
@@ -51,8 +52,11 @@
 #'     )
 #'   )
 #' )
+#' ```
 #' 
-#' # YAML representation
+#' YAML representation:
+#' 
+#' ```yaml
 #' type: agent
 #' tbl: ~small_table
 #' tbl_name: small_table
@@ -63,6 +67,7 @@
 #'   warn_count: 1.0
 #'   fns:
 #'     warn: ~log4r_step(x, append_to = "example_log")
+#' steps: []
 #' ```
 #' 
 #' Should you need to preview the transformation of an *agent* to YAML (without

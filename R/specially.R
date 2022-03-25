@@ -80,8 +80,9 @@
 #' validation step is expressed in R code and in the corresponding YAML
 #' representation.
 #' 
-#' ```
-#' # R statement
+#' R statement:
+#' 
+#' ```r
 #' agent %>% 
 #'   specially(
 #'     fn = function(x) { ... },
@@ -90,8 +91,10 @@
 #'     label = "The `specially()` step.",
 #'     active = FALSE
 #'   )
+#' ```
+#' YAML representation:
 #' 
-#' # YAML representation
+#' ```yaml
 #' steps:
 #' - specially:
 #'     fn: function(x) { ... }

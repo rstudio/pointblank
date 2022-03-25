@@ -48,7 +48,7 @@
 #' in-memory DuckDB database table with **pointblank**'s `small_table` dataset)
 #' and `sml_table_high` (a filtered version of `tbl_duckdb`):
 #' 
-#' ```
+#' ```r
 #' tbls_1 <-
 #'   tbl_store(
 #'     tbl_duckdb ~ 
@@ -70,7 +70,7 @@
 #' It's good to check that the tables can be obtained without error. We can do
 #' this with [tbl_get()]:
 #' 
-#' ```
+#' ```r
 #' tbl_get("tbl_duckdb", store = tbls_1)
 #' tbl_get("sml_table_high", store = tbls_1)
 #' ```
@@ -83,7 +83,7 @@
 #' allowing us to use `filter(...)` instead of `dplyr::filter(...)`). Here is
 #' the revised `tbl_store()` call:
 #' 
-#' ```
+#' ```r
 #' tbls_2 <- 
 #'   tbl_store(
 #'     tbl_duckdb ~ 
@@ -101,7 +101,7 @@
 #' 
 #' Checking again with [tbl_get()] should provide the same tables as before:
 #' 
-#' ```
+#' ```r
 #' tbl_get("tbl_duckdb", store = tbls_2)
 #' tbl_get("sml_table_high", store = tbls_2)
 #' ```
@@ -120,16 +120,20 @@
 #' written to YAML (if no filename is given then the YAML is written to
 #' `"tbl_store.yml"`).
 #' 
-#' ```
-#' # R statement for generating the "tbl_store.yml" file
+#' R statement for generating the `"tbl_store.yml"` file:
+#' 
+#' ```r
 #' tbl_store(
 #'   tbl_duckdb ~ db_tbl(small_table, dbname = ":memory:", dbtype = "duckdb"),
 #'   sml_table_high ~ small_table %>% dplyr::filter(f == "high"),
 #'   .init = ~ library(tidyverse)
 #' ) %>%
 #'   yaml_write()
+#' ```
 #' 
-#' # YAML representation ("tbl_store.yml")
+#' YAML representation (`"tbl_store.yml"`):
+#' 
+#' ```yaml
 #' type: tbl_store
 #' tbls:
 #'   tbl_duckdb: ~ db_tbl(small_table, dbname = ":memory:", dbtype = "duckdb")
@@ -144,8 +148,10 @@
 #' prepared data periodically, then the following example with [tbl_source()]
 #' will be useful:
 #' 
-#' ```
-#' # Generate agent that checks `sml_table_high`, write it to YAML
+#' R code to generate agent that checks `sml_table_high` and writing the agent
+#' to YAML:
+#' 
+#' ```r
 #' create_agent(
 #'   tbl = ~ tbl_source("sml_table_high", "tbl_store.yml"),
 #'   label = "An example that uses a table store.",
@@ -153,8 +159,11 @@
 #' ) %>% 
 #'   col_exists(vars(date, date_time)) %>%
 #'   write_yaml()
+#' ```
 #'   
-#' # YAML representation ("agent-sml_table_high.yml")
+#' The YAML representation (`"agent-sml_table_high.yml"`):
+#' 
+#' ```yaml
 #' tbl: ~ tbl_source("sml_table_high", "tbl_store.yml")
 #' tbl_name: sml_table_high
 #' label: An example that uses a table store.

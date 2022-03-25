@@ -70,8 +70,9 @@
 #' validation step is expressed in R code and in the corresponding YAML
 #' representation.
 #' 
-#' ```
-#' # R statement
+#' R statement:
+#' 
+#' ```r
 #' agent %>% 
 #'   col_is_factor(
 #'     vars(a),
@@ -79,8 +80,11 @@
 #'     label = "The `col_is_factor()` step.",
 #'     active = FALSE
 #'   )
+#' ```
 #' 
-#' # YAML representation
+#' YAML representation:
+#' 
+#' ```yaml
 #' steps:
 #' - col_is_factor:
 #'     columns: vars(a)

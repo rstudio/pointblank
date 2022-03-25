@@ -146,17 +146,18 @@ or interrogate the target table (via \code{\link[=yaml_agent_interrogate]{yaml_a
 a list member), the syntax closely follows the signature of the validation
 function. Here is an example of how a complex call of \code{col_is_logical()} as a
 validation step is expressed in R code and in the corresponding YAML
-representation.\preformatted{# R statement
-agent \%>\% 
+representation.
+
+R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
   col_is_logical(
     vars(a),
     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
     label = "The `col_is_logical()` step.",
     active = FALSE
   )
+}\if{html}{\out{</div>}}
 
-# YAML representation
-steps:
+YAML representation:\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
 - col_is_logical:
     columns: vars(a)
     actions:
@@ -164,7 +165,7 @@ steps:
       stop_fraction: 0.2
     label: The `col_is_logical()` step.
     active: false
-}
+}\if{html}{\out{</div>}}
 
 In practice, both of these will often be shorter as only the \code{columns}
 argument requires a value. Arguments with default values won't be written to

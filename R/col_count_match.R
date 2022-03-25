@@ -78,8 +78,9 @@
 #' a validation step is expressed in R code and in the corresponding YAML
 #' representation.
 #' 
-#' ```
-#' # R statement
+#' R statement:
+#' 
+#' ```r
 #' agent %>% 
 #'   col_count_match(
 #'     count = ~ file_tbl(
@@ -94,8 +95,11 @@
 #'     label = "The `col_count_match()` step.",
 #'     active = FALSE
 #'   )
+#' ```
 #' 
-#' # YAML representation
+#' YAML representation:
+#' 
+#' ```yaml
 #' steps:
 #' - col_count_match:
 #'     count: ~ file_tbl(

@@ -289,8 +289,6 @@ navbar:
     href: reference/index.html
   - text: News
     href: news/index.html
-  - text: En Español
-    href: https://rich-iannone.github.io/pointblank/es
 
 development:
   version_tooltip: "Development version"

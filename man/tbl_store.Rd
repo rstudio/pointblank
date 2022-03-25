@@ -52,7 +52,7 @@ to obtain that table. Then repeat as many times as you like!
 
 Here we'll define two tables that can be materialized later: \code{tbl_duckdb} (an
 in-memory DuckDB database table with \strong{pointblank}'s \code{small_table} dataset)
-and \code{sml_table_high} (a filtered version of \code{tbl_duckdb}):\preformatted{tbls_1 <-
+and \code{sml_table_high} (a filtered version of \code{tbl_duckdb}):\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbls_1 <-
   tbl_store(
     tbl_duckdb ~ 
       db_tbl(
@@ -68,12 +68,12 @@ and \code{sml_table_high} (a filtered version of \code{tbl_duckdb}):\preformatte
       ) \%>\%
       dplyr::filter(f == "high")
   )
-}
+}\if{html}{\out{</div>}}
 
 It's good to check that the tables can be obtained without error. We can do
-this with \code{\link[=tbl_get]{tbl_get()}}:\preformatted{tbl_get("tbl_duckdb", store = tbls_1)
+this with \code{\link[=tbl_get]{tbl_get()}}:\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_get("tbl_duckdb", store = tbls_1)
 tbl_get("sml_table_high", store = tbls_1)
-}
+}\if{html}{\out{</div>}}
 
 We can shorten the \code{tbl_store()} statement with some syntax that
 \strong{pointblank} provides. The \code{sml_table_high} table-prep is simply a
@@ -81,7 +81,7 @@ transformation of \code{tbl_duckdb}, so, we can use \code{{{ tbl_duckdb }}} in p
 the repeated statement. Additionally, we can provide a \code{library()} call to
 the \code{.init} argument of \code{tbl_store()} so that \strong{dplyr} is available (thus
 allowing us to use \code{filter(...)} instead of \code{dplyr::filter(...)}). Here is
-the revised \code{tbl_store()} call:\preformatted{tbls_2 <- 
+the revised \code{tbl_store()} call:\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbls_2 <- 
   tbl_store(
     tbl_duckdb ~ 
       db_tbl(
@@ -94,11 +94,11 @@ the revised \code{tbl_store()} call:\preformatted{tbls_2 <-
       filter(f == "high"),
     .init = ~ library(tidyverse)
   )
-}
+}\if{html}{\out{</div>}}
 
-Checking again with \code{\link[=tbl_get]{tbl_get()}} should provide the same tables as before:\preformatted{tbl_get("tbl_duckdb", store = tbls_2)
+Checking again with \code{\link[=tbl_get]{tbl_get()}} should provide the same tables as before:\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_get("tbl_duckdb", store = tbls_2)
 tbl_get("sml_table_high", store = tbls_2)
-}
+}\if{html}{\out{</div>}}
 
 This is a great way to make table-prep more concise, readable, and less
 prone to errors.
@@ -114,38 +114,41 @@ processing of both agents and informants can be performed with
 \code{\link[=yaml_agent_interrogate]{yaml_agent_interrogate()}} and \code{\link[=yaml_informant_incorporate]{yaml_informant_incorporate()}}. With the
 following R code, a table store with two table-prep formulas is generated and
 written to YAML (if no filename is given then the YAML is written to
-\code{"tbl_store.yml"}).\preformatted{# R statement for generating the "tbl_store.yml" file
-tbl_store(
+\code{"tbl_store.yml"}).
+
+R statement for generating the \code{"tbl_store.yml"} file:\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_store(
   tbl_duckdb ~ db_tbl(small_table, dbname = ":memory:", dbtype = "duckdb"),
   sml_table_high ~ small_table \%>\% dplyr::filter(f == "high"),
   .init = ~ library(tidyverse)
 ) \%>\%
   yaml_write()
+}\if{html}{\out{</div>}}
 
-# YAML representation ("tbl_store.yml")
-type: tbl_store
+YAML representation (\code{"tbl_store.yml"}):\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{type: tbl_store
 tbls:
   tbl_duckdb: ~ db_tbl(small_table, dbname = ":memory:", dbtype = "duckdb")
   sml_table_high: ~ small_table \%>\% dplyr::filter(f == "high")
 init: ~library(tidyverse)
-}
+}\if{html}{\out{</div>}}
 
 This is useful when you want to get fresh pulls of prepared data from a
 source materialized in an R session (with the \code{\link[=tbl_get]{tbl_get()}} function. For
 example, the \code{sml_table_high} table can be obtained by using
 \code{tbl_get("sml_table_high", "tbl_store.yml")}. To get an agent to check this
 prepared data periodically, then the following example with \code{\link[=tbl_source]{tbl_source()}}
-will be useful:\preformatted{# Generate agent that checks `sml_table_high`, write it to YAML
-create_agent(
+will be useful:
+
+R code to generate agent that checks \code{sml_table_high} and writing the agent
+to YAML:\if{html}{\out{<div class="sourceCode r">}}\preformatted{create_agent(
   tbl = ~ tbl_source("sml_table_high", "tbl_store.yml"),
   label = "An example that uses a table store.",
   actions = action_levels(warn_at = 0.10)
 ) \%>\% 
   col_exists(vars(date, date_time)) \%>\%
   write_yaml()
-  
-# YAML representation ("agent-sml_table_high.yml")
-tbl: ~ tbl_source("sml_table_high", "tbl_store.yml")
+}\if{html}{\out{</div>}}
+
+The YAML representation (\code{"agent-sml_table_high.yml"}):\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{tbl: ~ tbl_source("sml_table_high", "tbl_store.yml")
 tbl_name: sml_table_high
 label: An example that uses a table store.
 actions:
@@ -154,7 +157,7 @@ locale: en
 steps:
   - col_exists:
     columns: vars(date, date_time)
-}
+}\if{html}{\out{</div>}}
 
 Now, whenever the \code{sml_table_high} table needs to be validated, it can be
 done with \code{\link[=yaml_agent_interrogate]{yaml_agent_interrogate()}} (e.g.,

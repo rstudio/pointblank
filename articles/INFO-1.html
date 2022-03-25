@@ -64,9 +64,6 @@
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">News</a>
 </li>
-<li class="nav-item">
-  <a class="nav-link" href="https://rich-iannone.github.io/pointblank/es">En Español</a>
-</li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
@@ -88,8 +85,7 @@
 
 
 
-
-<div class="row">
+<script src="INFO-1_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <main id="main"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Intro to Information Management</h1>
             
@@ -211,11 +207,11 @@ This is an excerpt of the complete report, showing just the report header and th
 <h2 id="the-columns-section-and-info_columns">The <strong>COLUMNS</strong> Section and <code>info_columns()</code><a class="anchor" aria-label="anchor" href="#the-columns-section-and-info_columns"></a>
 </h2>
 <p>The section that follows the <strong>TABLE</strong> section is <strong>COLUMNS</strong>. This section provides an opportunity to describe each table column in as much detail as necessary. Here, individual columns serve as subsections (automatically generated upon using <code><a href="../reference/create_informant.html">create_informant()</a></code>) and there can be subsections within each column as well.</p>
-<p>The interesting thing about the information provided here via <code><a href="../reference/info_columns.html">info_columns()</a></code> is that the information is additive. We can make multiple calls of <code><a href="../reference/info_columns.html">info_columns()</a></code> and disperse common pieces of <em>info text</em> to multiple columns and append the text to any existing. Let’s take a look at this in practice with the far more interesting <code><a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html" class="external-link">palmerpenguins::penguins</a></code> dataset. Here, we fill in information for each column by adapting <a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html" class="external-link">documentation</a> from the <strong>palmerpenguins</strong> package.</p>
+<p>The interesting thing about the information provided here via <code><a href="../reference/info_columns.html">info_columns()</a></code> is that the information is additive. We can make multiple calls of <code><a href="../reference/info_columns.html">info_columns()</a></code> and disperse common pieces of <em>info text</em> to multiple columns and append the text to any existing. Let’s take a look at this in practice with the far more interesting <code>palmerpenguins::penguins</code> dataset. Here, we fill in information for each column by adapting <a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html" class="external-link">documentation</a> from the <strong>palmerpenguins</strong> package.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">informant_pp</span> <span class="op">&lt;-</span> 
   <span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span>
-    tbl <span class="op">=</span> <span class="fu">palmerpenguins</span><span class="fu">::</span><span class="va"><a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html" class="external-link">penguins</a></span>,
+    tbl <span class="op">=</span> <span class="fu">palmerpenguins</span><span class="fu">::</span><span class="va">penguins</span>,
     tbl_name <span class="op">=</span> <span class="st">"penguins"</span>,
     label <span class="op">=</span> <span class="st">"The `penguins` dataset from the **palmerpenguins** 📦."</span>
   <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
@@ -280,7 +276,7 @@ species, A factor denoting penguin species (Adélie, Chinstrap, and Gentoo); (2)
 <div class="section level2">
 <h2 id="extra-sections-and-info_section">Extra Sections and <code>info_section()</code><a class="anchor" aria-label="anchor" href="#extra-sections-and-info_section"></a>
 </h2>
-<p>For all that information that we can’t or don’t want to put in the <strong>TABLE</strong> or <strong>COLUMNS</strong> sections, we can place it extra sections (and their subsections) with the <code><a href="../reference/info_section.html">info_section()</a></code> function. These sections go below the aforementioned sections in the order of creation. Let’s put together some extra sections that further describe the <code><a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html" class="external-link">palmerpenguins::penguins</a></code> dataset.</p>
+<p>For all that information that we can’t or don’t want to put in the <strong>TABLE</strong> or <strong>COLUMNS</strong> sections, we can place it extra sections (and their subsections) with the <code><a href="../reference/info_section.html">info_section()</a></code> function. These sections go below the aforementioned sections in the order of creation. Let’s put together some extra sections that further describe the <code>palmerpenguins::penguins</code> dataset.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">informant_pp</span> <span class="op">&lt;-</span> 
   <span class="va">informant_pp</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>

@@ -53,11 +53,12 @@
 #' @return A list of tables if `i` is not provided, or, a standalone table if
 #'   `i` is given.
 #' 
-#' @examples
-#' # Create a series of two validation
-#' # steps focused on testing row values
-#' # for part of the `small_table` object;
-#' # `interrogate()` immediately
+#' @section Demos:
+#' 
+#' Create a series of two validation steps focused on testing row values for
+#' part of the `small_table` object. `interrogate()` immediately.
+#' 
+#' ```{r}
 #' agent <-
 #'   create_agent(
 #'     tbl = small_table %>%
@@ -71,20 +72,23 @@
 #'     na_pass = TRUE
 #'   ) %>%
 #'   interrogate()
+#' ```
 #' 
-#' # Using `get_data_extracts()` with its
-#' # defaults returns of a list of tables,
-#' # where each table is named after the
-#' # validation step that has an extract
-#' # available
+#' Using `get_data_extracts()` with its defaults returns of a list of tables,
+#' where each table is named after the validation step that has an extract
+#' available.
+#' 
+#' ```{r}
 #' agent %>% get_data_extracts()
+#' ```
 #' 
-#' # We can get an extract for a specific
-#' # step by specifying it in the `i`
-#' # argument; let's get the failing rows
-#' # from the first validation step
-#' # (`col_vals_gt`)
+#' We can get an extract for a specific step by specifying it in the `i`
+#' argument. Let's get the failing rows from the first validation step (the
+#' `col_vals_gt()` one).
+#' 
+#' ```{r}
 #' agent %>% get_data_extracts(i = 1)
+#' ```
 #' 
 #' @family Post-interrogation
 #' @section Function ID:

@@ -101,25 +101,34 @@
 #' 
 #' @return A `list` object.
 #' 
-#' @examples
-#' # Create a simple data frame with
-#' # a column of numerical values
+#' @section Demos:
+#' 
+#' Create a simple data frame with a column of numerical values.
+#' 
+#' ```{r}
 #' tbl <- dplyr::tibble(a = c(5, 7, 8, 5))
 #' 
-#' # Create an `action_levels()` list
-#' # with fractional values for the
-#' # `warn`, `stop`, and `notify` states
+#' tbl
+#' ```
+#' 
+#' Create an `action_levels()` list with fractional values for the `warn`,
+#' `stop`, and `notify` states.
+#' 
+#' ```{r}
 #' al <-
 #'   action_levels(
 #'     warn_at = 0.2,
 #'     stop_at = 0.8,
 #'     notify_at = 0.345
 #'   )
+#'   
+#' al
+#' ```
 #' 
-#' # Create an agent (giving it the
-#' # `tbl` and the `al` objects),
-#' # supply two validation step
-#' # functions, then interrogate
+#' Create an agent (giving it the `tbl` and the `al` objects), supply two
+#' validation step functions, then interrogate.
+#' 
+#' ```{r}
 #' agent <-
 #'   create_agent(
 #'     tbl = tbl,
@@ -128,16 +137,21 @@
 #'   col_vals_gt(vars(a), value = 7) %>%
 #'   col_is_numeric(vars(a)) %>%
 #'   interrogate()
+#' ```
 #'   
-#' # Get the agent x-list
+#' Get the agent x-list.
+#' 
+#' ```{r}
 #' x <- get_agent_x_list(agent)
 #' 
-#' # Print the x-list object `x`
 #' x
+#' ```
 #' 
-#' # Get the `f_passed` component
-#' # of the x-list
+#' Get the `f_passed` component of the x-list `x`.
+#' 
+#' ```{r}
 #' x$f_passed
+#' ```
 #' 
 #' @family Post-interrogation
 #' @section Function ID:

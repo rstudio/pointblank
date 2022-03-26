@@ -69,11 +69,12 @@
 #' @return A list of table objects if `type` is `NULL`, or, a single table if a
 #'   `type` is given.
 #' 
-#' @examples
-#' # Create a series of two validation
-#' # steps focused on testing row values
-#' # for part of the `small_table` object;
-#' # `interrogate()` immediately
+#' @section Demos:
+#' 
+#' Create a series of two validation steps focused on testing row values for
+#' part of the `small_table` object. Then, `interrogate()`.
+#' 
+#' ```{r}
 #' agent <-
 #'   create_agent(
 #'     tbl = small_table %>%
@@ -87,46 +88,50 @@
 #'     na_pass = TRUE
 #'   ) %>%
 #'   interrogate()
+#' ```
 #' 
-#' # Get the sundered data piece that
-#' # contains only rows that passed both
-#' # validation steps (the default piece);
-#' # this yields 5 of 13 total rows
+#' Get the sundered data piece that contains only rows that passed both
+#' validation steps (the default piece). This yields 5 of 13 total rows.
+#' 
+#' ```{r}
 #' agent %>% get_sundered_data()
+#' ```
 #' 
-#' # Get the complementary data piece:
-#' # all of those rows that failed either
-#' # of the two validation steps;
-#' # this yields 8 of 13 total rows
-#' agent %>%
-#'   get_sundered_data(type = "fail")
+#' Get the complementary data piece: all of those rows that failed either of the
+#' two validation steps. This yields 8 of 13 total rows.
+#' 
+#' ```{r}
+#' agent %>% get_sundered_data(type = "fail")
+#' ```
 #'   
-#' # We can get all of the input data
-#' # returned with a flag column (called
-#' # `.pb_combined`); this is done by
-#' # using `type = "combined"` and that
-#' # rightmost column will contain `"pass"`
-#' # and `"fail"` values
-#' agent %>%
-#'   get_sundered_data(type = "combined")
+#' We can get all of the input data returned with a flag column (called
+#' `.pb_combined`). This is done by using `type = "combined"` and that rightmost
+#' column will contain `"pass"` and `"fail"` values.
 #' 
-#' # We can change the `"pass"` or `"fail"`
-#' # text values to another type of coding
-#' # with the `pass_fail` argument; one
-#' # possibility is TRUE/FALSE
+#' ```{r}
+#' agent %>% get_sundered_data(type = "combined")
+#' ```
+#' 
+#' We can change the `"pass"` or `"fail"` text values to another type of coding
+#' with the `pass_fail` argument. One possibility is `TRUE`/`FALSE`.
+#' 
+#' ```{r}
 #' agent %>%
 #'   get_sundered_data(
 #'     type = "combined",
 #'     pass_fail = c(TRUE, FALSE)
 #'   )
+#' ```
 #'
-#' # ...and using `0` and `1` might be
-#' # worthwhile in some situations
+#' ...and using `0` and `1` might be worthwhile in some situations.
+#' 
+#' ```{r}
 #' agent %>%
 #'   get_sundered_data(
 #'     type = "combined",
 #'     pass_fail = 0:1
 #'   )
+#' ```
 #' 
 #' @family Post-interrogation
 #' @section Function ID:

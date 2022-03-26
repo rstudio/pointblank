@@ -43,17 +43,11 @@ form \verb{col_vals_*()} and also include \code{\link[=conjointly]{conjointly()}
 Only functions from that combined set of validation functions can yield data
 extracts.
 }
-\section{Function ID}{
+\section{Demos}{
 
-8-2
-}
 
-\examples{
-# Create a series of two validation
-# steps focused on testing row values
-# for part of the `small_table` object;
-# `interrogate()` immediately
-agent <-
+Create a series of two validation steps focused on testing row values for
+part of the \code{small_table} object. \code{interrogate()} immediately.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(
     tbl = small_table \%>\%
       dplyr::select(a:f),
@@ -66,22 +60,52 @@ agent <-
     na_pass = TRUE
   ) \%>\%
   interrogate()
+}\if{html}{\out{</div>}}
 
-# Using `get_data_extracts()` with its
-# defaults returns of a list of tables,
-# where each table is named after the
-# validation step that has an extract
-# available
-agent \%>\% get_data_extracts()
-
-# We can get an extract for a specific
-# step by specifying it in the `i`
-# argument; let's get the failing rows
-# from the first validation step
-# (`col_vals_gt`)
-agent \%>\% get_data_extracts(i = 1)
-
+Using \code{get_data_extracts()} with its defaults returns of a list of tables,
+where each table is named after the validation step that has an extract
+available.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% get_data_extracts()
+}\if{html}{\out{</div>}}\preformatted{## $`1`
+## # A tibble: 6 × 6
+##       a b             c     d e     f    
+##   <int> <chr>     <dbl> <dbl> <lgl> <chr>
+## 1     8 3-ldm-038     7  284. TRUE  low  
+## 2     7 1-knw-093     3  843. TRUE  high 
+## 3     3 5-bce-642     9  838. FALSE high 
+## 4     3 5-bce-642     9  838. FALSE high 
+## 5     4 2-dmx-010     7  834. TRUE  low  
+## 6     2 7-dmx-010     8  108. FALSE low  
+## 
+## $`2`
+## # A tibble: 4 × 6
+##       a b             c     d e     f    
+##   <int> <chr>     <dbl> <dbl> <lgl> <chr>
+## 1     6 8-kdg-938     3 2343. TRUE  high 
+## 2     8 3-ldm-038     7  284. TRUE  low  
+## 3     7 1-knw-093     3  843. TRUE  high 
+## 4     4 5-boe-639     2 1036. FALSE low
 }
+
+We can get an extract for a specific step by specifying it in the \code{i}
+argument. Let's get the failing rows from the first validation step (the
+\code{col_vals_gt()} one).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% get_data_extracts(i = 1)
+}\if{html}{\out{</div>}}\preformatted{## # A tibble: 6 × 6
+##       a b             c     d e     f    
+##   <int> <chr>     <dbl> <dbl> <lgl> <chr>
+## 1     8 3-ldm-038     7  284. TRUE  low  
+## 2     7 1-knw-093     3  843. TRUE  high 
+## 3     3 5-bce-642     9  838. FALSE high 
+## 4     3 5-bce-642     9  838. FALSE high 
+## 5     4 2-dmx-010     7  834. TRUE  low  
+## 6     2 7-dmx-010     8  108. FALSE low
+}
+}
+
+\section{Function ID}{
+
+8-2
+}
+
 \seealso{
 Other Post-interrogation: 
 \code{\link{all_passed}()},

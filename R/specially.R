@@ -125,12 +125,13 @@
 #'   called primarily for its potential side-effects (e.g., signaling failure).
 #'   The test function returns a logical value.
 #'   
-#' @examples
-#' # For all examples here, we'll use
-#' # a simple table with three numeric
-#' # columns (`a`, `b`, and `c`); this is
-#' # a very basic table but it'll be more
-#' # useful when explaining things later
+#' @section Demos:
+#' 
+#' For all examples here, we'll use a simple table with three numeric columns
+#' (`a`, `b`, and `c`). This is a very basic table but it'll be more useful when
+#' explaining things later.
+#' 
+#' ```{r}
 #' tbl <-
 #'   dplyr::tibble(
 #'     a = c(5, 2, 6),
@@ -139,91 +140,97 @@
 #'   )
 #'   
 #' tbl
+#' ```
 #'   
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()`
+#' ## A: Using an `agent` with validation functions and then `interrogate()`
 #' 
-#' # Validate that the target table has
-#' # exactly three rows; this single
-#' # validation with `specially()` has
-#' # 1 test unit since the function
-#' # executed on `x` (the target table)
-#' # results in a logical vector with a
-#' # length of 1
+#' Validate that the target table has exactly three rows. This single validation
+#' with `specially()` has 1 test unit since the function executed on `x` (the
+#' target table) results in a logical vector with a length of 1.
+#' 
+#' ```{r}
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
 #'     specially(
 #'       fn = function(x) nrow(x) == 3
 #'     ) %>%
 #'     interrogate()
-#'   
-#' # Determine if this validation
-#' # had no failing test units (there
-#' # is 1 test unit)
+#' ```
+#' 
+#' Determine if this validation had no failing test units (there is 1 test
+#' unit).
+#' 
+#' ```{r}
 #' all_passed(agent)
+#' ```
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' Calling `agent` in the console prints the agent's report. But we can get a
+#' `gt_tbl` object directly with `get_agent_report(agent)`.
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' ## B: Using the validation function directly on the data (no `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' This way of using validation functions acts as a data filter. Data is passed
+#' through but should `stop()` if there is a single test unit failing. The
+#' behavior of side effects can be customized with the `actions` option.
+#' 
+#' ```{r}
 #' tbl %>%
 #'   specially(
 #'       fn = function(x) nrow(x) == 3
 #'    )
+#' ```
 #'
-#' # C: Using the expectation function
+#' ## C: Using the expectation function
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' With the `expect_*()` form, we would typically perform one validation at a
+#' time. This is primarily used in testthat tests.
+#' 
+#' ```{r}
 #' expect_specially(
 #'   tbl,
 #'   fn = function(x) nrow(x) == 3
 #' )
+#' ```
 #' 
-#' # D: Using the test function
+#' ## D: Using the test function
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' With the `test_*()` form, we should get a single logical value returned to
+#' us.
+#' 
+#' ```{r}
 #' tbl %>%
 #'   test_specially(
 #'     fn = function(x) nrow(x) == 3
 #'   )
+#' ```
 #' 
-#' # Variations
+#' ## Variations
 #'
-#' # We can do more complex things with
-#' # `specially()` and its variants
+#' We can do more complex things with `specially()` and its variants.
 #' 
-# Check the class of the target table
+#' Check the class of the target table.
+#' 
+#' ```{r}
 #' tbl %>% test_specially(
 #'   fn = function(x) {
 #'     inherits(x, "data.frame")
 #'   }
 #' )
+#' ```
 #' 
-#' # Check that the number of rows in the
-#' # target table is less than `small_table`
+#' Check that the number of rows in the target table is less than `small_table`.
+#' 
+#' ```{r}
 #' tbl %>% test_specially(
 #'   fn = function(x) {
 #'     nrow(x) < nrow(small_table)
 #'   }
 #' )
+#' ```
 #' 
-#' # Check that all numbers across all
-#' # numeric column are less than `10` 
+#' Check that all numbers across all numeric column are less than `10`.
+#' 
+#' ```{r}
 #' tbl %>% test_specially(
 #'   fn = function(x) {
 #'     (x %>% 
@@ -232,14 +239,14 @@
 #'     ) < 10
 #'   }
 #' )
+#' ```
 #' 
-#' # Check that all values in column
-#' # `c` are greater than b and greater
-#' # than `a` (in each row) and always
-#' # less than 10; this creates a table
-#' # with the new column `d` which is
-#' # a logical column (that is used as
-#' # the evaluation of test units)
+#' Check that all values in column `c` are greater than b and greater than `a`
+#' (in each row) and always less than `10`. This creates a table with the new
+#' column `d` which is a logical column (that is used as the evaluation of test
+#' units).
+#' 
+#' ```{r}
 #' tbl %>% test_specially(
 #'   fn = function(x) {
 #'     x %>%
@@ -248,15 +255,18 @@
 #'       )
 #'   }
 #' )
+#' ```
 #' 
-#' # Check that the `game_revenue`
-#' # table (which is not the target
-#' # table) has exactly 2000 rows 
+#' Check that the `game_revenue` table (which is not the target table) has
+#' exactly 2000 rows.
+#' 
+#' ```{r}
 #' tbl %>% test_specially(
 #'   fn = function(x) {
 #'     nrow(game_revenue) == 2000
 #'   }
 #' )
+#' ```
 #'
 #' @family validation functions
 #' @section Function ID:

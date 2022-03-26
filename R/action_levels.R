@@ -84,30 +84,36 @@
 #'   `list(warn = ~ warning("Too many failures."))`. A series of expressions for
 #'   each named state can be used by enclosing the set of statements with `{ }`.
 #' 
-#' @examples 
+#' @section Demos:
 #' 
-#' # For these examples, we will use the
-#' # included `small_table` dataset
+#' For these examples, we will use the included `small_table` dataset.
+#' 
+#' ```{r}
 #' small_table
+#' ```
 #' 
-#' # Create an `action_levels` object
-#' # with fractional values for the
-#' # `warn`, `stop`, and `notify` states
+#' Create an `action_levels` object with fractional values for the `warn`,
+#' `stop`, and `notify` states.
+#' 
+#' ```{r}
 #' al <- 
 #'   action_levels(
 #'     warn_at = 0.2,
 #'     stop_at = 0.8,
 #'     notify_at = 0.5
 #'   )
+#' ```
 #'   
-#' # A summary of settings for the `al`
-#' # object is shown by printing it
-#' al
+#' A summary of settings for the `al` object is shown by printing it.
 #' 
-#' # Create a pointblank agent and
-#' # apply the `al` object to `actions`;
-#' # add two validation steps and
-#' # interrogate the `small_table`
+#' ```{r}
+#' al
+#' ```
+#' 
+#' Create a pointblank agent and apply the `al` object to `actions`. Add two
+#' validation steps and interrogate the `small_table`.
+#' 
+#' ```{r}
 #' agent_1 <-
 #'   create_agent(
 #'     tbl = small_table,
@@ -120,23 +126,23 @@
 #'     vars(d), value = 20000
 #'   ) %>%
 #'   interrogate()
+#' ```
 #' 
-#' # The report from the agent will show
-#' # that the `warn` state has been entered
-#' # for the first validation step but not
-#' # the second one; we can confirm this
-#' # in the console by inspecting the
-#' # `warn` component in the agent's x-list
+#' The report from the agent will show that the `warn` state has been entered
+#' for the first validation step but not the second one. We can confirm this in
+#' the console by inspecting the `warn` component in the agent's x-list.
+#' 
+#' ```{r warn=TRUE}
 #' x_list <- get_agent_x_list(agent_1)
 #' x_list$warn
+#' ```
 #' 
-#' # Applying the `action_levels` object
-#' # to the agent means that all validation
-#' # steps will inherit these settings but
-#' # we can override this by applying
-#' # another such object to the validation
-#' # step instead (this time using the
-#' # `warn_on_fail()` shorthand)
+#' Applying the `action_levels` object to the agent means that all validation
+#' steps will inherit these settings but we can override this by applying
+#' another such object to the validation step instead (this time using the
+#' `warn_on_fail()` shorthand).
+#' 
+#' ```{r}
 #' agent_2 <-
 #'   create_agent(
 #'     tbl = small_table,
@@ -150,53 +156,50 @@
 #'     vars(d), value = 20000
 #'   ) %>%
 #'   interrogate()
+#' ```
 #'
-#' # In this case, the first validation
-#' # step has a less stringent failure
-#' # threshold for the `warn` state and it's
-#' # high enough that the condition is not
-#' # entered; this can be confirmed in the
-#' # console through inspection of the
-#' # x-list `warn` component
+#' In this case, the first validation step has a less stringent failure
+#' threshold for the `warn` state and it's high enough that the condition is not
+#' entered. This can be confirmed in the console through inspection of the
+#' x-list `warn` component.
+#' 
+#' ```{r}
 #' x_list <- get_agent_x_list(agent_2)
 #' x_list$warn
+#' ```
 #'
-#' if (interactive()) {
-#'
-#' # In the context of using validation
-#' # functions directly on data (i.e., no
-#' # involvement of an agent) we want to
-#' # trigger warnings and raise errors; the
-#' # following will yield a warning if
-#' # it is executed (returning the
-#' # `small_table` data)
+#' In the context of using validation functions directly on data (i.e., no
+#' involvement of an agent) we want to trigger warnings and raise errors. The
+#' following will yield a warning if it is executed (returning the `small_table`
+#' data).
+#' 
+#' ```{r warn=TRUE}
 #' small_table %>%
 #'   col_vals_gt(
 #'     vars(a), value = 2,
 #'     actions = warn_on_fail(warn_at = 2)
 #'   )
+#' ```
 #' 
-#' # With the same pipeline, not supplying
-#' # anything for `actions` (it's `NULL` by
-#' # default) will have the same effect as
-#' # using `stop_on_fail(stop_at = 1)` 
+#' With the same pipeline, not supplying anything for `actions` (it's `NULL` by
+#' default) will have the same effect as using `stop_on_fail(stop_at = 1)`.
+#' 
+#' ```{r error=TRUE}
 #' small_table %>%
 #'   col_vals_gt(vars(a), value = 2)
+#' ```
 #' 
+#' ```{r error=TRUE}
 #' small_table %>%
 #'   col_vals_gt(
 #'     vars(a), value = 2,
 #'     actions = stop_on_fail(stop_at = 1)
 #'   )
+#' ```
 #' 
-#' # This is because the `stop_on_fail()`
-#' # call is auto-injected in the default
-#' # case (when operating on data) for your
-#' # convenience; behind the scenes a
-#' # 'secret agent' uses 'covert actions':
-#' # all so you can type less
-#' 
-#' }
+#' This is because the `stop_on_fail()` call is auto-injected in the default
+#' case (when operating on data) for your convenience. Behind the scenes a
+#' 'secret agent' uses 'covert actions': all so you can type less.
 #' 
 #' @family Planning and Prep
 #' @section Function ID:

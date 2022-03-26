@@ -247,16 +247,11 @@ to preview the transformation of an agent to YAML without any writing to disk
 by using the \code{\link[=yaml_agent_string]{yaml_agent_string()}} function.
 }
 
-\section{Function ID}{
+\section{Demos}{
 
-2-16
-}
 
-\examples{
-# For all examples here, we'll use
-# a simple table with four columns:
-# `a`, `b`, `c`, and `d`
-tbl <-
+For all examples here, we'll use a simple table with four columns: \code{a}, \code{b},
+\code{c}, and \code{d}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <-
   dplyr::tibble(
     a = c( 5,  7,  6,  5,  8),
     b = c( 7,  1,  0,  0,  0),
@@ -265,58 +260,65 @@ tbl <-
   )
   
 tbl
-  
-# A: Using an `agent` with validation
-#    functions and then `interrogate()`
+}\if{html}{\out{</div>}}\preformatted{## # A tibble: 5 × 4
+##       a     b c         d
+##   <dbl> <dbl> <lgl> <dbl>
+## 1     5     7 NA       35
+## 2     7     1 NA       23
+## 3     6     0 NA       NA
+## 4     5     0 NA       NA
+## 5     8     0 NA       NA
+}
+\subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
-# Validate that all values in column
-# `b` are *not* NA (they would be
-# non-NULL in a database context, which
-# isn't the case here)
-agent <-
+Validate that all values in column \code{b} are \emph{not} NA (they would be non-\code{NULL}
+in a database context, which isn't the case here).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl) \%>\%
   col_vals_not_null(vars(b)) \%>\%
   interrogate()
+}\if{html}{\out{</div>}}
 
-# Determine if this validation
-# had no failing test units (there
-# are 5 test units, one for each row)
-all_passed(agent)
+Determine if this validation had no failing test units (there are 5 test
+units, one for each row).\if{html}{\out{<div class="sourceCode r">}}\preformatted{all_passed(agent)
+}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
+}
 
-# Calling `agent` in the console
-# prints the agent's report; but we
-# can get a `gt_tbl` object directly
-# with `get_agent_report(agent)`
+Calling \code{agent} in the console prints the agent's report. But we can get a
+\code{gt_tbl} object directly with \code{get_agent_report(agent)}.
+}
 
-# B: Using the validation function
-#    directly on the data (no `agent`)
+\subsection{B: Using the validation function directly on the data (no \code{agent})}{
 
-# This way of using validation functions
-# acts as a data filter: data is passed
-# through but should `stop()` if there
-# is a single test unit failing; the
-# behavior of side effects can be
-# customized with the `actions` option
-tbl \%>\%
+This way of using validation functions acts as a data filter. Data is passed
+through but should \code{stop()} if there is a single test unit failing. The
+behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   col_vals_not_null(vars(b)) \%>\%
   dplyr::pull(b)
-
-# C: Using the expectation function
-
-# With the `expect_*()` form, we would
-# typically perform one validation at a
-# time; this is primarily used in
-# testthat tests
-expect_col_vals_not_null(tbl, vars(b))
-
-# D: Using the test function
-
-# With the `test_*()` form, we should
-# get a single logical value returned
-# to us
-tbl \%>\% test_col_vals_not_null(vars(b))
-
+}\if{html}{\out{</div>}}\preformatted{## [1] 7 1 0 0 0
 }
+}
+
+\subsection{C: Using the expectation function}{
+
+With the \verb{expect_*()} form, we would typically perform one validation at a
+time. This is primarily used in testthat tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_not_null(tbl, vars(b))
+}\if{html}{\out{</div>}}
+}
+
+\subsection{D: Using the test function}{
+
+With the \verb{test_*()} form, we should get a single logical value returned to
+us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% test_col_vals_not_null(vars(b))
+}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
+}
+}
+}
+
+\section{Function ID}{
+
+2-16
+}
+
 \seealso{
 The analogue to this function: \code{\link[=col_vals_null]{col_vals_null()}}.
 

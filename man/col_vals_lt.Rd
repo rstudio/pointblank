@@ -282,17 +282,11 @@ possible to preview the transformation of an agent to YAML without any
 writing to disk by using the \code{\link[=yaml_agent_string]{yaml_agent_string()}} function.
 }
 
-\section{Function ID}{
+\section{Demos}{
 
-2-1
-}
 
-\examples{
-# For all of the examples here, we'll
-# use a simple table with three numeric
-# columns (`a`, `b`, and `c`) and three
-# character columns (`d`, `e`, and `f`)
-tbl <-
+For all of the examples here, we'll use a simple table with three numeric
+columns (\code{a}, \code{b}, and \code{c}) and three character columns (\code{d}, \code{e}, and \code{f}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <-
   dplyr::tibble(
       a = c(5, 5, 5, 5, 5, 5),
       b = c(1, 1, 1, 2, 2, 2),
@@ -303,56 +297,65 @@ tbl <-
   )
   
 tbl
+}\if{html}{\out{</div>}}\preformatted{## # A tibble: 6 × 6
+##       a     b     c d     e     f    
+##   <dbl> <dbl> <dbl> <chr> <chr> <chr>
+## 1     5     1     1 E     A     A    
+## 2     5     1     1 E     A     A    
+## 3     5     1     1 E     A     A    
+## 4     5     2     2 E     B     B    
+## 5     5     2     3 E     B     C    
+## 6     5     2     4 E     B     D
+}
+\subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
-# A: Using an `agent` with validation
-#    functions and then `interrogate()` 
-
-# Validate that values in column `c`
-# are all less than the value of `5`
-agent <-
+Validate that values in column \code{c} are all less than the value of \code{5}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl) \%>\%
   col_vals_lt(vars(c), 5) \%>\%
   interrogate()
+}\if{html}{\out{</div>}}
 
-# Determine if this validation
-# had no failing test units (there
-# are 6 test units, one for each row)
-all_passed(agent)
+Determine if this validation had no failing test units (there are 6 test
+units, one for each row).\if{html}{\out{<div class="sourceCode r">}}\preformatted{all_passed(agent)
+}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
+}
 
-# Calling `agent` in the console
-# prints the agent's report; but we
-# can get a `gt_tbl` object directly
-# with `get_agent_report(agent)`
+Calling \code{agent} in the console prints the agent's report. But we can get a
+\code{gt_tbl} object directly with \code{get_agent_report(agent)}.
+}
 
-# B: Using the validation function
-#    directly on the data (no `agent`)
+\subsection{B: Using the validation function directly on the data (no \code{agent})}{
 
-# This way of using validation functions
-# acts as a data filter: data is passed
-# through but should `stop()` if there
-# is a single test unit failing; the
-# behavior of side effects can be
-# customized with the `actions` option
-tbl \%>\% 
+This way of using validation functions acts as a data filter. Data is passed
+through but should \code{stop()} if there is a single test unit failing. The
+behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% 
   col_vals_lt(vars(c), 5) \%>\%
   dplyr::pull(c)
-  
-# C: Using the expectation function
-
-# With the `expect_*()` form, we would
-# typically perform one validation at a
-# time; this is primarily used in
-# testthat tests
-expect_col_vals_lt(tbl, vars(c), 5)
-
-# D: Using the test function
-
-# With the `test_*()` form, we should
-# get a single logical value returned
-# to us
-test_col_vals_lt(tbl, vars(c), 5)
-
+}\if{html}{\out{</div>}}\preformatted{## [1] 1 1 1 2 3 4
 }
+}
+
+\subsection{C: Using the expectation function}{
+
+With the \verb{expect_*()} form, we would typically perform one validation at a
+time. This is primarily used in testthat tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_lt(tbl, vars(c), 5)
+}\if{html}{\out{</div>}}
+}
+
+\subsection{D: Using the test function}{
+
+With the \verb{test_*()} form, we should get a single logical value returned to
+us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{test_col_vals_lt(tbl, vars(c), 5)
+}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
+}
+}
+}
+
+\section{Function ID}{
+
+2-1
+}
+
 \seealso{
 The analogous function with a right-closed bound: \code{\link[=col_vals_lte]{col_vals_lte()}}.
 

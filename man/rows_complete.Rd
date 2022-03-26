@@ -242,15 +242,10 @@ transformation of an agent to YAML without any writing to disk by using the
 \code{\link[=yaml_agent_string]{yaml_agent_string()}} function.
 }
 
-\section{Function ID}{
+\section{Demos}{
 
-2-21
-}
 
-\examples{
-# Create a simple table with three
-# columns of numerical values
-tbl <-
+Create a simple table with three columns of numerical values.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <-
   dplyr::tibble(
     a = c(5, 7, 6, 5, 8, 7),
     b = c(7, 1, 0, 0, 8, 3),
@@ -258,61 +253,69 @@ tbl <-
   )
 
 tbl
+}\if{html}{\out{</div>}}\preformatted{## # A tibble: 6 × 3
+##       a     b     c
+##   <dbl> <dbl> <dbl>
+## 1     5     7     1
+## 2     7     1     1
+## 3     6     0     1
+## 4     5     0     3
+## 5     8     8     3
+## 6     7     3     3
+}
+\subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
-# A: Using an `agent` with validation
-#    functions and then `interrogate()` 
-
-# Validate that when considering only
-# data in columns `a` and `b`, there
-# are only complete rows (i.e., all
-# rows have no `NA` values)
-agent <-
+Validate that when considering only data in columns \code{a} and \code{b}, there are
+only complete rows (i.e., all rows have no \code{NA} values).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = tbl) \%>\%
   rows_complete(vars(a, b)) \%>\%
   interrogate()
+}\if{html}{\out{</div>}}
 
-# Determine if this validation passed
-# by using `all_passed()`
-all_passed(agent)
+Determine if this validation passed by using \code{all_passed()}:\if{html}{\out{<div class="sourceCode r">}}\preformatted{all_passed(agent)
+}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
+}
 
-# Calling `agent` in the console
-# prints the agent's report; but we
-# can get a `gt_tbl` object directly
-# with `get_agent_report(agent)`
+Calling \code{agent} in the console prints the agent's report. But we can get a
+\code{gt_tbl} object directly with \code{get_agent_report(agent)}.
+}
 
-# B: Using the validation function
-#    directly on the data (no `agent`)
+\subsection{B: Using the validation function directly on the data (no \code{agent})}{
 
-# This way of using validation functions
-# acts as a data filter: data is passed
-# through but should `stop()` if there
-# is a single test unit failing; the
-# behavior of side effects can be
-# customized with the `actions` option
-tbl \%>\%
+This way of using validation functions acts as a data filter. Data is passed
+through but should \code{stop()} if there is a single test unit failing. The
+behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   rows_complete(vars(a, b)) \%>\%
   dplyr::pull(a)
-
-# C: Using the expectation function
-
-# With the `expect_*()` form, we would
-# typically perform one validation at a
-# time; this is primarily used in
-# testthat tests
-expect_rows_complete(
-  tbl, vars(a, b)
-)
-
-# D: Using the test function
-
-# With the `test_*()` form, we should
-# get a single logical value returned
-# to us
-test_rows_complete(
-  tbl, vars(a, b)
-)
-
+}\if{html}{\out{</div>}}\preformatted{## [1] 5 7 6 5 8 7
 }
+}
+
+\subsection{C: Using the expectation function}{
+
+With the \verb{expect_*()} form, we would typically perform one validation at a
+time. This is primarily used in testthat tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_rows_complete(
+  tbl, vars(a, b)
+)
+}\if{html}{\out{</div>}}
+}
+
+\subsection{D: Using the test function}{
+
+With the \verb{test_*()} form, we should get a single logical value returned to
+us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{test_rows_complete(
+  tbl, vars(a, b)
+)
+}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
+}
+}
+}
+
+\section{Function ID}{
+
+2-21
+}
+
 \seealso{
 Other validation functions: 
 \code{\link{col_count_match}()},

@@ -48,25 +48,33 @@
 #'
 #' @return A logical value.
 #' 
-#' @examples
-#' # Create a simple table with
-#' # a column of numerical values
-#' tbl <- 
-#'   dplyr::tibble(a = c(4, 5, 7, 8))
+#' @section Demos:
 #' 
-#' # Validate that values in column
-#' # `a` are always greater than 4
+#' Create a simple table with a column of numerical values.
+#' 
+#' ```{r}
+#' tbl <- dplyr::tibble(a = c(4, 5, 7, 8))
+#' 
+#' tbl
+#' ```
+#' 
+#' Validate that values in column `a` are always greater than 4.
+#' 
+#' ```{r}
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
 #'   col_vals_gt(vars(a), value = 3) %>%
 #'   col_vals_lte(vars(a), value = 10) %>%
 #'   col_vals_increasing(vars(a)) %>%
 #'   interrogate()
+#' ```
 #' 
-#' # Determine if these column
-#' # validations have all passed by
-#' # using `all_passed()` (they do)
+#' Determine if these column validations have all passed by using `all_passed()`
+#' (they do).
+#' 
+#' ```{r}
 #' all_passed(agent = agent)
+#' ```
 #' 
 #' @family Post-interrogation
 #' @section Function ID:

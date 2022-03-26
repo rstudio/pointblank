@@ -47,33 +47,34 @@
 #'   
 #' @return A `ptblank_multiagent` object.
 #' 
-#' @examples 
-#' if (interactive()) {
+#' @section Demos:
 #' 
-#' # Let's walk through several theoretical
-#' # data quality analyses of an extremely
-#' # small table; that table is called
-#' # `small_table` and we can find it as a
-#' # dataset in this package
+#' Let's walk through several theoretical data quality analyses of an extremely
+#' small table. that table is called `small_table` and we can find it as a
+#' dataset in this package.
+#' 
+#' ```{r}
 #' small_table
+#' ```
 #' 
-#' # To set failure limits and signal
-#' # conditions, we designate proportional
-#' # failure thresholds to the `warn`, `stop`,
-#' # and `notify` states using `action_levels()`
+#' To set failure limits and signal conditions, we designate proportional
+#' failure thresholds to the `warn`, `stop`, and `notify` states using
+#' `action_levels()`.
+#' 
+#' ```{r}
 #' al <- 
 #'   action_levels(
 #'     warn_at = 0.05,
 #'     stop_at = 0.10,
 #'     notify_at = 0.20
 #'   )
+#' ```
 #' 
-#' # We will create four different agents
-#' # and have slightly different validation
-#' # steps in each of them; in the first,
-#' # `agent_1`, eight different validation
-#' # steps are created and the agent will
-#' # interrogate the `small_table`
+#' We will create four different agents and have slightly different validation
+#' steps in each of them. In the first, `agent_1`, eight different validation
+#' steps are created and the agent will interrogate the `small_table`.
+#' 
+#' ```{r}
 #' agent_1 <-
 #'   create_agent(
 #'     tbl = small_table,
@@ -108,10 +109,12 @@
 #'   rows_distinct(vars(d, e, f)) %>%
 #'   col_is_integer(vars(a)) %>%
 #'   interrogate()
+#' ```
 #' 
-#' # The second agent, `agent_2`, retains
-#' # all of the steps of `agent_1` and adds
-#' # two more (the last of which is inactive)
+#' The second agent, `agent_2`, retains all of the steps of `agent_1` and adds
+#' two more (the last of which is inactive).
+#' 
+#' ```{r}
 #' agent_2 <- 
 #'   agent_1 %>%
 #'   col_exists(vars(date, date_time)) %>%
@@ -121,10 +124,12 @@
 #'     active = FALSE
 #'   ) %>%
 #'   interrogate()
+#' ```
 #' 
-#' # The third agent, `agent_3`, adds a single
-#' # validation step, removes the fifth one,
-#' # and deactivates the first
+#' The third agent, `agent_3`, adds a single validation step, removes the fifth
+#' one, and deactivates the first.
+#' 
+#' ```{r}
 #' agent_3 <- 
 #'   agent_2 %>%
 #'   col_vals_in_set(
@@ -134,35 +139,40 @@
 #'   remove_steps(i = 5) %>%
 #'   deactivate_steps(i = 1) %>%
 #'   interrogate()
+#' ```
 #' 
-#' # The fourth and final agent, `agent_4`,
-#' # reactivates steps 1 and 10, and removes
-#' # the sixth step
+#' The fourth and final agent, `agent_4`, reactivates steps 1 and 10, and
+#' removes the sixth step.
+#' 
+#' ```{r}
 #' agent_4 <-
 #'   agent_3 %>%
 #'   activate_steps(i = 1) %>%
 #'   activate_steps(i = 10) %>%
 #'   remove_steps(i = 6) %>%
 #'   interrogate()
+#' ```
 #' 
-#' # While all the agents are slightly
-#' # different from each other, we can still
-#' # get a combined report of them by
-#' # creating a 'multiagent'
+#' While all the agents are slightly different from each other, we can still get
+#' a combined report of them by creating a 'multiagent'.
+#' 
+#' ```{r}
 #' multiagent <-
 #'   create_multiagent(
 #'     agent_1, agent_2, agent_3, agent_4
 #'   )
+#' ```
 #' 
-#' # Calling `multiagent` in the console
-#' # prints the multiagent report; but we
-#' # can get a `gt_tbl` object with the
-#' # `get_multiagent_report()` function
+#' Calling `multiagent` in the console prints the multiagent report. But we can
+#' get a `gt_tbl` object with the `get_multiagent_report()` function.
+#' 
+#' ```{r}
 #' report <- get_multiagent_report(multiagent)
+#' ```
 #' 
+#' ```{r}
 #' class(report)
-#' 
-#' }
+#' ```
 #' 
 #' @section Figures:
 #' \if{html}{\figure{man_create_multiagent_1.png}{options: width=100\%}}

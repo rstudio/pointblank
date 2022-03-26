@@ -262,77 +262,72 @@ possible to preview the transformation of an agent to YAML without any
 writing to disk by using the \code{\link[=yaml_agent_string]{yaml_agent_string()}} function.
 }
 
-\section{Function ID}{
+\section{Demos}{
 
-2-9
-}
 
-\examples{
-# The `small_table` dataset in the
-# package will be used to validate that
-# column values are part of a given set
+The \code{small_table} dataset in the package will be used to validate that column
+values are part of a given set.
+\subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
-# A: Using an `agent` with validation
-#    functions and then `interrogate()`
-
-# Validate that values in column `f`
-# are all part of the set of values
-# containing `low`, `mid`, and `high`
-agent <-
+Validate that values in column \code{f} are all part of the set of values
+containing \code{low}, \code{mid}, and \code{high}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(small_table) \%>\%
   col_vals_in_set(
     vars(f), c("low", "mid", "high")
   ) \%>\%
   interrogate()
-  
-# Determine if this validation
-# had no failing test units (there
-# are 13 test units, one for each row)
-all_passed(agent)
+}\if{html}{\out{</div>}}
 
-# Calling `agent` in the console
-# prints the agent's report; but we
-# can get a `gt_tbl` object directly
-# with `get_agent_report(agent)`
+Determine if this validation had no failing test units (there are 13 test
+units, one for each row).\if{html}{\out{<div class="sourceCode r">}}\preformatted{all_passed(agent)
+}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
+}
 
-# B: Using the validation function
-#    directly on the data (no `agent`)
+Calling \code{agent} in the console prints the agent's report. But we can get a
+\code{gt_tbl} object directly with \code{get_agent_report(agent)}.
+}
 
-# This way of using validation functions
-# acts as a data filter: data is passed
-# through but should `stop()` if there
-# is a single test unit failing; the
-# behavior of side effects can be
-# customized with the `actions` option
-small_table \%>\%
+\subsection{B: Using the validation function directly on the data (no \code{agent})}{
+
+This way of using validation functions acts as a data filter. Data is passed
+through but should \code{stop()} if there is a single test unit failing. The
+behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   col_vals_in_set(
     vars(f), c("low", "mid", "high")
   ) \%>\%
   dplyr::pull(f) \%>\%
   unique()
+}\if{html}{\out{</div>}}\preformatted{## [1] "high" "low"  "mid"
+}
+}
 
-# C: Using the expectation function
+\subsection{C: Using the expectation function}{
 
-# With the `expect_*()` form, we would
-# typically perform one validation at a
-# time; this is primarily used in
-# testthat tests
-expect_col_vals_in_set(
+With the \verb{expect_*()} form, we would typically perform one validation at a
+time. This is primarily used in testthat tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_in_set(
   small_table,
   vars(f), c("low", "mid", "high")
 )
+}\if{html}{\out{</div>}}
+}
 
-# D: Using the test function
+\subsection{D: Using the test function}{
 
-# With the `test_*()` form, we should
-# get a single logical value returned
-# to us
-small_table \%>\%
+With the \verb{test_*()} form, we should get a single logical value returned to
+us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   test_col_vals_in_set(
     vars(f), c("low", "mid", "high")
   )
-
+}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
 }
+}
+}
+
+\section{Function ID}{
+
+2-9
+}
+
 \seealso{
 The analogue to this function: \code{\link[=col_vals_not_in_set]{col_vals_not_in_set()}}.
 

@@ -158,35 +158,41 @@
 #'   
 #' @return A `ptblank_informant` object.
 #' 
-#' @examples 
-#' # Let's walk through how we can
-#' # generate some useful information for a
-#' # really small table; it's actually
-#' # called `small_table` and we can find
-#' # it as a dataset in this package
-#' small_table
+#' @section Demos:
 #' 
-#' # Create a pointblank `informant`
-#' # object with `create_informant()`
-#' # and the `small_table` dataset
+#' Let's walk through how we can generate some useful information for a really
+#' small table. It's actually called `small_table` and we can find it as a
+#' dataset in this package.
+#' 
+#' ```{r}
+#' small_table
+#' ```
+#' 
+#' Create a pointblank `informant` object with `create_informant()` and the
+#' `small_table` dataset.
+#' 
+#' ```{r}
 #' informant <- 
 #'   create_informant(
 #'     tbl = pointblank::small_table,
 #'     tbl_name = "small_table",
 #'     label = "An example."
 #'   )
+#' ```
 #' 
-#' # This function creates some information
-#' # without any extra help by profiling
-#' # the supplied table object; it adds
-#' # the sections: (1) 'table' and
-#' # (2) 'columns' and we can print the
-#' # object to see the information report
+#' This function creates some information without any extra help by profiling
+#' the supplied table object. It adds the sections: (1) 'table' and (2)
+#' 'columns' and we can print the object to see the information report.
 #' 
-#' # Alternatively, we can get the same report
-#' # by using `get_informant_report()`
+#' Alternatively, we can get the same report by using `get_informant_report()`.
+#' 
+#' ```{r}
 #' report <- get_informant_report(informant)
+#' ```
+#' 
+#' ```{r}
 #' class(report)
+#' ```
 #' 
 #' @section Figures:
 #' \if{html}{\figure{man_create_informant_1.png}{options: width=100\%}}

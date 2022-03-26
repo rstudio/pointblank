@@ -111,64 +111,68 @@
 #'   called primarily for its potential side-effects (e.g., signaling failure).
 #'   The test function returns a logical value.
 #'
-#' @examples
-#' # Let's modify the `f` column in the
-#' # `small_table` dataset so that the
-#' # values are factors instead of having
-#' # the `character` class; the following
-#' # examples will validate that the `f`
-#' # column was successfully mutated and
-#' # now consists of factors
+#' @section Demos:
+#' 
+#' Let's modify the `f` column in the `small_table` dataset so that the values
+#' are factors instead of having the `character` class. The following examples
+#' will validate that the `f` column was successfully mutated and now consists
+#' of factors.
+#' 
+#' ```{r}
 #' tbl <- 
 #'   small_table %>%
 #'   dplyr::mutate(f = factor(f))
+#' ```
 #' 
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()`
+#' ## A: Using an `agent` with validation functions and then `interrogate()`
 #' 
-#' # Validate that the column `f` in the
-#' # `tbl` object is of the `factor` class
+#' Validate that the column `f` in the `tbl` object is of the `factor` class.
+#' 
+#' ```{r}
 #' agent <-
 #'   create_agent(tbl) %>%
 #'   col_is_factor(vars(f)) %>%
 #'   interrogate()
-#'   
-#' # Determine if this validation
-#' # had no failing test units (1)
+#' ```
+#' 
+#' Determine if this validation had no failing test units (1).
+#' 
+#' ```{r}
 #' all_passed(agent)
+#' ```
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' Calling `agent` in the console prints the agent's report. But we can get a
+#' `gt_tbl` object directly with `get_agent_report(agent)`.
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' ## B: Using the validation function directly on the data (no `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' This way of using validation functions acts as a data filter. Data is passed
+#' through but should `stop()` if there is a single test unit failing. The
+#' behavior of side effects can be customized with the `actions` option.
+#' 
+#' ```{r}
 #' tbl %>%
 #'   col_is_factor(vars(f)) %>%
 #'   dplyr::slice(1:5)
+#' ```
 #' 
-#' # C: Using the expectation function
+#' ## C: Using the expectation function
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' With the `expect_*()` form, we would typically perform one validation at a
+#' time. This is primarily used in testthat tests.
+#' 
+#' ```{r}
 #' expect_col_is_factor(tbl, vars(f))
+#' ```
 #' 
-#' # D: Using the test function
+#' ## D: Using the test function
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' With the `test_*()` form, we should get a single logical value returned to
+#' us.
+#' 
+#' ```{r}
 #' tbl %>% test_col_is_factor(vars(f))
+#' ```
 #' 
 #' @family validation functions
 #' @section Function ID:

@@ -181,12 +181,13 @@
 #'   called primarily for its potential side-effects (e.g., signaling failure).
 #'   The test function returns a logical value.
 #'
-#' @examples
-#' # For all examples here, we'll use
-#' # a simple table with three numeric
-#' # columns (`a`, `b`, and `c`); this is
-#' # a very basic table but it'll be more
-#' # useful when explaining things later
+#' @section Demos:
+#' 
+#' For all examples here, we'll use a simple table with three numeric columns
+#' (`a`, `b`, and `c`). This is a very basic table but it'll be more useful when
+#' explaining things later.
+#' 
+#' ```{r}
 #' tbl <-
 #'   dplyr::tibble(
 #'     a = c(5, 2, 6),
@@ -195,20 +196,17 @@
 #'   )
 #'   
 #' tbl
+#' ```
 #'   
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()`
+#' ## A: Using an `agent` with validation functions and then `interrogate()`
 #' 
-#' # The `serially()` function can be set
-#' # up to perform a series of tests and
-#' # then perform a validation (only if
-#' # all tests pass); here, we are going
-#' # to (1) test whether columns `a` and
-#' # `b` are numeric, (2) check that both
-#' # don't have any `NA` values, and (3)
-#' # perform a finalizing validation that
-#' # checks whether values in `b` are
-#' # greater than values in `a`
+#' The `serially()` function can be set up to perform a series of tests and then
+#' perform a validation (only if all tests pass). Here, we are going to (1) test
+#' whether columns `a` and `b` are numeric, (2) check that both don't have any
+#' `NA` values, and (3) perform a finalizing validation that checks whether
+#' values in `b` are greater than values in `a`.
+#' 
+#' ```{r}
 #' agent_1 <-
 #'   create_agent(tbl = tbl) %>%
 #'   serially(
@@ -217,25 +215,25 @@
 #'     ~ col_vals_gt(., vars(b), vars(a))
 #'     ) %>%
 #'   interrogate()
-#'   
-#' # Determine if this validation
-#' # had no failing test units (there are
-#' # 4 tests and a final validation)
+#' ```
+#' 
+#' Determine if this validation had no failing test units (there are 4 tests and
+#' a final validation).
+#' 
+#' ```{r}
 #' all_passed(agent_1)
+#' ```
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent_1)`
+#' Calling `agent` in the console prints the agent's report. But we can get a
+#' `gt_tbl` object directly with `get_agent_report(agent_1)`.
 #' 
-#' # What's going on? All four of the tests
-#' # passed and so the final validation
-#' # occurred; there were no failing test
-#' # units in that either!
+#' What's going on? All four of the tests passed and so the final validation
+#' occurred. There were no failing test units in that either!
+#'
+#' The final validation is optional. Here is a different agent where only the
+#' serial tests are performed.
 #' 
-#' # The final validation is optional; here
-#' # is a different agent where only the
-#' # serial tests are performed
+#' ```{r}
 #' agent_2 <-
 #'   create_agent(tbl = tbl) %>%
 #'   serially(
@@ -243,50 +241,56 @@
 #'     ~ test_col_vals_not_null(., vars(a, b))
 #'   ) %>%
 #'   interrogate()
-#'   
-#' # Everything is good here too:
+#' ```
+#' 
+#' Everything is good here too:
+#' 
+#' ```{r}
 #' all_passed(agent_2)
+#' ```
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' ## B: Using the validation function directly on the data (no `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' This way of using validation functions acts as a data filter. Data is passed
+#' through but should `stop()` if there is a single test unit failing. The
+#' behavior of side effects can be customized with the `actions` option.
+#' 
+#' ```{r}
 #' tbl %>%
 #'   serially(
 #'     ~ test_col_is_numeric(., vars(a, b)),
 #'     ~ test_col_vals_not_null(., vars(a, b)),
 #'     ~ col_vals_gt(., vars(b), vars(a))
 #'   )
+#' ```
 #'
-#' # C: Using the expectation function
+#' ## C: Using the expectation function
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' With the `expect_*()` form, we would typically perform one validation at a
+#' time. This is primarily used in testthat tests.
+#' 
+#' ```{r}
 #' expect_serially(
 #'   tbl,
 #'   ~ test_col_is_numeric(., vars(a, b)),
 #'   ~ test_col_vals_not_null(., vars(a, b)),
 #'   ~ col_vals_gt(., vars(b), vars(a))
 #' )
+#' ```
 #' 
-#' # D: Using the test function
+#' ## D: Using the test function
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' With the `test_*()` form, we should get a single logical value returned to
+#' us.
+#' 
+#' ```{r}
 #' tbl %>%
 #'   test_serially(
 #'     ~ test_col_is_numeric(., vars(a, b)),
 #'     ~ test_col_vals_not_null(., vars(a, b)),
 #'     ~ col_vals_gt(., vars(b), vars(a))
 #'   )
+#' ```
 #'
 #' @family validation functions
 #' @section Function ID:

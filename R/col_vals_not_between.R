@@ -198,96 +198,96 @@
 #'   called primarily for its potential side-effects (e.g., signaling failure).
 #'   The test function returns a logical value.
 #'   
-#' @examples
-#' # The `small_table` dataset in the
-#' # package has a column of numeric
-#' # values in `c` (there are a few NAs
-#' # in that column); the following
-#' # examples will validate the values
-#' # in that numeric column
+#' @section Demos:
 #' 
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()`
+#' The `small_table` dataset in the package has a column of numeric values in
+#' `c` (there are a few `NA`s in that column). The following examples will
+#' validate the values in that numeric column.
 #' 
-#' # Validate that values in column `c`
-#' # are all between `10` and `20`; because
-#' # there are NA values, we'll choose to
-#' # let those pass validation by setting
-#' # `na_pass = TRUE`
+#' ```{r}
+#' small_table
+#' ```
+#' 
+#' ## A: Using an `agent` with validation functions and then `interrogate()`
+#' 
+#' Validate that values in column `c` are all between `10` and `20`. Because
+#' there are `NA` values, we'll choose to let those pass validation by setting
+#' `na_pass = TRUE`.
+#' 
+#' ```{r}
 #' agent <-
 #'   create_agent(small_table) %>%
 #'   col_vals_not_between(
 #'     vars(c), 10, 20, na_pass = TRUE
 #'   ) %>%
 #'   interrogate()
-#'   
-#' # Determine if this validation
-#' # had no failing test units (there
-#' # are 13 test units, one for each row)
+#' ```
+#'    
+#' Determine if this validation had no failing test units (there are 13 test
+#' units, one for each row).
+#' 
+#' ```{r}
 #' all_passed(agent)
+#' ```
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' Calling `agent` in the console prints the agent's report. But we can get a
+#' `gt_tbl` object directly with `get_agent_report(agent)`.
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' ## B: Using the validation function directly on the data (no `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' This way of using validation functions acts as a data filter. Data is passed
+#' through but should `stop()` if there is a single test unit failing. The
+#' behavior of side effects can be customized with the `actions` option.
+#' 
+#' ```{r}
 #' small_table %>%
 #'   col_vals_not_between(
 #'     vars(c), 10, 20, na_pass = TRUE
 #'   ) %>%
 #'   dplyr::pull(c)
-#'
-#' # C: Using the expectation function
+#' ```
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' ## C: Using the expectation function
+#' 
+#' With the `expect_*()` form, we would typically perform one validation at a
+#' time. This is primarily used in testthat tests.
+#' 
+#' ```{r}
 #' expect_col_vals_not_between(
 #'   small_table, vars(c), 10, 20,
 #'   na_pass = TRUE
 #' )
+#' ```
 #' 
-#' # D: Using the test function
+#' ## D: Using the test function
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' With the `test_*()` form, we should get a single logical value returned to
+#' us.
+#' 
+#' ```{r}
 #' small_table %>%
 #'   test_col_vals_not_between(
 #'     vars(c), 10, 20,
 #'     na_pass = TRUE
 #'   )
+#' ```
 #'
-#' # An additional note on the bounds for
-#' # this function: they are inclusive by
-#' # default; we can modify the
-#' # inclusiveness of the upper and lower
-#' # bounds with the `inclusive` option,
-#' # which is a length-2 logical vector
+#' An additional note on the bounds for this function: they are inclusive by
+#' default. We can modify the inclusiveness of the upper and lower bounds with
+#' the `inclusive` option, which is a length-2 logical vector.
 #' 
-#' # In changing the lower bound to be
-#' # `9` and making it non-inclusive, we
-#' # get `TRUE` since although two values
-#' # are `9` and they fall outside of the
-#' # lower (or left) bound (and any values
-#' # 'not between' count as passing test
-#' # units)
+#' In changing the lower bound to be `9` and making it non-inclusive, we get
+#' `TRUE` since although two values are `9` and they fall outside of the lower
+#' (or left) bound (and any values 'not between' count as passing test units).
+#' 
+#' ```{r}
 #' small_table %>%
 #'   test_col_vals_not_between(
 #'     vars(c), 9, 20,
 #'     inclusive = c(FALSE, TRUE),
 #'     na_pass = TRUE
 #'   )
+#' ```
 #' 
 #' @family validation functions
 #' @section Function ID:

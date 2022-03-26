@@ -111,62 +111,67 @@
 #'   called primarily for its potential side-effects (e.g., signaling failure).
 #'   The test function returns a logical value.
 #'   
-#' @examples
-#' # The `small_table` dataset in the
-#' # package has a `date` column; the
-#' # following examples will validate
-#' # that that column is of the `Date`
-#' # class
+#' @section Demos:
 #' 
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()`
+#' The `small_table` dataset in the package has a `date` column. The following
+#' examples will validate that that column is of the `Date` class.
 #' 
-#' # Validate that the column `date` has
-#' # the `Date` class
+#' ```{r}
+#' small_table
+#' ```
+#' 
+#' ## A: Using an `agent` with validation functions and then `interrogate()`
+#' 
+#' Validate that the column `date` has the `Date` class.
+#' 
+#' ```{r}
 #' agent <-
 #'   create_agent(small_table) %>%
 #'   col_is_date(vars(date)) %>%
 #'   interrogate()
+#' ```
 #'   
-#' # Determine if this validation
-#' # had no failing test units (1)
+#' Determine if this validation had no failing test units (1).
+#' 
+#' ```{r}
 #' all_passed(agent)
+#' ```
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' Calling `agent` in the console prints the agent's report. But we can get a
+#' `gt_tbl` object directly with `get_agent_report(agent)`.
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' ## B: Using the validation function directly on the data (no `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' This way of using validation functions acts as a data filter. Data is passed
+#' through but should `stop()` if there is a single test unit failing. The
+#' behavior of side effects can be customized with the `actions` option.
+#' 
+#' ```{r}
 #' small_table %>%
 #'   col_is_date(vars(date)) %>%
 #'   dplyr::slice(1:5)
+#' ```
+#'
+#' ## C: Using the expectation function
 #' 
-#' # C: Using the expectation function
+#' With the `expect_*()` form, we would typically perform one validation at a
+#' time. This is primarily used in testthat tests.
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' ```{r}
 #' expect_col_is_date(
 #'   small_table, vars(date)
 #' )
+#' ```
 #' 
-#' # D: Using the test function
+#' ## D: Using the test function
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' With the `test_*()` form, we should get a single logical value returned to
+#' us.
+#' 
+#' ```{r}
 #' small_table %>%
 #'   test_col_is_date(vars(date))
+#' ```
 #' 
 #' @family validation functions
 #' @section Function ID:

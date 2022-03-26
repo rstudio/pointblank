@@ -140,78 +140,89 @@
 #'   called primarily for its potential side-effects (e.g., signaling failure).
 #'   The test function returns a logical value.
 #'   
-#' @examples
-#' # Create a simple table with three
-#' # columns and three rows of values
+#' @section Demos:
+#' 
+#' Create a simple table with three columns and three rows of values:
+#' 
+#' ```{r}
 #' tbl <-
 #'   dplyr::tibble(
 #'     a = c(5, 7, 6),
 #'     b = c(7, 1, 0),
 #'     c = c(1, 1, 1)
 #'   )
-#' 
+#'   
 #' tbl
-#'
-#' # Create a second table which is
-#' # quite different but has the
-#' # same number of columns as `tbl`
+#' ```
+#' 
+#' Create a second table which is quite different but has the same number of
+#' columns as `tbl`.
+#' 
+#' ```{r}
 #' tbl_2 <-
 #'   dplyr::tibble(
 #'     e = c("a", NA, "a", "c"),
 #'     f = c(2.6, 1.2, 0, NA),
 #'     g = c("f", "g", "h", "i")
 #'   )
+#'   
+#' tbl_2
+#' ```
 #' 
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()` 
+#' We'll use these tables with the different function variants.
 #' 
-#' # Validate that the count of columns
-#' # in the target table (`tbl`) matches
-#' # that of the comparison table
-#' # (`tbl_2`)
+#' ## A: Using an `agent` with validation functions and then `interrogate()` 
+#' 
+#' Validate that the count of columns in the target table (`tbl`) matches that
+#' of the comparison table (`tbl_2`).
+#' 
+#' ```{r}
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
 #'   col_count_match(count = tbl_2) %>%
 #'   interrogate()
+#' ```
 #' 
-#' # Determine if this validation passed
-#' # by using `all_passed()`
+#' Determine if this validation passed by using `all_passed()`:
+#' 
+#' ```{r}
 #' all_passed(agent)
+#' ```
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' Calling `agent` in the console prints the agent's report. But we can get a
+#' `gt_tbl` object directly with `get_agent_report(agent)`.
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' ## B: Using the validation function directly on the data (no `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' This way of using validation functions acts as a data filter: data is passed
+#' through but should `stop()` if there is a single test unit failing. The
+#' behavior of side effects can be customized with the `actions` option.
+#' 
+#' ```{r}
 #' tbl %>%
 #'   col_count_match(count = tbl_2)
+#' ```
 #' 
-#' # C: Using the expectation function
+#' ## C: Using the expectation function
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' With the `expect_*()` form, we would typically perform one validation at a
+#' time. This is primarily used in testthat tests.
+#' 
+#' ```{r}
 #' expect_col_count_match(
 #'   tbl, count = tbl_2
 #' )
+#' ```
 #' 
-#' # D: Using the test function
+#' ## D: Using the test function
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' With the `test_*()` form, we should get a single logical value returned to
+#' us.
+#' 
+#' ```{r}
 #' tbl %>% 
 #'   test_col_count_match(count = 3)
+#' ```
 #' 
 #' @family validation functions
 #' @section Function ID:

@@ -277,34 +277,35 @@
 #'   
 #' @return A `ptblank_agent` object.
 #'   
-#' @examples
-#' # Let's walk through a data quality
-#' # analysis of an extremely small table;
-#' # it's actually called `small_table` and
-#' # we can find it as a dataset in this
-#' # package
-#' small_table
+#' @section Demos:
 #' 
-#' # We ought to think about what's
-#' # tolerable in terms of data quality so
-#' # let's designate proportional failure
-#' # thresholds to the `warn`, `stop`, and
-#' # `notify` states using `action_levels()`
+#' Let's walk through a data quality analysis of an extremely small table. It's
+#' actually called `small_table` and we can find it as a dataset in this
+#' package.
+#' 
+#' ```{r}
+#' small_table
+#' ```
+#' 
+#' We ought to think about what's tolerable in terms of data quality so let's
+#' designate proportional failure thresholds to the `warn`, `stop`, and `notify`
+#' states using `action_levels()`.
+#' 
+#' ```{r}
 #' al <- 
 #'   action_levels(
 #'       warn_at = 0.10,
 #'       stop_at = 0.25,
 #'     notify_at = 0.35
 #'   )
+#' ```
 #' 
-#' # Now create a pointblank `agent` object
-#' # and give it the `al` object (which
-#' # serves as a default for all validation
-#' # steps which can be overridden); the
-#' # static thresholds provided by `al` will
-#' # make the reporting a bit more useful;
-#' # we also provide a target table and we'll
-#' # use `pointblank::small_table` 
+#' Now create a pointblank `agent` object and give it the `al` object (which
+#' serves as a default for all validation steps which can be overridden). The
+#' static thresholds provided by `al` will make the reporting a bit more useful.
+#' We also provide a target table and we'll use `pointblank::small_table`.
+#' 
+#' ```{r}
 #' agent <- 
 #'   create_agent(
 #'     tbl = pointblank::small_table,
@@ -312,13 +313,13 @@
 #'     label = "An example.",
 #'     actions = al
 #'   )
+#' ```
 #'
-#' # Then, as with any `agent` object, we
-#' # can add steps to the validation plan by
-#' # using as many validation functions as we
-#' # want; then, we use `interrogate()` to
-#' # physically perform the validations and
-#' # gather intel
+#' Then, as with any `agent` object, we can add steps to the validation plan by
+#' using as many validation functions as we want. then, we use `interrogate()`
+#' to physically perform the validations and gather intel.
+#' 
+#' ```{r}
 #' agent <-
 #'   agent %>% 
 #'   col_exists(vars(date, date_time)) %>%
@@ -339,45 +340,53 @@
 #'     na_pass = TRUE
 #'   ) %>%
 #'   interrogate()
+#' ```
 #'   
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' Calling `agent` in the console prints the agent's report. But we can get a
+#' `gt_tbl` object directly with `get_agent_report(agent)`.
+#' 
+#' ```{r}
 #' report <- get_agent_report(agent)
+#' ```
+#' 
+#' ```{r}
 #' class(report)
+#' ```
 #' 
-#' # What can you do with the report object?
-#' # Print it from an R Markdown code
-#' # chunk, use it in a **blastula** email,
-#' # put it in a webpage, etc.
+#' What can you do with the report object? Print it from an R Markdown code
+#' chunk, use it in a **blastula** email, put it in a webpage, etc.
 #' 
-#' # From the report we know that Step
-#' # 4 had two test units (rows, really)
-#' # that failed; we can see those rows
-#' # with `get_data_extracts()` 
+#' From the report we know that Step 4 had two test units (rows, really) that
+#' failed. We can see those rows with `get_data_extracts()`.
+#' 
+#' ```{r}
 #' agent %>% get_data_extracts(i = 4)
+#' ```
 #' 
-#' # We can get an x-list for the whole
-#' # validation (8 steps), or, just for
-#' # the 4th step with `get_agent_x_list()`
+#' We can get an x-list for the whole validation (8 steps), or, just for the 4th
+#' step with `get_agent_x_list()`.
+#' 
+#' ```{r}
 #' xl_step_4 <-
 #'   agent %>% get_agent_x_list(i = 4)
-#'  
-#' # And then we can peruse the different
-#' # parts of the list; let's get the
-#' # fraction of test units that failed
+#' ```
+#' 
+#' And then we can peruse the different parts of the list. Let's get the
+#' fraction of test units that failed.
+#' 
+#' ```{r}
 #' xl_step_4$f_failed
+#' ```
 #' 
-#' # Just printing the x-list will tell
-#' # us what's available therein
+#' Just printing the x-list will tell us what's available therein.
+#' 
+#' ```{r}
 #' xl_step_4
+#' ```
 #' 
-#' # An x-list not specific to any step
-#' # will have way more information and a
-#' # slightly different structure; see
-#' # `help(get_agent_x_list)` for more info
-#' # get_agent_x_list(agent)
+#' An x-list not specific to any step will have way more information and a
+#' slightly different structure. See `help(get_agent_x_list)` for more info
+#' get_agent_x_list(agent).
 #' 
 #' @section Figures:
 #' \if{html}{\figure{man_create_agent_1.png}{options: width=100\%}}

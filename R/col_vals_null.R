@@ -164,10 +164,12 @@
 #'   called primarily for its potential side-effects (e.g., signaling failure).
 #'   The test function returns a logical value.
 #'   
-#' @examples
-#' # For all examples here, we'll use
-#' # a simple table with four columns:
-#' # `a`, `b`, `c`, and `d`
+#' @section Demos:
+#' 
+#' For all examples here, we'll use a simple table with four columns: `a`, `b`,
+#' `c`, and `d`.
+#' 
+#' ```{r}
 #' tbl <-
 #'   dplyr::tibble(
 #'     a = c( 5,  7,  6,  5,  8),
@@ -175,58 +177,61 @@
 #'     c = c(NA, NA, NA, NA, NA),
 #'     d = c(35, 23, NA, NA, NA)
 #'   )
-#'   
-#' tbl
-#'   
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()`
 #' 
-#' # Validate that all values in column
-#' # `c` are NA (they would be NULL in a
-#' # database context, which isn't the
-#' # case here)
+#' tbl
+#' ```
+#'   
+#' ## A: Using an `agent` with validation functions and then `interrogate()`
+#' 
+#' Validate that all values in column `c` are `NA` (they would be `NULL` in a
+#' database context, which isn't the case here).
+#' 
+#' ```{r}
 #' agent <-
 #'   create_agent(tbl) %>%
 #'   col_vals_null(vars(c)) %>%
 #'   interrogate()
+#' ```
 #' 
-#' # Determine if this validation
-#' # had no failing test units (there
-#' # are 5 test units, one for each row)
+#' Determine if this validation had no failing test units (there are 5 test
+#' units, one for each row).
+#' 
+#' ```{r}
 #' all_passed(agent)
+#' ```
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' Calling `agent` in the console prints the agent's report. But we can get a
+#' `gt_tbl` object directly with `get_agent_report(agent)`.
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' ## B: Using the validation function directly on the data (no `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' This way of using validation functions acts as a data filter. Data is passed
+#' through but should `stop()` if there is a single test unit failing. The
+#' behavior of side effects can be customized with the `actions` option.
+#' 
+#' ```{r}
 #' tbl %>%
 #'   col_vals_null(vars(c)) %>%
 #'   dplyr::pull(c)
+#' ```
 #'
-#' # C: Using the expectation function
+#' ## C: Using the expectation function
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' With the `expect_*()` form, we would typically perform one validation at a
+#' time. This is primarily used in testthat tests.
+#' 
+#' ```{r}
 #' expect_col_vals_null(tbl, vars(c))
+#' ```
 #' 
-#' # D: Using the test function
+#' ## D: Using the test function
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' With the `test_*()` form, we should get a single logical value returned to
+#' us.
+#' 
+#' ```{r}
 #' tbl %>% test_col_vals_null(vars(c))
+#' ```
 #' 
 #' @family validation functions
 #' @section Function ID:

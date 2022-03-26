@@ -277,64 +277,60 @@ monitoring and management, and, the reporting (which can be customized with
 a given target table.
 }
 
-\section{Figures}{
+\section{Demos}{
 
-\if{html}{\figure{man_create_agent_1.png}{options: width=100\%}}
+
+Let's walk through a data quality analysis of an extremely small table. It's
+actually called \code{small_table} and we can find it as a dataset in this
+package.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table
+}\if{html}{\out{</div>}}\preformatted{## # A tibble: 13 × 8
+##    date_time           date           a b             c      d e     f    
+##    <dttm>              <date>     <int> <chr>     <dbl>  <dbl> <lgl> <chr>
+##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high 
+##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-163     8 10000. TRUE  low  
+##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3  2343. TRUE  high 
+##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-903    NA  3892. FALSE mid  
+##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-038     7   284. TRUE  low  
+##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-923     4  3291. TRUE  mid  
+##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3   843. TRUE  high 
+##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-639     2  1036. FALSE low  
+##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
+## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
+## 11 2016-01-26 20:07:00 2016-01-26     4 2-dmx-010     7   834. TRUE  low  
+## 12 2016-01-28 02:51:00 2016-01-28     2 7-dmx-010     8   108. FALSE low  
+## 13 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA  2230. TRUE  high
 }
 
-\section{Function ID}{
-
-1-2
-}
-
-\examples{
-# Let's walk through a data quality
-# analysis of an extremely small table;
-# it's actually called `small_table` and
-# we can find it as a dataset in this
-# package
-small_table
-
-# We ought to think about what's
-# tolerable in terms of data quality so
-# let's designate proportional failure
-# thresholds to the `warn`, `stop`, and
-# `notify` states using `action_levels()`
-al <- 
+We ought to think about what's tolerable in terms of data quality so let's
+designate proportional failure thresholds to the \code{warn}, \code{stop}, and \code{notify}
+states using \code{action_levels()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <- 
   action_levels(
       warn_at = 0.10,
       stop_at = 0.25,
     notify_at = 0.35
   )
+}\if{html}{\out{</div>}}
 
-# Now create a pointblank `agent` object
-# and give it the `al` object (which
-# serves as a default for all validation
-# steps which can be overridden); the
-# static thresholds provided by `al` will
-# make the reporting a bit more useful;
-# we also provide a target table and we'll
-# use `pointblank::small_table` 
-agent <- 
+Now create a pointblank \code{agent} object and give it the \code{al} object (which
+serves as a default for all validation steps which can be overridden). The
+static thresholds provided by \code{al} will make the reporting a bit more useful.
+We also provide a target table and we'll use \code{pointblank::small_table}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- 
   create_agent(
     tbl = pointblank::small_table,
     tbl_name = "small_table",
     label = "An example.",
     actions = al
   )
+}\if{html}{\out{</div>}}
 
-# Then, as with any `agent` object, we
-# can add steps to the validation plan by
-# using as many validation functions as we
-# want; then, we use `interrogate()` to
-# physically perform the validations and
-# gather intel
-agent <-
+Then, as with any \code{agent} object, we can add steps to the validation plan by
+using as many validation functions as we want. then, we use \code{interrogate()}
+to physically perform the validations and gather intel.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   agent \%>\% 
   col_exists(vars(date, date_time)) \%>\%
   col_vals_regex(
     vars(b),
-    regex = "[0-9]-[a-z]{3}-[0-9]{3}"
+    regex = "[0-9]-[a-z]\{3\}-[0-9]\{3\}"
   ) \%>\%
   rows_distinct() \%>\%
   col_vals_gt(vars(d), value = 100) \%>\%
@@ -349,47 +345,67 @@ agent <-
     na_pass = TRUE
   ) \%>\%
   interrogate()
-  
-# Calling `agent` in the console
-# prints the agent's report; but we
-# can get a `gt_tbl` object directly
-# with `get_agent_report(agent)`
-report <- get_agent_report(agent)
-class(report)
+}\if{html}{\out{</div>}}
 
-# What can you do with the report object?
-# Print it from an R Markdown code
-# chunk, use it in a **blastula** email,
-# put it in a webpage, etc.
-
-# From the report we know that Step
-# 4 had two test units (rows, really)
-# that failed; we can see those rows
-# with `get_data_extracts()` 
-agent \%>\% get_data_extracts(i = 4)
-
-# We can get an x-list for the whole
-# validation (8 steps), or, just for
-# the 4th step with `get_agent_x_list()`
-xl_step_4 <-
-  agent \%>\% get_agent_x_list(i = 4)
- 
-# And then we can peruse the different
-# parts of the list; let's get the
-# fraction of test units that failed
-xl_step_4$f_failed
-
-# Just printing the x-list will tell
-# us what's available therein
-xl_step_4
-
-# An x-list not specific to any step
-# will have way more information and a
-# slightly different structure; see
-# `help(get_agent_x_list)` for more info
-# get_agent_x_list(agent)
-
+Calling \code{agent} in the console prints the agent's report. But we can get a
+\code{gt_tbl} object directly with \code{get_agent_report(agent)}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{report <- get_agent_report(agent)
+}\if{html}{\out{</div>}}\if{html}{\out{<div class="sourceCode r">}}\preformatted{class(report)
+}\if{html}{\out{</div>}}\preformatted{## [1] "ptblank_agent_report" "gt_tbl"               "list"
 }
+
+What can you do with the report object? Print it from an R Markdown code
+chunk, use it in a \strong{blastula} email, put it in a webpage, etc.
+
+From the report we know that Step 4 had two test units (rows, really) that
+failed. We can see those rows with \code{get_data_extracts()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% get_data_extracts(i = 4)
+}\if{html}{\out{</div>}}\preformatted{## # A tibble: 2 × 8
+##   date_time           date           a b             c     d e     f    
+##   <dttm>              <date>     <int> <chr>     <dbl> <dbl> <lgl> <chr>
+## 1 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high 
+## 2 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high
+}
+
+We can get an x-list for the whole validation (8 steps), or, just for the 4th
+step with \code{get_agent_x_list()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{xl_step_4 <-
+  agent \%>\% get_agent_x_list(i = 4)
+}\if{html}{\out{</div>}}
+
+And then we can peruse the different parts of the list. Let's get the
+fraction of test units that failed.\if{html}{\out{<div class="sourceCode r">}}\preformatted{xl_step_4$f_failed
+}\if{html}{\out{</div>}}\preformatted{## [1] 0.15385
+}
+
+Just printing the x-list will tell us what's available therein.\if{html}{\out{<div class="sourceCode r">}}\preformatted{xl_step_4
+}\if{html}{\out{</div>}}\preformatted{## -- The x-list for table `small_table`
+## ---- STEP 4 ----
+## $time_start $time_end (POSIXct [1])
+## $label $tbl_name $tbl_src $tbl_src_details (chr [1])
+## $tbl (spec_tbl_df tbl_df tbl data.frame)
+## $col_names $col_types (chr [8])
+## $i $type $columns $values $label $briefs (mixed [1])
+## $eval_error $eval_warning (lgl [1])
+## $capture_stack (list [1])
+## $n $n_passed $n_failed $f_passed $f_failed (num [1])
+## $warn $stop $notify (lgl [1])
+## $lang (chr [1])
+## ----
+}
+
+An x-list not specific to any step will have way more information and a
+slightly different structure. See \code{help(get_agent_x_list)} for more info
+get_agent_x_list(agent).
+}
+
+\section{Figures}{
+
+\if{html}{\figure{man_create_agent_1.png}{options: width=100\%}}
+}
+
+\section{Function ID}{
+
+1-2
+}
+
 \seealso{
 Other Planning and Prep: 
 \code{\link{action_levels}()},

@@ -186,12 +186,13 @@
 #'   called primarily for its potential side-effects (e.g., signaling failure).
 #'   The test function returns a logical value.
 #'
-#' @examples
-#' # For all examples here, we'll use
-#' # a simple table with three numeric
-#' # columns (`a`, `b`, and `c`); this is
-#' # a very basic table but it'll be more
-#' # useful when explaining things later
+#' @section Demos:
+#' 
+#' For all examples here, we'll use a simple table with three numeric columns
+#' (`a`, `b`, and `c`). This is a very basic table but it'll be more useful when
+#' explaining things later.
+#' 
+#' ```{r}
 #' tbl <-
 #'   dplyr::tibble(
 #'     a = c(5, 2, 6),
@@ -200,19 +201,16 @@
 #'   )
 #'   
 #' tbl
+#' ```
 #'   
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()`
+#' ## A: Using an `agent` with validation functions and then `interrogate()`
 #' 
-#' # Validate a number of things on a
-#' # row-by-row basis using validation
-#' # functions of the `col_vals*` type
-#' # (all have the same number of test
-#' # units): (1) values in `a` are less
-#' # than `8`, (2) values in `c` are
-#' # greater than the adjacent values in
-#' # `a`, and (3) there aren't any NA
-#' # values in `b`
+#' Validate a number of things on a row-by-row basis using validation functions
+#' of the `col_vals*` type (all have the same number of test units): (1) values
+#' in `a` are less than `8`, (2) values in `c` are greater than the adjacent
+#' values in `a`, and (3) there aren't any NA values in `b`.
+#' 
+#' ```{r}
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
 #'   conjointly(
@@ -221,66 +219,66 @@
 #'     ~ col_vals_not_null(., vars(b))
 #'     ) %>%
 #'   interrogate()
-#'   
-#' # Determine if this validation
-#' # had no failing test units (there
-#' # are 3 test units, one for each row)
+#' ```
+#' 
+#' Determine if this validation had no failing test units (there are 3 test
+#' units, one for each row).
+#' 
+#' ```{r}
 #' all_passed(agent)
+#' ```
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' Calling `agent` in the console prints the agent's report. But we can get a
+#' `gt_tbl` object directly with `get_agent_report(agent)`.
 #' 
-#' # What's going on? Think of there being
-#' # three parallel validations, each
-#' # producing a column of `TRUE` or `FALSE`
-#' # values (`pass` or `fail`) and line them
-#' # up side-by-side, any rows with any
-#' # `FALSE` values results in a conjoint
-#' # `fail` test unit
+#' What's going on? Think of there being three parallel validations, each
+#' producing a column of `TRUE` or `FALSE` values (`pass` or `fail`) and line
+#' them up side-by-side, any rows with any `FALSE` values results in a conjoint
+#' `fail` test unit.
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' ## B: Using the validation function directly on the data (no `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' This way of using validation functions acts as a data filter. Data is passed
+#' through but should `stop()` if there is a single test unit failing. The
+#' behavior of side effects can be customized with the `actions` option.
+#' 
+#' ```{r}
 #' tbl %>%
 #'   conjointly(
 #'     ~ col_vals_lt(., vars(a), value = 8),
 #'     ~ col_vals_gt(., vars(c), value = vars(a)),
 #'     ~ col_vals_not_null(., vars(b))
 #'   )
+#' ```
 #'
-#' # C: Using the expectation function
+#' ## C: Using the expectation function
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' With the `expect_*()` form, we would typically perform one validation at a
+#' time. This is primarily used in testthat tests.
+#' 
+#' ```{r}
 #' expect_conjointly(
 #'   tbl,
 #'   ~ col_vals_lt(., vars(a), value = 8),
 #'   ~ col_vals_gt(., vars(c), value = vars(a)),
 #'   ~ col_vals_not_null(., vars(b))
 #' )
+#' ```
 #' 
-#' # D: Using the test function
+#' ## D: Using the test function
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' With the `test_*()` form, we should get a single logical value returned to
+#' us.
+#' 
+#' ```{r}
 #' tbl %>%
 #'   test_conjointly(
 #'     ~ col_vals_lt(., vars(a), value = 8),
 #'     ~ col_vals_gt(., vars(c), value = vars(a)),
 #'     ~ col_vals_not_null(., vars(b))
 #'   )
-#'
+#' ```
+#' 
 #' @family validation functions
 #' @section Function ID:
 #' 2-34

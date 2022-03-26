@@ -273,77 +273,89 @@ possible to preview the transformation of an agent to YAML without any
 writing to disk by using the \code{\link[=yaml_agent_string]{yaml_agent_string()}} function.
 }
 
-\section{Function ID}{
+\section{Demos}{
 
-2-11
+
+The \code{small_table} dataset in the package will be used to validate that column
+values are part of a given set.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table
+}\if{html}{\out{</div>}}\preformatted{## # A tibble: 13 × 8
+##    date_time           date           a b             c      d e     f    
+##    <dttm>              <date>     <int> <chr>     <dbl>  <dbl> <lgl> <chr>
+##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high 
+##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-163     8 10000. TRUE  low  
+##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3  2343. TRUE  high 
+##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-903    NA  3892. FALSE mid  
+##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-038     7   284. TRUE  low  
+##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-923     4  3291. TRUE  mid  
+##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3   843. TRUE  high 
+##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-639     2  1036. FALSE low  
+##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
+## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
+## 11 2016-01-26 20:07:00 2016-01-26     4 2-dmx-010     7   834. TRUE  low  
+## 12 2016-01-28 02:51:00 2016-01-28     2 7-dmx-010     8   108. FALSE low  
+## 13 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA  2230. TRUE  high
 }
+\subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
-\examples{
-# The `small_table` dataset in the
-# package will be used to validate that
-# column values are part of a given set
-
-# A: Using an `agent` with validation
-#    functions and then `interrogate()`
-
-# Validate that values in column `f`
-# comprise the values of `low`, `mid`,
-# and `high`, and, no other values
-agent <-
+Validate that values in column \code{f} comprise the values of \code{low}, \code{mid}, and
+\code{high}, and, no other values.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(small_table) \%>\%
   col_vals_make_set(
     vars(f), c("low", "mid", "high")
   ) \%>\%
   interrogate()
-  
-# Determine if this validation
-# had no failing test units (there
-# are 4 test units)
-all_passed(agent)
+}\if{html}{\out{</div>}}
 
-# Calling `agent` in the console
-# prints the agent's report; but we
-# can get a `gt_tbl` object directly
-# with `get_agent_report(agent)`
+Determine if this validation had no failing test units (there are 4 test
+units).\if{html}{\out{<div class="sourceCode r">}}\preformatted{all_passed(agent)
+}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
+}
 
-# B: Using the validation function
-#    directly on the data (no `agent`)
+Calling \code{agent} in the console prints the agent's report. But we can get a
+\code{gt_tbl} object directly with \code{get_agent_report(agent)}.
+}
 
-# This way of using validation functions
-# acts as a data filter: data is passed
-# through but should `stop()` if there
-# is a single test unit failing; the
-# behavior of side effects can be
-# customized with the `actions` option
-small_table \%>\%
+\subsection{B: Using the validation function directly on the data (no \code{agent})}{
+
+This way of using validation functions acts as a data filter. Data is passed
+through but should \code{stop()} if there is a single test unit failing. The
+behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   col_vals_make_set(
     vars(f), c("low", "mid", "high")
   ) \%>\%
   dplyr::pull(f) \%>\%
   unique()
+}\if{html}{\out{</div>}}\preformatted{## [1] "high" "low"  "mid"
+}
+}
 
-# C: Using the expectation function
+\subsection{C: Using the expectation function}{
 
-# With the `expect_*()` form, we would
-# typically perform one validation at a
-# time; this is primarily used in
-# testthat tests
-expect_col_vals_make_set(
+With the \verb{expect_*()} form, we would typically perform one validation at a
+time. This is primarily used in testthat tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_make_set(
   small_table,
   vars(f), c("low", "mid", "high")
 )
+}\if{html}{\out{</div>}}
+}
 
-# D: Using the test function
+\subsection{D: Using the test function}{
 
-# With the `test_*()` form, we should
-# get a single logical value returned
-# to us
-small_table \%>\%
+With the \verb{test_*()} form, we should get a single logical value returned to
+us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   test_col_vals_make_set(
     vars(f), c("low", "mid", "high")
   )
-
+}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
 }
+}
+}
+
+\section{Function ID}{
+
+2-11
+}
+
 \seealso{
 Other validation functions: 
 \code{\link{col_count_match}()},

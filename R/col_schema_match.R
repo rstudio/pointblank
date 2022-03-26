@@ -149,14 +149,14 @@
 #'   called primarily for its potential side-effects (e.g., signaling failure).
 #'   The test function returns a logical value.
 #' 
-#' @examples
-#' # For all examples here, we'll use
-#' # a simple table with two columns:
-#' # one `integer` (`a`) and the other
-#' # `character` (`b`); the following
-#' # examples will validate that the
-#' # table columns abides match a schema
-#' # object as created by `col_schema()`
+#' @section Demos:
+#' 
+#' For all examples here, we'll use a simple table with two columns: one
+#' `integer` (`a`) and the other `character` (`b`). The following examples will
+#' validate that the table columns abides match a schema object as created by
+#' `col_schema()`.
+#' 
+#' ```{r}
 #' tbl <- 
 #'   dplyr::tibble(
 #'     a = 1:5,
@@ -164,64 +164,68 @@
 #'   )
 #'   
 #' tbl
+#' ```
 #' 
-#' # Create a column schema object with
-#' # the helper function `col_schema()`
-#' # that describes the columns and
-#' # their types (in the expected order)
+#' Create a column schema object with the helper function `col_schema()` that
+#' describes the columns and their types (in the expected order).
+#' 
+#' ```{r}
 #' schema_obj <- 
 #'   col_schema(
 #'     a = "integer",
 #'     b = "character"
 #'   )
+#' ```
 #'   
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()`
+#' ## A: Using an `agent` with validation functions and then `interrogate()`
 #' 
-#' # Validate that the schema object
-#' # `schema_obj` exactly defines
-#' # the column names and column types
+#' Validate that the schema object `schema_obj` exactly defines the column names
+#' and column types.
+#' 
+#' ```{r}
 #' agent <-
 #'   create_agent(tbl) %>%
 #'   col_schema_match(schema_obj) %>%
 #'   interrogate()
+#' ```
 #' 
-#' # Determine if this validation
-#' # had no failing test units (there is
-#' # a single test unit governed by
-#' # whether there is a match)
+#' Determine if this validation had no failing test units (there is a single
+#' test unit governed by whether there is a match).
+#' 
+#' ```{r}
 #' all_passed(agent)
+#' ```
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' Calling `agent` in the console prints the agent's report. But we can get a
+#' `gt_tbl` object directly with `get_agent_report(agent)`.
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' ## B: Using the validation function directly on the data (no `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' This way of using validation functions acts as a data filter. Data is passed
+#' through but should `stop()` if there is a single test unit failing. The
+#' behavior of side effects can be customized with the `actions` option.
+#' 
+#' ```{r}
 #' tbl %>% col_schema_match(schema_obj)
+#' ```
 #'
-#' # C: Using the expectation function
+#' ## C: Using the expectation function
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' With the `expect_*()` form, we would typically perform one validation at a
+#' time. This is primarily used in testthat tests.
+#' 
+#' ```{r}
 #' expect_col_schema_match(tbl, schema_obj)
+#' ```
 #' 
-#' # D: Using the test function
+#' ## D: Using the test function
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' With the `test_*()` form, we should get a single logical value returned to
+#' us.
+#' 
+#' ```{r}
 #' tbl %>% test_col_schema_match(schema_obj)
+#' ```
 #' 
 #' @family validation functions
 #' @section Function ID:
@@ -484,7 +488,10 @@ test_col_schema_match <- function(
 #' 
 #' # Determine if this validation step
 #' # passed by using `all_passed()`
+#' 
+#' ```{r}
 #' all_passed(agent)
+#' ```
 #' 
 #' # We can alternatively create
 #' # a column schema object from a

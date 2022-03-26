@@ -79,7 +79,7 @@ case better than starting with an empty code editor view.
 \examples{
 if (interactive()) {
 
-# Draft validation plan for the
+# Draft a validation plan for the
 # `dplyr::storms` dataset
 draft_validation(tbl = dplyr::storms)
 

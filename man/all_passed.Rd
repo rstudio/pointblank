@@ -38,32 +38,40 @@ utilize post-interrogation objects within the \emph{agent}'s x-list (obtained by
 using the \code{\link[=get_agent_x_list]{get_agent_x_list()}} function). This allows for many possibilities
 in producing a single logical value from an interrogation.
 }
-\section{Function ID}{
+\section{Demos}{
 
-8-4
+
+Create a simple table with a column of numerical values.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- dplyr::tibble(a = c(4, 5, 7, 8))
+
+tbl
+}\if{html}{\out{</div>}}\preformatted{## # A tibble: 4 × 1
+##       a
+##   <dbl>
+## 1     4
+## 2     5
+## 3     7
+## 4     8
 }
 
-\examples{
-# Create a simple table with
-# a column of numerical values
-tbl <- 
-  dplyr::tibble(a = c(4, 5, 7, 8))
-
-# Validate that values in column
-# `a` are always greater than 4
-agent <-
+Validate that values in column \code{a} are always greater than 4.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = tbl) \%>\%
   col_vals_gt(vars(a), value = 3) \%>\%
   col_vals_lte(vars(a), value = 10) \%>\%
   col_vals_increasing(vars(a)) \%>\%
   interrogate()
+}\if{html}{\out{</div>}}
 
-# Determine if these column
-# validations have all passed by
-# using `all_passed()` (they do)
-all_passed(agent = agent)
-
+Determine if these column validations have all passed by using \code{all_passed()}
+(they do).\if{html}{\out{<div class="sourceCode r">}}\preformatted{all_passed(agent = agent)
+}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
 }
+}
+
+\section{Function ID}{
+
+8-4
+}
+
 \seealso{
 Other Post-interrogation: 
 \code{\link{get_agent_x_list}()},

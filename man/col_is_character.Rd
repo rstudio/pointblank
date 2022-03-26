@@ -174,67 +174,83 @@ to preview the transformation of an agent to YAML without any writing to disk
 by using the \code{\link[=yaml_agent_string]{yaml_agent_string()}} function.
 }
 
+\section{Demos}{
+
+
+For all examples here, we'll use a simple table with a numeric column (\code{a})
+and a character column (\code{b}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <-
+  dplyr::tibble(
+    a = c(5, 7, 6, 5, 8, 7),
+    b = LETTERS[1:6]
+  )
+
+tbl
+}\if{html}{\out{</div>}}\preformatted{## # A tibble: 6 × 2
+##       a b    
+##   <dbl> <chr>
+## 1     5 A    
+## 2     7 B    
+## 3     6 C    
+## 4     5 D    
+## 5     8 E    
+## 6     7 F
+}
+
+We'll use this table with the different function variants.
+\subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
+
+Validate that column \code{b} has the \code{character} class.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
+  create_agent(tbl) \%>\%
+  col_is_character(vars(b)) \%>\%
+  interrogate()
+}\if{html}{\out{</div>}}
+
+Determine if this validation had no failing test units (1).\if{html}{\out{<div class="sourceCode r">}}\preformatted{all_passed(agent)
+}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
+}
+
+Calling \code{agent} in the console prints the agent's report. But we can get a
+\code{gt_tbl} object directly with \code{get_agent_report(agent)}.
+}
+
+\subsection{B: Using the validation function directly on the data (no \code{agent})}{
+
+This way of using validation functions acts as a data filter. Data is passed
+through but should \code{stop()} if there is a single test unit failing. The
+behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% col_is_character(vars(b))
+}\if{html}{\out{</div>}}\preformatted{## # A tibble: 6 × 2
+##       a b    
+##   <dbl> <chr>
+## 1     5 A    
+## 2     7 B    
+## 3     6 C    
+## 4     5 D    
+## 5     8 E    
+## 6     7 F
+}
+}
+
+\subsection{C: Using the expectation function}{
+
+With the \verb{expect_*()} form, we would typically perform one validation at a
+time. This is primarily used in testthat tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_is_character(tbl, vars(b))
+}\if{html}{\out{</div>}}
+}
+
+\subsection{D: Using the test function}{
+
+With the \verb{test_*()} form, we should get a single logical value returned to
+us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% test_col_is_character(vars(b))
+}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
+}
+}
+}
+
 \section{Function ID}{
 
 2-22
 }
 
-\examples{
-# For all examples here, we'll use
-# a simple table with a numeric column
-# (`a`) and a character column (`b`)
-tbl <-
-  dplyr::tibble(
-    a = c(5, 7, 6, 5, 8, 7),
-    b = LETTERS[1:6]
-  )
-  
-# A: Using an `agent` with validation
-#    functions and then `interrogate()`
-
-# Validate that column `b` has the
-# `character` class
-agent <-
-  create_agent(tbl) \%>\%
-  col_is_character(vars(b)) \%>\%
-  interrogate()
-
-# Determine if this validation
-# had no failing test units (1)
-all_passed(agent)
-
-# Calling `agent` in the console
-# prints the agent's report; but we
-# can get a `gt_tbl` object directly
-# with `get_agent_report(agent)`
-
-# B: Using the validation function
-#    directly on the data (no `agent`)
-
-# This way of using validation functions
-# acts as a data filter: data is passed
-# through but should `stop()` if there
-# is a single test unit failing; the
-# behavior of side effects can be
-# customized with the `actions` option
-tbl \%>\% col_is_character(vars(b))
-
-# C: Using the expectation function
-
-# With the `expect_*()` form, we would
-# typically perform one validation at a
-# time; this is primarily used in
-# testthat tests
-expect_col_is_character(tbl, vars(b))
-
-# D: Using the test function
-
-# With the `test_*()` form, we should
-# get a single logical value returned
-# to us
-tbl \%>\% test_col_is_character(vars(b))
-
-}
 \seealso{
 Other validation functions: 
 \code{\link{col_count_match}()},

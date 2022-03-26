@@ -174,71 +174,71 @@ to preview the transformation of an agent to YAML without any writing to disk
 by using the \code{\link[=yaml_agent_string]{yaml_agent_string()}} function.
 }
 
+\section{Demos}{
+
+
+Let's modify the \code{f} column in the \code{small_table} dataset so that the values
+are factors instead of having the \code{character} class. The following examples
+will validate that the \code{f} column was successfully mutated and now consists
+of factors.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- 
+  small_table \%>\%
+  dplyr::mutate(f = factor(f))
+}\if{html}{\out{</div>}}
+\subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
+
+Validate that the column \code{f} in the \code{tbl} object is of the \code{factor} class.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
+  create_agent(tbl) \%>\%
+  col_is_factor(vars(f)) \%>\%
+  interrogate()
+}\if{html}{\out{</div>}}
+
+Determine if this validation had no failing test units (1).\if{html}{\out{<div class="sourceCode r">}}\preformatted{all_passed(agent)
+}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
+}
+
+Calling \code{agent} in the console prints the agent's report. But we can get a
+\code{gt_tbl} object directly with \code{get_agent_report(agent)}.
+}
+
+\subsection{B: Using the validation function directly on the data (no \code{agent})}{
+
+This way of using validation functions acts as a data filter. Data is passed
+through but should \code{stop()} if there is a single test unit failing. The
+behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
+  col_is_factor(vars(f)) \%>\%
+  dplyr::slice(1:5)
+}\if{html}{\out{</div>}}\preformatted{## # A tibble: 5 × 8
+##   date_time           date           a b             c      d e     f    
+##   <dttm>              <date>     <int> <chr>     <dbl>  <dbl> <lgl> <fct>
+## 1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high 
+## 2 2016-01-04 00:32:00 2016-01-04     3 5-egh-163     8 10000. TRUE  low  
+## 3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3  2343. TRUE  high 
+## 4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-903    NA  3892. FALSE mid  
+## 5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-038     7   284. TRUE  low
+}
+}
+
+\subsection{C: Using the expectation function}{
+
+With the \verb{expect_*()} form, we would typically perform one validation at a
+time. This is primarily used in testthat tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_is_factor(tbl, vars(f))
+}\if{html}{\out{</div>}}
+}
+
+\subsection{D: Using the test function}{
+
+With the \verb{test_*()} form, we should get a single logical value returned to
+us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% test_col_is_factor(vars(f))
+}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
+}
+}
+}
+
 \section{Function ID}{
 
 2-28
 }
 
-\examples{
-# Let's modify the `f` column in the
-# `small_table` dataset so that the
-# values are factors instead of having
-# the `character` class; the following
-# examples will validate that the `f`
-# column was successfully mutated and
-# now consists of factors
-tbl <- 
-  small_table \%>\%
-  dplyr::mutate(f = factor(f))
-
-# A: Using an `agent` with validation
-#    functions and then `interrogate()`
-
-# Validate that the column `f` in the
-# `tbl` object is of the `factor` class
-agent <-
-  create_agent(tbl) \%>\%
-  col_is_factor(vars(f)) \%>\%
-  interrogate()
-  
-# Determine if this validation
-# had no failing test units (1)
-all_passed(agent)
-
-# Calling `agent` in the console
-# prints the agent's report; but we
-# can get a `gt_tbl` object directly
-# with `get_agent_report(agent)`
-
-# B: Using the validation function
-#    directly on the data (no `agent`)
-
-# This way of using validation functions
-# acts as a data filter: data is passed
-# through but should `stop()` if there
-# is a single test unit failing; the
-# behavior of side effects can be
-# customized with the `actions` option
-tbl \%>\%
-  col_is_factor(vars(f)) \%>\%
-  dplyr::slice(1:5)
-
-# C: Using the expectation function
-
-# With the `expect_*()` form, we would
-# typically perform one validation at a
-# time; this is primarily used in
-# testthat tests
-expect_col_is_factor(tbl, vars(f))
-
-# D: Using the test function
-
-# With the `test_*()` form, we should
-# get a single logical value returned
-# to us
-tbl \%>\% test_col_is_factor(vars(f))
-
-}
 \seealso{
 Other validation functions: 
 \code{\link{col_count_match}()},

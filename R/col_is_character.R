@@ -111,60 +111,70 @@
 #'   called primarily for its potential side-effects (e.g., signaling failure).
 #'   The test function returns a logical value.
 #'   
-#' @examples
-#' # For all examples here, we'll use
-#' # a simple table with a numeric column
-#' # (`a`) and a character column (`b`)
+#' @section Demos:
+#' 
+#' For all examples here, we'll use a simple table with a numeric column (`a`)
+#' and a character column (`b`).
+#' 
+#' ```{r}
 #' tbl <-
 #'   dplyr::tibble(
 #'     a = c(5, 7, 6, 5, 8, 7),
 #'     b = LETTERS[1:6]
 #'   )
-#'   
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()`
 #' 
-#' # Validate that column `b` has the
-#' # `character` class
+#' tbl
+#' ```
+#' 
+#' We'll use this table with the different function variants.
+#'   
+#' ## A: Using an `agent` with validation functions and then `interrogate()`
+#' 
+#' Validate that column `b` has the `character` class.
+#' 
+#' ```{r}
 #' agent <-
 #'   create_agent(tbl) %>%
 #'   col_is_character(vars(b)) %>%
 #'   interrogate()
+#' ```
 #' 
-#' # Determine if this validation
-#' # had no failing test units (1)
+#' Determine if this validation had no failing test units (1).
+#' 
+#' ```{r}
 #' all_passed(agent)
+#' ```
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' Calling `agent` in the console prints the agent's report. But we can get a
+#' `gt_tbl` object directly with `get_agent_report(agent)`.
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' ## B: Using the validation function directly on the data (no `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' This way of using validation functions acts as a data filter. Data is passed
+#' through but should `stop()` if there is a single test unit failing. The
+#' behavior of side effects can be customized with the `actions` option.
+#' 
+#' ```{r}
 #' tbl %>% col_is_character(vars(b))
+#' ```
 #' 
-#' # C: Using the expectation function
+#' ## C: Using the expectation function
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' With the `expect_*()` form, we would typically perform one validation at a
+#' time. This is primarily used in testthat tests.
+#' 
+#' ```{r}
 #' expect_col_is_character(tbl, vars(b))
+#' ```
 #' 
-#' # D: Using the test function
+#' ## D: Using the test function
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' With the `test_*()` form, we should get a single logical value returned to
+#' us.
+#' 
+#' ```{r}
 #' tbl %>% test_col_is_character(vars(b))
+#' ```
 #' 
 #' @family validation functions
 #' @section Function ID:

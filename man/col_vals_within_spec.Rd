@@ -331,86 +331,97 @@ possible to preview the transformation of an agent to YAML without any
 writing to disk by using the \code{\link[=yaml_agent_string]{yaml_agent_string()}} function.
 }
 
-\section{Function ID}{
+\section{Demos}{
 
-2-18
+
+The \code{specifications} dataset in the package has columns of character data
+that correspond to each of the specifications that can be tested. The
+following examples will validate that the \code{email_addresses} column has 5
+correct values (this is true if we get a subset of the data: the first five
+rows).\if{html}{\out{<div class="sourceCode r">}}\preformatted{spec_slice <- specifications[1:5, ]
+
+spec_slice
+}\if{html}{\out{</div>}}\preformatted{## # A tibble: 5 × 12
+##   isbn_numbers vin_numbers zip_codes credit_card_num… iban_austria swift_numbers
+##   <chr>        <chr>       <chr>     <chr>            <chr>        <chr>        
+## 1 978 1 85715… 4UZAANDH85… 99553     340000000000009  AT582774098… RBOSGGSX     
+## 2 978-1-84159… JM1BL1S59A… 36264     378734493671000  AT220332087… RZTIAT22263  
+## 3 978 1 84159… 1GCEK14R3W… 71660     6703444444444449 AT328650112… BCEELULL     
+## 4 978 1 85715… 2B7JB21Y0X… 85225     670300000000000… AT193357281… MARKDEFF     
+## 5 978 1 85715… 4UZAANDH85… 90309     4035501000000008 AT535755326… GENODEF1JEV  
+## # … with 6 more variables: phone_numbers <chr>, email_addresses <chr>,
+## #   urls <chr>, ipv4_addresses <chr>, ipv6_addresses <chr>, mac_addresses <chr>
 }
+\subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
-\examples{
-# The `specifications` dataset in the
-# package has columns of character data
-# that correspond to each of the
-# specifications that can be tested;
-# the following examples will validate
-# that the `email_addresses` column
-# has 5 correct values (this is true if
-# we get a subset of the data: the first
-# five rows)
-spec_slice <- specifications[1:5, ]
-
-# A: Using an `agent` with validation
-#    functions and then `interrogate()`
-
-# Validate that all values in the column
-# `email_addresses` are correct
-agent <-
+Validate that all values in the column \code{email_addresses} are correct.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(spec_slice) \%>\%
   col_vals_within_spec(
     vars(email_addresses),
     spec = "email"
   ) \%>\%
   interrogate()
-  
-# Determine if this validation
-# had no failing test units (there
-# are 5 test units, one for each row)
-all_passed(agent)
+}\if{html}{\out{</div>}}
 
-# Calling `agent` in the console
-# prints the agent's report; but we
-# can get a `gt_tbl` object directly
-# with `get_agent_report(agent)`
+Determine if this validation had no failing test units (there are 5 test
+units, one for each row).\if{html}{\out{<div class="sourceCode r">}}\preformatted{all_passed(agent)
+}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
+}
 
-# B: Using the validation function
-#    directly on the data (no `agent`)
+Calling \code{agent} in the console prints the agent's report. But we can get a
+\code{gt_tbl} object directly with \code{get_agent_report(agent)}.
+}
 
-# This way of using validation functions
-# acts as a data filter: data is passed
-# through but should `stop()` if there
-# is a single test unit failing; the
-# behavior of side effects can be
-# customized with the `actions` option
-spec_slice \%>\%
+\subsection{B: Using the validation function directly on the data (no \code{agent})}{
+
+This way of using validation functions acts as a data filter. Data is passed
+through but should \code{stop()} if there is a single test unit failing. The
+behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{spec_slice \%>\%
   col_vals_within_spec(
     vars(email_addresses),
     spec = "email"
   ) \%>\%
   dplyr::select(email_addresses)
+}\if{html}{\out{</div>}}\preformatted{## # A tibble: 5 × 1
+##   email_addresses                                                          
+##   <chr>                                                                    
+## 1 test@test.com                                                            
+## 2 mail+mail@example.com                                                    
+## 3 mail.email@e.test.com                                                    
+## 4 abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@letters-in-local.org
+## 5 01234567890@numbers-in-local.net
+}
+}
 
-# C: Using the expectation function
+\subsection{C: Using the expectation function}{
 
-# With the `expect_*()` form, we would
-# typically perform one validation at a
-# time; this is primarily used in
-# testthat tests
-expect_col_vals_within_spec(
+With the \verb{expect_*()} form, we would typically perform one validation at a
+time. This is primarily used in testthat tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_within_spec(
   spec_slice,
   vars(email_addresses),
   spec = "email"
 )
+}\if{html}{\out{</div>}}
+}
 
-# D: Using the test function
+\subsection{D: Using the test function}{
 
-# With the `test_*()` form, we should
-# get a single logical value returned
-# to us
-spec_slice \%>\%
+With the \verb{test_*()} form, we should get a single logical value returned to
+us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{spec_slice \%>\%
   test_col_vals_within_spec(
     vars(email_addresses),
     spec = "email"
   )
-
+}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
 }
+}
+}
+
+\section{Function ID}{
+
+2-18
+}
+
 \seealso{
 Other validation functions: 
 \code{\link{col_count_match}()},

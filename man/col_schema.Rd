@@ -72,7 +72,10 @@ agent <-
 
 # Determine if this validation step
 # passed by using `all_passed()`
+
+```{r}
 all_passed(agent)
+```
 
 # We can alternatively create
 # a column schema object from a

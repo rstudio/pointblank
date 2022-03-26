@@ -279,18 +279,12 @@ possible to preview the transformation of an agent to YAML without any
 writing to disk by using the \code{\link[=yaml_agent_string]{yaml_agent_string()}} function.
 }
 
-\section{Function ID}{
+\section{Demos}{
 
-2-34
-}
 
-\examples{
-# For all examples here, we'll use
-# a simple table with three numeric
-# columns (`a`, `b`, and `c`); this is
-# a very basic table but it'll be more
-# useful when explaining things later
-tbl <-
+For all examples here, we'll use a simple table with three numeric columns
+(\code{a}, \code{b}, and \code{c}). This is a very basic table but it'll be more useful when
+explaining things later.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <-
   dplyr::tibble(
     a = c(5, 2, 6),
     b = c(3, 4, 6),
@@ -298,20 +292,19 @@ tbl <-
   )
   
 tbl
-  
-# A: Using an `agent` with validation
-#    functions and then `interrogate()`
+}\if{html}{\out{</div>}}\preformatted{## # A tibble: 3 × 3
+##       a     b     c
+##   <dbl> <dbl> <dbl>
+## 1     5     3     9
+## 2     2     4     8
+## 3     6     6     7
+}
+\subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
-# Validate a number of things on a
-# row-by-row basis using validation
-# functions of the `col_vals*` type
-# (all have the same number of test
-# units): (1) values in `a` are less
-# than `8`, (2) values in `c` are
-# greater than the adjacent values in
-# `a`, and (3) there aren't any NA
-# values in `b`
-agent <-
+Validate a number of things on a row-by-row basis using validation functions
+of the \verb{col_vals*} type (all have the same number of test units): (1) values
+in \code{a} are less than \code{8}, (2) values in \code{c} are greater than the adjacent
+values in \code{a}, and (3) there aren't any NA values in \code{b}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = tbl) \%>\%
   conjointly(
     ~ col_vals_lt(., vars(a), value = 8),
@@ -319,67 +312,72 @@ agent <-
     ~ col_vals_not_null(., vars(b))
     ) \%>\%
   interrogate()
-  
-# Determine if this validation
-# had no failing test units (there
-# are 3 test units, one for each row)
-all_passed(agent)
+}\if{html}{\out{</div>}}
 
-# Calling `agent` in the console
-# prints the agent's report; but we
-# can get a `gt_tbl` object directly
-# with `get_agent_report(agent)`
+Determine if this validation had no failing test units (there are 3 test
+units, one for each row).\if{html}{\out{<div class="sourceCode r">}}\preformatted{all_passed(agent)
+}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
+}
 
-# What's going on? Think of there being
-# three parallel validations, each
-# producing a column of `TRUE` or `FALSE`
-# values (`pass` or `fail`) and line them
-# up side-by-side, any rows with any
-# `FALSE` values results in a conjoint
-# `fail` test unit
+Calling \code{agent} in the console prints the agent's report. But we can get a
+\code{gt_tbl} object directly with \code{get_agent_report(agent)}.
 
-# B: Using the validation function
-#    directly on the data (no `agent`)
+What's going on? Think of there being three parallel validations, each
+producing a column of \code{TRUE} or \code{FALSE} values (\code{pass} or \code{fail}) and line
+them up side-by-side, any rows with any \code{FALSE} values results in a conjoint
+\code{fail} test unit.
+}
 
-# This way of using validation functions
-# acts as a data filter: data is passed
-# through but should `stop()` if there
-# is a single test unit failing; the
-# behavior of side effects can be
-# customized with the `actions` option
-tbl \%>\%
+\subsection{B: Using the validation function directly on the data (no \code{agent})}{
+
+This way of using validation functions acts as a data filter. Data is passed
+through but should \code{stop()} if there is a single test unit failing. The
+behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   conjointly(
     ~ col_vals_lt(., vars(a), value = 8),
     ~ col_vals_gt(., vars(c), value = vars(a)),
     ~ col_vals_not_null(., vars(b))
   )
+}\if{html}{\out{</div>}}\preformatted{## # A tibble: 3 × 3
+##       a     b     c
+##   <dbl> <dbl> <dbl>
+## 1     5     3     9
+## 2     2     4     8
+## 3     6     6     7
+}
+}
 
-# C: Using the expectation function
+\subsection{C: Using the expectation function}{
 
-# With the `expect_*()` form, we would
-# typically perform one validation at a
-# time; this is primarily used in
-# testthat tests
-expect_conjointly(
+With the \verb{expect_*()} form, we would typically perform one validation at a
+time. This is primarily used in testthat tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_conjointly(
   tbl,
   ~ col_vals_lt(., vars(a), value = 8),
   ~ col_vals_gt(., vars(c), value = vars(a)),
   ~ col_vals_not_null(., vars(b))
 )
+}\if{html}{\out{</div>}}
+}
 
-# D: Using the test function
+\subsection{D: Using the test function}{
 
-# With the `test_*()` form, we should
-# get a single logical value returned
-# to us
-tbl \%>\%
+With the \verb{test_*()} form, we should get a single logical value returned to
+us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   test_conjointly(
     ~ col_vals_lt(., vars(a), value = 8),
     ~ col_vals_gt(., vars(c), value = vars(a)),
     ~ col_vals_not_null(., vars(b))
   )
-
+}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
 }
+}
+}
+
+\section{Function ID}{
+
+2-34
+}
+
 \seealso{
 Other validation functions: 
 \code{\link{col_count_match}()},

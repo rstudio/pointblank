@@ -159,91 +159,97 @@
 #'   called primarily for its potential side-effects (e.g., signaling failure).
 #'   The test function returns a logical value.
 #' 
-#' @examples
-#' # For all of the examples here, we'll
-#' # use a simple table with three numeric
-#' # columns (`a`, `b`, and `c`) and three
-#' # character columns (`d`, `e`, and `f`)
+#' @section Demos:
+#' 
+#' For all of the examples here, we'll use a simple table with three numeric
+#' columns (`a`, `b`, and `c`) and three character columns (`d`, `e`, and `f`).
+#' 
+#' ```{r}
 #' tbl <-
 #'   dplyr::tibble(
 #'     a = c(1, 2, 1, 7, 8, 6),
 #'     b = c(0, 0, 0, 1, 1, 1),
 #'     c = c(0.5, 0.3, 0.8, 1.4, 1.9, 1.2),
 #'   )
-#'   
+#' 
 #' tbl
+#' ```
 #' 
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()` 
+#' ## A: Using an `agent` with validation functions and then `interrogate()`
 #' 
-#' # Validate that values in column `a`
-#' # are integer-like by using the R modulo
-#' # operator and expecting `0`
+#' Validate that values in column `a` are integer-like by using the R modulo
+#' operator and expecting `0`.
+#' 
+#' ```{r}
 #' agent <-
 #'   create_agent(tbl) %>%
 #'   col_vals_expr(expr(a %% 1 == 0)) %>%
 #'   interrogate()
+#' ```
 #' 
-#' # Determine if this validation
-#' # had no failing test units (there
-#' # are 6 test units, one for each row)
+#' Determine if this validation had no failing test units (there are 6 test
+#' units, one for each row).
+#' 
+#' ```{r}
 #' all_passed(agent)
+#' ```
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' Calling `agent` in the console prints the agent's report. But we can get a
+#' `gt_tbl` object directly with `get_agent_report(agent)`.
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' ## B: Using the validation function directly on the data (no `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' This way of using validation functions acts as a data filter. Data is passed
+#' through but should `stop()` if there is a single test unit failing. The
+#' behavior of side effects can be customized with the `actions` option.
+#' 
+#' ```{r}
 #' tbl %>% 
 #'   col_vals_expr(expr(a %% 1 == 0)) %>%
 #'   dplyr::pull(a)
+#' ```
 #'   
-#' # C: Using the expectation function
+#' ## C: Using the expectation function
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' With the `expect_*()` form, we would typically perform one validation at a
+#' time. This is primarily used in testthat tests.
+#' 
+#' ```{r}
 #' expect_col_vals_expr(tbl, ~ a %% 1 == 0)
+#' ```
 #' 
-#' # D: Using the test function
+#' ## D: Using the test function
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' With the `test_*()` form, we should get a single logical value returned to
+#' us.
+#' 
+#' ```{r}
 #' test_col_vals_expr(tbl, ~ a %% 1 == 0)
+#' ```
 #' 
-#' # Variations
+#' ## Variations
 #' 
-#' # We can do more complex things by
-#' # taking advantage of the `case_when()`
-#' # and `between()` functions (available
-#' # for use in the pointblank package) 
+#' We can do more complex things by taking advantage of the `case_when()` and
+#' `between()` functions (available for use in the pointblank package).
+#' 
+#' ```{r}
 #' tbl %>%
 #'   test_col_vals_expr(~ case_when(
 #'     b == 0 ~ a %>% between(0, 5) & c < 1,
 #'     b == 1 ~ a > 5 & c >= 1
 #'   ))
+#' ```
 #' 
-#' # If you only want to test a subset of
-#' # rows, then the `case_when()` statement
-#' # doesn't need to be exhaustive; any
-#' # rows that don't fall into the cases
-#' # will be pruned (giving us less test
-#' # units overall) 
+#' If you only want to test a subset of rows, then the `case_when()` statement
+#' doesn't need to be exhaustive. Any rows that don't fall into the cases will
+#' be pruned (giving us less test units overall).
+#' 
+#' ```{r}
 #' tbl %>%
 #'   test_col_vals_expr(~ case_when(
 #'     b == 1 ~ a > 5 & c >= 1
 #'   ))
+#' ```
 #' 
 #' @family validation functions
 #' @section Function ID:

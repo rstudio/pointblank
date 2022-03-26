@@ -457,45 +457,51 @@ test_col_schema_match <- function(
 #' @param .db_col_types Determines whether the column types refer to R column
 #'   types (`"r"`) or SQL column types (`"sql"`).
 #'   
-#' @examples 
-#' # Create a simple table with two
-#' # columns: one `integer` and the
-#' # other `character`
+#' @section Demos:
+#' 
+#' Create a simple table with two columns: one `integer` and the other
+#' `character`.
+#' 
+#' ```{r}
 #' tbl <- 
 #'   dplyr::tibble(
 #'     a = 1:5,
 #'     b = letters[1:5]
 #'   )
 #' 
-#' # Create a column schema object
-#' # that describes the columns and
-#' # their types (in the expected
-#' # order)
+#' tbl
+#' ```
+#' 
+#' Create a column schema object that describes the columns and their types (in
+#' the expected order).
+#' 
+#' ```{r}
 #' schema_obj <- 
 #'   col_schema(
 #'     a = "integer",
 #'     b = "character"
 #'   )
+#' ```
 #' 
-#' # Validate that the schema object
-#' # `schema_obj` exactly defines
-#' # the column names and column types
-#' # of the `tbl` table
+#' Validate that the schema object `schema_obj` exactly defines the column names
+#' and column types of the `tbl` table.
+#' 
+#' ```{r}
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
 #'   col_schema_match(schema_obj) %>%
 #'   interrogate()
+#' ```
 #' 
-#' # Determine if this validation step
-#' # passed by using `all_passed()`
+#' Determine if this validation step passed by using `all_passed()`.
 #' 
 #' ```{r}
 #' all_passed(agent)
 #' ```
 #' 
-#' # We can alternatively create
-#' # a column schema object from a
-#' # `tbl_df` object
+#' We can alternatively create a column schema object from a `tbl_df` object.
+#' 
+#' ```{r}
 #' schema_obj <-
 #'   col_schema(
 #'     .tbl = dplyr::tibble(
@@ -503,15 +509,18 @@ test_col_schema_match <- function(
 #'       b = character(0)
 #'     )
 #'   )
+#' ```
 #'
-#' # This should provide the same
-#' # interrogation results as in the
-#' # previous example
+#' This should provide the same interrogation results as in the previous
+#' example.
+#' 
+#' ```{r}
 #' create_agent(tbl = tbl) %>%
 #'   col_schema_match(schema_obj) %>%
 #'   interrogate() %>%
 #'   all_passed()
-#'   
+#' ```
+#' 
 #' @family Utility and Helper Functions
 #' @section Function ID:
 #' 13-1

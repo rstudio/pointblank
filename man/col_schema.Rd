@@ -36,67 +36,69 @@ types (\code{"DoubleType"}, \code{"StringType"}, etc.). This is great if we want
 validate table column schemas both on the server side and when tabular data
 is collected and loaded into R.
 }
-\section{Function ID}{
+\section{Demos}{
 
-13-1
-}
 
-\examples{
-# Create a simple table with two
-# columns: one `integer` and the
-# other `character`
-tbl <- 
+Create a simple table with two columns: one \code{integer} and the other
+\code{character}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- 
   dplyr::tibble(
     a = 1:5,
     b = letters[1:5]
   )
 
-# Create a column schema object
-# that describes the columns and
-# their types (in the expected
-# order)
-schema_obj <- 
+tbl
+}\if{html}{\out{</div>}}\preformatted{## # A tibble: 5 × 2
+##       a b    
+##   <int> <chr>
+## 1     1 a    
+## 2     2 b    
+## 3     3 c    
+## 4     4 d    
+## 5     5 e
+}
+
+Create a column schema object that describes the columns and their types (in
+the expected order).\if{html}{\out{<div class="sourceCode r">}}\preformatted{schema_obj <- 
   col_schema(
     a = "integer",
     b = "character"
   )
+}\if{html}{\out{</div>}}
 
-# Validate that the schema object
-# `schema_obj` exactly defines
-# the column names and column types
-# of the `tbl` table
-agent <-
+Validate that the schema object \code{schema_obj} exactly defines the column names
+and column types of the \code{tbl} table.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = tbl) \%>\%
   col_schema_match(schema_obj) \%>\%
   interrogate()
+}\if{html}{\out{</div>}}
 
-# Determine if this validation step
-# passed by using `all_passed()`
+Determine if this validation step passed by using \code{all_passed()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{all_passed(agent)
+}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
+}
 
-```{r}
-all_passed(agent)
-```
-
-# We can alternatively create
-# a column schema object from a
-# `tbl_df` object
-schema_obj <-
+We can alternatively create a column schema object from a \code{tbl_df} object.\if{html}{\out{<div class="sourceCode r">}}\preformatted{schema_obj <-
   col_schema(
     .tbl = dplyr::tibble(
       a = integer(0),
       b = character(0)
     )
   )
+}\if{html}{\out{</div>}}
 
-# This should provide the same
-# interrogation results as in the
-# previous example
-create_agent(tbl = tbl) \%>\%
+This should provide the same interrogation results as in the previous
+example.\if{html}{\out{<div class="sourceCode r">}}\preformatted{create_agent(tbl = tbl) \%>\%
   col_schema_match(schema_obj) \%>\%
   interrogate() \%>\%
   all_passed()
-  
+}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
 }
+}
+
+\section{Function ID}{
+
+13-1
+}
+
 \seealso{
 Other Utility and Helper Functions: 
 \code{\link{affix_datetime}()},

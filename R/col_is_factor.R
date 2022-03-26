@@ -122,6 +122,8 @@
 #' tbl <- 
 #'   small_table %>%
 #'   dplyr::mutate(f = factor(f))
+#'   
+#' tbl
 #' ```
 #' 
 #' ## A: Using an `agent` with validation functions and then `interrogate()`

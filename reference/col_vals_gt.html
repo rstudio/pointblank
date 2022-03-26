@@ -233,8 +233,8 @@ The test function returns a logical value.</p>
 expansion of validation steps to that number of column names (e.g.,
 <code>vars(col_a, col_b)</code> will result in the entry of two validation steps). Aside
 from column names in quotes and in <code><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars()</a></code>, <strong>tidyselect</strong> helper functions
-are available for specifying columns. They are: <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>,
-<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches()</a></code>, and <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>.</p>
+are available for specifying columns. They are: <code><a href="https://rdrr.io/pkg/tidyselect/man/starts_with.html" class="external-link">starts_with()</a></code>,
+<code><a href="https://rdrr.io/pkg/tidyselect/man/starts_with.html" class="external-link">ends_with()</a></code>, <code><a href="https://rdrr.io/pkg/tidyselect/man/starts_with.html" class="external-link">contains()</a></code>, <code><a href="https://rdrr.io/pkg/tidyselect/man/starts_with.html" class="external-link">matches()</a></code>, and <code><a href="https://rdrr.io/pkg/tidyselect/man/everything.html" class="external-link">everything()</a></code>.</p>
     </div>
     <div class="section level2">
     <h2 id="missing-values">Missing Values<a class="anchor" aria-label="anchor" href="#missing-values"></a></h2>
@@ -331,40 +331,112 @@ or interrogate the target table (via <code><a href="yaml_agent_interrogate.html"
 list member), the syntax closely follows the signature of the validation
 function. Here is an example of how a complex call of <code>col_vals_gt()</code> as a
 validation step is expressed in R code and in the corresponding YAML
-representation.</p><div class="sourceCode"><pre><code># R statement
-agent %&gt;% 
-  col_vals_gt(
-    columns = vars(a),
-    value = 1,
-    na_pass = TRUE,
-    preconditions = ~ . %&gt;% dplyr::filter(a &lt; 10),
-    segments = b ~ c("group_1", "group_2"),
-    actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-    label = "The `col_vals_gt()` step.",
-    active = FALSE
-  )
-
-# YAML representation
-steps:
-- col_vals_gt:
-    columns: vars(a)
-    value: 1.0
-    na_pass: true
-    preconditions: ~. %&gt;% dplyr::filter(a &lt; 10)
-    segments: b ~ c("group_1", "group_2")
-    actions:
-      warn_fraction: 0.1
-      stop_fraction: 0.2
-    label: The `col_vals_gt()` step.
-    active: false
-</code></pre></div>
-
+representation.</p>
+<p>R statement:</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>,
+    value <span class="op">=</span> <span class="fl">1</span>,
+    na_pass <span class="op">=</span> <span class="cn">TRUE</span>,
+    preconditions <span class="op">=</span> <span class="op">~</span> <span class="va">.</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">a</span> <span class="op">&lt;</span> <span class="fl">10</span><span class="op">)</span>,
+    segments <span class="op">=</span> <span class="va">b</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"group_1"</span>, <span class="st">"group_2"</span><span class="op">)</span>,
+    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span>warn_at <span class="op">=</span> <span class="fl">0.1</span>, stop_at <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span>,
+    label <span class="op">=</span> <span class="st">"The `col_vals_gt()` step."</span>,
+    active <span class="op">=</span> <span class="cn">FALSE</span>
+  <span class="op">)</span></code></pre><p></p></div>
+<p>YAML representation:</p><div class="sourceCode yaml"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">steps</span><span class="kw">:</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">col_vals_gt</span><span class="kw">:</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">columns</span><span class="kw">:</span><span class="at"> vars(a)</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">value</span><span class="kw">:</span><span class="at"> </span><span class="fl">1.0</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">na_pass</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">preconditions</span><span class="kw">:</span><span class="at"> ~. %&gt;% dplyr::filter(a &lt; 10)</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">segments</span><span class="kw">:</span><span class="at"> b ~ c("group_1", "group_2")</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">actions</span><span class="kw">:</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">warn_fraction</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.1</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">stop_fraction</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.2</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">label</span><span class="kw">:</span><span class="at"> The `col_vals_gt()` step.</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">active</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span></code></pre><p></p></div>
 <p>In practice, both of these will often be shorter as only the <code>columns</code> and
 <code>value</code> arguments require values. Arguments with default values won't be
 written to YAML when using <code><a href="yaml_write.html">yaml_write()</a></code> (though it is acceptable to include
 them with their default when generating the YAML by other means). It is also
 possible to preview the transformation of an agent to YAML without any
 writing to disk by using the <code><a href="yaml_agent_string.html">yaml_agent_string()</a></code> function.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="demos">Demos<a class="anchor" aria-label="anchor" href="#demos"></a></h2>
+    
+
+
+<p>For all of the examples here, we'll use a simple table with three numeric
+columns (<code>a</code>, <code>b</code>, and <code>c</code>) and three character columns (<code>d</code>, <code>e</code>, and <code>f</code>).</p><div class="sourceCode r"><pre><code><span class="va">tbl</span> <span class="op">&lt;-</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>
+    a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span>,
+    b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>,
+    c <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>,
+    d <span class="op">=</span> <span class="va">LETTERS</span><span class="op">[</span><span class="va">a</span><span class="op">]</span>,
+    e <span class="op">=</span> <span class="va">LETTERS</span><span class="op">[</span><span class="va">b</span><span class="op">]</span>,
+    f <span class="op">=</span> <span class="va">LETTERS</span><span class="op">[</span><span class="va">c</span><span class="op">]</span>
+  <span class="op">)</span>
+  
+<span class="va">tbl</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 6 × 6</span>
+<span class="co">##       a     b     c d     e     f    </span>
+<span class="co">##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;</span>
+<span class="co">## 1     5     1     1 E     A     A    </span>
+<span class="co">## 2     5     1     1 E     A     A    </span>
+<span class="co">## 3     5     1     1 E     A     A    </span>
+<span class="co">## 4     5     2     2 E     B     B    </span>
+<span class="co">## 5     5     2     3 E     B     C    </span>
+<span class="co">## 6     5     2     4 E     B     D</span></code></pre></div>
+<div class="section">
+<h3 id="a-using-an-agent-with-validation-functions-and-then-interrogate-">A: Using an <code>agent</code> with validation functions and then <code><a href="interrogate.html">interrogate()</a></code><a class="anchor" aria-label="anchor" href="#a-using-an-agent-with-validation-functions-and-then-interrogate-"></a></h3>
+
+
+<p>Validate that values in column <code>a</code> are all greater than the value of <code>4</code>.</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span>
+  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span><span class="va">tbl</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
+<p>Determine if this validation had no failing test units (there are 6 test
+units, one for each row).</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/all_passed.html">all_passed</a></span><span class="op">(</span><span class="va">agent</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] TRUE</span></code></pre></div>
+
+<p>Calling <code>agent</code> in the console prints the agent's report. But we can get a
+<code>gt_tbl</code> object directly with <code>get_agent_report(agent)</code>.</p>
+</div>
+
+<div class="section">
+<h3 id="b-using-the-validation-function-directly-on-the-data-no-agent-">B: Using the validation function directly on the data (no <code>agent</code>)<a class="anchor" aria-label="anchor" href="#b-using-the-validation-function-directly-on-the-data-no-agent-"></a></h3>
+
+
+<p>This way of using validation functions acts as a data filter. Data is passed
+through but should <code><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop()</a></code> if there is a single test unit failing. The
+behavior of side effects can be customized with the <code>actions</code> option.</p><div class="sourceCode r"><pre><code><span class="va">tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] 5 5 5 5 5 5</span></code></pre></div>
+
+</div>
+
+<div class="section">
+<h3 id="c-using-the-expectation-function">C: Using the expectation function<a class="anchor" aria-label="anchor" href="#c-using-the-expectation-function"></a></h3>
+
+
+<p>With the <code>expect_*()</code> form, we would typically perform one validation at a
+time. This is primarily used in testthat tests.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/col_vals_gt.html">expect_col_vals_gt</a></span><span class="op">(</span>
+  <span class="va">tbl</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>,
+  value <span class="op">=</span> <span class="fl">4</span>
+<span class="op">)</span></code></pre><p></p></div>
+</div>
+
+<div class="section">
+<h3 id="d-using-the-test-function">D: Using the test function<a class="anchor" aria-label="anchor" href="#d-using-the-test-function"></a></h3>
+
+
+<p>With the <code>test_*()</code> form, we should get a single logical value returned to
+us.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/col_vals_gt.html">test_col_vals_gt</a></span><span class="op">(</span>
+  <span class="va">tbl</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, 
+  value <span class="op">=</span> <span class="fl">4</span>
+<span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] TRUE</span></code></pre></div>
+
+</div>
+
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
@@ -413,92 +485,6 @@ writing to disk by using the <code><a href="yaml_agent_string.html">yaml_agent_s
 <code><a href="tbl_match.html">tbl_match</a>()</code></p></div>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># For all of the examples here, we'll</span></span>
-<span class="r-in"><span class="co"># use a simple table with three numeric</span></span>
-<span class="r-in"><span class="co"># columns (`a`, `b`, and `c`) and three</span></span>
-<span class="r-in"><span class="co"># character columns (`d`, `e`, and `f`)</span></span>
-<span class="r-in"><span class="va">tbl</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
-<span class="r-in">    a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span>,</span>
-<span class="r-in">    b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>,</span>
-<span class="r-in">    c <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>,</span>
-<span class="r-in">    d <span class="op">=</span> <span class="va">LETTERS</span><span class="op">[</span><span class="va">a</span><span class="op">]</span>,</span>
-<span class="r-in">    e <span class="op">=</span> <span class="va">LETTERS</span><span class="op">[</span><span class="va">b</span><span class="op">]</span>,</span>
-<span class="r-in">    f <span class="op">=</span> <span class="va">LETTERS</span><span class="op">[</span><span class="va">c</span><span class="op">]</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in">  </span>
-<span class="r-in"><span class="va">tbl</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       a     b     c d     e     f    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     5     1     1 E     A     A    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>     5     1     1 E     A     A    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>     5     1     1 E     A     A    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>     5     2     2 E     B     B    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>     5     2     3 E     B     C    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span>     5     2     4 E     B     D    </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># A: Using an `agent` with validation</span></span>
-<span class="r-in"><span class="co">#    functions and then `interrogate()` </span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Validate that values in column `a`</span></span>
-<span class="r-in"><span class="co"># are all greater than the value of `4`</span></span>
-<span class="r-in"><span class="va">agent</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="create_agent.html">create_agent</a></span><span class="op">(</span><span class="va">tbl</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">col_vals_gt</span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Determine if this validation</span></span>
-<span class="r-in"><span class="co"># had no failing test units (there</span></span>
-<span class="r-in"><span class="co"># are 6 test units, one for each row)</span></span>
-<span class="r-in"><span class="fu"><a href="all_passed.html">all_passed</a></span><span class="op">(</span><span class="va">agent</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Calling `agent` in the console</span></span>
-<span class="r-in"><span class="co"># prints the agent's report; but we</span></span>
-<span class="r-in"><span class="co"># can get a `gt_tbl` object directly</span></span>
-<span class="r-in"><span class="co"># with `get_agent_report(agent)`</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># B: Using the validation function</span></span>
-<span class="r-in"><span class="co">#    directly on the data (no `agent`)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># This way of using validation functions</span></span>
-<span class="r-in"><span class="co"># acts as a data filter: data is passed</span></span>
-<span class="r-in"><span class="co"># through but should `stop()` if there</span></span>
-<span class="r-in"><span class="co"># is a single test unit failing; the</span></span>
-<span class="r-in"><span class="co"># behavior of side effects can be</span></span>
-<span class="r-in"><span class="co"># customized with the `actions` option</span></span>
-<span class="r-in"><span class="va">tbl</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu">col_vals_gt</span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 5 5 5 5 5 5</span>
-<span class="r-in">  </span>
-<span class="r-in"><span class="co"># C: Using the expectation function</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># With the `expect_*()` form, we would</span></span>
-<span class="r-in"><span class="co"># typically perform one validation at a</span></span>
-<span class="r-in"><span class="co"># time; this is primarily used in</span></span>
-<span class="r-in"><span class="co"># testthat tests</span></span>
-<span class="r-in"><span class="fu">expect_col_vals_gt</span><span class="op">(</span></span>
-<span class="r-in">  <span class="va">tbl</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>,</span>
-<span class="r-in">  value <span class="op">=</span> <span class="fl">4</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># D: Using the test function</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># With the `test_*()` form, we should</span></span>
-<span class="r-in"><span class="co"># get a single logical value returned</span></span>
-<span class="r-in"><span class="co"># to us</span></span>
-<span class="r-in"><span class="fu">test_col_vals_gt</span><span class="op">(</span></span>
-<span class="r-in">  <span class="va">tbl</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, </span>
-<span class="r-in">  value <span class="op">=</span> <span class="fl">4</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-in"></span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

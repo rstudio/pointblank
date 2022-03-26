@@ -149,22 +149,18 @@ resulting YAML can be used to regenerate an informant (with
 table (via <code><a href="yaml_informant_incorporate.html">yaml_informant_incorporate()</a></code>). When <code>info_tabular()</code> is
 represented in YAML, <em>info text</em> goes into subsections of the top-level
 <code>table</code> key. Here is an example of how a call of <code>info_tabular()</code> is
-expressed in R code and in the corresponding YAML representation.</p><div class="sourceCode"><pre><code># R statement
-informant %&gt;% 
-  info_tabular(
-    section_1 = "*info text* 1.",
-    `section 2` = "*info text* 2 and {snippet_1}"
-  )
-
-# YAML representation
-table:
-  _columns: 23
-  _rows: 205.0
-  _type: tbl_df
-  section_1: '*info text* 1.'
-  section 2: '*info text* 2 and {snippet_1}'
-</code></pre></div>
-
+expressed in R code and in the corresponding YAML representation.</p>
+<p>R statement:</p><div class="sourceCode r"><pre><code><span class="va">informant</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="../reference/info_tabular.html">info_tabular</a></span><span class="op">(</span>
+    section_1 <span class="op">=</span> <span class="st">"*info text* 1."</span>,
+    `section 2` <span class="op">=</span> <span class="st">"*info text* 2 and {snippet_1}"</span>
+  <span class="op">)</span></code></pre><p></p></div>
+<p>YAML representation:</p><div class="sourceCode yaml"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span><span class="kw">:</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">_columns</span><span class="kw">:</span><span class="at"> </span><span class="dv">23</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">_rows</span><span class="kw">:</span><span class="at"> </span><span class="fl">205.0</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">_type</span><span class="kw">:</span><span class="at"> tbl_df</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">section_1</span><span class="kw">:</span><span class="at"> </span><span class="st">'*info text* 1.'</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">section 2</span><span class="kw">:</span><span class="at"> </span><span class="st">'*info text* 2 and {snippet_1}'</span></span></code></pre><p></p></div>
 <p>Subsection titles as defined in <code>info_tabular()</code> can be set in backticks if
 they are not syntactically correct as an argument name without them (e.g.,
 when using spaces, hyphens, etc.).</p>

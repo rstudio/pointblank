@@ -109,6 +109,31 @@ using the <code><a href="get_agent_x_list.html">get_agent_x_list()</a></code> fu
 in producing a single logical value from an interrogation.</p>
     </div>
     <div class="section level2">
+    <h2 id="demos">Demos<a class="anchor" aria-label="anchor" href="#demos"></a></h2>
+    
+
+
+<p>Create a simple table with a column of numerical values.</p><div class="sourceCode r"><pre><code><span class="va">tbl</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">tbl</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 4 × 1</span>
+<span class="co">##       a</span>
+<span class="co">##   &lt;dbl&gt;</span>
+<span class="co">## 1     4</span>
+<span class="co">## 2     5</span>
+<span class="co">## 3     7</span>
+<span class="co">## 4     8</span></code></pre></div>
+
+<p>Validate that values in column <code>a</code> are always greater than 4.</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span>
+  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">tbl</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_vals_lte.html">col_vals_lte</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_vals_increasing.html">col_vals_increasing</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
+<p>Determine if these column validations have all passed by using <code>all_passed()</code>
+(they do).</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/all_passed.html">all_passed</a></span><span class="op">(</span>agent <span class="op">=</span> <span class="va">agent</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] TRUE</span></code></pre></div>
+
+    </div>
+    <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
     
 
@@ -123,30 +148,6 @@ in producing a single logical value from an interrogation.</p>
 <code><a href="write_testthat_file.html">write_testthat_file</a>()</code></p></div>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Create a simple table with</span></span>
-<span class="r-in"><span class="co"># a column of numerical values</span></span>
-<span class="r-in"><span class="va">tbl</span> <span class="op">&lt;-</span> </span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Validate that values in column</span></span>
-<span class="r-in"><span class="co"># `a` are always greater than 4</span></span>
-<span class="r-in"><span class="va">agent</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">tbl</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_lte.html">col_vals_lte</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_increasing.html">col_vals_increasing</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Determine if these column</span></span>
-<span class="r-in"><span class="co"># validations have all passed by</span></span>
-<span class="r-in"><span class="co"># using `all_passed()` (they do)</span></span>
-<span class="r-in"><span class="fu">all_passed</span><span class="op">(</span>agent <span class="op">=</span> <span class="va">agent</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-in"></span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

@@ -209,46 +209,42 @@ resulting YAML can be used to regenerate an informant (with
 <code><a href="yaml_read_informant.html">yaml_read_informant()</a></code>) or perform the 'incorporate' action using the target
 table (via <code><a href="yaml_informant_incorporate.html">yaml_informant_incorporate()</a></code>). Here is an example of how a
 complex call of <code>create_informant()</code> is expressed in R code and in the
-corresponding YAML representation.</p><div class="sourceCode"><pre><code># R statement
-create_informant(
-  tbl = ~ small_table,
-  tbl_name = "small_table",
-  label = "An example.",
-  lang = "fr", 
-  locale = "fr_CA"
-)
-
-# YAML representation
-type: informant
-tbl: ~small_table
-tbl_name: small_table
-info_label: An example.
-lang: fr
-locale: fr_CA
-table:
-  name: small_table
-  _columns: 8
-  _rows: 13.0
-  _type: tbl_df
-columns:
-  date_time:
-    _type: POSIXct, POSIXt
-  date:
-    _type: Date
-  a:
-    _type: integer
-  b:
-    _type: character
-  c:
-    _type: numeric
-  d:
-    _type: numeric
-  e:
-    _type: logical
-  f:
-    _type: character
-</code></pre></div>
-
+corresponding YAML representation.</p>
+<p>R statement:</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span>
+  tbl <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,
+  tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,
+  label <span class="op">=</span> <span class="st">"An example."</span>,
+  lang <span class="op">=</span> <span class="st">"fr"</span>, 
+  locale <span class="op">=</span> <span class="st">"fr_CA"</span>
+<span class="op">)</span></code></pre><p></p></div>
+<p>YAML representation:</p><div class="sourceCode yaml"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">type</span><span class="kw">:</span><span class="at"> informant</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl</span><span class="kw">:</span><span class="at"> ~small_table</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_name</span><span class="kw">:</span><span class="at"> small_table</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">info_label</span><span class="kw">:</span><span class="at"> An example.</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lang</span><span class="kw">:</span><span class="at"> fr</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">locale</span><span class="kw">:</span><span class="at"> fr_CA</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span><span class="kw">:</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> small_table</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">_columns</span><span class="kw">:</span><span class="at"> </span><span class="dv">8</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">_rows</span><span class="kw">:</span><span class="at"> </span><span class="fl">13.0</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">_type</span><span class="kw">:</span><span class="at"> tbl_df</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">columns</span><span class="kw">:</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">date_time</span><span class="kw">:</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">_type</span><span class="kw">:</span><span class="at"> POSIXct, POSIXt</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">date</span><span class="kw">:</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">_type</span><span class="kw">:</span><span class="at"> Date</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">a</span><span class="kw">:</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">_type</span><span class="kw">:</span><span class="at"> integer</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">b</span><span class="kw">:</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">_type</span><span class="kw">:</span><span class="at"> character</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">c</span><span class="kw">:</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">_type</span><span class="kw">:</span><span class="at"> numeric</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">d</span><span class="kw">:</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">_type</span><span class="kw">:</span><span class="at"> numeric</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">e</span><span class="kw">:</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">_type</span><span class="kw">:</span><span class="at"> logical</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">f</span><span class="kw">:</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">_type</span><span class="kw">:</span><span class="at"> character</span></span></code></pre><p></p></div>
 <p>The generated YAML includes some top-level keys where <code>type</code> and <code>tbl</code> are
 mandatory, and, two metadata sections: <code>table</code> and <code>columns</code>. Keys that begin
 with an underscore character are those that are updated whenever
@@ -272,6 +268,44 @@ easily retrieved with the <code><a href="x_read_disk.html">x_read_disk()</a></co
 of <code>create_informant()</code>. In this way, when an <em>informant</em> is read from disk
 through <code><a href="x_read_disk.html">x_read_disk()</a></code>, it can be reused to access the target table (which
 may changed, hence the need to use an expression for this).</p>
+    </div>
+    <div class="section level2">
+    <h2 id="demos">Demos<a class="anchor" aria-label="anchor" href="#demos"></a></h2>
+    
+
+
+<p>Let's walk through how we can generate some useful information for a really
+small table. It's actually called <code>small_table</code> and we can find it as a
+dataset in this package.</p><div class="sourceCode r"><pre><code><span class="va">small_table</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 13 × 8</span>
+<span class="co">##    date_time           date           a b             c      d e     f    </span>
+<span class="co">##    &lt;dttm&gt;              &lt;date&gt;     &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;</span>
+<span class="co">##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high </span>
+<span class="co">##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-163     8 10000. TRUE  low  </span>
+<span class="co">##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3  2343. TRUE  high </span>
+<span class="co">##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-903    NA  3892. FALSE mid  </span>
+<span class="co">##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-038     7   284. TRUE  low  </span>
+<span class="co">##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-923     4  3291. TRUE  mid  </span>
+<span class="co">##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3   843. TRUE  high </span>
+<span class="co">##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-639     2  1036. FALSE low  </span>
+<span class="co">##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high </span>
+<span class="co">## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high </span>
+<span class="co">## 11 2016-01-26 20:07:00 2016-01-26     4 2-dmx-010     7   834. TRUE  low  </span>
+<span class="co">## 12 2016-01-28 02:51:00 2016-01-28     2 7-dmx-010     8   108. FALSE low  </span>
+<span class="co">## 13 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA  2230. TRUE  high</span></code></pre></div>
+
+<p>Create a pointblank <code>informant</code> object with <code>create_informant()</code> and the
+<code>small_table</code> dataset.</p><div class="sourceCode r"><pre><code><span class="va">informant</span> <span class="op">&lt;-</span> 
+  <span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span>
+    tbl <span class="op">=</span> <span class="fu">pointblank</span><span class="fu">::</span><span class="va"><a href="../reference/small_table.html">small_table</a></span>,
+    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,
+    label <span class="op">=</span> <span class="st">"An example."</span>
+  <span class="op">)</span></code></pre><p></p></div>
+<p>This function creates some information without any extra help by profiling
+the supplied table object. It adds the sections: (1) 'table' and (2)
+'columns' and we can print the object to see the information report.</p>
+<p>Alternatively, we can get the same report by using <code><a href="get_informant_report.html">get_informant_report()</a></code>.</p><div class="sourceCode r"><pre><code><span class="va">report</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_informant_report.html">get_informant_report</a></span><span class="op">(</span><span class="va">informant</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode r"><pre><code><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">report</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] "ptblank_informant_report" "gt_tbl"                  </span>
+<span class="co">## [3] "list"</span></code></pre></div>
+
     </div>
     <div class="section level2">
     <h2 id="figures">Figures<a class="anchor" aria-label="anchor" href="#figures"></a></h2>
@@ -300,57 +334,6 @@ may changed, hence the need to use an expression for this).</p>
 <code><a href="validate_rmd.html">validate_rmd</a>()</code></p></div>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Let's walk through how we can</span></span>
-<span class="r-in"><span class="co"># generate some useful information for a</span></span>
-<span class="r-in"><span class="co"># really small table; it's actually</span></span>
-<span class="r-in"><span class="co"># called `small_table` and we can find</span></span>
-<span class="r-in"><span class="co"># it as a dataset in this package</span></span>
-<span class="r-in"><span class="va">small_table</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 13 × 8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    date_time           date           a b             c      d e     f    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2016-01-04 <span style="color: #949494;">11:00:00</span> 2016-01-04     2 1-bcd-345     3  <span style="text-decoration: underline;">3</span>423. TRUE  high </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2016-01-04 <span style="color: #949494;">00:32:00</span> 2016-01-04     3 5-egh-163     8 <span style="text-decoration: underline;">10</span>000. TRUE  low  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2016-01-05 <span style="color: #949494;">13:32:00</span> 2016-01-05     6 8-kdg-938     3  <span style="text-decoration: underline;">2</span>343. TRUE  high </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2016-01-06 <span style="color: #949494;">17:23:00</span> 2016-01-06     2 5-jdo-903    <span style="color: #BB0000;">NA</span>  <span style="text-decoration: underline;">3</span>892. FALSE mid  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2016-01-09 <span style="color: #949494;">12:36:00</span> 2016-01-09     8 3-ldm-038     7   284. TRUE  low  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2016-01-11 <span style="color: #949494;">06:15:00</span> 2016-01-11     4 2-dhe-923     4  <span style="text-decoration: underline;">3</span>291. TRUE  mid  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2016-01-15 <span style="color: #949494;">18:46:00</span> 2016-01-15     7 1-knw-093     3   843. TRUE  high </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2016-01-17 <span style="color: #949494;">11:27:00</span> 2016-01-17     4 5-boe-639     2  <span style="text-decoration: underline;">1</span>036. FALSE low  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2016-01-20 <span style="color: #949494;">04:30:00</span> 2016-01-20     3 5-bce-642     9   838. FALSE high </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2016-01-20 <span style="color: #949494;">04:30:00</span> 2016-01-20     3 5-bce-642     9   838. FALSE high </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> 2016-01-26 <span style="color: #949494;">20:07:00</span> 2016-01-26     4 2-dmx-010     7   834. TRUE  low  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> 2016-01-28 <span style="color: #949494;">02:51:00</span> 2016-01-28     2 7-dmx-010     8   108. FALSE low  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> 2016-01-30 <span style="color: #949494;">11:23:00</span> 2016-01-30     1 3-dka-303    <span style="color: #BB0000;">NA</span>  <span style="text-decoration: underline;">2</span>230. TRUE  high </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Create a pointblank `informant`</span></span>
-<span class="r-in"><span class="co"># object with `create_informant()`</span></span>
-<span class="r-in"><span class="co"># and the `small_table` dataset</span></span>
-<span class="r-in"><span class="va">informant</span> <span class="op">&lt;-</span> </span>
-<span class="r-in">  <span class="fu">create_informant</span><span class="op">(</span></span>
-<span class="r-in">    tbl <span class="op">=</span> <span class="fu">pointblank</span><span class="fu">::</span><span class="va"><a href="small_table.html">small_table</a></span>,</span>
-<span class="r-in">    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,</span>
-<span class="r-in">    label <span class="op">=</span> <span class="st">"An example."</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># This function creates some information</span></span>
-<span class="r-in"><span class="co"># without any extra help by profiling</span></span>
-<span class="r-in"><span class="co"># the supplied table object; it adds</span></span>
-<span class="r-in"><span class="co"># the sections: (1) 'table' and</span></span>
-<span class="r-in"><span class="co"># (2) 'columns' and we can print the</span></span>
-<span class="r-in"><span class="co"># object to see the information report</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Alternatively, we can get the same report</span></span>
-<span class="r-in"><span class="co"># by using `get_informant_report()`</span></span>
-<span class="r-in"><span class="va">report</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_informant_report.html">get_informant_report</a></span><span class="op">(</span><span class="va">informant</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">report</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ptblank_informant_report" "gt_tbl"                  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3] "list"                    </span>
-<span class="r-in"></span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

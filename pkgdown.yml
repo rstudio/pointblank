@@ -1,4 +1,4 @@
-pandoc: 2.7.3
+pandoc: 2.16.2
 pkgdown: 2.0.2
 pkgdown_sha: ~
 articles:
@@ -11,7 +11,7 @@ articles:
   VALID-V: VALID-V.html
   VALID-VI: VALID-VI.html
   validation_workflows: validation_workflows.html
-last_built: 2022-03-25T00:39Z
+last_built: 2022-03-26T01:07Z
 urls:
   reference: https://rich-iannone.github.io/pointblank/reference
   article: https://rich-iannone.github.io/pointblank/articles

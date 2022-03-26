@@ -124,6 +124,54 @@ the table at interrogation time.</p></dd>
 types (<code>"r"</code>) or SQL column types (<code>"sql"</code>).</p></dd>
 </dl></div>
     <div class="section level2">
+    <h2 id="demos">Demos<a class="anchor" aria-label="anchor" href="#demos"></a></h2>
+    
+
+
+<p>Create a simple table with two columns: one <code>integer</code> and the other
+<code>character</code>.</p><div class="sourceCode r"><pre><code><span class="va">tbl</span> <span class="op">&lt;-</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>
+    a <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,
+    b <span class="op">=</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>
+  <span class="op">)</span>
+
+<span class="va">tbl</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 5 × 2</span>
+<span class="co">##       a b    </span>
+<span class="co">##   &lt;int&gt; &lt;chr&gt;</span>
+<span class="co">## 1     1 a    </span>
+<span class="co">## 2     2 b    </span>
+<span class="co">## 3     3 c    </span>
+<span class="co">## 4     4 d    </span>
+<span class="co">## 5     5 e</span></code></pre></div>
+
+<p>Create a column schema object that describes the columns and their types (in
+the expected order).</p><div class="sourceCode r"><pre><code><span class="va">schema_obj</span> <span class="op">&lt;-</span> 
+  <span class="fu"><a href="../reference/col_schema.html">col_schema</a></span><span class="op">(</span>
+    a <span class="op">=</span> <span class="st">"integer"</span>,
+    b <span class="op">=</span> <span class="st">"character"</span>
+  <span class="op">)</span></code></pre><p></p></div>
+<p>Validate that the schema object <code>schema_obj</code> exactly defines the column names
+and column types of the <code>tbl</code> table.</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span>
+  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">tbl</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_schema_match.html">col_schema_match</a></span><span class="op">(</span><span class="va">schema_obj</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
+<p>Determine if this validation step passed by using <code><a href="all_passed.html">all_passed()</a></code>.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/all_passed.html">all_passed</a></span><span class="op">(</span><span class="va">agent</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] TRUE</span></code></pre></div>
+
+<p>We can alternatively create a column schema object from a <code>tbl_df</code> object.</p><div class="sourceCode r"><pre><code><span class="va">schema_obj</span> <span class="op">&lt;-</span>
+  <span class="fu"><a href="../reference/col_schema.html">col_schema</a></span><span class="op">(</span>
+    .tbl <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>
+      a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>,
+      b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>
+    <span class="op">)</span>
+  <span class="op">)</span></code></pre><p></p></div>
+<p>This should provide the same interrogation results as in the previous
+example.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">tbl</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_schema_match.html">col_schema_match</a></span><span class="op">(</span><span class="va">schema_obj</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/all_passed.html">all_passed</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] TRUE</span></code></pre></div>
+
+    </div>
+    <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
     
 
@@ -139,63 +187,6 @@ types (<code>"r"</code>) or SQL column types (<code>"sql"</code>).</p></dd>
 <code><a href="stop_if_not.html">stop_if_not</a>()</code></p></div>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Create a simple table with two</span></span>
-<span class="r-in"><span class="co"># columns: one `integer` and the</span></span>
-<span class="r-in"><span class="co"># other `character`</span></span>
-<span class="r-in"><span class="va">tbl</span> <span class="op">&lt;-</span> </span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
-<span class="r-in">    a <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,</span>
-<span class="r-in">    b <span class="op">=</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Create a column schema object</span></span>
-<span class="r-in"><span class="co"># that describes the columns and</span></span>
-<span class="r-in"><span class="co"># their types (in the expected</span></span>
-<span class="r-in"><span class="co"># order)</span></span>
-<span class="r-in"><span class="va">schema_obj</span> <span class="op">&lt;-</span> </span>
-<span class="r-in">  <span class="fu">col_schema</span><span class="op">(</span></span>
-<span class="r-in">    a <span class="op">=</span> <span class="st">"integer"</span>,</span>
-<span class="r-in">    b <span class="op">=</span> <span class="st">"character"</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Validate that the schema object</span></span>
-<span class="r-in"><span class="co"># `schema_obj` exactly defines</span></span>
-<span class="r-in"><span class="co"># the column names and column types</span></span>
-<span class="r-in"><span class="co"># of the `tbl` table</span></span>
-<span class="r-in"><span class="va">agent</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">tbl</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_schema_match.html">col_schema_match</a></span><span class="op">(</span><span class="va">schema_obj</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Determine if this validation step</span></span>
-<span class="r-in"><span class="co"># passed by using `all_passed()`</span></span>
-<span class="r-in"><span class="fu"><a href="all_passed.html">all_passed</a></span><span class="op">(</span><span class="va">agent</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># We can alternatively create</span></span>
-<span class="r-in"><span class="co"># a column schema object from a</span></span>
-<span class="r-in"><span class="co"># `tbl_df` object</span></span>
-<span class="r-in"><span class="va">schema_obj</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu">col_schema</span><span class="op">(</span></span>
-<span class="r-in">    .tbl <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
-<span class="r-in">      a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>,</span>
-<span class="r-in">      b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span></span>
-<span class="r-in">    <span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># This should provide the same</span></span>
-<span class="r-in"><span class="co"># interrogation results as in the</span></span>
-<span class="r-in"><span class="co"># previous example</span></span>
-<span class="r-in"><span class="fu"><a href="create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">tbl</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_schema_match.html">col_schema_match</a></span><span class="op">(</span><span class="va">schema_obj</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="all_passed.html">all_passed</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-in">  </span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

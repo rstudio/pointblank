@@ -245,34 +245,158 @@ or interrogate the target table (via <code><a href="yaml_agent_interrogate.html"
 list member), the syntax closely follows the signature of the validation
 function. Here is an example of how a complex call of <code>specially()</code> as a
 validation step is expressed in R code and in the corresponding YAML
-representation.</p><div class="sourceCode"><pre><code># R statement
-agent %&gt;% 
-  specially(
-    fn = function(x) { ... },
-    preconditions = ~ . %&gt;% dplyr::filter(a &lt; 10),
-    actions = action_levels(warn_at = 0.1, stop_at = 0.2), 
-    label = "The `specially()` step.",
-    active = FALSE
-  )
-
-# YAML representation
-steps:
-- specially:
-    fn: function(x) { ... }
-    preconditions: ~. %&gt;% dplyr::filter(a &lt; 10)
-    actions:
-      warn_fraction: 0.1
-      stop_fraction: 0.2
-    label: The `specially()` step.
-    active: false
-</code></pre></div>
-
+representation.</p>
+<p>R statement:</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="../reference/specially.html">specially</a></span><span class="op">(</span>
+    fn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span> <span class="va">...</span> <span class="op">}</span>,
+    preconditions <span class="op">=</span> <span class="op">~</span> <span class="va">.</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">a</span> <span class="op">&lt;</span> <span class="fl">10</span><span class="op">)</span>,
+    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span>warn_at <span class="op">=</span> <span class="fl">0.1</span>, stop_at <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span>, 
+    label <span class="op">=</span> <span class="st">"The `specially()` step."</span>,
+    active <span class="op">=</span> <span class="cn">FALSE</span>
+  <span class="op">)</span></code></pre><p></p></div>
+<p>YAML representation:</p><div class="sourceCode yaml"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">steps</span><span class="kw">:</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">specially</span><span class="kw">:</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">fn</span><span class="kw">:</span><span class="at"> function(x) { ... }</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">preconditions</span><span class="kw">:</span><span class="at"> ~. %&gt;% dplyr::filter(a &lt; 10)</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">actions</span><span class="kw">:</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">warn_fraction</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.1</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">stop_fraction</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.2</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">label</span><span class="kw">:</span><span class="at"> The `specially()` step.</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">active</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span></code></pre><p></p></div>
 <p>In practice, both of these will often be shorter as only the expressions for
 validation steps are necessary. Arguments with default values won't be
 written to YAML when using <code><a href="yaml_write.html">yaml_write()</a></code> (though it is acceptable to include
 them with their default when generating the YAML by other means). It is also
 possible to preview the transformation of an agent to YAML without any
 writing to disk by using the <code><a href="yaml_agent_string.html">yaml_agent_string()</a></code> function.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="demos">Demos<a class="anchor" aria-label="anchor" href="#demos"></a></h2>
+    
+
+
+<p>For all examples here, we'll use a simple table with three numeric columns
+(<code>a</code>, <code>b</code>, and <code>c</code>). This is a very basic table but it'll be more useful when
+explaining things later.</p><div class="sourceCode r"><pre><code><span class="va">tbl</span> <span class="op">&lt;-</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>
+    a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">2</span>, <span class="fl">6</span><span class="op">)</span>,
+    b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">6</span><span class="op">)</span>,
+    c <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">9</span>, <span class="fl">8</span>, <span class="fl">7</span><span class="op">)</span>
+  <span class="op">)</span>
+  
+<span class="va">tbl</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 3 × 3</span>
+<span class="co">##       a     b     c</span>
+<span class="co">##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">## 1     5     3     9</span>
+<span class="co">## 2     2     4     8</span>
+<span class="co">## 3     6     6     7</span></code></pre></div>
+<div class="section">
+<h3 id="a-using-an-agent-with-validation-functions-and-then-interrogate-">A: Using an <code>agent</code> with validation functions and then <code><a href="interrogate.html">interrogate()</a></code><a class="anchor" aria-label="anchor" href="#a-using-an-agent-with-validation-functions-and-then-interrogate-"></a></h3>
+
+
+<p>Validate that the target table has exactly three rows. This single validation
+with <code>specially()</code> has 1 test unit since the function executed on <code>x</code> (the
+target table) results in a logical vector with a length of 1.</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span>
+  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">tbl</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+    <span class="fu"><a href="../reference/specially.html">specially</a></span><span class="op">(</span>
+      fn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">==</span> <span class="fl">3</span>
+    <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+    <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
+<p>Determine if this validation had no failing test units (there is 1 test
+unit).</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/all_passed.html">all_passed</a></span><span class="op">(</span><span class="va">agent</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] TRUE</span></code></pre></div>
+
+<p>Calling <code>agent</code> in the console prints the agent's report. But we can get a
+<code>gt_tbl</code> object directly with <code>get_agent_report(agent)</code>.</p>
+</div>
+
+<div class="section">
+<h3 id="b-using-the-validation-function-directly-on-the-data-no-agent-">B: Using the validation function directly on the data (no <code>agent</code>)<a class="anchor" aria-label="anchor" href="#b-using-the-validation-function-directly-on-the-data-no-agent-"></a></h3>
+
+
+<p>This way of using validation functions acts as a data filter. Data is passed
+through but should <code><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop()</a></code> if there is a single test unit failing. The
+behavior of side effects can be customized with the <code>actions</code> option.</p><div class="sourceCode r"><pre><code><span class="va">tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/specially.html">specially</a></span><span class="op">(</span>
+      fn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">==</span> <span class="fl">3</span>
+   <span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 3 × 3</span>
+<span class="co">##       a     b     c</span>
+<span class="co">##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">## 1     5     3     9</span>
+<span class="co">## 2     2     4     8</span>
+<span class="co">## 3     6     6     7</span></code></pre></div>
+
+</div>
+
+<div class="section">
+<h3 id="c-using-the-expectation-function">C: Using the expectation function<a class="anchor" aria-label="anchor" href="#c-using-the-expectation-function"></a></h3>
+
+
+<p>With the <code>expect_*()</code> form, we would typically perform one validation at a
+time. This is primarily used in testthat tests.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/specially.html">expect_specially</a></span><span class="op">(</span>
+  <span class="va">tbl</span>,
+  fn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">==</span> <span class="fl">3</span>
+<span class="op">)</span></code></pre><p></p></div>
+</div>
+
+<div class="section">
+<h3 id="d-using-the-test-function">D: Using the test function<a class="anchor" aria-label="anchor" href="#d-using-the-test-function"></a></h3>
+
+
+<p>With the <code>test_*()</code> form, we should get a single logical value returned to
+us.</p><div class="sourceCode r"><pre><code><span class="va">tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/specially.html">test_specially</a></span><span class="op">(</span>
+    fn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">==</span> <span class="fl">3</span>
+  <span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] TRUE</span></code></pre></div>
+
+</div>
+
+<div class="section">
+<h3 id="variations">Variations<a class="anchor" aria-label="anchor" href="#variations"></a></h3>
+
+
+<p>We can do more complex things with <code>specially()</code> and its variants.</p>
+<p>Check the class of the target table.</p><div class="sourceCode r"><pre><code><span class="va">tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/specially.html">test_specially</a></span><span class="op">(</span>
+  fn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">inherits</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"data.frame"</span><span class="op">)</span>
+  <span class="op">}</span>
+<span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] TRUE</span></code></pre></div>
+
+<p>Check that the number of rows in the target table is less than <code>small_table</code>.</p><div class="sourceCode r"><pre><code><span class="va">tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/specially.html">test_specially</a></span><span class="op">(</span>
+  fn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">small_table</span><span class="op">)</span>
+  <span class="op">}</span>
+<span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] TRUE</span></code></pre></div>
+
+<p>Check that all numbers across all numeric column are less than <code>10</code>.</p><div class="sourceCode r"><pre><code><span class="va">tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/specially.html">test_specially</a></span><span class="op">(</span>
+  fn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
+    <span class="op">(</span><span class="va">x</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+       <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+       <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="op">)</span>
+    <span class="op">)</span> <span class="op">&lt;</span> <span class="fl">10</span>
+  <span class="op">}</span>
+<span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] TRUE</span></code></pre></div>
+
+<p>Check that all values in column <code>c</code> are greater than b and greater than <code>a</code>
+(in each row) and always less than <code>10</code>. This creates a table with the new
+column <code>d</code> which is a logical column (that is used as the evaluation of test
+units).</p><div class="sourceCode r"><pre><code><span class="va">tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/specially.html">test_specially</a></span><span class="op">(</span>
+  fn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">x</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>
+        d <span class="op">=</span> <span class="va">c</span> <span class="op">&gt;</span> <span class="va">b</span> <span class="op">&amp;</span> <span class="va">c</span> <span class="op">&gt;</span> <span class="va">a</span> <span class="op">&amp;</span> <span class="va">c</span> <span class="op">&lt;</span> <span class="fl">10</span>
+      <span class="op">)</span>
+  <span class="op">}</span>
+<span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] TRUE</span></code></pre></div>
+
+<p>Check that the <code>game_revenue</code> table (which is not the target table) has
+exactly 2000 rows.</p><div class="sourceCode r"><pre><code><span class="va">tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/specially.html">test_specially</a></span><span class="op">(</span>
+  fn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">game_revenue</span><span class="op">)</span> <span class="op">==</span> <span class="fl">2000</span>
+  <span class="op">}</span>
+<span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] TRUE</span></code></pre></div>
+
+</div>
+
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
@@ -320,160 +444,6 @@ writing to disk by using the <code><a href="yaml_agent_string.html">yaml_agent_s
 <code><a href="tbl_match.html">tbl_match</a>()</code></p></div>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># For all examples here, we'll use</span></span>
-<span class="r-in"><span class="co"># a simple table with three numeric</span></span>
-<span class="r-in"><span class="co"># columns (`a`, `b`, and `c`); this is</span></span>
-<span class="r-in"><span class="co"># a very basic table but it'll be more</span></span>
-<span class="r-in"><span class="co"># useful when explaining things later</span></span>
-<span class="r-in"><span class="va">tbl</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
-<span class="r-in">    a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">2</span>, <span class="fl">6</span><span class="op">)</span>,</span>
-<span class="r-in">    b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">6</span><span class="op">)</span>,</span>
-<span class="r-in">    c <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">9</span>, <span class="fl">8</span>, <span class="fl">7</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in">  </span>
-<span class="r-in"><span class="va">tbl</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       a     b     c</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     5     3     9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>     2     4     8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>     6     6     7</span>
-<span class="r-in">  </span>
-<span class="r-in"><span class="co"># A: Using an `agent` with validation</span></span>
-<span class="r-in"><span class="co">#    functions and then `interrogate()`</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Validate that the target table has</span></span>
-<span class="r-in"><span class="co"># exactly three rows; this single</span></span>
-<span class="r-in"><span class="co"># validation with `specially()` has</span></span>
-<span class="r-in"><span class="co"># 1 test unit since the function</span></span>
-<span class="r-in"><span class="co"># executed on `x` (the target table)</span></span>
-<span class="r-in"><span class="co"># results in a logical vector with a</span></span>
-<span class="r-in"><span class="co"># length of 1</span></span>
-<span class="r-in"><span class="va">agent</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">tbl</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu">specially</span><span class="op">(</span></span>
-<span class="r-in">      fn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">==</span> <span class="fl">3</span></span>
-<span class="r-in">    <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in">  </span>
-<span class="r-in"><span class="co"># Determine if this validation</span></span>
-<span class="r-in"><span class="co"># had no failing test units (there</span></span>
-<span class="r-in"><span class="co"># is 1 test unit)</span></span>
-<span class="r-in"><span class="fu"><a href="all_passed.html">all_passed</a></span><span class="op">(</span><span class="va">agent</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Calling `agent` in the console</span></span>
-<span class="r-in"><span class="co"># prints the agent's report; but we</span></span>
-<span class="r-in"><span class="co"># can get a `gt_tbl` object directly</span></span>
-<span class="r-in"><span class="co"># with `get_agent_report(agent)`</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># B: Using the validation function</span></span>
-<span class="r-in"><span class="co">#    directly on the data (no `agent`)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># This way of using validation functions</span></span>
-<span class="r-in"><span class="co"># acts as a data filter: data is passed</span></span>
-<span class="r-in"><span class="co"># through but should `stop()` if there</span></span>
-<span class="r-in"><span class="co"># is a single test unit failing; the</span></span>
-<span class="r-in"><span class="co"># behavior of side effects can be</span></span>
-<span class="r-in"><span class="co"># customized with the `actions` option</span></span>
-<span class="r-in"><span class="va">tbl</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">specially</span><span class="op">(</span></span>
-<span class="r-in">      fn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">==</span> <span class="fl">3</span></span>
-<span class="r-in">   <span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       a     b     c</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     5     3     9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>     2     4     8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>     6     6     7</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># C: Using the expectation function</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># With the `expect_*()` form, we would</span></span>
-<span class="r-in"><span class="co"># typically perform one validation at a</span></span>
-<span class="r-in"><span class="co"># time; this is primarily used in</span></span>
-<span class="r-in"><span class="co"># testthat tests</span></span>
-<span class="r-in"><span class="fu">expect_specially</span><span class="op">(</span></span>
-<span class="r-in">  <span class="va">tbl</span>,</span>
-<span class="r-in">  fn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">==</span> <span class="fl">3</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># D: Using the test function</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># With the `test_*()` form, we should</span></span>
-<span class="r-in"><span class="co"># get a single logical value returned</span></span>
-<span class="r-in"><span class="co"># to us</span></span>
-<span class="r-in"><span class="va">tbl</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">test_specially</span><span class="op">(</span></span>
-<span class="r-in">    fn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">==</span> <span class="fl">3</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Variations</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># We can do more complex things with</span></span>
-<span class="r-in"><span class="co"># `specially()` and its variants</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">tbl</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">test_specially</span><span class="op">(</span></span>
-<span class="r-in">  fn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">inherits</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"data.frame"</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">}</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Check that the number of rows in the</span></span>
-<span class="r-in"><span class="co"># target table is less than `small_table`</span></span>
-<span class="r-in"><span class="va">tbl</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">test_specially</span><span class="op">(</span></span>
-<span class="r-in">  fn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">small_table</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">}</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Check that all numbers across all</span></span>
-<span class="r-in"><span class="co"># numeric column are less than `10` </span></span>
-<span class="r-in"><span class="va">tbl</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">test_specially</span><span class="op">(</span></span>
-<span class="r-in">  fn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">    <span class="op">(</span><span class="va">x</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> </span>
-<span class="r-in">       <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">       <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in">    <span class="op">)</span> <span class="op">&lt;</span> <span class="fl">10</span></span>
-<span class="r-in">  <span class="op">}</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Check that all values in column</span></span>
-<span class="r-in"><span class="co"># `c` are greater than b and greater</span></span>
-<span class="r-in"><span class="co"># than `a` (in each row) and always</span></span>
-<span class="r-in"><span class="co"># less than 10; this creates a table</span></span>
-<span class="r-in"><span class="co"># with the new column `d` which is</span></span>
-<span class="r-in"><span class="co"># a logical column (that is used as</span></span>
-<span class="r-in"><span class="co"># the evaluation of test units)</span></span>
-<span class="r-in"><span class="va">tbl</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">test_specially</span><span class="op">(</span></span>
-<span class="r-in">  fn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">    <span class="va">x</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
-<span class="r-in">        d <span class="op">=</span> <span class="va">c</span> <span class="op">&gt;</span> <span class="va">b</span> <span class="op">&amp;</span> <span class="va">c</span> <span class="op">&gt;</span> <span class="va">a</span> <span class="op">&amp;</span> <span class="va">c</span> <span class="op">&lt;</span> <span class="fl">10</span></span>
-<span class="r-in">      <span class="op">)</span></span>
-<span class="r-in">  <span class="op">}</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Check that the `game_revenue`</span></span>
-<span class="r-in"><span class="co"># table (which is not the target</span></span>
-<span class="r-in"><span class="co"># table) has exactly 2000 rows </span></span>
-<span class="r-in"><span class="va">tbl</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">test_specially</span><span class="op">(</span></span>
-<span class="r-in">  fn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">game_revenue</span><span class="op">)</span> <span class="op">==</span> <span class="fl">2000</span></span>
-<span class="r-in">  <span class="op">}</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-in"></span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

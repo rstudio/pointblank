@@ -78,9 +78,9 @@
 #'   interrogate()
 #' ```
 #' 
-#' \if{html}{
+#' We can print the resulting object to see the validation report.
 #' 
-#' We can print the resulting object to see the information report.
+#' \if{html}{
 #' 
 #' \out{
 #' `r pb_get_image_tag(file = "man_interrogate_1.png")`

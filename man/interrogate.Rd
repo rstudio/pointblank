@@ -83,9 +83,9 @@ process.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   interrogate()
 }\if{html}{\out{</div>}}
 
-\if{html}{
+We can print the resulting object to see the validation report.
 
-We can print the resulting object to see the information report.
+\if{html}{
 
 \out{
 <img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_interrogate_1.png" style="width:100\%;">

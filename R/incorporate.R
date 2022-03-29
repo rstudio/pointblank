@@ -68,7 +68,7 @@
 #'   ) %>%
 #'   info_columns(
 #'     columns = vars(a),
-#'     info = "In the range of 1 to 10. (SIMPLE)"
+#'     info = "In the range of 1 to 10. ((SIMPLE))"
 #'   ) %>%
 #'   info_columns(
 #'     columns = starts_with("date"),
@@ -76,7 +76,7 @@
 #'   ) %>%
 #'   info_columns(
 #'     columns = "date",
-#'     info = "The date part of `date_time`. (CALC)"
+#'     info = "The date part of `date_time`. ((CALC))"
 #'   ) %>%
 #'   info_section(
 #'     section_name = "rows",
@@ -111,6 +111,8 @@
 #' 
 #' When printed again, we'll also see that the row and column counts in the
 #' header have been updated to reflect the new dimensions of the target table.
+#' Furthermore, the info text in the `ROWS` section has updated text
+#' (`"There are 26 rows available."`).
 #' 
 #' \if{html}{
 #' 

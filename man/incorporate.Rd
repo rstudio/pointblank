@@ -106,6 +106,8 @@ current state of the \code{changing_table}.\if{html}{\out{<div class="sourceCode
 
 When printed again, we'll also see that the row and column counts in the
 header have been updated to reflect the new dimensions of the target table.
+Furthermore, the info text in the \code{ROWS} section has updated text
+(\code{"There are 26 rows available."}).
 
 \if{html}{
 

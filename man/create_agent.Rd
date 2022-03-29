@@ -279,6 +279,7 @@ a given target table.
 
 \section{Demos}{
 
+\subsection{Creating an agent, adding a validation plan, and interrogating}{
 
 Let's walk through a data quality analysis of an extremely small table. It's
 actually called \code{small_table} and we can find it as a dataset in this
@@ -303,7 +304,7 @@ package.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table
 
 We ought to think about what's tolerable in terms of data quality so let's
 designate proportional failure thresholds to the \code{warn}, \code{stop}, and \code{notify}
-states using \code{action_levels()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <- 
+states using \code{\link[=action_levels]{action_levels()}}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <- 
   action_levels(
       warn_at = 0.10,
       stop_at = 0.25,
@@ -318,14 +319,14 @@ We also provide a target table and we'll use \code{pointblank::small_table}.\if{
   create_agent(
     tbl = pointblank::small_table,
     tbl_name = "small_table",
-    label = "An example.",
+    label = "`create_agent()` example.",
     actions = al
   )
 }\if{html}{\out{</div>}}
 
 Then, as with any \code{agent} object, we can add steps to the validation plan by
-using as many validation functions as we want. then, we use \code{interrogate()}
-to physically perform the validations and gather intel.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
+using as many validation functions as we want. then, we use \code{\link[=interrogate]{interrogate()}}
+to actually perform the validations and gather intel.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   agent \%>\% 
   col_exists(vars(date, date_time)) \%>\%
   col_vals_regex(
@@ -335,10 +336,6 @@ to physically perform the validations and gather intel.\if{html}{\out{<div class
   rows_distinct() \%>\%
   col_vals_gt(vars(d), value = 100) \%>\%
   col_vals_lte(vars(c), value = 5) \%>\%
-  col_vals_equal(
-    vars(d), value = vars(d),
-    na_pass = TRUE
-  ) \%>\%
   col_vals_between(
     vars(c),
     left = vars(a), right = vars(d),
@@ -347,17 +344,45 @@ to physically perform the validations and gather intel.\if{html}{\out{<div class
   interrogate()
 }\if{html}{\out{</div>}}
 
-Calling \code{agent} in the console prints the agent's report. But we can get a
-\code{gt_tbl} object directly with \code{get_agent_report(agent)}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{report <- get_agent_report(agent)
-}\if{html}{\out{</div>}}\if{html}{\out{<div class="sourceCode r">}}\preformatted{class(report)
-}\if{html}{\out{</div>}}\preformatted{## [1] "ptblank_agent_report" "gt_tbl"               "list"
+The \code{agent} object can be printed to see the information report in the
+Viewer.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent
+}\if{html}{\out{</div>}}
+
+\if{html}{
+
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_create_agent_1.png" style="width:100\%;">
+}
 }
 
-What can you do with the report object? Print it from an R Markdown code
-chunk, use it in a \strong{blastula} email, put it in a webpage, etc.
+If we want to make use of more report display options, we can alternatively
+use the \code{\link[=get_agent_report]{get_agent_report()}} function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{report <-
+  get_agent_report(
+    agent,
+    arrange_by = "severity",
+    title = "Validation of `small_table`"
+  )
 
-From the report we know that Step 4 had two test units (rows, really) that
-failed. We can see those rows with \code{get_data_extracts()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% get_data_extracts(i = 4)
+report
+}\if{html}{\out{</div>}}
+
+\if{html}{
+
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_create_agent_2.png" style="width:100\%;">
+}
+}
+}
+
+\subsection{Post-interrogation operations}{
+
+We can use the \code{agent} object with a variety of functions to get at more
+of the information collected during interrogation.
+
+We can see from the validation report that Step 4 (which used the
+\code{\link[=rows_distinct]{rows_distinct()}} validation function) had two test units, corresponding to
+duplicated rows, that failed. We can see those rows with
+\code{\link[=get_data_extracts]{get_data_extracts()}}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% get_data_extracts(i = 4)
 }\if{html}{\out{</div>}}\preformatted{## # A tibble: 2 × 8
 ##   date_time           date           a b             c     d e     f    
 ##   <dttm>              <date>     <int> <chr>     <dbl> <dbl> <lgl> <chr>
@@ -365,9 +390,8 @@ failed. We can see those rows with \code{get_data_extracts()}.\if{html}{\out{<di
 ## 2 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high
 }
 
-We can get an x-list for the whole validation (8 steps), or, just for the 4th
-step with \code{get_agent_x_list()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{xl_step_4 <-
-  agent \%>\% get_agent_x_list(i = 4)
+We can get an x-list for the entire validation process (7 steps), or, just
+for the 4th step with \code{\link[=get_agent_x_list]{get_agent_x_list()}}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{xl_step_4 <- agent \%>\% get_agent_x_list(i = 4)
 }\if{html}{\out{</div>}}
 
 And then we can peruse the different parts of the list. Let's get the
@@ -375,7 +399,7 @@ fraction of test units that failed.\if{html}{\out{<div class="sourceCode r">}}\p
 }\if{html}{\out{</div>}}\preformatted{## [1] 0.15385
 }
 
-Just printing the x-list will tell us what's available therein.\if{html}{\out{<div class="sourceCode r">}}\preformatted{xl_step_4
+Just printing the x-list will tell us what's available.\if{html}{\out{<div class="sourceCode r">}}\preformatted{xl_step_4
 }\if{html}{\out{</div>}}\preformatted{## -- The x-list for table `small_table`
 ## ---- STEP 4 ----
 ## $time_start $time_end (POSIXct [1])
@@ -392,13 +416,8 @@ Just printing the x-list will tell us what's available therein.\if{html}{\out{<d
 }
 
 An x-list not specific to any step will have way more information and a
-slightly different structure. See \code{help(get_agent_x_list)} for more info
-get_agent_x_list(agent).
+slightly different structure. See \code{help(get_agent_x_list)} for more info.
 }
-
-\section{Figures}{
-
-\if{html}{\figure{man_create_agent_1.png}{options: width=100\%}}
 }
 
 \section{Function ID}{

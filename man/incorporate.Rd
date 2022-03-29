@@ -85,9 +85,9 @@ use \code{incorporate()} to work the snippets into the info text.\if{html}{\out{
   incorporate()
 }\if{html}{\out{</div>}}
 
-\if{html}{
-
 We can print the resulting object to see the information report.
+
+\if{html}{
 
 \out{
 <img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_incorporate_1.png" style="width:100\%;">
@@ -104,10 +104,10 @@ accordingly the content of the report will be updated to keep up with the
 current state of the \code{changing_table}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- informant \%>\% incorporate()
 }\if{html}{\out{</div>}}
 
-\if{html}{
-
 When printed again, we'll also see that the row and column counts in the
 header have been updated to reflect the new dimensions of the target table.
+
+\if{html}{
 
 \out{
 <img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_incorporate_2.png" style="width:100\%;">

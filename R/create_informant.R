@@ -171,31 +171,50 @@
 #' Create a pointblank `informant` object with `create_informant()` and the
 #' `small_table` dataset.
 #' 
-#' ```{r}
+#' ```r
 #' informant <- 
 #'   create_informant(
 #'     tbl = pointblank::small_table,
 #'     tbl_name = "small_table",
-#'     label = "An example."
+#'     label = "`create_informant()` example."
 #'   )
 #' ```
 #' 
 #' This function creates some information without any extra help by profiling
-#' the supplied table object. It adds the sections: (1) 'table' and (2)
-#' 'columns' and we can print the object to see the information report.
+#' the supplied table object. It adds the `COLUMNS` section with stubs for each
+#' of the target table's columns. We can use the [info_columns()] or
+#' [info_columns_from_tbl()] to provide descriptions for each of the columns.
+#' The `informant` object can be printed to see the information report in the
+#' Viewer.
 #' 
-#' Alternatively, we can get the same report by using `get_informant_report()`.
-#' 
-#' ```{r}
-#' report <- get_informant_report(informant)
+#' ```r
+#' informant
 #' ```
 #' 
 #' \if{html}{
 #' 
-#' We can print the resulting object to see the information report.
-#' 
 #' \out{
 #' `r pb_get_image_tag(file = "man_create_informant_1.png")`
+#' }
+#' }
+#' 
+#' If we want to make use of more report display options, we can alternatively
+#' use the [get_informant_report()] function.
+#' 
+#' ```r
+#' report <- 
+#'   get_informant_report(
+#'     informant,
+#'     title = "Data Dictionary for `small_table`"
+#'   )
+#'   
+#' report
+#' ```
+#' 
+#' \if{html}{
+#' 
+#' \out{
+#' `r pb_get_image_tag(file = "man_create_informant_2.png")`
 #' }
 #' }
 #' 

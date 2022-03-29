@@ -188,23 +188,39 @@ Create a pointblank \code{informant} object with \code{create_informant()} and t
   create_informant(
     tbl = pointblank::small_table,
     tbl_name = "small_table",
-    label = "An example."
+    label = "`create_informant()` example."
   )
 }\if{html}{\out{</div>}}
 
 This function creates some information without any extra help by profiling
-the supplied table object. It adds the sections: (1) 'table' and (2)
-'columns' and we can print the object to see the information report.
-
-Alternatively, we can get the same report by using \code{get_informant_report()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{report <- get_informant_report(informant)
+the supplied table object. It adds the \code{COLUMNS} section with stubs for each
+of the target table's columns. We can use the \code{\link[=info_columns]{info_columns()}} or
+\code{\link[=info_columns_from_tbl]{info_columns_from_tbl()}} to provide descriptions for each of the columns.
+The \code{informant} object can be printed to see the information report in the
+Viewer.\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant
 }\if{html}{\out{</div>}}
 
 \if{html}{
 
-We can print the resulting object to see the information report.
-
 \out{
 <img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_create_informant_1.png" style="width:100\%;">
+}
+}
+
+If we want to make use of more report display options, we can alternatively
+use the \code{\link[=get_informant_report]{get_informant_report()}} function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{report <- 
+  get_informant_report(
+    informant,
+    title = "Data Dictionary for `small_table`"
+  )
+  
+report
+}\if{html}{\out{</div>}}
+
+\if{html}{
+
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_create_informant_2.png" style="width:100\%;">
 }
 }
 }

@@ -84,9 +84,9 @@
 #'   ) %>%
 #'   incorporate()
 #' ```
-#' \if{html}{
-#' 
 #' We can print the resulting object to see the information report.
+#' 
+#' \if{html}{
 #' 
 #' \out{
 #' `r pb_get_image_tag(file = "man_incorporate_1.png")`
@@ -109,10 +109,10 @@
 #' informant <- informant %>% incorporate()
 #' ```
 #' 
-#' \if{html}{
-#' 
 #' When printed again, we'll also see that the row and column counts in the
 #' header have been updated to reflect the new dimensions of the target table.
+#' 
+#' \if{html}{
 #' 
 #' \out{
 #' `r pb_get_image_tag(file = "man_incorporate_2.png")`

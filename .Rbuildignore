@@ -10,6 +10,7 @@
 ^docs$
 ^scripts$
 ^icons$
+^images$
 ^pkgdown$
 ^CRAN-RELEASE$
 ^data-raw$

@@ -298,20 +298,24 @@ dataset in this package.</p><div class="sourceCode r"><pre><code><span class="va
   <span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span>
     tbl <span class="op">=</span> <span class="fu">pointblank</span><span class="fu">::</span><span class="va"><a href="../reference/small_table.html">small_table</a></span>,
     tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,
-    label <span class="op">=</span> <span class="st">"An example."</span>
+    label <span class="op">=</span> <span class="st">"`create_informant()` example."</span>
   <span class="op">)</span></code></pre><p></p></div>
 <p>This function creates some information without any extra help by profiling
-the supplied table object. It adds the sections: (1) 'table' and (2)
-'columns' and we can print the object to see the information report.</p>
-<p>Alternatively, we can get the same report by using <code><a href="get_informant_report.html">get_informant_report()</a></code>.</p><div class="sourceCode r"><pre><code><span class="va">report</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_informant_report.html">get_informant_report</a></span><span class="op">(</span><span class="va">informant</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode r"><pre><code><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">report</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] "ptblank_informant_report" "gt_tbl"                  </span>
-<span class="co">## [3] "list"</span></code></pre></div>
-
-    </div>
-    <div class="section level2">
-    <h2 id="figures">Figures<a class="anchor" aria-label="anchor" href="#figures"></a></h2>
-    
-
-<p><img src="figures/man_create_informant_1.png" width="100%"></p>
+the supplied table object. It adds the <code>COLUMNS</code> section with stubs for each
+of the target table's columns. We can use the <code><a href="info_columns.html">info_columns()</a></code> or
+<code><a href="info_columns_from_tbl.html">info_columns_from_tbl()</a></code> to provide descriptions for each of the columns.
+The <code>informant</code> object can be printed to see the information report in the
+Viewer.</p><div class="sourceCode r"><pre><code><span class="va">informant</span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_create_informant_1.png" style="width:100%;"></p>
+<p>If we want to make use of more report display options, we can alternatively
+use the <code><a href="get_informant_report.html">get_informant_report()</a></code> function.</p><div class="sourceCode r"><pre><code><span class="va">report</span> <span class="op">&lt;-</span> 
+  <span class="fu"><a href="../reference/get_informant_report.html">get_informant_report</a></span><span class="op">(</span>
+    <span class="va">informant</span>,
+    title <span class="op">=</span> <span class="st">"Data Dictionary for `small_table`"</span>
+  <span class="op">)</span>
+  
+<span class="va">report</span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_create_informant_2.png" style="width:100%;"></p>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>

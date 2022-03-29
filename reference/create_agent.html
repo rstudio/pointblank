@@ -359,6 +359,9 @@ a given target table.</p>
     <h2 id="demos">Demos<a class="anchor" aria-label="anchor" href="#demos"></a></h2>
     
 
+<div class="section">
+<h3 id="creating-an-agent-adding-a-validation-plan-and-interrogating">Creating an agent, adding a validation plan, and interrogating<a class="anchor" aria-label="anchor" href="#creating-an-agent-adding-a-validation-plan-and-interrogating"></a></h3>
+
 
 <p>Let's walk through a data quality analysis of an extremely small table. It's
 actually called <code>small_table</code> and we can find it as a dataset in this
@@ -394,12 +397,12 @@ We also provide a target table and we'll use <code><a href="small_table.html">po
   <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>
     tbl <span class="op">=</span> <span class="fu">pointblank</span><span class="fu">::</span><span class="va"><a href="../reference/small_table.html">small_table</a></span>,
     tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,
-    label <span class="op">=</span> <span class="st">"An example."</span>,
+    label <span class="op">=</span> <span class="st">"`create_agent()` example."</span>,
     actions <span class="op">=</span> <span class="va">al</span>
   <span class="op">)</span></code></pre><p></p></div>
 <p>Then, as with any <code>agent</code> object, we can add steps to the validation plan by
 using as many validation functions as we want. then, we use <code><a href="interrogate.html">interrogate()</a></code>
-to physically perform the validations and gather intel.</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span>
+to actually perform the validations and gather intel.</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span>
   <span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/col_exists.html">col_exists</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">date_time</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span>
@@ -409,35 +412,48 @@ to physically perform the validations and gather intel.</p><div class="sourceCod
   <span class="fu"><a href="../reference/rows_distinct.html">rows_distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/col_vals_lte.html">col_vals_lte</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_equal.html">col_vals_equal</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, value <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>,
-    na_pass <span class="op">=</span> <span class="cn">TRUE</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span>
     <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>,
     left <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, right <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>,
     na_pass <span class="op">=</span> <span class="cn">TRUE</span>
   <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
-<p>Calling <code>agent</code> in the console prints the agent's report. But we can get a
-<code>gt_tbl</code> object directly with <code>get_agent_report(agent)</code>.</p><div class="sourceCode r"><pre><code><span class="va">report</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_agent_report.html">get_agent_report</a></span><span class="op">(</span><span class="va">agent</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode r"><pre><code><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">report</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] "ptblank_agent_report" "gt_tbl"               "list"</span></code></pre></div>
+<p>The <code>agent</code> object can be printed to see the information report in the
+Viewer.</p><div class="sourceCode r"><pre><code><span class="va">agent</span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_create_agent_1.png" style="width:100%;"></p>
+<p>If we want to make use of more report display options, we can alternatively
+use the <code><a href="get_agent_report.html">get_agent_report()</a></code> function.</p><div class="sourceCode r"><pre><code><span class="va">report</span> <span class="op">&lt;-</span>
+  <span class="fu"><a href="../reference/get_agent_report.html">get_agent_report</a></span><span class="op">(</span>
+    <span class="va">agent</span>,
+    arrange_by <span class="op">=</span> <span class="st">"severity"</span>,
+    title <span class="op">=</span> <span class="st">"Validation of `small_table`"</span>
+  <span class="op">)</span>
 
-<p>What can you do with the report object? Print it from an R Markdown code
-chunk, use it in a <strong>blastula</strong> email, put it in a webpage, etc.</p>
-<p>From the report we know that Step 4 had two test units (rows, really) that
-failed. We can see those rows with <code><a href="get_data_extracts.html">get_data_extracts()</a></code>.</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/get_data_extracts.html">get_data_extracts</a></span><span class="op">(</span>i <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 2 × 8</span>
+<span class="va">report</span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_create_agent_2.png" style="width:100%;"></p>
+</div>
+
+<div class="section">
+<h3 id="post-interrogation-operations">Post-interrogation operations<a class="anchor" aria-label="anchor" href="#post-interrogation-operations"></a></h3>
+
+
+<p>We can use the <code>agent</code> object with a variety of functions to get at more
+of the information collected during interrogation.</p>
+<p>We can see from the validation report that Step 4 (which used the
+<code><a href="rows_distinct.html">rows_distinct()</a></code> validation function) had two test units, corresponding to
+duplicated rows, that failed. We can see those rows with
+<code><a href="get_data_extracts.html">get_data_extracts()</a></code>.</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/get_data_extracts.html">get_data_extracts</a></span><span class="op">(</span>i <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 2 × 8</span>
 <span class="co">##   date_time           date           a b             c     d e     f    </span>
 <span class="co">##   &lt;dttm&gt;              &lt;date&gt;     &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;</span>
 <span class="co">## 1 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high </span>
 <span class="co">## 2 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high</span></code></pre></div>
 
-<p>We can get an x-list for the whole validation (8 steps), or, just for the 4th
-step with <code><a href="get_agent_x_list.html">get_agent_x_list()</a></code>.</p><div class="sourceCode r"><pre><code><span class="va">xl_step_4</span> <span class="op">&lt;-</span>
-  <span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/get_agent_x_list.html">get_agent_x_list</a></span><span class="op">(</span>i <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></code></pre><p></p></div>
+<p>We can get an x-list for the entire validation process (7 steps), or, just
+for the 4th step with <code><a href="get_agent_x_list.html">get_agent_x_list()</a></code>.</p><div class="sourceCode r"><pre><code><span class="va">xl_step_4</span> <span class="op">&lt;-</span> <span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/get_agent_x_list.html">get_agent_x_list</a></span><span class="op">(</span>i <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></code></pre><p></p></div>
 <p>And then we can peruse the different parts of the list. Let's get the
 fraction of test units that failed.</p><div class="sourceCode r"><pre><code><span class="va">xl_step_4</span><span class="op">$</span><span class="va">f_failed</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] 0.15385</span></code></pre></div>
 
-<p>Just printing the x-list will tell us what's available therein.</p><div class="sourceCode r"><pre><code><span class="va">xl_step_4</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## -- The x-list for table `small_table`</span>
+<p>Just printing the x-list will tell us what's available.</p><div class="sourceCode r"><pre><code><span class="va">xl_step_4</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## -- The x-list for table `small_table`</span>
 <span class="co">## ---- STEP 4 ----</span>
 <span class="co">## $time_start $time_end (POSIXct [1])</span>
 <span class="co">## $label $tbl_name $tbl_src $tbl_src_details (chr [1])</span>
@@ -452,14 +468,9 @@ fraction of test units that failed.</p><div class="sourceCode r"><pre><code><spa
 <span class="co">## ----</span></code></pre></div>
 
 <p>An x-list not specific to any step will have way more information and a
-slightly different structure. See <code><a href="get_agent_x_list.html">help(get_agent_x_list)</a></code> for more info
-get_agent_x_list(agent).</p>
-    </div>
-    <div class="section level2">
-    <h2 id="figures">Figures<a class="anchor" aria-label="anchor" href="#figures"></a></h2>
-    
+slightly different structure. See <code><a href="get_agent_x_list.html">help(get_agent_x_list)</a></code> for more info.</p>
+</div>
 
-<p><img src="figures/man_create_agent_1.png" width="100%"></p>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>

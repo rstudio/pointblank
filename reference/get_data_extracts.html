@@ -142,6 +142,60 @@ all data extract tables will be provided in a list object.</p></dd>
 <code>i</code> is given.</p>
     </div>
     <div class="section level2">
+    <h2 id="demos">Demos<a class="anchor" aria-label="anchor" href="#demos"></a></h2>
+    
+
+
+<p>Create a series of two validation steps focused on testing row values for
+part of the <code>small_table</code> object. <code><a href="interrogate.html">interrogate()</a></code> immediately.</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span>
+  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>
+    tbl <span class="op">=</span> <span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">a</span><span class="op">:</span><span class="va">f</span><span class="op">)</span>,
+    label <span class="op">=</span> <span class="st">"`get_data_extracts()`"</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>,
+    left <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, right <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>,
+    na_pass <span class="op">=</span> <span class="cn">TRUE</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
+<p>Using <code>get_data_extracts()</code> with its defaults returns of a list of tables,
+where each table is named after the validation step that has an extract
+available.</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/get_data_extracts.html">get_data_extracts</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## $`1`</span>
+<span class="co">## # A tibble: 6 × 6</span>
+<span class="co">##       a b             c     d e     f    </span>
+<span class="co">##   &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;</span>
+<span class="co">## 1     8 3-ldm-038     7  284. TRUE  low  </span>
+<span class="co">## 2     7 1-knw-093     3  843. TRUE  high </span>
+<span class="co">## 3     3 5-bce-642     9  838. FALSE high </span>
+<span class="co">## 4     3 5-bce-642     9  838. FALSE high </span>
+<span class="co">## 5     4 2-dmx-010     7  834. TRUE  low  </span>
+<span class="co">## 6     2 7-dmx-010     8  108. FALSE low  </span>
+<span class="co">## </span>
+<span class="co">## $`2`</span>
+<span class="co">## # A tibble: 4 × 6</span>
+<span class="co">##       a b             c     d e     f    </span>
+<span class="co">##   &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;</span>
+<span class="co">## 1     6 8-kdg-938     3 2343. TRUE  high </span>
+<span class="co">## 2     8 3-ldm-038     7  284. TRUE  low  </span>
+<span class="co">## 3     7 1-knw-093     3  843. TRUE  high </span>
+<span class="co">## 4     4 5-boe-639     2 1036. FALSE low</span></code></pre></div>
+
+<p>We can get an extract for a specific step by specifying it in the <code>i</code>
+argument. Let's get the failing rows from the first validation step (the
+<code><a href="col_vals_gt.html">col_vals_gt()</a></code> one).</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/get_data_extracts.html">get_data_extracts</a></span><span class="op">(</span>i <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 6 × 6</span>
+<span class="co">##       a b             c     d e     f    </span>
+<span class="co">##   &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;</span>
+<span class="co">## 1     8 3-ldm-038     7  284. TRUE  low  </span>
+<span class="co">## 2     7 1-knw-093     3  843. TRUE  high </span>
+<span class="co">## 3     3 5-bce-642     9  838. FALSE high </span>
+<span class="co">## 4     3 5-bce-642     9  838. FALSE high </span>
+<span class="co">## 5     4 2-dmx-010     7  834. TRUE  low  </span>
+<span class="co">## 6     2 7-dmx-010     8  108. FALSE low</span></code></pre></div>
+
+    </div>
+    <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
     
 
@@ -156,71 +210,6 @@ all data extract tables will be provided in a list object.</p></dd>
 <code><a href="write_testthat_file.html">write_testthat_file</a>()</code></p></div>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Create a series of two validation</span></span>
-<span class="r-in"><span class="co"># steps focused on testing row values</span></span>
-<span class="r-in"><span class="co"># for part of the `small_table` object;</span></span>
-<span class="r-in"><span class="co"># `interrogate()` immediately</span></span>
-<span class="r-in"><span class="va">agent</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="create_agent.html">create_agent</a></span><span class="op">(</span></span>
-<span class="r-in">    tbl <span class="op">=</span> <span class="va">small_table</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">a</span><span class="op">:</span><span class="va">f</span><span class="op">)</span>,</span>
-<span class="r-in">    label <span class="op">=</span> <span class="st">"`get_data_extracts()`"</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_between.html">col_vals_between</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>,</span>
-<span class="r-in">    left <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, right <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>,</span>
-<span class="r-in">    na_pass <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Using `get_data_extracts()` with its</span></span>
-<span class="r-in"><span class="co"># defaults returns of a list of tables,</span></span>
-<span class="r-in"><span class="co"># where each table is named after the</span></span>
-<span class="r-in"><span class="co"># validation step that has an extract</span></span>
-<span class="r-in"><span class="co"># available</span></span>
-<span class="r-in"><span class="va">agent</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">get_data_extracts</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       a b             c     d e     f    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     8 3-ldm-038     7  284. TRUE  low  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>     7 1-knw-093     3  843. TRUE  high </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>     3 5-bce-642     9  838. FALSE high </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>     3 5-bce-642     9  838. FALSE high </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>     4 2-dmx-010     7  834. TRUE  low  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span>     2 7-dmx-010     8  108. FALSE low  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       a b             c     d e     f    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     6 8-kdg-938     3 <span style="text-decoration: underline;">2</span>343. TRUE  high </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>     8 3-ldm-038     7  284. TRUE  low  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>     7 1-knw-093     3  843. TRUE  high </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>     4 5-boe-639     2 <span style="text-decoration: underline;">1</span>036. FALSE low  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># We can get an extract for a specific</span></span>
-<span class="r-in"><span class="co"># step by specifying it in the `i`</span></span>
-<span class="r-in"><span class="co"># argument; let's get the failing rows</span></span>
-<span class="r-in"><span class="co"># from the first validation step</span></span>
-<span class="r-in"><span class="co"># (`col_vals_gt`)</span></span>
-<span class="r-in"><span class="va">agent</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">get_data_extracts</span><span class="op">(</span>i <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       a b             c     d e     f    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     8 3-ldm-038     7  284. TRUE  low  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>     7 1-knw-093     3  843. TRUE  high </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>     3 5-bce-642     9  838. FALSE high </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>     3 5-bce-642     9  838. FALSE high </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>     4 2-dmx-010     7  834. TRUE  low  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span>     2 7-dmx-010     8  108. FALSE low  </span>
-<span class="r-in"></span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

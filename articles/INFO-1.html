@@ -238,7 +238,7 @@ This is an excerpt of the complete report, showing just the report header and th
     `ℹ️` <span class="op">=</span> <span class="st">"An integer denoting flipper length"</span>
   <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/tidyselect/man/starts_with.html" class="external-link">ends_with</a></span><span class="op">(</span><span class="st">"mm"</span><span class="op">)</span>,
+    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with</a></span><span class="op">(</span><span class="st">"mm"</span><span class="op">)</span>,
     `ℹ️` <span class="op">=</span> <span class="st">"(in units of millimeters)."</span>
   <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
@@ -260,18 +260,18 @@ This is an excerpt of the complete report, showing just the report header and th
 species, A factor denoting penguin species (Adélie, Chinstrap, and Gentoo); (2) island, A factor denoting island in Palmer Archipelago, Antarctica (Biscoe, Dream, or Torgersen); (3) bill_length_mm, A number denoting bill length (in units of millimeters); (4) bill_depth_mm, A number denoting bill depth (in units of millimeters); (5) flipper_length_mm, An integer denoting flipper length (in units of millimeters); (6) body_mass_g, An integer denoting body mass (grams).; (7) sex, A factor denoting penguin sex (female, male); and (8) year, The study year (e.g., 2007, 2008, 2009)." width="80%">
 </div>
 <p><br></p>
-<p>We are able to provide subsections with the name <code>ℹ️</code> and, furthermore, use <strong>tidyselect</strong> functions like <code><a href="https://rdrr.io/pkg/tidyselect/man/starts_with.html" class="external-link">ends_with()</a></code> to append <em>info text</em> to a common subsection that exists across multiple columns. This was useful for stating the units which were common across three columns: <code>bill_length_mm</code>, <code>bill_depth_mm</code>, and <code>flipper_length_mm</code>. The following <strong>tidyselect</strong> functions are available in <strong>pointblank</strong> to make this process easier:</p>
+<p>We are able to provide subsections with the name <code>ℹ️</code> and, furthermore, use <strong>tidyselect</strong> functions like <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code> to append <em>info text</em> to a common subsection that exists across multiple columns. This was useful for stating the units which were common across three columns: <code>bill_length_mm</code>, <code>bill_depth_mm</code>, and <code>flipper_length_mm</code>. The following <strong>tidyselect</strong> functions are available in <strong>pointblank</strong> to make this process easier:</p>
 <ul>
 <li>
-<code><a href="https://rdrr.io/pkg/tidyselect/man/starts_with.html" class="external-link">starts_with()</a></code>: Match columns that start with a prefix.</li>
+<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>: Match columns that start with a prefix.</li>
 <li>
-<code><a href="https://rdrr.io/pkg/tidyselect/man/starts_with.html" class="external-link">ends_with()</a></code>: Match columns that end with a suffix.</li>
+<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>: Match columns that end with a suffix.</li>
 <li>
-<code><a href="https://rdrr.io/pkg/tidyselect/man/starts_with.html" class="external-link">contains()</a></code>: Match columns that contain a literal string.</li>
+<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>: Match columns that contain a literal string.</li>
 <li>
-<code><a href="https://rdrr.io/pkg/tidyselect/man/starts_with.html" class="external-link">matches()</a></code>: Perform matching with a regular expression.</li>
+<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches()</a></code>: Perform matching with a regular expression.</li>
 <li>
-<code><a href="https://rdrr.io/pkg/tidyselect/man/everything.html" class="external-link">everything()</a></code>: Select all columns.</li>
+<code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>: Select all columns.</li>
 </ul>
 </div>
 <div class="section level2">

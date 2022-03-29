@@ -284,6 +284,66 @@ step.</p></dd>
     <p>A <code>list</code> object.</p>
     </div>
     <div class="section level2">
+    <h2 id="demos">Demos<a class="anchor" aria-label="anchor" href="#demos"></a></h2>
+    
+
+
+<p>Create a simple data frame with a column of numerical values.</p><div class="sourceCode r"><pre><code><span class="va">tbl</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">8</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">tbl</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 4 × 1</span>
+<span class="co">##       a</span>
+<span class="co">##   &lt;dbl&gt;</span>
+<span class="co">## 1     5</span>
+<span class="co">## 2     7</span>
+<span class="co">## 3     8</span>
+<span class="co">## 4     5</span></code></pre></div>
+
+<p>Create an <code><a href="action_levels.html">action_levels()</a></code> list with fractional values for the <code>warn</code>,
+<code>stop</code>, and <code>notify</code> states.</p><div class="sourceCode r"><pre><code><span class="va">al</span> <span class="op">&lt;-</span>
+  <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span>
+    warn_at <span class="op">=</span> <span class="fl">0.2</span>,
+    stop_at <span class="op">=</span> <span class="fl">0.8</span>,
+    notify_at <span class="op">=</span> <span class="fl">0.345</span>
+  <span class="op">)</span>
+  
+<span class="va">al</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## -- The `action_levels` settings</span>
+<span class="co">## WARN failure threshold of 0.2 of all test units.</span>
+<span class="co">## STOP failure threshold of 0.8 of all test units.</span>
+<span class="co">## NOTIFY failure threshold of 0.345 of all test units.</span>
+<span class="co">## ----</span></code></pre></div>
+
+<p>Create an agent (giving it the <code>tbl</code> and the <code>al</code> objects), supply two
+validation step functions, then interrogate.</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span>
+  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>
+    tbl <span class="op">=</span> <span class="va">tbl</span>,
+    actions <span class="op">=</span> <span class="va">al</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">7</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_is_numeric.html">col_is_numeric</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
+<p>Get the agent x-list.</p><div class="sourceCode r"><pre><code><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_agent_x_list.html">get_agent_x_list</a></span><span class="op">(</span><span class="va">agent</span><span class="op">)</span>
+
+<span class="va">x</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## -- The x-list for table `tbl`</span>
+<span class="co">## ---- ALL STEPS ----</span>
+<span class="co">## $time_start $time_end (POSIXct [1])</span>
+<span class="co">## $label $tbl_name $tbl_src $tbl_src_details (chr [1])</span>
+<span class="co">## $tbl (tbl_df tbl data.frame)</span>
+<span class="co">## $col_names $col_types (chr [1])</span>
+<span class="co">## $i $type $columns $values $label $briefs (mixed [2])</span>
+<span class="co">## $eval_error $eval_warning (lgl [2])</span>
+<span class="co">## $capture_stack (list [2])</span>
+<span class="co">## $n $n_passed $n_failed $f_passed $f_failed (num [2])</span>
+<span class="co">## $warn $stop $notify (lgl [2])</span>
+<span class="co">## $validation_set (tbl_df [2, 35])</span>
+<span class="co">## $lang (chr [1])</span>
+<span class="co">## $report_object (blastula_message)</span>
+<span class="co">## $report_html $report_html_small (chr [1])</span>
+<span class="co">## ----</span></code></pre></div>
+
+<p>Get the <code>f_passed</code> component of the x-list <code>x</code>.</p><div class="sourceCode r"><pre><code><span class="va">x</span><span class="op">$</span><span class="va">f_passed</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] 0.25 1.00</span></code></pre></div>
+
+    </div>
+    <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
     
 
@@ -298,64 +358,6 @@ step.</p></dd>
 <code><a href="write_testthat_file.html">write_testthat_file</a>()</code></p></div>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Create a simple data frame with</span></span>
-<span class="r-in"><span class="co"># a column of numerical values</span></span>
-<span class="r-in"><span class="va">tbl</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">8</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Create an `action_levels()` list</span></span>
-<span class="r-in"><span class="co"># with fractional values for the</span></span>
-<span class="r-in"><span class="co"># `warn`, `stop`, and `notify` states</span></span>
-<span class="r-in"><span class="va">al</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="action_levels.html">action_levels</a></span><span class="op">(</span></span>
-<span class="r-in">    warn_at <span class="op">=</span> <span class="fl">0.2</span>,</span>
-<span class="r-in">    stop_at <span class="op">=</span> <span class="fl">0.8</span>,</span>
-<span class="r-in">    notify_at <span class="op">=</span> <span class="fl">0.345</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Create an agent (giving it the</span></span>
-<span class="r-in"><span class="co"># `tbl` and the `al` objects),</span></span>
-<span class="r-in"><span class="co"># supply two validation step</span></span>
-<span class="r-in"><span class="co"># functions, then interrogate</span></span>
-<span class="r-in"><span class="va">agent</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="create_agent.html">create_agent</a></span><span class="op">(</span></span>
-<span class="r-in">    tbl <span class="op">=</span> <span class="va">tbl</span>,</span>
-<span class="r-in">    actions <span class="op">=</span> <span class="va">al</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">7</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_is_numeric.html">col_is_numeric</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in">  </span>
-<span class="r-in"><span class="co"># Get the agent x-list</span></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">get_agent_x_list</span><span class="op">(</span><span class="va">agent</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Print the x-list object `x`</span></span>
-<span class="r-in"><span class="va">x</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── The x-list for `tbl` ─────────────────────────────────────────── ALL STEPS ──</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">$time_start $time_end</span> (<span style="color: #BB0000;">POSIXct [1]</span>)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">$label $tbl_name $tbl_src $tbl_src_details</span> (<span style="color: #BB0000;">chr [1]</span>)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">$tbl</span> (<span style="color: #0000BB;">tbl_df</span>, <span style="color: #0000BB;">tbl</span>, and <span style="color: #0000BB;">data.frame</span>)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">$col_names $col_types</span> (<span style="color: #BB0000;">chr [1]</span>)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">$i $type $columns $values $label $briefs</span> (<span style="color: #00BB00;">mixed [2]</span>)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">$eval_error $eval_warning</span> (<span style="color: #BBBB00;">lgl [2]</span>)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">$capture_stack</span> (<span style="color: #FFAF00;">list [2]</span>)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">$n $n_passed $n_failed $f_passed $f_failed</span> (<span style="color: #00BB00;">num [2]</span>)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">$warn $stop $notify</span> (<span style="color: #BBBB00;">lgl [2]</span>)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">$validation_set</span> (<span style="color: #0000BB;">tbl_df [2, 35]</span>)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">$lang</span> (<span style="color: #BB0000;">chr [1]</span>)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">$report_object</span> (<span style="color: #FFD7D7;">gt_tbl</span>)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">$email_object</span> (<span style="color: #FFD7D7;">blastula_message</span>)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">$report_html $report_html_small</span> (<span style="color: #BB0000;">chr [1]</span>)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ────────────────────────────────────────────────────────────────────────────────</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Get the `f_passed` component</span></span>
-<span class="r-in"><span class="co"># of the x-list</span></span>
-<span class="r-in"><span class="va">x</span><span class="op">$</span><span class="va">f_passed</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.25 1.00</span>
-<span class="r-in"></span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

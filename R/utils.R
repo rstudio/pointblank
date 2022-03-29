@@ -1525,3 +1525,12 @@ print_time <- function(time_diff_s) {
     )
   }
 }
+
+pb_get_image_tag <- function(file, dir = "images") {
+  
+  repo_url <- "https://raw.githubusercontent.com/rich-iannone/pointblank/main"
+  
+  image_url <- file.path(repo_url, dir, file)
+  
+  paste0("<img src=\"", image_url, "\" style=\"width:100%;\">")
+}

@@ -88,7 +88,7 @@ process.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
 We can print the resulting object to see the information report.
 
 \out{
-<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_interrogate_1.png" style="width:100%;">
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_interrogate_1.png" style="width:100\%;">
 }
 }
 }

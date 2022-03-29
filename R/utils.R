@@ -1532,5 +1532,5 @@ pb_get_image_tag <- function(file, dir = "images") {
   
   image_url <- file.path(repo_url, dir, file)
   
-  paste0("<img src=\"", image_url, "\" style=\"width:100%;\">")
+  paste0("<img src=\"", image_url, "\" style=\"width:100\\%;\">")
 }

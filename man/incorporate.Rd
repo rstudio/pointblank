@@ -22,29 +22,41 @@ updated (getting the current state of table dimensions, re-rendering the
 info text, etc.) and we can print the \emph{informant} object or use the
 \code{\link[=get_informant_report]{get_informant_report()}} function to see the information report.
 }
-\section{Function ID}{
+\section{Demos}{
 
-7-1
+
+Take the \code{small_table} and assign it to \code{changing_table} (we'll modify it
+later):\if{html}{\out{<div class="sourceCode r">}}\preformatted{changing_table <- small_table
+
+changing_table
+}\if{html}{\out{</div>}}\preformatted{## # A tibble: 13 × 8
+##    date_time           date           a b             c      d e     f    
+##    <dttm>              <date>     <int> <chr>     <dbl>  <dbl> <lgl> <chr>
+##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high 
+##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-163     8 10000. TRUE  low  
+##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3  2343. TRUE  high 
+##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-903    NA  3892. FALSE mid  
+##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-038     7   284. TRUE  low  
+##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-923     4  3291. TRUE  mid  
+##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3   843. TRUE  high 
+##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-639     2  1036. FALSE low  
+##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
+## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
+## 11 2016-01-26 20:07:00 2016-01-26     4 2-dmx-010     7   834. TRUE  low  
+## 12 2016-01-28 02:51:00 2016-01-28     2 7-dmx-010     8   108. FALSE low  
+## 13 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA  2230. TRUE  high
 }
 
-\examples{
-if (interactive()) {
-
-# Take the `small_table` and
-# assign it to `test_table`; we'll
-# modify it later
-test_table <- small_table
-
-# Generate an informant object, add
-# two snippets with `info_snippet()`,
-# add information with some other
-# `info_*()` functions and then
-# `incorporate()` the snippets into
-# the info text
-informant <- 
+Use \code{\link[=create_informant]{create_informant()}} to generate an informant object with
+\code{changing_table} given to the \code{tbl} argument with a leading \code{~} (ensures that
+the table will be fetched each time it is needed, instead of being statically
+stored in the object). We'll add two snippets with \code{\link[=info_snippet]{info_snippet()}}, add
+information with the \code{\link[=info_columns]{info_columns()}} and \code{\link[=info_section]{info_section()}} functions and then
+use \code{incorporate()} to work the snippets into the info text.\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- 
   create_informant(
-    tbl = ~ test_table,
-    tbl_name = "test_table"
+    tbl = ~ changing_table,
+    tbl_name = "changing_table",
+    label = "`informant()` example"
   ) \%>\%
   info_snippet(
     snippet_name = "row_count",
@@ -68,33 +80,46 @@ informant <-
   ) \%>\%
   info_section(
     section_name = "rows",
-    row_count = "There are {row_count} rows available."
+    row_count = "There are \{row_count\} rows available."
   ) \%>\%
   incorporate()
+}\if{html}{\out{</div>}}
 
-# We can print the `informant` object
-# to see the information report
+\if{html}{
 
-# Let's modify `test_table` to give
-# it more rows and an extra column
-test_table <- 
-  dplyr::bind_rows(test_table, test_table) \%>\%
+We can print the resulting object to see the information report.
+
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_incorporate_1.png" style="width:100%;">
+}
+}
+
+Let's modify \code{test_table} to give it more rows and an extra column.\if{html}{\out{<div class="sourceCode r">}}\preformatted{changing_table <- 
+  dplyr::bind_rows(changing_table, changing_table) \%>\%
   dplyr::mutate(h = a + c)
+}\if{html}{\out{</div>}}
 
-# Using `incorporate()` will cause
-# the snippets to be reprocessed, and,
-# the strings to be updated
-informant <-
-  informant \%>\% incorporate()
-  
-# When printed again, we'll see that the
-# row and column counts in the header
-# have been updated to reflect the
-# changed `test_table`
+Using \code{incorporate()} will cause the snippets to be reprocessed and
+accordingly the content of the report will be updated to keep up with the
+current state of the \code{changing_table}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- informant \%>\% incorporate()
+}\if{html}{\out{</div>}}
 
+\if{html}{
+
+When printed again, we'll also see that the row and column counts in the
+header have been updated to reflect the new dimensions of the target table.
+
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_incorporate_2.png" style="width:100%;">
+}
+}
 }
 
+\section{Function ID}{
+
+7-1
 }
+
 \seealso{
 Other Incorporate and Report: 
 \code{\link{get_informant_report}()}

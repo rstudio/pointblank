@@ -50,27 +50,41 @@
 #'   
 #' @return A `ptblank_agent` object.
 #'   
-#' @examples
-#' if (interactive()) {
+#' @section Demos:
+#'  
+#' Create a simple table with two columns of numerical values.
 #' 
-#' # Create a simple table with two
-#' # columns of numerical values
+#' ```{r}
 #' tbl <-
 #'   dplyr::tibble(
 #'     a = c(5, 7, 6, 5, 8, 7),
 #'     b = c(7, 1, 0, 0, 0, 3)
 #'   )
 #' 
-#' # Validate that values in column
-#' # `a` from `tbl` are always > 5,
-#' # using `interrogate()` carries out
-#' # the validation plan and completes
-#' # the whole process
+#' tbl
+#' ```
+#' 
+#' Validate that values in column `a` from `tbl` are always less than `5`. Using
+#' `interrogate()` carries out the validation plan and completes the whole
+#' process.
+#' 
+#' ```{r}
 #' agent <-
-#'   create_agent(tbl = tbl) %>%
+#'   create_agent(
+#'     tbl = tbl,
+#'     label = "`interrogate()` example"
+#'   ) %>%
 #'   col_vals_gt(vars(a), value = 5) %>%
 #'   interrogate()
+#' ```
 #' 
+#' \if{html}{
+#' 
+#' We can print the resulting object to see the information report.
+#' 
+#' \out{
+#' `r pb_get_image_tag(file = "man_interrogate_1.png")`
+#' }
 #' }
 #' 
 #' @family Interrogate and Report

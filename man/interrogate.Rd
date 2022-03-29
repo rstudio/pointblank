@@ -51,35 +51,53 @@ according its plan. After that, the agent will have gathered intel, and we
 can use functions like \code{\link[=get_agent_report]{get_agent_report()}} and \code{\link[=all_passed]{all_passed()}} to understand
 how the interrogation went down.
 }
-\section{Function ID}{
+\section{Demos}{
 
-6-1
-}
 
-\examples{
-if (interactive()) {
-
-# Create a simple table with two
-# columns of numerical values
-tbl <-
+Create a simple table with two columns of numerical values.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <-
   dplyr::tibble(
     a = c(5, 7, 6, 5, 8, 7),
     b = c(7, 1, 0, 0, 0, 3)
   )
 
-# Validate that values in column
-# `a` from `tbl` are always > 5,
-# using `interrogate()` carries out
-# the validation plan and completes
-# the whole process
-agent <-
-  create_agent(tbl = tbl) \%>\%
+tbl
+}\if{html}{\out{</div>}}\preformatted{## # A tibble: 6 × 2
+##       a     b
+##   <dbl> <dbl>
+## 1     5     7
+## 2     7     1
+## 3     6     0
+## 4     5     0
+## 5     8     0
+## 6     7     3
+}
+
+Validate that values in column \code{a} from \code{tbl} are always less than \code{5}. Using
+\code{interrogate()} carries out the validation plan and completes the whole
+process.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
+  create_agent(
+    tbl = tbl,
+    label = "`interrogate()` example"
+  ) \%>\%
   col_vals_gt(vars(a), value = 5) \%>\%
   interrogate()
+}\if{html}{\out{</div>}}
 
+\if{html}{
+
+We can print the resulting object to see the information report.
+
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_interrogate_1.png" style="width:100%;">
+}
+}
 }
 
+\section{Function ID}{
+
+6-1
 }
+
 \seealso{
 Other Interrogate and Report: 
 \code{\link{get_agent_report}()}

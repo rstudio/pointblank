@@ -197,15 +197,16 @@ the supplied table object. It adds the sections: (1) 'table' and (2)
 'columns' and we can print the object to see the information report.
 
 Alternatively, we can get the same report by using \code{get_informant_report()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{report <- get_informant_report(informant)
-}\if{html}{\out{</div>}}\if{html}{\out{<div class="sourceCode r">}}\preformatted{class(report)
-}\if{html}{\out{</div>}}\preformatted{## [1] "ptblank_informant_report" "gt_tbl"                  
-## [3] "list"
+}\if{html}{\out{</div>}}
+
+\if{html}{
+
+We can print the resulting object to see the information report.
+
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_create_informant_1.png" style="width:100%;">
 }
 }
-
-\section{Figures}{
-
-\if{html}{\figure{man_create_informant_1.png}{options: width=100\%}}
 }
 
 \section{Function ID}{

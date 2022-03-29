@@ -190,12 +190,14 @@
 #' report <- get_informant_report(informant)
 #' ```
 #' 
-#' ```{r}
-#' class(report)
-#' ```
+#' \if{html}{
 #' 
-#' @section Figures:
-#' \if{html}{\figure{man_create_informant_1.png}{options: width=100\%}}
+#' We can print the resulting object to see the information report.
+#' 
+#' \out{
+#' `r pb_get_image_tag(file = "man_create_informant_1.png")`
+#' }
+#' }
 #' 
 #' @family Planning and Prep
 #' @section Function ID:

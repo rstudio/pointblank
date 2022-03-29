@@ -68,7 +68,7 @@ use \code{incorporate()} to work the snippets into the info text.\if{html}{\out{
   ) \%>\%
   info_columns(
     columns = vars(a),
-    info = "In the range of 1 to 10. (SIMPLE)"
+    info = "In the range of 1 to 10. ((SIMPLE))"
   ) \%>\%
   info_columns(
     columns = starts_with("date"),
@@ -76,7 +76,7 @@ use \code{incorporate()} to work the snippets into the info text.\if{html}{\out{
   ) \%>\%
   info_columns(
     columns = "date",
-    info = "The date part of `date_time`. (CALC)"
+    info = "The date part of `date_time`. ((CALC))"
   ) \%>\%
   info_section(
     section_name = "rows",

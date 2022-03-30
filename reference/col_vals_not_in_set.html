@@ -358,17 +358,17 @@ values are not part of a given set.</p><div class="section">
 
 
 <p>Validate that values in column <code>f</code> contain none of the values <code>lows</code>, <code>mids</code>,
-and <code>highs</code>.</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span>
+and <code>highs</code>. We'll determine if this validation has any failing test units
+(there are 13 test units, one for each row).</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span>
   <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span><span class="va">small_table</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/col_vals_not_in_set.html">col_vals_not_in_set</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lows"</span>, <span class="st">"mids"</span>, <span class="st">"highs"</span><span class="op">)</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span>, set <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lows"</span>, <span class="st">"mids"</span>, <span class="st">"highs"</span><span class="op">)</span>
   <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
-<p>Determine if this validation had no failing test units (there are 13 test
-units, one for each row).</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/all_passed.html">all_passed</a></span><span class="op">(</span><span class="va">agent</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] TRUE</span></code></pre></div>
-
-<p>Calling <code>agent</code> in the console prints the agent's report. But we can get a
-<code>gt_tbl</code> object directly with <code>get_agent_report(agent)</code>.</p>
+<p>Printing the <code>agent</code> in the console shows the validation report in the
+Viewer. Here is an excerpt of validation report, showing the single entry
+that corresponds to the validation step demonstrated here.</p>
+<p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_col_vals_not_in_set_1.png" style="width:100%;"></p>
 </div>
 
 <div class="section">
@@ -379,7 +379,7 @@ units, one for each row).</p><div class="sourceCode r"><pre><code><span class="f
 through but should <code><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop()</a></code> if there is a single test unit failing. The
 behavior of side effects can be customized with the <code>actions</code> option.</p><div class="sourceCode"><pre><code><span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/col_vals_not_in_set.html">col_vals_not_in_set</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lows"</span>, <span class="st">"mids"</span>, <span class="st">"highs"</span><span class="op">)</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span>, set <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lows"</span>, <span class="st">"mids"</span>, <span class="st">"highs"</span><span class="op">)</span>
   <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
@@ -393,7 +393,7 @@ behavior of side effects can be customized with the <code>actions</code> option.
 <p>With the <code>expect_*()</code> form, we would typically perform one validation at a
 time. This is primarily used in testthat tests.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/col_vals_not_in_set.html">expect_col_vals_not_in_set</a></span><span class="op">(</span>
   <span class="va">small_table</span>,
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lows"</span>, <span class="st">"mids"</span>, <span class="st">"highs"</span><span class="op">)</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span>, set <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lows"</span>, <span class="st">"mids"</span>, <span class="st">"highs"</span><span class="op">)</span>
 <span class="op">)</span></code></pre><p></p></div>
 </div>
 
@@ -404,7 +404,7 @@ time. This is primarily used in testthat tests.</p><div class="sourceCode r"><pr
 <p>With the <code>test_*()</code> form, we should get a single logical value returned to
 us.</p><div class="sourceCode r"><pre><code><span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/col_vals_not_in_set.html">test_col_vals_not_in_set</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lows"</span>, <span class="st">"mids"</span>, <span class="st">"highs"</span><span class="op">)</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span>, set <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lows"</span>, <span class="st">"mids"</span>, <span class="st">"highs"</span><span class="op">)</span>
   <span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] TRUE</span></code></pre></div>
 
 </div>

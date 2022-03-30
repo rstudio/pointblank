@@ -161,7 +161,7 @@ use <code>incorporate()</code> to work the snippets into the info text.</p><div 
     row_count <span class="op">=</span> <span class="st">"There are {row_count} rows available."</span>
   <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/incorporate.html">incorporate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
-<p>We can print the resulting object to see the information report.</p>
+<p>We can print the resulting object to see the information report.</p><div class="sourceCode r"><pre><code><span class="va">informant</span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_incorporate_1.png" style="width:100%;"></p>
 <p>Let's modify <code>test_table</code> to give it more rows and an extra column.</p><div class="sourceCode r"><pre><code><span class="va">changing_table</span> <span class="op">&lt;-</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="va">changing_table</span>, <span class="va">changing_table</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
@@ -172,7 +172,7 @@ current state of the <code>changing_table</code>.</p><div class="sourceCode r"><
 <p>When printed again, we'll also see that the row and column counts in the
 header have been updated to reflect the new dimensions of the target table.
 Furthermore, the info text in the <code>ROWS</code> section has updated text
-(<code>"There are 26 rows available."</code>).</p>
+(<code>"There are 26 rows available."</code>).</p><div class="sourceCode r"><pre><code><span class="va">informant</span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_incorporate_2.png" style="width:100%;"></p>
     </div>
     <div class="section level2">

@@ -346,7 +346,16 @@ function.</p>
     a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">6</span>, <span class="fl">5</span><span class="op">)</span>,
     b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,
     c <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span>
-  <span class="op">)</span></code></pre><p></p></div><div class="section">
+  <span class="op">)</span>
+
+<span class="va">tbl_2</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 4 × 3</span>
+<span class="co">##       a     b     c</span>
+<span class="co">##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">## 1     5     7     1</span>
+<span class="co">## 2     7     1     1</span>
+<span class="co">## 3     6     0     1</span>
+<span class="co">## 4     5     0     3</span></code></pre></div>
+<div class="section">
 <h3 id="a-using-an-agent-with-validation-functions-and-then-interrogate-">A: Using an <code>agent</code> with validation functions and then <code><a href="interrogate.html">interrogate()</a></code><a class="anchor" aria-label="anchor" href="#a-using-an-agent-with-validation-functions-and-then-interrogate-"></a></h3>
 
 
@@ -355,10 +364,10 @@ equivalent in terms of content.</p><div class="sourceCode r"><pre><code><span cl
   <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">tbl</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/tbl_match.html">tbl_match</a></span><span class="op">(</span>tbl_compare <span class="op">=</span> <span class="va">tbl_2</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
-<p>Determine if this validation passed by using <code><a href="all_passed.html">all_passed()</a></code>:</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/all_passed.html">all_passed</a></span><span class="op">(</span><span class="va">agent</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] TRUE</span></code></pre></div>
-
-<p>Calling <code>agent</code> in the console prints the agent's report. But we can get a
-<code>gt_tbl</code> object directly with <code>get_agent_report(agent)</code>.</p>
+<p>Printing the <code>agent</code> in the console shows the validation report in the
+Viewer. Here is an excerpt of validation report, showing the single entry
+that corresponds to the validation step demonstrated here.</p>
+<p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_tbl_match_1.png" style="width:100%;"></p>
 </div>
 
 <div class="section">
@@ -382,9 +391,7 @@ behavior of side effects can be customized with the <code>actions</code> option.
 
 
 <p>With the <code>expect_*()</code> form, we would typically perform one validation at a
-time. This is primarily used in testthat tests.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/tbl_match.html">expect_tbl_match</a></span><span class="op">(</span>
-  <span class="va">tbl</span>, tbl_compare <span class="op">=</span> <span class="va">tbl_2</span>
-<span class="op">)</span></code></pre><p></p></div>
+time. This is primarily used in testthat tests.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/tbl_match.html">expect_tbl_match</a></span><span class="op">(</span><span class="va">tbl</span>, tbl_compare <span class="op">=</span> <span class="va">tbl_2</span><span class="op">)</span></code></pre><p></p></div>
 </div>
 
 <div class="section">

@@ -411,18 +411,18 @@ that are increasing from top to bottom.</p><div class="sourceCode r"><pre><code>
 
 <p>Validate that all date-time values in the column <code>session_start</code> are
 increasing, and, allow for repeating values (<code>allow_stationary</code> will be set
-to <code>TRUE</code>).</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span>
+to <code>TRUE</code>). We'll determine if this validation has any failing test units
+(there are 2000 test units).</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span>
   <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span><span class="va">game_revenue</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/col_vals_increasing.html">col_vals_increasing</a></span><span class="op">(</span>
     <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">session_start</span><span class="op">)</span>,
     allow_stationary <span class="op">=</span> <span class="cn">TRUE</span>
   <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
-<p>Determine if this validation had no failing test units (there are 2000 test
-units).</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/all_passed.html">all_passed</a></span><span class="op">(</span><span class="va">agent</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] TRUE</span></code></pre></div>
-
-<p>Calling <code>agent</code> in the console prints the agent's report. But we can get a
-<code>gt_tbl</code> object directly with <code>get_agent_report(agent)</code>.</p>
+<p>Printing the <code>agent</code> in the console shows the validation report in the
+Viewer. Here is an excerpt of validation report, showing the single entry
+that corresponds to the validation step demonstrated here.</p>
+<p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_col_vals_increasing_1.png" style="width:100%;"></p>
 </div>
 
 <div class="section">

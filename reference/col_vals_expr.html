@@ -339,15 +339,15 @@ columns (<code>a</code>, <code>b</code>, and <code>c</code>) and three character
 
 
 <p>Validate that values in column <code>a</code> are integer-like by using the R modulo
-operator and expecting <code>0</code>.</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span>
+operator and expecting <code>0</code>. We'll determine if this validation has any
+failing test units (there are 6 test units, one for each row).</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span>
   <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span><span class="va">tbl</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_expr.html">col_vals_expr</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html" class="external-link">expr</a></span><span class="op">(</span><span class="va">a</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">%%</a></span> <span class="fl">1</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_vals_expr.html">col_vals_expr</a></span><span class="op">(</span>expr <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html" class="external-link">expr</a></span><span class="op">(</span><span class="va">a</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">%%</a></span> <span class="fl">1</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
-<p>Determine if this validation had no failing test units (there are 6 test
-units, one for each row).</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/all_passed.html">all_passed</a></span><span class="op">(</span><span class="va">agent</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] TRUE</span></code></pre></div>
-
-<p>Calling <code>agent</code> in the console prints the agent's report. But we can get a
-<code>gt_tbl</code> object directly with <code>get_agent_report(agent)</code>.</p>
+<p>Printing the <code>agent</code> in the console shows the validation report in the
+Viewer. Here is an excerpt of validation report, showing the single entry
+that corresponds to the validation step demonstrated here.</p>
+<p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_col_vals_expr_1.png" style="width:100%;"></p>
 </div>
 
 <div class="section">
@@ -357,7 +357,7 @@ units, one for each row).</p><div class="sourceCode r"><pre><code><span class="f
 <p>This way of using validation functions acts as a data filter. Data is passed
 through but should <code><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop()</a></code> if there is a single test unit failing. The
 behavior of side effects can be customized with the <code>actions</code> option.</p><div class="sourceCode r"><pre><code><span class="va">tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="../reference/col_vals_expr.html">col_vals_expr</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html" class="external-link">expr</a></span><span class="op">(</span><span class="va">a</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">%%</a></span> <span class="fl">1</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_vals_expr.html">col_vals_expr</a></span><span class="op">(</span>expr <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html" class="external-link">expr</a></span><span class="op">(</span><span class="va">a</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">%%</a></span> <span class="fl">1</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] 1 2 1 7 8 6</span></code></pre></div>
 
 </div>
@@ -367,7 +367,7 @@ behavior of side effects can be customized with the <code>actions</code> option.
 
 
 <p>With the <code>expect_*()</code> form, we would typically perform one validation at a
-time. This is primarily used in testthat tests.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/col_vals_expr.html">expect_col_vals_expr</a></span><span class="op">(</span><span class="va">tbl</span>, <span class="op">~</span> <span class="va">a</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">%%</a></span> <span class="fl">1</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span></code></pre><p></p></div>
+time. This is primarily used in testthat tests.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/col_vals_expr.html">expect_col_vals_expr</a></span><span class="op">(</span><span class="va">tbl</span>, expr <span class="op">=</span> <span class="op">~</span> <span class="va">a</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">%%</a></span> <span class="fl">1</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span></code></pre><p></p></div>
 </div>
 
 <div class="section">
@@ -375,7 +375,7 @@ time. This is primarily used in testthat tests.</p><div class="sourceCode r"><pr
 
 
 <p>With the <code>test_*()</code> form, we should get a single logical value returned to
-us.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/col_vals_expr.html">test_col_vals_expr</a></span><span class="op">(</span><span class="va">tbl</span>, <span class="op">~</span> <span class="va">a</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">%%</a></span> <span class="fl">1</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] TRUE</span></code></pre></div>
+us.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/col_vals_expr.html">test_col_vals_expr</a></span><span class="op">(</span><span class="va">tbl</span>, expr <span class="op">=</span> <span class="op">~</span> <span class="va">a</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">%%</a></span> <span class="fl">1</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] TRUE</span></code></pre></div>
 
 </div>
 
@@ -384,8 +384,8 @@ us.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../referen
 
 
 <p>We can do more complex things by taking advantage of the <code><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when()</a></code> and
-<code><a href="https://dplyr.tidyverse.org/reference/between.html" class="external-link">between()</a></code> functions (available for use in the pointblank package).</p><div class="sourceCode r"><pre><code><span class="va">tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_expr.html">test_col_vals_expr</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span>
+<code><a href="https://dplyr.tidyverse.org/reference/between.html" class="external-link">between()</a></code> functions (available for use in the <strong>pointblank</strong> package).</p><div class="sourceCode r"><pre><code><span class="va">tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_vals_expr.html">test_col_vals_expr</a></span><span class="op">(</span>expr <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span>
     <span class="va">b</span> <span class="op">==</span> <span class="fl">0</span> <span class="op">~</span> <span class="va">a</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/between.html" class="external-link">between</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">5</span><span class="op">)</span> <span class="op">&amp;</span> <span class="va">c</span> <span class="op">&lt;</span> <span class="fl">1</span>,
     <span class="va">b</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">~</span> <span class="va">a</span> <span class="op">&gt;</span> <span class="fl">5</span> <span class="op">&amp;</span> <span class="va">c</span> <span class="op">&gt;=</span> <span class="fl">1</span>
   <span class="op">)</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] TRUE</span></code></pre></div>
@@ -393,7 +393,7 @@ us.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../referen
 <p>If you only want to test a subset of rows, then the <code><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when()</a></code> statement
 doesn't need to be exhaustive. Any rows that don't fall into the cases will
 be pruned (giving us less test units overall).</p><div class="sourceCode r"><pre><code><span class="va">tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_expr.html">test_col_vals_expr</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span>
+  <span class="fu"><a href="../reference/col_vals_expr.html">test_col_vals_expr</a></span><span class="op">(</span>expr <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span>
     <span class="va">b</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">~</span> <span class="va">a</span> <span class="op">&gt;</span> <span class="fl">5</span> <span class="op">&amp;</span> <span class="va">c</span> <span class="op">&gt;=</span> <span class="fl">1</span>
   <span class="op">)</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] TRUE</span></code></pre></div>
 

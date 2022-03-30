@@ -365,20 +365,30 @@ describes the columns and their types (in the expected order).</p><div class="so
   <span class="fu"><a href="../reference/col_schema.html">col_schema</a></span><span class="op">(</span>
     a <span class="op">=</span> <span class="st">"integer"</span>,
     b <span class="op">=</span> <span class="st">"character"</span>
-  <span class="op">)</span></code></pre><p></p></div><div class="section">
+  <span class="op">)</span>
+
+<span class="va">schema_obj</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## $a</span>
+<span class="co">## [1] "integer"</span>
+<span class="co">## </span>
+<span class="co">## $b</span>
+<span class="co">## [1] "character"</span>
+<span class="co">## </span>
+<span class="co">## attr(,"class")</span>
+<span class="co">## [1] "r_type"     "col_schema"</span></code></pre></div>
+<div class="section">
 <h3 id="a-using-an-agent-with-validation-functions-and-then-interrogate-">A: Using an <code>agent</code> with validation functions and then <code><a href="interrogate.html">interrogate()</a></code><a class="anchor" aria-label="anchor" href="#a-using-an-agent-with-validation-functions-and-then-interrogate-"></a></h3>
 
 
 <p>Validate that the schema object <code>schema_obj</code> exactly defines the column names
-and column types.</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span>
+and column types. We'll determine if this validation has a failing test unit
+(there is a single test unit governed by whether there is a match).</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span>
   <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span><span class="va">tbl</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_schema_match.html">col_schema_match</a></span><span class="op">(</span><span class="va">schema_obj</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_schema_match.html">col_schema_match</a></span><span class="op">(</span>schema <span class="op">=</span> <span class="va">schema_obj</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
-<p>Determine if this validation had no failing test units (there is a single
-test unit governed by whether there is a match).</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/all_passed.html">all_passed</a></span><span class="op">(</span><span class="va">agent</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] TRUE</span></code></pre></div>
-
-<p>Calling <code>agent</code> in the console prints the agent's report. But we can get a
-<code>gt_tbl</code> object directly with <code>get_agent_report(agent)</code>.</p>
+<p>Printing the <code>agent</code> in the console shows the validation report in the
+Viewer. Here is an excerpt of validation report, showing the single entry
+that corresponds to the validation step demonstrated here.</p>
+<p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_col_schema_match_1.png" style="width:100%;"></p>
 </div>
 
 <div class="section">
@@ -387,7 +397,7 @@ test unit governed by whether there is a match).</p><div class="sourceCode r"><p
 
 <p>This way of using validation functions acts as a data filter. Data is passed
 through but should <code><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop()</a></code> if there is a single test unit failing. The
-behavior of side effects can be customized with the <code>actions</code> option.</p><div class="sourceCode r"><pre><code><span class="va">tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/col_schema_match.html">col_schema_match</a></span><span class="op">(</span><span class="va">schema_obj</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 5 × 2</span>
+behavior of side effects can be customized with the <code>actions</code> option.</p><div class="sourceCode r"><pre><code><span class="va">tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/col_schema_match.html">col_schema_match</a></span><span class="op">(</span>schema <span class="op">=</span> <span class="va">schema_obj</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 5 × 2</span>
 <span class="co">##       a b    </span>
 <span class="co">##   &lt;int&gt; &lt;chr&gt;</span>
 <span class="co">## 1     1 a    </span>
@@ -403,7 +413,7 @@ behavior of side effects can be customized with the <code>actions</code> option.
 
 
 <p>With the <code>expect_*()</code> form, we would typically perform one validation at a
-time. This is primarily used in testthat tests.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/col_schema_match.html">expect_col_schema_match</a></span><span class="op">(</span><span class="va">tbl</span>, <span class="va">schema_obj</span><span class="op">)</span></code></pre><p></p></div>
+time. This is primarily used in testthat tests.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/col_schema_match.html">expect_col_schema_match</a></span><span class="op">(</span><span class="va">tbl</span>, scheam <span class="op">=</span> <span class="va">schema_obj</span><span class="op">)</span></code></pre><p></p></div>
 </div>
 
 <div class="section">
@@ -411,7 +421,7 @@ time. This is primarily used in testthat tests.</p><div class="sourceCode r"><pr
 
 
 <p>With the <code>test_*()</code> form, we should get a single logical value returned to
-us.</p><div class="sourceCode r"><pre><code><span class="va">tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/col_schema_match.html">test_col_schema_match</a></span><span class="op">(</span><span class="va">schema_obj</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] TRUE</span></code></pre></div>
+us.</p><div class="sourceCode r"><pre><code><span class="va">tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/col_schema_match.html">test_col_schema_match</a></span><span class="op">(</span>schema <span class="op">=</span> <span class="va">schema_obj</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] TRUE</span></code></pre></div>
 
 </div>
 

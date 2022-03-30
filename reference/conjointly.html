@@ -401,7 +401,9 @@ explaining things later.</p><div class="sourceCode r"><pre><code><span class="va
 <p>Validate a number of things on a row-by-row basis using validation functions
 of the <code>col_vals*</code> type (all have the same number of test units): (1) values
 in <code>a</code> are less than <code>8</code>, (2) values in <code>c</code> are greater than the adjacent
-values in <code>a</code>, and (3) there aren't any NA values in <code>b</code>.</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span>
+values in <code>a</code>, and (3) there aren't any NA values in <code>b</code>. We'll determine if
+this validation has any failing test units (there are 3 test units, one for
+each row).</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span>
   <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">tbl</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/conjointly.html">conjointly</a></span><span class="op">(</span>
     <span class="op">~</span> <span class="fu"><a href="../reference/col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span><span class="va">.</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">8</span><span class="op">)</span>,
@@ -409,11 +411,10 @@ values in <code>a</code>, and (3) there aren't any NA values in <code>b</code>.<
     <span class="op">~</span> <span class="fu"><a href="../reference/col_vals_not_null.html">col_vals_not_null</a></span><span class="op">(</span><span class="va">.</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span><span class="op">)</span>
     <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
-<p>Determine if this validation had no failing test units (there are 3 test
-units, one for each row).</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/all_passed.html">all_passed</a></span><span class="op">(</span><span class="va">agent</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] TRUE</span></code></pre></div>
-
-<p>Calling <code>agent</code> in the console prints the agent's report. But we can get a
-<code>gt_tbl</code> object directly with <code>get_agent_report(agent)</code>.</p>
+<p>Printing the <code>agent</code> in the console shows the validation report in the
+Viewer. Here is an excerpt of validation report, showing the single entry
+that corresponds to the validation step demonstrated here.</p>
+<p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_conjointly_1.png" style="width:100%;"></p>
 <p>What's going on? Think of there being three parallel validations, each
 producing a column of <code>TRUE</code> or <code>FALSE</code> values (<code>pass</code> or <code>fail</code>) and line
 them up side-by-side, any rows with any <code>FALSE</code> values results in a conjoint

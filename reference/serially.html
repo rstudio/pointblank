@@ -426,7 +426,9 @@ explaining things later.</p><div class="sourceCode r"><pre><code><span class="va
 perform a validation (only if all tests pass). Here, we are going to (1) test
 whether columns <code>a</code> and <code>b</code> are numeric, (2) check that both don't have any
 <code>NA</code> values, and (3) perform a finalizing validation that checks whether
-values in <code>b</code> are greater than values in <code>a</code>.</p><div class="sourceCode r"><pre><code><span class="va">agent_1</span> <span class="op">&lt;-</span>
+values in <code>b</code> are greater than values in <code>a</code>. We'll determine if this
+validation has any failing test units (there are 4 tests and a final
+validation).</p><div class="sourceCode r"><pre><code><span class="va">agent_1</span> <span class="op">&lt;-</span>
   <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">tbl</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/serially.html">serially</a></span><span class="op">(</span>
     <span class="op">~</span> <span class="fu"><a href="../reference/col_is_numeric.html">test_col_is_numeric</a></span><span class="op">(</span><span class="va">.</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span><span class="op">)</span>,
@@ -434,14 +436,13 @@ values in <code>b</code> are greater than values in <code>a</code>.</p><div clas
     <span class="op">~</span> <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="va">.</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span>
     <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
-<p>Determine if this validation had no failing test units (there are 4 tests and
-a final validation).</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/all_passed.html">all_passed</a></span><span class="op">(</span><span class="va">agent_1</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] TRUE</span></code></pre></div>
-
-<p>Calling <code>agent</code> in the console prints the agent's report. But we can get a
-<code>gt_tbl</code> object directly with <code>get_agent_report(agent_1)</code>.</p>
+<p>Printing the <code>agent</code> in the console shows the validation report in the
+Viewer. Here is an excerpt of validation report, showing the single entry
+that corresponds to the validation step demonstrated here.</p>
+<p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_serially_1.png" style="width:100%;"></p>
 <p>What's going on? All four of the tests passed and so the final validation
 occurred. There were no failing test units in that either!</p>
-<p>The final validation is optional. Here is a different agent where only the
+<p>The final validation is optional and so here is a variation where only the
 serial tests are performed.</p><div class="sourceCode r"><pre><code><span class="va">agent_2</span> <span class="op">&lt;-</span>
   <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">tbl</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/serially.html">serially</a></span><span class="op">(</span>
@@ -449,8 +450,8 @@ serial tests are performed.</p><div class="sourceCode r"><pre><code><span class=
     <span class="op">~</span> <span class="fu"><a href="../reference/col_vals_not_null.html">test_col_vals_not_null</a></span><span class="op">(</span><span class="va">.</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span><span class="op">)</span>
   <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
-<p>Everything is good here too:</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/all_passed.html">all_passed</a></span><span class="op">(</span><span class="va">agent_2</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] TRUE</span></code></pre></div>
-
+<p>Everything is good here too:</p>
+<p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_serially_2.png" style="width:100%;"></p>
 </div>
 
 <div class="section">

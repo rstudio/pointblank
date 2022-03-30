@@ -149,7 +149,17 @@ the expected order).</p><div class="sourceCode r"><pre><code><span class="va">sc
   <span class="fu"><a href="../reference/col_schema.html">col_schema</a></span><span class="op">(</span>
     a <span class="op">=</span> <span class="st">"integer"</span>,
     b <span class="op">=</span> <span class="st">"character"</span>
-  <span class="op">)</span></code></pre><p></p></div>
+  <span class="op">)</span>
+
+<span class="va">schema_obj</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## $a</span>
+<span class="co">## [1] "integer"</span>
+<span class="co">## </span>
+<span class="co">## $b</span>
+<span class="co">## [1] "character"</span>
+<span class="co">## </span>
+<span class="co">## attr(,"class")</span>
+<span class="co">## [1] "r_type"     "col_schema"</span></code></pre></div>
+
 <p>Validate that the schema object <code>schema_obj</code> exactly defines the column names
 and column types of the <code>tbl</code> table.</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span>
   <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">tbl</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>

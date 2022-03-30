@@ -397,25 +397,43 @@ session start.</p><div class="sourceCode r"><pre><code><span class="va">game_rev
       <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd_hms.html" class="external-link">ymd_hms</a></span><span class="op">(</span>
         <span class="st">"2015-02-01 00:00:00"</span>
       <span class="op">)</span> <span class="op">-</span> <span class="va">session_start</span>
-  <span class="op">)</span></code></pre><p></p></div>
-<p>Let's ensure that the difftime values in the new <code>time_left</code> column has
+  <span class="op">)</span>
+
+<span class="va">game_revenue_2</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 2,000 × 12</span>
+<span class="co">##    player_id       session_id  session_start       time                item_type</span>
+<span class="co">##    &lt;chr&gt;           &lt;chr&gt;       &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;    </span>
+<span class="co">##  1 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 01:31:03 2015-01-01 01:31:27 iap      </span>
+<span class="co">##  2 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 01:31:03 2015-01-01 01:36:57 iap      </span>
+<span class="co">##  3 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 01:31:03 2015-01-01 01:37:45 iap      </span>
+<span class="co">##  4 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 01:31:03 2015-01-01 01:42:33 ad       </span>
+<span class="co">##  5 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 11:55:20 ad       </span>
+<span class="co">##  6 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 12:08:56 ad       </span>
+<span class="co">##  7 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 12:14:08 ad       </span>
+<span class="co">##  8 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 12:21:44 ad       </span>
+<span class="co">##  9 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 12:24:20 ad       </span>
+<span class="co">## 10 FXWUORGYNJAE271 FXWUORGYNJ… 2015-01-01 15:17:18 2015-01-01 15:19:36 ad       </span>
+<span class="co">## # … with 1,990 more rows, and 7 more variables: item_name &lt;chr&gt;,</span>
+<span class="co">## #   item_revenue &lt;dbl&gt;, session_duration &lt;dbl&gt;, start_day &lt;date&gt;,</span>
+<span class="co">## #   acquisition &lt;chr&gt;, country &lt;chr&gt;, time_left &lt;drtn&gt;</span></code></pre></div>
+
+<p>Let's ensure that the <code>"difftime"</code> values in the new <code>time_left</code> column has
 values that are decreasing from top to bottom.</p><div class="section">
 <h3 id="a-using-an-agent-with-validation-functions-and-then-interrogate-">A: Using an <code>agent</code> with validation functions and then <code><a href="interrogate.html">interrogate()</a></code><a class="anchor" aria-label="anchor" href="#a-using-an-agent-with-validation-functions-and-then-interrogate-"></a></h3>
 
 
-<p>Validate that all difftime values in the column <code>time_left</code> are decreasing,
-and, allow for repeating values (<code>allow_stationary</code> will be set to <code>TRUE</code>).</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span>
+<p>Validate that all <code>"difftime"</code> values in the column <code>time_left</code> are
+decreasing, and, allow for repeating values (<code>allow_stationary</code> will be set
+to <code>TRUE</code>).</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span>
   <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span><span class="va">game_revenue_2</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/col_vals_decreasing.html">col_vals_decreasing</a></span><span class="op">(</span>
     <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">time_left</span><span class="op">)</span>,
     allow_stationary <span class="op">=</span> <span class="cn">TRUE</span>
   <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
-<p>Determine if this validation had no failing test units (there are 2000 test
-units).</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/all_passed.html">all_passed</a></span><span class="op">(</span><span class="va">agent</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] TRUE</span></code></pre></div>
-
-<p>Calling <code>agent</code> in the console prints the agent's report. But we can get a
-<code>gt_tbl</code> object directly with <code>get_agent_report(agent)</code>.</p>
+<p>Printing the <code>agent</code> in the console shows the validation report in the
+Viewer. Here is an excerpt of validation report, showing the single entry
+that corresponds to the validation step demonstrated here.</p>
+<p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_col_vals_decreasing_1.png" style="width:100%;"></p>
 </div>
 
 <div class="section">

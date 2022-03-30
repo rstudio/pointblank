@@ -132,21 +132,22 @@
 #' 
 #' Validate that column `b` has the `character` class.
 #' 
-#' ```{r}
+#' ```r
 #' agent <-
 #'   create_agent(tbl) %>%
 #'   col_is_character(vars(b)) %>%
 #'   interrogate()
 #' ```
 #' 
-#' Determine if this validation had no failing test units (1).
+#' Printing the `agent` in the console shows the validation report in the
+#' Viewer. Here is an excerpt of validation report, showing the single entry
+#' that corresponds to the validation step demonstrated here.
 #' 
-#' ```{r}
-#' all_passed(agent)
-#' ```
-#' 
-#' Calling `agent` in the console prints the agent's report. But we can get a
-#' `gt_tbl` object directly with `get_agent_report(agent)`.
+#' \if{html}{
+#' \out{
+#' `r pb_get_image_tag(file = "man_col_is_character_1.png")`
+#' }
+#' }
 #' 
 #' ## B: Using the validation function directly on the data (no `agent`)
 #' 
@@ -155,7 +156,9 @@
 #' behavior of side effects can be customized with the `actions` option.
 #' 
 #' ```{r}
-#' tbl %>% col_is_character(vars(b))
+#' tbl %>% 
+#'   col_is_character(vars(b)) %>%
+#'   dplyr::slice(1:5)
 #' ```
 #' 
 #' ## C: Using the expectation function
@@ -163,7 +166,7 @@
 #' With the `expect_*()` form, we would typically perform one validation at a
 #' time. This is primarily used in testthat tests.
 #' 
-#' ```{r}
+#' ```r
 #' expect_col_is_character(tbl, vars(b))
 #' ```
 #' 

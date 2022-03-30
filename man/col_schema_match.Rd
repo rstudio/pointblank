@@ -235,7 +235,7 @@ by using the \code{\link[=yaml_agent_string]{yaml_agent_string()}} function.
 For all examples here, we'll use a simple table with two columns: one
 \code{integer} (\code{a}) and the other \code{character} (\code{b}). The following examples will
 validate that the table columns abides match a schema object as created by
-\code{col_schema()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- 
+\code{\link[=col_schema]{col_schema()}}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- 
   dplyr::tibble(
     a = 1:5,
     b = letters[1:5]
@@ -258,30 +258,43 @@ describes the columns and their types (in the expected order).\if{html}{\out{<di
     a = "integer",
     b = "character"
   )
-}\if{html}{\out{</div>}}
+
+schema_obj
+}\if{html}{\out{</div>}}\preformatted{## $a
+## [1] "integer"
+## 
+## $b
+## [1] "character"
+## 
+## attr(,"class")
+## [1] "r_type"     "col_schema"
+}
 \subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
 Validate that the schema object \code{schema_obj} exactly defines the column names
-and column types.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
+and column types. We'll determine if this validation has a failing test unit
+(there is a single test unit governed by whether there is a match).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl) \%>\%
-  col_schema_match(schema_obj) \%>\%
+  col_schema_match(schema = schema_obj) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
 
-Determine if this validation had no failing test units (there is a single
-test unit governed by whether there is a match).\if{html}{\out{<div class="sourceCode r">}}\preformatted{all_passed(agent)
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+Printing the \code{agent} in the console shows the validation report in the
+Viewer. Here is an excerpt of validation report, showing the single entry
+that corresponds to the validation step demonstrated here.
 
-Calling \code{agent} in the console prints the agent's report. But we can get a
-\code{gt_tbl} object directly with \code{get_agent_report(agent)}.
+\if{html}{
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_col_schema_match_1.png" style="width:100\%;">
+}
+}
 }
 
 \subsection{B: Using the validation function directly on the data (no \code{agent})}{
 
 This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
-behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% col_schema_match(schema_obj)
+behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% col_schema_match(schema = schema_obj)
 }\if{html}{\out{</div>}}\preformatted{## # A tibble: 5 × 2
 ##       a b    
 ##   <int> <chr>
@@ -296,14 +309,14 @@ behavior of side effects can be customized with the \code{actions} option.\if{ht
 \subsection{C: Using the expectation function}{
 
 With the \verb{expect_*()} form, we would typically perform one validation at a
-time. This is primarily used in testthat tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_schema_match(tbl, schema_obj)
+time. This is primarily used in testthat tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_schema_match(tbl, scheam = schema_obj)
 }\if{html}{\out{</div>}}
 }
 
 \subsection{D: Using the test function}{
 
 With the \verb{test_*()} form, we should get a single logical value returned to
-us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% test_col_schema_match(schema_obj)
+us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% test_col_schema_match(schema = schema_obj)
 }\if{html}{\out{</div>}}\preformatted{## [1] TRUE
 }
 }

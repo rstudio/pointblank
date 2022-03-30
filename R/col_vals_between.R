@@ -216,24 +216,25 @@
 #' are `NA` values, we'll choose to let those pass validation by setting
 #' `na_pass = TRUE`.
 #' 
-#' ```{r}
+#' ```r
 #' agent <-
 #'   create_agent(small_table) %>%
 #'   col_vals_between(
-#'     vars(c), 1, 9, na_pass = TRUE
+#'     vars(c), left = 1, right = 9,
+#'     na_pass = TRUE
 #'   ) %>%
 #'   interrogate()
 #' ```
 #' 
-#' Determine if this validation had no failing test units (there are 13 test
-#' units, one for each row).
+#' Printing the `agent` in the console shows the validation report in the
+#' Viewer. Here is an excerpt of validation report, showing the single entry
+#' that corresponds to the validation step demonstrated here.
 #' 
-#' ```{r}
-#' all_passed(agent)
-#' ```
-#' 
-#' Calling `agent` in the console prints the agent's report. But we can get a
-#' `gt_tbl` object directly with `get_agent_report(agent)`.
+#' \if{html}{
+#' \out{
+#' `r pb_get_image_tag(file = "man_col_vals_between_1.png")`
+#' }
+#' }
 #' 
 #' ## B: Using the validation function directly on the data (no `agent`)
 #' 
@@ -244,7 +245,8 @@
 #' ```{r}
 #' small_table %>%
 #'   col_vals_between(
-#'     vars(c), 1, 9, na_pass = TRUE
+#'     vars(c), left = 1, right = 9,
+#'     na_pass = TRUE
 #'   ) %>%
 #'   dplyr::pull(c)
 #' ```
@@ -254,9 +256,10 @@
 #' With the `expect_*()` form, we would typically perform one validation at a
 #' time. This is primarily used in testthat tests.
 #' 
-#' ```{r}
+#' ```r
 #' expect_col_vals_between(
-#'   small_table, vars(c), 1, 9,
+#'   small_table, vars(c),
+#'   left = 1, right = 9,
 #'   na_pass = TRUE
 #' )
 #' ```
@@ -269,13 +272,13 @@
 #' ```{r}
 #' small_table %>%
 #'   test_col_vals_between(
-#'     vars(c), 1, 9,
+#'     vars(c), left = 1, right = 9,
 #'     na_pass = TRUE
 #'   )
 #' ```
 #'
 #' An additional note on the bounds for this function: they are inclusive by
-#' default (i.e., values of exactly 1 and 9 will pass). We can modify the
+#' default (i.e., values of exactly `1` and `9` will pass). We can modify the
 #' inclusiveness of the upper and lower bounds with the `inclusive` option,
 #' which is a length-2 logical vector.
 #' 
@@ -285,7 +288,7 @@
 #' ```{r}
 #' small_table %>%
 #'   test_col_vals_between(
-#'     vars(c), 1, 9,
+#'     vars(c), left = 1, right = 9,
 #'     inclusive = c(TRUE, FALSE),
 #'     na_pass = TRUE
 #'   )

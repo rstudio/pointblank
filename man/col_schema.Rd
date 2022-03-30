@@ -63,7 +63,17 @@ the expected order).\if{html}{\out{<div class="sourceCode r">}}\preformatted{sch
     a = "integer",
     b = "character"
   )
-}\if{html}{\out{</div>}}
+
+schema_obj
+}\if{html}{\out{</div>}}\preformatted{## $a
+## [1] "integer"
+## 
+## $b
+## [1] "character"
+## 
+## attr(,"class")
+## [1] "r_type"     "col_schema"
+}
 
 Validate that the schema object \code{schema_obj} exactly defines the column names
 and column types of the \code{tbl} table.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-

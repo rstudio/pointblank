@@ -86,6 +86,10 @@
 #' ```
 #' We can print the resulting object to see the information report.
 #' 
+#' ```r
+#' informant
+#' ```
+#' 
 #' \if{html}{
 #' 
 #' \out{
@@ -113,6 +117,10 @@
 #' header have been updated to reflect the new dimensions of the target table.
 #' Furthermore, the info text in the `ROWS` section has updated text
 #' (`"There are 26 rows available."`).
+#' 
+#' ```r
+#' informant
+#' ```
 #' 
 #' \if{html}{
 #' 

@@ -291,7 +291,9 @@ The \code{serially()} function can be set up to perform a series of tests and th
 perform a validation (only if all tests pass). Here, we are going to (1) test
 whether columns \code{a} and \code{b} are numeric, (2) check that both don't have any
 \code{NA} values, and (3) perform a finalizing validation that checks whether
-values in \code{b} are greater than values in \code{a}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_1 <-
+values in \code{b} are greater than values in \code{a}. We'll determine if this
+validation has any failing test units (there are 4 tests and a final
+validation).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_1 <-
   create_agent(tbl = tbl) \%>\%
   serially(
     ~ test_col_is_numeric(., vars(a, b)),
@@ -301,18 +303,20 @@ values in \code{b} are greater than values in \code{a}.\if{html}{\out{<div class
   interrogate()
 }\if{html}{\out{</div>}}
 
-Determine if this validation had no failing test units (there are 4 tests and
-a final validation).\if{html}{\out{<div class="sourceCode r">}}\preformatted{all_passed(agent_1)
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+Printing the \code{agent} in the console shows the validation report in the
+Viewer. Here is an excerpt of validation report, showing the single entry
+that corresponds to the validation step demonstrated here.
 
-Calling \code{agent} in the console prints the agent's report. But we can get a
-\code{gt_tbl} object directly with \code{get_agent_report(agent_1)}.
+\if{html}{
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_serially_1.png" style="width:100\%;">
+}
+}
 
 What's going on? All four of the tests passed and so the final validation
 occurred. There were no failing test units in that either!
 
-The final validation is optional. Here is a different agent where only the
+The final validation is optional and so here is a variation where only the
 serial tests are performed.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_2 <-
   create_agent(tbl = tbl) \%>\%
   serially(
@@ -322,8 +326,12 @@ serial tests are performed.\if{html}{\out{<div class="sourceCode r">}}\preformat
   interrogate()
 }\if{html}{\out{</div>}}
 
-Everything is good here too:\if{html}{\out{<div class="sourceCode r">}}\preformatted{all_passed(agent_2)
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
+Everything is good here too:
+
+\if{html}{
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_serially_2.png" style="width:100\%;">
+}
 }
 }
 

@@ -85,7 +85,8 @@ use \code{incorporate()} to work the snippets into the info text.\if{html}{\out{
   incorporate()
 }\if{html}{\out{</div>}}
 
-We can print the resulting object to see the information report.
+We can print the resulting object to see the information report.\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant
+}\if{html}{\out{</div>}}
 
 \if{html}{
 
@@ -107,7 +108,8 @@ current state of the \code{changing_table}.\if{html}{\out{<div class="sourceCode
 When printed again, we'll also see that the row and column counts in the
 header have been updated to reflect the new dimensions of the target table.
 Furthermore, the info text in the \code{ROWS} section has updated text
-(\code{"There are 26 rows available."}).
+(\code{"There are 26 rows available."}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant
+}\if{html}{\out{</div>}}
 
 \if{html}{
 

@@ -210,12 +210,15 @@ Validate that the column \code{f} in the \code{tbl} object is of the \code{facto
   interrogate()
 }\if{html}{\out{</div>}}
 
-Determine if this validation had no failing test units (1).\if{html}{\out{<div class="sourceCode r">}}\preformatted{all_passed(agent)
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+Printing the \code{agent} in the console shows the validation report in the
+Viewer. Here is an excerpt of validation report, showing the single entry
+that corresponds to the validation step demonstrated here.
 
-Calling \code{agent} in the console prints the agent's report. But we can get a
-\code{gt_tbl} object directly with \code{get_agent_report(agent)}.
+\if{html}{
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_col_is_factor_1.png" style="width:100\%;">
+}
+}
 }
 
 \subsection{B: Using the validation function directly on the data (no \code{agent})}{

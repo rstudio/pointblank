@@ -324,7 +324,8 @@ that are increasing from top to bottom.\if{html}{\out{<div class="sourceCode r">
 
 Validate that all date-time values in the column \code{session_start} are
 increasing, and, allow for repeating values (\code{allow_stationary} will be set
-to \code{TRUE}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
+to \code{TRUE}). We'll determine if this validation has any failing test units
+(there are 2000 test units).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(game_revenue) \%>\%
   col_vals_increasing(
     vars(session_start),
@@ -333,13 +334,15 @@ to \code{TRUE}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <
   interrogate()
 }\if{html}{\out{</div>}}
 
-Determine if this validation had no failing test units (there are 2000 test
-units).\if{html}{\out{<div class="sourceCode r">}}\preformatted{all_passed(agent)
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+Printing the \code{agent} in the console shows the validation report in the
+Viewer. Here is an excerpt of validation report, showing the single entry
+that corresponds to the validation step demonstrated here.
 
-Calling \code{agent} in the console prints the agent's report. But we can get a
-\code{gt_tbl} object directly with \code{get_agent_report(agent)}.
+\if{html}{
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_col_vals_increasing_1.png" style="width:100\%;">
+}
+}
 }
 
 \subsection{B: Using the validation function directly on the data (no \code{agent})}{

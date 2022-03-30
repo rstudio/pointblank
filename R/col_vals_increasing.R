@@ -204,9 +204,10 @@
 #' 
 #' Validate that all date-time values in the column `session_start` are
 #' increasing, and, allow for repeating values (`allow_stationary` will be set
-#' to `TRUE`).
+#' to `TRUE`). We'll determine if this validation has any failing test units
+#' (there are 2000 test units).
 #' 
-#' ```{r}
+#' ```r
 #' agent <-
 #'   create_agent(game_revenue) %>%
 #'   col_vals_increasing(
@@ -215,16 +216,16 @@
 #'   ) %>%
 #'   interrogate()
 #' ```
-#'   
-#' Determine if this validation had no failing test units (there are 2000 test
-#' units).
 #' 
-#' ```{r}
-#' all_passed(agent)
-#' ```
+#' Printing the `agent` in the console shows the validation report in the
+#' Viewer. Here is an excerpt of validation report, showing the single entry
+#' that corresponds to the validation step demonstrated here.
 #' 
-#' Calling `agent` in the console prints the agent's report. But we can get a
-#' `gt_tbl` object directly with `get_agent_report(agent)`.
+#' \if{html}{
+#' \out{
+#' `r pb_get_image_tag(file = "man_col_vals_increasing_1.png")`
+#' }
+#' }
 #' 
 #' ## B: Using the validation function directly on the data (no `agent`)
 #' 
@@ -248,7 +249,7 @@
 #' With the `expect_*()` form, we would typically perform one validation at a
 #' time. This is primarily used in testthat tests.
 #' 
-#' ```{r}
+#' ```r
 #' expect_col_vals_increasing(
 #'   game_revenue,
 #'   vars(session_start),

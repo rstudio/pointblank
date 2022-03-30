@@ -131,24 +131,24 @@
 #' 
 #' ## A: Using an `agent` with validation functions and then `interrogate()`
 #' 
-#' Validate that columns `a` and `b` exist in the `tbl` table. This makes two
-#' distinct validation steps since two columns were provided to `vars()`.
+#' Validate that column `a` exists in the `tbl` table with `col_exists()`.
 #' 
-#' ```{r}
+#' ```r
 #' agent <-
 #'   create_agent(tbl) %>%
-#'   col_exists(vars(a, b)) %>%
+#'   col_exists(vars(a)) %>%
 #'   interrogate()
 #' ```
 #' 
-#' Determine if this validation had no failing test units (1).
+#' Printing the `agent` in the console shows the validation report in the
+#' Viewer. Here is an excerpt of validation report, showing the single entry
+#' that corresponds to the validation step demonstrated here.
 #' 
-#' ```{r}
-#' all_passed(agent)
-#' ```
-#' 
-#' Calling `agent` in the console prints the agent's report. But we can get a
-#' `gt_tbl` object directly with `get_agent_report(agent)`.
+#' \if{html}{
+#' \out{
+#' `r pb_get_image_tag(file = "man_col_exists_1.png")`
+#' }
+#' }
 #' 
 #' ## B: Using the validation function directly on the data (no `agent`)
 #' 
@@ -157,29 +157,25 @@
 #' The behavior of side effects can be customized with the `actions` option.
 #' 
 #' ```{r}
-#' tbl %>% col_exists(vars(a, b))
+#' tbl %>% col_exists(vars(a))
 #' ```
 #' 
 #' ## C: Using the expectation function
 #' 
-#' With the `expect_*()` form, we need to be more exacting and provide one
-#' column at a time; this is primarily used in testthat tests.
+#' With the `expect_*()` form, we would typically perform one validation at a
+#' time. This is primarily used in testthat tests.
 #' 
-#' ```{r}
+#' ```r
 #' expect_col_exists(tbl, vars(a))
-#' ```
-#' 
-#' ```{r}
-#' expect_col_exists(tbl, vars(b))
 #' ```
 #' 
 #' ## D: Using the test function
 #' 
 #' With the `test_*()` form, we should get a single logical value returned to
-#' us (even if there are multiple columns tested, as is the case below).
+#' us.
 #' 
 #' ```{r}
-#' tbl %>% test_col_exists(vars(a, b))
+#' tbl %>% test_col_exists(vars(a))
 #' ```
 #' 
 #' @family validation functions

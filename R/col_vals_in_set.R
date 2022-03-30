@@ -177,29 +177,34 @@
 #' The `small_table` dataset in the package will be used to validate that column
 #' values are part of a given set.
 #' 
+#' ```{r}
+#' small_table
+#' ```
+#' 
 #' ## A: Using an `agent` with validation functions and then `interrogate()`
 #' 
 #' Validate that values in column `f` are all part of the set of values
-#' containing `low`, `mid`, and `high`.
+#' containing `low`, `mid`, and `high`. We'll determine if this validation has
+#' any failing test units (there are 13 test units, one for each row).
 #' 
-#' ```{r}
+#' ```r
 #' agent <-
 #'   create_agent(small_table) %>%
 #'   col_vals_in_set(
-#'     vars(f), c("low", "mid", "high")
+#'     vars(f), set = c("low", "mid", "high")
 #'   ) %>%
 #'   interrogate()
 #' ```
 #' 
-#' Determine if this validation had no failing test units (there are 13 test
-#' units, one for each row).
+#' Printing the `agent` in the console shows the validation report in the
+#' Viewer. Here is an excerpt of validation report, showing the single entry
+#' that corresponds to the validation step demonstrated here.
 #' 
-#' ```{r}
-#' all_passed(agent)
-#' ```
-#' 
-#' Calling `agent` in the console prints the agent's report. But we can get a
-#' `gt_tbl` object directly with `get_agent_report(agent)`.
+#' \if{html}{
+#' \out{
+#' `r pb_get_image_tag(file = "man_col_vals_in_set_1.png")`
+#' }
+#' }
 #' 
 #' ## B: Using the validation function directly on the data (no `agent`)
 #' 
@@ -210,7 +215,7 @@
 #' ```{r}
 #' small_table %>%
 #'   col_vals_in_set(
-#'     vars(f), c("low", "mid", "high")
+#'     vars(f), set = c("low", "mid", "high")
 #'   ) %>%
 #'   dplyr::pull(f) %>%
 #'   unique()
@@ -221,10 +226,10 @@
 #' With the `expect_*()` form, we would typically perform one validation at a
 #' time. This is primarily used in testthat tests.
 #' 
-#' ```{r}
+#' ```r
 #' expect_col_vals_in_set(
 #'   small_table,
-#'   vars(f), c("low", "mid", "high")
+#'   vars(f), set = c("low", "mid", "high")
 #' )
 #' ```
 #' 
@@ -236,7 +241,7 @@
 #' ```{r}
 #' small_table %>%
 #'   test_col_vals_in_set(
-#'     vars(f), c("low", "mid", "high")
+#'     vars(f), set = c("low", "mid", "high")
 #'   )
 #' ```
 #' 

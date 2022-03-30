@@ -124,21 +124,22 @@
 #' 
 #' Validate that the column `date` has the `Date` class.
 #' 
-#' ```{r}
+#' ```r
 #' agent <-
 #'   create_agent(small_table) %>%
 #'   col_is_date(vars(date)) %>%
 #'   interrogate()
 #' ```
 #'   
-#' Determine if this validation had no failing test units (1).
+#' Printing the `agent` in the console shows the validation report in the
+#' Viewer. Here is an excerpt of validation report, showing the single entry
+#' that corresponds to the validation step demonstrated here.
 #' 
-#' ```{r}
-#' all_passed(agent)
-#' ```
-#' 
-#' Calling `agent` in the console prints the agent's report. But we can get a
-#' `gt_tbl` object directly with `get_agent_report(agent)`.
+#' \if{html}{
+#' \out{
+#' `r pb_get_image_tag(file = "man_col_is_date_1.png")`
+#' }
+#' }
 #' 
 #' ## B: Using the validation function directly on the data (no `agent`)
 #' 
@@ -157,10 +158,8 @@
 #' With the `expect_*()` form, we would typically perform one validation at a
 #' time. This is primarily used in testthat tests.
 #' 
-#' ```{r}
-#' expect_col_is_date(
-#'   small_table, vars(date)
-#' )
+#' ```r
+#' expect_col_is_date(small_table, vars(date))
 #' ```
 #' 
 #' ## D: Using the test function
@@ -169,8 +168,7 @@
 #' us.
 #' 
 #' ```{r}
-#' small_table %>%
-#'   test_col_is_date(vars(date))
+#' small_table %>% test_col_is_date(vars(date))
 #' ```
 #' 
 #' @family validation functions

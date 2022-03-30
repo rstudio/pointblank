@@ -199,26 +199,28 @@ tbl
 We'll use this table with the different function variants.
 \subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
-Validate that columns \code{a} and \code{b} exist in the \code{tbl} table. This makes two
-distinct validation steps since two columns were provided to \code{vars()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
+Validate that column \code{a} exists in the \code{tbl} table with \code{col_exists()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl) \%>\%
-  col_exists(vars(a, b)) \%>\%
+  col_exists(vars(a)) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
 
-Determine if this validation had no failing test units (1).\if{html}{\out{<div class="sourceCode r">}}\preformatted{all_passed(agent)
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+Printing the \code{agent} in the console shows the validation report in the
+Viewer. Here is an excerpt of validation report, showing the single entry
+that corresponds to the validation step demonstrated here.
 
-Calling \code{agent} in the console prints the agent's report. But we can get a
-\code{gt_tbl} object directly with \code{get_agent_report(agent)}.
+\if{html}{
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_col_exists_1.png" style="width:100\%;">
+}
+}
 }
 
 \subsection{B: Using the validation function directly on the data (no \code{agent})}{
 
 This way of using validation functions acts as a data filter. Data is
 passed through but should \code{stop()} if there is a single test unit failing.
-The behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% col_exists(vars(a, b))
+The behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% col_exists(vars(a))
 }\if{html}{\out{</div>}}\preformatted{## # A tibble: 6 × 2
 ##       a     b
 ##   <dbl> <dbl>
@@ -233,16 +235,15 @@ The behavior of side effects can be customized with the \code{actions} option.\i
 
 \subsection{C: Using the expectation function}{
 
-With the \verb{expect_*()} form, we need to be more exacting and provide one
-column at a time; this is primarily used in testthat tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_exists(tbl, vars(a))
-}\if{html}{\out{</div>}}\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_exists(tbl, vars(b))
+With the \verb{expect_*()} form, we would typically perform one validation at a
+time. This is primarily used in testthat tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_exists(tbl, vars(a))
 }\if{html}{\out{</div>}}
 }
 
 \subsection{D: Using the test function}{
 
 With the \verb{test_*()} form, we should get a single logical value returned to
-us (even if there are multiple columns tested, as is the case below).\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% test_col_exists(vars(a, b))
+us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% test_col_exists(vars(a))
 }\if{html}{\out{</div>}}\preformatted{## [1] TRUE
 }
 }

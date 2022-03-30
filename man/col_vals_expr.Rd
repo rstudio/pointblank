@@ -262,19 +262,22 @@ tbl
 \subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
 Validate that values in column \code{a} are integer-like by using the R modulo
-operator and expecting \code{0}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
+operator and expecting \code{0}. We'll determine if this validation has any
+failing test units (there are 6 test units, one for each row).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl) \%>\%
-  col_vals_expr(expr(a \%\% 1 == 0)) \%>\%
+  col_vals_expr(expr = expr(a \%\% 1 == 0)) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
 
-Determine if this validation had no failing test units (there are 6 test
-units, one for each row).\if{html}{\out{<div class="sourceCode r">}}\preformatted{all_passed(agent)
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+Printing the \code{agent} in the console shows the validation report in the
+Viewer. Here is an excerpt of validation report, showing the single entry
+that corresponds to the validation step demonstrated here.
 
-Calling \code{agent} in the console prints the agent's report. But we can get a
-\code{gt_tbl} object directly with \code{get_agent_report(agent)}.
+\if{html}{
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_col_vals_expr_1.png" style="width:100\%;">
+}
+}
 }
 
 \subsection{B: Using the validation function directly on the data (no \code{agent})}{
@@ -282,7 +285,7 @@ Calling \code{agent} in the console prints the agent's report. But we can get a
 This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
 behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% 
-  col_vals_expr(expr(a \%\% 1 == 0)) \%>\%
+  col_vals_expr(expr = expr(a \%\% 1 == 0)) \%>\%
   dplyr::pull(a)
 }\if{html}{\out{</div>}}\preformatted{## [1] 1 2 1 7 8 6
 }
@@ -291,14 +294,14 @@ behavior of side effects can be customized with the \code{actions} option.\if{ht
 \subsection{C: Using the expectation function}{
 
 With the \verb{expect_*()} form, we would typically perform one validation at a
-time. This is primarily used in testthat tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_expr(tbl, ~ a \%\% 1 == 0)
+time. This is primarily used in testthat tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_expr(tbl, expr = ~ a \%\% 1 == 0)
 }\if{html}{\out{</div>}}
 }
 
 \subsection{D: Using the test function}{
 
 With the \verb{test_*()} form, we should get a single logical value returned to
-us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{test_col_vals_expr(tbl, ~ a \%\% 1 == 0)
+us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{test_col_vals_expr(tbl, expr = ~ a \%\% 1 == 0)
 }\if{html}{\out{</div>}}\preformatted{## [1] TRUE
 }
 }
@@ -306,8 +309,8 @@ us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{test_col_vals_expr(t
 \subsection{Variations}{
 
 We can do more complex things by taking advantage of the \code{case_when()} and
-\code{between()} functions (available for use in the pointblank package).\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
-  test_col_vals_expr(~ case_when(
+\code{between()} functions (available for use in the \strong{pointblank} package).\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
+  test_col_vals_expr(expr = ~ case_when(
     b == 0 ~ a \%>\% between(0, 5) & c < 1,
     b == 1 ~ a > 5 & c >= 1
   ))
@@ -317,7 +320,7 @@ We can do more complex things by taking advantage of the \code{case_when()} and
 If you only want to test a subset of rows, then the \code{case_when()} statement
 doesn't need to be exhaustive. Any rows that don't fall into the cases will
 be pruned (giving us less test units overall).\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
-  test_col_vals_expr(~ case_when(
+  test_col_vals_expr(expr = ~ case_when(
     b == 1 ~ a > 5 & c >= 1
   ))
 }\if{html}{\out{</div>}}\preformatted{## [1] TRUE

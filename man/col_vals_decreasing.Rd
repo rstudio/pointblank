@@ -311,14 +311,33 @@ session start.\if{html}{\out{<div class="sourceCode r">}}\preformatted{game_reve
         "2015-02-01 00:00:00"
       ) - session_start
   )
-}\if{html}{\out{</div>}}
 
-Let's ensure that the difftime values in the new \code{time_left} column has
+game_revenue_2
+}\if{html}{\out{</div>}}\preformatted{## # A tibble: 2,000 × 12
+##    player_id       session_id  session_start       time                item_type
+##    <chr>           <chr>       <dttm>              <dttm>              <chr>    
+##  1 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 01:31:03 2015-01-01 01:31:27 iap      
+##  2 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 01:31:03 2015-01-01 01:36:57 iap      
+##  3 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 01:31:03 2015-01-01 01:37:45 iap      
+##  4 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 01:31:03 2015-01-01 01:42:33 ad       
+##  5 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 11:55:20 ad       
+##  6 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 12:08:56 ad       
+##  7 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 12:14:08 ad       
+##  8 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 12:21:44 ad       
+##  9 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 12:24:20 ad       
+## 10 FXWUORGYNJAE271 FXWUORGYNJ… 2015-01-01 15:17:18 2015-01-01 15:19:36 ad       
+## # … with 1,990 more rows, and 7 more variables: item_name <chr>,
+## #   item_revenue <dbl>, session_duration <dbl>, start_day <date>,
+## #   acquisition <chr>, country <chr>, time_left <drtn>
+}
+
+Let's ensure that the \code{"difftime"} values in the new \code{time_left} column has
 values that are decreasing from top to bottom.
 \subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
-Validate that all difftime values in the column \code{time_left} are decreasing,
-and, allow for repeating values (\code{allow_stationary} will be set to \code{TRUE}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
+Validate that all \code{"difftime"} values in the column \code{time_left} are
+decreasing, and, allow for repeating values (\code{allow_stationary} will be set
+to \code{TRUE}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(game_revenue_2) \%>\%
   col_vals_decreasing(
     vars(time_left),
@@ -327,13 +346,15 @@ and, allow for repeating values (\code{allow_stationary} will be set to \code{TR
   interrogate()
 }\if{html}{\out{</div>}}
 
-Determine if this validation had no failing test units (there are 2000 test
-units).\if{html}{\out{<div class="sourceCode r">}}\preformatted{all_passed(agent)
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+Printing the \code{agent} in the console shows the validation report in the
+Viewer. Here is an excerpt of validation report, showing the single entry
+that corresponds to the validation step demonstrated here.
 
-Calling \code{agent} in the console prints the agent's report. But we can get a
-\code{gt_tbl} object directly with \code{get_agent_report(agent)}.
+\if{html}{
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_col_vals_decreasing_1.png" style="width:100\%;">
+}
+}
 }
 
 \subsection{B: Using the validation function directly on the data (no \code{agent})}{

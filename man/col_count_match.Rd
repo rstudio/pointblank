@@ -257,20 +257,22 @@ of the comparison table (\code{tbl_2}).\if{html}{\out{<div class="sourceCode r">
   interrogate()
 }\if{html}{\out{</div>}}
 
-Determine if this validation passed by using \code{all_passed()}:\if{html}{\out{<div class="sourceCode r">}}\preformatted{all_passed(agent)
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+Printing the \code{agent} in the console shows the validation report in the
+Viewer. Here is an excerpt of validation report, showing the single entry
+that corresponds to the validation step demonstrated here.
 
-Calling \code{agent} in the console prints the agent's report. But we can get a
-\code{gt_tbl} object directly with \code{get_agent_report(agent)}.
+\if{html}{
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_col_count_match_1.png" style="width:100\%;">
+}
+}
 }
 
 \subsection{B: Using the validation function directly on the data (no \code{agent})}{
 
 This way of using validation functions acts as a data filter: data is passed
 through but should \code{stop()} if there is a single test unit failing. The
-behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
-  col_count_match(count = tbl_2)
+behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% col_count_match(count = tbl_2)
 }\if{html}{\out{</div>}}\preformatted{## # A tibble: 3 × 3
 ##       a     b     c
 ##   <dbl> <dbl> <dbl>
@@ -283,17 +285,14 @@ behavior of side effects can be customized with the \code{actions} option.\if{ht
 \subsection{C: Using the expectation function}{
 
 With the \verb{expect_*()} form, we would typically perform one validation at a
-time. This is primarily used in testthat tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_count_match(
-  tbl, count = tbl_2
-)
+time. This is primarily used in testthat tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_count_match(tbl, count = tbl_2)
 }\if{html}{\out{</div>}}
 }
 
 \subsection{D: Using the test function}{
 
 With the \verb{test_*()} form, we should get a single logical value returned to
-us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% 
-  test_col_count_match(count = 3)
+us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% test_col_count_match(count = 3)
 }\if{html}{\out{</div>}}\preformatted{## [1] TRUE
 }
 }

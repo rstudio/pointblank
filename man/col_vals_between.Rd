@@ -341,18 +341,21 @@ are \code{NA} values, we'll choose to let those pass validation by setting
 \code{na_pass = TRUE}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(small_table) \%>\%
   col_vals_between(
-    vars(c), 1, 9, na_pass = TRUE
+    vars(c), left = 1, right = 9,
+    na_pass = TRUE
   ) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
 
-Determine if this validation had no failing test units (there are 13 test
-units, one for each row).\if{html}{\out{<div class="sourceCode r">}}\preformatted{all_passed(agent)
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+Printing the \code{agent} in the console shows the validation report in the
+Viewer. Here is an excerpt of validation report, showing the single entry
+that corresponds to the validation step demonstrated here.
 
-Calling \code{agent} in the console prints the agent's report. But we can get a
-\code{gt_tbl} object directly with \code{get_agent_report(agent)}.
+\if{html}{
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_col_vals_between_1.png" style="width:100\%;">
+}
+}
 }
 
 \subsection{B: Using the validation function directly on the data (no \code{agent})}{
@@ -361,7 +364,8 @@ This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
 behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   col_vals_between(
-    vars(c), 1, 9, na_pass = TRUE
+    vars(c), left = 1, right = 9,
+    na_pass = TRUE
   ) \%>\%
   dplyr::pull(c)
 }\if{html}{\out{</div>}}\preformatted{##  [1]  3  8  3 NA  7  4  3  2  9  9  7  8 NA
@@ -372,7 +376,8 @@ behavior of side effects can be customized with the \code{actions} option.\if{ht
 
 With the \verb{expect_*()} form, we would typically perform one validation at a
 time. This is primarily used in testthat tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_between(
-  small_table, vars(c), 1, 9,
+  small_table, vars(c),
+  left = 1, right = 9,
   na_pass = TRUE
 )
 }\if{html}{\out{</div>}}
@@ -383,21 +388,21 @@ time. This is primarily used in testthat tests.\if{html}{\out{<div class="source
 With the \verb{test_*()} form, we should get a single logical value returned to
 us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   test_col_vals_between(
-    vars(c), 1, 9,
+    vars(c), left = 1, right = 9,
     na_pass = TRUE
   )
 }\if{html}{\out{</div>}}\preformatted{## [1] TRUE
 }
 
 An additional note on the bounds for this function: they are inclusive by
-default (i.e., values of exactly 1 and 9 will pass). We can modify the
+default (i.e., values of exactly \code{1} and \code{9} will pass). We can modify the
 inclusiveness of the upper and lower bounds with the \code{inclusive} option,
 which is a length-2 logical vector.
 
 Testing with the upper bound being non-inclusive, we get \code{FALSE} since two
 values are \code{9} and they now fall outside of the upper (or right) bound.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   test_col_vals_between(
-    vars(c), 1, 9,
+    vars(c), left = 1, right = 9,
     inclusive = c(TRUE, FALSE),
     na_pass = TRUE
   )

@@ -80,6 +80,10 @@
 #' 
 #' We can print the resulting object to see the validation report.
 #' 
+#' ```r
+#' agent
+#' ```
+#' 
 #' \if{html}{
 #' 
 #' \out{

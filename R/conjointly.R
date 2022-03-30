@@ -208,9 +208,11 @@
 #' Validate a number of things on a row-by-row basis using validation functions
 #' of the `col_vals*` type (all have the same number of test units): (1) values
 #' in `a` are less than `8`, (2) values in `c` are greater than the adjacent
-#' values in `a`, and (3) there aren't any NA values in `b`.
+#' values in `a`, and (3) there aren't any NA values in `b`. We'll determine if
+#' this validation has any failing test units (there are 3 test units, one for
+#' each row).
 #' 
-#' ```{r}
+#' ```r
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
 #'   conjointly(
@@ -221,15 +223,15 @@
 #'   interrogate()
 #' ```
 #' 
-#' Determine if this validation had no failing test units (there are 3 test
-#' units, one for each row).
+#' Printing the `agent` in the console shows the validation report in the
+#' Viewer. Here is an excerpt of validation report, showing the single entry
+#' that corresponds to the validation step demonstrated here.
 #' 
-#' ```{r}
-#' all_passed(agent)
-#' ```
-#' 
-#' Calling `agent` in the console prints the agent's report. But we can get a
-#' `gt_tbl` object directly with `get_agent_report(agent)`.
+#' \if{html}{
+#' \out{
+#' `r pb_get_image_tag(file = "man_conjointly_1.png")`
+#' }
+#' }
 #' 
 #' What's going on? Think of there being three parallel validations, each
 #' producing a column of `TRUE` or `FALSE` values (`pass` or `fail`) and line
@@ -256,7 +258,7 @@
 #' With the `expect_*()` form, we would typically perform one validation at a
 #' time. This is primarily used in testthat tests.
 #' 
-#' ```{r}
+#' ```r
 #' expect_conjointly(
 #'   tbl,
 #'   ~ col_vals_lt(., vars(a), value = 8),

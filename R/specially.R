@@ -146,26 +146,25 @@
 #' 
 #' Validate that the target table has exactly three rows. This single validation
 #' with `specially()` has 1 test unit since the function executed on `x` (the
-#' target table) results in a logical vector with a length of 1.
+#' target table) results in a logical vector with a length of 1. We'll determine
+#' if this validation has any failing test units (there is 1 test unit).
 #' 
-#' ```{r}
+#' ```r
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
-#'     specially(
-#'       fn = function(x) nrow(x) == 3
-#'     ) %>%
-#'     interrogate()
+#'   specially(fn = function(x) nrow(x) == 3) %>%
+#'   interrogate()
 #' ```
 #' 
-#' Determine if this validation had no failing test units (there is 1 test
-#' unit).
+#' Printing the `agent` in the console shows the validation report in the
+#' Viewer. Here is an excerpt of validation report, showing the single entry
+#' that corresponds to the validation step demonstrated here.
 #' 
-#' ```{r}
-#' all_passed(agent)
-#' ```
-#' 
-#' Calling `agent` in the console prints the agent's report. But we can get a
-#' `gt_tbl` object directly with `get_agent_report(agent)`.
+#' \if{html}{
+#' \out{
+#' `r pb_get_image_tag(file = "man_specially_1.png")`
+#' }
+#' }
 #' 
 #' ## B: Using the validation function directly on the data (no `agent`)
 #' 
@@ -174,10 +173,7 @@
 #' behavior of side effects can be customized with the `actions` option.
 #' 
 #' ```{r}
-#' tbl %>%
-#'   specially(
-#'       fn = function(x) nrow(x) == 3
-#'    )
+#' tbl %>% specially(fn = function(x) nrow(x) == 3)
 #' ```
 #'
 #' ## C: Using the expectation function
@@ -185,11 +181,8 @@
 #' With the `expect_*()` form, we would typically perform one validation at a
 #' time. This is primarily used in testthat tests.
 #' 
-#' ```{r}
-#' expect_specially(
-#'   tbl,
-#'   fn = function(x) nrow(x) == 3
-#' )
+#' ```r
+#' expect_specially(tbl, fn = function(x) nrow(x) == 3)
 #' ```
 #' 
 #' ## D: Using the test function
@@ -198,10 +191,7 @@
 #' us.
 #' 
 #' ```{r}
-#' tbl %>%
-#'   test_specially(
-#'     fn = function(x) nrow(x) == 3
-#'   )
+#' tbl %>% test_specially(fn = function(x) nrow(x) == 3)
 #' ```
 #' 
 #' ## Variations
@@ -211,34 +201,37 @@
 #' Check the class of the target table.
 #' 
 #' ```{r}
-#' tbl %>% test_specially(
-#'   fn = function(x) {
-#'     inherits(x, "data.frame")
-#'   }
-#' )
+#' tbl %>% 
+#'   test_specially(
+#'     fn = function(x) {
+#'       inherits(x, "data.frame")
+#'     }
+#'   )
 #' ```
 #' 
 #' Check that the number of rows in the target table is less than `small_table`.
 #' 
 #' ```{r}
-#' tbl %>% test_specially(
-#'   fn = function(x) {
-#'     nrow(x) < nrow(small_table)
-#'   }
-#' )
+#' tbl %>% 
+#'   test_specially(
+#'     fn = function(x) {
+#'       nrow(x) < nrow(small_table)
+#'     }
+#'   )
 #' ```
 #' 
 #' Check that all numbers across all numeric column are less than `10`.
 #' 
 #' ```{r}
-#' tbl %>% test_specially(
-#'   fn = function(x) {
-#'     (x %>% 
-#'        dplyr::select(where(is.numeric)) %>%
-#'        unlist()
-#'     ) < 10
-#'   }
-#' )
+#' tbl %>% 
+#'   test_specially(
+#'     fn = function(x) {
+#'       (x %>% 
+#'          dplyr::select(where(is.numeric)) %>%
+#'          unlist()
+#'       ) < 10
+#'     }
+#'   )
 #' ```
 #' 
 #' Check that all values in column `c` are greater than b and greater than `a`
@@ -247,25 +240,27 @@
 #' units).
 #' 
 #' ```{r}
-#' tbl %>% test_specially(
-#'   fn = function(x) {
-#'     x %>%
-#'       dplyr::mutate(
-#'         d = c > b & c > a & c < 10
-#'       )
-#'   }
-#' )
+#' tbl %>% 
+#'   test_specially(
+#'     fn = function(x) {
+#'       x %>%
+#'         dplyr::mutate(
+#'           d = c > b & c > a & c < 10
+#'         )
+#'     }
+#'   )
 #' ```
 #' 
 #' Check that the `game_revenue` table (which is not the target table) has
 #' exactly 2000 rows.
 #' 
 #' ```{r}
-#' tbl %>% test_specially(
-#'   fn = function(x) {
-#'     nrow(game_revenue) == 2000
-#'   }
-#' )
+#' tbl %>% 
+#'   test_specially(
+#'     fn = function(x) {
+#'       nrow(game_revenue) == 2000
+#'     }
+#'   )
 #' ```
 #'
 #' @family validation functions

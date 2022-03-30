@@ -294,21 +294,24 @@ values are part of a given set.\if{html}{\out{<div class="sourceCode r">}}\prefo
 
 Validate that the distinct set of values in column \code{f} contains at least the
 subset defined as \code{low} and \code{high} (the column actually has both of those and
-some \code{mid} values).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
+some \code{mid} values). We'll determine if this validation has any failing test
+units (there are 2 test units, one per element in the \code{set}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(small_table) \%>\%
   col_vals_make_subset(
-    vars(f), c("low", "high")
+    vars(f), set = c("low", "high")
   ) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
 
-Determine if this validation had no failing test units (there are 2 test
-units, one per element in the \code{set}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{all_passed(agent)
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+Printing the \code{agent} in the console shows the validation report in the
+Viewer. Here is an excerpt of validation report, showing the single entry
+that corresponds to the validation step demonstrated here.
 
-Calling \code{agent} in the console prints the agent's report. But we can get a
-\code{gt_tbl} object directly with \code{get_agent_report(agent)}.
+\if{html}{
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_col_vals_make_subset_1.png" style="width:100\%;">
+}
+}
 }
 
 \subsection{B: Using the validation function directly on the data (no \code{agent})}{
@@ -317,7 +320,7 @@ This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
 behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   col_vals_make_subset(
-    vars(f), c("low", "high")
+    vars(f), set = c("low", "high")
   ) \%>\%
   dplyr::pull(f) \%>\%
   unique()
@@ -330,7 +333,7 @@ behavior of side effects can be customized with the \code{actions} option.\if{ht
 With the \verb{expect_*()} form, we would typically perform one validation at a
 time. This is primarily used in testthat tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_make_subset(
   small_table,
-  vars(f), c("low", "high")
+  vars(f), set = c("low", "high")
 )
 }\if{html}{\out{</div>}}
 }
@@ -340,7 +343,7 @@ time. This is primarily used in testthat tests.\if{html}{\out{<div class="source
 With the \verb{test_*()} form, we should get a single logical value returned to
 us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   test_col_vals_make_subset(
-    vars(f), c("low", "high")
+    vars(f), set = c("low", "high")
   )
 }\if{html}{\out{</div>}}\preformatted{## [1] TRUE
 }

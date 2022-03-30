@@ -154,7 +154,7 @@
 #' For all examples here, we'll use a simple table with two columns: one
 #' `integer` (`a`) and the other `character` (`b`). The following examples will
 #' validate that the table columns abides match a schema object as created by
-#' `col_schema()`.
+#' [col_schema()].
 #' 
 #' ```{r}
 #' tbl <- 
@@ -175,29 +175,32 @@
 #'     a = "integer",
 #'     b = "character"
 #'   )
+#' 
+#' schema_obj
 #' ```
 #'   
 #' ## A: Using an `agent` with validation functions and then `interrogate()`
 #' 
 #' Validate that the schema object `schema_obj` exactly defines the column names
-#' and column types.
+#' and column types. We'll determine if this validation has a failing test unit
+#' (there is a single test unit governed by whether there is a match).
 #' 
-#' ```{r}
+#' ```r
 #' agent <-
 #'   create_agent(tbl) %>%
-#'   col_schema_match(schema_obj) %>%
+#'   col_schema_match(schema = schema_obj) %>%
 #'   interrogate()
 #' ```
 #' 
-#' Determine if this validation had no failing test units (there is a single
-#' test unit governed by whether there is a match).
+#' Printing the `agent` in the console shows the validation report in the
+#' Viewer. Here is an excerpt of validation report, showing the single entry
+#' that corresponds to the validation step demonstrated here.
 #' 
-#' ```{r}
-#' all_passed(agent)
-#' ```
-#' 
-#' Calling `agent` in the console prints the agent's report. But we can get a
-#' `gt_tbl` object directly with `get_agent_report(agent)`.
+#' \if{html}{
+#' \out{
+#' `r pb_get_image_tag(file = "man_col_schema_match_1.png")`
+#' }
+#' }
 #' 
 #' ## B: Using the validation function directly on the data (no `agent`)
 #' 
@@ -206,7 +209,7 @@
 #' behavior of side effects can be customized with the `actions` option.
 #' 
 #' ```{r}
-#' tbl %>% col_schema_match(schema_obj)
+#' tbl %>% col_schema_match(schema = schema_obj)
 #' ```
 #'
 #' ## C: Using the expectation function
@@ -214,8 +217,8 @@
 #' With the `expect_*()` form, we would typically perform one validation at a
 #' time. This is primarily used in testthat tests.
 #' 
-#' ```{r}
-#' expect_col_schema_match(tbl, schema_obj)
+#' ```r
+#' expect_col_schema_match(tbl, scheam = schema_obj)
 #' ```
 #' 
 #' ## D: Using the test function
@@ -224,7 +227,7 @@
 #' us.
 #' 
 #' ```{r}
-#' tbl %>% test_col_schema_match(schema_obj)
+#' tbl %>% test_col_schema_match(schema = schema_obj)
 #' ```
 #' 
 #' @family validation functions
@@ -481,6 +484,8 @@ test_col_schema_match <- function(
 #'     a = "integer",
 #'     b = "character"
 #'   )
+#' 
+#' schema_obj
 #' ```
 #' 
 #' Validate that the schema object `schema_obj` exactly defines the column names

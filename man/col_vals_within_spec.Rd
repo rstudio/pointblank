@@ -354,7 +354,9 @@ spec_slice
 }
 \subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
-Validate that all values in the column \code{email_addresses} are correct.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
+Validate that all values in the column \code{email_addresses} are correct. We'll
+determine if this validation has any failing test units (there are 5 test
+units, one for each row).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(spec_slice) \%>\%
   col_vals_within_spec(
     vars(email_addresses),
@@ -363,13 +365,15 @@ Validate that all values in the column \code{email_addresses} are correct.\if{ht
   interrogate()
 }\if{html}{\out{</div>}}
 
-Determine if this validation had no failing test units (there are 5 test
-units, one for each row).\if{html}{\out{<div class="sourceCode r">}}\preformatted{all_passed(agent)
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+Printing the \code{agent} in the console shows the validation report in the
+Viewer. Here is an excerpt of validation report, showing the single entry
+that corresponds to the validation step demonstrated here.
 
-Calling \code{agent} in the console prints the agent's report. But we can get a
-\code{gt_tbl} object directly with \code{get_agent_report(agent)}.
+\if{html}{
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_col_vals_within_spec_1.png" style="width:100\%;">
+}
+}
 }
 
 \subsection{B: Using the validation function directly on the data (no \code{agent})}{

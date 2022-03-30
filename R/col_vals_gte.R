@@ -202,24 +202,25 @@
 #' ## A: Using an `agent` with validation functions and then `interrogate()` 
 #' 
 #' Validate that values in column `a` are all greater than or equal to the value
-#' of `5`.
+#' of `5`. We'll determine if this validation has any failing test units (there
+#' are 6 test units, one for each row).
 #' 
-#' ```{r}
+#' ```r
 #' agent <-
 #'   create_agent(tbl) %>%
-#'   col_vals_gte(vars(a), 5) %>%
+#'   col_vals_gte(vars(a), value = 5) %>%
 #'   interrogate()
 #' ```
 #' 
-#' Determine if this validation had no failing test units (there are 6 test
-#' units, one for each row).
+#' Printing the `agent` in the console shows the validation report in the
+#' Viewer. Here is an excerpt of validation report, showing the single entry
+#' that corresponds to the validation step demonstrated here.
 #' 
-#' ```{r}
-#' all_passed(agent)
-#' ```
-#' 
-#' Calling `agent` in the console prints the agent's report. But we can get a
-#' `gt_tbl` object directly with `get_agent_report(agent)`.
+#' \if{html}{
+#' \out{
+#' `r pb_get_image_tag(file = "man_col_vals_gte_1.png")`
+#' }
+#' }
 #' 
 #' ## B: Using the validation function directly on the data (no `agent`)
 #' 
@@ -228,9 +229,7 @@
 #' behavior of side effects can be customized with the `actions` option.
 #' 
 #' ```{r}
-#' tbl %>% 
-#'   col_vals_gte(vars(a), 5) %>%
-#'   dplyr::pull(a)
+#' tbl %>% col_vals_gte(vars(a), value = 5)
 #' ```
 #'   
 #' ## C: Using the expectation function
@@ -238,8 +237,8 @@
 #' With the `expect_*()` form, we would typically perform one validation at a
 #' time. This is primarily used in testthat tests.
 #' 
-#' ```{r}
-#' expect_col_vals_gte(tbl, vars(a), 5)
+#' ```r
+#' expect_col_vals_gte(tbl, vars(a), value = 5)
 #' ```
 #' 
 #' ## D: Using the test function
@@ -248,7 +247,7 @@
 #' us.
 #' 
 #' ```{r}
-#' test_col_vals_gte(tbl, vars(a), 5)
+#' test_col_vals_gte(tbl, vars(a), value = 5)
 #' ```
 #' 
 #' @family validation functions

@@ -204,9 +204,11 @@
 #' perform a validation (only if all tests pass). Here, we are going to (1) test
 #' whether columns `a` and `b` are numeric, (2) check that both don't have any
 #' `NA` values, and (3) perform a finalizing validation that checks whether
-#' values in `b` are greater than values in `a`.
+#' values in `b` are greater than values in `a`. We'll determine if this
+#' validation has any failing test units (there are 4 tests and a final
+#' validation).
 #' 
-#' ```{r}
+#' ```r
 #' agent_1 <-
 #'   create_agent(tbl = tbl) %>%
 #'   serially(
@@ -217,23 +219,23 @@
 #'   interrogate()
 #' ```
 #' 
-#' Determine if this validation had no failing test units (there are 4 tests and
-#' a final validation).
+#' Printing the `agent` in the console shows the validation report in the
+#' Viewer. Here is an excerpt of validation report, showing the single entry
+#' that corresponds to the validation step demonstrated here.
 #' 
-#' ```{r}
-#' all_passed(agent_1)
-#' ```
-#' 
-#' Calling `agent` in the console prints the agent's report. But we can get a
-#' `gt_tbl` object directly with `get_agent_report(agent_1)`.
+#' \if{html}{
+#' \out{
+#' `r pb_get_image_tag(file = "man_serially_1.png")`
+#' }
+#' }
 #' 
 #' What's going on? All four of the tests passed and so the final validation
 #' occurred. There were no failing test units in that either!
 #'
-#' The final validation is optional. Here is a different agent where only the
+#' The final validation is optional and so here is a variation where only the
 #' serial tests are performed.
 #' 
-#' ```{r}
+#' ```r
 #' agent_2 <-
 #'   create_agent(tbl = tbl) %>%
 #'   serially(
@@ -245,9 +247,11 @@
 #' 
 #' Everything is good here too:
 #' 
-#' ```{r}
-#' all_passed(agent_2)
-#' ```
+#' \if{html}{
+#' \out{
+#' `r pb_get_image_tag(file = "man_serially_2.png")`
+#' }
+#' }
 #' 
 #' ## B: Using the validation function directly on the data (no `agent`)
 #' 
@@ -269,7 +273,7 @@
 #' With the `expect_*()` form, we would typically perform one validation at a
 #' time. This is primarily used in testthat tests.
 #' 
-#' ```{r}
+#' ```r
 #' expect_serially(
 #'   tbl,
 #'   ~ test_col_is_numeric(., vars(a, b)),

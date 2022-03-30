@@ -190,6 +190,8 @@
 #'     b = c(7, 1, 0, 0),
 #'     c = c(1, 1, 1, 3)
 #'   )
+#' 
+#' tbl_2
 #' ```
 #' 
 #' ## A: Using an `agent` with validation functions and then `interrogate()`
@@ -197,21 +199,22 @@
 #' Validate that the target table (`tbl`) and the comparison table (`tbl_2`) are
 #' equivalent in terms of content.
 #' 
-#' ```{r}
+#' ```r
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
 #'   tbl_match(tbl_compare = tbl_2) %>%
 #'   interrogate()
 #' ```
 #' 
-#' Determine if this validation passed by using `all_passed()`:
+#' Printing the `agent` in the console shows the validation report in the
+#' Viewer. Here is an excerpt of validation report, showing the single entry
+#' that corresponds to the validation step demonstrated here.
 #' 
-#' ```{r}
-#' all_passed(agent)
-#' ```
-#' 
-#' Calling `agent` in the console prints the agent's report. But we can get a
-#' `gt_tbl` object directly with `get_agent_report(agent)`.
+#' \if{html}{
+#' \out{
+#' `r pb_get_image_tag(file = "man_tbl_match_1.png")`
+#' }
+#' }
 #' 
 #' ## B: Using the validation function directly on the data (no `agent`)
 #' 
@@ -228,10 +231,8 @@
 #' With the `expect_*()` form, we would typically perform one validation at a
 #' time. This is primarily used in testthat tests.
 #' 
-#' ```{r}
-#' expect_tbl_match(
-#'   tbl, tbl_compare = tbl_2
-#' )
+#' ```r
+#' expect_tbl_match(tbl, tbl_compare = tbl_2)
 #' ```
 #' 
 #' ## D: Using the test function

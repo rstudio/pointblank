@@ -83,7 +83,8 @@ process.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   interrogate()
 }\if{html}{\out{</div>}}
 
-We can print the resulting object to see the validation report.
+We can print the resulting object to see the validation report.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent
+}\if{html}{\out{</div>}}
 
 \if{html}{
 

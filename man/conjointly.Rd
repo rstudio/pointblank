@@ -304,7 +304,9 @@ tbl
 Validate a number of things on a row-by-row basis using validation functions
 of the \verb{col_vals*} type (all have the same number of test units): (1) values
 in \code{a} are less than \code{8}, (2) values in \code{c} are greater than the adjacent
-values in \code{a}, and (3) there aren't any NA values in \code{b}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
+values in \code{a}, and (3) there aren't any NA values in \code{b}. We'll determine if
+this validation has any failing test units (there are 3 test units, one for
+each row).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = tbl) \%>\%
   conjointly(
     ~ col_vals_lt(., vars(a), value = 8),
@@ -314,13 +316,15 @@ values in \code{a}, and (3) there aren't any NA values in \code{b}.\if{html}{\ou
   interrogate()
 }\if{html}{\out{</div>}}
 
-Determine if this validation had no failing test units (there are 3 test
-units, one for each row).\if{html}{\out{<div class="sourceCode r">}}\preformatted{all_passed(agent)
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+Printing the \code{agent} in the console shows the validation report in the
+Viewer. Here is an excerpt of validation report, showing the single entry
+that corresponds to the validation step demonstrated here.
 
-Calling \code{agent} in the console prints the agent's report. But we can get a
-\code{gt_tbl} object directly with \code{get_agent_report(agent)}.
+\if{html}{
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_conjointly_1.png" style="width:100\%;">
+}
+}
 
 What's going on? Think of there being three parallel validations, each
 producing a column of \code{TRUE} or \code{FALSE} values (\code{pass} or \code{fail}) and line

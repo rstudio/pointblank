@@ -354,7 +354,7 @@ behavior of side effects can be customized with the \code{actions} option.\if{ht
 \subsection{C: Using the expectation function}{
 
 With the \verb{expect_*()} form, we would typically perform one validation at a
-time. This is primarily used in testthat tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_conjointly(
+time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_conjointly(
   tbl,
   ~ col_vals_lt(., vars(a), value = 8),
   ~ col_vals_gt(., vars(c), value = vars(a)),

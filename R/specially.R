@@ -179,7 +179,7 @@
 #' ## C: Using the expectation function
 #' 
 #' With the `expect_*()` form, we would typically perform one validation at a
-#' time. This is primarily used in testthat tests.
+#' time. This is primarily used in **testthat** tests.
 #' 
 #' ```r
 #' expect_specially(tbl, fn = function(x) nrow(x) == 3)

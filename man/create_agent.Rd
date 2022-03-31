@@ -96,6 +96,7 @@ table. This reporting of the interrogation can also be accessed with the
 }
 \section{The Use of an Agent for Validation Is Just One Option of Several}{
 
+
 There are a few validation workflows and using an \emph{agent} is the one that
 provides the most options. It is probably the best choice for assessing the
 state of data quality since it yields detailed reporting, has options for
@@ -134,6 +135,7 @@ This test of \code{small_table} would be counted as a failure.
 
 \section{The Agent Report}{
 
+
 While printing an \emph{agent} (a \code{ptblank_agent} object) will display its
 reporting in the Viewer, we can alternatively use the \code{\link[=get_agent_report]{get_agent_report()}} to
 take advantage of other options (e.g., overriding the language, modifying the
@@ -150,6 +152,7 @@ a web browser.
 }
 
 \section{Data Products Obtained from an Agent}{
+
 
 A very detailed list object, known as an x-list, can be obtained by using the
 \code{\link[=get_agent_x_list]{get_agent_x_list()}} function on the \emph{agent}. This font of information can be
@@ -177,6 +180,7 @@ validation steps are free from any failing units.
 }
 
 \section{YAML}{
+
 
 A \strong{pointblank} agent can be written to YAML with \code{\link[=yaml_write]{yaml_write()}} and the
 resulting YAML can be used to regenerate an agent (with \code{\link[=yaml_read_agent]{yaml_read_agent()}})
@@ -254,6 +258,7 @@ of the R expressions that are used to regenerate that agent with
 
 \section{Writing an Agent to Disk}{
 
+
 An \emph{agent} object can be written to disk with the \code{\link[=x_write_disk]{x_write_disk()}} function.
 This can be useful for keeping a history of validations and generating views
 of data quality over time. Agents are stored in the serialized RDS format and
@@ -266,6 +271,7 @@ may change, hence the need to use an expression for this).
 }
 
 \section{Combining Several Agents in a \emph{multiagent} Object}{
+
 
 Multiple \emph{agent} objects can be part of a \emph{multiagent} object, and two
 functions can be used for this: \code{\link[=create_multiagent]{create_multiagent()}} and

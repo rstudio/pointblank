@@ -40,6 +40,7 @@
 #' [get_agent_report()] function, where there are more reporting options.
 #'
 #' @section The Use of an Agent for Validation Is Just One Option of Several:
+#' 
 #' There are a few validation workflows and using an *agent* is the one that
 #' provides the most options. It is probably the best choice for assessing the
 #' state of data quality since it yields detailed reporting, has options for
@@ -88,6 +89,7 @@
 #' This test of `small_table` would be counted as a failure.
 #' 
 #' @section The Agent Report:
+#' 
 #' While printing an *agent* (a `ptblank_agent` object) will display its
 #' reporting in the Viewer, we can alternatively use the [get_agent_report()] to
 #' take advantage of other options (e.g., overriding the language, modifying the
@@ -103,6 +105,7 @@
 #' a web browser.
 #'
 #' @section Data Products Obtained from an Agent:
+#' 
 #' A very detailed list object, known as an x-list, can be obtained by using the
 #' [get_agent_x_list()] function on the *agent*. This font of information can be
 #' taken as a whole, or, broken down by the step number (with the `i` argument).
@@ -128,6 +131,7 @@
 #' validation steps are free from any failing units.
 #' 
 #' @section YAML: 
+#' 
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
 #' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
 #' or interrogate the target table (via [yaml_agent_interrogate()]). Here is an
@@ -208,6 +212,7 @@
 #' [yaml_agent_show_exprs()].
 #' 
 #' @section Writing an Agent to Disk:
+#' 
 #' An *agent* object can be written to disk with the [x_write_disk()] function.
 #' This can be useful for keeping a history of validations and generating views
 #' of data quality over time. Agents are stored in the serialized RDS format and
@@ -219,6 +224,7 @@
 #' may change, hence the need to use an expression for this).
 #' 
 #' @section Combining Several Agents in a *multiagent* Object:
+#' 
 #' Multiple *agent* objects can be part of a *multiagent* object, and two
 #' functions can be used for this: [create_multiagent()] and
 #' [read_disk_multiagent()]. By gathering multiple agents that have performed

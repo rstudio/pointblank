@@ -227,7 +227,8 @@
 #'   ) 
 #' })
 #' 
-#' test_that("values in `b` should match the regular expression: `[0-9]-[a-z]{3}-[0-9]{3}`", {
+#' test_that("values in `b` should match the regular expression: 
+#' `[0-9]-[a-z]{3}-[0-9]{3}`", {
 #'   
 #'   expect_col_vals_regex(
 #'     tbl,

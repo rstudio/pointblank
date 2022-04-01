@@ -50,36 +50,63 @@
 #'   
 #' @return A character vector.
 #'   
-#' @examples 
-#' # Taking the generic `pb_file` name for
-#' # a file, we add the current date to it
-#' # as a suffix
+#' @section Demos:
+#' 
+#' ## The basics of creating a filename with the current date
+#' 
+#' Taking the generic `"pb_file"` name for a file, we add the current date to it
+#' as a suffix.
+#' 
+#' ```r
 #' affix_date(filename = "pb_file")
+#' ```
+#' ```
+#' ## [1] "pb_file_2022-04-01"
+#' ```
 #' 
-#' # File extensions won't get in the way:
+#' File extensions won't get in the way:
+#' 
+#' ```r
 #' affix_date(filename = "pb_file.rds")
+#' ```
+#' ```
+#' ## [1] "pb_file_2022-04-01.rds"
+#' ```
 #' 
-#' # The date can be used as a prefix
+#' The date can be used as a prefix.
+#' 
+#' ```r
 #' affix_date(
 #'   filename = "pb_file",
 #'   position = "start"
 #' )
+#' ```
+#' ```
+#' ## [1] "2022-04-01_pb_file"
+#' ```
 #' 
-#' # The date pattern can be changed and so
-#' # can the delimiter
+#' The date pattern can be changed and so can the delimiter.
+#' 
+#' ```r
 #' affix_date(
 #'   filename = "pb_file.yml",
 #'   format = "%Y%m%d",
 #'   delimiter = "-"
 #' )
+#' ```
+#' ```
+#' ## [1] "pb_file-20220401.yml"
+#' ```
+#'
+#' ## Using a date-based filename in a **pointblank** workflow
+#'
+#' We can use a file-naming convention involving dates when writing output files
+#' immediately after interrogating. This is just one example (any workflow
+#' involving a `filename` argument is applicable). It's really advantageous to
+#' use date-based filenames when interrogating directly from YAML in a scheduled
+#' process.
 #' 
-#' if (interactive()) {
-#' 
-#' # We can use a file-naming convention
-#' # involving dates when writing output
-#' # files immediately after interrogating;
-#' # useful when interrogating directly
-#' # from YAML in a scheduled process
+#' ```r
 #' yaml_agent_interrogate(
 #'   filename = system.file(
 #'     "yaml", "agent-small_table.yml",
@@ -94,8 +121,14 @@
 #'     keep_tbl = TRUE,
 #'     keep_extracts = TRUE
 #'   )
+#' ```
 #' 
-#' }
+#' In the above, we used the written-to-disk agent (The
+#' `"agent-small_table.yml"` YAML file) for an interrogation via
+#' [yaml_agent_interrogate()]. Then, the results were written to disk as an RDS
+#' file. In the `filename` argument of [x_write_disk()], the [affix_date()]
+#' function was used to ensure that a daily run would produce a file whose name
+#' indicates the day of execution.
 #' 
 #' @family Utility and Helper Functions
 #' @section Function ID:

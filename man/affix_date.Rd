@@ -117,7 +117,7 @@ indicates the day of execution.
 
 \seealso{
 The \code{\link[=affix_datetime]{affix_datetime()}} function provides the same features except it
-produces a date-time string by default.
+produces a datetime string by default.
 
 Other Utility and Helper Functions: 
 \code{\link{affix_datetime}()},

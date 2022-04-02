@@ -34,33 +34,51 @@ Only numerical data from the input table will generate columns in the output
 table. Column names from the input will be used in the output, preserving
 order as well.
 }
-\section{Function ID}{
+\section{Demos}{
 
-12-1
+
+Get summary statistics for the \code{game_revenue} dataset that is included in the
+\strong{pointblank} package.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_summary_stats(tbl = game_revenue)
+}\if{html}{\out{</div>}}\preformatted{## # A tibble: 9 × 3
+##   .param. item_revenue session_duration
+##   <chr>          <dbl>            <dbl>
+## 1 min             0                 3.2
+## 2 p05             0.02              8.2
+## 3 q_1             0.09             18.5
+## 4 med             0.38             26.5
+## 5 q_3             1.25             33.8
+## 6 p95            22.0              39.5
+## 7 max           143.               41  
+## 8 iqr             1.16             15.3
+## 9 range         143.               37.8
 }
 
-\examples{
-# Get summary statistics for the
-# `game_revenue` dataset that is
-# included in the package
-tt_summary_stats(game_revenue)
-
-# Ensure that the maximum revenue
-# for individual purchases in the
-# `game_revenue` table is less than
-# $150
-tt_summary_stats(game_revenue) \%>\%
+Table transformers work great in conjunction with validation functions. Let's
+ensure that the maximum revenue for individual purchases in the
+\code{game_revenue} table is less than $150.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_summary_stats(game_revenue) \%>\%
   col_vals_lt(
     columns = vars(item_revenue),
     value = 150,
     segments = .param. ~ "max"
   )
+}\if{html}{\out{</div>}}\preformatted{## # A tibble: 9 × 3
+##   .param. item_revenue session_duration
+##   <chr>          <dbl>            <dbl>
+## 1 min             0                 3.2
+## 2 p05             0.02              8.2
+## 3 q_1             0.09             18.5
+## 4 med             0.38             26.5
+## 5 q_3             1.25             33.8
+## 6 p95            22.0              39.5
+## 7 max           143.               41  
+## 8 iqr             1.16             15.3
+## 9 range         143.               37.8
+}
 
-# For in-app purchases in the
-# `game_revenue` table, check that
-# median revenue is somewhere
-# between $8 and $12
-game_revenue \%>\% 
+We see data, and not an error, so the validation was successful!
+
+Let's do another: for in-app purchases in the \code{game_revenue} table, check
+that the median revenue is somewhere between $8 and $12.\if{html}{\out{<div class="sourceCode r">}}\preformatted{game_revenue \%>\% 
   dplyr::filter(item_type == "iap") \%>\%
   tt_summary_stats() \%>\%
   col_vals_between(
@@ -68,21 +86,31 @@ game_revenue \%>\%
     left = 8, right = 12,
     segments = .param. ~ "med"
   )
+}\if{html}{\out{</div>}}\preformatted{## # A tibble: 9 × 3
+##   .param. item_revenue session_duration
+##   <chr>          <dbl>            <dbl>
+## 1 min             0.4              3.2 
+## 2 p05             1.39             5.99
+## 3 q_1             4.49            14.0 
+## 4 med            10.5             22.6 
+## 5 q_3            20.3             30.6 
+## 6 p95            66.0             38.8 
+## 7 max           143.              41   
+## 8 iqr            15.8             16.7 
+## 9 range         143.              37.8
+}
 
-# While performing validations of the
-# `game_revenue` table with an agent
-# we can include the same revenue
-# check by using `tt_summary_stats()`
-# in the `preconditions` argument (this
-# will transform the target table for
-# the validation step); we also need
-# to get just a segment of that table
-# (the row with the median values)
-agent <- 
+We can get more creative with this transformer. Why not use a transformed
+table in a validation plan? While performing validations of the
+\code{game_revenue} table with an agent we can include the same revenue check as
+above by using \code{tt_summary_stats()} in the \code{preconditions} argument. This
+transforms the target table into a summary table for the validation step. The
+final step of the transformation in \code{preconditions} is a \code{dplyr::filter()}
+step that isolates the row of the median statistic.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- 
   create_agent(
     tbl = game_revenue,
     tbl_name = "game_revenue",
-    label = "An example.",
+    label = "`tt_summary_stats()` example.",
     actions = action_levels(
       warn_at = 0.10,
       stop_at = 0.25,
@@ -96,15 +124,29 @@ agent <-
     left = 8, right = 12,
     preconditions = ~ . \%>\%
       dplyr::filter(item_type == "iap") \%>\%
-      tt_summary_stats(),
-    segments = .param. ~ "med"
+      tt_summary_stats() \%>\%
+      dplyr::filter(.param. == "med")
   ) \%>\%
   interrogate()
+}\if{html}{\out{</div>}}
 
-# This should all pass but let's check:
-all_passed(agent)
+Printing the \code{agent} in the console shows the validation report in the
+Viewer. Here is an excerpt of validation report. Take note of the final step
+(\verb{STEP 3}) as it shows the entry that corresponds to the \code{\link[=col_vals_between]{col_vals_between()}}
+validation step that uses the summary stats table as its target.
 
+\if{html}{
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_tt_summary_stats_1.png" style="width:100\%;">
 }
+}
+}
+
+\section{Function ID}{
+
+12-1
+}
+
 \seealso{
 Other Table Transformers: 
 \code{\link{get_tt_param}()},

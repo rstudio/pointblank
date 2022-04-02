@@ -44,27 +44,34 @@
 #' 
 #' @return A `tibble` object.
 #' 
-#' @examples 
-#' # Get summary statistics for the
-#' # `game_revenue` dataset that is
-#' # included in the package
-#' tt_summary_stats(game_revenue)
+#' @section Demos:
 #' 
-#' # Ensure that the maximum revenue
-#' # for individual purchases in the
-#' # `game_revenue` table is less than
-#' # $150
+#' Get summary statistics for the `game_revenue` dataset that is included in the
+#' **pointblank** package.
+#' 
+#' ```{r}
+#' tt_summary_stats(tbl = game_revenue)
+#' ```
+#' 
+#' Table transformers work great in conjunction with validation functions. Let's
+#' ensure that the maximum revenue for individual purchases in the
+#' `game_revenue` table is less than $150.
+#' 
+#' ```{r}
 #' tt_summary_stats(game_revenue) %>%
 #'   col_vals_lt(
 #'     columns = vars(item_revenue),
 #'     value = 150,
 #'     segments = .param. ~ "max"
 #'   )
+#' ```
 #' 
-#' # For in-app purchases in the
-#' # `game_revenue` table, check that
-#' # median revenue is somewhere
-#' # between $8 and $12
+#' We see data, and not an error, so the validation was successful!
+#' 
+#' Let's do another: for in-app purchases in the `game_revenue` table, check
+#' that the median revenue is somewhere between $8 and $12.
+#' 
+#' ```{r}
 #' game_revenue %>% 
 #'   dplyr::filter(item_type == "iap") %>%
 #'   tt_summary_stats() %>%
@@ -73,21 +80,22 @@
 #'     left = 8, right = 12,
 #'     segments = .param. ~ "med"
 #'   )
+#' ```
 #'
-#' # While performing validations of the
-#' # `game_revenue` table with an agent
-#' # we can include the same revenue
-#' # check by using `tt_summary_stats()`
-#' # in the `preconditions` argument (this
-#' # will transform the target table for
-#' # the validation step); we also need
-#' # to get just a segment of that table
-#' # (the row with the median values)
+#' We can get more creative with this transformer. Why not use a transformed
+#' table in a validation plan? While performing validations of the
+#' `game_revenue` table with an agent we can include the same revenue check as
+#' above by using `tt_summary_stats()` in the `preconditions` argument. This
+#' transforms the target table into a summary table for the validation step. The
+#' final step of the transformation in `preconditions` is a `dplyr::filter()`
+#' step that isolates the row of the median statistic.
+#' 
+#' ```r
 #' agent <- 
 #'   create_agent(
 #'     tbl = game_revenue,
 #'     tbl_name = "game_revenue",
-#'     label = "An example.",
+#'     label = "`tt_summary_stats()` example.",
 #'     actions = action_levels(
 #'       warn_at = 0.10,
 #'       stop_at = 0.25,
@@ -101,13 +109,22 @@
 #'     left = 8, right = 12,
 #'     preconditions = ~ . %>%
 #'       dplyr::filter(item_type == "iap") %>%
-#'       tt_summary_stats(),
-#'     segments = .param. ~ "med"
+#'       tt_summary_stats() %>%
+#'       dplyr::filter(.param. == "med")
 #'   ) %>%
 #'   interrogate()
+#' ```
 #' 
-#' # This should all pass but let's check:
-#' all_passed(agent)
+#' Printing the `agent` in the console shows the validation report in the
+#' Viewer. Here is an excerpt of validation report. Take note of the final step
+#' (`STEP 3`) as it shows the entry that corresponds to the [col_vals_between()]
+#' validation step that uses the summary stats table as its target.
+#' 
+#' \if{html}{
+#' \out{
+#' `r pb_get_image_tag(file = "man_tt_summary_stats_1.png")`
+#' }
+#' }
 #' 
 #' @family Table Transformers
 #' @section Function ID:

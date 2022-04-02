@@ -367,7 +367,6 @@ tt_tbl_dims <- function(tbl) {
   tbl_dims_tbl
 }
 
-
 #' Table Transformer: get a table's column names
 #' 
 #' @description
@@ -383,27 +382,34 @@ tt_tbl_dims <- function(tbl) {
 #' 
 #' @return A `tibble` object.
 #' 
-#' @examples
-#' # Get the column names of the
-#' # `game_revenue` dataset that's
-#' # included in the package
-#' tt_tbl_colnames(game_revenue)
+#' @section Demos:
 #' 
-#' # This output table is useful when
-#' # you want to validate the
-#' # column names of the table; here,
-#' # we check that `game_revenue` has
-#' # certain column names present
-#' tt_tbl_colnames(game_revenue) %>%
+#' Get the column names of the `game_revenue` dataset that is included in the
+#' **pointblank** package.
+#' 
+#' ```{r}
+#' tt_tbl_colnames(tbl = game_revenue)
+#' ```
+#' 
+#' This output table is useful when you want to validate the column names of the
+#' table. Here, we check that `game_revenue` table, included in the
+#' **pointblank** package, has certain column names present with
+#' [test_col_vals_make_subset()].
+#' 
+#' ```{r}
+#' tt_tbl_colnames(tbl = game_revenue) %>%
 #'   test_col_vals_make_subset(
 #'     columns = vars(value),
 #'     set = c("acquisition", "country")
 #'   )
+#' ```
 #' 
-#' # We can check to see whether the
-#' # column names in the `specifications`
-#' # table are all less than 15
-#' # characters in length
+#' We can check to see whether the column names in the `specifications` table
+#' are all less than `15` characters in length. For this, we would use the
+#' combination of `tt_tbl_colnames()`, then [tt_string_info()], and finally
+#' [test_col_vals_lt()] to perform the test.
+#' 
+#' ```{r}
 #' specifications %>%
 #'   tt_tbl_colnames() %>%
 #'   tt_string_info() %>%
@@ -411,6 +417,10 @@ tt_tbl_dims <- function(tbl) {
 #'     columns = vars(value),
 #'     value = 15
 #'   )
+#' ```
+#' 
+#' This returned `FALSE` and this is because the column name
+#' `credit_card_numbers` is 16 characters long.
 #' 
 #' @family Table Transformers
 #' @section Function ID:

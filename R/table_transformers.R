@@ -310,32 +310,38 @@ tt_string_info <- function(tbl) {
 #' 
 #' @return A `tibble` object.
 #' 
-#' @examples
-#' # Get the dimensions of the
-#' # `game_revenue` dataset that's
-#' # included in the package
-#' tt_tbl_dims(game_revenue)
+#' @section Demos:
 #' 
-#' # This output table is useful when
-#' # you want to validate the
-#' # dimensions of the table; here,
-#' # we check that `game_revenue` has
-#' # at least 1500 rows
-#' tt_tbl_dims(game_revenue) %>%
+#' Get the dimensions of the `game_revenue` dataset that is included in the
+#' **pointblank** package.
+#' 
+#' ```{r}
+#' tt_tbl_dims(tbl = game_revenue)
+#' ```
+#' 
+#' This output table is useful when a table validation depends on its
+#' dimensions. Here, we check that `game_revenue` has at least `1500` rows.
+#' 
+#' ```{r}
+#' tt_tbl_dims(tbl = game_revenue) %>%
 #'   dplyr::filter(.param. == "rows") %>%
 #'   test_col_vals_gt(
 #'     columns = vars(value),
 #'     value = 1500
 #'   )
+#' ```
 #' 
-#' # We can check `small_table` for
-#' # an exact number of columns (`8`)
-#' tt_tbl_dims(small_table) %>%
+#' We can check `small_table` to ensure that number of columns is less than
+#' `10`.
+#' 
+#' ```{r}
+#' tt_tbl_dims(tbl = small_table) %>%
 #'   dplyr::filter(.param. == "columns") %>%
-#'   test_col_vals_equal(
+#'   test_col_vals_lt(
 #'     columns = vars(value),
-#'     value = 8
+#'     value = 10
 #'   )
+#' ```
 #' 
 #' @family Table Transformers
 #' @section Function ID:

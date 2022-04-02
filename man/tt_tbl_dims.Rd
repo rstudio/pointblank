@@ -20,39 +20,44 @@ columns. The output summary table will have two columns and two rows. The
 first is the \code{".param."} column with the labels \code{"rows"} and \code{"columns"}; the
 second column, \code{"value"}, contains the row and column counts.
 }
-\section{Function ID}{
+\section{Demos}{
 
-12-3
+
+Get the dimensions of the \code{game_revenue} dataset that is included in the
+\strong{pointblank} package.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_tbl_dims(tbl = game_revenue)
+}\if{html}{\out{</div>}}\preformatted{## # A tibble: 2 × 2
+##   .param. value
+##   <chr>   <int>
+## 1 rows     2000
+## 2 columns    11
 }
 
-\examples{
-# Get the dimensions of the
-# `game_revenue` dataset that's
-# included in the package
-tt_tbl_dims(game_revenue)
-
-# This output table is useful when
-# you want to validate the
-# dimensions of the table; here,
-# we check that `game_revenue` has
-# at least 1500 rows
-tt_tbl_dims(game_revenue) \%>\%
+This output table is useful when a table validation depends on its
+dimensions. Here, we check that \code{game_revenue} has at least \code{1500} rows.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_tbl_dims(tbl = game_revenue) \%>\%
   dplyr::filter(.param. == "rows") \%>\%
   test_col_vals_gt(
     columns = vars(value),
     value = 1500
   )
-
-# We can check `small_table` for
-# an exact number of columns (`8`)
-tt_tbl_dims(small_table) \%>\%
-  dplyr::filter(.param. == "columns") \%>\%
-  test_col_vals_equal(
-    columns = vars(value),
-    value = 8
-  )
-
+}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
 }
+
+We can check \code{small_table} to ensure that number of columns is less than
+\code{10}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_tbl_dims(tbl = small_table) \%>\%
+  dplyr::filter(.param. == "columns") \%>\%
+  test_col_vals_lt(
+    columns = vars(value),
+    value = 10
+  )
+}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
+}
+}
+
+\section{Function ID}{
+
+12-3
+}
+
 \seealso{
 Other Table Transformers: 
 \code{\link{get_tt_param}()},

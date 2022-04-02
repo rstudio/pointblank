@@ -55,7 +55,7 @@ Get summary statistics for the \code{game_revenue} dataset that is included in t
 
 Table transformers work great in conjunction with validation functions. Let's
 ensure that the maximum revenue for individual purchases in the
-\code{game_revenue} table is less than $150.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_summary_stats(game_revenue) \%>\%
+\code{game_revenue} table is less than $150.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_summary_stats(tbl = game_revenue) \%>\%
   col_vals_lt(
     columns = vars(item_revenue),
     value = 150,

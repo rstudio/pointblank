@@ -58,7 +58,7 @@
 #' `game_revenue` table is less than $150.
 #' 
 #' ```{r}
-#' tt_summary_stats(game_revenue) %>%
+#' tt_summary_stats(tbl = game_revenue) %>%
 #'   col_vals_lt(
 #'     columns = vars(item_revenue),
 #'     value = 150,
@@ -211,17 +211,20 @@ tt_summary_stats <- function(tbl) {
 #' 
 #' @return A `tibble` object.
 #' 
-#' @examples 
-#' # Get string information for the
-#' # string-based columns in the
-#' # `game_revenue` dataset
-#' tt_string_info(game_revenue)
+#' @section Demos:
 #' 
-#' # Ensure that `player_id` and
-#' # `session_id` values always have
-#' # the same number of characters
-#' # throughout the table
-#' tt_string_info(game_revenue) %>%
+#' Get string information for the string-based columns in the `game_revenue`
+#' dataset that is included in the **pointblank** package.
+#' 
+#' ```{r}
+#' tt_string_info(tbl = game_revenue)
+#' ```
+#' 
+#' Ensure that `player_id` and `session_id` values always have the same fixed
+#' numbers of characters (`15` and `24`, respectively) throughout the table.
+#' 
+#' ```{r}
+#' tt_string_info(tbl = game_revenue) %>%
 #'   col_vals_equal(
 #'     columns = vars(player_id),
 #'     value = 15
@@ -230,16 +233,21 @@ tt_summary_stats <- function(tbl) {
 #'     columns = vars(session_id),
 #'     value = 24
 #'   )
+#' ```
 #' 
-#' # Check that the maximum string
-#' # length in column `f` of the
-#' # `small_table` dataset is no
-#' # greater than `4`
-#' tt_string_info(small_table) %>%
+#' We see data, and not an error, so both validations were successful!
+#' 
+#' Let's use a `tt_string_info()`-transformed table with the
+#' [test_col_vals_lte()] to check that the maximum string length in column `f`
+#' of the `small_table` dataset is no greater than `4`.
+#' 
+#' ```{r}
+#' tt_string_info(tbl = small_table) %>%
 #'   test_col_vals_lte(
 #'     columns = vars(f),
 #'     value = 4
 #'   )
+#' ```
 #' 
 #' @family Table Transformers
 #' @section Function ID:

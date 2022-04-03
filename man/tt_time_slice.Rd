@@ -55,36 +55,63 @@ the \code{time_column}. This ordering is always done in an ascending manner. Any
 \code{NA}/\code{NULL} values in the \code{time_column} will result in the corresponding rows
 can being removed (no matter which slice is retained).
 }
+\section{Demos}{
+
+
+Let's use the \code{game_revenue} dataset, included in the \strong{pointblank} package,
+as the input table for the first demo. It has entries in the first 21 days of
+2015 and we'll elect to get all of the records where the \code{time} values are
+strictly for the first 15 days of 2015. The \code{keep} argument has a default of
+\code{"left"} so all rows where the \code{time} column is less than
+\code{"2015-01-16 00:00:00"} will be kept.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_time_slice(
+  tbl = game_revenue,
+  time_column = "time",
+  slice_point = "2015-01-16"
+)
+}\if{html}{\out{</div>}}\preformatted{## # A tibble: 1,208 × 11
+##    player_id       session_id  session_start       time                item_type
+##    <chr>           <chr>       <dttm>              <dttm>              <chr>    
+##  1 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 01:31:03 2015-01-01 01:31:27 iap      
+##  2 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 01:31:03 2015-01-01 01:36:57 iap      
+##  3 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 01:31:03 2015-01-01 01:37:45 iap      
+##  4 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 01:31:03 2015-01-01 01:42:33 ad       
+##  5 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 11:55:20 ad       
+##  6 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 12:08:56 ad       
+##  7 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 12:14:08 ad       
+##  8 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 12:21:44 ad       
+##  9 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 12:24:20 ad       
+## 10 FXWUORGYNJAE271 FXWUORGYNJ… 2015-01-01 15:17:18 2015-01-01 15:19:36 ad       
+## # … with 1,198 more rows, and 6 more variables: item_name <chr>,
+## #   item_revenue <dbl>, session_duration <dbl>, start_day <date>,
+## #   acquisition <chr>, country <chr>
+}
+
+Omit the first 25\% of records from \code{small_table}, also included in the
+package, with a fractional \code{slice_point} of \code{0.25} on the basis of a timeline
+that begins at \verb{2016-01-04 11:00:00} and ends at \verb{2016-01-30 11:23:00}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
+  tt_time_slice(
+    slice_point = 0.25,
+    keep = "right"
+  )
+}\if{html}{\out{</div>}}\preformatted{## # A tibble: 8 × 8
+##   date_time           date           a b             c     d e     f    
+##   <dttm>              <date>     <int> <chr>     <dbl> <dbl> <lgl> <chr>
+## 1 2016-01-11 06:15:00 2016-01-11     4 2-dhe-923     4 3291. TRUE  mid  
+## 2 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3  843. TRUE  high 
+## 3 2016-01-17 11:27:00 2016-01-17     4 5-boe-639     2 1036. FALSE low  
+## 4 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high 
+## 5 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high 
+## 6 2016-01-26 20:07:00 2016-01-26     4 2-dmx-010     7  834. TRUE  low  
+## 7 2016-01-28 02:51:00 2016-01-28     2 7-dmx-010     8  108. FALSE low  
+## 8 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA 2230. TRUE  high
+}
+}
+
 \section{Function ID}{
 
 12-6
 }
 
-\examples{
-# With the `game_revenue` dataset,
-# which has entries in the first
-# 21 days of 2015, elect to get all
-# of the records where the `time`
-# values are strictly for the first
-# 15 days of 2015
-tt_time_slice(
-  tbl = game_revenue,
-  time_column = "time",
-  slice_point = "2015-01-16"
-)
-
-# Omit the first 25\% of records
-# from `small_table` on the basis
-# of a timeline that begins at 
-# `2016-01-04 11:00:00` and
-# ends at `2016-01-30 11:23:00`
-small_table \%>\%
-  tt_time_slice(
-    slice_point = 0.25,
-    keep = "right"
-  )
-
-}
 \seealso{
 Other Table Transformers: 
 \code{\link{get_tt_param}()},

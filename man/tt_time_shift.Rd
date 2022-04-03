@@ -40,31 +40,64 @@ result in a truncation to \code{"20d"}. Similarly, a \code{difftime} object will
 altered in the same circumstances, however, the object will resolved to an
 exact number of days through rounding.
 }
+\section{Demos}{
+
+
+Let's use the \code{game_revenue} dataset, included in the \strong{pointblank} package,
+as the input table for the first demo. It has entries in the first 21 days of
+2015 and we'll move all of the date and date-time values to the beginning of
+2021 with the \code{tt_time_shift()} function and the \code{"6y"} \code{time_shift}
+specification.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_time_shift(
+  tbl = game_revenue,
+  time_shift = "6y"
+)
+}\if{html}{\out{</div>}}\preformatted{## # A tibble: 2,000 × 11
+##    player_id       session_id  session_start       time                item_type
+##    <chr>           <chr>       <dttm>              <dttm>              <chr>    
+##  1 ECPANOIXLZHF896 ECPANOIXLZ… 2021-01-01 01:31:03 2021-01-01 01:31:27 iap      
+##  2 ECPANOIXLZHF896 ECPANOIXLZ… 2021-01-01 01:31:03 2021-01-01 01:36:57 iap      
+##  3 ECPANOIXLZHF896 ECPANOIXLZ… 2021-01-01 01:31:03 2021-01-01 01:37:45 iap      
+##  4 ECPANOIXLZHF896 ECPANOIXLZ… 2021-01-01 01:31:03 2021-01-01 01:42:33 ad       
+##  5 ECPANOIXLZHF896 ECPANOIXLZ… 2021-01-01 11:50:02 2021-01-01 11:55:20 ad       
+##  6 ECPANOIXLZHF896 ECPANOIXLZ… 2021-01-01 11:50:02 2021-01-01 12:08:56 ad       
+##  7 ECPANOIXLZHF896 ECPANOIXLZ… 2021-01-01 11:50:02 2021-01-01 12:14:08 ad       
+##  8 ECPANOIXLZHF896 ECPANOIXLZ… 2021-01-01 11:50:02 2021-01-01 12:21:44 ad       
+##  9 ECPANOIXLZHF896 ECPANOIXLZ… 2021-01-01 11:50:02 2021-01-01 12:24:20 ad       
+## 10 FXWUORGYNJAE271 FXWUORGYNJ… 2021-01-01 15:17:18 2021-01-01 15:19:36 ad       
+## # … with 1,990 more rows, and 6 more variables: item_name <chr>,
+## #   item_revenue <dbl>, session_duration <dbl>, start_day <date>,
+## #   acquisition <chr>, country <chr>
+}
+
+Keeping only the \code{date_time} and \code{a}-\code{f} columns of \code{small_table}, also
+included in the package, shift the times back 2 days and 12 hours with the
+\code{"-2d 12H"} specification.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
+  dplyr::select(-date) \%>\%
+  tt_time_shift("-2d 12H")
+}\if{html}{\out{</div>}}\preformatted{## # A tibble: 13 × 7
+##    date_time               a b             c      d e     f    
+##    <dttm>              <int> <chr>     <dbl>  <dbl> <lgl> <chr>
+##  1 2016-01-01 23:00:00     2 1-bcd-345     3  3423. TRUE  high 
+##  2 2016-01-01 12:32:00     3 5-egh-163     8 10000. TRUE  low  
+##  3 2016-01-03 01:32:00     6 8-kdg-938     3  2343. TRUE  high 
+##  4 2016-01-04 05:23:00     2 5-jdo-903    NA  3892. FALSE mid  
+##  5 2016-01-07 00:36:00     8 3-ldm-038     7   284. TRUE  low  
+##  6 2016-01-08 18:15:00     4 2-dhe-923     4  3291. TRUE  mid  
+##  7 2016-01-13 06:46:00     7 1-knw-093     3   843. TRUE  high 
+##  8 2016-01-14 23:27:00     4 5-boe-639     2  1036. FALSE low  
+##  9 2016-01-17 16:30:00     3 5-bce-642     9   838. FALSE high 
+## 10 2016-01-17 16:30:00     3 5-bce-642     9   838. FALSE high 
+## 11 2016-01-24 08:07:00     4 2-dmx-010     7   834. TRUE  low  
+## 12 2016-01-25 14:51:00     2 7-dmx-010     8   108. FALSE low  
+## 13 2016-01-27 23:23:00     1 3-dka-303    NA  2230. TRUE  high
+}
+}
+
 \section{Function ID}{
 
 12-5
 }
 
-\examples{
-# With the `game_revenue` dataset,
-# which has entries in the first
-# 21 days of 2015, move all of the
-# date and date-time values to the
-# beginning of 2021
-tt_time_shift(
-  tbl = game_revenue,
-  time_shift = "6y"
-)
-
-# Keeping only the `date_time` and
-# `a`-`f` columns of `small_table`,
-# shift the times back 2 days and
-# 12 hours
-small_table \%>\%
-  dplyr::select(-date) \%>\%
-  tt_time_shift("-2d 12H")
-
-}
 \seealso{
 Other Table Transformers: 
 \code{\link{get_tt_param}()},

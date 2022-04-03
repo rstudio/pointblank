@@ -478,24 +478,30 @@ tt_tbl_colnames <- function(tbl) {
 #' @return A data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object
 #'   depending on what was provided as `tbl`.
 #' 
-#' @examples
-#' # With the `game_revenue` dataset,
-#' # which has entries in the first
-#' # 21 days of 2015, move all of the
-#' # date and date-time values to the
-#' # beginning of 2021
+#' @section Demos:
+#' 
+#' Let's use the `game_revenue` dataset, included in the **pointblank** package,
+#' as the input table for the first demo. It has entries in the first 21 days of
+#' 2015 and we'll move all of the date and date-time values to the beginning of
+#' 2021 with the `tt_time_shift()` function and the `"6y"` `time_shift`
+#' specification.
+#' 
+#' ```{r}
 #' tt_time_shift(
 #'   tbl = game_revenue,
 #'   time_shift = "6y"
 #' )
+#' ```
 #' 
-#' # Keeping only the `date_time` and
-#' # `a`-`f` columns of `small_table`,
-#' # shift the times back 2 days and
-#' # 12 hours
+#' Keeping only the `date_time` and `a`-`f` columns of `small_table`, also
+#' included in the package, shift the times back 2 days and 12 hours with the
+#' `"-2d 12H"` specification.
+#' 
+#' ```{r}
 #' small_table %>%
 #'   dplyr::select(-date) %>%
 #'   tt_time_shift("-2d 12H")
+#' ```
 #' 
 #' @family Table Transformers
 #' @section Function ID:
@@ -655,29 +661,34 @@ tt_time_shift <- function(
 #' @return A data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object
 #'   depending on what was provided as `tbl`.
 #' 
-#' @examples
-#' # With the `game_revenue` dataset,
-#' # which has entries in the first
-#' # 21 days of 2015, elect to get all
-#' # of the records where the `time`
-#' # values are strictly for the first
-#' # 15 days of 2015
+#' @section Demos:
+#' 
+#' Let's use the `game_revenue` dataset, included in the **pointblank** package,
+#' as the input table for the first demo. It has entries in the first 21 days of
+#' 2015 and we'll elect to get all of the records where the `time` values are
+#' strictly for the first 15 days of 2015. The `keep` argument has a default of
+#' `"left"` so all rows where the `time` column is less than
+#' `"2015-01-16 00:00:00"` will be kept.
+#' 
+#' ```{r}
 #' tt_time_slice(
 #'   tbl = game_revenue,
 #'   time_column = "time",
 #'   slice_point = "2015-01-16"
 #' )
+#' ```
 #' 
-#' # Omit the first 25% of records
-#' # from `small_table` on the basis
-#' # of a timeline that begins at 
-#' # `2016-01-04 11:00:00` and
-#' # ends at `2016-01-30 11:23:00`
+#' Omit the first 25% of records from `small_table`, also included in the
+#' package, with a fractional `slice_point` of `0.25` on the basis of a timeline
+#' that begins at `2016-01-04 11:00:00` and ends at `2016-01-30 11:23:00`.
+#' 
+#' ```{r}
 #' small_table %>%
 #'   tt_time_slice(
 #'     slice_point = 0.25,
 #'     keep = "right"
 #'   )
+#' ```
 #' 
 #' @family Table Transformers
 #' @section Function ID:

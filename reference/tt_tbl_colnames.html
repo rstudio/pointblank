@@ -96,6 +96,50 @@ can be a data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spa
     <p>A <code>tibble</code> object.</p>
     </div>
     <div class="section level2">
+    <h2 id="demos">Demos<a class="anchor" aria-label="anchor" href="#demos"></a></h2>
+    
+
+
+<p>Get the column names of the <code>game_revenue</code> dataset that is included in the
+<strong>pointblank</strong> package.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/tt_tbl_colnames.html">tt_tbl_colnames</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">game_revenue</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 11 × 2</span>
+<span class="co">##    .param. value           </span>
+<span class="co">##      &lt;int&gt; &lt;chr&gt;           </span>
+<span class="co">##  1       1 player_id       </span>
+<span class="co">##  2       2 session_id      </span>
+<span class="co">##  3       3 session_start   </span>
+<span class="co">##  4       4 time            </span>
+<span class="co">##  5       5 item_type       </span>
+<span class="co">##  6       6 item_name       </span>
+<span class="co">##  7       7 item_revenue    </span>
+<span class="co">##  8       8 session_duration</span>
+<span class="co">##  9       9 start_day       </span>
+<span class="co">## 10      10 acquisition     </span>
+<span class="co">## 11      11 country</span></code></pre></div>
+
+<p>This output table is useful when you want to validate the column names of the
+table. Here, we check that <code>game_revenue</code> table, included in the
+<strong>pointblank</strong> package, has certain column names present with
+<code><a href="col_vals_make_subset.html">test_col_vals_make_subset()</a></code>.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/tt_tbl_colnames.html">tt_tbl_colnames</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">game_revenue</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_vals_make_subset.html">test_col_vals_make_subset</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span>,
+    set <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"acquisition"</span>, <span class="st">"country"</span><span class="op">)</span>
+  <span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] TRUE</span></code></pre></div>
+
+<p>We can check to see whether the column names in the <code>specifications</code> table
+are all less than <code>15</code> characters in length. For this, we would use the
+combination of <code>tt_tbl_colnames()</code>, then <code><a href="tt_string_info.html">tt_string_info()</a></code>, and finally
+<code><a href="col_vals_lt.html">test_col_vals_lt()</a></code> to perform the test.</p><div class="sourceCode r"><pre><code><span class="va">specifications</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/tt_tbl_colnames.html">tt_tbl_colnames</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/tt_string_info.html">tt_string_info</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_vals_lt.html">test_col_vals_lt</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span>,
+    value <span class="op">=</span> <span class="fl">15</span>
+  <span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] FALSE</span></code></pre></div>
+
+<p>This returned <code>FALSE</code> and this is because the column name
+<code>credit_card_numbers</code> is 16 characters long.</p>
+    </div>
+    <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
     
 
@@ -112,54 +156,6 @@ can be a data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spa
 <code><a href="tt_time_slice.html">tt_time_slice</a>()</code></p></div>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Get the column names of the</span></span>
-<span class="r-in"><span class="co"># `game_revenue` dataset that's</span></span>
-<span class="r-in"><span class="co"># included in the package</span></span>
-<span class="r-in"><span class="fu">tt_tbl_colnames</span><span class="op">(</span><span class="va">game_revenue</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 11 × 2</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    .param. value           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>       1 player_id       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>       2 session_id      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>       3 session_start   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>       4 time            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>       5 item_type       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>       6 item_name       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>       7 item_revenue    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>       8 session_duration</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>       9 start_day       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>      10 acquisition     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span>      11 country         </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># This output table is useful when</span></span>
-<span class="r-in"><span class="co"># you want to validate the</span></span>
-<span class="r-in"><span class="co"># column names of the table; here,</span></span>
-<span class="r-in"><span class="co"># we check that `game_revenue` has</span></span>
-<span class="r-in"><span class="co"># certain column names present</span></span>
-<span class="r-in"><span class="fu">tt_tbl_colnames</span><span class="op">(</span><span class="va">game_revenue</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_make_subset.html">test_col_vals_make_subset</a></span><span class="op">(</span></span>
-<span class="r-in">    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span>,</span>
-<span class="r-in">    set <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"acquisition"</span>, <span class="st">"country"</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># We can check to see whether the</span></span>
-<span class="r-in"><span class="co"># column names in the `specifications`</span></span>
-<span class="r-in"><span class="co"># table are all less than 15</span></span>
-<span class="r-in"><span class="co"># characters in length</span></span>
-<span class="r-in"><span class="va">specifications</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">tt_tbl_colnames</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="tt_string_info.html">tt_string_info</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_lt.html">test_col_vals_lt</a></span><span class="op">(</span></span>
-<span class="r-in">    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span>,</span>
-<span class="r-in">    value <span class="op">=</span> <span class="fl">15</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
-<span class="r-in"></span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

@@ -193,6 +193,7 @@ table-prep formula or function to <code>tbl</code>.</p></dd>
     <h2 id="the-use-of-an-agent-for-validation-is-just-one-option-of-several">The Use of an Agent for Validation Is Just One Option of Several<a class="anchor" aria-label="anchor" href="#the-use-of-an-agent-for-validation-is-just-one-option-of-several"></a></h2>
     
 
+
 <p>There are a few validation workflows and using an <em>agent</em> is the one that
 provides the most options. It is probably the best choice for assessing the
 state of data quality since it yields detailed reporting, has options for
@@ -221,6 +222,7 @@ would with <strong>testthat</strong>'s library of <code>expect_*()</code> functi
     <h2 id="the-agent-report">The Agent Report<a class="anchor" aria-label="anchor" href="#the-agent-report"></a></h2>
     
 
+
 <p>While printing an <em>agent</em> (a <code>ptblank_agent</code> object) will display its
 reporting in the Viewer, we can alternatively use the <code><a href="get_agent_report.html">get_agent_report()</a></code> to
 take advantage of other options (e.g., overriding the language, modifying the
@@ -237,6 +239,7 @@ a web browser.</p>
     <div class="section level2">
     <h2 id="data-products-obtained-from-an-agent">Data Products Obtained from an Agent<a class="anchor" aria-label="anchor" href="#data-products-obtained-from-an-agent"></a></h2>
     
+
 
 <p>A very detailed list object, known as an x-list, can be obtained by using the
 <code><a href="get_agent_x_list.html">get_agent_x_list()</a></code> function on the <em>agent</em>. This font of information can be
@@ -262,6 +265,7 @@ validation steps are free from any failing units.</p>
     <div class="section level2">
     <h2 id="yaml">YAML<a class="anchor" aria-label="anchor" href="#yaml"></a></h2>
     
+
 
 <p>A <strong>pointblank</strong> agent can be written to YAML with <code><a href="yaml_write.html">yaml_write()</a></code> and the
 resulting YAML can be used to regenerate an agent (with <code><a href="yaml_read_agent.html">yaml_read_agent()</a></code>)
@@ -333,6 +337,7 @@ of the R expressions that are used to regenerate that agent with
     <h2 id="writing-an-agent-to-disk">Writing an Agent to Disk<a class="anchor" aria-label="anchor" href="#writing-an-agent-to-disk"></a></h2>
     
 
+
 <p>An <em>agent</em> object can be written to disk with the <code><a href="x_write_disk.html">x_write_disk()</a></code> function.
 This can be useful for keeping a history of validations and generating views
 of data quality over time. Agents are stored in the serialized RDS format and
@@ -345,6 +350,7 @@ may change, hence the need to use an expression for this).</p>
     <div class="section level2">
     <h2 id="combining-several-agents-in-a-multiagent-object">Combining Several Agents in a <em>multiagent</em> Object<a class="anchor" aria-label="anchor" href="#combining-several-agents-in-a-multiagent-object"></a></h2>
     
+
 
 <p>Multiple <em>agent</em> objects can be part of a <em>multiagent</em> object, and two
 functions can be used for this: <code><a href="create_multiagent.html">create_multiagent()</a></code> and
@@ -404,27 +410,27 @@ We also provide a target table and we'll use <code><a href="small_table.html">po
 using as many validation functions as we want. then, we use <code><a href="interrogate.html">interrogate()</a></code>
 to actually perform the validations and gather intel.</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span>
   <span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="../reference/col_exists.html">col_exists</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">date_time</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_exists.html">col_exists</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">date_time</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>,
+    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>,
     regex <span class="op">=</span> <span class="st">"[0-9]-[a-z]{3}-[0-9]{3}"</span>
   <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/rows_distinct.html">rows_distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_lte.html">col_vals_lte</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_vals_lte.html">col_vals_lte</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>,
+    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>,
     left <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, right <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>,
     na_pass <span class="op">=</span> <span class="cn">TRUE</span>
   <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
-<p>The <code>agent</code> object can be printed to see the information report in the
+<p>The <code>agent</code> object can be printed to see the validation report in the
 Viewer.</p><div class="sourceCode r"><pre><code><span class="va">agent</span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_create_agent_1.png" style="width:100%;"></p>
 <p>If we want to make use of more report display options, we can alternatively
 use the <code><a href="get_agent_report.html">get_agent_report()</a></code> function.</p><div class="sourceCode r"><pre><code><span class="va">report</span> <span class="op">&lt;-</span>
   <span class="fu"><a href="../reference/get_agent_report.html">get_agent_report</a></span><span class="op">(</span>
-    <span class="va">agent</span>,
+    agent <span class="op">=</span> <span class="va">agent</span>,
     arrange_by <span class="op">=</span> <span class="st">"severity"</span>,
     title <span class="op">=</span> <span class="st">"Validation of `small_table`"</span>
   <span class="op">)</span>

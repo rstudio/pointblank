@@ -111,6 +111,45 @@ can be a data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spa
     <p>A <code>tibble</code> object.</p>
     </div>
     <div class="section level2">
+    <h2 id="demos">Demos<a class="anchor" aria-label="anchor" href="#demos"></a></h2>
+    
+
+
+<p>Get string information for the string-based columns in the <code>game_revenue</code>
+dataset that is included in the <strong>pointblank</strong> package.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/tt_string_info.html">tt_string_info</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">game_revenue</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 3 × 7</span>
+<span class="co">##   .param.     player_id session_id item_type item_name acquisition country</span>
+<span class="co">##   &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;</span>
+<span class="co">## 1 length_mean        15         24      2.22      7.35        7.97    8.53</span>
+<span class="co">## 2 length_min         15         24      2         5           5       5   </span>
+<span class="co">## 3 length_max         15         24      3        11          14      14</span></code></pre></div>
+
+<p>Ensure that <code>player_id</code> and <code>session_id</code> values always have the same fixed
+numbers of characters (<code>15</code> and <code>24</code>, respectively) throughout the table.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/tt_string_info.html">tt_string_info</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">game_revenue</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_vals_equal.html">col_vals_equal</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">player_id</span><span class="op">)</span>,
+    value <span class="op">=</span> <span class="fl">15</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_vals_equal.html">col_vals_equal</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">session_id</span><span class="op">)</span>,
+    value <span class="op">=</span> <span class="fl">24</span>
+  <span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 3 × 7</span>
+<span class="co">##   .param.     player_id session_id item_type item_name acquisition country</span>
+<span class="co">##   &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;</span>
+<span class="co">## 1 length_mean        15         24      2.22      7.35        7.97    8.53</span>
+<span class="co">## 2 length_min         15         24      2         5           5       5   </span>
+<span class="co">## 3 length_max         15         24      3        11          14      14</span></code></pre></div>
+
+<p>We see data, and not an error, so both validations were successful!</p>
+<p>Let's use a <code>tt_string_info()</code>-transformed table with the
+<code><a href="col_vals_lte.html">test_col_vals_lte()</a></code> to check that the maximum string length in column <code>f</code>
+of the <code>small_table</code> dataset is no greater than <code>4</code>.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/tt_string_info.html">tt_string_info</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">small_table</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_vals_lte.html">test_col_vals_lte</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span>,
+    value <span class="op">=</span> <span class="fl">4</span>
+  <span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] TRUE</span></code></pre></div>
+
+    </div>
+    <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
     
 
@@ -127,52 +166,6 @@ can be a data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spa
 <code><a href="tt_time_slice.html">tt_time_slice</a>()</code></p></div>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Get string information for the</span></span>
-<span class="r-in"><span class="co"># string-based columns in the</span></span>
-<span class="r-in"><span class="co"># `game_revenue` dataset</span></span>
-<span class="r-in"><span class="fu">tt_string_info</span><span class="op">(</span><span class="va">game_revenue</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 7</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .param.     player_id session_id item_type item_name acquisition country</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> length_mean        15         24      2.22      7.35        7.97    8.53</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> length_min         15         24      2         5           5       5   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> length_max         15         24      3        11          14      14   </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Ensure that `player_id` and</span></span>
-<span class="r-in"><span class="co"># `session_id` values always have</span></span>
-<span class="r-in"><span class="co"># the same number of characters</span></span>
-<span class="r-in"><span class="co"># throughout the table</span></span>
-<span class="r-in"><span class="fu">tt_string_info</span><span class="op">(</span><span class="va">game_revenue</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_equal.html">col_vals_equal</a></span><span class="op">(</span></span>
-<span class="r-in">    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">player_id</span><span class="op">)</span>,</span>
-<span class="r-in">    value <span class="op">=</span> <span class="fl">15</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_equal.html">col_vals_equal</a></span><span class="op">(</span></span>
-<span class="r-in">    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">session_id</span><span class="op">)</span>,</span>
-<span class="r-in">    value <span class="op">=</span> <span class="fl">24</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 7</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .param.     player_id session_id item_type item_name acquisition country</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> length_mean        15         24      2.22      7.35        7.97    8.53</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> length_min         15         24      2         5           5       5   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> length_max         15         24      3        11          14      14   </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Check that the maximum string</span></span>
-<span class="r-in"><span class="co"># length in column `f` of the</span></span>
-<span class="r-in"><span class="co"># `small_table` dataset is no</span></span>
-<span class="r-in"><span class="co"># greater than `4`</span></span>
-<span class="r-in"><span class="fu">tt_string_info</span><span class="op">(</span><span class="va">small_table</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_lte.html">test_col_vals_lte</a></span><span class="op">(</span></span>
-<span class="r-in">    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span>,</span>
-<span class="r-in">    value <span class="op">=</span> <span class="fl">4</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-in"></span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

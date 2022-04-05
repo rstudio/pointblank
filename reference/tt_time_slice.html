@@ -139,6 +139,56 @@ the <code>time_column</code>. This ordering is always done in an ascending manne
 can being removed (no matter which slice is retained).</p>
     </div>
     <div class="section level2">
+    <h2 id="demos">Demos<a class="anchor" aria-label="anchor" href="#demos"></a></h2>
+    
+
+
+<p>Let's use the <code>game_revenue</code> dataset, included in the <strong>pointblank</strong> package,
+as the input table for the first demo. It has entries in the first 21 days of
+2015 and we'll elect to get all of the records where the <code>time</code> values are
+strictly for the first 15 days of 2015. The <code>keep</code> argument has a default of
+<code>"left"</code> so all rows where the <code>time</code> column is less than
+<code>"2015-01-16 00:00:00"</code> will be kept.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/tt_time_slice.html">tt_time_slice</a></span><span class="op">(</span>
+  tbl <span class="op">=</span> <span class="va">game_revenue</span>,
+  time_column <span class="op">=</span> <span class="st">"time"</span>,
+  slice_point <span class="op">=</span> <span class="st">"2015-01-16"</span>
+<span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 1,208 × 11</span>
+<span class="co">##    player_id       session_id  session_start       time                item_type</span>
+<span class="co">##    &lt;chr&gt;           &lt;chr&gt;       &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;    </span>
+<span class="co">##  1 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 01:31:03 2015-01-01 01:31:27 iap      </span>
+<span class="co">##  2 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 01:31:03 2015-01-01 01:36:57 iap      </span>
+<span class="co">##  3 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 01:31:03 2015-01-01 01:37:45 iap      </span>
+<span class="co">##  4 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 01:31:03 2015-01-01 01:42:33 ad       </span>
+<span class="co">##  5 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 11:55:20 ad       </span>
+<span class="co">##  6 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 12:08:56 ad       </span>
+<span class="co">##  7 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 12:14:08 ad       </span>
+<span class="co">##  8 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 12:21:44 ad       </span>
+<span class="co">##  9 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 12:24:20 ad       </span>
+<span class="co">## 10 FXWUORGYNJAE271 FXWUORGYNJ… 2015-01-01 15:17:18 2015-01-01 15:19:36 ad       </span>
+<span class="co">## # … with 1,198 more rows, and 6 more variables: item_name &lt;chr&gt;,</span>
+<span class="co">## #   item_revenue &lt;dbl&gt;, session_duration &lt;dbl&gt;, start_day &lt;date&gt;,</span>
+<span class="co">## #   acquisition &lt;chr&gt;, country &lt;chr&gt;</span></code></pre></div>
+
+<p>Omit the first 25% of records from <code>small_table</code>, also included in the
+package, with a fractional <code>slice_point</code> of <code>0.25</code> on the basis of a timeline
+that begins at <code>2016-01-04 11:00:00</code> and ends at <code>2016-01-30 11:23:00</code>.</p><div class="sourceCode r"><pre><code><span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/tt_time_slice.html">tt_time_slice</a></span><span class="op">(</span>
+    slice_point <span class="op">=</span> <span class="fl">0.25</span>,
+    keep <span class="op">=</span> <span class="st">"right"</span>
+  <span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 8 × 8</span>
+<span class="co">##   date_time           date           a b             c     d e     f    </span>
+<span class="co">##   &lt;dttm&gt;              &lt;date&gt;     &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;</span>
+<span class="co">## 1 2016-01-11 06:15:00 2016-01-11     4 2-dhe-923     4 3291. TRUE  mid  </span>
+<span class="co">## 2 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3  843. TRUE  high </span>
+<span class="co">## 3 2016-01-17 11:27:00 2016-01-17     4 5-boe-639     2 1036. FALSE low  </span>
+<span class="co">## 4 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high </span>
+<span class="co">## 5 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high </span>
+<span class="co">## 6 2016-01-26 20:07:00 2016-01-26     4 2-dmx-010     7  834. TRUE  low  </span>
+<span class="co">## 7 2016-01-28 02:51:00 2016-01-28     2 7-dmx-010     8  108. FALSE low  </span>
+<span class="co">## 8 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA 2230. TRUE  high</span></code></pre></div>
+
+    </div>
+    <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
     
 
@@ -155,60 +205,6 @@ can being removed (no matter which slice is retained).</p>
 <code><a href="tt_time_shift.html">tt_time_shift</a>()</code></p></div>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># With the `game_revenue` dataset,</span></span>
-<span class="r-in"><span class="co"># which has entries in the first</span></span>
-<span class="r-in"><span class="co"># 21 days of 2015, elect to get all</span></span>
-<span class="r-in"><span class="co"># of the records where the `time`</span></span>
-<span class="r-in"><span class="co"># values are strictly for the first</span></span>
-<span class="r-in"><span class="co"># 15 days of 2015</span></span>
-<span class="r-in"><span class="fu">tt_time_slice</span><span class="op">(</span></span>
-<span class="r-in">  tbl <span class="op">=</span> <span class="va">game_revenue</span>,</span>
-<span class="r-in">  time_column <span class="op">=</span> <span class="st">"time"</span>,</span>
-<span class="r-in">  slice_point <span class="op">=</span> <span class="st">"2015-01-16"</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1,208 × 11</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    player_id       session_id  session_start       time                item_type</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 <span style="color: #949494;">01:31:03</span> 2015-01-01 <span style="color: #949494;">01:31:27</span> iap      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 <span style="color: #949494;">01:31:03</span> 2015-01-01 <span style="color: #949494;">01:36:57</span> iap      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 <span style="color: #949494;">01:31:03</span> 2015-01-01 <span style="color: #949494;">01:37:45</span> iap      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 <span style="color: #949494;">01:31:03</span> 2015-01-01 <span style="color: #949494;">01:42:33</span> ad       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 <span style="color: #949494;">11:50:02</span> 2015-01-01 <span style="color: #949494;">11:55:20</span> ad       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 <span style="color: #949494;">11:50:02</span> 2015-01-01 <span style="color: #949494;">12:08:56</span> ad       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 <span style="color: #949494;">11:50:02</span> 2015-01-01 <span style="color: #949494;">12:14:08</span> ad       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 <span style="color: #949494;">11:50:02</span> 2015-01-01 <span style="color: #949494;">12:21:44</span> ad       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 <span style="color: #949494;">11:50:02</span> 2015-01-01 <span style="color: #949494;">12:24:20</span> ad       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> FXWUORGYNJAE271 FXWUORGYNJ… 2015-01-01 <span style="color: #949494;">15:17:18</span> 2015-01-01 <span style="color: #949494;">15:19:36</span> ad       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 1,198 more rows, and 6 more variables: item_name &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   item_revenue &lt;dbl&gt;, session_duration &lt;dbl&gt;, start_day &lt;date&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   acquisition &lt;chr&gt;, country &lt;chr&gt;</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Omit the first 25% of records</span></span>
-<span class="r-in"><span class="co"># from `small_table` on the basis</span></span>
-<span class="r-in"><span class="co"># of a timeline that begins at </span></span>
-<span class="r-in"><span class="co"># `2016-01-04 11:00:00` and</span></span>
-<span class="r-in"><span class="co"># ends at `2016-01-30 11:23:00`</span></span>
-<span class="r-in"><span class="va">small_table</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">tt_time_slice</span><span class="op">(</span></span>
-<span class="r-in">    slice_point <span class="op">=</span> <span class="fl">0.25</span>,</span>
-<span class="r-in">    keep <span class="op">=</span> <span class="st">"right"</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 8 × 8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   date_time           date           a b             c     d e     f    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2016-01-11 <span style="color: #949494;">06:15:00</span> 2016-01-11     4 2-dhe-923     4 <span style="text-decoration: underline;">3</span>291. TRUE  mid  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2016-01-15 <span style="color: #949494;">18:46:00</span> 2016-01-15     7 1-knw-093     3  843. TRUE  high </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2016-01-17 <span style="color: #949494;">11:27:00</span> 2016-01-17     4 5-boe-639     2 <span style="text-decoration: underline;">1</span>036. FALSE low  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2016-01-20 <span style="color: #949494;">04:30:00</span> 2016-01-20     3 5-bce-642     9  838. FALSE high </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> 2016-01-20 <span style="color: #949494;">04:30:00</span> 2016-01-20     3 5-bce-642     9  838. FALSE high </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> 2016-01-26 <span style="color: #949494;">20:07:00</span> 2016-01-26     4 2-dmx-010     7  834. TRUE  low  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> 2016-01-28 <span style="color: #949494;">02:51:00</span> 2016-01-28     2 7-dmx-010     8  108. FALSE low  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> 2016-01-30 <span style="color: #949494;">11:23:00</span> 2016-01-30     1 3-dka-303    <span style="color: #BB0000;">NA</span> <span style="text-decoration: underline;">2</span>230. TRUE  high </span>
-<span class="r-in"></span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

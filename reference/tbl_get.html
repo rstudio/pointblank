@@ -110,6 +110,76 @@ function or a path to a table store YAML file created by <code><a href="yaml_wri
     <p>A table object.</p>
     </div>
     <div class="section level2">
+    <h2 id="demos">Demos<a class="anchor" aria-label="anchor" href="#demos"></a></h2>
+    
+
+
+<p>Define a <code>tbl_store</code> object by adding several table-prep formulas in
+<code><a href="tbl_store.html">tbl_store()</a></code>.</p><div class="sourceCode r"><pre><code><span class="va">store</span> <span class="op">&lt;-</span> 
+  <span class="fu"><a href="../reference/tbl_store.html">tbl_store</a></span><span class="op">(</span>
+    <span class="va">small_table_duck</span> <span class="op">~</span> <span class="fu"><a href="../reference/db_tbl.html">db_tbl</a></span><span class="op">(</span>
+      table <span class="op">=</span> <span class="va">small_table</span>,
+      dbname <span class="op">=</span> <span class="st">":memory:"</span>,
+      dbtype <span class="op">=</span> <span class="st">"duckdb"</span>
+    <span class="op">)</span>,
+    <span class="op">~</span> <span class="fu"><a href="../reference/db_tbl.html">db_tbl</a></span><span class="op">(</span>
+      table <span class="op">=</span> <span class="st">"rna"</span>,
+      dbname <span class="op">=</span> <span class="st">"pfmegrnargs"</span>,
+      dbtype <span class="op">=</span> <span class="st">"postgres"</span>,
+      host <span class="op">=</span> <span class="st">"hh-pgsql-public.ebi.ac.uk"</span>,
+      port <span class="op">=</span> <span class="fl">5432</span>,
+      user <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="st">"reader"</span><span class="op">)</span>,
+      password <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="st">"NWDMCE5xdipIjRrp"</span><span class="op">)</span>
+    <span class="op">)</span>,
+    <span class="va">sml_table</span> <span class="op">~</span> <span class="fu">pointblank</span><span class="fu">::</span><span class="va"><a href="../reference/small_table.html">small_table</a></span>
+  <span class="op">)</span></code></pre><p></p></div>
+<p>Once this object is available, we can access the tables named:
+<code>"small_table_duck"</code>, <code>"rna"</code>, and <code>"sml_table"</code>. Let's check that the
+<code>"rna"</code> table is accessible through <code>tbl_get()</code>:</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/tbl_get.html">tbl_get</a></span><span class="op">(</span>
+  tbl <span class="op">=</span> <span class="st">"rna"</span>,
+  store <span class="op">=</span> <span class="va">store</span>
+<span class="op">)</span></code></pre><p></p></div>
+<div class="sourceCode"><pre><code><span class="co">## # Source:   table&lt;rna&gt; [?? x 9]</span>
+<span class="co">## # Database: postgres [reader@hh-pgsql-public.ebi.ac.uk:5432/pfmegrnargs]</span>
+<span class="co">##          id upi        timestamp           userstamp crc64   len seq_short</span>
+<span class="co">##     &lt;int64&gt; &lt;chr&gt;      &lt;dttm&gt;              &lt;chr&gt;     &lt;chr&gt; &lt;int&gt; &lt;chr&gt;    </span>
+<span class="co">##  1 24583872 URS000177… 2019-12-02 13:26:08 rnacen    C380…   511 ATTGAACG…</span>
+<span class="co">##  2 24583873 URS000177… 2019-12-02 13:26:08 rnacen    BC42…   390 ATGGGCGA…</span>
+<span class="co">##  3 24583874 URS000177… 2019-12-02 13:26:08 rnacen    19A5…   422 CTACGGGA…</span>
+<span class="co">##  4 24583875 URS000177… 2019-12-02 13:26:08 rnacen    66E1…   534 AGGGTTCG…</span>
+<span class="co">##  5 24583876 URS000177… 2019-12-02 13:26:08 rnacen    CC8F…   252 TACGTAGG…</span>
+<span class="co">##  6 24583877 URS000177… 2019-12-02 13:26:08 rnacen    19E4…   413 ATGGGCGA…</span>
+<span class="co">##  7 24583878 URS000177… 2019-12-02 13:26:08 rnacen    AE91…   253 TACGAAGG…</span>
+<span class="co">##  8 24583879 URS000177… 2019-12-02 13:26:08 rnacen    E21A…   304 CAGCAGTA…</span>
+<span class="co">##  9 24583880 URS000177… 2019-12-02 13:26:08 rnacen    1AA7…   460 CCTACGGG…</span>
+<span class="co">## 10 24583881 URS000177… 2019-12-02 13:26:08 rnacen    2046…   440 CCTACGGG…     </span>
+<span class="co">## # … with more rows, and 2 more variables: seq_long &lt;chr&gt;, md5 &lt;chr&gt;</span></code></pre></div>
+
+
+<p>An alternative method for getting the same table materialized is by using <code>$</code>
+to get the formula of choice from <code>tbls</code> and passing that to <code>tbl_get()</code>. The
+benefit of this is that we can use autocompletion to show us what's available
+in the table store (i.e., appears after typing the <code>$</code>).</p><div class="sourceCode r"><pre><code><span class="va">store</span><span class="op">$</span><span class="va">small_table_duck</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/tbl_get.html">tbl_get</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
+<div class="sourceCode"><pre><code><span class="co">## # Source:   table&lt;small_table&gt; [?? x 8]</span>
+<span class="co">## # Database: duckdb_connection</span>
+<span class="co">##    date_time           date           a b             c      d e     f    </span>
+<span class="co">##    &lt;dttm&gt;              &lt;date&gt;     &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;</span>
+<span class="co">##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high </span>
+<span class="co">##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-163     8 10000. TRUE  low  </span>
+<span class="co">##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3  2343. TRUE  high </span>
+<span class="co">##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-903    NA  3892. FALSE mid  </span>
+<span class="co">##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-038     7   284. TRUE  low  </span>
+<span class="co">##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-923     4  3291. TRUE  mid  </span>
+<span class="co">##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3   843. TRUE  high </span>
+<span class="co">##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-639     2  1036. FALSE low  </span>
+<span class="co">##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high </span>
+<span class="co">## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high </span>
+<span class="co">## # … with more rows</span></code></pre></div>
+
+
+
+    </div>
+    <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
     
 
@@ -130,59 +200,6 @@ function or a path to a table store YAML file created by <code><a href="yaml_wri
 <code><a href="validate_rmd.html">validate_rmd</a>()</code></p></div>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Define a `tbl_store` object by adding</span></span>
-<span class="r-in"><span class="co"># table-prep formulas in `tbl_store()`</span></span>
-<span class="r-in"><span class="va">tbls</span> <span class="op">&lt;-</span> </span>
-<span class="r-in">  <span class="fu"><a href="tbl_store.html">tbl_store</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="va">small_table_duck</span> <span class="op">~</span> <span class="fu"><a href="db_tbl.html">db_tbl</a></span><span class="op">(</span></span>
-<span class="r-in">      table <span class="op">=</span> <span class="va">small_table</span>,</span>
-<span class="r-in">      dbname <span class="op">=</span> <span class="st">":memory:"</span>,</span>
-<span class="r-in">      dbtype <span class="op">=</span> <span class="st">"duckdb"</span></span>
-<span class="r-in">    <span class="op">)</span>,</span>
-<span class="r-in">    <span class="op">~</span> <span class="fu"><a href="db_tbl.html">db_tbl</a></span><span class="op">(</span></span>
-<span class="r-in">      table <span class="op">=</span> <span class="st">"rna"</span>,</span>
-<span class="r-in">      dbname <span class="op">=</span> <span class="st">"pfmegrnargs"</span>,</span>
-<span class="r-in">      dbtype <span class="op">=</span> <span class="st">"postgres"</span>,</span>
-<span class="r-in">      host <span class="op">=</span> <span class="st">"hh-pgsql-public.ebi.ac.uk"</span>,</span>
-<span class="r-in">      port <span class="op">=</span> <span class="fl">5432</span>,</span>
-<span class="r-in">      user <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="st">"reader"</span><span class="op">)</span>,</span>
-<span class="r-in">      password <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="st">"NWDMCE5xdipIjRrp"</span><span class="op">)</span></span>
-<span class="r-in">    <span class="op">)</span>,</span>
-<span class="r-in">    <span class="va">all_revenue</span> <span class="op">~</span> <span class="fu"><a href="db_tbl.html">db_tbl</a></span><span class="op">(</span></span>
-<span class="r-in">      table <span class="op">=</span> <span class="fu"><a href="file_tbl.html">file_tbl</a></span><span class="op">(</span></span>
-<span class="r-in">        file <span class="op">=</span> <span class="fu"><a href="from_github.html">from_github</a></span><span class="op">(</span></span>
-<span class="r-in">          file <span class="op">=</span> <span class="st">"all_revenue_large.rds"</span>,</span>
-<span class="r-in">          repo <span class="op">=</span> <span class="st">"rich-iannone/intendo"</span>,</span>
-<span class="r-in">          subdir <span class="op">=</span> <span class="st">"data-large"</span></span>
-<span class="r-in">        <span class="op">)</span></span>
-<span class="r-in">      <span class="op">)</span>,</span>
-<span class="r-in">      dbname <span class="op">=</span> <span class="st">":memory:"</span>,</span>
-<span class="r-in">      dbtype <span class="op">=</span> <span class="st">"duckdb"</span></span>
-<span class="r-in">    <span class="op">)</span>,</span>
-<span class="r-in">    <span class="va">sml_table</span> <span class="op">~</span> <span class="fu">pointblank</span><span class="fu">::</span><span class="va"><a href="small_table.html">small_table</a></span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Once this object is available, you can</span></span>
-<span class="r-in"><span class="co"># check that the table of interest is</span></span>
-<span class="r-in"><span class="co"># produced to your specification</span></span>
-<span class="r-in"><span class="fu">tbl_get</span><span class="op">(</span></span>
-<span class="r-in">  tbl <span class="op">=</span> <span class="st">"small_table_duck"</span>,</span>
-<span class="r-in">  store <span class="op">=</span> <span class="va">tbls</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># An alternative method for getting the</span></span>
-<span class="r-in"><span class="co"># same table materialized is by using `$`</span></span>
-<span class="r-in"><span class="co"># to get the formula of choice from `tbls`</span></span>
-<span class="r-in"><span class="va">tbls</span><span class="op">$</span><span class="va">small_table_duck</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">tbl_get</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

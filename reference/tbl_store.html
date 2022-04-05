@@ -140,58 +140,6 @@ table store are obtained. This is useful, for instance, for including a
     <p>A <code>tbl_store</code> object that contains table-prep formulas.</p>
     </div>
     <div class="section level2">
-    <h2 id="syntax">Syntax<a class="anchor" aria-label="anchor" href="#syntax"></a></h2>
-    
-
-<p>The table store provides a way to get the tables we need fairly easily. Think
-of an identifier for the table you'd like and then provide the code necessary
-to obtain that table. Then repeat as many times as you like!</p>
-<p>Here we'll define two tables that can be materialized later: <code>tbl_duckdb</code> (an
-in-memory DuckDB database table with <strong>pointblank</strong>'s <code>small_table</code> dataset)
-and <code>sml_table_high</code> (a filtered version of <code>tbl_duckdb</code>):</p><div class="sourceCode r"><pre><code><span class="va">tbls_1</span> <span class="op">&lt;-</span>
-  <span class="fu"><a href="../reference/tbl_store.html">tbl_store</a></span><span class="op">(</span>
-    <span class="va">tbl_duckdb</span> <span class="op">~</span> 
-      <span class="fu"><a href="../reference/db_tbl.html">db_tbl</a></span><span class="op">(</span>
-        <span class="fu">pointblank</span><span class="fu">::</span><span class="va"><a href="../reference/small_table.html">small_table</a></span>,
-        dbname <span class="op">=</span> <span class="st">":memory:"</span>,
-        dbtype <span class="op">=</span> <span class="st">"duckdb"</span>
-      <span class="op">)</span>,
-    <span class="va">sml_table_high</span> <span class="op">~</span> 
-      <span class="fu"><a href="../reference/db_tbl.html">db_tbl</a></span><span class="op">(</span>
-        <span class="fu">pointblank</span><span class="fu">::</span><span class="va"><a href="../reference/small_table.html">small_table</a></span>,
-        dbname <span class="op">=</span> <span class="st">":memory:"</span>,
-        dbtype <span class="op">=</span> <span class="st">"duckdb"</span>
-      <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">f</span> <span class="op">==</span> <span class="st">"high"</span><span class="op">)</span>
-  <span class="op">)</span></code></pre><p></p></div>
-<p>It's good to check that the tables can be obtained without error. We can do
-this with <code><a href="tbl_get.html">tbl_get()</a></code>:</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/tbl_get.html">tbl_get</a></span><span class="op">(</span><span class="st">"tbl_duckdb"</span>, store <span class="op">=</span> <span class="va">tbls_1</span><span class="op">)</span>
-<span class="fu"><a href="../reference/tbl_get.html">tbl_get</a></span><span class="op">(</span><span class="st">"sml_table_high"</span>, store <span class="op">=</span> <span class="va">tbls_1</span><span class="op">)</span></code></pre><p></p></div>
-<p>We can shorten the <code>tbl_store()</code> statement with some syntax that
-<strong>pointblank</strong> provides. The <code>sml_table_high</code> table-prep is simply a
-transformation of <code>tbl_duckdb</code>, so, we can use <code>{{ tbl_duckdb }}</code> in place of
-the repeated statement. Additionally, we can provide a <code><a href="https://rdrr.io/r/base/library.html" class="external-link">library()</a></code> call to
-the <code>.init</code> argument of <code>tbl_store()</code> so that <strong>dplyr</strong> is available (thus
-allowing us to use <code>filter(...)</code> instead of <code>dplyr::filter(...)</code>). Here is
-the revised <code>tbl_store()</code> call:</p><div class="sourceCode r"><pre><code><span class="va">tbls_2</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="../reference/tbl_store.html">tbl_store</a></span><span class="op">(</span>
-    <span class="va">tbl_duckdb</span> <span class="op">~</span> 
-      <span class="fu"><a href="../reference/db_tbl.html">db_tbl</a></span><span class="op">(</span>
-        <span class="fu">pointblank</span><span class="fu">::</span><span class="va"><a href="../reference/small_table.html">small_table</a></span>,
-        dbname <span class="op">=</span> <span class="st">":memory:"</span>,
-        dbtype <span class="op">=</span> <span class="st">"duckdb"</span>
-      <span class="op">)</span>,
-    <span class="va">sml_table_high</span> <span class="op">~</span> 
-      <span class="op">{</span><span class="op">{</span> <span class="va">tbl_duckdb</span> <span class="op">}</span><span class="op">}</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-      <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">f</span> <span class="op">==</span> <span class="st">"high"</span><span class="op">)</span>,
-    .init <span class="op">=</span> <span class="op">~</span> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>
-  <span class="op">)</span></code></pre><p></p></div>
-<p>Checking again with <code><a href="tbl_get.html">tbl_get()</a></code> should provide the same tables as before:</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/tbl_get.html">tbl_get</a></span><span class="op">(</span><span class="st">"tbl_duckdb"</span>, store <span class="op">=</span> <span class="va">tbls_2</span><span class="op">)</span>
-<span class="fu"><a href="../reference/tbl_get.html">tbl_get</a></span><span class="op">(</span><span class="st">"sml_table_high"</span>, store <span class="op">=</span> <span class="va">tbls_2</span><span class="op">)</span></code></pre><p></p></div>
-<p>This is a great way to make table-prep more concise, readable, and less
-prone to errors.</p>
-    </div>
-    <div class="section level2">
     <h2 id="yaml">YAML<a class="anchor" aria-label="anchor" href="#yaml"></a></h2>
     
 
@@ -243,6 +191,260 @@ done with <code><a href="yaml_agent_interrogate.html">yaml_agent_interrogate()</
 <code>yaml_agent_interrogate("agent-sml_table_high.yml")</code>).</p>
     </div>
     <div class="section level2">
+    <h2 id="demos">Demos<a class="anchor" aria-label="anchor" href="#demos"></a></h2>
+    
+
+<div class="section">
+<h3 id="creating-an-in-memory-table-store-and-adding-table-prep-formulas">Creating an in-memory table store and adding table-prep formulas<a class="anchor" aria-label="anchor" href="#creating-an-in-memory-table-store-and-adding-table-prep-formulas"></a></h3>
+
+
+<p>The table store provides a way to get the tables we need fairly easily. Think
+of an identifier for the table you'd like and then provide the code necessary
+to obtain that table. Then repeat as many times as you like!</p>
+<p>Here we'll define two tables that can be materialized later: <code>tbl_duckdb</code> (an
+in-memory DuckDB database table with <strong>pointblank</strong>'s <code>small_table</code> dataset)
+and <code>sml_table_high</code> (a filtered version of <code>tbl_duckdb</code>):</p><div class="sourceCode r"><pre><code><span class="va">store_1</span> <span class="op">&lt;-</span>
+  <span class="fu"><a href="../reference/tbl_store.html">tbl_store</a></span><span class="op">(</span>
+    <span class="va">tbl_duckdb</span> <span class="op">~</span> 
+      <span class="fu"><a href="../reference/db_tbl.html">db_tbl</a></span><span class="op">(</span>
+        <span class="fu">pointblank</span><span class="fu">::</span><span class="va"><a href="../reference/small_table.html">small_table</a></span>,
+        dbname <span class="op">=</span> <span class="st">":memory:"</span>,
+        dbtype <span class="op">=</span> <span class="st">"duckdb"</span>
+      <span class="op">)</span>,
+    <span class="va">sml_table_high</span> <span class="op">~</span> 
+      <span class="fu"><a href="../reference/db_tbl.html">db_tbl</a></span><span class="op">(</span>
+        <span class="fu">pointblank</span><span class="fu">::</span><span class="va"><a href="../reference/small_table.html">small_table</a></span>,
+        dbname <span class="op">=</span> <span class="st">":memory:"</span>,
+        dbtype <span class="op">=</span> <span class="st">"duckdb"</span>
+      <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">f</span> <span class="op">==</span> <span class="st">"high"</span><span class="op">)</span>
+  <span class="op">)</span></code></pre><p></p></div>
+<p>We can see what's in the table store <code>store_1</code> by printing it out:</p><div class="sourceCode r"><pre><code><span class="va">store_1</span></code></pre><p></p></div>
+<div class="sourceCode"><pre><code><span class="co">## -- The `table_store` table-prep formulas</span>
+<span class="co">## 1 tbl_duckdb // ~ db_tbl(pointblank::small_table, dbname = ":memory:",</span>
+<span class="co">## dbtype = "duckdb")</span>
+<span class="co">## 2 sml_table_high // ~ db_tbl(pointblank::small_table, dbname = ":memory:",</span>
+<span class="co">## dbtype = "duckdb") %&gt;% dplyr::filter(f == "high")</span>
+<span class="co">## ----</span></code></pre></div>
+
+<p>It's good to check that the tables can be obtained without error. We can do
+this with the <code><a href="tbl_get.html">tbl_get()</a></code> function. With that function, we need to supply the
+given name of the table-prep formula (in quotes) and the table store object.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/tbl_get.html">tbl_get</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="st">"tbl_duckdb"</span>, store <span class="op">=</span> <span class="va">store_1</span><span class="op">)</span></code></pre><p></p></div>
+<div class="sourceCode"><pre><code><span class="co">## # Source:   table&lt;pointblank::small_table&gt; [?? x 8]</span>
+<span class="co">## # Database: duckdb_connection</span>
+<span class="co">##    date_time           date           a b             c      d e     f    </span>
+<span class="co">##    &lt;dttm&gt;              &lt;date&gt;     &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;</span>
+<span class="co">##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high </span>
+<span class="co">##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-163     8 10000. TRUE  low  </span>
+<span class="co">##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3  2343. TRUE  high </span>
+<span class="co">##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-903    NA  3892. FALSE mid  </span>
+<span class="co">##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-038     7   284. TRUE  low  </span>
+<span class="co">##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-923     4  3291. TRUE  mid  </span>
+<span class="co">##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3   843. TRUE  high </span>
+<span class="co">##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-639     2  1036. FALSE low  </span>
+<span class="co">##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high </span>
+<span class="co">## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high </span>
+<span class="co">## # … with more rows</span></code></pre></div>
+
+<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/tbl_get.html">tbl_get</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="st">"sml_table_high"</span>, store <span class="op">=</span> <span class="va">store_1</span><span class="op">)</span></code></pre><p></p></div>
+<div class="sourceCode"><pre><code><span class="co">## # Source:   lazy query [?? x 8]</span>
+<span class="co">## # Database: duckdb_connection</span>
+<span class="co">##   date_time           date           a b             c     d e     f    </span>
+<span class="co">##   &lt;dttm&gt;              &lt;date&gt;     &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;</span>
+<span class="co">## 1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3 3423. TRUE  high </span>
+<span class="co">## 2 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3 2343. TRUE  high </span>
+<span class="co">## 3 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3  843. TRUE  high </span>
+<span class="co">## 4 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high </span>
+<span class="co">## 5 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high </span>
+<span class="co">## 6 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA 2230. TRUE  high</span></code></pre></div>
+
+<p>We can shorten the <code>tbl_store()</code> statement with some syntax that
+<strong>pointblank</strong> provides. The <code>sml_table_high</code> table-prep is simply a
+transformation of <code>tbl_duckdb</code>, so, we can use <code>{{ tbl_duckdb }}</code> in place of
+the repeated statement. Additionally, we can provide a <code><a href="https://rdrr.io/r/base/library.html" class="external-link">library()</a></code> call to
+the <code>.init</code> argument of <code>tbl_store()</code> so that <strong>dplyr</strong> is available (thus
+allowing us to use <code>filter(...)</code> instead of <code>dplyr::filter(...)</code>). Here is
+the revised <code>tbl_store()</code> call:</p><div class="sourceCode r"><pre><code><span class="va">store_2</span> <span class="op">&lt;-</span> 
+  <span class="fu"><a href="../reference/tbl_store.html">tbl_store</a></span><span class="op">(</span>
+    <span class="va">tbl_duckdb</span> <span class="op">~</span> 
+      <span class="fu"><a href="../reference/db_tbl.html">db_tbl</a></span><span class="op">(</span>
+        <span class="fu">pointblank</span><span class="fu">::</span><span class="va"><a href="../reference/small_table.html">small_table</a></span>,
+        dbname <span class="op">=</span> <span class="st">":memory:"</span>,
+        dbtype <span class="op">=</span> <span class="st">"duckdb"</span>
+      <span class="op">)</span>,
+    <span class="va">sml_table_high</span> <span class="op">~</span> 
+      <span class="op">{</span><span class="op">{</span> <span class="va">tbl_duckdb</span> <span class="op">}</span><span class="op">}</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+      <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">f</span> <span class="op">==</span> <span class="st">"high"</span><span class="op">)</span>,
+    .init <span class="op">=</span> <span class="op">~</span> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>
+  <span class="op">)</span></code></pre><p></p></div>
+<p>Printing the table store <code>store_2</code> now shows that we used an <code>.init</code>
+statement:</p><div class="sourceCode r"><pre><code><span class="va">store_2</span></code></pre><p></p></div>
+<div class="sourceCode"><pre><code><span class="co">## -- The `table_store` table-prep formulas</span>
+<span class="co">## 1 tbl_duckdb // ~ db_tbl(pointblank::small_table, dbname = ":memory:",</span>
+<span class="co">## dbtype = "duckdb")</span>
+<span class="co">## 2 sml_table_high // ~ {{tbl_duckdb}} %&gt;% filter(f == "high") </span>
+<span class="co">## ----</span>
+<span class="co">## INIT // ~library(tidyverse)</span>
+<span class="co">## ----</span></code></pre></div>
+
+<p>Checking again with <code><a href="tbl_get.html">tbl_get()</a></code> should provide the same tables as before:</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/tbl_get.html">tbl_get</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="st">"tbl_duckdb"</span>, store <span class="op">=</span> <span class="va">store_2</span><span class="op">)</span></code></pre><p></p></div>
+<div class="sourceCode"><pre><code><span class="co">## # Source:   table&lt;pointblank::small_table&gt; [?? x 8]</span>
+<span class="co">## # Database: duckdb_connection</span>
+<span class="co">##    date_time           date           a b             c      d e     f    </span>
+<span class="co">##    &lt;dttm&gt;              &lt;date&gt;     &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;</span>
+<span class="co">##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high </span>
+<span class="co">##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-163     8 10000. TRUE  low  </span>
+<span class="co">##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3  2343. TRUE  high </span>
+<span class="co">##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-903    NA  3892. FALSE mid  </span>
+<span class="co">##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-038     7   284. TRUE  low  </span>
+<span class="co">##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-923     4  3291. TRUE  mid  </span>
+<span class="co">##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3   843. TRUE  high </span>
+<span class="co">##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-639     2  1036. FALSE low  </span>
+<span class="co">##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high </span>
+<span class="co">## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high </span>
+<span class="co">## # … with more rows</span></code></pre></div>
+
+<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/tbl_get.html">tbl_get</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="st">"sml_table_high"</span>, store <span class="op">=</span> <span class="va">store_2</span><span class="op">)</span></code></pre><p></p></div>
+<div class="sourceCode"><pre><code><span class="co">## # Source:   lazy query [?? x 8]</span>
+<span class="co">## # Database: duckdb_connection</span>
+<span class="co">##   date_time           date           a b             c     d e     f    </span>
+<span class="co">##   &lt;dttm&gt;              &lt;date&gt;     &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;</span>
+<span class="co">## 1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3 3423. TRUE  high </span>
+<span class="co">## 2 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3 2343. TRUE  high </span>
+<span class="co">## 3 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3  843. TRUE  high </span>
+<span class="co">## 4 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high </span>
+<span class="co">## 5 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high </span>
+<span class="co">## 6 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA 2230. TRUE  high</span></code></pre></div>
+
+</div>
+
+<div class="section">
+<h3 id="using-a-table-store-in-a-data-validation-workflow">Using a table store in a data validation workflow<a class="anchor" aria-label="anchor" href="#using-a-table-store-in-a-data-validation-workflow"></a></h3>
+
+
+<p>Define a <code>tbl_store</code> object by adding table-prep formulas inside the
+<code>tbl_store()</code> call.</p><div class="sourceCode r"><pre><code><span class="va">store_3</span> <span class="op">&lt;-</span> 
+  <span class="fu"><a href="../reference/tbl_store.html">tbl_store</a></span><span class="op">(</span>
+    <span class="va">small_table_duck</span> <span class="op">~</span> <span class="fu"><a href="../reference/db_tbl.html">db_tbl</a></span><span class="op">(</span>
+      table <span class="op">=</span> <span class="va">small_table</span>,
+      dbname <span class="op">=</span> <span class="st">":memory:"</span>,
+      dbtype <span class="op">=</span> <span class="st">"duckdb"</span>
+    <span class="op">)</span>,
+    <span class="op">~</span> <span class="fu"><a href="../reference/db_tbl.html">db_tbl</a></span><span class="op">(</span>
+      table <span class="op">=</span> <span class="st">"rna"</span>,
+      dbname <span class="op">=</span> <span class="st">"pfmegrnargs"</span>,
+      dbtype <span class="op">=</span> <span class="st">"postgres"</span>,
+      host <span class="op">=</span> <span class="st">"hh-pgsql-public.ebi.ac.uk"</span>,
+      port <span class="op">=</span> <span class="fl">5432</span>,
+      user <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="st">"reader"</span><span class="op">)</span>,
+      password <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="st">"NWDMCE5xdipIjRrp"</span><span class="op">)</span>
+    <span class="op">)</span>,
+    <span class="va">all_revenue</span> <span class="op">~</span> <span class="fu"><a href="../reference/db_tbl.html">db_tbl</a></span><span class="op">(</span>
+      table <span class="op">=</span> <span class="fu"><a href="../reference/file_tbl.html">file_tbl</a></span><span class="op">(</span>
+        file <span class="op">=</span> <span class="fu"><a href="../reference/from_github.html">from_github</a></span><span class="op">(</span>
+          file <span class="op">=</span> <span class="st">"all_revenue_large.rds"</span>,
+          repo <span class="op">=</span> <span class="st">"rich-iannone/intendo"</span>,
+          subdir <span class="op">=</span> <span class="st">"data-large"</span>
+        <span class="op">)</span>
+      <span class="op">)</span>,
+      dbname <span class="op">=</span> <span class="st">":memory:"</span>,
+      dbtype <span class="op">=</span> <span class="st">"duckdb"</span>
+    <span class="op">)</span>,
+    <span class="va">sml_table</span> <span class="op">~</span> <span class="fu">pointblank</span><span class="fu">::</span><span class="va"><a href="../reference/small_table.html">small_table</a></span>
+  <span class="op">)</span></code></pre><p></p></div>
+<p>Let's get a summary of what's in the table store <code>store_3</code> through printing:</p><div class="sourceCode r"><pre><code><span class="va">store_3</span></code></pre><p></p></div>
+<div class="sourceCode"><pre><code><span class="co">## -- The `table_store` table-prep formulas</span>
+<span class="co">## 1 small_table_duck // ~ db_tbl(table = small_table, dbname = ":memory:",</span>
+<span class="co">## dbtype = "duckdb")</span>
+<span class="co">## 2 rna // ~db_tbl(table = "rna", dbname = "pfmegrnargs", dbtype =</span>
+<span class="co">## "postgres", host = "hh-pgsql-public.ebi.ac.uk", port = 5432, user =</span>
+<span class="co">## I("reader"), password = I("NWDMCE5xdipIjRrp"))</span>
+<span class="co">## 3 all_revenue // ~ db_tbl(table = file_tbl(file = from_github(file =</span>
+<span class="co">## "all_revenue_large.rds", repo = "rich-iannone/intendo", subdir =</span>
+<span class="co">## "data-large")), dbname = ":memory:", dbtype = "duckdb")</span>
+<span class="co">## 4 sml_table // ~ pointblank::small_table</span>
+<span class="co">## ----</span></code></pre></div>
+
+<p>Once this object is available, you can check that the table of interest is
+produced to your specification with the <code><a href="tbl_get.html">tbl_get()</a></code> function.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/tbl_get.html">tbl_get</a></span><span class="op">(</span>
+  tbl <span class="op">=</span> <span class="st">"small_table_duck"</span>,
+  store <span class="op">=</span> <span class="va">store_3</span>
+<span class="op">)</span></code></pre><p></p></div>
+<div class="sourceCode"><pre><code><span class="co">## # Source:   table&lt;small_table&gt; [?? x 8]</span>
+<span class="co">## # Database: duckdb_connection</span>
+<span class="co">##    date_time           date           a b             c      d e     f    </span>
+<span class="co">##    &lt;dttm&gt;              &lt;date&gt;     &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;</span>
+<span class="co">##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high </span>
+<span class="co">##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-163     8 10000. TRUE  low  </span>
+<span class="co">##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3  2343. TRUE  high </span>
+<span class="co">##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-903    NA  3892. FALSE mid  </span>
+<span class="co">##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-038     7   284. TRUE  low  </span>
+<span class="co">##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-923     4  3291. TRUE  mid  </span>
+<span class="co">##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3   843. TRUE  high </span>
+<span class="co">##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-639     2  1036. FALSE low  </span>
+<span class="co">##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high </span>
+<span class="co">## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high </span>
+<span class="co">## # … with more rows</span></code></pre></div>
+
+
+<p>Another way to get the same table materialized is by using <code>$</code> to get the
+entry of choice for <code><a href="tbl_get.html">tbl_get()</a></code>.</p><div class="sourceCode r"><pre><code><span class="va">store_3</span><span class="op">$</span><span class="va">small_table_duck</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/tbl_get.html">tbl_get</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
+<div class="sourceCode"><pre><code><span class="co">## # Source:   table&lt;small_table&gt; [?? x 8]</span>
+<span class="co">## # Database: duckdb_connection</span>
+<span class="co">##    date_time           date           a b             c      d e     f    </span>
+<span class="co">##    &lt;dttm&gt;              &lt;date&gt;     &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;</span>
+<span class="co">##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high </span>
+<span class="co">##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-163     8 10000. TRUE  low  </span>
+<span class="co">##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3  2343. TRUE  high </span>
+<span class="co">##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-903    NA  3892. FALSE mid  </span>
+<span class="co">##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-038     7   284. TRUE  low  </span>
+<span class="co">##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-923     4  3291. TRUE  mid  </span>
+<span class="co">##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3   843. TRUE  high </span>
+<span class="co">##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-639     2  1036. FALSE low  </span>
+<span class="co">##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high </span>
+<span class="co">## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high </span>
+<span class="co">## # … with more rows</span></code></pre></div>
+
+
+<p>Creating an agent is easy when all table-prep formulas are encapsulated in a
+<code>tbl_store</code> object. Use <code>$</code> notation to pass the appropriate procedure for
+reading a table to the <code>tbl</code> argument.</p><div class="sourceCode r"><pre><code><span class="va">agent_1</span> <span class="op">&lt;-</span>
+  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>
+    tbl <span class="op">=</span> <span class="va">store_3</span><span class="op">$</span><span class="va">small_table_duck</span>
+  <span class="op">)</span></code></pre><p></p></div>
+<p>There are other ways to use the table store to assign a target table to an
+agent, like using the <code><a href="tbl_source.html">tbl_source()</a></code> function (which extracts the table-prep
+formula from the table store).</p><div class="sourceCode r"><pre><code><span class="va">agent_2</span> <span class="op">&lt;-</span>
+  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>
+    tbl <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="../reference/tbl_source.html">tbl_source</a></span><span class="op">(</span>
+      tbl <span class="op">=</span> <span class="st">"small_table_duck"</span>,
+      store <span class="op">=</span> <span class="va">store_3</span>
+      <span class="op">)</span>
+  <span class="op">)</span></code></pre><p></p></div>
+</div>
+
+<div class="section">
+<h3 id="writing-a-table-store-to-a-yaml-file">Writing a table store to a YAML file<a class="anchor" aria-label="anchor" href="#writing-a-table-store-to-a-yaml-file"></a></h3>
+
+
+<p>The table store can be moved to YAML with <code>yaml_write</code> and the <code><a href="tbl_source.html">tbl_source()</a></code>
+call could then refer to that on-disk table store. Let's do that YAML
+conversion.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/yaml_write.html">yaml_write</a></span><span class="op">(</span><span class="va">store_3</span><span class="op">)</span></code></pre><p></p></div>
+<p>The above writes the <code>tbl_store.yml</code> file (by not providing a <code>filename</code> this
+default filename is chosen).</p>
+<p>It can be convenient to read table-prep formulas from a YAML file that's a
+table store. To achieve this, we can modify the <code><a href="tbl_source.html">tbl_source()</a></code> statement in
+the <code><a href="create_agent.html">create_agent()</a></code> call so that <code>store</code> refers to the on-disk YAML file.</p><div class="sourceCode r"><pre><code><span class="va">agent_3</span> <span class="op">&lt;-</span>
+  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>
+    tbl <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="../reference/tbl_source.html">tbl_source</a></span><span class="op">(</span>
+      tbl <span class="op">=</span> <span class="st">"small_table_duck"</span>,
+      store <span class="op">=</span> <span class="st">"tbl_store.yml"</span>
+    <span class="op">)</span>
+  <span class="op">)</span></code></pre><p></p></div>
+</div>
+
+    </div>
+    <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
     
 
@@ -263,105 +465,6 @@ done with <code><a href="yaml_agent_interrogate.html">yaml_agent_interrogate()</
 <code><a href="validate_rmd.html">validate_rmd</a>()</code></p></div>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Define a `tbl_store` object by adding</span></span>
-<span class="r-in"><span class="co"># table-prep formulas inside the</span></span>
-<span class="r-in"><span class="co"># `tbl_store()` call</span></span>
-<span class="r-in"><span class="va">tbls</span> <span class="op">&lt;-</span> </span>
-<span class="r-in">  <span class="fu">tbl_store</span><span class="op">(</span></span>
-<span class="r-in">    <span class="va">small_table_duck</span> <span class="op">~</span> <span class="fu"><a href="db_tbl.html">db_tbl</a></span><span class="op">(</span></span>
-<span class="r-in">      table <span class="op">=</span> <span class="va">small_table</span>,</span>
-<span class="r-in">      dbname <span class="op">=</span> <span class="st">":memory:"</span>,</span>
-<span class="r-in">      dbtype <span class="op">=</span> <span class="st">"duckdb"</span></span>
-<span class="r-in">    <span class="op">)</span>,</span>
-<span class="r-in">    <span class="op">~</span> <span class="fu"><a href="db_tbl.html">db_tbl</a></span><span class="op">(</span></span>
-<span class="r-in">      table <span class="op">=</span> <span class="st">"rna"</span>,</span>
-<span class="r-in">      dbname <span class="op">=</span> <span class="st">"pfmegrnargs"</span>,</span>
-<span class="r-in">      dbtype <span class="op">=</span> <span class="st">"postgres"</span>,</span>
-<span class="r-in">      host <span class="op">=</span> <span class="st">"hh-pgsql-public.ebi.ac.uk"</span>,</span>
-<span class="r-in">      port <span class="op">=</span> <span class="fl">5432</span>,</span>
-<span class="r-in">      user <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="st">"reader"</span><span class="op">)</span>,</span>
-<span class="r-in">      password <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="st">"NWDMCE5xdipIjRrp"</span><span class="op">)</span></span>
-<span class="r-in">    <span class="op">)</span>,</span>
-<span class="r-in">    <span class="va">all_revenue</span> <span class="op">~</span> <span class="fu"><a href="db_tbl.html">db_tbl</a></span><span class="op">(</span></span>
-<span class="r-in">      table <span class="op">=</span> <span class="fu"><a href="file_tbl.html">file_tbl</a></span><span class="op">(</span></span>
-<span class="r-in">        file <span class="op">=</span> <span class="fu"><a href="from_github.html">from_github</a></span><span class="op">(</span></span>
-<span class="r-in">          file <span class="op">=</span> <span class="st">"all_revenue_large.rds"</span>,</span>
-<span class="r-in">          repo <span class="op">=</span> <span class="st">"rich-iannone/intendo"</span>,</span>
-<span class="r-in">          subdir <span class="op">=</span> <span class="st">"data-large"</span></span>
-<span class="r-in">        <span class="op">)</span></span>
-<span class="r-in">      <span class="op">)</span>,</span>
-<span class="r-in">      dbname <span class="op">=</span> <span class="st">":memory:"</span>,</span>
-<span class="r-in">      dbtype <span class="op">=</span> <span class="st">"duckdb"</span></span>
-<span class="r-in">    <span class="op">)</span>,</span>
-<span class="r-in">    <span class="va">sml_table</span> <span class="op">~</span> <span class="fu">pointblank</span><span class="fu">::</span><span class="va"><a href="small_table.html">small_table</a></span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Once this object is available, you</span></span>
-<span class="r-in"><span class="co"># can check that the table of interest</span></span>
-<span class="r-in"><span class="co"># is produced to your specification with</span></span>
-<span class="r-in"><span class="co"># the `tbl_get()` function</span></span>
-<span class="r-in"><span class="fu"><a href="tbl_get.html">tbl_get</a></span><span class="op">(</span></span>
-<span class="r-in">  tbl <span class="op">=</span> <span class="st">"small_table_duck"</span>,</span>
-<span class="r-in">  store <span class="op">=</span> <span class="va">tbls</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Another simpler way to get the same</span></span>
-<span class="r-in"><span class="co"># table materialized is by using `$` to</span></span>
-<span class="r-in"><span class="co"># get the entry of choice for `tbl_get()`</span></span>
-<span class="r-in"><span class="va">tbls</span><span class="op">$</span><span class="va">small_table_duck</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="tbl_get.html">tbl_get</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Creating an agent is easy when all</span></span>
-<span class="r-in"><span class="co"># table-prep formulas are encapsulated</span></span>
-<span class="r-in"><span class="co"># in a `tbl_store` object; use `$` </span></span>
-<span class="r-in"><span class="co"># notation to pass the appropriate</span></span>
-<span class="r-in"><span class="co"># procedure for reading a table to the</span></span>
-<span class="r-in"><span class="co"># `tbl` argument</span></span>
-<span class="r-in"><span class="va">agent_1</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="create_agent.html">create_agent</a></span><span class="op">(</span></span>
-<span class="r-in">    tbl <span class="op">=</span> <span class="va">tbls</span><span class="op">$</span><span class="va">small_table_duck</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in">  </span>
-<span class="r-in"><span class="co"># There are other ways to use the</span></span>
-<span class="r-in"><span class="co"># table store to assign a target table</span></span>
-<span class="r-in"><span class="co"># to an agent, like using the</span></span>
-<span class="r-in"><span class="co"># `tbl_source()` function</span></span>
-<span class="r-in"><span class="va">agent_2</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="create_agent.html">create_agent</a></span><span class="op">(</span></span>
-<span class="r-in">    tbl <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="tbl_source.html">tbl_source</a></span><span class="op">(</span></span>
-<span class="r-in">      tbl <span class="op">=</span> <span class="st">"small_table_duck"</span>,</span>
-<span class="r-in">      store <span class="op">=</span> <span class="va">tbls</span></span>
-<span class="r-in">      <span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># The table store can be moved to</span></span>
-<span class="r-in"><span class="co"># YAML with `yaml_write` and the</span></span>
-<span class="r-in"><span class="co"># `tbl_source()` call could then</span></span>
-<span class="r-in"><span class="co"># refer to that on-disk table store;</span></span>
-<span class="r-in"><span class="co"># let's do that YAML conversion</span></span>
-<span class="r-in"><span class="fu"><a href="yaml_write.html">yaml_write</a></span><span class="op">(</span><span class="va">tbls</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># The above writes the `tbl_store.yml`</span></span>
-<span class="r-in"><span class="co"># file (by not providing a `filename`</span></span>
-<span class="r-in"><span class="co"># this default filename is chosen);</span></span>
-<span class="r-in"><span class="co"># next, modify the `tbl_source()`</span></span>
-<span class="r-in"><span class="co"># so that `store` refer to the YAML</span></span>
-<span class="r-in"><span class="co"># file</span></span>
-<span class="r-in"><span class="va">agent_3</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="create_agent.html">create_agent</a></span><span class="op">(</span></span>
-<span class="r-in">    tbl <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="tbl_source.html">tbl_source</a></span><span class="op">(</span></span>
-<span class="r-in">      tbl <span class="op">=</span> <span class="st">"small_table_duck"</span>,</span>
-<span class="r-in">      store <span class="op">=</span> <span class="st">"tbl_store.yml"</span></span>
-<span class="r-in">    <span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

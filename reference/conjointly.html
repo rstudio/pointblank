@@ -446,7 +446,7 @@ behavior of side effects can be customized with the <code>actions</code> option.
 
 
 <p>With the <code>expect_*()</code> form, we would typically perform one validation at a
-time. This is primarily used in testthat tests.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/conjointly.html">expect_conjointly</a></span><span class="op">(</span>
+time. This is primarily used in <strong>testthat</strong> tests.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/conjointly.html">expect_conjointly</a></span><span class="op">(</span>
   <span class="va">tbl</span>,
   <span class="op">~</span> <span class="fu"><a href="../reference/col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span><span class="va">.</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">8</span><span class="op">)</span>,
   <span class="op">~</span> <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="va">.</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, value <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span>,

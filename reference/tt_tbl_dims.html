@@ -93,6 +93,35 @@ can be a data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spa
     <p>A <code>tibble</code> object.</p>
     </div>
     <div class="section level2">
+    <h2 id="demos">Demos<a class="anchor" aria-label="anchor" href="#demos"></a></h2>
+    
+
+
+<p>Get the dimensions of the <code>game_revenue</code> dataset that is included in the
+<strong>pointblank</strong> package.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/tt_tbl_dims.html">tt_tbl_dims</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">game_revenue</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 2 × 2</span>
+<span class="co">##   .param. value</span>
+<span class="co">##   &lt;chr&gt;   &lt;int&gt;</span>
+<span class="co">## 1 rows     2000</span>
+<span class="co">## 2 columns    11</span></code></pre></div>
+
+<p>This output table is useful when a table validation depends on its
+dimensions. Here, we check that <code>game_revenue</code> has at least <code>1500</code> rows.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/tt_tbl_dims.html">tt_tbl_dims</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">game_revenue</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">.param.</span> <span class="op">==</span> <span class="st">"rows"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_vals_gt.html">test_col_vals_gt</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span>,
+    value <span class="op">=</span> <span class="fl">1500</span>
+  <span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] TRUE</span></code></pre></div>
+
+<p>We can check <code>small_table</code> to ensure that number of columns is less than
+<code>10</code>.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/tt_tbl_dims.html">tt_tbl_dims</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">small_table</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">.param.</span> <span class="op">==</span> <span class="st">"columns"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_vals_lt.html">test_col_vals_lt</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span>,
+    value <span class="op">=</span> <span class="fl">10</span>
+  <span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] TRUE</span></code></pre></div>
+
+    </div>
+    <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
     
 
@@ -109,43 +138,6 @@ can be a data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spa
 <code><a href="tt_time_slice.html">tt_time_slice</a>()</code></p></div>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Get the dimensions of the</span></span>
-<span class="r-in"><span class="co"># `game_revenue` dataset that's</span></span>
-<span class="r-in"><span class="co"># included in the package</span></span>
-<span class="r-in"><span class="fu">tt_tbl_dims</span><span class="op">(</span><span class="va">game_revenue</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 2</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .param. value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> rows     <span style="text-decoration: underline;">2</span>000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> columns    11</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># This output table is useful when</span></span>
-<span class="r-in"><span class="co"># you want to validate the</span></span>
-<span class="r-in"><span class="co"># dimensions of the table; here,</span></span>
-<span class="r-in"><span class="co"># we check that `game_revenue` has</span></span>
-<span class="r-in"><span class="co"># at least 1500 rows</span></span>
-<span class="r-in"><span class="fu">tt_tbl_dims</span><span class="op">(</span><span class="va">game_revenue</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">.param.</span> <span class="op">==</span> <span class="st">"rows"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_gt.html">test_col_vals_gt</a></span><span class="op">(</span></span>
-<span class="r-in">    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span>,</span>
-<span class="r-in">    value <span class="op">=</span> <span class="fl">1500</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># We can check `small_table` for</span></span>
-<span class="r-in"><span class="co"># an exact number of columns (`8`)</span></span>
-<span class="r-in"><span class="fu">tt_tbl_dims</span><span class="op">(</span><span class="va">small_table</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">.param.</span> <span class="op">==</span> <span class="st">"columns"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_equal.html">test_col_vals_equal</a></span><span class="op">(</span></span>
-<span class="r-in">    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span>,</span>
-<span class="r-in">    value <span class="op">=</span> <span class="fl">8</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-in"></span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

@@ -334,23 +334,23 @@ Then, as with any \code{agent} object, we can add steps to the validation plan b
 using as many validation functions as we want. then, we use \code{\link[=interrogate]{interrogate()}}
 to actually perform the validations and gather intel.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   agent \%>\% 
-  col_exists(vars(date, date_time)) \%>\%
+  col_exists(columns = vars(date, date_time)) \%>\%
   col_vals_regex(
-    vars(b),
+    columns = vars(b),
     regex = "[0-9]-[a-z]\{3\}-[0-9]\{3\}"
   ) \%>\%
   rows_distinct() \%>\%
-  col_vals_gt(vars(d), value = 100) \%>\%
-  col_vals_lte(vars(c), value = 5) \%>\%
+  col_vals_gt(columns = vars(d), value = 100) \%>\%
+  col_vals_lte(columns = vars(c), value = 5) \%>\%
   col_vals_between(
-    vars(c),
+    columns = vars(c),
     left = vars(a), right = vars(d),
     na_pass = TRUE
   ) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
 
-The \code{agent} object can be printed to see the information report in the
+The \code{agent} object can be printed to see the validation report in the
 Viewer.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent
 }\if{html}{\out{</div>}}
 
@@ -364,7 +364,7 @@ Viewer.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent
 If we want to make use of more report display options, we can alternatively
 use the \code{\link[=get_agent_report]{get_agent_report()}} function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{report <-
   get_agent_report(
-    agent,
+    agent = agent,
     arrange_by = "severity",
     title = "Validation of `small_table`"
   )

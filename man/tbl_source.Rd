@@ -29,18 +29,11 @@ file (which can be created with the \code{\link[=yaml_write]{yaml_write()}} func
 Should you need to obtain the table itself (that is generated via the
 table-prep formula), then the \code{\link[=tbl_get]{tbl_get()}} function should be used for that.
 }
-\section{Function ID}{
+\section{Demos}{
 
-1-9
-}
 
-\examples{
-if (interactive()) {
-
-# Let's create a `tbl_store` object by
-# giving two table-prep formulas to
-# `tbl_store()`
-tbls <- 
+Let's create a \code{tbl_store} object by giving two table-prep formulas to
+\code{\link[=tbl_store]{tbl_store()}}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{store <- 
   tbl_store(
     small_table_duck ~ db_tbl(
       table = small_table,
@@ -49,57 +42,61 @@ tbls <-
     ),
     sml_table ~ pointblank::small_table
   )
+}\if{html}{\out{</div>}}
 
-# We can pass a table-prep formula
-# to `create_agent()` and interrogate
-# the table shortly thereafter
-agent <- 
+We can pass a table-prep formula to \code{\link[=create_agent]{create_agent()}} via \code{\link[=tbl_source]{tbl_source()}}, add
+some validation steps, and interrogate the table shortly thereafter.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_1 <- 
   create_agent(
-    tbl = ~ tbl_source("sml_table", tbls),
-    label = "An example that uses a table store.",
+    tbl = ~ tbl_source("sml_table", store),
+    label = "`tbl_source()` example",
     actions = action_levels(warn_at = 0.10)
   ) \%>\% 
-  col_exists(vars(date, date_time)) \%>\%
+  col_exists(columns = vars(date, date_time)) \%>\%
   interrogate()
+}\if{html}{\out{</div>}}
 
-# Both the `tbl_store` object and the
-# `agent` can be transformed to YAML with
-# the `yaml_write()` function
+The \code{agent_1} object can be printed to see the validation report in the
+Viewer.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_1
+}\if{html}{\out{</div>}}
 
-# This writes the `tbl_store.yml` file
-# by default (but a different name
-# could be used)
-yaml_write(tbls)
+\if{html}{
 
-# Let's modify the agent's target
-# to point to the table labeled as
-# `"sml_table"` in the YAML
-# representation of the `tbl_store`
-agent <-
-  agent \%>\% 
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_tbl_source_1.png" style="width:100\%;">
+}
+}
+
+The \code{tbl_store} object can be transformed to YAML with the \code{\link[=yaml_write]{yaml_write()}}
+function. The following statement writes the \code{tbl_store.yml} file by default
+(but a different name could be used with the \code{filename} argument):\if{html}{\out{<div class="sourceCode r">}}\preformatted{yaml_write(store)
+}\if{html}{\out{</div>}}
+
+Let's modify the agent's target to point to the table labeled as
+\code{"sml_table"} in the YAML representation of the \code{tbl_store}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_2 <-
+  agent_1 \%>\% 
   set_tbl(
     ~ tbl_source(
         tbl = "sml_table",
         store = "tbl_store.yml"
       )
   )
+}\if{html}{\out{</div>}}
 
-# Then we can write agent to a YAML
-# file (writes to `agent-sml_table.yml`
-# by default)
-yaml_write(agent)
+We can likewise write the agent to a YAML file with \code{\link[=yaml_write]{yaml_write()}} (writes to
+\code{agent-sml_table.yml} by default but the \code{filename} allows for any filename
+you want).\if{html}{\out{<div class="sourceCode r">}}\preformatted{yaml_write(agent_2)
+}\if{html}{\out{</div>}}
 
-# Now that both are in this on-disk format
-# an interrogation can be done by accessing
-# the agent YAML
-agent <-
-  yaml_agent_interrogate(
-    filename = "agent-sml_table.yml"
-  )
-
+Now that both the agent and the associated table store are present as on-disk
+YAML, interrogations can be done by using \code{\link[=yaml_agent_interrogate]{yaml_agent_interrogate()}}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- yaml_agent_interrogate(filename = "agent-sml_table.yml")
+}\if{html}{\out{</div>}}
 }
 
+\section{Function ID}{
+
+1-9
 }
+
 \seealso{
 Other Planning and Prep: 
 \code{\link{action_levels}()},

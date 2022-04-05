@@ -44,66 +44,6 @@ notation (e.g, \verb{create_agent(tbl = <tbl_store>$<name>)}) or with
 \code{\link[=tbl_source]{tbl_source()}} (e.g.,
 \verb{create_agent(tbl = ~ tbl_source("<name>", <tbl_store>))}).
 }
-\section{Syntax}{
-
-The table store provides a way to get the tables we need fairly easily. Think
-of an identifier for the table you'd like and then provide the code necessary
-to obtain that table. Then repeat as many times as you like!
-
-Here we'll define two tables that can be materialized later: \code{tbl_duckdb} (an
-in-memory DuckDB database table with \strong{pointblank}'s \code{small_table} dataset)
-and \code{sml_table_high} (a filtered version of \code{tbl_duckdb}):\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbls_1 <-
-  tbl_store(
-    tbl_duckdb ~ 
-      db_tbl(
-        pointblank::small_table,
-        dbname = ":memory:",
-        dbtype = "duckdb"
-      ),
-    sml_table_high ~ 
-      db_tbl(
-        pointblank::small_table,
-        dbname = ":memory:",
-        dbtype = "duckdb"
-      ) \%>\%
-      dplyr::filter(f == "high")
-  )
-}\if{html}{\out{</div>}}
-
-It's good to check that the tables can be obtained without error. We can do
-this with \code{\link[=tbl_get]{tbl_get()}}:\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_get("tbl_duckdb", store = tbls_1)
-tbl_get("sml_table_high", store = tbls_1)
-}\if{html}{\out{</div>}}
-
-We can shorten the \code{tbl_store()} statement with some syntax that
-\strong{pointblank} provides. The \code{sml_table_high} table-prep is simply a
-transformation of \code{tbl_duckdb}, so, we can use \code{{{ tbl_duckdb }}} in place of
-the repeated statement. Additionally, we can provide a \code{library()} call to
-the \code{.init} argument of \code{tbl_store()} so that \strong{dplyr} is available (thus
-allowing us to use \code{filter(...)} instead of \code{dplyr::filter(...)}). Here is
-the revised \code{tbl_store()} call:\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbls_2 <- 
-  tbl_store(
-    tbl_duckdb ~ 
-      db_tbl(
-        pointblank::small_table,
-        dbname = ":memory:",
-        dbtype = "duckdb"
-      ),
-    sml_table_high ~ 
-      \{\{ tbl_duckdb \}\} \%>\%
-      filter(f == "high"),
-    .init = ~ library(tidyverse)
-  )
-}\if{html}{\out{</div>}}
-
-Checking again with \code{\link[=tbl_get]{tbl_get()}} should provide the same tables as before:\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_get("tbl_duckdb", store = tbls_2)
-tbl_get("sml_table_high", store = tbls_2)
-}\if{html}{\out{</div>}}
-
-This is a great way to make table-prep more concise, readable, and less
-prone to errors.
-}
-
 \section{YAML}{
 
 A \strong{pointblank} table store can be written to YAML with \code{\link[=yaml_write]{yaml_write()}} and
@@ -164,18 +104,150 @@ done with \code{\link[=yaml_agent_interrogate]{yaml_agent_interrogate()}} (e.g.,
 \code{yaml_agent_interrogate("agent-sml_table_high.yml")}).
 }
 
-\section{Function ID}{
+\section{Demos}{
 
-1-8
+\subsection{Creating an in-memory table store and adding table-prep formulas}{
+
+The table store provides a way to get the tables we need fairly easily. Think
+of an identifier for the table you'd like and then provide the code necessary
+to obtain that table. Then repeat as many times as you like!
+
+Here we'll define two tables that can be materialized later: \code{tbl_duckdb} (an
+in-memory DuckDB database table with \strong{pointblank}'s \code{small_table} dataset)
+and \code{sml_table_high} (a filtered version of \code{tbl_duckdb}):\if{html}{\out{<div class="sourceCode r">}}\preformatted{store_1 <-
+  tbl_store(
+    tbl_duckdb ~ 
+      db_tbl(
+        pointblank::small_table,
+        dbname = ":memory:",
+        dbtype = "duckdb"
+      ),
+    sml_table_high ~ 
+      db_tbl(
+        pointblank::small_table,
+        dbname = ":memory:",
+        dbtype = "duckdb"
+      ) \%>\%
+      dplyr::filter(f == "high")
+  )
+}\if{html}{\out{</div>}}
+
+We can see what's in the table store \code{store_1} by printing it out:\if{html}{\out{<div class="sourceCode r">}}\preformatted{store_1
+}\if{html}{\out{</div>}}
+
+\preformatted{## -- The `table_store` table-prep formulas
+## 1 tbl_duckdb // ~ db_tbl(pointblank::small_table, dbname = ":memory:",
+## dbtype = "duckdb")
+## 2 sml_table_high // ~ db_tbl(pointblank::small_table, dbname = ":memory:",
+## dbtype = "duckdb") \%>\% dplyr::filter(f == "high")
+## ----}
+
+It's good to check that the tables can be obtained without error. We can do
+this with the \code{\link[=tbl_get]{tbl_get()}} function. With that function, we need to supply the
+given name of the table-prep formula (in quotes) and the table store object.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_get(tbl = "tbl_duckdb", store = store_1)
+}\if{html}{\out{</div>}}
+
+\preformatted{## # Source:   table<pointblank::small_table> [?? x 8]
+## # Database: duckdb_connection
+##    date_time           date           a b             c      d e     f    
+##    <dttm>              <date>     <int> <chr>     <dbl>  <dbl> <lgl> <chr>
+##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high 
+##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-163     8 10000. TRUE  low  
+##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3  2343. TRUE  high 
+##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-903    NA  3892. FALSE mid  
+##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-038     7   284. TRUE  low  
+##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-923     4  3291. TRUE  mid  
+##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3   843. TRUE  high 
+##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-639     2  1036. FALSE low  
+##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
+## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
+## # … with more rows}
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_get(tbl = "sml_table_high", store = store_1)
+}\if{html}{\out{</div>}}
+
+\preformatted{## # Source:   lazy query [?? x 8]
+## # Database: duckdb_connection
+##   date_time           date           a b             c     d e     f    
+##   <dttm>              <date>     <int> <chr>     <dbl> <dbl> <lgl> <chr>
+## 1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3 3423. TRUE  high 
+## 2 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3 2343. TRUE  high 
+## 3 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3  843. TRUE  high 
+## 4 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high 
+## 5 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high 
+## 6 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA 2230. TRUE  high}
+
+We can shorten the \code{tbl_store()} statement with some syntax that
+\strong{pointblank} provides. The \code{sml_table_high} table-prep is simply a
+transformation of \code{tbl_duckdb}, so, we can use \code{{{ tbl_duckdb }}} in place of
+the repeated statement. Additionally, we can provide a \code{library()} call to
+the \code{.init} argument of \code{tbl_store()} so that \strong{dplyr} is available (thus
+allowing us to use \code{filter(...)} instead of \code{dplyr::filter(...)}). Here is
+the revised \code{tbl_store()} call:\if{html}{\out{<div class="sourceCode r">}}\preformatted{store_2 <- 
+  tbl_store(
+    tbl_duckdb ~ 
+      db_tbl(
+        pointblank::small_table,
+        dbname = ":memory:",
+        dbtype = "duckdb"
+      ),
+    sml_table_high ~ 
+      \{\{ tbl_duckdb \}\} \%>\%
+      filter(f == "high"),
+    .init = ~ library(tidyverse)
+  )
+}\if{html}{\out{</div>}}
+
+Printing the table store \code{store_2} now shows that we used an \code{.init}
+statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{store_2
+}\if{html}{\out{</div>}}
+
+\preformatted{## -- The `table_store` table-prep formulas
+## 1 tbl_duckdb // ~ db_tbl(pointblank::small_table, dbname = ":memory:",
+## dbtype = "duckdb")
+## 2 sml_table_high // ~ \{\{tbl_duckdb\}\} \%>\% filter(f == "high") 
+## ----
+## INIT // ~library(tidyverse)
+## ----}
+
+Checking again with \code{\link[=tbl_get]{tbl_get()}} should provide the same tables as before:\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_get(tbl = "tbl_duckdb", store = store_2)
+}\if{html}{\out{</div>}}
+
+\preformatted{## # Source:   table<pointblank::small_table> [?? x 8]
+## # Database: duckdb_connection
+##    date_time           date           a b             c      d e     f    
+##    <dttm>              <date>     <int> <chr>     <dbl>  <dbl> <lgl> <chr>
+##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high 
+##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-163     8 10000. TRUE  low  
+##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3  2343. TRUE  high 
+##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-903    NA  3892. FALSE mid  
+##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-038     7   284. TRUE  low  
+##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-923     4  3291. TRUE  mid  
+##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3   843. TRUE  high 
+##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-639     2  1036. FALSE low  
+##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
+## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
+## # … with more rows}
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_get(tbl = "sml_table_high", store = store_2)
+}\if{html}{\out{</div>}}
+
+\preformatted{## # Source:   lazy query [?? x 8]
+## # Database: duckdb_connection
+##   date_time           date           a b             c     d e     f    
+##   <dttm>              <date>     <int> <chr>     <dbl> <dbl> <lgl> <chr>
+## 1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3 3423. TRUE  high 
+## 2 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3 2343. TRUE  high 
+## 3 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3  843. TRUE  high 
+## 4 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high 
+## 5 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high 
+## 6 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA 2230. TRUE  high}
 }
 
-\examples{
-if (interactive()) {
+\subsection{Using a table store in a data validation workflow}{
 
-# Define a `tbl_store` object by adding
-# table-prep formulas inside the
-# `tbl_store()` call
-tbls <- 
+Define a \code{tbl_store} object by adding table-prep formulas inside the
+\code{\link[=tbl_store]{tbl_store()}} call.\if{html}{\out{<div class="sourceCode r">}}\preformatted{store_3 <- 
   tbl_store(
     small_table_duck ~ db_tbl(
       table = small_table,
@@ -204,68 +276,116 @@ tbls <-
     ),
     sml_table ~ pointblank::small_table
   )
+}\if{html}{\out{</div>}}
 
-# Once this object is available, you
-# can check that the table of interest
-# is produced to your specification with
-# the `tbl_get()` function
-tbl_get(
+Let's get a summary of what's in the table store \code{store_3} through printing:\if{html}{\out{<div class="sourceCode r">}}\preformatted{store_3
+}\if{html}{\out{</div>}}
+
+\preformatted{## -- The `table_store` table-prep formulas
+## 1 small_table_duck // ~ db_tbl(table = small_table, dbname = ":memory:",
+## dbtype = "duckdb")
+## 2 rna // ~db_tbl(table = "rna", dbname = "pfmegrnargs", dbtype =
+## "postgres", host = "hh-pgsql-public.ebi.ac.uk", port = 5432, user =
+## I("reader"), password = I("NWDMCE5xdipIjRrp"))
+## 3 all_revenue // ~ db_tbl(table = file_tbl(file = from_github(file =
+## "all_revenue_large.rds", repo = "rich-iannone/intendo", subdir =
+## "data-large")), dbname = ":memory:", dbtype = "duckdb")
+## 4 sml_table // ~ pointblank::small_table
+## ----}
+
+Once this object is available, you can check that the table of interest is
+produced to your specification with the \code{\link[=tbl_get]{tbl_get()}} function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_get(
   tbl = "small_table_duck",
-  store = tbls
+  store = store_3
 )
+}\if{html}{\out{</div>}}
 
-# Another simpler way to get the same
-# table materialized is by using `$` to
-# get the entry of choice for `tbl_get()`
-tbls$small_table_duck \%>\% tbl_get()
+\preformatted{## # Source:   table<small_table> [?? x 8]
+## # Database: duckdb_connection
+##    date_time           date           a b             c      d e     f    
+##    <dttm>              <date>     <int> <chr>     <dbl>  <dbl> <lgl> <chr>
+##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high 
+##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-163     8 10000. TRUE  low  
+##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3  2343. TRUE  high 
+##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-903    NA  3892. FALSE mid  
+##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-038     7   284. TRUE  low  
+##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-923     4  3291. TRUE  mid  
+##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3   843. TRUE  high 
+##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-639     2  1036. FALSE low  
+##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
+## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
+## # … with more rows}
 
-# Creating an agent is easy when all
-# table-prep formulas are encapsulated
-# in a `tbl_store` object; use `$` 
-# notation to pass the appropriate
-# procedure for reading a table to the
-# `tbl` argument
-agent_1 <-
+
+Another way to get the same table materialized is by using \code{$} to get the
+entry of choice for \code{\link[=tbl_get]{tbl_get()}}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{store_3$small_table_duck \%>\% tbl_get()
+}\if{html}{\out{</div>}}
+
+\preformatted{## # Source:   table<small_table> [?? x 8]
+## # Database: duckdb_connection
+##    date_time           date           a b             c      d e     f    
+##    <dttm>              <date>     <int> <chr>     <dbl>  <dbl> <lgl> <chr>
+##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high 
+##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-163     8 10000. TRUE  low  
+##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3  2343. TRUE  high 
+##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-903    NA  3892. FALSE mid  
+##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-038     7   284. TRUE  low  
+##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-923     4  3291. TRUE  mid  
+##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3   843. TRUE  high 
+##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-639     2  1036. FALSE low  
+##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
+## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
+## # … with more rows}
+
+
+Creating an agent is easy when all table-prep formulas are encapsulated in a
+\code{tbl_store} object. Use \code{$} notation to pass the appropriate procedure for
+reading a table to the \code{tbl} argument.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_1 <-
   create_agent(
-    tbl = tbls$small_table_duck
+    tbl = store_3$small_table_duck
   )
-  
-# There are other ways to use the
-# table store to assign a target table
-# to an agent, like using the
-# `tbl_source()` function
-agent_2 <-
+}\if{html}{\out{</div>}}
+
+There are other ways to use the table store to assign a target table to an
+agent, like using the \code{\link[=tbl_source]{tbl_source()}} function (which extracts the table-prep
+formula from the table store).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_2 <-
   create_agent(
     tbl = ~ tbl_source(
       tbl = "small_table_duck",
-      store = tbls
+      store = store_3
       )
   )
+}\if{html}{\out{</div>}}
+}
 
-# The table store can be moved to
-# YAML with `yaml_write` and the
-# `tbl_source()` call could then
-# refer to that on-disk table store;
-# let's do that YAML conversion
-yaml_write(tbls)
+\subsection{Writing a table store to a YAML file}{
 
-# The above writes the `tbl_store.yml`
-# file (by not providing a `filename`
-# this default filename is chosen);
-# next, modify the `tbl_source()`
-# so that `store` refer to the YAML
-# file
-agent_3 <-
+The table store can be moved to YAML with \code{yaml_write} and the \code{\link[=tbl_source]{tbl_source()}}
+call could then refer to that on-disk table store. Let's do that YAML
+conversion.\if{html}{\out{<div class="sourceCode r">}}\preformatted{yaml_write(store_3)
+}\if{html}{\out{</div>}}
+
+The above writes the \code{tbl_store.yml} file (by not providing a \code{filename} this
+default filename is chosen).
+
+It can be convenient to read table-prep formulas from a YAML file that's a
+table store. To achieve this, we can modify the \code{\link[=tbl_source]{tbl_source()}} statement in
+the \code{\link[=create_agent]{create_agent()}} call so that \code{store} refers to the on-disk YAML file.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_3 <-
   create_agent(
     tbl = ~ tbl_source(
       tbl = "small_table_duck",
       store = "tbl_store.yml"
     )
   )
-
+}\if{html}{\out{</div>}}
+}
 }
 
+\section{Function ID}{
+
+1-8
 }
+
 \seealso{
 Other Planning and Prep: 
 \code{\link{action_levels}()},

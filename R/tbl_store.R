@@ -39,76 +39,6 @@
 #' [tbl_source()] (e.g.,
 #' `create_agent(tbl = ~ tbl_source("<name>", <tbl_store>))`).
 #' 
-#' @section Syntax:
-#' The table store provides a way to get the tables we need fairly easily. Think
-#' of an identifier for the table you'd like and then provide the code necessary
-#' to obtain that table. Then repeat as many times as you like!
-#'
-#' Here we'll define two tables that can be materialized later: `tbl_duckdb` (an
-#' in-memory DuckDB database table with **pointblank**'s `small_table` dataset)
-#' and `sml_table_high` (a filtered version of `tbl_duckdb`):
-#' 
-#' ```r
-#' tbls_1 <-
-#'   tbl_store(
-#'     tbl_duckdb ~ 
-#'       db_tbl(
-#'         pointblank::small_table,
-#'         dbname = ":memory:",
-#'         dbtype = "duckdb"
-#'       ),
-#'     sml_table_high ~ 
-#'       db_tbl(
-#'         pointblank::small_table,
-#'         dbname = ":memory:",
-#'         dbtype = "duckdb"
-#'       ) %>%
-#'       dplyr::filter(f == "high")
-#'   )
-#' ```
-#' 
-#' It's good to check that the tables can be obtained without error. We can do
-#' this with [tbl_get()]:
-#' 
-#' ```r
-#' tbl_get("tbl_duckdb", store = tbls_1)
-#' tbl_get("sml_table_high", store = tbls_1)
-#' ```
-#' 
-#' We can shorten the `tbl_store()` statement with some syntax that
-#' **pointblank** provides. The `sml_table_high` table-prep is simply a
-#' transformation of `tbl_duckdb`, so, we can use `{{ tbl_duckdb }}` in place of
-#' the repeated statement. Additionally, we can provide a `library()` call to
-#' the `.init` argument of `tbl_store()` so that **dplyr** is available (thus
-#' allowing us to use `filter(...)` instead of `dplyr::filter(...)`). Here is
-#' the revised `tbl_store()` call:
-#' 
-#' ```r
-#' tbls_2 <- 
-#'   tbl_store(
-#'     tbl_duckdb ~ 
-#'       db_tbl(
-#'         pointblank::small_table,
-#'         dbname = ":memory:",
-#'         dbtype = "duckdb"
-#'       ),
-#'     sml_table_high ~ 
-#'       {{ tbl_duckdb }} %>%
-#'       filter(f == "high"),
-#'     .init = ~ library(tidyverse)
-#'   )
-#' ```
-#' 
-#' Checking again with [tbl_get()] should provide the same tables as before:
-#' 
-#' ```r
-#' tbl_get("tbl_duckdb", store = tbls_2)
-#' tbl_get("sml_table_high", store = tbls_2)
-#' ```
-#' 
-#' This is a great way to make table-prep more concise, readable, and less
-#' prone to errors.
-#' 
 #' @section YAML:
 #' A **pointblank** table store can be written to YAML with [yaml_write()] and
 #' the resulting YAML can be used in several ways. The ideal scenario is to have
@@ -193,13 +123,177 @@
 #' 
 #' @return A `tbl_store` object that contains table-prep formulas.
 #' 
-#' @examples 
-#' if (interactive()) {
+#' @section Demos:
 #' 
-#' # Define a `tbl_store` object by adding
-#' # table-prep formulas inside the
-#' # `tbl_store()` call
-#' tbls <- 
+#' ## Creating an in-memory table store and adding table-prep formulas
+#' 
+#' The table store provides a way to get the tables we need fairly easily. Think
+#' of an identifier for the table you'd like and then provide the code necessary
+#' to obtain that table. Then repeat as many times as you like!
+#'
+#' Here we'll define two tables that can be materialized later: `tbl_duckdb` (an
+#' in-memory DuckDB database table with **pointblank**'s `small_table` dataset)
+#' and `sml_table_high` (a filtered version of `tbl_duckdb`):
+#' 
+#' ```r
+#' store_1 <-
+#'   tbl_store(
+#'     tbl_duckdb ~ 
+#'       db_tbl(
+#'         pointblank::small_table,
+#'         dbname = ":memory:",
+#'         dbtype = "duckdb"
+#'       ),
+#'     sml_table_high ~ 
+#'       db_tbl(
+#'         pointblank::small_table,
+#'         dbname = ":memory:",
+#'         dbtype = "duckdb"
+#'       ) %>%
+#'       dplyr::filter(f == "high")
+#'   )
+#' ```
+#' 
+#' We can see what's in the table store `store_1` by printing it out:
+#' 
+#' ```r
+#' store_1
+#' ```
+#' 
+#' \preformatted{## -- The `table_store` table-prep formulas
+#' ## 1 tbl_duckdb // ~ db_tbl(pointblank::small_table, dbname = ":memory:",
+#' ## dbtype = "duckdb")
+#' ## 2 sml_table_high // ~ db_tbl(pointblank::small_table, dbname = ":memory:",
+#' ## dbtype = "duckdb") \%>\% dplyr::filter(f == "high")
+#' ## ----}
+#' 
+#' 
+#' It's good to check that the tables can be obtained without error. We can do
+#' this with the [tbl_get()] function. With that function, we need to supply the
+#' given name of the table-prep formula (in quotes) and the table store object.
+#' 
+#' ```r
+#' tbl_get(tbl = "tbl_duckdb", store = store_1)
+#' ```
+#' 
+#' \preformatted{## # Source:   table<pointblank::small_table> [?? x 8]
+#' ## # Database: duckdb_connection
+#' ##    date_time           date           a b             c      d e     f    
+#' ##    <dttm>              <date>     <int> <chr>     <dbl>  <dbl> <lgl> <chr>
+#' ##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high 
+#' ##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-163     8 10000. TRUE  low  
+#' ##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3  2343. TRUE  high 
+#' ##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-903    NA  3892. FALSE mid  
+#' ##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-038     7   284. TRUE  low  
+#' ##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-923     4  3291. TRUE  mid  
+#' ##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3   843. TRUE  high 
+#' ##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-639     2  1036. FALSE low  
+#' ##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
+#' ## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
+#' ## # … with more rows}
+#' 
+#' 
+#' ```r
+#' tbl_get(tbl = "sml_table_high", store = store_1)
+#' ```
+#' 
+#' \preformatted{## # Source:   lazy query [?? x 8]
+#' ## # Database: duckdb_connection
+#' ##   date_time           date           a b             c     d e     f    
+#' ##   <dttm>              <date>     <int> <chr>     <dbl> <dbl> <lgl> <chr>
+#' ## 1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3 3423. TRUE  high 
+#' ## 2 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3 2343. TRUE  high 
+#' ## 3 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3  843. TRUE  high 
+#' ## 4 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high 
+#' ## 5 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high 
+#' ## 6 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA 2230. TRUE  high}
+#' 
+#' 
+#' We can shorten the `tbl_store()` statement with some syntax that
+#' **pointblank** provides. The `sml_table_high` table-prep is simply a
+#' transformation of `tbl_duckdb`, so, we can use `{{ tbl_duckdb }}` in place of
+#' the repeated statement. Additionally, we can provide a `library()` call to
+#' the `.init` argument of `tbl_store()` so that **dplyr** is available (thus
+#' allowing us to use `filter(...)` instead of `dplyr::filter(...)`). Here is
+#' the revised `tbl_store()` call:
+#' 
+#' ```r
+#' store_2 <- 
+#'   tbl_store(
+#'     tbl_duckdb ~ 
+#'       db_tbl(
+#'         pointblank::small_table,
+#'         dbname = ":memory:",
+#'         dbtype = "duckdb"
+#'       ),
+#'     sml_table_high ~ 
+#'       {{ tbl_duckdb }} %>%
+#'       filter(f == "high"),
+#'     .init = ~ library(tidyverse)
+#'   )
+#' ```
+#' 
+#' Printing the table store `store_2` now shows that we used an `.init`
+#' statement:
+#' 
+#' ```r
+#' store_2
+#' ```
+#' 
+#' \preformatted{## -- The `table_store` table-prep formulas
+#' ## 1 tbl_duckdb // ~ db_tbl(pointblank::small_table, dbname = ":memory:",
+#' ## dbtype = "duckdb")
+#' ## 2 sml_table_high // ~ \{\{tbl_duckdb\}\} \%>\% filter(f == "high") 
+#' ## ----
+#' ## INIT // ~library(tidyverse)
+#' ## ----}
+#' 
+#' 
+#' Checking again with [tbl_get()] should provide the same tables as before:
+#' 
+#' ```r
+#' tbl_get(tbl = "tbl_duckdb", store = store_2)
+#' ```
+#' \preformatted{## # Source:   table<pointblank::small_table> [?? x 8]
+#' ## # Database: duckdb_connection
+#' ##    date_time           date           a b             c      d e     f    
+#' ##    <dttm>              <date>     <int> <chr>     <dbl>  <dbl> <lgl> <chr>
+#' ##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high 
+#' ##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-163     8 10000. TRUE  low  
+#' ##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3  2343. TRUE  high 
+#' ##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-903    NA  3892. FALSE mid  
+#' ##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-038     7   284. TRUE  low  
+#' ##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-923     4  3291. TRUE  mid  
+#' ##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3   843. TRUE  high 
+#' ##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-639     2  1036. FALSE low  
+#' ##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
+#' ## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
+#' ## # … with more rows}
+#' 
+#' 
+#' ```r
+#' tbl_get(tbl = "sml_table_high", store = store_2)
+#' ```
+#' 
+#' \preformatted{## # Source:   lazy query [?? x 8]
+#' ## # Database: duckdb_connection
+#' ##   date_time           date           a b             c     d e     f    
+#' ##   <dttm>              <date>     <int> <chr>     <dbl> <dbl> <lgl> <chr>
+#' ## 1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3 3423. TRUE  high 
+#' ## 2 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3 2343. TRUE  high 
+#' ## 3 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3  843. TRUE  high 
+#' ## 4 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high 
+#' ## 5 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high 
+#' ## 6 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA 2230. TRUE  high}
+#' 
+#' 
+#' ## Using a table store in a data validation workflow
+#' 
+#' Define a `tbl_store` object by adding table-prep formulas inside the
+#' [tbl_store()] call.
+#' 
+#' ```r
+#' store_3 <- 
 #'   tbl_store(
 #'     small_table_duck ~ db_tbl(
 #'       table = small_table,
@@ -228,57 +322,121 @@
 #'     ),
 #'     sml_table ~ pointblank::small_table
 #'   )
+#' ```
 #' 
-#' # Once this object is available, you
-#' # can check that the table of interest
-#' # is produced to your specification with
-#' # the `tbl_get()` function
+#' Let's get a summary of what's in the table store `store_3` through printing:
+#' 
+#' ```r
+#' store_3
+#' ```
+#' 
+#' \preformatted{## -- The `table_store` table-prep formulas
+#' ## 1 small_table_duck // ~ db_tbl(table = small_table, dbname = ":memory:",
+#' ## dbtype = "duckdb")
+#' ## 2 rna // ~db_tbl(table = "rna", dbname = "pfmegrnargs", dbtype =
+#' ## "postgres", host = "hh-pgsql-public.ebi.ac.uk", port = 5432, user =
+#' ## I("reader"), password = I("NWDMCE5xdipIjRrp"))
+#' ## 3 all_revenue // ~ db_tbl(table = file_tbl(file = from_github(file =
+#' ## "all_revenue_large.rds", repo = "rich-iannone/intendo", subdir =
+#' ## "data-large")), dbname = ":memory:", dbtype = "duckdb")
+#' ## 4 sml_table // ~ pointblank::small_table
+#' ## ----}
+#' 
+#' 
+#' Once this object is available, you can check that the table of interest is
+#' produced to your specification with the [tbl_get()] function.
+#' 
+#' ```r
 #' tbl_get(
 #'   tbl = "small_table_duck",
-#'   store = tbls
+#'   store = store_3
 #' )
+#' ```
 #' 
-#' # Another simpler way to get the same
-#' # table materialized is by using `$` to
-#' # get the entry of choice for `tbl_get()`
-#' tbls$small_table_duck %>% tbl_get()
+#' \preformatted{## # Source:   table<small_table> [?? x 8]
+#' ## # Database: duckdb_connection
+#' ##    date_time           date           a b             c      d e     f    
+#' ##    <dttm>              <date>     <int> <chr>     <dbl>  <dbl> <lgl> <chr>
+#' ##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high 
+#' ##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-163     8 10000. TRUE  low  
+#' ##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3  2343. TRUE  high 
+#' ##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-903    NA  3892. FALSE mid  
+#' ##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-038     7   284. TRUE  low  
+#' ##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-923     4  3291. TRUE  mid  
+#' ##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3   843. TRUE  high 
+#' ##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-639     2  1036. FALSE low  
+#' ##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
+#' ## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
+#' ## # … with more rows}
 #' 
-#' # Creating an agent is easy when all
-#' # table-prep formulas are encapsulated
-#' # in a `tbl_store` object; use `$` 
-#' # notation to pass the appropriate
-#' # procedure for reading a table to the
-#' # `tbl` argument
+#' 
+#' Another way to get the same table materialized is by using `$` to get the
+#' entry of choice for [tbl_get()].
+#' 
+#' ```r
+#' store_3$small_table_duck %>% tbl_get()
+#' ```
+#' 
+#' \preformatted{## # Source:   table<small_table> [?? x 8]
+#' ## # Database: duckdb_connection
+#' ##    date_time           date           a b             c      d e     f    
+#' ##    <dttm>              <date>     <int> <chr>     <dbl>  <dbl> <lgl> <chr>
+#' ##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high 
+#' ##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-163     8 10000. TRUE  low  
+#' ##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3  2343. TRUE  high 
+#' ##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-903    NA  3892. FALSE mid  
+#' ##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-038     7   284. TRUE  low  
+#' ##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-923     4  3291. TRUE  mid  
+#' ##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3   843. TRUE  high 
+#' ##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-639     2  1036. FALSE low  
+#' ##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
+#' ## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
+#' ## # … with more rows}
+#' 
+#' 
+#' Creating an agent is easy when all table-prep formulas are encapsulated in a
+#' `tbl_store` object. Use `$` notation to pass the appropriate procedure for
+#' reading a table to the `tbl` argument.
+#' 
+#' ```r
 #' agent_1 <-
 #'   create_agent(
-#'     tbl = tbls$small_table_duck
+#'     tbl = store_3$small_table_duck
 #'   )
+#' ```
 #'   
-#' # There are other ways to use the
-#' # table store to assign a target table
-#' # to an agent, like using the
-#' # `tbl_source()` function
+#' There are other ways to use the table store to assign a target table to an
+#' agent, like using the [tbl_source()] function (which extracts the table-prep
+#' formula from the table store).
+#' 
+#' ```r
 #' agent_2 <-
 #'   create_agent(
 #'     tbl = ~ tbl_source(
 #'       tbl = "small_table_duck",
-#'       store = tbls
+#'       store = store_3
 #'       )
 #'   )
+#' ```
 #' 
-#' # The table store can be moved to
-#' # YAML with `yaml_write` and the
-#' # `tbl_source()` call could then
-#' # refer to that on-disk table store;
-#' # let's do that YAML conversion
-#' yaml_write(tbls)
+#' ## Writing a table store to a YAML file
 #' 
-#' # The above writes the `tbl_store.yml`
-#' # file (by not providing a `filename`
-#' # this default filename is chosen);
-#' # next, modify the `tbl_source()`
-#' # so that `store` refer to the YAML
-#' # file
+#' The table store can be moved to YAML with `yaml_write` and the [tbl_source()]
+#' call could then refer to that on-disk table store. Let's do that YAML
+#' conversion.
+#' 
+#' ```r
+#' yaml_write(store_3)
+#' ```
+#' 
+#' The above writes the `tbl_store.yml` file (by not providing a `filename` this
+#' default filename is chosen).
+#' 
+#' It can be convenient to read table-prep formulas from a YAML file that's a
+#' table store. To achieve this, we can modify the [tbl_source()] statement in
+#' the [create_agent()] call so that `store` refers to the on-disk YAML file.
+#' 
+#' ```r
 #' agent_3 <-
 #'   create_agent(
 #'     tbl = ~ tbl_source(
@@ -286,8 +444,8 @@
 #'       store = "tbl_store.yml"
 #'     )
 #'   )
+#' ```
 #' 
-#' }
 #' 
 #' @family Planning and Prep
 #' @section Function ID:
@@ -427,13 +585,13 @@ add_to_name_list <- function(
 #' 
 #' @return A table-prep formula.
 #' 
-#' @examples 
-#' if (interactive()) {
+#' @section Demos:
 #' 
-#' # Let's create a `tbl_store` object by
-#' # giving two table-prep formulas to
-#' # `tbl_store()`
-#' tbls <- 
+#' Let's create a `tbl_store` object by giving two table-prep formulas to
+#' [tbl_store()].
+#' 
+#' ```r
+#' store <- 
 #'   tbl_store(
 #'     small_table_duck ~ db_tbl(
 #'       table = small_table,
@@ -442,55 +600,72 @@ add_to_name_list <- function(
 #'     ),
 #'     sml_table ~ pointblank::small_table
 #'   )
+#' ```
 #' 
-#' # We can pass a table-prep formula
-#' # to `create_agent()` and interrogate
-#' # the table shortly thereafter
-#' agent <- 
+#' We can pass a table-prep formula to [create_agent()] via [tbl_source()], add
+#' some validation steps, and interrogate the table shortly thereafter.
+#' 
+#' ```r
+#' agent_1 <- 
 #'   create_agent(
-#'     tbl = ~ tbl_source("sml_table", tbls),
-#'     label = "An example that uses a table store.",
+#'     tbl = ~ tbl_source("sml_table", store),
+#'     label = "`tbl_source()` example",
 #'     actions = action_levels(warn_at = 0.10)
 #'   ) %>% 
-#'   col_exists(vars(date, date_time)) %>%
+#'   col_exists(columns = vars(date, date_time)) %>%
 #'   interrogate()
-#'
-#' # Both the `tbl_store` object and the
-#' # `agent` can be transformed to YAML with
-#' # the `yaml_write()` function
+#' ```
 #' 
-#' # This writes the `tbl_store.yml` file
-#' # by default (but a different name
-#' # could be used)
-#' yaml_write(tbls)
+#' The `agent_1` object can be printed to see the validation report in the
+#' Viewer.
 #' 
-#' # Let's modify the agent's target
-#' # to point to the table labeled as
-#' # `"sml_table"` in the YAML
-#' # representation of the `tbl_store`
-#' agent <-
-#'   agent %>% 
+#' ```r
+#' agent_1
+#' ```
+#' 
+#' \if{html}{
+#' 
+#' \out{
+#' `r pb_get_image_tag(file = "man_tbl_source_1.png")`
+#' }
+#' }
+#' 
+#' The `tbl_store` object can be transformed to YAML with the [yaml_write()]
+#' function. The following statement writes the `tbl_store.yml` file by default
+#' (but a different name could be used with the `filename` argument):
+#' 
+#' ```r
+#' yaml_write(store)
+#' ```
+#' 
+#' Let's modify the agent's target to point to the table labeled as
+#' `"sml_table"` in the YAML representation of the `tbl_store`.
+#' 
+#' ```r
+#' agent_2 <-
+#'   agent_1 %>% 
 #'   set_tbl(
 #'     ~ tbl_source(
 #'         tbl = "sml_table",
 #'         store = "tbl_store.yml"
 #'       )
 #'   )
+#' ```
 #' 
-#' # Then we can write agent to a YAML
-#' # file (writes to `agent-sml_table.yml`
-#' # by default)
-#' yaml_write(agent)
+#' We can likewise write the agent to a YAML file with [yaml_write()] (writes to
+#' `agent-sml_table.yml` by default but the `filename` allows for any filename
+#' you want).
 #' 
-#' # Now that both are in this on-disk format
-#' # an interrogation can be done by accessing
-#' # the agent YAML
-#' agent <-
-#'   yaml_agent_interrogate(
-#'     filename = "agent-sml_table.yml"
-#'   )
+#' ```r
+#' yaml_write(agent_2)
+#' ```
 #' 
-#' }
+#' Now that both the agent and the associated table store are present as on-disk
+#' YAML, interrogations can be done by using [yaml_agent_interrogate()].
+#' 
+#' ```r
+#' agent <- yaml_agent_interrogate(filename = "agent-sml_table.yml")
+#' ```
 #' 
 #' @family Planning and Prep
 #' @section Function ID:
@@ -592,12 +767,13 @@ has_substitutions <- function(x) {
 #' 
 #' @return A table object.
 #' 
-#' @examples 
-#' if (interactive()) {
+#' @section Demos:
 #' 
-#' # Define a `tbl_store` object by adding
-#' # table-prep formulas in `tbl_store()`
-#' tbls <- 
+#' Define a `tbl_store` object by adding several table-prep formulas in
+#' [tbl_store()].
+#' 
+#' ```r
+#' store <- 
 #'   tbl_store(
 #'     small_table_duck ~ db_tbl(
 #'       table = small_table,
@@ -613,34 +789,63 @@ has_substitutions <- function(x) {
 #'       user = I("reader"),
 #'       password = I("NWDMCE5xdipIjRrp")
 #'     ),
-#'     all_revenue ~ db_tbl(
-#'       table = file_tbl(
-#'         file = from_github(
-#'           file = "all_revenue_large.rds",
-#'           repo = "rich-iannone/intendo",
-#'           subdir = "data-large"
-#'         )
-#'       ),
-#'       dbname = ":memory:",
-#'       dbtype = "duckdb"
-#'     ),
 #'     sml_table ~ pointblank::small_table
 #'   )
+#' ```
 #' 
-#' # Once this object is available, you can
-#' # check that the table of interest is
-#' # produced to your specification
+#' Once this object is available, we can access the tables named:
+#' `"small_table_duck"`, `"rna"`, and `"sml_table"`. Let's check that the
+#' `"rna"` table is accessible through [tbl_get()]:
+#' 
+#' ```r
 #' tbl_get(
-#'   tbl = "small_table_duck",
-#'   store = tbls
+#'   tbl = "rna",
+#'   store = store
 #' )
+#' ```
 #' 
-#' # An alternative method for getting the
-#' # same table materialized is by using `$`
-#' # to get the formula of choice from `tbls`
-#' tbls$small_table_duck %>% tbl_get()
+#' \preformatted{## # Source:   table<rna> [?? x 9]
+#' ## # Database: postgres [reader@hh-pgsql-public.ebi.ac.uk:5432/pfmegrnargs]
+#' ##          id upi        timestamp           userstamp crc64   len seq_short
+#' ##     <int64> <chr>      <dttm>              <chr>     <chr> <int> <chr>    
+#' ##  1 24583872 URS000177… 2019-12-02 13:26:08 rnacen    C380…   511 ATTGAACG…
+#' ##  2 24583873 URS000177… 2019-12-02 13:26:08 rnacen    BC42…   390 ATGGGCGA…
+#' ##  3 24583874 URS000177… 2019-12-02 13:26:08 rnacen    19A5…   422 CTACGGGA…
+#' ##  4 24583875 URS000177… 2019-12-02 13:26:08 rnacen    66E1…   534 AGGGTTCG…
+#' ##  5 24583876 URS000177… 2019-12-02 13:26:08 rnacen    CC8F…   252 TACGTAGG…
+#' ##  6 24583877 URS000177… 2019-12-02 13:26:08 rnacen    19E4…   413 ATGGGCGA…
+#' ##  7 24583878 URS000177… 2019-12-02 13:26:08 rnacen    AE91…   253 TACGAAGG…
+#' ##  8 24583879 URS000177… 2019-12-02 13:26:08 rnacen    E21A…   304 CAGCAGTA…
+#' ##  9 24583880 URS000177… 2019-12-02 13:26:08 rnacen    1AA7…   460 CCTACGGG…
+#' ## 10 24583881 URS000177… 2019-12-02 13:26:08 rnacen    2046…   440 CCTACGGG…     
+#' ## # … with more rows, and 2 more variables: seq_long <chr>, md5 <chr>}
 #' 
-#' }
+#' 
+#' An alternative method for getting the same table materialized is by using `$`
+#' to get the formula of choice from `tbls` and passing that to `tbl_get()`. The
+#' benefit of this is that we can use autocompletion to show us what's available
+#' in the table store (i.e., appears after typing the `$`).
+#' 
+#' ```r
+#' store$small_table_duck %>% tbl_get()
+#' ```
+#' 
+#' \preformatted{## # Source:   table<small_table> [?? x 8]
+#' ## # Database: duckdb_connection
+#' ##    date_time           date           a b             c      d e     f    
+#' ##    <dttm>              <date>     <int> <chr>     <dbl>  <dbl> <lgl> <chr>
+#' ##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high 
+#' ##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-163     8 10000. TRUE  low  
+#' ##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3  2343. TRUE  high 
+#' ##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-903    NA  3892. FALSE mid  
+#' ##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-038     7   284. TRUE  low  
+#' ##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-923     4  3291. TRUE  mid  
+#' ##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3   843. TRUE  high 
+#' ##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-639     2  1036. FALSE low  
+#' ##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
+#' ## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
+#' ## # … with more rows}
+#' 
 #' 
 #' @family Planning and Prep
 #' @section Function ID:

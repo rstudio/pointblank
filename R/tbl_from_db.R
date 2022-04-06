@@ -236,7 +236,7 @@
 #' Using table-prep formulas in a centralized table store can make it easier to
 #' work with DB tables in **pointblank**. Here's how to generate a table store
 #' with two named entries for table preparations involving the [tbl_store()] and
-#' [db_tbl()] functions.
+#' `db_tbl()` functions.
 #' 
 #' ```r
 #' store <-
@@ -251,8 +251,8 @@
 #'   )
 #' ```
 #' 
-#' Now it's easy to obtain either of these tables via [tbl_get()]. Refer to the
-#' table in the store by its name (given to the left of the `~`).
+#' Now it's easy to obtain either of these tables via [tbl_get()]. We can
+#' reference the table in the store by its name (given to the left of the `~`).
 #' 
 #' ```r
 #' tbl_get(tbl = "small_table_duck", store = store)

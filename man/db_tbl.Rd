@@ -221,7 +221,7 @@ the \code{usethis::edit_r_environ()} function makes this pretty easy to do.
 Using table-prep formulas in a centralized table store can make it easier to
 work with DB tables in \strong{pointblank}. Here's how to generate a table store
 with two named entries for table preparations involving the \code{\link[=tbl_store]{tbl_store()}} and
-\code{\link[=db_tbl]{db_tbl()}} functions.\if{html}{\out{<div class="sourceCode r">}}\preformatted{store <-
+\code{db_tbl()} functions.\if{html}{\out{<div class="sourceCode r">}}\preformatted{store <-
   tbl_store(
     small_table_duck ~ db_tbl(
       table = pointblank::small_table,
@@ -233,8 +233,8 @@ with two named entries for table preparations involving the \code{\link[=tbl_sto
   )
 }\if{html}{\out{</div>}}
 
-Now it's easy to obtain either of these tables via \code{\link[=tbl_get]{tbl_get()}}. Refer to the
-table in the store by its name (given to the left of the \code{~}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_get(tbl = "small_table_duck", store = store)
+Now it's easy to obtain either of these tables via \code{\link[=tbl_get]{tbl_get()}}. We can
+reference the table in the store by its name (given to the left of the \code{~}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_get(tbl = "small_table_duck", store = store)
 }\if{html}{\out{</div>}}
 
 \preformatted{## # Source:   table<pointblank::small_table> [?? x 8]

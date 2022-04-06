@@ -58,38 +58,66 @@
 #'   
 #' @return A `tbl_df` object.
 #' 
-#' @examples 
-#' # A local CSV file can be obtained as
-#' # a tbl object by supplying a path to
-#' # the file and some CSV reading options
-#' # (the ones used by `readr::read_csv()`)
-#' # to the `file_tbl()` function; for
-#' # this example we could obtain a path
-#' # to a CSV file in the pointblank
-#' # package with `system.file()`:
+#' @section Demos:
+#' 
+#' ## Producing tables from CSV files
+#' 
+#' A local CSV file can be obtained as a tbl object by supplying a path to the
+#' file and some CSV reading options (the ones used by `readr::read_csv()`) to
+#' the `file_tbl()` function. For this example we could obtain a path to a CSV
+#' file in the **pointblank** package with `system.file()`.
+#' 
+#' ```r
 #' csv_path <- 
 #'   system.file(
 #'     "data_files", "small_table.csv",
 #'     package = "pointblank"
 #'   )
+#' ```
 #' 
-#' # Then use that path in `file_tbl()`
-#' # with the option to specify the column
-#' # types in that CSV  
+#' Then use that path in `file_tbl()` with the option to specify the column
+#' types in that CSV.
+#' 
+#' ```r
 #' tbl <- 
 #'   file_tbl(
 #'     file = csv_path,
 #'     col_types = "TDdcddlc"
 #'   )
-#'   
-#' # Now that we have a `tbl` object that
-#' # is a tibble, it can be introduced to
-#' # `create_agent()` for validation
+#' 
+#' tbl
+#' ```
+#' 
+#' \preformatted{## # A tibble: 13 × 8
+#' ##    date_time           date           a b           c      d e     f    
+#' ##    <dttm>              <date>     <dbl> <chr>   <dbl>  <dbl> <lgl> <chr>
+#' ##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-…     3  3423. TRUE  high 
+#' ##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-…     8 10000. TRUE  low  
+#' ##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-…     3  2343. TRUE  high 
+#' ##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-…    NA  3892. FALSE mid  
+#' ##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-…     7   284. TRUE  low  
+#' ##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-…     4  3291. TRUE  mid  
+#' ##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-…     3   843. TRUE  high 
+#' ##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-…     2  1036. FALSE low  
+#' ##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-…     9   838. FALSE high 
+#' ## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-…     9   838. FALSE high 
+#' ## 11 2016-01-26 20:07:00 2016-01-26     4 2-dmx-…     7   834. TRUE  low  
+#' ## 12 2016-01-28 02:51:00 2016-01-28     2 7-dmx-…     8   108. FALSE low  
+#' ## 13 2016-01-30 11:23:00 2016-01-30     1 3-dka-…    NA  2230. TRUE  high}
+#' 
+#' 
+#' 
+#' Now that we have a `tbl` object that is a tibble it could be introduced to
+#' [create_agent()] for validation.
+#' 
+#' ```r
 #' agent <- create_agent(tbl = tbl)
+#' ```
 #'
-#' # A different strategy is to provide
-#' # the data-reading function call
-#' # directly to `create_agent()`:
+#' A different strategy is to provide the data-reading function call directly to
+#' [create_agent()]:
+#' 
+#' ```r
 #' agent <- 
 #'   create_agent(
 #'     tbl = ~ file_tbl(
@@ -100,23 +128,21 @@
 #'       col_types = "TDdcddlc"
 #'     )
 #'   ) %>%
-#'   col_vals_gt(vars(a), value = 0)
+#'   col_vals_gt(columns = vars(a), value = 0)
+#' ```
 #'
-#' # All of the file-reading instructions
-#' # are encapsulated in the `tbl`
-#' # expression so the agent will always
-#' # obtain the most recent version of
-#' # the table (and the logic can be
-#' # translated to YAML, for later use)
+#' All of the file-reading instructions are encapsulated in the `tbl` expression
+#' (with the leading `~`) so the agent will always obtain the most recent
+#' version of the table (and the logic can be translated to YAML, for later
+#' use).
 #' 
-#' if (interactive()) {
+#' ## Producing tables from files on GitHub
 #' 
-#' # A CSV can be obtained from a public
-#' # GitHub repo by using the `from_github()`
-#' # helper function; let's create an agent
-#' # a supply a table-prep formula that
-#' # gets the same CSV file from the GitHub
-#' # repository for the pointblank package 
+#' A CSV can be obtained from a public GitHub repo by using the [from_github()]
+#' helper function. Let's create an agent a supply a table-prep formula that
+#' gets the same CSV file from the GitHub repository for the pointblank package.
+#' 
+#' ```r
 #' agent <- 
 #'   create_agent(
 #'     tbl = ~ file_tbl(
@@ -125,24 +151,38 @@
 #'         repo = "rich-iannone/pointblank"
 #'       ),
 #'       col_types = "TDdcddlc"
-#'     )
+#'     ),
+#'     tbl_name = "small_table",
+#'     label = "`file_tbl()` example.",
 #'   ) %>%
-#'   col_vals_gt(vars(a), value = 0) %>%
+#'   col_vals_gt(columns = vars(a), value = 0) %>%
 #'   interrogate()
+#' ```
 #' 
-#' # This interrogated the data that was
-#' # obtained from the remote source file,
-#' # and, there's nothing to clean up (by
-#' # default, the downloaded file goes into
-#' # a system temp directory)
+#' ```r
+#' agent
+#' ```
 #' 
-#' # Storing table-prep formulas in a table
-#' # store makes it easier to work with
-#' # tabular data originating from files;
-#' # here's how to generate a table store
-#' # with two named entries for table
-#' # preparations
-#' tbls <-
+#' \if{html}{
+#' 
+#' \out{
+#' `r pb_get_image_tag(file = "man_file_tbl_1.png")`
+#' }
+#' }
+#' 
+#' This interrogated the data that was obtained from the remote source file,
+#' and, there's nothing to clean up (by default, the downloaded file goes into a
+#' system temp directory).
+#' 
+#' ## File access, table creation, and prep via the table store
+#' 
+#' Using table-prep formulas in a centralized table store can make it easier to
+#' work with tables from disparate sources. Here's how to generate a table store
+#' with two named entries for table preparations involving the [tbl_store()] and
+#' `file_tbl()` functions.
+#' 
+#' ```r
+#' store <-
 #'   tbl_store(
 #'     small_table_file ~ file_tbl(
 #'       file = system.file(
@@ -151,43 +191,79 @@
 #'       ),
 #'       col_types = "TDdcddlc"
 #'     ),
-#'     small_high_file ~ file_tbl(
-#'       file = system.file(
-#'         "data_files", "small_table.csv",
-#'         package = "pointblank"
-#'       ),
-#'       col_types = "TDdcddlc"
-#'     ) %>%
+#'     small_high_file ~ {{ small_table_file }} %>%
 #'       dplyr::filter(f == "high")
 #'   )
+#' ```
 #' 
-#' # Now it's easy to access either of these
-#' # tables (the second is a mutated version)
-#' # via the `tbl_get()` function
-#' tbl_get("small_table_file", store = tbls)
-#' tbl_get("small_high_file", store = tbls)
+#' Now it's easy to access either of these tables via [tbl_get()]. We can
+#' reference the table in the store by its name (given to the left of the `~`).
 #' 
-#' # The table-prep formulas in `tbls`
-#' # could also be used in functions with
-#' # the `tbl` argument; this is thanks
-#' # to the `tbl_source()` function
+#' ```r
+#' tbl_get(tbl = "small_table_file", store = store)
+#' ```
+#' 
+#' \preformatted{## # A tibble: 13 × 8
+#' ##    date_time           date           a b           c      d e     f    
+#' ##    <dttm>              <date>     <dbl> <chr>   <dbl>  <dbl> <lgl> <chr>
+#' ##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-…     3  3423. TRUE  high 
+#' ##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-…     8 10000. TRUE  low  
+#' ##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-…     3  2343. TRUE  high 
+#' ##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-…    NA  3892. FALSE mid  
+#' ##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-…     7   284. TRUE  low  
+#' ##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-…     4  3291. TRUE  mid  
+#' ##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-…     3   843. TRUE  high 
+#' ##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-…     2  1036. FALSE low  
+#' ##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-…     9   838. FALSE high 
+#' ## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-…     9   838. FALSE high 
+#' ## 11 2016-01-26 20:07:00 2016-01-26     4 2-dmx-…     7   834. TRUE  low  
+#' ## 12 2016-01-28 02:51:00 2016-01-28     2 7-dmx-…     8   108. FALSE low  
+#' ## 13 2016-01-30 11:23:00 2016-01-30     1 3-dka-…    NA  2230. TRUE  high}
+#' 
+#' 
+#' 
+#' The second table in the table store is a mutated version of the first. It's
+#' just as easily obtainable via [tbl_get()]:
+#' 
+#' ```r
+#' tbl_get(tbl = "small_high_file", store = store)
+#' ```
+#' 
+#' \preformatted{## # A tibble: 6 × 8
+#' ##   date_time           date           a b             c     d e     f    
+#' ##   <dttm>              <date>     <dbl> <chr>     <dbl> <dbl> <lgl> <chr>
+#' ## 1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3 3423. TRUE  high 
+#' ## 2 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3 2343. TRUE  high 
+#' ## 3 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3  843. TRUE  high 
+#' ## 4 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high 
+#' ## 5 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high 
+#' ## 6 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA 2230. TRUE  high}
+#' 
+#' 
+#' 
+#' The table-prep formulas in the `store` object could also be used in functions
+#' with a `tbl` argument (like [create_agent()] and [create_informant()]). This
+#' is accomplished most easily with the [tbl_source()] function.
+#' 
+#' ```r
 #' agent <- 
 #'   create_agent(
 #'     tbl = ~ tbl_source(
-#'       "small_table_file",
-#'       store = tbls
+#'       tbl = "small_table_file",
+#'       store = store
 #'     )
 #'   )
+#' ```
 #' 
+#' ```r
 #' informant <- 
 #'   create_informant(
 #'     tbl = ~ tbl_source(
-#'       "small_high_file",
-#'       store = tbls
+#'       tbl = "small_high_file",
+#'       store = store
 #'     )
 #'   )
-#' 
-#' }
+#' ```
 #'
 #' @family Planning and Prep
 #' @section Function ID:

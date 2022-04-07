@@ -55,9 +55,9 @@ tbl
 
 Validate that values in column \code{a} are always greater than 4.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = tbl) \%>\%
-  col_vals_gt(vars(a), value = 3) \%>\%
-  col_vals_lte(vars(a), value = 10) \%>\%
-  col_vals_increasing(vars(a)) \%>\%
+  col_vals_gt(columns = vars(a), value = 3) \%>\%
+  col_vals_lte(columns = vars(a), value = 10) \%>\%
+  col_vals_increasing(columns = vars(a)) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
 

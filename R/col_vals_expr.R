@@ -183,7 +183,7 @@
 #' 
 #' ```r
 #' agent <-
-#'   create_agent(tbl) %>%
+#'   create_agent(tbl = tbl) %>%
 #'   col_vals_expr(expr = expr(a %% 1 == 0)) %>%
 #'   interrogate()
 #' ```

@@ -55,7 +55,7 @@ part of the \code{small_table} object. \code{interrogate()} immediately.\if{html
   ) \%>\%
   col_vals_gt(vars(d), value = 1000) \%>\%
   col_vals_between(
-    vars(c),
+    columns = vars(c),
     left = vars(a), right = vars(d),
     na_pass = TRUE
   ) \%>\%

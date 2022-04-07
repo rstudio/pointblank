@@ -128,8 +128,8 @@ validation step functions, then interrogate.\if{html}{\out{<div class="sourceCod
     tbl = tbl,
     actions = al
   ) \%>\%
-  col_vals_gt(vars(a), value = 7) \%>\%
-  col_is_numeric(vars(a)) \%>\%
+  col_vals_gt(columns = vars(a), value = 7) \%>\%
+  col_is_numeric(columns = vars(a)) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
 

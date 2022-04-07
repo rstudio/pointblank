@@ -128,8 +128,8 @@
 #' 
 #' ```r
 #' agent <-
-#'   create_agent(small_table) %>%
-#'   col_is_logical(vars(e)) %>%
+#'   create_agent(tbl = small_table) %>%
+#'   col_is_logical(columns = vars(e)) %>%
 #'   interrogate()
 #' ```
 #' 
@@ -151,7 +151,7 @@
 #' 
 #' ```{r}
 #' small_table %>%
-#'   col_is_logical(vars(e)) %>%
+#'   col_is_logical(columns = vars(e)) %>%
 #'   dplyr::slice(1:5)
 #' ```
 #' 
@@ -161,7 +161,7 @@
 #' time. This is primarily used in **testthat** tests.
 #' 
 #' ```r
-#' expect_col_is_logical(small_table, vars(e))
+#' expect_col_is_logical(small_table, columns = vars(e))
 #' ```
 #' 
 #' ## D: Using the test function
@@ -170,7 +170,7 @@
 #' us.
 #' 
 #' ```{r}
-#' small_table %>% test_col_is_logical(vars(e))
+#' small_table %>% test_col_is_logical(columns = vars(e))
 #' ```
 #' 
 #' @family validation functions

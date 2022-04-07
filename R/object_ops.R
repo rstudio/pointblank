@@ -105,11 +105,11 @@
 #'   agent %>% 
 #'   col_exists(vars(date, date_time)) %>%
 #'   col_vals_regex(
-#'     vars(b), regex = "[0-9]-[a-z]{3}-[0-9]{3}"
+#'     columns = vars(b), regex = "[0-9]-[a-z]{3}-[0-9]{3}"
 #'   ) %>%
 #'   rows_distinct() %>%
-#'   col_vals_gt(vars(d), value = 100) %>%
-#'   col_vals_lte(vars(c), value = 5) %>%
+#'   col_vals_gt(columns = vars(d), value = 100) %>%
+#'   col_vals_lte(columns = vars(c), value = 5) %>%
 #'   interrogate()
 #'
 #' # The `agent` can be written to a file with
@@ -210,11 +210,11 @@
 #'     actions = al
 #'   ) %>%
 #'   col_vals_gt(
-#'     vars(b), vars(g), na_pass = TRUE,
+#'     columns = vars(b), vars(g), na_pass = TRUE,
 #'     label = "b > g"
 #'   ) %>%
 #'   col_is_character(
-#'     vars(b, f),
+#'     columns = vars(b, f),
 #'     label = "Verifying character-type columns" 
 #'   ) %>%
 #'   interrogate()

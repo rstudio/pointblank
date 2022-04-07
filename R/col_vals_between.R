@@ -218,9 +218,10 @@
 #' 
 #' ```r
 #' agent <-
-#'   create_agent(small_table) %>%
+#'   create_agent(tbl = small_table) %>%
 #'   col_vals_between(
-#'     vars(c), left = 1, right = 9,
+#'     columns = vars(c),
+#'     left = 1, right = 9,
 #'     na_pass = TRUE
 #'   ) %>%
 #'   interrogate()
@@ -245,7 +246,8 @@
 #' ```{r}
 #' small_table %>%
 #'   col_vals_between(
-#'     vars(c), left = 1, right = 9,
+#'     columns = vars(c),
+#'     left = 1, right = 9,
 #'     na_pass = TRUE
 #'   ) %>%
 #'   dplyr::pull(c)
@@ -258,7 +260,7 @@
 #' 
 #' ```r
 #' expect_col_vals_between(
-#'   small_table, vars(c),
+#'   small_table, columns = vars(c),
 #'   left = 1, right = 9,
 #'   na_pass = TRUE
 #' )
@@ -272,7 +274,8 @@
 #' ```{r}
 #' small_table %>%
 #'   test_col_vals_between(
-#'     vars(c), left = 1, right = 9,
+#'     columns = vars(c),
+#'     left = 1, right = 9,
 #'     na_pass = TRUE
 #'   )
 #' ```
@@ -288,7 +291,7 @@
 #' ```{r}
 #' small_table %>%
 #'   test_col_vals_between(
-#'     vars(c), left = 1, right = 9,
+#'     columns = vars(c), left = 1, right = 9,
 #'     inclusive = c(TRUE, FALSE),
 #'     na_pass = TRUE
 #'   )

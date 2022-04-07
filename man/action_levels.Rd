@@ -125,17 +125,18 @@ validation steps and interrogate the \code{small_table}.\if{html}{\out{<div clas
     actions = al
   ) \%>\%
   col_vals_gt(
-    vars(a), value = 2
+    columns = vars(a), value = 2
   ) \%>\%
   col_vals_lt(
-    vars(d), value = 20000
+    columns = vars(d), value = 20000
   ) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
 
 The report from the agent will show that the \code{warn} state has been entered
 for the first validation step but not the second one. We can confirm this in
-the console by inspecting the \code{warn} component in the agent's x-list.\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_list <- get_agent_x_list(agent_1)
+the console by inspecting the \code{warn} component in the agent's x-list.\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_list <- get_agent_x_list(agent = agent_1)
+
 x_list$warn
 }\if{html}{\out{</div>}}\preformatted{## [1]  TRUE FALSE
 }
@@ -149,11 +150,11 @@ another such object to the validation step instead (this time using the
     actions = al
   ) \%>\%
   col_vals_gt(
-    vars(a), value = 2,
+    columns = vars(a), value = 2,
     actions = warn_on_fail(warn_at = 0.5)
   ) \%>\%
   col_vals_lt(
-    vars(d), value = 20000
+    columns = vars(d), value = 20000
   ) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
@@ -161,7 +162,8 @@ another such object to the validation step instead (this time using the
 In this case, the first validation step has a less stringent failure
 threshold for the \code{warn} state and it's high enough that the condition is not
 entered. This can be confirmed in the console through inspection of the
-x-list \code{warn} component.\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_list <- get_agent_x_list(agent_2)
+x-list \code{warn} component.\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_list <- get_agent_x_list(agent = agent_2)
+
 x_list$warn
 }\if{html}{\out{</div>}}\preformatted{## [1] FALSE FALSE
 }
@@ -171,7 +173,7 @@ involvement of an agent) we want to trigger warnings and raise errors. The
 following will yield a warning if it is executed (returning the \code{small_table}
 data).\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   col_vals_gt(
-    vars(a), value = 2,
+    columns = vars(a), value = 2,
     actions = warn_on_fail(warn_at = 2)
   )
 }\if{html}{\out{</div>}}\preformatted{## Warning: Exceedance of failed test units where values in `a` should have been > `2`.
@@ -197,13 +199,13 @@ data).\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
 
 With the same pipeline, not supplying anything for \code{actions} (it's \code{NULL} by
 default) will have the same effect as using \code{stop_on_fail(stop_at = 1)}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
-  col_vals_gt(vars(a), value = 2)
+  col_vals_gt(columns = vars(a), value = 2)
 }\if{html}{\out{</div>}}\preformatted{## Error: Exceedance of failed test units where values in `a` should have been > `2`.
 ## The `col_vals_gt()` validation failed beyond the absolute threshold level (1).
 ## * failure level (4) >= failure threshold (1)
 }\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   col_vals_gt(
-    vars(a), value = 2,
+    columns = vars(a), value = 2,
     actions = stop_on_fail(stop_at = 1)
   )
 }\if{html}{\out{</div>}}\preformatted{## Error: Exceedance of failed test units where values in `a` should have been > `2`.

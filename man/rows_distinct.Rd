@@ -269,7 +269,7 @@ tbl
 Validate that when considering only data in columns \code{a} and \code{b}, there are no
 duplicate rows (i.e., all rows are distinct).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = tbl) \%>\%
-  rows_distinct(vars(a, b)) \%>\%
+  rows_distinct(columns = vars(a, b)) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
 
@@ -289,7 +289,7 @@ that corresponds to the validation step demonstrated here.
 This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
 behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
-  rows_distinct(vars(a, b)) \%>\%
+  rows_distinct(columns = vars(a, b)) \%>\%
   dplyr::pull(a)
 }\if{html}{\out{</div>}}\preformatted{## [1] 5 7 6 5 8 7
 }
@@ -298,14 +298,14 @@ behavior of side effects can be customized with the \code{actions} option.\if{ht
 \subsection{C: Using the expectation function}{
 
 With the \verb{expect_*()} form, we would typically perform one validation at a
-time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_rows_distinct(tbl, vars(a, b))
+time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_rows_distinct(tbl, columns = vars(a, b))
 }\if{html}{\out{</div>}}
 }
 
 \subsection{D: Using the test function}{
 
 With the \verb{test_*()} form, we should get a single logical value returned to
-us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{test_rows_distinct(tbl, vars(a, b))
+us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{test_rows_distinct(tbl, columns = vars(a, b))
 }\if{html}{\out{</div>}}\preformatted{## [1] TRUE
 }
 }

@@ -181,7 +181,7 @@
 #' ```r
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
-#'   rows_complete(vars(a, b)) %>%
+#'   rows_complete(columns = vars(a, b)) %>%
 #'   interrogate()
 #' ```
 #' 
@@ -203,7 +203,7 @@
 #' 
 #' ```{r}
 #' tbl %>%
-#'   rows_complete(vars(a, b)) %>%
+#'   rows_complete(columns = vars(a, b)) %>%
 #'   dplyr::pull(a)
 #' ```
 #' 
@@ -213,7 +213,7 @@
 #' time. This is primarily used in **testthat** tests.
 #' 
 #' ```r
-#' expect_rows_complete(tbl, vars(a, b))
+#' expect_rows_complete(tbl, columns = vars(a, b))
 #' ```
 #' 
 #' ## D: Using the test function
@@ -222,7 +222,7 @@
 #' us.
 #' 
 #' ```{r}
-#' test_rows_complete(tbl, vars(a, b))
+#' test_rows_complete(tbl, columns = vars(a, b))
 #' ```
 #' 
 #' @family validation functions

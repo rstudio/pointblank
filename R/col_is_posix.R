@@ -127,8 +127,8 @@
 #' 
 #' ```r
 #' agent <-
-#'   create_agent(small_table) %>%
-#'   col_is_posix(vars(date_time)) %>%
+#'   create_agent(tbl = small_table) %>%
+#'   col_is_posix(columns = vars(date_time)) %>%
 #'   interrogate()
 #' ```
 #' 
@@ -150,7 +150,7 @@
 #' 
 #' ```{r}
 #' small_table %>%
-#'   col_is_posix(vars(date_time)) %>%
+#'   col_is_posix(columns = vars(date_time)) %>%
 #'   dplyr::slice(1:5)
 #' ```
 #' 
@@ -160,7 +160,7 @@
 #' time. This is primarily used in **testthat** tests.
 #' 
 #' ```r
-#' expect_col_is_posix(small_table, vars(date_time))
+#' expect_col_is_posix(small_table, columns = vars(date_time))
 #' ```
 #' 
 #' ## D: Using the test function
@@ -169,7 +169,7 @@
 #' us.
 #' 
 #' ```{r}
-#' small_table %>% test_col_is_posix(vars(date_time))
+#' small_table %>% test_col_is_posix(columns = vars(date_time))
 #' ```
 #' 
 #' @family validation functions

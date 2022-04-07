@@ -77,9 +77,9 @@ part of the \code{small_table} object. Then, \code{interrogate()}.\if{html}{\out
       dplyr::select(a:f),
     label = "`get_sundered_data()`"
   ) \%>\%
-  col_vals_gt(vars(d), value = 1000) \%>\%
+  col_vals_gt(columns = vars(d), value = 1000) \%>\%
   col_vals_between(
-    vars(c),
+    columns = vars(c),
     left = vars(a), right = vars(d),
     na_pass = TRUE
   ) \%>\%

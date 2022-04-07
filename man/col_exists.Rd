@@ -200,8 +200,8 @@ We'll use this table with the different function variants.
 \subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
 Validate that column \code{a} exists in the \code{tbl} table with \code{col_exists()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
-  create_agent(tbl) \%>\%
-  col_exists(vars(a)) \%>\%
+  create_agent(tbl = tbl) \%>\%
+  col_exists(columns = vars(a)) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
 
@@ -220,7 +220,7 @@ that corresponds to the validation step demonstrated here.
 
 This way of using validation functions acts as a data filter. Data is
 passed through but should \code{stop()} if there is a single test unit failing.
-The behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% col_exists(vars(a))
+The behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% col_exists(columns = vars(a))
 }\if{html}{\out{</div>}}\preformatted{## # A tibble: 6 × 2
 ##       a     b
 ##   <dbl> <dbl>
@@ -236,14 +236,14 @@ The behavior of side effects can be customized with the \code{actions} option.\i
 \subsection{C: Using the expectation function}{
 
 With the \verb{expect_*()} form, we would typically perform one validation at a
-time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_exists(tbl, vars(a))
+time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_exists(tbl, columns = vars(a))
 }\if{html}{\out{</div>}}
 }
 
 \subsection{D: Using the test function}{
 
 With the \verb{test_*()} form, we should get a single logical value returned to
-us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% test_col_exists(vars(a))
+us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% test_col_exists(columns = vars(a))
 }\if{html}{\out{</div>}}\preformatted{## [1] TRUE
 }
 }

@@ -41,9 +41,9 @@ agent_1 <-
     tbl_name = "small_table",
     label = "An example."
   ) \%>\%
-  col_exists(vars(date)) \%>\%
+  col_exists(columns = vars(date)) \%>\%
   col_vals_regex(
-    vars(b),
+    columns = vars(b),
     regex = "[0-9]-[a-z]{3}-[0-9]"
   ) \%>\%
   interrogate()

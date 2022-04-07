@@ -201,8 +201,8 @@
 #' 
 #' ```r
 #' agent <-
-#'   create_agent(small_table) %>%
-#'   col_vals_regex(vars(b), regex = pattern) %>%
+#'   create_agent(tbl = small_table) %>%
+#'   col_vals_regex(columns = vars(b), regex = pattern) %>%
 #'   interrogate()
 #' ```
 #' 
@@ -224,7 +224,7 @@
 #' 
 #' ```{r}
 #' small_table %>%
-#'   col_vals_regex(vars(b), regex = pattern) %>%
+#'   col_vals_regex(columns = vars(b), regex = pattern) %>%
 #'   dplyr::slice(1:5)
 #' ```
 #'
@@ -234,7 +234,7 @@
 #' time. This is primarily used in **testthat** tests.
 #' 
 #' ```r
-#' expect_col_vals_regex(small_table, vars(b), regex = pattern)
+#' expect_col_vals_regex(small_table, columns = vars(b), regex = pattern)
 #' ```
 #' 
 #' ## D: Using the test function
@@ -243,7 +243,7 @@
 #' us.
 #' 
 #' ```{r}
-#' small_table %>% test_col_vals_regex(vars(b), regex = pattern)
+#' small_table %>% test_col_vals_regex(columns = vars(b), regex = pattern)
 #' ```
 #' 
 #' @family validation functions

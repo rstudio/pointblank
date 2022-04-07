@@ -191,8 +191,8 @@
 #' 
 #' ```r
 #' agent <-
-#'   create_agent(tbl) %>%
-#'   col_vals_not_null(vars(b)) %>%
+#'   create_agent(tbl = tbl) %>%
+#'   col_vals_not_null(columns = vars(b)) %>%
 #'   interrogate()
 #' ```
 #' 
@@ -214,7 +214,7 @@
 #' 
 #' ```{r}
 #' tbl %>%
-#'   col_vals_not_null(vars(b)) %>%
+#'   col_vals_not_null(columns = vars(b)) %>%
 #'   dplyr::pull(b)
 #' ```
 #'
@@ -224,7 +224,7 @@
 #' time. This is primarily used in **testthat** tests.
 #' 
 #' ```r
-#' expect_col_vals_not_null(tbl, vars(b))
+#' expect_col_vals_not_null(tbl, columns = vars(b))
 #' ```
 #' 
 #' ## D: Using the test function
@@ -233,7 +233,7 @@
 #' us.
 #' 
 #' ```{r}
-#' tbl %>% test_col_vals_not_null(vars(b))
+#' tbl %>% test_col_vals_not_null(columns = vars(b))
 #' ```
 #' 
 #' @family validation functions

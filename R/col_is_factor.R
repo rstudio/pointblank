@@ -132,8 +132,8 @@
 #' 
 #' ```r
 #' agent <-
-#'   create_agent(tbl) %>%
-#'   col_is_factor(vars(f)) %>%
+#'   create_agent(tbl = tbl) %>%
+#'   col_is_factor(columns = vars(f)) %>%
 #'   interrogate()
 #' ```
 #' 
@@ -155,7 +155,7 @@
 #' 
 #' ```{r}
 #' tbl %>%
-#'   col_is_factor(vars(f)) %>%
+#'   col_is_factor(columns = vars(f)) %>%
 #'   dplyr::slice(1:5)
 #' ```
 #' 
@@ -174,7 +174,7 @@
 #' us.
 #' 
 #' ```{r}
-#' tbl %>% test_col_is_factor(vars(f))
+#' tbl %>% test_col_is_factor(columns = vars(f))
 #' ```
 #' 
 #' @family validation functions

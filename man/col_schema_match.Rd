@@ -274,7 +274,7 @@ schema_obj
 Validate that the schema object \code{schema_obj} exactly defines the column names
 and column types. We'll determine if this validation has a failing test unit
 (there is a single test unit governed by whether there is a match).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
-  create_agent(tbl) \%>\%
+  create_agent(tbl = tbl) \%>\%
   col_schema_match(schema = schema_obj) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}

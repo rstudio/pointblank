@@ -205,8 +205,8 @@ tbl
 \subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
 Validate that the column \code{f} in the \code{tbl} object is of the \code{factor} class.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
-  create_agent(tbl) \%>\%
-  col_is_factor(vars(f)) \%>\%
+  create_agent(tbl = tbl) \%>\%
+  col_is_factor(columns = vars(f)) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
 
@@ -226,7 +226,7 @@ that corresponds to the validation step demonstrated here.
 This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
 behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
-  col_is_factor(vars(f)) \%>\%
+  col_is_factor(columns = vars(f)) \%>\%
   dplyr::slice(1:5)
 }\if{html}{\out{</div>}}\preformatted{## # A tibble: 5 × 8
 ##   date_time           date           a b             c      d e     f    
@@ -249,7 +249,7 @@ time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div clas
 \subsection{D: Using the test function}{
 
 With the \verb{test_*()} form, we should get a single logical value returned to
-us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% test_col_is_factor(vars(f))
+us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% test_col_is_factor(columns = vars(f))
 }\if{html}{\out{</div>}}\preformatted{## [1] TRUE
 }
 }

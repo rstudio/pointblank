@@ -337,9 +337,10 @@ Validate that values in column \code{c} are all between \code{10} and \code{20}.
 there are \code{NA} values, we'll choose to let those pass validation by setting
 \code{na_pass = TRUE}. We'll determine if this validation has any failing test
 units (there are 13 test units, one for each row).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
-  create_agent(small_table) \%>\%
+  create_agent(tbl = small_table) \%>\%
   col_vals_not_between(
-    vars(c), left = 10, right = 20,
+    columns = vars(c),
+    left = 10, right = 20,
     na_pass = TRUE
   ) \%>\%
   interrogate()
@@ -362,7 +363,8 @@ This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
 behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   col_vals_not_between(
-    vars(c), left = 10, right = 20,
+    columns = vars(c),
+    left = 10, right = 20,
     na_pass = TRUE
   ) \%>\%
   dplyr::pull(c)
@@ -374,7 +376,7 @@ behavior of side effects can be customized with the \code{actions} option.\if{ht
 
 With the \verb{expect_*()} form, we would typically perform one validation at a
 time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_not_between(
-  small_table, vars(c),
+  small_table, columns = vars(c),
   left = 10, right = 20,
   na_pass = TRUE
 )
@@ -386,7 +388,8 @@ time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div clas
 With the \verb{test_*()} form, we should get a single logical value returned to
 us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   test_col_vals_not_between(
-    vars(c), left = 10, right = 20,
+    columns = vars(c),
+    left = 10, right = 20,
     na_pass = TRUE
   )
 }\if{html}{\out{</div>}}\preformatted{## [1] TRUE
@@ -400,7 +403,8 @@ In changing the lower bound to be \code{9} and making it non-inclusive, we get
 \code{TRUE} since although two values are \code{9} and they fall outside of the lower
 (or left) bound (and any values 'not between' count as passing test units).\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   test_col_vals_not_between(
-    vars(c), left = 9, right = 20,
+    columns = vars(c),
+    left = 9, right = 20,
     inclusive = c(FALSE, TRUE),
     na_pass = TRUE
   )

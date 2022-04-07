@@ -209,9 +209,9 @@
 #' 
 #' ```r
 #' agent <-
-#'   create_agent(game_revenue) %>%
+#'   create_agent(tbl = game_revenue) %>%
 #'   col_vals_increasing(
-#'     vars(session_start),
+#'     columns = vars(session_start),
 #'     allow_stationary = TRUE
 #'   ) %>%
 #'   interrogate()
@@ -236,7 +236,7 @@
 #' ```{r}
 #' game_revenue %>%
 #'   col_vals_increasing(
-#'     vars(session_start),
+#'     columns = vars(session_start),
 #'     allow_stationary = TRUE
 #'   ) %>%
 #'   dplyr::select(session_start) %>%
@@ -252,7 +252,7 @@
 #' ```r
 #' expect_col_vals_increasing(
 #'   game_revenue,
-#'   vars(session_start),
+#'   columns = vars(session_start),
 #'   allow_stationary = TRUE
 #' )
 #' ```
@@ -265,7 +265,7 @@
 #' ```{r}
 #' game_revenue %>%
 #'   test_col_vals_increasing(
-#'     vars(session_start),
+#'     columns = vars(session_start),
 #'     allow_stationary = TRUE
 #'   )
 #' ```

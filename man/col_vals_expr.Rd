@@ -264,7 +264,7 @@ tbl
 Validate that values in column \code{a} are integer-like by using the R modulo
 operator and expecting \code{0}. We'll determine if this validation has any
 failing test units (there are 6 test units, one for each row).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
-  create_agent(tbl) \%>\%
+  create_agent(tbl = tbl) \%>\%
   col_vals_expr(expr = expr(a \%\% 1 == 0)) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}

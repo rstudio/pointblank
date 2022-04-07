@@ -182,7 +182,7 @@
 #' ```r
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
-#'   rows_distinct(vars(a, b)) %>%
+#'   rows_distinct(columns = vars(a, b)) %>%
 #'   interrogate()
 #' ```
 #' 
@@ -204,7 +204,7 @@
 #' 
 #' ```{r}
 #' tbl %>%
-#'   rows_distinct(vars(a, b)) %>%
+#'   rows_distinct(columns = vars(a, b)) %>%
 #'   dplyr::pull(a)
 #' ```
 #' 
@@ -214,7 +214,7 @@
 #' time. This is primarily used in **testthat** tests.
 #' 
 #' ```r
-#' expect_rows_distinct(tbl, vars(a, b))
+#' expect_rows_distinct(tbl, columns = vars(a, b))
 #' ```
 #' 
 #' ## D: Using the test function
@@ -223,7 +223,7 @@
 #' us.
 #' 
 #' ```{r}
-#' test_rows_distinct(tbl, vars(a, b))
+#' test_rows_distinct(tbl, columns = vars(a, b))
 #' ```
 #' 
 #' @family validation functions

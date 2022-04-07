@@ -309,9 +309,9 @@ this validation has any failing test units (there are 3 test units, one for
 each row).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = tbl) \%>\%
   conjointly(
-    ~ col_vals_lt(., vars(a), value = 8),
-    ~ col_vals_gt(., vars(c), value = vars(a)),
-    ~ col_vals_not_null(., vars(b))
+    ~ col_vals_lt(., columns = vars(a), value = 8),
+    ~ col_vals_gt(., columns = vars(c), value = vars(a)),
+    ~ col_vals_not_null(., columns = vars(b))
     ) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
@@ -338,9 +338,9 @@ This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
 behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   conjointly(
-    ~ col_vals_lt(., vars(a), value = 8),
-    ~ col_vals_gt(., vars(c), value = vars(a)),
-    ~ col_vals_not_null(., vars(b))
+    ~ col_vals_lt(., columns = vars(a), value = 8),
+    ~ col_vals_gt(., columns = vars(c), value = vars(a)),
+    ~ col_vals_not_null(., columns = vars(b))
   )
 }\if{html}{\out{</div>}}\preformatted{## # A tibble: 3 × 3
 ##       a     b     c
@@ -356,9 +356,9 @@ behavior of side effects can be customized with the \code{actions} option.\if{ht
 With the \verb{expect_*()} form, we would typically perform one validation at a
 time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_conjointly(
   tbl,
-  ~ col_vals_lt(., vars(a), value = 8),
-  ~ col_vals_gt(., vars(c), value = vars(a)),
-  ~ col_vals_not_null(., vars(b))
+  ~ col_vals_lt(., columns = vars(a), value = 8),
+  ~ col_vals_gt(., columns = vars(c), value = vars(a)),
+  ~ col_vals_not_null(., columns = vars(b))
 )
 }\if{html}{\out{</div>}}
 }
@@ -368,9 +368,9 @@ time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div clas
 With the \verb{test_*()} form, we should get a single logical value returned to
 us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   test_conjointly(
-    ~ col_vals_lt(., vars(a), value = 8),
-    ~ col_vals_gt(., vars(c), value = vars(a)),
-    ~ col_vals_not_null(., vars(b))
+    ~ col_vals_lt(., columns = vars(a), value = 8),
+    ~ col_vals_gt(., columns = vars(c), value = vars(a)),
+    ~ col_vals_not_null(., columns = vars(b))
   )
 }\if{html}{\out{</div>}}\preformatted{## [1] TRUE
 }

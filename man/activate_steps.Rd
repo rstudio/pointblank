@@ -41,11 +41,12 @@ agent_1 <-
     label = "An example."
   ) \%>\%
   col_exists(
-    vars(date),
+    columns = vars(date),
     active = FALSE
   ) \%>\%
   col_vals_regex(
-    vars(b), regex = "[0-9]-[a-z]{3}-[0-9]{3}",
+    columns = vars(b),
+    regex = "[0-9]-[a-z]{3}-[0-9]{3}",
     active = FALSE
   ) \%>\%
   interrogate()

@@ -296,9 +296,9 @@ validation has any failing test units (there are 4 tests and a final
 validation).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_1 <-
   create_agent(tbl = tbl) \%>\%
   serially(
-    ~ test_col_is_numeric(., vars(a, b)),
-    ~ test_col_vals_not_null(., vars(a, b)),
-    ~ col_vals_gt(., vars(b), vars(a))
+    ~ test_col_is_numeric(., columns = vars(a, b)),
+    ~ test_col_vals_not_null(., columns = vars(a, b)),
+    ~ col_vals_gt(., columns = vars(b), value = vars(a))
     ) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
@@ -320,8 +320,8 @@ The final validation is optional and so here is a variation where only the
 serial tests are performed.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_2 <-
   create_agent(tbl = tbl) \%>\%
   serially(
-    ~ test_col_is_numeric(., vars(a, b)),
-    ~ test_col_vals_not_null(., vars(a, b))
+    ~ test_col_is_numeric(., columns = vars(a, b)),
+    ~ test_col_vals_not_null(., columns = vars(a, b))
   ) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
@@ -341,9 +341,9 @@ This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
 behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   serially(
-    ~ test_col_is_numeric(., vars(a, b)),
-    ~ test_col_vals_not_null(., vars(a, b)),
-    ~ col_vals_gt(., vars(b), vars(a))
+    ~ test_col_is_numeric(., columns = vars(a, b)),
+    ~ test_col_vals_not_null(., columns = vars(a, b)),
+    ~ col_vals_gt(., columns = vars(b), value = vars(a))
   )
 }\if{html}{\out{</div>}}\preformatted{## # A tibble: 3 × 3
 ##       a     b     c
@@ -359,9 +359,9 @@ behavior of side effects can be customized with the \code{actions} option.\if{ht
 With the \verb{expect_*()} form, we would typically perform one validation at a
 time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_serially(
   tbl,
-  ~ test_col_is_numeric(., vars(a, b)),
-  ~ test_col_vals_not_null(., vars(a, b)),
-  ~ col_vals_gt(., vars(b), vars(a))
+  ~ test_col_is_numeric(., columns = vars(a, b)),
+  ~ test_col_vals_not_null(., columns = vars(a, b)),
+  ~ col_vals_gt(., columns = vars(b), value = vars(a))
 )
 }\if{html}{\out{</div>}}
 }
@@ -371,9 +371,9 @@ time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div clas
 With the \verb{test_*()} form, we should get a single logical value returned to
 us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   test_serially(
-    ~ test_col_is_numeric(., vars(a, b)),
-    ~ test_col_vals_not_null(., vars(a, b)),
-    ~ col_vals_gt(., vars(b), vars(a))
+    ~ test_col_is_numeric(., columns = vars(a, b)),
+    ~ test_col_vals_not_null(., columns = vars(a, b)),
+    ~ col_vals_gt(., columns = vars(b), value = vars(a))
   )
 }\if{html}{\out{</div>}}\preformatted{## [1] TRUE
 }

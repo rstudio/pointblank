@@ -74,7 +74,7 @@
 #'     tbl = tbl,
 #'     label = "`interrogate()` example"
 #'   ) %>%
-#'   col_vals_gt(vars(a), value = 5) %>%
+#'   col_vals_gt(columns = vars(a), value = 5) %>%
 #'   interrogate()
 #' ```
 #' 

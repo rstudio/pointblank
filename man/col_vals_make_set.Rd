@@ -300,9 +300,9 @@ values are part of a given set.\if{html}{\out{<div class="sourceCode r">}}\prefo
 Validate that values in column \code{f} comprise the values of \code{low}, \code{mid}, and
 \code{high}, and, no other values. We'll determine if this validation has any
 failing test units (there are 4 test units).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
-  create_agent(small_table) \%>\%
+  create_agent(tbl = small_table) \%>\%
   col_vals_make_set(
-    vars(f), set = c("low", "mid", "high")
+    columns = vars(f), set = c("low", "mid", "high")
   ) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
@@ -324,7 +324,7 @@ This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
 behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   col_vals_make_set(
-    vars(f), set = c("low", "mid", "high")
+    columns = vars(f), set = c("low", "mid", "high")
   ) \%>\%
   dplyr::pull(f) \%>\%
   unique()
@@ -337,7 +337,7 @@ behavior of side effects can be customized with the \code{actions} option.\if{ht
 With the \verb{expect_*()} form, we would typically perform one validation at a
 time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_make_set(
   small_table,
-  vars(f), set = c("low", "mid", "high")
+  columns = vars(f), set = c("low", "mid", "high")
 )
 }\if{html}{\out{</div>}}
 }
@@ -347,7 +347,7 @@ time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div clas
 With the \verb{test_*()} form, we should get a single logical value returned to
 us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   test_col_vals_make_set(
-    vars(f), set = c("low", "mid", "high")
+    columns = vars(f), set = c("low", "mid", "high")
   )
 }\if{html}{\out{</div>}}\preformatted{## [1] TRUE
 }

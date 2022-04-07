@@ -50,21 +50,21 @@ and the \code{a} through \code{f} columns.\if{html}{\out{<div class="sourceCode 
 
 With \code{has_columns()} we can check for column existence by using it directly
 on the table. A column name can be verified as present by using it in double
-quotes.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% has_columns("date")
+quotes.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% has_columns(columns = "date")
 }\if{html}{\out{</div>}}\preformatted{## [1] TRUE
 }
 
 Multiple column names can be supplied. The following is \code{TRUE} because both
-columns are present in \code{small_table}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% has_columns(c("a", "b"))
+columns are present in \code{small_table}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% has_columns(columns = c("a", "b"))
 }\if{html}{\out{</div>}}\preformatted{## [1] TRUE
 }
 
-It's possible to supply column names in \code{vars()} as well:\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% has_columns(vars(a, b))
+It's possible to supply column names in \code{vars()} as well:\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% has_columns(columns = vars(a, b))
 }\if{html}{\out{</div>}}\preformatted{## [1] TRUE
 }
 
 Because column \code{h} isn't present, this returns \code{FALSE} (all specified columns
-need to be present to obtain \code{TRUE}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% has_columns(vars(a, h))
+need to be present to obtain \code{TRUE}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% has_columns(columns = vars(a, h))
 }\if{html}{\out{</div>}}\preformatted{## [1] FALSE
 }
 
@@ -81,16 +81,16 @@ statement there we would get an evaluation failure in the agent report).\if{html
     tbl_name = "small_table"
   ) \%>\%
   col_vals_gt(
-    vars(c), value = vars(a),
+    columns = vars(c), value = vars(a),
     active = ~ . \%>\% has_columns(vars(a, c))
   ) \%>\%
   col_vals_lt(
-    vars(h), value = vars(d),
+    columns = vars(h), value = vars(d),
     preconditions = ~ . \%>\% dplyr::mutate(h = d - a),
     active = ~ . \%>\% has_columns(vars(a, d))
   ) \%>\%
   col_is_character(
-    vars(j),
+    columns = vars(j),
     active = ~ . \%>\% has_columns("j")
   ) \%>\%
   interrogate()
@@ -100,6 +100,7 @@ Through the agent's x-list, we can verify that no evaluation error (any
 evaluation at all, really) had occurred. The third value, representative of
 the third validation step, is actually \code{NA} instead of \code{FALSE} because the
 step became inactive.\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_list <- get_agent_x_list(agent = agent)
+
 x_list$eval_warning
 }\if{html}{\out{</div>}}\preformatted{## [1] FALSE FALSE    NA
 }

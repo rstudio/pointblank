@@ -187,7 +187,7 @@
 #' 
 #' ```r
 #' agent <-
-#'   create_agent(tbl) %>%
+#'   create_agent(tbl = tbl) %>%
 #'   col_schema_match(schema = schema_obj) %>%
 #'   interrogate()
 #' ```

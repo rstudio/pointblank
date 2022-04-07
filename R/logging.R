@@ -135,9 +135,9 @@
 #'     tbl_name = "small_table",
 #'     actions = al
 #'   ) %>%
-#'   col_vals_gt(vars(d), 300) %>%
+#'   col_vals_gt(columns = vars(d), 300) %>%
 #'   col_vals_in_set(
-#'     vars(f), c("low", "high")
+#'     columns = vars(f), c("low", "high")
 #'   ) %>%
 #'   interrogate()
 #' 

@@ -312,8 +312,8 @@ tbl
 Validate that values in column \code{c} are all less than the value of \code{5}. We'll
 determine if this validation has any failing test units (there are 6 test
 units, one for each row).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
-  create_agent(tbl) \%>\%
-  col_vals_lt(vars(c), value = 5) \%>\%
+  create_agent(tbl = tbl) \%>\%
+  col_vals_lt(columns = vars(c), value = 5) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
 
@@ -333,7 +333,7 @@ that corresponds to the validation step demonstrated here.
 This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
 behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% 
-  col_vals_lt(vars(c), value = 5) \%>\%
+  col_vals_lt(columns = vars(c), value = 5) \%>\%
   dplyr::pull(c)
 }\if{html}{\out{</div>}}\preformatted{## [1] 1 1 1 2 3 4
 }
@@ -342,14 +342,14 @@ behavior of side effects can be customized with the \code{actions} option.\if{ht
 \subsection{C: Using the expectation function}{
 
 With the \verb{expect_*()} form, we would typically perform one validation at a
-time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_lt(tbl, vars(c), value = 5)
+time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_lt(tbl, columns = vars(c), value = 5)
 }\if{html}{\out{</div>}}
 }
 
 \subsection{D: Using the test function}{
 
 With the \verb{test_*()} form, we should get a single logical value returned to
-us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{test_col_vals_lt(tbl, vars(c), value = 5)
+us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{test_col_vals_lt(tbl, columns = vars(c), value = 5)
 }\if{html}{\out{</div>}}\preformatted{## [1] TRUE
 }
 }

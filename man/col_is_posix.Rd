@@ -200,8 +200,8 @@ following examples will validate that that column is of the \code{POSIXct} and
 \subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
 Validate that the column \code{date_time} is indeed a date-time column.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
-  create_agent(small_table) \%>\%
-  col_is_posix(vars(date_time)) \%>\%
+  create_agent(tbl = small_table) \%>\%
+  col_is_posix(columns = vars(date_time)) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
 
@@ -221,7 +221,7 @@ that corresponds to the validation step demonstrated here.
 This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
 behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
-  col_is_posix(vars(date_time)) \%>\%
+  col_is_posix(columns = vars(date_time)) \%>\%
   dplyr::slice(1:5)
 }\if{html}{\out{</div>}}\preformatted{## # A tibble: 5 × 8
 ##   date_time           date           a b             c      d e     f    
@@ -237,14 +237,14 @@ behavior of side effects can be customized with the \code{actions} option.\if{ht
 \subsection{C: Using the expectation function}{
 
 With the \verb{expect_*()} form, we would typically perform one validation at a
-time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_is_posix(small_table, vars(date_time))
+time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_is_posix(small_table, columns = vars(date_time))
 }\if{html}{\out{</div>}}
 }
 
 \subsection{D: Using the test function}{
 
 With the \verb{test_*()} form, we should get a single logical value returned to
-us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% test_col_is_posix(vars(date_time))
+us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% test_col_is_posix(columns = vars(date_time))
 }\if{html}{\out{</div>}}\preformatted{## [1] TRUE
 }
 }

@@ -296,9 +296,9 @@ Validate that the distinct set of values in column \code{f} contains at least th
 subset defined as \code{low} and \code{high} (the column actually has both of those and
 some \code{mid} values). We'll determine if this validation has any failing test
 units (there are 2 test units, one per element in the \code{set}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
-  create_agent(small_table) \%>\%
+  create_agent(tbl = small_table) \%>\%
   col_vals_make_subset(
-    vars(f), set = c("low", "high")
+    columns = vars(f), set = c("low", "high")
   ) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
@@ -320,7 +320,7 @@ This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
 behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   col_vals_make_subset(
-    vars(f), set = c("low", "high")
+    columns = vars(f), set = c("low", "high")
   ) \%>\%
   dplyr::pull(f) \%>\%
   unique()
@@ -333,7 +333,7 @@ behavior of side effects can be customized with the \code{actions} option.\if{ht
 With the \verb{expect_*()} form, we would typically perform one validation at a
 time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_make_subset(
   small_table,
-  vars(f), set = c("low", "high")
+  columns = vars(f), set = c("low", "high")
 )
 }\if{html}{\out{</div>}}
 }
@@ -343,7 +343,7 @@ time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div clas
 With the \verb{test_*()} form, we should get a single logical value returned to
 us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   test_col_vals_make_subset(
-    vars(f), set = c("low", "high")
+    columns = vars(f), set = c("low", "high")
   )
 }\if{html}{\out{</div>}}\preformatted{## [1] TRUE
 }

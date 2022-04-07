@@ -247,9 +247,9 @@
 #' 
 #' ```r
 #' agent <-
-#'   create_agent(spec_slice) %>%
+#'   create_agent(tbl = spec_slice) %>%
 #'   col_vals_within_spec(
-#'     vars(email_addresses),
+#'     columns = vars(email_addresses),
 #'     spec = "email"
 #'   ) %>%
 #'   interrogate()
@@ -274,7 +274,7 @@
 #' ```{r}
 #' spec_slice %>%
 #'   col_vals_within_spec(
-#'     vars(email_addresses),
+#'     columns = vars(email_addresses),
 #'     spec = "email"
 #'   ) %>%
 #'   dplyr::select(email_addresses)
@@ -288,7 +288,7 @@
 #' ```r
 #' expect_col_vals_within_spec(
 #'   spec_slice,
-#'   vars(email_addresses),
+#'   columns = vars(email_addresses),
 #'   spec = "email"
 #' )
 #' ```
@@ -301,7 +301,7 @@
 #' ```{r}
 #' spec_slice %>%
 #'   test_col_vals_within_spec(
-#'     vars(email_addresses),
+#'     columns = vars(email_addresses),
 #'     spec = "email"
 #'   )
 #' ```

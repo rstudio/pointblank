@@ -51,27 +51,27 @@
 #' quotes.
 #' 
 #' ```{r}
-#' small_table %>% has_columns("date")
+#' small_table %>% has_columns(columns = "date")
 #' ```
 #' 
 #' Multiple column names can be supplied. The following is `TRUE` because both
 #' columns are present in `small_table`.
 #' 
 #' ```{r}
-#' small_table %>% has_columns(c("a", "b"))
+#' small_table %>% has_columns(columns = c("a", "b"))
 #' ```
 #' 
 #' It's possible to supply column names in `vars()` as well:
 #' 
 #' ```{r}
-#' small_table %>% has_columns(vars(a, b))
+#' small_table %>% has_columns(columns = vars(a, b))
 #' ```
 #' 
 #' Because column `h` isn't present, this returns `FALSE` (all specified columns
 #' need to be present to obtain `TRUE`).
 #' 
 #' ```{r}
-#' small_table %>% has_columns(vars(a, h))
+#' small_table %>% has_columns(columns = vars(a, h))
 #' ```
 #' 
 #' The `has_columns()` function can be useful in expressions that involve the
@@ -90,16 +90,16 @@
 #'     tbl_name = "small_table"
 #'   ) %>%
 #'   col_vals_gt(
-#'     vars(c), value = vars(a),
+#'     columns = vars(c), value = vars(a),
 #'     active = ~ . %>% has_columns(vars(a, c))
 #'   ) %>%
 #'   col_vals_lt(
-#'     vars(h), value = vars(d),
+#'     columns = vars(h), value = vars(d),
 #'     preconditions = ~ . %>% dplyr::mutate(h = d - a),
 #'     active = ~ . %>% has_columns(vars(a, d))
 #'   ) %>%
 #'   col_is_character(
-#'     vars(j),
+#'     columns = vars(j),
 #'     active = ~ . %>% has_columns("j")
 #'   ) %>%
 #'   interrogate()
@@ -112,6 +112,7 @@
 #' 
 #' ```{r}
 #' x_list <- get_agent_x_list(agent = agent)
+#' 
 #' x_list$eval_warning
 #' ```
 #' 

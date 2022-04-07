@@ -208,8 +208,8 @@
 #' 
 #' ```r
 #' agent <-
-#'   create_agent(tbl) %>%
-#'   col_vals_lte(vars(c), value = 4) %>%
+#'   create_agent(tbl = tbl) %>%
+#'   col_vals_lte(columns = vars(c), value = 4) %>%
 #'   interrogate()
 #' ```
 #' 
@@ -231,7 +231,7 @@
 #' 
 #' ```{r}
 #' tbl %>% 
-#'   col_vals_lte(vars(c), value = 4) %>%
+#'   col_vals_lte(columns = vars(c), value = 4) %>%
 #'   dplyr::pull(c)
 #' ```
 #'   
@@ -241,7 +241,7 @@
 #' time. This is primarily used in **testthat** tests.
 #' 
 #' ```r
-#' expect_col_vals_lte(tbl, vars(c), value = 4)
+#' expect_col_vals_lte(tbl, columns = vars(c), value = 4)
 #' ```
 #' 
 #' ## D: Using the test function
@@ -250,7 +250,7 @@
 #' us.
 #' 
 #' ```{r}
-#' test_col_vals_lte(tbl, vars(c), value = 4)
+#' test_col_vals_lte(tbl, columns = vars(c), value = 4)
 #' ```
 #' 
 #' @family validation functions

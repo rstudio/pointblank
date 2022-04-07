@@ -311,8 +311,8 @@ This is the regex pattern that will be used throughout:\if{html}{\out{<div class
 Validate that all values in column \code{b} match the regex \code{pattern}. We'll
 determine if this validation has any failing test units (there are 13 test
 units, one for each row).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
-  create_agent(small_table) \%>\%
-  col_vals_regex(vars(b), regex = pattern) \%>\%
+  create_agent(tbl = small_table) \%>\%
+  col_vals_regex(columns = vars(b), regex = pattern) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
 
@@ -332,7 +332,7 @@ that corresponds to the validation step demonstrated here.
 This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
 behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
-  col_vals_regex(vars(b), regex = pattern) \%>\%
+  col_vals_regex(columns = vars(b), regex = pattern) \%>\%
   dplyr::slice(1:5)
 }\if{html}{\out{</div>}}\preformatted{## # A tibble: 5 × 8
 ##   date_time           date           a b             c      d e     f    
@@ -348,14 +348,14 @@ behavior of side effects can be customized with the \code{actions} option.\if{ht
 \subsection{C: Using the expectation function}{
 
 With the \verb{expect_*()} form, we would typically perform one validation at a
-time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_regex(small_table, vars(b), regex = pattern)
+time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_regex(small_table, columns = vars(b), regex = pattern)
 }\if{html}{\out{</div>}}
 }
 
 \subsection{D: Using the test function}{
 
 With the \verb{test_*()} form, we should get a single logical value returned to
-us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% test_col_vals_regex(vars(b), regex = pattern)
+us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% test_col_vals_regex(columns = vars(b), regex = pattern)
 }\if{html}{\out{</div>}}\preformatted{## [1] TRUE
 }
 }

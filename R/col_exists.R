@@ -135,8 +135,8 @@
 #' 
 #' ```r
 #' agent <-
-#'   create_agent(tbl) %>%
-#'   col_exists(vars(a)) %>%
+#'   create_agent(tbl = tbl) %>%
+#'   col_exists(columns = vars(a)) %>%
 #'   interrogate()
 #' ```
 #' 
@@ -157,7 +157,7 @@
 #' The behavior of side effects can be customized with the `actions` option.
 #' 
 #' ```{r}
-#' tbl %>% col_exists(vars(a))
+#' tbl %>% col_exists(columns = vars(a))
 #' ```
 #' 
 #' ## C: Using the expectation function
@@ -166,7 +166,7 @@
 #' time. This is primarily used in **testthat** tests.
 #' 
 #' ```r
-#' expect_col_exists(tbl, vars(a))
+#' expect_col_exists(tbl, columns = vars(a))
 #' ```
 #' 
 #' ## D: Using the test function
@@ -175,7 +175,7 @@
 #' us.
 #' 
 #' ```{r}
-#' tbl %>% test_col_exists(vars(a))
+#' tbl %>% test_col_exists(columns = vars(a))
 #' ```
 #' 
 #' @family validation functions

@@ -274,8 +274,8 @@ Validate that all values in column \code{c} are \code{NA} (they would be \code{N
 database context, which isn't the case here). We'll determine if this
 validation has any failing test units (there are 5 test units, one for each
 row).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
-  create_agent(tbl) \%>\%
-  col_vals_null(vars(c)) \%>\%
+  create_agent(tbl = tbl) \%>\%
+  col_vals_null(columns = vars(c)) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
 
@@ -295,7 +295,7 @@ that corresponds to the validation step demonstrated here.
 This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
 behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
-  col_vals_null(vars(c)) \%>\%
+  col_vals_null(columns = vars(c)) \%>\%
   dplyr::pull(c)
 }\if{html}{\out{</div>}}\preformatted{## [1] NA NA NA NA NA
 }
@@ -304,14 +304,14 @@ behavior of side effects can be customized with the \code{actions} option.\if{ht
 \subsection{C: Using the expectation function}{
 
 With the \verb{expect_*()} form, we would typically perform one validation at a
-time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_null(tbl, vars(c))
+time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_null(tbl, columns = vars(c))
 }\if{html}{\out{</div>}}
 }
 
 \subsection{D: Using the test function}{
 
 With the \verb{test_*()} form, we should get a single logical value returned to
-us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% test_col_vals_null(vars(c))
+us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% test_col_vals_null(columns = vars(c))
 }\if{html}{\out{</div>}}\preformatted{## [1] TRUE
 }
 }

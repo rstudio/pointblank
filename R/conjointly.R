@@ -216,9 +216,9 @@
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
 #'   conjointly(
-#'     ~ col_vals_lt(., vars(a), value = 8),
-#'     ~ col_vals_gt(., vars(c), value = vars(a)),
-#'     ~ col_vals_not_null(., vars(b))
+#'     ~ col_vals_lt(., columns = vars(a), value = 8),
+#'     ~ col_vals_gt(., columns = vars(c), value = vars(a)),
+#'     ~ col_vals_not_null(., columns = vars(b))
 #'     ) %>%
 #'   interrogate()
 #' ```
@@ -247,9 +247,9 @@
 #' ```{r}
 #' tbl %>%
 #'   conjointly(
-#'     ~ col_vals_lt(., vars(a), value = 8),
-#'     ~ col_vals_gt(., vars(c), value = vars(a)),
-#'     ~ col_vals_not_null(., vars(b))
+#'     ~ col_vals_lt(., columns = vars(a), value = 8),
+#'     ~ col_vals_gt(., columns = vars(c), value = vars(a)),
+#'     ~ col_vals_not_null(., columns = vars(b))
 #'   )
 #' ```
 #'
@@ -261,9 +261,9 @@
 #' ```r
 #' expect_conjointly(
 #'   tbl,
-#'   ~ col_vals_lt(., vars(a), value = 8),
-#'   ~ col_vals_gt(., vars(c), value = vars(a)),
-#'   ~ col_vals_not_null(., vars(b))
+#'   ~ col_vals_lt(., columns = vars(a), value = 8),
+#'   ~ col_vals_gt(., columns = vars(c), value = vars(a)),
+#'   ~ col_vals_not_null(., columns = vars(b))
 #' )
 #' ```
 #' 
@@ -275,9 +275,9 @@
 #' ```{r}
 #' tbl %>%
 #'   test_conjointly(
-#'     ~ col_vals_lt(., vars(a), value = 8),
-#'     ~ col_vals_gt(., vars(c), value = vars(a)),
-#'     ~ col_vals_not_null(., vars(b))
+#'     ~ col_vals_lt(., columns = vars(a), value = 8),
+#'     ~ col_vals_gt(., columns = vars(c), value = vars(a)),
+#'     ~ col_vals_not_null(., columns = vars(b))
 #'   )
 #' ```
 #' 

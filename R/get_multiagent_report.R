@@ -128,32 +128,32 @@
 #'     actions = al
 #'   ) %>%
 #'   col_vals_gt(
-#'     vars(date_time),
+#'     columns = vars(date_time),
 #'     value = vars(date),
 #'     na_pass = TRUE
 #'   ) %>%
 #'   col_vals_gt(
-#'     vars(b), 
+#'     columns = vars(b), 
 #'     value = vars(g),
 #'     na_pass = TRUE
 #'   ) %>%
 #'   rows_distinct() %>%
 #'   col_vals_equal(
-#'     vars(d), 
+#'     columns = vars(d), 
 #'     value = vars(d),
 #'     na_pass = TRUE
 #'   ) %>%
 #'   col_vals_between(
-#'     vars(c), 
+#'     columns = vars(c), 
 #'     left = vars(a), right = vars(d)
 #'   ) %>%
 #'   col_vals_not_between(
-#'     vars(c),
+#'     columns = vars(c),
 #'     left = 10, right = 20,
 #'     na_pass = TRUE
 #'   ) %>%
-#'   rows_distinct(vars(d, e, f)) %>%
-#'   col_is_integer(vars(a)) %>%
+#'   rows_distinct(columns = vars(d, e, f)) %>%
+#'   col_is_integer(columns = vars(a)) %>%
 #'   interrogate()
 #' 
 #' # The second agent, `agent_2`, retains
@@ -161,9 +161,9 @@
 #' # two more (the last of which is inactive)
 #' agent_2 <- 
 #'   agent_1 %>%
-#'   col_exists(vars(date, date_time)) %>%
+#'   col_exists(columns = vars(date, date_time)) %>%
 #'   col_vals_regex(
-#'     vars(b), 
+#'     columns = vars(b), 
 #'     regex = "[0-9]-[a-z]{3}-[0-9]{3}",
 #'     active = FALSE
 #'   ) %>%
@@ -175,7 +175,7 @@
 #' agent_3 <- 
 #'   agent_2 %>%
 #'   col_vals_in_set(
-#'     vars(f),
+#'     columns = vars(f),
 #'     set = c("low", "mid", "high")
 #'   ) %>%
 #'   remove_steps(i = 5) %>%

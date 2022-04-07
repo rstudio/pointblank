@@ -326,9 +326,9 @@ Validate that all date-time values in the column \code{session_start} are
 increasing, and, allow for repeating values (\code{allow_stationary} will be set
 to \code{TRUE}). We'll determine if this validation has any failing test units
 (there are 2000 test units).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
-  create_agent(game_revenue) \%>\%
+  create_agent(tbl = game_revenue) \%>\%
   col_vals_increasing(
-    vars(session_start),
+    columns = vars(session_start),
     allow_stationary = TRUE
   ) \%>\%
   interrogate()
@@ -351,7 +351,7 @@ This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
 behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{game_revenue \%>\%
   col_vals_increasing(
-    vars(session_start),
+    columns = vars(session_start),
     allow_stationary = TRUE
   ) \%>\%
   dplyr::select(session_start) \%>\%
@@ -369,7 +369,7 @@ behavior of side effects can be customized with the \code{actions} option.\if{ht
 With the \verb{expect_*()} form, we would typically perform one validation at a
 time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_increasing(
   game_revenue,
-  vars(session_start),
+  columns = vars(session_start),
   allow_stationary = TRUE
 )
 }\if{html}{\out{</div>}}
@@ -380,7 +380,7 @@ time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div clas
 With the \verb{test_*()} form, we should get a single logical value returned to
 us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{game_revenue \%>\%
   test_col_vals_increasing(
-    vars(session_start),
+    columns = vars(session_start),
     allow_stationary = TRUE
   )
 }\if{html}{\out{</div>}}\preformatted{## [1] TRUE

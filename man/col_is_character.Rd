@@ -200,8 +200,8 @@ We'll use this table with the different function variants.
 \subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
 Validate that column \code{b} has the \code{character} class.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
-  create_agent(tbl) \%>\%
-  col_is_character(vars(b)) \%>\%
+  create_agent(tbl = tbl) \%>\%
+  col_is_character(columns = vars(b)) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
 
@@ -221,7 +221,7 @@ that corresponds to the validation step demonstrated here.
 This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
 behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% 
-  col_is_character(vars(b)) \%>\%
+  col_is_character(columns = vars(b)) \%>\%
   dplyr::slice(1:5)
 }\if{html}{\out{</div>}}\preformatted{## # A tibble: 5 × 2
 ##       a b    
@@ -237,14 +237,14 @@ behavior of side effects can be customized with the \code{actions} option.\if{ht
 \subsection{C: Using the expectation function}{
 
 With the \verb{expect_*()} form, we would typically perform one validation at a
-time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_is_character(tbl, vars(b))
+time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_is_character(tbl, columns = vars(b))
 }\if{html}{\out{</div>}}
 }
 
 \subsection{D: Using the test function}{
 
 With the \verb{test_*()} form, we should get a single logical value returned to
-us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% test_col_is_character(vars(b))
+us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% test_col_is_character(columns = vars(b))
 }\if{html}{\out{</div>}}\preformatted{## [1] TRUE
 }
 }

@@ -190,9 +190,9 @@
 #' 
 #' ```r
 #' agent <-
-#'   create_agent(small_table) %>%
+#'   create_agent(tbl = small_table) %>%
 #'   col_vals_make_subset(
-#'     vars(f), set = c("low", "high")
+#'     columns = vars(f), set = c("low", "high")
 #'   ) %>%
 #'   interrogate()
 #' ```
@@ -216,7 +216,7 @@
 #' ```{r}
 #' small_table %>%
 #'   col_vals_make_subset(
-#'     vars(f), set = c("low", "high")
+#'     columns = vars(f), set = c("low", "high")
 #'   ) %>%
 #'   dplyr::pull(f) %>%
 #'   unique()
@@ -230,7 +230,7 @@
 #' ```r
 #' expect_col_vals_make_subset(
 #'   small_table,
-#'   vars(f), set = c("low", "high")
+#'   columns = vars(f), set = c("low", "high")
 #' )
 #' ```
 #' 
@@ -242,7 +242,7 @@
 #' ```{r}
 #' small_table %>%
 #'   test_col_vals_make_subset(
-#'     vars(f), set = c("low", "high")
+#'     columns = vars(f), set = c("low", "high")
 #'   )
 #' ```
 #' 

@@ -194,9 +194,9 @@
 #' 
 #' ```r
 #' agent <-
-#'   create_agent(small_table) %>%
+#'   create_agent(tbl = small_table) %>%
 #'   col_vals_make_set(
-#'     vars(f), set = c("low", "mid", "high")
+#'     columns = vars(f), set = c("low", "mid", "high")
 #'   ) %>%
 #'   interrogate()
 #' ```
@@ -220,7 +220,7 @@
 #' ```{r}
 #' small_table %>%
 #'   col_vals_make_set(
-#'     vars(f), set = c("low", "mid", "high")
+#'     columns = vars(f), set = c("low", "mid", "high")
 #'   ) %>%
 #'   dplyr::pull(f) %>%
 #'   unique()
@@ -234,7 +234,7 @@
 #' ```r
 #' expect_col_vals_make_set(
 #'   small_table,
-#'   vars(f), set = c("low", "mid", "high")
+#'   columns = vars(f), set = c("low", "mid", "high")
 #' )
 #' ```
 #' 
@@ -246,7 +246,7 @@
 #' ```{r}
 #' small_table %>%
 #'   test_col_vals_make_set(
-#'     vars(f), set = c("low", "mid", "high")
+#'     columns = vars(f), set = c("low", "mid", "high")
 #'   )
 #' ```
 #' 

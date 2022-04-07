@@ -120,10 +120,10 @@
 #'     actions = al
 #'   ) %>%
 #'   col_vals_gt(
-#'     vars(a), value = 2
+#'     columns = vars(a), value = 2
 #'   ) %>%
 #'   col_vals_lt(
-#'     vars(d), value = 20000
+#'     columns = vars(d), value = 20000
 #'   ) %>%
 #'   interrogate()
 #' ```
@@ -133,7 +133,8 @@
 #' the console by inspecting the `warn` component in the agent's x-list.
 #' 
 #' ```{r warn=TRUE}
-#' x_list <- get_agent_x_list(agent_1)
+#' x_list <- get_agent_x_list(agent = agent_1)
+#' 
 #' x_list$warn
 #' ```
 #' 
@@ -149,11 +150,11 @@
 #'     actions = al
 #'   ) %>%
 #'   col_vals_gt(
-#'     vars(a), value = 2,
+#'     columns = vars(a), value = 2,
 #'     actions = warn_on_fail(warn_at = 0.5)
 #'   ) %>%
 #'   col_vals_lt(
-#'     vars(d), value = 20000
+#'     columns = vars(d), value = 20000
 #'   ) %>%
 #'   interrogate()
 #' ```
@@ -164,7 +165,8 @@
 #' x-list `warn` component.
 #' 
 #' ```{r}
-#' x_list <- get_agent_x_list(agent_2)
+#' x_list <- get_agent_x_list(agent = agent_2)
+#' 
 #' x_list$warn
 #' ```
 #'
@@ -176,7 +178,7 @@
 #' ```{r warn=TRUE}
 #' small_table %>%
 #'   col_vals_gt(
-#'     vars(a), value = 2,
+#'     columns = vars(a), value = 2,
 #'     actions = warn_on_fail(warn_at = 2)
 #'   )
 #' ```
@@ -186,13 +188,13 @@
 #' 
 #' ```{r error=TRUE}
 #' small_table %>%
-#'   col_vals_gt(vars(a), value = 2)
+#'   col_vals_gt(columns = vars(a), value = 2)
 #' ```
 #' 
 #' ```{r error=TRUE}
 #' small_table %>%
 #'   col_vals_gt(
-#'     vars(a), value = 2,
+#'     columns = vars(a), value = 2,
 #'     actions = stop_on_fail(stop_at = 1)
 #'   )
 #' ```

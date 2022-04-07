@@ -207,8 +207,8 @@
 #' 
 #' ```r
 #' agent <-
-#'   create_agent(tbl) %>%
-#'   col_vals_gte(vars(a), value = 5) %>%
+#'   create_agent(tbl = tbl) %>%
+#'   col_vals_gte(columns = vars(a), value = 5) %>%
 #'   interrogate()
 #' ```
 #' 
@@ -229,7 +229,7 @@
 #' behavior of side effects can be customized with the `actions` option.
 #' 
 #' ```{r}
-#' tbl %>% col_vals_gte(vars(a), value = 5)
+#' tbl %>% col_vals_gte(columns = vars(a), value = 5)
 #' ```
 #'   
 #' ## C: Using the expectation function
@@ -238,7 +238,7 @@
 #' time. This is primarily used in **testthat** tests.
 #' 
 #' ```r
-#' expect_col_vals_gte(tbl, vars(a), value = 5)
+#' expect_col_vals_gte(tbl, columns = vars(a), value = 5)
 #' ```
 #' 
 #' ## D: Using the test function
@@ -247,7 +247,7 @@
 #' us.
 #' 
 #' ```{r}
-#' test_col_vals_gte(tbl, vars(a), value = 5)
+#' test_col_vals_gte(tbl, columns = vars(a), value = 5)
 #' ```
 #' 
 #' @family validation functions

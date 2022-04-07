@@ -212,9 +212,9 @@
 #' agent_1 <-
 #'   create_agent(tbl = tbl) %>%
 #'   serially(
-#'     ~ test_col_is_numeric(., vars(a, b)),
-#'     ~ test_col_vals_not_null(., vars(a, b)),
-#'     ~ col_vals_gt(., vars(b), vars(a))
+#'     ~ test_col_is_numeric(., columns = vars(a, b)),
+#'     ~ test_col_vals_not_null(., columns = vars(a, b)),
+#'     ~ col_vals_gt(., columns = vars(b), value = vars(a))
 #'     ) %>%
 #'   interrogate()
 #' ```
@@ -239,8 +239,8 @@
 #' agent_2 <-
 #'   create_agent(tbl = tbl) %>%
 #'   serially(
-#'     ~ test_col_is_numeric(., vars(a, b)),
-#'     ~ test_col_vals_not_null(., vars(a, b))
+#'     ~ test_col_is_numeric(., columns = vars(a, b)),
+#'     ~ test_col_vals_not_null(., columns = vars(a, b))
 #'   ) %>%
 #'   interrogate()
 #' ```
@@ -262,9 +262,9 @@
 #' ```{r}
 #' tbl %>%
 #'   serially(
-#'     ~ test_col_is_numeric(., vars(a, b)),
-#'     ~ test_col_vals_not_null(., vars(a, b)),
-#'     ~ col_vals_gt(., vars(b), vars(a))
+#'     ~ test_col_is_numeric(., columns = vars(a, b)),
+#'     ~ test_col_vals_not_null(., columns = vars(a, b)),
+#'     ~ col_vals_gt(., columns = vars(b), value = vars(a))
 #'   )
 #' ```
 #'
@@ -276,9 +276,9 @@
 #' ```r
 #' expect_serially(
 #'   tbl,
-#'   ~ test_col_is_numeric(., vars(a, b)),
-#'   ~ test_col_vals_not_null(., vars(a, b)),
-#'   ~ col_vals_gt(., vars(b), vars(a))
+#'   ~ test_col_is_numeric(., columns = vars(a, b)),
+#'   ~ test_col_vals_not_null(., columns = vars(a, b)),
+#'   ~ col_vals_gt(., columns = vars(b), value = vars(a))
 #' )
 #' ```
 #' 
@@ -290,9 +290,9 @@
 #' ```{r}
 #' tbl %>%
 #'   test_serially(
-#'     ~ test_col_is_numeric(., vars(a, b)),
-#'     ~ test_col_vals_not_null(., vars(a, b)),
-#'     ~ col_vals_gt(., vars(b), vars(a))
+#'     ~ test_col_is_numeric(., columns = vars(a, b)),
+#'     ~ test_col_vals_not_null(., columns = vars(a, b)),
+#'     ~ col_vals_gt(., columns = vars(b), value = vars(a))
 #'   )
 #' ```
 #'

@@ -225,7 +225,7 @@ R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
   row_count_match(
     count = ~ file_tbl(
       file = from_github(
-        file = "all_revenue_large.rds",
+        file = "sj_all_revenue_large.rds",
         repo = "rich-iannone/intendo",
         subdir = "data-large"
         )
@@ -242,7 +242,7 @@ YAML representation:\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{
 - row_count_match:
     count: ~ file_tbl(
       file = from_github(
-        file = "all_revenue_large.rds",
+        file = "sj_all_revenue_large.rds",
         repo = "rich-iannone/intendo",
         subdir = "data-large"
         )

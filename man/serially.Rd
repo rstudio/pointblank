@@ -233,9 +233,9 @@ representation.
 
 R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
   serially(
-    ~ col_vals_lt(., vars(a), 8),
-    ~ col_vals_gt(., vars(c), vars(a)),
-    ~ col_vals_not_null(., vars(b)),
+    ~ col_vals_lt(., columns = vars(a), value = 8),
+    ~ col_vals_gt(., columns = vars(c), value = vars(a)),
+    ~ col_vals_not_null(., columns = vars(b)),
     preconditions = ~ . \%>\% dplyr::filter(a < 10),
     actions = action_levels(warn_at = 0.1, stop_at = 0.2), 
     label = "The `serially()` step.",
@@ -246,8 +246,8 @@ R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
 YAML representation:\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
 - serially:
     fns:
-    - ~col_vals_lt(., vars(a), 8)
-    - ~col_vals_gt(., vars(c), vars(a))
+    - ~col_vals_lt(., columns = vars(a), value = 8)
+    - ~col_vals_gt(., columns = vars(c), value = vars(a))
     - ~col_vals_not_null(., vars(b))
     preconditions: ~. \%>\% dplyr::filter(a < 10)
     actions:

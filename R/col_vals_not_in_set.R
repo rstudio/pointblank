@@ -140,7 +140,7 @@
 #' ```yaml
 #' steps:
 #' - col_vals_not_in_set:
-#'     columns: vars(a)
+#'    columns: vars(a)
 #'    set:
 #'    - 1.0
 #'    - 2.0

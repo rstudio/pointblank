@@ -75,7 +75,7 @@
 #' ```r
 #' agent %>% 
 #'   col_is_numeric(
-#'     vars(a),
+#'     columns = vars(a),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
 #'     label = "The `col_is_numeric()` step.",
 #'     active = FALSE

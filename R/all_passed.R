@@ -21,7 +21,7 @@
 #'
 #' @description
 #' Given an agent's validation plan that had undergone interrogation via
-#' `interrogate()`, did every single validation step result in zero *failing*
+#' [interrogate()], did every single validation step result in zero *failing*
 #' test units? Using the `all_passed()` function will let us know whether that's
 #' `TRUE` or not.
 #' 

@@ -19,7 +19,7 @@ A logical value.
 }
 \description{
 Given an agent's validation plan that had undergone interrogation via
-\code{interrogate()}, did every single validation step result in zero \emph{failing}
+\code{\link[=interrogate]{interrogate()}}, did every single validation step result in zero \emph{failing}
 test units? Using the \code{all_passed()} function will let us know whether that's
 \code{TRUE} or not.
 }

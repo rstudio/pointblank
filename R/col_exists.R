@@ -73,7 +73,7 @@
 #' ```r
 #' agent %>% 
 #'   col_exists(
-#'     vars(a),
+#'     columns = vars(a),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
 #'     label = "The `col_exists()` step.",
 #'     active = FALSE

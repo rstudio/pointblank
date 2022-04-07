@@ -250,7 +250,7 @@ R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
 
 YAML representation:\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
 - col_vals_make_set:
-    columns: vars(a)
+   columns: vars(a)
    set:
    - 1.0
    - 2.0

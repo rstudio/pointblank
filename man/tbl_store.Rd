@@ -266,7 +266,7 @@ Define a \code{tbl_store} object by adding table-prep formulas inside the
     all_revenue ~ db_tbl(
       table = file_tbl(
         file = from_github(
-          file = "all_revenue_large.rds",
+          file = "sj_all_revenue_large.rds",
           repo = "rich-iannone/intendo",
           subdir = "data-large"
         )
@@ -288,7 +288,7 @@ Let's get a summary of what's in the table store \code{store_3} through printing
 ## "postgres", host = "hh-pgsql-public.ebi.ac.uk", port = 5432, user =
 ## I("reader"), password = I("NWDMCE5xdipIjRrp"))
 ## 3 all_revenue // ~ db_tbl(table = file_tbl(file = from_github(file =
-## "all_revenue_large.rds", repo = "rich-iannone/intendo", subdir =
+## "sj_all_revenue_large.rds", repo = "rich-iannone/intendo", subdir =
 ## "data-large")), dbname = ":memory:", dbtype = "duckdb")
 ## 4 sml_table // ~ pointblank::small_table
 ## ----}

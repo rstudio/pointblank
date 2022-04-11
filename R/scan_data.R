@@ -41,12 +41,10 @@
 #' \item{Sample}{A table that provides the head and tail rows of the dataset}
 #' }
 #' 
-#' The output HTML report will appear in the RStudio Viewer and can also be
-#' integrated in R Markdown HTML output. If you need the output HTML as a
-#' string, it's possible to get that by using `as.character()` (e.g.,
-#' `scan_data(tbl = mtcars) %>% as.character()`). The resulting HTML string is a
-#' complete HTML document where **Bootstrap** and **jQuery** are embedded
-#' within.
+#' The resulting object can be printed to make it viewable in the RStudio
+#' Viewer. It's also a `"shiny.tag.list"` object and so can be integrated in R
+#' Markdown HTML output or in Shiny applications. If you need the output HTML,
+#' it's to export that to a file with the [export_report()] function.
 #' 
 #' @param tbl The input table. This can be a data frame, tibble, a `tbl_dbi`
 #'   object, or a `tbl_spark` object.
@@ -73,18 +71,23 @@
 #'   (United States) and `"fr_FR"` for French (France); more simply, this can be
 #'   a language identifier without a country designation, like `"es"` for
 #'   Spanish (Spain, same as `"es_ES"`).
-#'   
-#' @examples
-#' if (interactive()) {
 #' 
-#' # Get an HTML document that describes all of
-#' # the data in the `dplyr::storms` dataset
+#' @return A `ptblank_tbl_scan` object.
+#' 
+#' @section Demos:
+#' 
+#' Get an HTML document that describes all of the data in the `dplyr::storms`
+#' dataset.
+#' 
+#' ```r
 #' tbl_scan <- scan_data(tbl = dplyr::storms)
+#' ```
 #' 
+#' \if{html}{
+#' \out{
+#' `r pb_get_image_tag(file = "man_scan_data_1.png")`
 #' }
-#' 
-#' @section Figures:
-#' \if{html}{\figure{man_scan_data_1.png}{options: width=100\%}}
+#' }
 #' 
 #' @family Planning and Prep
 #' @section Function ID:

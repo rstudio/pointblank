@@ -45,6 +45,9 @@ report according the locale's rules. Examples include \code{"en_US"} for English
 a language identifier without a country designation, like \code{"es"} for
 Spanish (Spain, same as \code{"es_ES"}).}
 }
+\value{
+A \code{ptblank_tbl_scan} object.
+}
 \description{
 Generate an HTML report that scours the input table data. Before calling up
 an \emph{agent} to validate the data, it's a good idea to understand the data with
@@ -65,16 +68,23 @@ across variables}
 \item{Sample}{A table that provides the head and tail rows of the dataset}
 }
 
-The output HTML report will appear in the RStudio Viewer and can also be
-integrated in R Markdown HTML output. If you need the output HTML as a
-string, it's possible to get that by using \code{as.character()} (e.g.,
-\code{scan_data(tbl = mtcars) \%>\% as.character()}). The resulting HTML string is a
-complete HTML document where \strong{Bootstrap} and \strong{jQuery} are embedded
-within.
+The resulting object can be printed to make it viewable in the RStudio
+Viewer. It's also a \code{"shiny.tag.list"} object and so can be integrated in R
+Markdown HTML output or in Shiny applications. If you need the output HTML,
+it's to export that to a file with the \code{\link[=export_report]{export_report()}} function.
 }
-\section{Figures}{
+\section{Demos}{
 
-\if{html}{\figure{man_scan_data_1.png}{options: width=100\%}}
+
+Get an HTML document that describes all of the data in the \code{dplyr::storms}
+dataset.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_scan <- scan_data(tbl = dplyr::storms)
+}\if{html}{\out{</div>}}
+
+\if{html}{
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_scan_data_1.png" style="width:100\%;">
+}
+}
 }
 
 \section{Function ID}{
@@ -82,16 +92,6 @@ within.
 1-1
 }
 
-\examples{
-if (interactive()) {
-
-# Get an HTML document that describes all of
-# the data in the `dplyr::storms` dataset
-tbl_scan <- scan_data(tbl = dplyr::storms)
-
-}
-
-}
 \seealso{
 Other Planning and Prep: 
 \code{\link{action_levels}()},

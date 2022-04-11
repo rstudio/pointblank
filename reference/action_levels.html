@@ -220,15 +220,16 @@ validation steps and interrogate the <code>small_table</code>.</p><div class="so
     actions <span class="op">=</span> <span class="va">al</span>
   <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">2</span>
+    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">2</span>
   <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">20000</span>
+    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">20000</span>
   <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
 <p>The report from the agent will show that the <code>warn</code> state has been entered
 for the first validation step but not the second one. We can confirm this in
-the console by inspecting the <code>warn</code> component in the agent's x-list.</p><div class="sourceCode r"><pre><code><span class="va">x_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_agent_x_list.html">get_agent_x_list</a></span><span class="op">(</span><span class="va">agent_1</span><span class="op">)</span>
+the console by inspecting the <code>warn</code> component in the agent's x-list.</p><div class="sourceCode r"><pre><code><span class="va">x_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_agent_x_list.html">get_agent_x_list</a></span><span class="op">(</span>agent <span class="op">=</span> <span class="va">agent_1</span><span class="op">)</span>
+
 <span class="va">x_list</span><span class="op">$</span><span class="va">warn</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1]  TRUE FALSE</span></code></pre></div>
 
 <p>Applying the <code>action_levels</code> object to the agent means that all validation
@@ -240,17 +241,18 @@ another such object to the validation step instead (this time using the
     actions <span class="op">=</span> <span class="va">al</span>
   <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">2</span>,
+    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">2</span>,
     actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">warn_on_fail</a></span><span class="op">(</span>warn_at <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
   <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">20000</span>
+    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">20000</span>
   <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
 <p>In this case, the first validation step has a less stringent failure
 threshold for the <code>warn</code> state and it's high enough that the condition is not
 entered. This can be confirmed in the console through inspection of the
-x-list <code>warn</code> component.</p><div class="sourceCode r"><pre><code><span class="va">x_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_agent_x_list.html">get_agent_x_list</a></span><span class="op">(</span><span class="va">agent_2</span><span class="op">)</span>
+x-list <code>warn</code> component.</p><div class="sourceCode r"><pre><code><span class="va">x_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_agent_x_list.html">get_agent_x_list</a></span><span class="op">(</span>agent <span class="op">=</span> <span class="va">agent_2</span><span class="op">)</span>
+
 <span class="va">x_list</span><span class="op">$</span><span class="va">warn</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] FALSE FALSE</span></code></pre></div>
 
 <p>In the context of using validation functions directly on data (i.e., no
@@ -258,7 +260,7 @@ involvement of an agent) we want to trigger warnings and raise errors. The
 following will yield a warning if it is executed (returning the <code>small_table</code>
 data).</p><div class="sourceCode r"><pre><code><span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">2</span>,
+    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">2</span>,
     actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">warn_on_fail</a></span><span class="op">(</span>warn_at <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
   <span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## Warning: Exceedance of failed test units where values in `a` should have been &gt; `2`.</span>
 <span class="co">## The `col_vals_gt()` validation failed beyond the absolute threshold level (2).</span>
@@ -281,11 +283,11 @@ data).</p><div class="sourceCode r"><pre><code><span class="va">small_table</spa
 
 <p>With the same pipeline, not supplying anything for <code>actions</code> (it's <code>NULL</code> by
 default) will have the same effect as using <code>stop_on_fail(stop_at = 1)</code>.</p><div class="sourceCode r"><pre><code><span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## Error: Exceedance of failed test units where values in `a` should have been &gt; `2`.</span>
+  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## Error: Exceedance of failed test units where values in `a` should have been &gt; `2`.</span>
 <span class="co">## The `col_vals_gt()` validation failed beyond the absolute threshold level (1).</span>
 <span class="co">## * failure level (4) &gt;= failure threshold (1)</span></code></pre></div><p></p><div class="sourceCode r"><pre><code><span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">2</span>,
+    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">2</span>,
     actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">stop_on_fail</a></span><span class="op">(</span>stop_at <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
   <span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## Error: Exceedance of failed test units where values in `a` should have been &gt; `2`.</span>
 <span class="co">## The `col_vals_gt()` validation failed beyond the absolute threshold level (1).</span>

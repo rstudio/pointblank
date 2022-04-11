@@ -382,7 +382,7 @@ describes the columns and their types (in the expected order).</p><div class="so
 <p>Validate that the schema object <code>schema_obj</code> exactly defines the column names
 and column types. We'll determine if this validation has a failing test unit
 (there is a single test unit governed by whether there is a match).</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span>
-  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span><span class="va">tbl</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">tbl</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/col_schema_match.html">col_schema_match</a></span><span class="op">(</span>schema <span class="op">=</span> <span class="va">schema_obj</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
 <p>Printing the <code>agent</code> in the console shows the validation report in the

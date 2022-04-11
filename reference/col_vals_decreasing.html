@@ -424,9 +424,9 @@ values that are decreasing from top to bottom.</p><div class="section">
 <p>Validate that all <code>"difftime"</code> values in the column <code>time_left</code> are
 decreasing, and, allow for repeating values (<code>allow_stationary</code> will be set
 to <code>TRUE</code>).</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span>
-  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span><span class="va">game_revenue_2</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">game_revenue_2</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/col_vals_decreasing.html">col_vals_decreasing</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">time_left</span><span class="op">)</span>,
+    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">time_left</span><span class="op">)</span>,
     allow_stationary <span class="op">=</span> <span class="cn">TRUE</span>
   <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
@@ -444,7 +444,7 @@ that corresponds to the validation step demonstrated here.</p>
 through but should <code><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop()</a></code> if there is a single test unit failing. The
 behavior of side effects can be customized with the <code>actions</code> option.</p><div class="sourceCode r"><pre><code><span class="va">game_revenue_2</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/col_vals_decreasing.html">col_vals_decreasing</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">time_left</span><span class="op">)</span>,
+    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">time_left</span><span class="op">)</span>,
     allow_stationary <span class="op">=</span> <span class="cn">TRUE</span>
   <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">time_left</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
@@ -463,7 +463,7 @@ behavior of side effects can be customized with the <code>actions</code> option.
 <p>With the <code>expect_*()</code> form, we would typically perform one validation at a
 time. This is primarily used in <strong>testthat</strong> tests.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/col_vals_decreasing.html">expect_col_vals_decreasing</a></span><span class="op">(</span>
   <span class="va">game_revenue_2</span>,
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">time_left</span><span class="op">)</span>,
+  columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">time_left</span><span class="op">)</span>,
   allow_stationary <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span></code></pre><p></p></div>
 </div>
@@ -475,7 +475,7 @@ time. This is primarily used in <strong>testthat</strong> tests.</p><div class="
 <p>With the <code>test_*()</code> form, we should get a single logical value returned to
 us.</p><div class="sourceCode r"><pre><code><span class="va">game_revenue_2</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/col_vals_decreasing.html">test_col_vals_decreasing</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">time_left</span><span class="op">)</span>,
+    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">time_left</span><span class="op">)</span>,
     allow_stationary <span class="op">=</span> <span class="cn">TRUE</span>
   <span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] TRUE</span></code></pre></div>
 

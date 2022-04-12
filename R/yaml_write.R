@@ -227,7 +227,7 @@
 #' 
 #' \if{html}{
 #' \out{
-#' `r pb_get_image_tag(file = "man_yaml_write_1.png")`
+#' `r pb_get_image_tag(file = "man_yaml_write_2.png")`
 #' }
 #' }
 #' 

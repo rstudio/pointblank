@@ -199,7 +199,7 @@
 #' tbl
 #' ```
 #' 
-#' ## A: Using an `agent` with validation functions and then `interrogate()` 
+#' ## A: Using an `agent` with validation functions and then `interrogate()`
 #' 
 #' Validate that values in column `a` are all greater than or equal to the value
 #' of `5`. We'll determine if this validation has any failing test units (there

@@ -31,112 +31,65 @@ plan specified in the \strong{pointblank} YAML, we can use the
 \code{\link[=yaml_agent_show_exprs]{yaml_agent_show_exprs()}} function. That function shows us (in the console)
 the \strong{pointblank} expressions for generating the described validation plan.
 }
+\section{Demos}{
+
+
+There's a YAML file available in the \strong{pointblank} package that's also
+called \code{"agent-small_table.yml"}. The path for it can be accessed through
+\code{system.file()}:\if{html}{\out{<div class="sourceCode r">}}\preformatted{yml_file_path <- 
+  system.file(
+    "yaml", "agent-small_table.yml",
+    package = "pointblank"
+  )
+}\if{html}{\out{</div>}}
+
+The YAML file can be read as an agent with a pre-existing validation plan by
+using the \code{yaml_read_agent()} function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- yaml_read_agent(filename = yml_file_path)
+
+agent
+}\if{html}{\out{</div>}}
+
+\if{html}{
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_yaml_write_1.png" style="width:100\%;">
+}
+}
+
+This particular agent is using \code{~ tbl_source("small_table", "tbl_store.yml")}
+to source the table-prep from a YAML file that holds a table store (can be
+seen using \code{yaml_agent_string(agent = agent)}). Let's put that file in the
+working directory (the \strong{pointblank} package has the corresponding YAML
+file):\if{html}{\out{<div class="sourceCode r">}}\preformatted{yml_tbl_store_path <-
+  system.file(
+    "yaml", "tbl_store.yml",
+    package = "pointblank"
+  )
+
+file.copy(from = yml_tbl_store_path, to = ".")
+}\if{html}{\out{</div>}}
+
+As can be seen from the validation report, no interrogation was yet
+performed. Saving an agent to YAML will remove any traces of interrogation
+data and serve as a plan for a new interrogation on the same target table. We
+can either follow this up with with \code{\link[=interrogate]{interrogate()}} and get an agent with
+intel, or, we can interrogate directly from the YAML file with
+\code{\link[=yaml_agent_interrogate]{yaml_agent_interrogate()}}:\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- yaml_agent_interrogate(filename = yml_file_path)
+
+agent
+}\if{html}{\out{</div>}}
+
+\if{html}{
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_yaml_write_2.png" style="width:100\%;">
+}
+}
+}
+
 \section{Function ID}{
 
 11-2
 }
 
-\examples{
-if (interactive()) {
-
-# Let's go through the process of
-# developing an agent with a validation
-# plan (to be used for the data quality
-# analysis of the `small_table` dataset),
-# and then offloading that validation
-# plan to a pointblank YAML file; this
-# will be read in with `yaml_read_agent()`
-
-# Creating an `action_levels` object is a
-# common workflow step when creating a
-# pointblank agent; we designate failure
-# thresholds to the `warn`, `stop`, and
-# `notify` states using `action_levels()`
-al <- 
-  action_levels(
-    warn_at = 0.10,
-    stop_at = 0.25,
-    notify_at = 0.35
-  )
-
-# Now create a pointblank `agent` object
-# and give it the `al` object (which
-# serves as a default for all validation
-# steps which can be overridden); the
-# data will be referenced in `tbl` with
-# a table-prep formula (a requirement
-# for writing to YAML)
-agent <- 
-  create_agent(
-    tbl = ~ small_table,
-    tbl_name = "small_table",
-    label = "A simple example with the `small_table`.",
-    actions = al
-  )
-
-# Then, as with any `agent` object, we
-# can add steps to the validation plan by
-# using as many validation functions as we
-# want
-agent <-
-  agent \%>\% 
-  col_exists(vars(date, date_time)) \%>\%
-  col_vals_regex(
-    vars(b),
-    regex = "[0-9]-[a-z]{3}-[0-9]{3}"
-  ) \%>\%
-  rows_distinct() \%>\%
-  col_vals_gt(vars(d), value = 100) \%>\%
-  col_vals_lte(vars(c), value = 5)
-
-# The agent can be written to a pointblank
-# YAML file with `yaml_write()`
-yaml_write(
-  agent = agent,
-  filename = "agent-small_table.yml"
-)
-
-# The 'agent-small_table.yml' file is
-# available in the package through
-# `system.file()`
-yml_file <- 
-  system.file(
-    "yaml", "agent-small_table.yml",
-    package = "pointblank"
-  )
-
-# We can view the YAML file in the console
-# with the `yaml_agent_string()` function
-yaml_agent_string(filename = yml_file)
-
-# The YAML can also be printed in the console
-# by supplying the agent as the input
-yaml_agent_string(agent = agent)
-
-# At some later time, the YAML file can
-# be read as a new agent with the
-# `yaml_read_agent()` function
-agent <- yaml_read_agent(filename = yml_file)
-
-class(agent)
-
-# We can interrogate the data (which
-# is accessible through the table-prep
-# formula supplied initially) with
-# `interrogate()` and get an agent
-# with intel, or, we can interrogate
-# directly from the YAML file with
-# `yaml_agent_interrogate()`
-agent <- 
-  yaml_agent_interrogate(
-    filename = yml_file
-  )
-
-class(agent)
-
-}
-
-}
 \seealso{
 Other pointblank YAML: 
 \code{\link{yaml_agent_interrogate}()},

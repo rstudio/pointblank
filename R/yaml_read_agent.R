@@ -41,104 +41,68 @@
 #'   
 #' @return A `ptblank_agent` object.
 #'   
-#' @examples
-#' if (interactive()) {
-#' 
-#' # Let's go through the process of
-#' # developing an agent with a validation
-#' # plan (to be used for the data quality
-#' # analysis of the `small_table` dataset),
-#' # and then offloading that validation
-#' # plan to a pointblank YAML file; this
-#' # will be read in with `yaml_read_agent()`
-#' 
-#' # Creating an `action_levels` object is a
-#' # common workflow step when creating a
-#' # pointblank agent; we designate failure
-#' # thresholds to the `warn`, `stop`, and
-#' # `notify` states using `action_levels()`
-#' al <- 
-#'   action_levels(
-#'     warn_at = 0.10,
-#'     stop_at = 0.25,
-#'     notify_at = 0.35
-#'   )
-#' 
-#' # Now create a pointblank `agent` object
-#' # and give it the `al` object (which
-#' # serves as a default for all validation
-#' # steps which can be overridden); the
-#' # data will be referenced in `tbl` with
-#' # a table-prep formula (a requirement
-#' # for writing to YAML)
-#' agent <- 
-#'   create_agent(
-#'     tbl = ~ small_table,
-#'     tbl_name = "small_table",
-#'     label = "A simple example with the `small_table`.",
-#'     actions = al
-#'   )
-#' 
-#' # Then, as with any `agent` object, we
-#' # can add steps to the validation plan by
-#' # using as many validation functions as we
-#' # want
-#' agent <-
-#'   agent %>% 
-#'   col_exists(vars(date, date_time)) %>%
-#'   col_vals_regex(
-#'     vars(b),
-#'     regex = "[0-9]-[a-z]{3}-[0-9]{3}"
-#'   ) %>%
-#'   rows_distinct() %>%
-#'   col_vals_gt(vars(d), value = 100) %>%
-#'   col_vals_lte(vars(c), value = 5)
+#' @section Demos:
 #'
-#' # The agent can be written to a pointblank
-#' # YAML file with `yaml_write()`
-#' yaml_write(
-#'   agent = agent,
-#'   filename = "agent-small_table.yml"
-#' )
+#' There's a YAML file available in the **pointblank** package that's also
+#' called `"agent-small_table.yml"`. The path for it can be accessed through
+#' `system.file()`:
 #' 
-#' # The 'agent-small_table.yml' file is
-#' # available in the package through
-#' # `system.file()`
-#' yml_file <- 
+#' ```r
+#' yml_file_path <- 
 #'   system.file(
 #'     "yaml", "agent-small_table.yml",
 #'     package = "pointblank"
 #'   )
+#' ```
 #' 
-#' # We can view the YAML file in the console
-#' # with the `yaml_agent_string()` function
-#' yaml_agent_string(filename = yml_file)
+#' The YAML file can be read as an agent with a pre-existing validation plan by
+#' using the `yaml_read_agent()` function.
 #' 
-#' # The YAML can also be printed in the console
-#' # by supplying the agent as the input
-#' yaml_agent_string(agent = agent)
+#' ```r
+#' agent <- yaml_read_agent(filename = yml_file_path)
 #' 
-#' # At some later time, the YAML file can
-#' # be read as a new agent with the
-#' # `yaml_read_agent()` function
-#' agent <- yaml_read_agent(filename = yml_file)
+#' agent
+#' ```
 #' 
-#' class(agent)
+#' \if{html}{
+#' \out{
+#' `r pb_get_image_tag(file = "man_yaml_write_1.png")`
+#' }
+#' }
 #' 
-#' # We can interrogate the data (which
-#' # is accessible through the table-prep
-#' # formula supplied initially) with
-#' # `interrogate()` and get an agent
-#' # with intel, or, we can interrogate
-#' # directly from the YAML file with
-#' # `yaml_agent_interrogate()`
-#' agent <- 
-#'   yaml_agent_interrogate(
-#'     filename = yml_file
+#' This particular agent is using `~ tbl_source("small_table", "tbl_store.yml")`
+#' to source the table-prep from a YAML file that holds a table store (can be
+#' seen using `yaml_agent_string(agent = agent)`). Let's put that file in the
+#' working directory (the **pointblank** package has the corresponding YAML
+#' file):
+#' 
+#' ```r
+#' yml_tbl_store_path <-
+#'   system.file(
+#'     "yaml", "tbl_store.yml",
+#'     package = "pointblank"
 #'   )
 #' 
-#' class(agent)
+#' file.copy(from = yml_tbl_store_path, to = ".")
+#' ```
 #' 
+#' As can be seen from the validation report, no interrogation was yet
+#' performed. Saving an agent to YAML will remove any traces of interrogation
+#' data and serve as a plan for a new interrogation on the same target table. We
+#' can either follow this up with with [interrogate()] and get an agent with
+#' intel, or, we can interrogate directly from the YAML file with
+#' [yaml_agent_interrogate()]:
+#' 
+#' ```r
+#' agent <- yaml_agent_interrogate(filename = yml_file_path)
+#' 
+#' agent
+#' ```
+#' 
+#' \if{html}{
+#' \out{
+#' `r pb_get_image_tag(file = "man_yaml_write_2.png")`
+#' }
 #' }
 #' 
 #' @family pointblank YAML
@@ -195,101 +159,68 @@ yaml_read_agent <- function(
 #' 
 #' @return A `ptblank_agent` object.
 #'
-#' @examples
-#' if (interactive()) {
-#' 
-#' # Let's go through the process of
-#' # developing an agent with a validation
-#' # plan (to be used for the data quality
-#' # analysis of the `small_table` dataset),
-#' # and then offloading that validation
-#' # plan to a pointblank YAML file; this
-#' # will later be read in as a new agent and
-#' # the target data will be interrogated
-#' # (one step) with `yaml_agent_interrogate()`
-#' 
-#' # Creating an `action_levels` object is a
-#' # common workflow step when creating a
-#' # pointblank agent; we designate failure
-#' # thresholds to the `warn`, `stop`, and
-#' # `notify` states using `action_levels()`
-#' al <- 
-#'   action_levels(
-#'     warn_at = 0.10,
-#'     stop_at = 0.25,
-#'     notify_at = 0.35
-#'   )
-#' 
-#' # Now create a pointblank `agent` object
-#' # and give it the `al` object (which
-#' # serves as a default for all validation
-#' # steps which can be overridden); the
-#' # data will be referenced in `tbl`
-#' # (a requirement for writing to YAML)
-#' agent <- 
-#'   create_agent(
-#'     tbl = ~ small_table,
-#'     tbl_name = "small_table",
-#'     label = "A simple example with the `small_table`.",
-#'     actions = al
-#'   )
-#' 
-#' # Then, as with any `agent` object, we
-#' # can add steps to the validation plan by
-#' # using as many validation functions as we
-#' # want
-#' agent <-
-#'   agent %>% 
-#'   col_exists(vars(date, date_time)) %>%
-#'   col_vals_regex(
-#'     vars(b),
-#'     regex = "[0-9]-[a-z]{3}-[0-9]{3}"
-#'   ) %>%
-#'   rows_distinct() %>%
-#'   col_vals_gt(vars(d), value = 100) %>%
-#'   col_vals_lte(vars(c), value = 5)
+#' @section Demos:
 #'
-#' # The agent can be written to a pointblank
-#' # YAML file with `yaml_write()`
-#' yaml_write(
-#'   agent = agent,
-#'   filename = "agent-small_table.yml"
-#' )
+#' There's a YAML file available in the **pointblank** package that's also
+#' called `"agent-small_table.yml"`. The path for it can be accessed through
+#' `system.file()`:
 #' 
-#' # The 'agent-small_table.yml' file is
-#' # available in the package through `system.file()`
-#' yml_file <- 
+#' ```r
+#' yml_file_path <- 
 #'   system.file(
 #'     "yaml", "agent-small_table.yml",
 #'     package = "pointblank"
 #'   )
+#' ```
 #' 
-#' # We can view the YAML file in the console
-#' # with the `yaml_agent_string()` function
-#' yaml_agent_string(filename = yml_file)
+#' The YAML file can be read as an agent with a pre-existing validation plan by
+#' using the [yaml_read_agent()] function.
 #' 
-#' # The YAML can also be printed in the console
-#' # by supplying the agent as the input
-#' yaml_agent_string(agent = agent)
+#' ```r
+#' agent <- yaml_read_agent(filename = yml_file_path)
 #' 
-#' # We can interrogate the data (which
-#' # is accessible through `tbl`)
-#' # through direct use of the YAML file
-#' # with `yaml_agent_interrogate()`
-#' agent <- 
-#'   yaml_agent_interrogate(filename = yml_file)
+#' agent
+#' ```
 #' 
-#' class(agent)
-#'
-#' # If it's desired to only create a new
-#' # agent with the validation plan in place
-#' # (stopping short of interrogating the data),
-#' # then the `yaml_read_agent()` function
-#' # will be useful
-#' agent <- 
-#'   yaml_read_agent(filename = yml_file)
-#' class(agent)
+#' \if{html}{
+#' \out{
+#' `r pb_get_image_tag(file = "man_yaml_write_1.png")`
+#' }
+#' }
 #' 
+#' This particular agent is using `~ tbl_source("small_table", "tbl_store.yml")`
+#' to source the table-prep from a YAML file that holds a table store (can be
+#' seen using `yaml_agent_string(agent = agent)`). Let's put that file in the
+#' working directory (the **pointblank** package has the corresponding YAML
+#' file):
+#' 
+#' ```r
+#' yml_tbl_store_path <-
+#'   system.file(
+#'     "yaml", "tbl_store.yml",
+#'     package = "pointblank"
+#'   )
+#' 
+#' file.copy(from = yml_tbl_store_path, to = ".")
+#' ```
+#' 
+#' As can be seen from the validation report, no interrogation was yet
+#' performed. Saving an agent to YAML will remove any traces of interrogation
+#' data and serve as a plan for a new interrogation on the same target table. We
+#' can either follow this up with with [interrogate()] and get an agent with
+#' intel, or, we can interrogate directly from the YAML file with
+#' `yaml_agent_interrogate()`:
+#' 
+#' ```r
+#' agent <- yaml_agent_interrogate(filename = yml_file_path)
+#' 
+#' agent
+#' ```
+#' 
+#' \if{html}{
+#' \out{
+#' `r pb_get_image_tag(file = "man_yaml_write_2.png")`
+#' }
 #' }
 #'
 #' @family pointblank YAML
@@ -326,14 +257,13 @@ yaml_agent_interrogate <- function(
 #'   *agent*.
 #' @param path An optional path to the YAML file (combined with `filename`).
 #' 
-#' @examples
-#' if (interactive()) {
+#' @section Demos:
 #' 
-#' # Let's create a validation plan for the
-#' # data quality analysis of the `small_table`
-#' # dataset; we need an agent and its
-#' # table-prep formula enables retrieval
-#' # of the target table
+#' Let's create a validation plan for the data quality analysis of the
+#' `small_table` dataset. We need an agent and its table-prep formula enables
+#' retrieval of the target table.
+#' 
+#' ```r
 #' agent <- 
 #'   create_agent(
 #'     tbl = ~ small_table,
@@ -345,45 +275,75 @@ yaml_agent_interrogate <- function(
 #'       notify_at = 0.35
 #'     )
 #'   ) %>%
-#'   col_exists(vars(date, date_time)) %>%
+#'   col_exists(columns = vars(date, date_time)) %>%
 #'   col_vals_regex(
-#'     vars(b),
+#'     columns = vars(b),
 #'     regex = "[0-9]-[a-z]{3}-[0-9]{3}"
 #'   ) %>%
 #'   rows_distinct() %>%
-#'   col_vals_gt(vars(d), value = 100) %>%
-#'   col_vals_lte(vars(c), value = 5)
+#'   col_vals_gt(columns = vars(d), value = 100) %>%
+#'   col_vals_lte(columns = vars(c), value = 5)
+#' ```
 #'
-#' # The agent can be written to a pointblank
-#' # YAML file with `yaml_write()`
+#' The agent can be written to a **pointblank** YAML file with [yaml_write()].
+#' 
+#' ```r
 #' yaml_write(
 #'   agent = agent,
 #'   filename = "agent-small_table.yml"
 #' )
+#' ```
 #' 
-#' # The 'agent-small_table.yml' file is
-#' # available in the package through
-#' # `system.file()`
-#' yml_file <- 
-#'   system.file(
-#'     "yaml", "agent-small_table.yml",
-#'     package = "pointblank"
-#'   )
+#' At a later time, the YAML file can be read into a new agent with the
+#' [yaml_read_agent()] function.
 #' 
-#' # At a later time, the YAML file can
-#' # be read into a new agent with the
-#' # `yaml_read_agent()` function
-#' agent <- 
-#'   yaml_read_agent(filename = yml_file)
+#' ```r
+#' agent <- yaml_read_agent(filename = "agent-small_table.yml")
 #' 
-#' class(agent)
+#' agent
+#' ```
 #' 
-#' # To get a sense of which expressions are
-#' # being used to generate the new agent, we
-#' # can use `yaml_agent_show_exprs()`
-#' yaml_agent_show_exprs(filename = yml_file)
-#' 
+#' \if{html}{
+#' \out{
+#' `r pb_get_image_tag(file = "man_yaml_agent_show_exprs_2.png")`
 #' }
+#' }
+#' 
+#' To get a sense of which expressions are being used to generate the new agent,
+#' we can use `yaml_agent_show_exprs()`.
+#' 
+#' ```r
+#' yaml_agent_show_exprs(filename = "agent-small_table.yml")
+#' ```
+#' 
+#' ```
+#' create_agent(
+#'   tbl = ~small_table,
+#'   actions = action_levels(
+#'     warn_at = 0.1,
+#'     stop_at = 0.25,
+#'     notify_at = 0.35
+#'   ),
+#'   tbl_name = "small_table",
+#'   label = "A simple example with the `small_table`."
+#' ) %>%
+#'   col_exists(
+#'     columns = vars(date, date_time)
+#'   ) %>%
+#'   col_vals_regex(
+#'     columns = vars(b),
+#'     regex = "[0-9]-[a-z]{3}-[0-9]{3}"
+#'   ) %>%
+#'   rows_distinct() %>%
+#'   col_vals_gt(
+#'     columns = vars(d),
+#'     value = 100
+#'   ) %>%
+#'   col_vals_lte(
+#'     columns = vars(c),
+#'     value = 5
+#'   ) 
+#' ```
 #'   
 #' @family pointblank YAML
 #' @section Function ID:

@@ -221,6 +221,112 @@ agent
 }
 }
 }
+
+\subsection{Writing an \code{informant} object to a YAML file}{
+
+Let's walk through how we can generate some useful information for a really
+small table. We can create an \code{informant} object with \code{\link[=create_informant]{create_informant()}}
+and we'll again use the \code{small_table} dataset.\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- 
+  create_informant(
+    tbl = ~ small_table,
+    tbl_name = "small_table",
+    label = "A simple example with the `small_table`."
+  )
+}\if{html}{\out{</div>}}
+
+Then, as with any \code{informant} object, we can add info text to the
+using as many \verb{info_*()} functions as we want.\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- 
+  informant \%>\%
+  info_columns(
+    columns = vars(a),
+    info = "In the range of 1 to 10. (SIMPLE)"
+  ) \%>\%
+  info_columns(
+    columns = starts_with("date"),
+    info = "Time-based values (e.g., `Sys.time()`)."
+  ) \%>\%
+  info_columns(
+    columns = "date",
+    info = "The date part of `date_time`. (CALC)"
+  )
+}\if{html}{\out{</div>}}
+
+The informant can be written to a \strong{pointblank}-readable YAML file with the
+\code{yaml_write()} function. Here, we'll use the filename
+\code{"informant-small_table.yml"} and, after writing, the YAML file will be in
+the working directory:\if{html}{\out{<div class="sourceCode r">}}\preformatted{yaml_write(informant, filename = "informant-small_table.yml")
+}\if{html}{\out{</div>}}
+
+We can inspect the YAML file in the working directory and expect to see the
+following:\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{type: informant
+tbl: ~small_table
+tbl_name: small_table
+info_label: A simple example with the `small_table`.
+lang: en
+locale: en
+table:
+  name: small_table
+  _columns: 8
+  _rows: 13.0
+  _type: tbl_df
+columns:
+  date_time:
+  _type: POSIXct, POSIXt
+info: Time-based values (e.g., `Sys.time()`).
+date:
+  _type: Date
+  info: Time-based values (e.g., `Sys.time()`). The date part of `date_time`. (CALC)
+a:
+  _type: integer
+  info: In the range of 1 to 10. (SIMPLE)
+b:
+  _type: character
+c:
+  _type: numeric
+d:
+  _type: numeric
+e:
+  _type: logical
+f:
+  _type: character
+}\if{html}{\out{</div>}}
+}
+
+\subsection{Reading an \code{informant} object from a YAML file}{
+
+There's a YAML file available in the \strong{pointblank} package that's also
+called \code{"informant-small_table.yml"}. The path for it can be accessed through
+\code{system.file()}:\if{html}{\out{<div class="sourceCode r">}}\preformatted{yml_file_path <- 
+  system.file(
+    "yaml", "informant-small_table.yml",
+    package = "pointblank"
+  )
+}\if{html}{\out{</div>}}
+
+The YAML file can be read as an informant by using the
+\code{\link[=yaml_read_informant]{yaml_read_informant()}} function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- yaml_read_informant(filename = yml_file_path)
+
+informant
+}\if{html}{\out{</div>}}
+
+\if{html}{
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_yaml_write_3.png" style="width:100\%;">
+}
+}
+
+As can be seen from the information report, the available table metadata was
+restored and reported. If you expect metadata to change with time, it might
+be beneficial to use \code{\link[=incorporate]{incorporate()}} to query the target table. Or, we can
+perform this querying directly from the YAML file with
+\code{\link[=yaml_informant_incorporate]{yaml_informant_incorporate()}}:\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- yaml_informant_incorporate(filename = yml_file_path)
+}\if{html}{\out{</div>}}
+
+There will be no apparent difference in this particular case since
+\code{small_data} is a static table with no alterations over time. However,
+using \code{\link[=yaml_informant_incorporate]{yaml_informant_incorporate()}} is good practice since this refreshing
+of data will be important with real-world datasets.
+}
 }
 
 \section{Function ID}{

@@ -231,6 +231,131 @@
 #' }
 #' }
 #' 
+#' ## Writing an `informant` object to a YAML file
+#' 
+#' Let's walk through how we can generate some useful information for a really
+#' small table. We can create an `informant` object with [create_informant()]
+#' and we'll again use the `small_table` dataset.
+#' 
+#' ```r
+#' informant <- 
+#'   create_informant(
+#'     tbl = ~ small_table,
+#'     tbl_name = "small_table",
+#'     label = "A simple example with the `small_table`."
+#'   )
+#' ```
+#' 
+#' Then, as with any `informant` object, we can add info text to the
+#' using as many `info_*()` functions as we want.
+#' 
+#' ```r
+#' informant <- 
+#'   informant %>%
+#'   info_columns(
+#'     columns = vars(a),
+#'     info = "In the range of 1 to 10. (SIMPLE)"
+#'   ) %>%
+#'   info_columns(
+#'     columns = starts_with("date"),
+#'     info = "Time-based values (e.g., `Sys.time()`)."
+#'   ) %>%
+#'   info_columns(
+#'     columns = "date",
+#'     info = "The date part of `date_time`. (CALC)"
+#'   )
+#' ```
+#' 
+#' The informant can be written to a **pointblank**-readable YAML file with the
+#' `yaml_write()` function. Here, we'll use the filename
+#' `"informant-small_table.yml"` and, after writing, the YAML file will be in
+#' the working directory:
+#' 
+#' ```r
+#' yaml_write(informant, filename = "informant-small_table.yml")
+#' ```
+#' 
+#' We can inspect the YAML file in the working directory and expect to see the
+#' following:
+#' 
+#' ```yaml
+#' type: informant
+#' tbl: ~small_table
+#' tbl_name: small_table
+#' info_label: A simple example with the `small_table`.
+#' lang: en
+#' locale: en
+#' table:
+#'   name: small_table
+#'   _columns: 8
+#'   _rows: 13.0
+#'   _type: tbl_df
+#' columns:
+#'   date_time:
+#'   _type: POSIXct, POSIXt
+#' info: Time-based values (e.g., `Sys.time()`).
+#' date:
+#'   _type: Date
+#'   info: Time-based values (e.g., `Sys.time()`). The date part of `date_time`. (CALC)
+#' a:
+#'   _type: integer
+#'   info: In the range of 1 to 10. (SIMPLE)
+#' b:
+#'   _type: character
+#' c:
+#'   _type: numeric
+#' d:
+#'   _type: numeric
+#' e:
+#'   _type: logical
+#' f:
+#'   _type: character
+#' ```
+#' 
+#' ## Reading an `informant` object from a YAML file
+#'
+#' There's a YAML file available in the **pointblank** package that's also
+#' called `"informant-small_table.yml"`. The path for it can be accessed through
+#' `system.file()`:
+#' 
+#' ```r
+#' yml_file_path <- 
+#'   system.file(
+#'     "yaml", "informant-small_table.yml",
+#'     package = "pointblank"
+#'   )
+#' ```
+#' 
+#' The YAML file can be read as an informant by using the
+#' [yaml_read_informant()] function.
+#' 
+#' ```r
+#' informant <- yaml_read_informant(filename = yml_file_path)
+#' 
+#' informant
+#' ```
+#' 
+#' \if{html}{
+#' \out{
+#' `r pb_get_image_tag(file = "man_yaml_write_3.png")`
+#' }
+#' }
+#' 
+#' As can be seen from the information report, the available table metadata was
+#' restored and reported. If you expect metadata to change with time, it might
+#' be beneficial to use [incorporate()] to query the target table. Or, we can
+#' perform this querying directly from the YAML file with
+#' [yaml_informant_incorporate()]:
+#' 
+#' ```r
+#' informant <- yaml_informant_incorporate(filename = yml_file_path)
+#' ```
+#' 
+#' There will be no apparent difference in this particular case since
+#' `small_data` is a static table with no alterations over time. However,
+#' using [yaml_informant_incorporate()] is good practice since this refreshing
+#' of data will be important with real-world datasets.
+#' 
 #' @family pointblank YAML
 #' @section Function ID:
 #' 11-1

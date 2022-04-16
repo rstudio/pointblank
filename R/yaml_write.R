@@ -548,68 +548,60 @@ yaml_write <- function(
 #'   `FALSE` so expressions as written will be retained in the YAML
 #'   representation.
 #'   
-#' @examples 
-#' if (interactive()) {
-#' 
-#' # Let's create a validation plan for the
-#' # data quality analysis of the `small_table`
-#' # dataset; we need an agent and its
-#' # table-prep formula enables retrieval
-#' # of the target table
-#' agent <- 
-#'   create_agent(
-#'     tbl = ~ small_table,
-#'     tbl_name = "small_table",
-#'     label = "A simple example with the `small_table`.",
-#'     actions = action_levels(
-#'       warn_at = 0.10,
-#'       stop_at = 0.25,
-#'       notify_at = 0.35
-#'     )
-#'   ) %>%
-#'   col_exists(vars(date, date_time)) %>%
-#'   col_vals_regex(
-#'     vars(b),
-#'     regex = "[0-9]-[a-z]{3}-[0-9]{3}"
-#'   ) %>%
-#'   rows_distinct() %>%
-#'   col_vals_gt(vars(d), value = 100) %>%
-#'   col_vals_lte(vars(c), value = 5)
+#' @section Demos:
 #'
-#' # We can view the YAML file in the console
-#' # with the `yaml_agent_string()` function,
-#' # providing the `agent` object as the input
-#' yaml_agent_string(agent = agent)
-#'
-#' # The agent can be written to a pointblank
-#' # YAML file with `yaml_write()`
-#' yaml_write(
-#'   agent = agent,
-#'   filename = "agent-small_table.yml"
-#' )
+#' There's a YAML file available in the **pointblank** package that's called
+#' `"agent-small_table.yml"`. The path for it can be accessed through
+#' `system.file()`:
 #' 
-#' # There's a similar file in the package
-#' # ('agent-small_table.yml') and it's
-#' # accessible with `system.file()`
-#' yml_file <- 
+#' ```r
+#' yml_file_path <- 
 #'   system.file(
 #'     "yaml", "agent-small_table.yml",
 #'     package = "pointblank"
 #'   )
+#' ```
 #' 
-#' # The `yaml_agent_string()` function can
-#' # be used with the YAML file as well,
-#' # use the `filename` argument instead
-#' yaml_agent_string(filename = yml_file)
+#' We can view the contents of the YAML file in the console with the
+#' `yaml_agent_string()` function.
 #' 
-#' # At some later time, the YAML file can
-#' # be read as a new agent with the
-#' # `yaml_read_agent()` function
-#' agent <- yaml_read_agent(filename = yml_file)
-#' class(agent)
+#' ```r
+#' yaml_agent_string(filename = yml_file_path)
+#' ```
 #' 
-#' }
-#'   
+#' ```yaml
+#' type: agent
+#' tbl: ~ tbl_source("small_table", "tbl_store.yml")
+#' tbl_name: small_table
+#' label: A simple example with the `small_table`.
+#' lang: en
+#' locale: en
+#' actions:
+#'   warn_fraction: 0.1
+#'   stop_fraction: 0.25
+#'   notify_fraction: 0.35
+#' steps:
+#' - col_exists:
+#'     columns: vars(date)
+#' - col_exists:
+#'     columns: vars(date_time)
+#' - col_vals_regex:
+#'     columns: vars(b)
+#'     regex: '[0-9]-[a-z]{3}-[0-9]{3}'
+#' - rows_distinct:
+#'     columns: ~
+#' - col_vals_gt:
+#'     columns: vars(d)
+#'     value: 100.0
+#' - col_vals_lte:
+#'     columns: vars(c)
+#'     value: 5.0
+#' ```
+#' 
+#' Incidentally, we can also use `yaml_agent_string()` to print YAML in the
+#' console when supplying an *agent object* as the input. This can be useful for
+#' previewing YAML output just before writing it to disk with [yaml_write()].
+#' 
 #' @family pointblank YAML
 #' @section Function ID:
 #' 11-5

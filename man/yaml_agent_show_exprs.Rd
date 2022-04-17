@@ -61,7 +61,7 @@ agent
 
 \if{html}{
 \out{
-<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_yaml_agent_show_exprs_2.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_yaml_agent_show_exprs_1.png" style="width:100\%;">
 }
 }
 

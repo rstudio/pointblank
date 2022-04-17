@@ -97,6 +97,70 @@ written by hand.</p>
 <dd><p>An optional path to the YAML file (combined with <code>filename</code>).</p></dd>
 </dl></div>
     <div class="section level2">
+    <h2 id="demos">Demos<a class="anchor" aria-label="anchor" href="#demos"></a></h2>
+    
+
+
+<p>Let's create a validation plan for the data quality analysis of the
+<code>small_table</code> dataset. We need an agent and its table-prep formula enables
+retrieval of the target table.</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span> 
+  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>
+    tbl <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,
+    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,
+    label <span class="op">=</span> <span class="st">"A simple example with the `small_table`."</span>,
+    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span>
+      warn_at <span class="op">=</span> <span class="fl">0.10</span>,
+      stop_at <span class="op">=</span> <span class="fl">0.25</span>,
+      notify_at <span class="op">=</span> <span class="fl">0.35</span>
+    <span class="op">)</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_exists.html">col_exists</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">date_time</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>,
+    regex <span class="op">=</span> <span class="st">"[0-9]-[a-z]{3}-[0-9]{3}"</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/rows_distinct.html">rows_distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_vals_lte.html">col_vals_lte</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></code></pre><p></p></div>
+<p>The agent can be written to a <strong>pointblank</strong> YAML file with <code><a href="yaml_write.html">yaml_write()</a></code>.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/yaml_write.html">yaml_write</a></span><span class="op">(</span>
+  agent <span class="op">=</span> <span class="va">agent</span>,
+  filename <span class="op">=</span> <span class="st">"agent-small_table.yml"</span>
+<span class="op">)</span></code></pre><p></p></div>
+<p>At a later time, the YAML file can be read into a new agent with the
+<code><a href="yaml_read_agent.html">yaml_read_agent()</a></code> function.</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/yaml_read_agent.html">yaml_read_agent</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="st">"agent-small_table.yml"</span><span class="op">)</span>
+
+<span class="va">agent</span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_yaml_agent_show_exprs_2.png" style="width:100%;"></p>
+<p>To get a sense of which expressions are being used to generate the new agent,
+we can use <code>yaml_agent_show_exprs()</code>.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/yaml_agent_show_exprs.html">yaml_agent_show_exprs</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="st">"agent-small_table.yml"</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>
+  tbl <span class="op">=</span> <span class="op">~</span><span class="va">small_table</span>,
+  actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span>
+    warn_at <span class="op">=</span> <span class="fl">0.1</span>,
+    stop_at <span class="op">=</span> <span class="fl">0.25</span>,
+    notify_at <span class="op">=</span> <span class="fl">0.35</span>
+  <span class="op">)</span>,
+  tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,
+  label <span class="op">=</span> <span class="st">"A simple example with the `small_table`."</span>
+<span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_exists.html">col_exists</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">date_time</span><span class="op">)</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>,
+    regex <span class="op">=</span> <span class="st">"[0-9]-[a-z]{3}-[0-9]{3}"</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/rows_distinct.html">rows_distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>,
+    value <span class="op">=</span> <span class="fl">100</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_vals_lte.html">col_vals_lte</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>,
+    value <span class="op">=</span> <span class="fl">5</span>
+  <span class="op">)</span></code></pre></div>
+
+    </div>
+    <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
     
 
@@ -114,68 +178,6 @@ written by hand.</p>
 <code><a href="yaml_write.html">yaml_write</a>()</code></p></div>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Let's create a validation plan for the</span></span>
-<span class="r-in"><span class="co"># data quality analysis of the `small_table`</span></span>
-<span class="r-in"><span class="co"># dataset; we need an agent and its</span></span>
-<span class="r-in"><span class="co"># table-prep formula enables retrieval</span></span>
-<span class="r-in"><span class="co"># of the target table</span></span>
-<span class="r-in"><span class="va">agent</span> <span class="op">&lt;-</span> </span>
-<span class="r-in">  <span class="fu"><a href="create_agent.html">create_agent</a></span><span class="op">(</span></span>
-<span class="r-in">    tbl <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,</span>
-<span class="r-in">    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,</span>
-<span class="r-in">    label <span class="op">=</span> <span class="st">"A simple example with the `small_table`."</span>,</span>
-<span class="r-in">    actions <span class="op">=</span> <span class="fu"><a href="action_levels.html">action_levels</a></span><span class="op">(</span></span>
-<span class="r-in">      warn_at <span class="op">=</span> <span class="fl">0.10</span>,</span>
-<span class="r-in">      stop_at <span class="op">=</span> <span class="fl">0.25</span>,</span>
-<span class="r-in">      notify_at <span class="op">=</span> <span class="fl">0.35</span></span>
-<span class="r-in">    <span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_exists.html">col_exists</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">date_time</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>,</span>
-<span class="r-in">    regex <span class="op">=</span> <span class="st">"[0-9]-[a-z]{3}-[0-9]{3}"</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="rows_distinct.html">rows_distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_lte.html">col_vals_lte</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># The agent can be written to a pointblank</span></span>
-<span class="r-in"><span class="co"># YAML file with `yaml_write()`</span></span>
-<span class="r-in"><span class="fu"><a href="yaml_write.html">yaml_write</a></span><span class="op">(</span></span>
-<span class="r-in">  agent <span class="op">=</span> <span class="va">agent</span>,</span>
-<span class="r-in">  filename <span class="op">=</span> <span class="st">"agent-small_table.yml"</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># The 'agent-small_table.yml' file is</span></span>
-<span class="r-in"><span class="co"># available in the package through</span></span>
-<span class="r-in"><span class="co"># `system.file()`</span></span>
-<span class="r-in"><span class="va">yml_file</span> <span class="op">&lt;-</span> </span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="st">"yaml"</span>, <span class="st">"agent-small_table.yml"</span>,</span>
-<span class="r-in">    package <span class="op">=</span> <span class="st">"pointblank"</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># At a later time, the YAML file can</span></span>
-<span class="r-in"><span class="co"># be read into a new agent with the</span></span>
-<span class="r-in"><span class="co"># `yaml_read_agent()` function</span></span>
-<span class="r-in"><span class="va">agent</span> <span class="op">&lt;-</span> </span>
-<span class="r-in">  <span class="fu"><a href="yaml_read_agent.html">yaml_read_agent</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">yml_file</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">agent</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># To get a sense of which expressions are</span></span>
-<span class="r-in"><span class="co"># being used to generate the new agent, we</span></span>
-<span class="r-in"><span class="co"># can use `yaml_agent_show_exprs()`</span></span>
-<span class="r-in"><span class="fu">yaml_agent_show_exprs</span><span class="op">(</span>filename <span class="op">=</span> <span class="va">yml_file</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in">  </span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

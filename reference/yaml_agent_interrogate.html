@@ -104,6 +104,44 @@ time, it has intel from the interrogation.</p>
     <p>A <code>ptblank_agent</code> object.</p>
     </div>
     <div class="section level2">
+    <h2 id="demos">Demos<a class="anchor" aria-label="anchor" href="#demos"></a></h2>
+    
+
+
+<p>There's a YAML file available in the <strong>pointblank</strong> package that's also
+called <code>"agent-small_table.yml"</code>. The path for it can be accessed through
+<code><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file()</a></code>:</p><div class="sourceCode r"><pre><code><span class="va">yml_file_path</span> <span class="op">&lt;-</span> 
+  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span>
+    <span class="st">"yaml"</span>, <span class="st">"agent-small_table.yml"</span>,
+    package <span class="op">=</span> <span class="st">"pointblank"</span>
+  <span class="op">)</span></code></pre><p></p></div>
+<p>The YAML file can be read as an agent with a pre-existing validation plan by
+using the <code><a href="yaml_read_agent.html">yaml_read_agent()</a></code> function.</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/yaml_read_agent.html">yaml_read_agent</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">yml_file_path</span><span class="op">)</span>
+
+<span class="va">agent</span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_yaml_write_1.png" style="width:100%;"></p>
+<p>This particular agent is using <code>~ tbl_source("small_table", "tbl_store.yml")</code>
+to source the table-prep from a YAML file that holds a table store (can be
+seen using <code>yaml_agent_string(agent = agent)</code>). Let's put that file in the
+working directory (the <strong>pointblank</strong> package has the corresponding YAML
+file):</p><div class="sourceCode r"><pre><code><span class="va">yml_tbl_store_path</span> <span class="op">&lt;-</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span>
+    <span class="st">"yaml"</span>, <span class="st">"tbl_store.yml"</span>,
+    package <span class="op">=</span> <span class="st">"pointblank"</span>
+  <span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.copy</a></span><span class="op">(</span>from <span class="op">=</span> <span class="va">yml_tbl_store_path</span>, to <span class="op">=</span> <span class="st">"."</span><span class="op">)</span></code></pre><p></p></div>
+<p>As can be seen from the validation report, no interrogation was yet
+performed. Saving an agent to YAML will remove any traces of interrogation
+data and serve as a plan for a new interrogation on the same target table. We
+can either follow this up with with <code><a href="interrogate.html">interrogate()</a></code> and get an agent with
+intel, or, we can interrogate directly from the YAML file with
+<code>yaml_agent_interrogate()</code>:</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/yaml_agent_interrogate.html">yaml_agent_interrogate</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">yml_file_path</span><span class="op">)</span>
+
+<span class="va">agent</span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_yaml_write_2.png" style="width:100%;"></p>
+    </div>
+    <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
     
 
@@ -121,106 +159,6 @@ time, it has intel from the interrogation.</p>
 <code><a href="yaml_write.html">yaml_write</a>()</code></p></div>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Let's go through the process of</span></span>
-<span class="r-in"><span class="co"># developing an agent with a validation</span></span>
-<span class="r-in"><span class="co"># plan (to be used for the data quality</span></span>
-<span class="r-in"><span class="co"># analysis of the `small_table` dataset),</span></span>
-<span class="r-in"><span class="co"># and then offloading that validation</span></span>
-<span class="r-in"><span class="co"># plan to a pointblank YAML file; this</span></span>
-<span class="r-in"><span class="co"># will later be read in as a new agent and</span></span>
-<span class="r-in"><span class="co"># the target data will be interrogated</span></span>
-<span class="r-in"><span class="co"># (one step) with `yaml_agent_interrogate()`</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Creating an `action_levels` object is a</span></span>
-<span class="r-in"><span class="co"># common workflow step when creating a</span></span>
-<span class="r-in"><span class="co"># pointblank agent; we designate failure</span></span>
-<span class="r-in"><span class="co"># thresholds to the `warn`, `stop`, and</span></span>
-<span class="r-in"><span class="co"># `notify` states using `action_levels()`</span></span>
-<span class="r-in"><span class="va">al</span> <span class="op">&lt;-</span> </span>
-<span class="r-in">  <span class="fu"><a href="action_levels.html">action_levels</a></span><span class="op">(</span></span>
-<span class="r-in">    warn_at <span class="op">=</span> <span class="fl">0.10</span>,</span>
-<span class="r-in">    stop_at <span class="op">=</span> <span class="fl">0.25</span>,</span>
-<span class="r-in">    notify_at <span class="op">=</span> <span class="fl">0.35</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Now create a pointblank `agent` object</span></span>
-<span class="r-in"><span class="co"># and give it the `al` object (which</span></span>
-<span class="r-in"><span class="co"># serves as a default for all validation</span></span>
-<span class="r-in"><span class="co"># steps which can be overridden); the</span></span>
-<span class="r-in"><span class="co"># data will be referenced in `tbl`</span></span>
-<span class="r-in"><span class="co"># (a requirement for writing to YAML)</span></span>
-<span class="r-in"><span class="va">agent</span> <span class="op">&lt;-</span> </span>
-<span class="r-in">  <span class="fu"><a href="create_agent.html">create_agent</a></span><span class="op">(</span></span>
-<span class="r-in">    tbl <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,</span>
-<span class="r-in">    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,</span>
-<span class="r-in">    label <span class="op">=</span> <span class="st">"A simple example with the `small_table`."</span>,</span>
-<span class="r-in">    actions <span class="op">=</span> <span class="va">al</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Then, as with any `agent` object, we</span></span>
-<span class="r-in"><span class="co"># can add steps to the validation plan by</span></span>
-<span class="r-in"><span class="co"># using as many validation functions as we</span></span>
-<span class="r-in"><span class="co"># want</span></span>
-<span class="r-in"><span class="va">agent</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="va">agent</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu"><a href="col_exists.html">col_exists</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">date_time</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>,</span>
-<span class="r-in">    regex <span class="op">=</span> <span class="st">"[0-9]-[a-z]{3}-[0-9]{3}"</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="rows_distinct.html">rows_distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_lte.html">col_vals_lte</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># The agent can be written to a pointblank</span></span>
-<span class="r-in"><span class="co"># YAML file with `yaml_write()`</span></span>
-<span class="r-in"><span class="fu"><a href="yaml_write.html">yaml_write</a></span><span class="op">(</span></span>
-<span class="r-in">  agent <span class="op">=</span> <span class="va">agent</span>,</span>
-<span class="r-in">  filename <span class="op">=</span> <span class="st">"agent-small_table.yml"</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># The 'agent-small_table.yml' file is</span></span>
-<span class="r-in"><span class="co"># available in the package through `system.file()`</span></span>
-<span class="r-in"><span class="va">yml_file</span> <span class="op">&lt;-</span> </span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="st">"yaml"</span>, <span class="st">"agent-small_table.yml"</span>,</span>
-<span class="r-in">    package <span class="op">=</span> <span class="st">"pointblank"</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># We can view the YAML file in the console</span></span>
-<span class="r-in"><span class="co"># with the `yaml_agent_string()` function</span></span>
-<span class="r-in"><span class="fu"><a href="yaml_agent_string.html">yaml_agent_string</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">yml_file</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># The YAML can also be printed in the console</span></span>
-<span class="r-in"><span class="co"># by supplying the agent as the input</span></span>
-<span class="r-in"><span class="fu"><a href="yaml_agent_string.html">yaml_agent_string</a></span><span class="op">(</span>agent <span class="op">=</span> <span class="va">agent</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># We can interrogate the data (which</span></span>
-<span class="r-in"><span class="co"># is accessible through `tbl`)</span></span>
-<span class="r-in"><span class="co"># through direct use of the YAML file</span></span>
-<span class="r-in"><span class="co"># with `yaml_agent_interrogate()`</span></span>
-<span class="r-in"><span class="va">agent</span> <span class="op">&lt;-</span> </span>
-<span class="r-in">  <span class="fu">yaml_agent_interrogate</span><span class="op">(</span>filename <span class="op">=</span> <span class="va">yml_file</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">agent</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># If it's desired to only create a new</span></span>
-<span class="r-in"><span class="co"># agent with the validation plan in place</span></span>
-<span class="r-in"><span class="co"># (stopping short of interrogating the data),</span></span>
-<span class="r-in"><span class="co"># then the `yaml_read_agent()` function</span></span>
-<span class="r-in"><span class="co"># will be useful</span></span>
-<span class="r-in"><span class="va">agent</span> <span class="op">&lt;-</span> </span>
-<span class="r-in">  <span class="fu"><a href="yaml_read_agent.html">yaml_read_agent</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">yml_file</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">agent</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

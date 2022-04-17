@@ -95,6 +95,29 @@ the <code>info_*()</code> functions.</p>
     <p>A <code>ptblank_informant</code> object.</p>
     </div>
     <div class="section level2">
+    <h2 id="demos">Demos<a class="anchor" aria-label="anchor" href="#demos"></a></h2>
+    
+
+
+<p>There's a YAML file available in the <strong>pointblank</strong> package that's called
+<code>"informant-small_table.yml"</code>. The path for it can be accessed through
+<code><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file()</a></code>:</p><div class="sourceCode r"><pre><code><span class="va">yml_file_path</span> <span class="op">&lt;-</span> 
+  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span>
+    <span class="st">"yaml"</span>, <span class="st">"informant-small_table.yml"</span>,
+    package <span class="op">=</span> <span class="st">"pointblank"</span>
+  <span class="op">)</span></code></pre><p></p></div>
+<p>The YAML file can be read as an informant by using the
+<code>yaml_read_informant()</code> function.</p><div class="sourceCode r"><pre><code><span class="va">informant</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/yaml_read_informant.html">yaml_read_informant</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">yml_file_path</span><span class="op">)</span>
+
+<span class="va">informant</span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_yaml_write_3.png" style="width:100%;"></p>
+<p>As can be seen from the information report, the available table metadata was
+restored and reported. If you expect metadata to change with time, it might
+be beneficial to use <code><a href="incorporate.html">incorporate()</a></code> to query the target table. Or, we can
+perform this querying directly from the YAML file with
+<code><a href="yaml_informant_incorporate.html">yaml_informant_incorporate()</a></code>.</p>
+    </div>
+    <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
     
 
@@ -112,111 +135,6 @@ the <code>info_*()</code> functions.</p>
 <code><a href="yaml_write.html">yaml_write</a>()</code></p></div>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Create a pointblank `informant`</span></span>
-<span class="r-in"><span class="co"># object with `create_informant()`</span></span>
-<span class="r-in"><span class="co"># and the `small_table` dataset</span></span>
-<span class="r-in"><span class="va">informant</span> <span class="op">&lt;-</span> <span class="fu"><a href="create_informant.html">create_informant</a></span><span class="op">(</span><span class="va">small_table</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># An `informant` object can be written</span></span>
-<span class="r-in"><span class="co"># to a YAML file with the `yaml_write()`</span></span>
-<span class="r-in"><span class="co"># function</span></span>
-<span class="r-in"><span class="co"># yaml_write(</span></span>
-<span class="r-in"><span class="co">#   informant = informant,</span></span>
-<span class="r-in"><span class="co">#   filename = "informant-small_table.yml"</span></span>
-<span class="r-in"><span class="co"># )</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># The `informant-small_table.yml` file</span></span>
-<span class="r-in"><span class="co"># looks like this when written</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#&gt; info_label: '[2020-09-06|13:37:38]'</span></span>
-<span class="r-in"><span class="co">#&gt; table:</span></span>
-<span class="r-in"><span class="co">#&gt;   name: small_table</span></span>
-<span class="r-in"><span class="co">#&gt; _columns: 8</span></span>
-<span class="r-in"><span class="co">#&gt; _rows: 13</span></span>
-<span class="r-in"><span class="co">#&gt; _type: tbl_df</span></span>
-<span class="r-in"><span class="co">#&gt; columns:</span></span>
-<span class="r-in"><span class="co">#&gt;   date_time:</span></span>
-<span class="r-in"><span class="co">#&gt;     _type: POSIXct, POSIXt</span></span>
-<span class="r-in"><span class="co">#&gt;   date:</span></span>
-<span class="r-in"><span class="co">#&gt;     _type: Date</span></span>
-<span class="r-in"><span class="co">#&gt;   a:</span></span>
-<span class="r-in"><span class="co">#&gt;     _type: integer</span></span>
-<span class="r-in"><span class="co">#&gt;   b:</span></span>
-<span class="r-in"><span class="co">#&gt;     _type: character</span></span>
-<span class="r-in"><span class="co">#&gt;   c:</span></span>
-<span class="r-in"><span class="co">#&gt;     _type: numeric</span></span>
-<span class="r-in"><span class="co">#&gt;   d:</span></span>
-<span class="r-in"><span class="co">#&gt;     _type: numeric</span></span>
-<span class="r-in"><span class="co">#&gt;   e:</span></span>
-<span class="r-in"><span class="co">#&gt;     _type: logical</span></span>
-<span class="r-in"><span class="co">#&gt;   f:</span></span>
-<span class="r-in"><span class="co">#&gt;     _type: character</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># We can add keys and values to</span></span>
-<span class="r-in"><span class="co"># add more pertinent information; with</span></span>
-<span class="r-in"><span class="co"># some direct editing of the file we get:</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#&gt; info_label: '[2020-09-06|13:37:38]'</span></span>
-<span class="r-in"><span class="co">#&gt; table:</span></span>
-<span class="r-in"><span class="co">#&gt;   name: small_table</span></span>
-<span class="r-in"><span class="co">#&gt;   _columns: 8</span></span>
-<span class="r-in"><span class="co">#&gt;   _rows: 13</span></span>
-<span class="r-in"><span class="co">#&gt;   _type: tbl_df</span></span>
-<span class="r-in"><span class="co">#&gt; columns:</span></span>
-<span class="r-in"><span class="co">#&gt;   date_time:</span></span>
-<span class="r-in"><span class="co">#&gt;     _type: POSIXct, POSIXt</span></span>
-<span class="r-in"><span class="co">#&gt;     info: Date-time values.</span></span>
-<span class="r-in"><span class="co">#&gt;   date:</span></span>
-<span class="r-in"><span class="co">#&gt;     _type: Date</span></span>
-<span class="r-in"><span class="co">#&gt;     info: Date values (the date part of `date_time`).</span></span>
-<span class="r-in"><span class="co">#&gt;   a:</span></span>
-<span class="r-in"><span class="co">#&gt;     _type: integer</span></span>
-<span class="r-in"><span class="co">#&gt;     info: Small integer values (no missing values).</span></span>
-<span class="r-in"><span class="co">#&gt;   b:</span></span>
-<span class="r-in"><span class="co">#&gt;     _type: character</span></span>
-<span class="r-in"><span class="co">#&gt;     info: Strings with a common pattern.</span></span>
-<span class="r-in"><span class="co">#&gt;   c:</span></span>
-<span class="r-in"><span class="co">#&gt;     _type: numeric</span></span>
-<span class="r-in"><span class="co">#&gt;     info: Small numeric values (contains missing values).</span></span>
-<span class="r-in"><span class="co">#&gt;   d:</span></span>
-<span class="r-in"><span class="co">#&gt;     _type: numeric</span></span>
-<span class="r-in"><span class="co">#&gt;     info: Large numeric values (much greater than `c`).</span></span>
-<span class="r-in"><span class="co">#&gt;   e:</span></span>
-<span class="r-in"><span class="co">#&gt;     _type: logical</span></span>
-<span class="r-in"><span class="co">#&gt;     info: TRUE and FALSE values.</span></span>
-<span class="r-in"><span class="co">#&gt;   f:</span></span>
-<span class="r-in"><span class="co">#&gt;     _type: character</span></span>
-<span class="r-in"><span class="co">#&gt;     info: Strings of the set `"low"`, `"mid"`, and `"high"`.</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># We could also have done the same</span></span>
-<span class="r-in"><span class="co"># with the `informant` object by use of</span></span>
-<span class="r-in"><span class="co"># the `info_columns()` function</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># The 'informant-small_table.yml' file</span></span>
-<span class="r-in"><span class="co"># is available in the package through</span></span>
-<span class="r-in"><span class="co"># `system.file()`</span></span>
-<span class="r-in"><span class="va">yml_file</span> <span class="op">&lt;-</span> </span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="st">"yaml"</span>, <span class="st">"informant-small_table.yml"</span>,</span>
-<span class="r-in">    package <span class="op">=</span> <span class="st">"pointblank"</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># We can read this YAML file back</span></span>
-<span class="r-in"><span class="co"># as an `informant` object by using</span></span>
-<span class="r-in"><span class="co"># `yaml_read_informant()`</span></span>
-<span class="r-in"><span class="va">informant</span> <span class="op">&lt;-</span> </span>
-<span class="r-in">  <span class="fu">yaml_read_informant</span><span class="op">(</span>filename <span class="op">=</span> <span class="va">yml_file</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">informant</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

@@ -305,7 +305,7 @@ yaml_agent_interrogate <- function(
 #' 
 #' \if{html}{
 #' \out{
-#' `r pb_get_image_tag(file = "man_yaml_agent_show_exprs_2.png")`
+#' `r pb_get_image_tag(file = "man_yaml_agent_show_exprs_1.png")`
 #' }
 #' }
 #' 

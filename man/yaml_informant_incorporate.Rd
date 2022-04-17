@@ -26,100 +26,43 @@ default options of that function. As with \code{\link[=yaml_read_informant]{yaml
 informant is returned except, this time, it has been updated with the latest
 information from the target table.
 }
+\section{Demos}{
+
+
+There's a YAML file available in the \strong{pointblank} package that's called
+\code{"informant-small_table.yml"}. The path for it can be accessed through
+\code{system.file()}:\if{html}{\out{<div class="sourceCode r">}}\preformatted{yml_file_path <- 
+  system.file(
+    "yaml", "informant-small_table.yml",
+    package = "pointblank"
+  )
+}\if{html}{\out{</div>}}
+
+The YAML file can be read as an informant by using the
+\code{yaml_informant_incorporate()} function. If you expect metadata to change
+with time, it's best to use \code{yaml_informant_incorporate()} instead of
+\code{\link[=yaml_read_informant]{yaml_read_informant()}} since the former will go the extra mile and perform
+\code{\link[=incorporate]{incorporate()}} in addition to the reading.\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- yaml_informant_incorporate(filename = yml_file_path)
+
+informant
+}\if{html}{\out{</div>}}
+
+\if{html}{
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_yaml_write_3.png" style="width:100\%;">
+}
+}
+
+As can be seen from the information report, the available table metadata was
+restored and reported. If the metadata were to change with time, that would
+be updated as well.
+}
+
 \section{Function ID}{
 
 11-7
 }
 
-\examples{
-if (interactive()) {
-
-# Let's go through the process of
-# developing an informant with information
-# about the `small_table` dataset and then
-# move all that to a pointblank YAML
-# file; this will later be read in as a
-# new informant and the target data will
-# be incorporated into the info text
-# (in one step) with
-# `yaml_informant_incorporate()`
-
-# Now create a pointblank `informant`
-# object; the data will be referenced
-# to `tbl` with a table-prep formula
-# (a requirement for writing to YAML)
-informant <- 
-  create_informant(
-    tbl = ~ small_table,
-    label = "A simple example with the `small_table`."
-  )
-
-# Then, as with any `informant` object, we
-# can add information by using as many
-# `info_*()` functions as we want
-informant <-
-  informant \%>\%
-  info_columns(
-   columns = vars(a),
-   info = "In the range of 1 to 10. (SIMPLE)"
-  ) \%>\%
-  info_columns(
-    columns = starts_with("date"),
-    info = "Time-based values (e.g., `Sys.time()`)."
-  ) \%>\%
-  info_columns(
-    columns = "date",
-    info = "The date part of `date_time`. (CALC)"
-  ) \%>\%
-  info_section(
-    section_name = "rows",
-    row_count = "There are {row_count} rows available."
-  ) \%>\%
-  info_snippet(
-    snippet_name = "row_count",
-    fn = ~ . \%>\% nrow()
-  ) \%>\%
-  incorporate()
-
-# The informant can be written to a pointblank
-# YAML file with `yaml_write()`
-yaml_write(
-  informant = informant,
-  filename = "informant-small_table.yml"
-)
-
-# The 'informant-small_table.yml' file
-# is available in the package through
-# `system.file()`
-yml_file <- 
-  system.file(
-    "yaml", "informant-small_table.yml",
-    package = "pointblank"
-  )
-
-# We can incorporate the data (which
-# is accessible through the table-prep
-# formula) into the info text through
-# direct use of the YAML file with
-# `yaml_informant_incorporate()`
-informant <- 
-  yaml_informant_incorporate(filename = yml_file)
-
-class(informant)
-
-# If it's desired to only create a new
-# informant with the information in place
-# (stopping short of processing), then the
-# `yaml_read_informant()` function will
-# be useful
-informant <- 
-  yaml_read_informant(filename = yml_file)
-
-class(informant)
-
-}
-
-}
 \seealso{
 Other pointblank YAML: 
 \code{\link{yaml_agent_interrogate}()},

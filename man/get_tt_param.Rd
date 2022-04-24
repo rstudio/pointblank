@@ -40,7 +40,7 @@ summary tables with columns that mirror the numeric and character columns
 in their input tables, respectively. For that reason, a column name must be
 supplied to the \code{column} argument in \code{get_tt_param()}.
 }
-\section{Demos}{
+\section{Examples}{
 
 
 Get summary statistics for the first quarter of the \code{game_revenue} dataset

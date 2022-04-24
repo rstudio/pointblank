@@ -38,7 +38,7 @@ by using the \code{\link[=get_multiagent_report]{get_multiagent_report()}} funct
 the interrogation time and it automatically recognizes which validation steps
 are equivalent across interrogations.
 }
-\section{Demos}{
+\section{Examples}{
 
 
 Let's walk through several theoretical data quality analyses of an extremely

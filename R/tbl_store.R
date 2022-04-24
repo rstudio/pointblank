@@ -123,7 +123,7 @@
 #' 
 #' @return A `tbl_store` object that contains table-prep formulas.
 #' 
-#' @section Demos:
+#' @section Examples:
 #' 
 #' ## Creating an in-memory table store and adding table-prep formulas
 #' 
@@ -585,7 +585,7 @@ add_to_name_list <- function(
 #' 
 #' @return A table-prep formula.
 #' 
-#' @section Demos:
+#' @section Examples:
 #' 
 #' Let's create a `tbl_store` object by giving two table-prep formulas to
 #' [tbl_store()].
@@ -767,7 +767,7 @@ has_substitutions <- function(x) {
 #' 
 #' @return A table object.
 #' 
-#' @section Demos:
+#' @section Examples:
 #' 
 #' Define a `tbl_store` object by adding several table-prep formulas in
 #' [tbl_store()].

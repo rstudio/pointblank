@@ -64,7 +64,7 @@
 #'   
 #' @return Invisibly returns `TRUE` if the file has been written. 
 #' 
-#' @section Demos:
+#' @section Examples:
 #' 
 #' Let's draft a validation plan for the `dplyr::storms` dataset.
 #' 

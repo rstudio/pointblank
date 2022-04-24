@@ -101,7 +101,7 @@
 #' 
 #' @return A `list` object.
 #' 
-#' @section Demos:
+#' @section Examples:
 #' 
 #' Create a simple data frame with a column of numerical values.
 #' 

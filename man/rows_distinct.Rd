@@ -243,7 +243,7 @@ transformation of an agent to YAML without any writing to disk by using the
 \code{\link[=yaml_agent_string]{yaml_agent_string()}} function.
 }
 
-\section{Demos}{
+\section{Examples}{
 
 
 Create a simple table with three columns of numerical values.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <-

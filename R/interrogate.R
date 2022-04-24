@@ -50,7 +50,7 @@
 #'   
 #' @return A `ptblank_agent` object.
 #'   
-#' @section Demos:
+#' @section Examples:
 #'  
 #' Create a simple table with two columns of numerical values.
 #' 

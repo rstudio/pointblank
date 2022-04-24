@@ -28,7 +28,7 @@ Only string data from the input table will generate columns in the output
 table. Column names from the input will be used in the output, preserving
 order as well.
 }
-\section{Demos}{
+\section{Examples}{
 
 
 Get string information for the string-based columns in the \code{game_revenue}

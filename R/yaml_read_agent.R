@@ -41,7 +41,7 @@
 #'   
 #' @return A `ptblank_agent` object.
 #'   
-#' @section Demos:
+#' @section Examples:
 #'
 #' There's a YAML file available in the **pointblank** package that's also
 #' called `"agent-small_table.yml"`. The path for it can be accessed through
@@ -159,7 +159,7 @@ yaml_read_agent <- function(
 #' 
 #' @return A `ptblank_agent` object.
 #'
-#' @section Demos:
+#' @section Examples:
 #'
 #' There's a YAML file available in the **pointblank** package that's also
 #' called `"agent-small_table.yml"`. The path for it can be accessed through
@@ -257,7 +257,7 @@ yaml_agent_interrogate <- function(
 #'   *agent*.
 #' @param path An optional path to the YAML file (combined with `filename`).
 #' 
-#' @section Demos:
+#' @section Examples:
 #' 
 #' Let's create a validation plan for the data quality analysis of the
 #' `small_table` dataset. We need an agent and its table-prep formula enables

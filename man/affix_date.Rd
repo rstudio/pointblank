@@ -50,7 +50,7 @@ not at the time of writing a file to disk. In most cases, especially when
 using \code{affix_date()} with the aforementioned file-writing functions, the file
 timestamps should approximate the time components affixed to the filenames.
 }
-\section{Demos}{
+\section{Examples}{
 
 \subsection{The basics of creating a filename with the current date}{
 

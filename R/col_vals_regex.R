@@ -177,7 +177,7 @@
 #'   called primarily for its potential side-effects (e.g., signaling failure).
 #'   The test function returns a logical value.
 #' 
-#' @section Demos:
+#' @section Examples:
 #' 
 #' The `small_table` dataset in the package has a character-based `b` column
 #' with values that adhere to a very particular pattern. The following examples

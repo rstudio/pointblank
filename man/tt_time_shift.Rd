@@ -40,7 +40,7 @@ result in a truncation to \code{"20d"}. Similarly, a \code{difftime} object will
 altered in the same circumstances, however, the object will resolved to an
 exact number of days through rounding.
 }
-\section{Demos}{
+\section{Examples}{
 
 
 Let's use the \code{game_revenue} dataset, included in the \strong{pointblank} package,

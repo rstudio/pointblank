@@ -79,7 +79,7 @@ When using an \emph{agent}, we often opt to not use any functions in \code{fns} 
 on the entire interrogation, allowing for finer control on side effects and
 reducing potential for duplicating any side effects.
 }
-\section{Demos}{
+\section{Examples}{
 
 
 For these examples, we will use the included \code{small_table} dataset.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table

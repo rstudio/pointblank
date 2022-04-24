@@ -37,7 +37,7 @@
 #'   
 #' @return A length-1 logical vector.
 #' 
-#' @section Demos:
+#' @section Examples:
 #' 
 #' The `small_table` dataset in the package has the columns `date_time`, `date`,
 #' and the `a` through `f` columns.

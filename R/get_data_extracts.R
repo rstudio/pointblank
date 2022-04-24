@@ -53,7 +53,7 @@
 #' @return A list of tables if `i` is not provided, or, a standalone table if
 #'   `i` is given.
 #' 
-#' @section Demos:
+#' @section Examples:
 #' 
 #' Create a series of two validation steps focused on testing row values for
 #' part of the `small_table` object. `interrogate()` immediately.

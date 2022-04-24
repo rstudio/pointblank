@@ -159,7 +159,7 @@ through \code{\link[=x_read_disk]{x_read_disk()}}, it can be reused to access th
 may changed, hence the need to use an expression for this).
 }
 
-\section{Demos}{
+\section{Examples}{
 
 
 Let's walk through how we can generate some useful information for a really

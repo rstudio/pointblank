@@ -55,7 +55,7 @@ The username and password are supplied through environment variable names. If
 desired, values for the username and password can be supplied directly by
 enclosing such values in \code{\link[=I]{I()}}.
 }
-\section{Demos}{
+\section{Examples}{
 
 \subsection{Obtaining in-memory database tables}{
 

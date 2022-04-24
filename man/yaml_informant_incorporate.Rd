@@ -26,7 +26,7 @@ default options of that function. As with \code{\link[=yaml_read_informant]{yaml
 informant is returned except, this time, it has been updated with the latest
 information from the target table.
 }
-\section{Demos}{
+\section{Examples}{
 
 
 There's a YAML file available in the \strong{pointblank} package that's called

@@ -38,7 +38,7 @@ utilize post-interrogation objects within the \emph{agent}'s x-list (obtained by
 using the \code{\link[=get_agent_x_list]{get_agent_x_list()}} function). This allows for many possibilities
 in producing a single logical value from an interrogation.
 }
-\section{Demos}{
+\section{Examples}{
 
 
 Create a simple table with a column of numerical values.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- dplyr::tibble(a = c(4, 5, 7, 8))

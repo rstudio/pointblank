@@ -91,7 +91,7 @@ version of \code{report_object}, provided as a length-one character vector; The
 HTML has inlined styles, making it more suitable for email message bodies
 }
 }
-\section{Demos}{
+\section{Examples}{
 
 
 Create a simple data frame with a column of numerical values.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- dplyr::tibble(a = c(5, 7, 8, 5))

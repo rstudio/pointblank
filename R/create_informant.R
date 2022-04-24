@@ -158,7 +158,7 @@
 #'   
 #' @return A `ptblank_informant` object.
 #' 
-#' @section Demos:
+#' @section Examples:
 #' 
 #' Let's walk through how we can generate some useful information for a really
 #' small table. It's actually called `small_table` and we can find it as a

@@ -84,7 +84,7 @@
 #'   `list(warn = ~ warning("Too many failures."))`. A series of expressions for
 #'   each named state can be used by enclosing the set of statements with `{ }`.
 #' 
-#' @section Demos:
+#' @section Examples:
 #' 
 #' For these examples, we will use the included `small_table` dataset.
 #' 

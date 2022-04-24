@@ -140,7 +140,7 @@
 #'   called primarily for its potential side-effects (e.g., signaling failure).
 #'   The test function returns a logical value.
 #'   
-#' @section Demos:
+#' @section Examples:
 #' 
 #' Create a simple table with three columns and three rows of values:
 #' 

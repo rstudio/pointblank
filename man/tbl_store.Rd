@@ -104,7 +104,7 @@ done with \code{\link[=yaml_agent_interrogate]{yaml_agent_interrogate()}} (e.g.,
 \code{yaml_agent_interrogate("agent-sml_table_high.yml")}).
 }
 
-\section{Demos}{
+\section{Examples}{
 
 \subsection{Creating an in-memory table store and adding table-prep formulas}{
 

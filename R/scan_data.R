@@ -74,7 +74,7 @@
 #' 
 #' @return A `ptblank_tbl_scan` object.
 #' 
-#' @section Demos:
+#' @section Examples:
 #' 
 #' Get an HTML document that describes all of the data in the `dplyr::storms`
 #' dataset.

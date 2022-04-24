@@ -21,7 +21,7 @@ column, which is an integer-based column containing the indices of the
 columns from the input table. The second column, \code{"value"}, contains the
 column names from the input table.
 }
-\section{Demos}{
+\section{Examples}{
 
 
 Get the column names of the \code{game_revenue} dataset that is included in the

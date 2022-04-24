@@ -283,7 +283,7 @@
 #'   
 #' @return A `ptblank_agent` object.
 #'   
-#' @section Demos:
+#' @section Examples:
 #' 
 #' ## Creating an agent, adding a validation plan, and interrogating
 #' 

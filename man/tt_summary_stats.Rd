@@ -34,7 +34,7 @@ Only numerical data from the input table will generate columns in the output
 table. Column names from the input will be used in the output, preserving
 order as well.
 }
-\section{Demos}{
+\section{Examples}{
 
 
 Get summary statistics for the \code{game_revenue} dataset that is included in the

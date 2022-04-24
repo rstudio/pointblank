@@ -25,7 +25,7 @@ multiple columns in \code{vars()} so having \code{active = ~ . \%>\% has_columns
 inactive at \code{\link[=interrogate]{interrogate()}} time unless the columns \code{column_1} and \code{column_2}
 are both present.
 }
-\section{Demos}{
+\section{Examples}{
 
 
 The \code{small_table} dataset in the package has the columns \code{date_time}, \code{date},

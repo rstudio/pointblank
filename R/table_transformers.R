@@ -44,7 +44,7 @@
 #' 
 #' @return A `tibble` object.
 #' 
-#' @section Demos:
+#' @section Examples:
 #' 
 #' Get summary statistics for the `game_revenue` dataset that is included in the
 #' **pointblank** package.
@@ -211,7 +211,7 @@ tt_summary_stats <- function(tbl) {
 #' 
 #' @return A `tibble` object.
 #' 
-#' @section Demos:
+#' @section Examples:
 #' 
 #' Get string information for the string-based columns in the `game_revenue`
 #' dataset that is included in the **pointblank** package.
@@ -310,7 +310,7 @@ tt_string_info <- function(tbl) {
 #' 
 #' @return A `tibble` object.
 #' 
-#' @section Demos:
+#' @section Examples:
 #' 
 #' Get the dimensions of the `game_revenue` dataset that is included in the
 #' **pointblank** package.
@@ -382,7 +382,7 @@ tt_tbl_dims <- function(tbl) {
 #' 
 #' @return A `tibble` object.
 #' 
-#' @section Demos:
+#' @section Examples:
 #' 
 #' Get the column names of the `game_revenue` dataset that is included in the
 #' **pointblank** package.
@@ -478,7 +478,7 @@ tt_tbl_colnames <- function(tbl) {
 #' @return A data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object
 #'   depending on what was provided as `tbl`.
 #' 
-#' @section Demos:
+#' @section Examples:
 #' 
 #' Let's use the `game_revenue` dataset, included in the **pointblank** package,
 #' as the input table for the first demo. It has entries in the first 21 days of
@@ -661,7 +661,7 @@ tt_time_shift <- function(
 #' @return A data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object
 #'   depending on what was provided as `tbl`.
 #' 
-#' @section Demos:
+#' @section Examples:
 #' 
 #' Let's use the `game_revenue` dataset, included in the **pointblank** package,
 #' as the input table for the first demo. It has entries in the first 21 days of
@@ -850,7 +850,7 @@ tt_time_slice <- function(
 #'   [tt_tbl_colnames()] functions will always generate a two-column summary
 #'   table).
 #'   
-#' @section Demos:
+#' @section Examples:
 #' 
 #' Get summary statistics for the first quarter of the `game_revenue` dataset
 #' that's included in the **pointblank** package.

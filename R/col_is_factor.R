@@ -111,7 +111,7 @@
 #'   called primarily for its potential side-effects (e.g., signaling failure).
 #'   The test function returns a logical value.
 #'
-#' @section Demos:
+#' @section Examples:
 #' 
 #' Let's modify the `f` column in the `small_table` dataset so that the values
 #' are factors instead of having the `character` class. The following examples

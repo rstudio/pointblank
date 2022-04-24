@@ -56,7 +56,7 @@
 #'   
 #' @return A `tbl_dbi` object.
 #' 
-#' @section Demos:
+#' @section Examples:
 #' 
 #' ## Obtaining in-memory database tables
 #' 

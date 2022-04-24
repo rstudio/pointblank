@@ -50,7 +50,7 @@
 #'   
 #' @return A character vector.
 #'   
-#' @section Demos:
+#' @section Examples:
 #' 
 #' ## The basics of creating a filename with the current date
 #' 
@@ -198,7 +198,7 @@ affix_date <- function(
 #'
 #' @return A character vector.
 #' 
-#' @section Demos:
+#' @section Examples:
 #' 
 #' ## The basics of creating a filename with the current date and time
 #' 

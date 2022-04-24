@@ -31,7 +31,7 @@ plan specified in the \strong{pointblank} YAML, we can use the
 \code{\link[=yaml_agent_show_exprs]{yaml_agent_show_exprs()}} function. That function shows us (in the console)
 the \strong{pointblank} expressions for generating the described validation plan.
 }
-\section{Demos}{
+\section{Examples}{
 
 
 There's a YAML file available in the \strong{pointblank} package that's also

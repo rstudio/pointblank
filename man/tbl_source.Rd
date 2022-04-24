@@ -29,7 +29,7 @@ file (which can be created with the \code{\link[=yaml_write]{yaml_write()}} func
 Should you need to obtain the table itself (that is generated via the
 table-prep formula), then the \code{\link[=tbl_get]{tbl_get()}} function should be used for that.
 }
-\section{Demos}{
+\section{Examples}{
 
 
 Let's create a \code{tbl_store} object by giving two table-prep formulas to

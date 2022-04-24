@@ -48,7 +48,7 @@
 #'
 #' @return A logical value.
 #' 
-#' @section Demos:
+#' @section Examples:
 #' 
 #' Create a simple table with a column of numerical values.
 #' 

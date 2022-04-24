@@ -43,7 +43,7 @@ form \verb{col_vals_*()} and also include \code{\link[=conjointly]{conjointly()}
 Only functions from that combined set of validation functions can yield data
 extracts.
 }
-\section{Demos}{
+\section{Examples}{
 
 
 Create a series of two validation steps focused on testing row values for

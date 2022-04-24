@@ -133,7 +133,7 @@ write_testthat_file(
 )
 }\if{html}{\out{</div>}}
 }
-\section{Demos}{
+\section{Examples}{
 
 \subsection{Creating a \strong{testthat} file from an \emph{agent}}{
 

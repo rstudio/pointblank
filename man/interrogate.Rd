@@ -51,7 +51,7 @@ according its plan. After that, the agent will have gathered intel, and we
 can use functions like \code{\link[=get_agent_report]{get_agent_report()}} and \code{\link[=all_passed]{all_passed()}} to understand
 how the interrogation went down.
 }
-\section{Demos}{
+\section{Examples}{
 
 
 Create a simple table with two columns of numerical values.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <-

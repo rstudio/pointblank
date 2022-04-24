@@ -20,7 +20,7 @@ columns. The output summary table will have two columns and two rows. The
 first is the \code{".param."} column with the labels \code{"rows"} and \code{"columns"}; the
 second column, \code{"value"}, contains the row and column counts.
 }
-\section{Demos}{
+\section{Examples}{
 
 
 Get the dimensions of the \code{game_revenue} dataset that is included in the

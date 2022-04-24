@@ -47,7 +47,7 @@
 #'   
 #' @return A `ptblank_multiagent` object.
 #' 
-#' @section Demos:
+#' @section Examples:
 #' 
 #' Let's walk through several theoretical data quality analyses of an extremely
 #' small table. that table is called `small_table` and we can find it as a

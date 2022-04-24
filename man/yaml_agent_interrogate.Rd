@@ -25,7 +25,7 @@ additional auto-invocation of \code{\link[=interrogate]{interrogate()}} uses the
 that function. As with \code{\link[=yaml_read_agent]{yaml_read_agent()}} the agent is returned except, this
 time, it has intel from the interrogation.
 }
-\section{Demos}{
+\section{Examples}{
 
 
 There's a YAML file available in the \strong{pointblank} package that's also

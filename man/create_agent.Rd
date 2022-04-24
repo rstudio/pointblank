@@ -283,7 +283,7 @@ monitoring and management, and, the reporting (which can be customized with
 a given target table.
 }
 
-\section{Demos}{
+\section{Examples}{
 
 \subsection{Creating an agent, adding a validation plan, and interrogating}{
 

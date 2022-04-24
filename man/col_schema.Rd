@@ -36,7 +36,7 @@ types (\code{"DoubleType"}, \code{"StringType"}, etc.). This is great if we want
 validate table column schemas both on the server side and when tabular data
 is collected and loaded into R.
 }
-\section{Demos}{
+\section{Examples}{
 
 
 Create a simple table with two columns: one \code{integer} and the other

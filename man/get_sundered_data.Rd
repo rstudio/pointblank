@@ -67,7 +67,7 @@ function. Put another way, we cannot split the target table using a
 collection of in-consideration validation steps that use different forms of
 the input table.
 }
-\section{Demos}{
+\section{Examples}{
 
 
 Create a series of two validation steps focused on testing row values for

@@ -73,7 +73,7 @@ Viewer. It's also a \code{"shiny.tag.list"} object and so can be integrated in R
 Markdown HTML output or in Shiny applications. If you need the output HTML,
 it's to export that to a file with the \code{\link[=export_report]{export_report()}} function.
 }
-\section{Demos}{
+\section{Examples}{
 
 
 Get an HTML document that describes all of the data in the \code{dplyr::storms}

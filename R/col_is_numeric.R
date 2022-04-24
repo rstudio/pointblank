@@ -111,7 +111,7 @@
 #'   called primarily for its potential side-effects (e.g., signaling failure).
 #'   The test function returns a logical value.
 #'   
-#' @section Demos:
+#' @section Examples:
 #' 
 #' The `small_table` dataset in the package has a `d` column that is known to be
 #' numeric. The following examples will validate that that column is indeed of

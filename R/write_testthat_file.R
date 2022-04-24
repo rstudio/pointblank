@@ -138,7 +138,7 @@
 #'   
 #' @return Invisibly returns `TRUE` if the **testthat** file has been written. 
 #' 
-#' @section Demos:
+#' @section Examples:
 #' 
 #' ## Creating a **testthat** file from an *agent*
 #' 

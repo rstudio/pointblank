@@ -58,7 +58,7 @@
 #'   
 #' @return A `tbl_df` object.
 #' 
-#' @section Demos:
+#' @section Examples:
 #' 
 #' ## Producing tables from CSV files
 #' 

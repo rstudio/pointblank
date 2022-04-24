@@ -63,7 +63,7 @@ to read the target table when \code{\link[=interrogate]{interrogate()}} or \code
 This option can be set when using \code{\link[=create_agent]{create_agent()}}/\code{\link[=create_informant]{create_informant()}} or
 with \code{\link[=set_tbl]{set_tbl()}} (useful with an existing agent or informant object).
 }
-\section{Demos}{
+\section{Examples}{
 
 \subsection{Writing an \code{agent} object to a YAML file}{
 

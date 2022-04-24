@@ -22,7 +22,7 @@ function. What's returned is a new \emph{informant} object with the information
 intact. The \emph{informant} object can be given more information through use of
 the \verb{info_*()} functions.
 }
-\section{Demos}{
+\section{Examples}{
 
 
 There's a YAML file available in the \strong{pointblank} package that's called

@@ -71,7 +71,7 @@ values without domain expertise. However, using \code{draft_validation()} could
 get you started on floor 10 of tackling data quality issues and is in any
 case better than starting with an empty code editor view.
 }
-\section{Demos}{
+\section{Examples}{
 
 
 Let's draft a validation plan for the \code{dplyr::storms} dataset.\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::storms

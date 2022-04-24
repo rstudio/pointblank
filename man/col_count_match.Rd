@@ -210,7 +210,7 @@ to YAML without any writing to disk by using the \code{\link[=yaml_agent_string]
 function.
 }
 
-\section{Demos}{
+\section{Examples}{
 
 
 Create a simple table with three columns and three rows of values:\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <-

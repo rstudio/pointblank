@@ -49,7 +49,7 @@ files are available in a GitHub repository then we can use the
 \code{\link[=from_github]{from_github()}} function to specify the name and location of the table data
 in a repository.
 }
-\section{Demos}{
+\section{Examples}{
 
 \subsection{Producing tables from CSV files}{
 

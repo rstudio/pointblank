@@ -191,7 +191,7 @@
 #'   called primarily for its potential side-effects (e.g., signaling failure).
 #'   The test function returns a logical value.
 #' 
-#' @section Demos:
+#' @section Examples:
 #' 
 #' The `game_revenue` dataset in the package has the column `session_start`,
 #' which contains date-time values. Let's create a column of difftime values (in

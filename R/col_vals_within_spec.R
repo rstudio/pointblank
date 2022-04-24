@@ -225,7 +225,7 @@
 #'   called primarily for its potential side-effects (e.g., signaling failure).
 #'   The test function returns a logical value.
 #' 
-#' @section Demos:
+#' @section Examples:
 #' 
 #' The `specifications` dataset in the package has columns of character data
 #' that correspond to each of the specifications that can be tested. The

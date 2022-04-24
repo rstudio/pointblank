@@ -32,7 +32,7 @@
 #' 
 #' @return A `ptblank_informant` object.
 #' 
-#' @section Demos:
+#' @section Examples:
 #' 
 #' There's a YAML file available in the **pointblank** package that's called
 #' `"informant-small_table.yml"`. The path for it can be accessed through
@@ -129,7 +129,7 @@ yaml_read_informant <- function(
 #' 
 #' @return A `ptblank_informant` object.
 #'
-#' @section Demos:
+#' @section Examples:
 #' 
 #' There's a YAML file available in the **pointblank** package that's called
 #' `"informant-small_table.yml"`. The path for it can be accessed through

@@ -30,7 +30,7 @@ Should you want a table-prep formula from a table store to use as a value for
 \code{tbl} (in \code{\link[=create_agent]{create_agent()}}, \code{\link[=create_informant]{create_informant()}}, or \code{\link[=set_tbl]{set_tbl()}}), then have
 a look at the \code{\link[=tbl_source]{tbl_source()}} function.
 }
-\section{Demos}{
+\section{Examples}{
 
 
 Define a \code{tbl_store} object by adding several table-prep formulas in

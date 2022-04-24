@@ -69,7 +69,7 @@
 #' @return A list of table objects if `type` is `NULL`, or, a single table if a
 #'   `type` is given.
 #' 
-#' @section Demos:
+#' @section Examples:
 #' 
 #' Create a series of two validation steps focused on testing row values for
 #' part of the `small_table` object. Then, `interrogate()`.

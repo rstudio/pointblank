@@ -55,7 +55,7 @@ the \code{time_column}. This ordering is always done in an ascending manner. Any
 \code{NA}/\code{NULL} values in the \code{time_column} will result in the corresponding rows
 can being removed (no matter which slice is retained).
 }
-\section{Demos}{
+\section{Examples}{
 
 
 Let's use the \code{game_revenue} dataset, included in the \strong{pointblank} package,

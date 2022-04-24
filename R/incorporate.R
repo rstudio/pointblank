@@ -33,7 +33,7 @@
 #' 
 #' @return A `ptblank_informant` object.
 #' 
-#' @section Demos:
+#' @section Examples:
 #' 
 #' Take the `small_table` and assign it to `changing_table` (we'll modify it
 #' later):

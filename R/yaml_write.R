@@ -62,7 +62,7 @@
 #'   
 #' @return Invisibly returns `TRUE` if the YAML file has been written. 
 #'   
-#' @section Demos:
+#' @section Examples:
 #' 
 #' ## Writing an `agent` object to a YAML file
 #' 
@@ -548,7 +548,7 @@ yaml_write <- function(
 #'   `FALSE` so expressions as written will be retained in the YAML
 #'   representation.
 #'   
-#' @section Demos:
+#' @section Examples:
 #'
 #' There's a YAML file available in the **pointblank** package that's called
 #' `"agent-small_table.yml"`. The path for it can be accessed through

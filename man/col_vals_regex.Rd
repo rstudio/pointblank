@@ -280,7 +280,7 @@ possible to preview the transformation of an agent to YAML without any
 writing to disk by using the \code{\link[=yaml_agent_string]{yaml_agent_string()}} function.
 }
 
-\section{Demos}{
+\section{Examples}{
 
 
 The \code{small_table} dataset in the package has a character-based \code{b} column

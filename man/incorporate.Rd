@@ -22,7 +22,7 @@ updated (getting the current state of table dimensions, re-rendering the
 info text, etc.) and we can print the \emph{informant} object or use the
 \code{\link[=get_informant_report]{get_informant_report()}} function to see the information report.
 }
-\section{Demos}{
+\section{Examples}{
 
 
 Take the \code{small_table} and assign it to \code{changing_table} (we'll modify it

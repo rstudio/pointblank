@@ -58,7 +58,7 @@ cases, especially when using \code{affix_datetime()} with the aforementioned
 file-writing functions, the file timestamps should approximate the time
 components affixed to the filenames.
 }
-\section{Demos}{
+\section{Examples}{
 
 \subsection{The basics of creating a filename with the current date and time}{
 

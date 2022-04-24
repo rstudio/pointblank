@@ -33,7 +33,7 @@ to open the file directly. Alternatively, we can provide an \emph{agent} to the
 \code{yaml_agent_string()} and view the YAML representation of the validation plan
 without needing to write the YAML to disk beforehand.
 }
-\section{Demos}{
+\section{Examples}{
 
 
 There's a YAML file available in the \strong{pointblank} package that's called

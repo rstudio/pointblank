@@ -1930,15 +1930,15 @@ create_table_time_html <- function(
         style = htmltools::css(
           `background-color` = "#FFF",
           color = "#444",
-          padding = if (size == "standard") "0.5em 0.5em" else "",
+          padding = if (size != "small") "0.5em 0.5em" else "",
           position = "inherit",
           `text-transform` = "uppercase",
-          `margin-left` = if (size == "standard") "10px" else "",
-          border = if (size == "standard") "solid 1px #999999" else "",
+          `margin-left` = if (size != "small") "10px" else "",
+          border = if (size != "small") "solid 1px #999999" else "",
           `font-variant-numeric` = "tabular-nums",
           `border-radius` = "0",
           padding = "2px 10px 2px 10px",
-          padding = if (size == "standard") {
+          padding = if (size != "small") {
             "2px 10px 2px 10px" 
           } else {
             "2px 10px 2px 5px"
@@ -1951,10 +1951,10 @@ create_table_time_html <- function(
         style = htmltools::css(
           `background-color` = "#FFF",
           color = "#444",
-          padding = if (size == "standard") "0.5em 0.5em" else "",
+          padding = if (size != "small") "0.5em 0.5em" else "",
           position = "inherit",
           margin = "5px 1px 5px 0",
-          border = if (size == "standard") "solid 1px #999999" else "",
+          border = if (size != "small") "solid 1px #999999" else "",
           `border-left` = if (size == "small") "none" else "",
           `font-variant-numeric` = "tabular-nums",
           `border-radius` = "0",
@@ -1966,11 +1966,11 @@ create_table_time_html <- function(
         style = htmltools::css(
           `background-color` = "#FFF",
           color = "#444",
-          padding = if (size == "standard") "0.5em 0.5em" else "",
+          padding = if (size != "small") "0.5em 0.5em" else "",
           position = "inherit",
           `text-transform` = "uppercase",
           `margin` = "5px 1px 5px -1px",
-          border = if (size == "standard") "solid 1px #999999" else "",
+          border = if (size != "small") "solid 1px #999999" else "",
           `font-variant-numeric` = "tabular-nums",
           `border-left` = if (size == "small") "solid 1px #333" else "",
           `border-radius` = "0",

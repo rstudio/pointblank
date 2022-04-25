@@ -42,62 +42,47 @@ same validation steps will be used, more can be added before calling
 object, using \code{\link[=incorporate]{incorporate()}} will update aspects of the reporting such as
 table dimensions, and info snippets/text will be regenerated.
 }
+\section{Examples}{
+
+\subsection{A: Reading an agent from disk}{
+
+The process of developing an agent and writing it to disk with the
+\code{\link[=x_write_disk]{x_write_disk()}} function is explained in that function's documentation.
+Suppose we have such a written file that's named \code{"agent-small_table.rds"},
+we could read that to a new agent object with \code{x_read_disk()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- x_read_disk("agent-small_table.rds")
+}\if{html}{\out{</div>}}
+}
+
+\subsection{B: Reading an informant from disk}{
+
+If there is an informant written to disk via \code{\link[=x_write_disk]{x_write_disk()}} and it's named
+\code{"informant-small_table.rds"}. We could read that to a new informant object
+with \code{x_read_disk()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- x_read_disk("informant-small_table.rds")
+}\if{html}{\out{</div>}}
+}
+
+\subsection{C: Reading a multiagent from disk}{
+
+The process of creating a multiagent and writing it to disk with the
+\code{\link[=x_write_disk]{x_write_disk()}} function is shown in that function's documentation. Should
+we have such a written file called \code{"multiagent-small_table.rds"}, we could
+read that to a new multiagent object with \code{x_read_disk()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{multiagent <- x_read_disk("multiagent-small_table.rds")
+}\if{html}{\out{</div>}}
+}
+
+\subsection{D: Reading a table scan from disk}{
+
+If there is a table scan written to disk via \code{\link[=x_write_disk]{x_write_disk()}} and it's named
+\code{"tbl_scan-storms.rds"}, we could read it back into R with \code{x_read_disk()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_scan <- x_read_disk("tbl_scan-storms.rds")
+}\if{html}{\out{</div>}}
+}
+}
+
 \section{Function ID}{
 
 9-2
 }
 
-\examples{
-if (interactive()) {
-
-# A: Reading an agent from disk 
-
-# The process of developing an agent
-# and writing it to disk with the
-# `x_write_disk()` function is explained
-# in that function's documentation;
-# but suppose we have such a written file
-# that's named "agent-small_table.rds",
-# we could read that to a new agent
-# object with `x_read_disk()`
-agent <-
-  x_read_disk("agent-small_table.rds")
-
-# B: Reading an informant from disk
-
-# If there is an informant written
-# to disk via `x_write_disk()` and it's
-# named "informant-small_table.rds",
-# we could read that to a new informant
-# object with `x_read_disk()`
-informant <-
-  x_read_disk("informant-small_table.rds")
-
-# C: Reading a multiagent from disk 
-
-# The process of creating a multiagent
-# and writing it to disk with the
-# `x_write_disk()` function is shown
-# in that function's documentation;
-# but should we have such a written file
-# called "multiagent-small_table.rds",
-# we could read that to a new multiagent
-# object with `x_read_disk()`
-multiagent <-
-  x_read_disk("multiagent-small_table.rds")
-
-# D: Reading a table scan from disk
-
-# If there is a table scan written
-# to disk via `x_write_disk()` and it's
-# named "tbl_scan-storms.rds", we could
-# read it back into R with `x_read_disk()`
-tbl_scan <-
-  x_read_disk("tbl_scan-storms.rds")
-
-}
-
-}
 \seealso{
 Other Object Ops: 
 \code{\link{activate_steps}()},

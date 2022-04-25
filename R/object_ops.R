@@ -59,36 +59,33 @@
 #'   
 #' @return Invisibly returns `TRUE` if the file has been written.
 #' 
-#' @examples
-#' if (interactive()) {
+#' @section Examples:
 #' 
-#' # A: Writing an `agent` to disk 
+#' ## A: Writing an `agent` to disk 
 #' 
-#' # Let's go through the process of (1)
-#' # developing an agent with a validation
-#' # plan (to be used for the data quality
-#' # analysis of the `small_table` dataset),
-#' # (2) interrogating the agent with the
-#' # `interrogate()` function, and (3) writing
-#' # the agent and all its intel to a file
+#' Let's go through the process of (1) developing an agent with a validation
+#' plan (to be used for the data quality analysis of the [`small_table`]
+#' dataset), (2) interrogating the agent with the [interrogate()] function, and
+#' (3) writing the agent and all its intel to a file.
 #' 
-#' # Creating an `action_levels` object is a
-#' # common workflow step when creating a
-#' # pointblank agent; we designate failure
-#' # thresholds to the `warn`, `stop`, and
-#' # `notify` states using `action_levels()`
+#' Creating an `action_levels` object is a common workflow step when creating a
+#' pointblank agent. We designate failure thresholds to the `warn`, `stop`, and
+#' `notify` states using [action_levels()].
+#' 
+#' ```r
 #' al <- 
 #'   action_levels(
 #'     warn_at = 0.10,
 #'     stop_at = 0.25,
 #'     notify_at = 0.35
 #'   )
+#' ```
 #' 
-#' # Now create a pointblank `agent` object
-#' # and give it the `al` object (which
-#' # serves as a default for all validation
-#' # steps which can be overridden); the
-#' # data will be referenced in `tbl`
+#' Now, let's create a pointblank `agent` object and give it the `al` object
+#' (which serves as a default for all validation steps which can be overridden).
+#' The data will be referenced in the `tbl` argument with a leading `~`.
+#' 
+#' ```r
 #' agent <- 
 #'   create_agent(
 #'     tbl = ~ small_table,
@@ -96,63 +93,64 @@
 #'     label = "`x_write_disk()`",
 #'     actions = al
 #'   )
+#' ```
 #' 
-#' # Then, as with any `agent` object, we
-#' # can add steps to the validation plan by
-#' # using as many validation functions as we
-#' # want; then, we `interrogate()`
+#' Then, as with any `agent` object, we can add steps to the validation plan by
+#' using as many validation functions as we want. After that, use
+#' [interrogate()].
+#' 
+#' ```r
 #' agent <-
 #'   agent %>% 
-#'   col_exists(vars(date, date_time)) %>%
+#'   col_exists(columns = vars(date, date_time)) %>%
 #'   col_vals_regex(
-#'     columns = vars(b), regex = "[0-9]-[a-z]{3}-[0-9]{3}"
+#'     columns = vars(b),
+#'     regex = "[0-9]-[a-z]{3}-[0-9]{3}"
 #'   ) %>%
 #'   rows_distinct() %>%
 #'   col_vals_gt(columns = vars(d), value = 100) %>%
 #'   col_vals_lte(columns = vars(c), value = 5) %>%
 #'   interrogate()
+#' ```
 #'
-#' # The `agent` can be written to a file with
-#' # the `x_write_disk()` function
+#' The `agent` can be written to a file with the `x_write_disk()` function.
+#' 
+#' ```r
 #' x_write_disk(
 #'   agent,
 #'   filename = "agent-small_table.rds"
 #' )
+#' ```
 #' 
-#' # We can read the file back as an agent
-#' # with the `x_read_disk()` function and
-#' # we'll get all of the intel along with the
-#' # restored agent
+#' We can read the file back as an agent with the [x_read_disk()] function and
+#' we'll get all of the intel along with the restored agent.
 #' 
-#' # If you're consistently writing agent
-#' # reports when periodically checking data,
-#' # we could make use of the `affix_date()`
-#' # or `affix_datetime()` depending on the
-#' # granularity you need; here's an example
-#' # that writes the file with the format:
-#' # 'agent-small_table-YYYY-mm-dd_HH-MM-SS.rds'
+#' If you're consistently writing agent reports when periodically checking data,
+#' we could make use of the [affix_date()] or [affix_datetime()] depending on
+#' the granularity you need. Here's an example that writes the file with the
+#' format: `"<filename>-YYYY-mm-dd_HH-MM-SS.rds"`.
+#' 
+#' ```r
 #' x_write_disk(
 #'   agent,
 #'   filename = affix_datetime(
 #'     "agent-small_table.rds"
 #'   )
 #' )
+#' ```
 #' 
-#' # B: Writing an `informant` to disk
+#' ## B: Writing an `informant` to disk
 #' 
-#' # Let's go through the process of (1)
-#' # creating an informant object that
-#' # minimally describes the `small_table`
-#' # dataset, (2) ensuring that data is
-#' # captured from the target table using
-#' # the `incorporate()` function, and (3)
-#' # writing the informant to a file
+#' Let's go through the process of (1) creating an informant object that
+#' minimally describes the [`small_table`] dataset, (2) ensuring that data is
+#' captured from the target table using the [incorporate()] function, and (3)
+#' writing the informant to a file.
 #' 
-#' # Create a pointblank `informant`
-#' # object with `create_informant()`
-#' # and the `small_table` dataset; use
-#' # `incorporate()` so that info snippets
-#' # are integrated into the text
+#' Create a pointblank `informant` object with [create_informant()] and the
+#' [`small_table`] dataset. Use [incorporate()] so that info snippets are
+#' integrated into the text.
+#' 
+#' ```r
 #' informant <- 
 #'   create_informant(
 #'     tbl = ~ small_table,
@@ -180,28 +178,29 @@
 #'     info = "The date part of `date_time`."
 #'   ) %>%
 #'   incorporate()
+#' ```
 #'
-#' # The `informant` can be written to a
-#' # file with `x_write_disk()`; let's do
-#' # this with `affix_date()` so that the
-#' # filename has a datestamp
+#' The `informant` can be written to a file with `x_write_disk()`. Let's do this
+#' with [affix_date()] so that the filename has a datestamp.
+#' 
+#' ```r
 #' x_write_disk(
 #'   informant,
 #'   filename = affix_date(
 #'     "informant-small_table.rds"
 #'   )
 #' )
+#' ```
 #' 
-#' # We can read the file back into a
-#' # new informant object (in the same
-#' # state as when it was saved) by using
-#' # `x_read_disk()`
+#' We can read the file back into a new informant object (in the same state as
+#' when it was saved) by using [x_read_disk()].
 #' 
-#' # C: Writing a multiagent to disk
+#' ## C: Writing a multiagent to disk
 #' 
-#' # Let's create one more pointblank
-#' # agent object, provide it with some
-#' # validation steps, and `interrogate()`
+#' Let's create one more pointblank agent object, provide it with some
+#' validation steps, and [interrogate()].
+#' 
+#' ```r
 #' agent_b <-
 #'   create_agent(
 #'     tbl = ~ small_table,
@@ -210,7 +209,9 @@
 #'     actions = al
 #'   ) %>%
 #'   col_vals_gt(
-#'     columns = vars(b), vars(g), na_pass = TRUE,
+#'     columns = vars(b),
+#'     value = vars(g),
+#'     na_pass = TRUE,
 #'     label = "b > g"
 #'   ) %>%
 #'   col_is_character(
@@ -218,39 +219,44 @@
 #'     label = "Verifying character-type columns" 
 #'   ) %>%
 #'   interrogate()
+#' ```
 #' 
-#' # Now we can combine the earlier `agent`
-#' # object with the newer `agent_b` to 
-#' # create a `multiagent`
-#' multiagent <-
-#'   create_multiagent(agent, agent_b)
-#'   
-#' # The `multiagent` can be written to
-#' # a file with the `x_write_disk()` function
+#' Now we can combine the earlier `agent` object with the newer `agent_b` to
+#' create a `multiagent`.
+#' 
+#' ```r
+#' multiagent <- create_multiagent(agent, agent_b)
+#' ```
+#' 
+#' The `multiagent` can be written to a file with the `x_write_disk()` function.
+#' 
+#' ```r
 #' x_write_disk(
 #'   multiagent,
 #'   filename = "multiagent-small_table.rds"
 #' )
+#' ```
 #' 
-#' # We can read the file back as a multiagent
-#' # with the `x_read_disk()` function and
-#' # we'll get all of the constituent agents
-#' # and their associated intel back as well
+#' We can read the file back as a multiagent with the [x_read_disk()] function
+#' and we'll get all of the constituent agents and their associated intel back
+#' as well.
 #' 
-#' # D: Writing a table scan to disk
+#' ## D: Writing a table scan to disk
 #' 
-#' # We can get an report that describes all
-#' # of the data in the `storms` dataset
+#' We can get a report that describes all of the data in the `storms` dataset.
+#' 
+#' ```r
 #' tbl_scan <- scan_data(tbl = dplyr::storms)
+#' ```
 #' 
-#' # The table scan object can be written
-#' # to a file with `x_write_disk()`
+#' The table scan object can be written to a file with `x_write_disk()`.
+#' 
+#' ```r
 #' x_write_disk(
 #'   tbl_scan,
 #'   filename = "tbl_scan-storms.rds"
 #' )
-#' 
-#' }
+#' ```
 #'   
 #' @family Object Ops
 #' @section Function ID:
@@ -384,55 +390,48 @@ x_write_disk <- function(
 #' @return Either a `ptblank_agent`, `ptblank_informant`, or a
 #'   `ptblank_tbl_scan` object.
 #' 
-#' @examples
-#' if (interactive()) {
+#' @section Examples:
 #' 
-#' # A: Reading an agent from disk 
+#' ## A: Reading an agent from disk 
 #' 
-#' # The process of developing an agent
-#' # and writing it to disk with the
-#' # `x_write_disk()` function is explained
-#' # in that function's documentation;
-#' # but suppose we have such a written file
-#' # that's named "agent-small_table.rds",
-#' # we could read that to a new agent
-#' # object with `x_read_disk()`
-#' agent <-
-#'   x_read_disk("agent-small_table.rds")
+#' The process of developing an agent and writing it to disk with the
+#' [x_write_disk()] function is explained in that function's documentation.
+#' Suppose we have such a written file that's named `"agent-small_table.rds"`,
+#' we could read that to a new agent object with `x_read_disk()`.
 #' 
-#' # B: Reading an informant from disk
+#' ```r
+#' agent <- x_read_disk("agent-small_table.rds")
+#' ```
 #' 
-#' # If there is an informant written
-#' # to disk via `x_write_disk()` and it's
-#' # named "informant-small_table.rds",
-#' # we could read that to a new informant
-#' # object with `x_read_disk()`
-#' informant <-
-#'   x_read_disk("informant-small_table.rds")
+#' ## B: Reading an informant from disk
 #' 
-#' # C: Reading a multiagent from disk 
+#' If there is an informant written to disk via [x_write_disk()] and it's named
+#' `"informant-small_table.rds"`. We could read that to a new informant object
+#' with `x_read_disk()`.
 #' 
-#' # The process of creating a multiagent
-#' # and writing it to disk with the
-#' # `x_write_disk()` function is shown
-#' # in that function's documentation;
-#' # but should we have such a written file
-#' # called "multiagent-small_table.rds",
-#' # we could read that to a new multiagent
-#' # object with `x_read_disk()`
-#' multiagent <-
-#'   x_read_disk("multiagent-small_table.rds")
+#' ```r
+#' informant <- x_read_disk("informant-small_table.rds")
+#' ```
 #' 
-#' # D: Reading a table scan from disk
+#' ## C: Reading a multiagent from disk 
 #' 
-#' # If there is a table scan written
-#' # to disk via `x_write_disk()` and it's
-#' # named "tbl_scan-storms.rds", we could
-#' # read it back into R with `x_read_disk()`
-#' tbl_scan <-
-#'   x_read_disk("tbl_scan-storms.rds")
+#' The process of creating a multiagent and writing it to disk with the
+#' [x_write_disk()] function is shown in that function's documentation. Should
+#' we have such a written file called `"multiagent-small_table.rds"`, we could
+#' read that to a new multiagent object with `x_read_disk()`.
 #' 
-#' }
+#' ```r
+#' multiagent <- x_read_disk("multiagent-small_table.rds")
+#' ```
+#' 
+#' ## D: Reading a table scan from disk
+#' 
+#' If there is a table scan written to disk via [x_write_disk()] and it's named
+#' `"tbl_scan-storms.rds"`, we could read it back into R with `x_read_disk()`.
+#' 
+#' ```r
+#' tbl_scan <- x_read_disk("tbl_scan-storms.rds")
+#' ```
 #' 
 #' @family Object Ops
 #' @section Function ID:
@@ -506,36 +505,33 @@ x_read_disk <- function(
 #'   
 #' @return Invisibly returns `TRUE` if the file has been written.
 #' 
-#' @examples
-#' if (interactive()) {
+#' @section Examples:
 #' 
-#' # A: Writing an agent report as HTML 
+#' ## A: Writing an agent report as HTML 
 #' 
-#' # Let's go through the process of (1)
-#' # developing an agent with a validation
-#' # plan (to be used for the data quality
-#' # analysis of the `small_table` dataset),
-#' # (2) interrogating the agent with the
-#' # `interrogate()` function, and (3) writing
-#' # the agent and all its intel to a file
+#' Let's go through the process of (1) developing an agent with a validation
+#' plan (to be used for the data quality analysis of the [`small_table`]
+#' dataset), (2) interrogating the agent with the [interrogate()] function, and
+#' (3) writing the agent and all its intel to a file.
 #' 
-#' # Creating an `action_levels` object is a
-#' # common workflow step when creating a
-#' # pointblank agent; we designate failure
-#' # thresholds to the `warn`, `stop`, and
-#' # `notify` states using `action_levels()`
+#' Creating an `action_levels` object is a common workflow step when creating a
+#' pointblank agent. We designate failure thresholds to the `warn`, `stop`, and
+#' `notify` states using [action_levels()].
+#' 
+#' ```r
 #' al <- 
 #'   action_levels(
 #'     warn_at = 0.10,
 #'     stop_at = 0.25,
 #'     notify_at = 0.35
 #'   )
+#' ```
 #' 
-#' # Now create a pointblank `agent` object
-#' # and give it the `al` object (which
-#' # serves as a default for all validation
-#' # steps which can be overridden); the
-#' # data will be referenced in `tbl`
+#' Now create a pointblank `agent` object and give it the `al` object (which
+#' serves as a default for all validation steps which can be overridden). The
+#' data will be referenced in the `tbl` argument with a leading `~`.
+#' 
+#' ```r
 #' agent <- 
 #'   create_agent(
 #'     tbl = ~ small_table,
@@ -543,58 +539,60 @@ x_read_disk <- function(
 #'     label = "`export_report()`",
 #'     actions = al
 #'   )
+#' ```
 #' 
-#' # Then, as with any agent object, we
-#' # can add steps to the validation plan by
-#' # using as many validation functions as we
-#' # want; then, we `interrogate()`
+#' As with any agent object, we can add steps to the validation plan by using as
+#' many validation functions as we want. Then, we [interrogate()].
+#' 
+#' ```r
 #' agent <-
 #'   agent %>% 
-#'   col_exists(vars(date, date_time)) %>%
+#'   col_exists(columns = vars(date, date_time)) %>%
 #'   col_vals_regex(
-#'     vars(b), regex = "[0-9]-[a-z]{3}-[0-9]{3}"
+#'     columns = vars(b),
+#'     regex = "[0-9]-[a-z]{3}-[0-9]{3}"
 #'   ) %>%
 #'   rows_distinct() %>%
-#'   col_vals_gt(vars(d), value = 100) %>%
-#'   col_vals_lte(vars(c), value = 5) %>%
+#'   col_vals_gt(columns = vars(d), value = 100) %>%
+#'   col_vals_lte(columns = vars(c), value = 5) %>%
 #'   interrogate()
+#' ```
 #'
-#' # The agent report can be written to an
-#' # HTML file with `export_report()`
+#' The agent report can be written to an HTML file with `export_report()`.
+#' 
+#' ```r
 #' export_report(
 #'   agent,
 #'   filename = "agent-small_table.html"
 #' )
+#' ```
 #' 
-#' # If you're consistently writing agent
-#' # reports when periodically checking data,
-#' # we could make use of `affix_date()` or
-#' # `affix_datetime()` depending on the
-#' # granularity you need; here's an example
-#' # that writes the file with the format:
-#' # 'agent-small_table-YYYY-mm-dd_HH-MM-SS.html'
+#' If you're consistently writing agent reports when periodically checking data,
+#' we could make use of `affix_date()` or `affix_datetime()` depending on the
+#' granularity you need. Here's an example that writes the file with the format:
+#' `"<filename>-YYYY-mm-dd_HH-MM-SS.html"`.
+#' 
+#' ```r
 #' export_report(
 #'   agent,
 #'   filename = affix_datetime(
 #'     "agent-small_table.html"
 #'   )
 #' )
+#' ```
 #' 
-#' # B: Writing an informant report as HTML
+#' ## B: Writing an informant report as HTML
 #' 
-#' # Let's go through the process of (1)
-#' # creating an informant object that
-#' # minimally describes the `small_table`
-#' # dataset, (2) ensuring that data is
-#' # captured from the target table using
-#' # the `incorporate()` function, and (3)
-#' # writing the informant report to HTML
+#' Let's go through the process of (1) creating an informant object that
+#' minimally describes the [`small_table`] dataset, (2) ensuring that data is
+#' captured from the target table using the [incorporate()] function, and (3)
+#' writing the informant report to HTML.
 #' 
-#' # Create a pointblank `informant`
-#' # object with `create_informant()`
-#' # and the `small_table` dataset;
-#' # `incorporate()` so that info snippets
-#' # are integrated into the text
+#' Create a pointblank `informant` object with [create_informant()] and the
+#' [`small_table`] dataset. Use [incorporate()] so that info snippets are
+#' integrated into the text.
+#' 
+#' ```r
 #' informant <- 
 #'   create_informant(
 #'     tbl = ~ small_table,
@@ -622,32 +620,36 @@ x_read_disk <- function(
 #'     info = "The date part of `date_time`."
 #'   ) %>%
 #'   incorporate()
+#' ```
 #'
-#' # The informant report can be written
-#' # to an HTML file with `export_report()`;
-#' # let's do this with `affix_date()` so
-#' # the filename has a datestamp
+#' The informant report can be written to an HTML file with `export_report()`.
+#' Let's do this with [affix_date()] so the filename has a datestamp.
+#' 
+#' ```r
 #' export_report(
 #'   informant,
 #'   filename = affix_date(
 #'     "informant-small_table.html"
 #'   )
 #' )
+#' ```
 #' 
-#' # C: Writing a table scan as HTML
+#' ## C: Writing a table scan as HTML
 #' 
-#' # We can get an report that describes all
-#' # of the data in the `storms` dataset
+#' We can get a report that describes all of the data in the `storms` dataset.
+#' 
+#' ```r
 #' tbl_scan <- scan_data(tbl = dplyr::storms)
+#' ```
 #' 
-#' # The table scan object can be written
-#' # to an HTML file with `export_report()`
+#' The table scan object can be written to an HTML file with `export_report()`.
+#' 
+#' ```r
 #' export_report(
 #'   tbl_scan,
 #'   filename = "tbl_scan-storms.html"
 #' )
-#' 
-#' }
+#' ```
 #'
 #' @family Object Ops
 #' @section Function ID:
@@ -784,22 +786,24 @@ export_report <- function(
 #' @param label An optional label for the validation plan. If no value is
 #'   provided then any existing label will be retained.
 #' 
-#' @examples
-#' # Set proportional failure thresholds
-#' # to the `warn`, `stop`, and `notify`
-#' # states using `action_levels()`
+#' @section Examples:
+#' 
+#' Set proportional failure thresholds to the `warn`, `stop`, and `notify`
+#' states using [action_levels()].
+#' 
+#' ```r
 #' al <- 
 #'   action_levels(
 #'       warn_at = 0.10,
 #'       stop_at = 0.25,
 #'     notify_at = 0.35
 #'   )
+#' ```
 #' 
-#' # Create an agent that has
-#' # `small_table` set as the target
-#' # table via `tbl`; apply the actions,
-#' # add some validation steps and then
-#' # interrogate the data
+#' Create an agent that has `small_table` set as the target table via `tbl`.
+#' Apply the actions, add some validation steps and then interrogate the data.
+#' 
+#' ```r
 #' agent_1 <- 
 #'   create_agent(
 #'     tbl = small_table,
@@ -807,23 +811,26 @@ export_report <- function(
 #'     label = "An example.",
 #'     actions = al
 #'   ) %>%
-#'   col_exists(vars(date, date_time)) %>%
+#'   col_exists(columns = vars(date, date_time)) %>%
 #'   col_vals_regex(
-#'     vars(b), "[0-9]-[a-z]{3}-[0-9]{3}"
+#'     columns = vars(b),
+#'     regex = "[0-9]-[a-z]{3}-[0-9]{3}"
 #'   ) %>%
 #'   rows_distinct() %>%
 #'   interrogate()
+#' ```
 #'   
-#' # Replace the agent's association to
-#' # `small_table` with a mutated version
-#' # of it (one that removes duplicate rows);
-#' # then, interrogate the new target table
+#' Replace the agent's association to `small_table` with a mutated version of it
+#' (one that removes duplicate rows). Then, interrogate the new target table.
+#' 
+#' ```r
 #' agent_2 <-
 #'   agent_1 %>%
 #'   set_tbl(
 #'     tbl = small_table %>% dplyr::distinct()
 #'   ) %>%
 #'   interrogate()
+#' ```
 #' 
 #' @family Object Ops
 #' @section Function ID:

@@ -31,53 +31,50 @@ Setting a data table to an \emph{agent} or an \emph{informant} with \code{set_tb
 replaces any associated table (a data frame, a tibble, objects of class
 \code{tbl_dbi} or \code{tbl_spark}).
 }
-\section{Function ID}{
+\section{Examples}{
 
-9-4
-}
 
-\examples{
-# Set proportional failure thresholds
-# to the `warn`, `stop`, and `notify`
-# states using `action_levels()`
-al <- 
+Set proportional failure thresholds to the \code{warn}, \code{stop}, and \code{notify}
+states using \code{\link[=action_levels]{action_levels()}}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <- 
   action_levels(
       warn_at = 0.10,
       stop_at = 0.25,
     notify_at = 0.35
   )
+}\if{html}{\out{</div>}}
 
-# Create an agent that has
-# `small_table` set as the target
-# table via `tbl`; apply the actions,
-# add some validation steps and then
-# interrogate the data
-agent_1 <- 
+Create an agent that has \code{small_table} set as the target table via \code{tbl}.
+Apply the actions, add some validation steps and then interrogate the data.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_1 <- 
   create_agent(
     tbl = small_table,
     tbl_name = "small_table",
     label = "An example.",
     actions = al
   ) \%>\%
-  col_exists(vars(date, date_time)) \%>\%
+  col_exists(columns = vars(date, date_time)) \%>\%
   col_vals_regex(
-    vars(b), "[0-9]-[a-z]{3}-[0-9]{3}"
+    columns = vars(b),
+    regex = "[0-9]-[a-z]\{3\}-[0-9]\{3\}"
   ) \%>\%
   rows_distinct() \%>\%
   interrogate()
-  
-# Replace the agent's association to
-# `small_table` with a mutated version
-# of it (one that removes duplicate rows);
-# then, interrogate the new target table
-agent_2 <-
+}\if{html}{\out{</div>}}
+
+Replace the agent's association to \code{small_table} with a mutated version of it
+(one that removes duplicate rows). Then, interrogate the new target table.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_2 <-
   agent_1 \%>\%
   set_tbl(
     tbl = small_table \%>\% dplyr::distinct()
   ) \%>\%
   interrogate()
-
+}\if{html}{\out{</div>}}
 }
+
+\section{Function ID}{
+
+9-4
+}
+
 \seealso{
 Other Object Ops: 
 \code{\link{activate_steps}()},

@@ -1532,8 +1532,8 @@ probe_sample <- function(data) {
       fn = function(x) ifelse(x == "**NA**", "<code>NA</code>", x)
     ) %>%
     gt::tab_options(table.width = "100%") %>% 
-    gt::text_transform(locations = gt::cells_body(), 
-      fn = function(x) {paste0("<code>", x, "</code>")})
+    gt::tab_style(style = gt::cell_text(font = "monospace"),
+      locations = list(gt::cells_column_labels(), gt::cells_body()))
   
   list(probe_sample = probe_sample)
 }

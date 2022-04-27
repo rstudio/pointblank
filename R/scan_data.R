@@ -1522,7 +1522,7 @@ probe_missing <- function(data) {
 }
 
 probe_sample <- function(data) {
-  
+
   probe_sample <-
     data %>%
     gt::gt_preview(top_n = 5, bottom_n = 5) %>%
@@ -1531,7 +1531,12 @@ probe_sample <- function(data) {
       locations = gt::cells_body(columns = gt::everything()),
       fn = function(x) ifelse(x == "**NA**", "<code>NA</code>", x)
     ) %>%
-    gt::tab_options(table.width = "100%")
+    gt::tab_options(table.width = "100%") %>% 
+    gt::tab_style(style = gt::cell_text(font = "monospace"),
+      locations = list(gt::cells_column_labels(), gt::cells_body())) %>% 
+    gt::text_transform(locations = gt::cells_body(), 
+      fn = function(x) {ifelse(x == "<code>NA</code>",
+        "<code style=\"color:#3A70FB\">NA</code>", x)})
   
   list(probe_sample = probe_sample)
 }

@@ -478,8 +478,7 @@ check_is_a_table_object <- function(tbl) {
 # This function verifies that some target table input is provided
 # A portion of this is dedicated to checking the `read_fn` argument which
 # is undergoing soft deprecation in `create_agent()` and `create_informant()`
-check_table_input <- function(tbl,
-                              read_fn) {
+check_table_input <- function(tbl, read_fn) {
   
   if (is.null(tbl) && is.null(read_fn)) {
     
@@ -516,9 +515,8 @@ check_table_input <- function(tbl,
   tbl
 }
 
-process_table_input <- function(tbl,
-                                tbl_name) {
-
+process_table_input <- function(tbl, tbl_name) {
+  
   if (inherits(tbl, "function")) {
     
     read_fn <- tbl
@@ -537,8 +535,12 @@ process_table_input <- function(tbl,
     }
     
   } else {
-    
     read_fn <- NULL
+  }
+  
+  # Remove grouping for data frames or tibbles
+  if (is_tbl_df(tbl) && dplyr::is_grouped_df(tbl)) {
+    tbl <- dplyr::ungroup(tbl)
   }
   
   list(

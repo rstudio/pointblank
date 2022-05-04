@@ -47,12 +47,19 @@
 #'   `RPostgres::Postgres()`) or a shortname for the database type. Valid names
 #'   are: `"postgresql"`, `"postgres"`, or `"pgsql"` (PostgreSQL, using the
 #'   `RPostgres::Postgres()` driver function); `"mysql"` (MySQL, using
-#'   `RMySQL::MySQL()`); `"duckdb"` (DuckDB, using `duckdb::duckdb()`); and
-#'   `"sqlite"` (SQLite, using `RSQLite::SQLite()`).
+#'   `RMySQL::MySQL()`); `bigquery` or `bq` (BigQuery, using
+#'   `bigrquery::bigquery()`); `"duckdb"` (DuckDB, using `duckdb::duckdb()`);
+#'   and `"sqlite"` (SQLite, using `RSQLite::SQLite()`).
 #' @param host,port The database host and optional port number.
 #' @param user,password The environment variables used to access the username
 #'   and password for the database. Enclose in [I()] when using literal username
 #'   or password values.
+#' @param bq_project,bq_dataset,bq_billing If accessing a table from a BigQuery
+#'   data source, there's the requirement to provide the table's associated
+#'   project (`bq_project`) and dataset (`bq_dataset`) names. By default, the
+#'   project to be billed will be the same as the one provided for `bq_project`
+#'   but the `bq_billing` argument can be changed to reflect a different
+#'   BigQuery project.
 #'   
 #' @return A `tbl_dbi` object.
 #' 

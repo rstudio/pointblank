@@ -336,7 +336,7 @@ db_tbl <- function(
     password = NULL,
     bq_project = NULL,
     bq_dataset = NULL,
-    bq_billing = NULL
+    bq_billing = bq_project
 ) {
   
   force(table)

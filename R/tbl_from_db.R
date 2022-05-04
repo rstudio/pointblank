@@ -333,7 +333,10 @@ db_tbl <- function(
     host = NULL,
     port = NULL,
     user = NULL,
-    password = NULL
+    password = NULL,
+    bq_project = NULL,
+    bq_dataset = NULL,
+    bq_billing = NULL
 ) {
   
   force(table)

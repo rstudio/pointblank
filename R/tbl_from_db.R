@@ -389,9 +389,11 @@ db_tbl <- function(
   
   # Insert data if is supplied, in the right format, and
   # if the DB connection is in-memory
-  if (dbname == ":memory:" &&
-      is.data.frame(table) && 
-      tolower(dbtype) %in% c("duckdb", "sqlite")) {
+  if (
+    dbname == ":memory:" &&
+    is.data.frame(table) && 
+    tolower(dbtype) %in% c("duckdb", "sqlite")
+  ) {
     
     # Obtain the name of the data table
     if ("pb_tbl_name" %in% names(attributes(table))) {

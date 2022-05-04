@@ -2040,6 +2040,7 @@ create_table_type_html <- function(
         duckdb = c("#000000", "#FFFFFF", "DuckDB"),
         mysql = c("#EBAD40", "#222222", "MySQL"),
         postgres = c("#3E638B", "#FFFFFF", "PostgreSQL"),
+        bigquery = c("#5283EC", "#FFFFFF", "BigQuery"),
         tbl_spark = c("#E66F21", "#FFFFFF", "Spark DataFrame"),
         Arrow = c("#353A3F", "#FFFFFF", "Apache Arrow"),
         c("#E2E2E2", "#222222", tbl_src)

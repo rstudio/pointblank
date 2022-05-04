@@ -475,6 +475,20 @@ RMySQL_driver <- function() {
   RMySQL::MySQL()
 }
 
+bigrquery_driver <- function() {
+  
+  if (!requireNamespace("bigrquery", quietly = TRUE)) {
+    
+    stop(
+      "Accessing a BigQuery table requires the bigrquery package:\n",
+      "* It can be installed with `install.packages(\"bigrquery\")`.",
+      call. = FALSE
+    )
+  }
+  
+  bigrquery::bigquery()
+}
+
 DuckDB_driver <- function() {
   
   if (!requireNamespace("duckdb", quietly = TRUE)) {

@@ -374,18 +374,39 @@ db_tbl <- function(
     driver_function <- dbtype
   }
 
+  #
   # Create the DB connection object
-  connection <-
-    DBI::dbConnect(
-      drv = driver_function,
-      user = ifelse(inherits(user, "AsIs"), user, Sys.getenv(user)),
-      password = ifelse(
-        inherits(password, "AsIs"),
-        password, Sys.getenv(password)
-      ),
-      host = host,
-      dbname = dbname
-    )
+  #
+  
+  if (any(c("bq", "bigquery") %in% tolower(dbtype))) {
+  
+    # BigQuery connection
+      
+    connection <-
+      DBI::dbConnect(
+        drv = driver_function,
+        project = bq_project,
+        dataset = bq_dataset,
+        billing = bq_billing
+      )
+    
+  } else {
+    
+    connection <-
+      DBI::dbConnect(
+        drv = driver_function,
+        user = ifelse(
+          inherits(user, "AsIs"),
+          user, Sys.getenv(user)
+        ),
+        password = ifelse(
+          inherits(password, "AsIs"),
+          password, Sys.getenv(password)
+        ),
+        host = host,
+        dbname = dbname
+      )
+  }
   
   # Insert data if is supplied, in the right format, and
   # if the DB connection is in-memory

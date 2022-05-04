@@ -434,7 +434,12 @@ db_tbl <- function(
   
   if (is.character(table)) {
     
-    if (length(table) == 1) {
+    if (any(c("bq", "bigquery") %in% tolower(dbtype))) {
+      
+      table_name <- paste0(bq_dataset, ".", table_name)
+      table_stmt <- table
+    
+    } else if (length(table) == 1) {
       
       table_stmt <- table
       table_name <- table

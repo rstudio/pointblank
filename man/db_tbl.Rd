@@ -11,7 +11,10 @@ db_tbl(
   host = NULL,
   port = NULL,
   user = NULL,
-  password = NULL
+  password = NULL,
+  bq_project = NULL,
+  bq_dataset = NULL,
+  bq_billing = bq_project
 )
 }
 \arguments{
@@ -28,14 +31,22 @@ object supplied to \code{table} is a data frame or a tibble object.}
 \code{RPostgres::Postgres()}) or a shortname for the database type. Valid names
 are: \code{"postgresql"}, \code{"postgres"}, or \code{"pgsql"} (PostgreSQL, using the
 \code{RPostgres::Postgres()} driver function); \code{"mysql"} (MySQL, using
-\code{RMySQL::MySQL()}); \code{"duckdb"} (DuckDB, using \code{duckdb::duckdb()}); and
-\code{"sqlite"} (SQLite, using \code{RSQLite::SQLite()}).}
+\code{RMySQL::MySQL()}); \code{bigquery} or \code{bq} (BigQuery, using
+\code{bigrquery::bigquery()}); \code{"duckdb"} (DuckDB, using \code{duckdb::duckdb()});
+and \code{"sqlite"} (SQLite, using \code{RSQLite::SQLite()}).}
 
 \item{host, port}{The database host and optional port number.}
 
 \item{user, password}{The environment variables used to access the username
 and password for the database. Enclose in \code{\link[=I]{I()}} when using literal username
 or password values.}
+
+\item{bq_project, bq_dataset, bq_billing}{If accessing a table from a BigQuery
+data source, there's the requirement to provide the table's associated
+project (\code{bq_project}) and dataset (\code{bq_dataset}) names. By default, the
+project to be billed will be the same as the one provided for \code{bq_project}
+but the \code{bq_billing} argument can be changed to reflect a different
+BigQuery project.}
 }
 \value{
 A \code{tbl_dbi} object.

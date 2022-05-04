@@ -1680,11 +1680,13 @@ interrogate_regex <- function(
   tbl_type <- agent$tbl_src
   
   # Create function for validating the `col_vals_regex()` step function
-  tbl_val_regex <- function(table,
-                            tbl_type,
-                            column,
-                            regex,
-                            na_pass) {
+  tbl_val_regex <- function(
+    table,
+    tbl_type,
+    column,
+    regex,
+    na_pass
+  ) {
     
     # Ensure that the input `table` is actually a table object
     tbl_validity_check(table = table)
@@ -1731,6 +1733,19 @@ interrogate_regex <- function(
         table %>%
         dplyr::mutate(pb_is_good_ = ifelse(
           !is.na({{ column }}), {{ column }} %REGEXP% regex, NA)
+        ) %>%
+        dplyr::mutate(pb_is_good_ = dplyr::case_when(
+          is.na(pb_is_good_) ~ na_pass,
+          TRUE ~ pb_is_good_
+        ))
+    
+    } else if (tbl_type == "bigquery") {
+      
+      tbl <- 
+        table %>%
+        dplyr::mutate(
+          pb_is_good_ = ifelse(
+            !is.na({{ column }}), REGEXP_CONTAINS({{ column }}, regex), NA)
         ) %>%
         dplyr::mutate(pb_is_good_ = dplyr::case_when(
           is.na(pb_is_good_) ~ na_pass,

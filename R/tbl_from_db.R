@@ -362,6 +362,8 @@ db_tbl <- function(
         postgres = ,
         pgsql = RPostgres_driver(),
         mysql = RMySQL_driver(),
+        bq = ,
+        bigquery = bigrquery_driver(),
         duckdb = DuckDB_driver(),
         sqlite = RSQLite_driver(),
         unknown_driver()

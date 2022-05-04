@@ -783,13 +783,22 @@ get_tbl_information_dbi <- function(tbl) {
   if (grepl("sql server|sqlserver", tbl_src_details)) {
     
     # nocov start
-    
     tbl_src <- "mssql"
-    
     # nocov end
     
-  } else {
+  } else if (grepl("sql server|sqlserver", tbl_src_details)) {
     
+    # nocov start
+    tbl_src <- "mssql"
+    # nocov end
+      
+  } else if (grepl("bq_|bigquery", tbl_src_details)) {
+      
+    # nocov start
+    tbl_src <- "bigquery"
+    # nocov end
+      
+  } else {
     tbl_src <- gsub("^([a-z]*).*", "\\1", get_tbl_dbi_src_details(tbl))
   }
   

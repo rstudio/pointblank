@@ -68,6 +68,10 @@ is_tbl_spark <- function(x) {
   inherits(x, "tbl_spark")
 }
 
+is_tbl_bigquery <- function(x) {
+  inherits(x, "tbl_BigQueryConnection")
+}
+
 is_arrow_object <- function(x) {
   inherits(x, "ArrowObject")
 }

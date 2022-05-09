@@ -42,7 +42,6 @@
 #'   connection. This only works if: (1) the `db` is chosen as either `"sqlite"`
 #'   or `"duckdb"`, (2) the `dbname` was is set to `":memory:"`, and (3) the
 #'   object supplied to `table` is a data frame or a tibble object.
-#' @param dbname The database name.
 #' @param dbtype Either an appropriate driver function (e.g.,
 #'   `RPostgres::Postgres()`) or a shortname for the database type. Valid names
 #'   are: `"postgresql"`, `"postgres"`, or `"pgsql"` (PostgreSQL, using the
@@ -50,16 +49,17 @@
 #'   `RMySQL::MySQL()`); `bigquery` or `bq` (BigQuery, using
 #'   `bigrquery::bigquery()`); `"duckdb"` (DuckDB, using `duckdb::duckdb()`);
 #'   and `"sqlite"` (SQLite, using `RSQLite::SQLite()`).
+#' @param dbname The database name.
 #' @param host,port The database host and optional port number.
 #' @param user,password The environment variables used to access the username
 #'   and password for the database. Enclose in [I()] when using literal username
 #'   or password values.
-#' @param bq_project,bq_dataset,bq_billing If accessing a table from a BigQuery
-#'   data source, there's the requirement to provide the table's associated
-#'   project (`bq_project`) and dataset (`bq_dataset`) names. By default, the
-#'   project to be billed will be the same as the one provided for `bq_project`
-#'   but the `bq_billing` argument can be changed to reflect a different
-#'   BigQuery project.
+#' @param bq_project,bq_dataset,bq_billing If accessing a table from a
+#'   *BigQuery* data source, there's the requirement to provide the table's
+#'   associated project (`bq_project`) and dataset (`bq_dataset`) names. By
+#'   default, the project to be billed will be the same as the one provided for
+#'   `bq_project` but the `bq_billing` argument can be changed to reflect a
+#'   different BigQuery project.
 #'   
 #' @return A `tbl_dbi` object.
 #' 
@@ -75,8 +75,8 @@
 #' small_table_duckdb <- 
 #'   db_tbl(
 #'     table = small_table,
-#'     dbname = ":memory:",
-#'     dbtype = "duckdb"
+#'     dbtype = "duckdb",
+#'     dbname = ":memory:"
 #'   )
 #' 
 #' small_table_duckdb
@@ -107,8 +107,8 @@
 #' small_table_sqlite <- 
 #'   db_tbl(
 #'     table = small_table,
-#'     dbname = ":memory:",
-#'     dbtype = "sqlite"
+#'     dbtype = "sqlite",
+#'     dbname = ":memory:"
 #'   )
 #' 
 #' small_table_sqlite
@@ -146,8 +146,8 @@
 #'         subdir = "data-large"
 #'       )
 #'     ),
-#'     dbname = ":memory:",
-#'     dbtype = "duckdb"
+#'     dbtype = "duckdb",
+#'     dbname = ":memory:"
 #'   )
 #'   
 #' all_revenue_large_duckdb
@@ -188,8 +188,8 @@
 #' rna_db_tbl <- 
 #'   db_tbl(
 #'     table = "rna",
+#'     dbtype = "postgres",
 #'     dbname = "pfmegrnargs",
-#'     dbtype = "postgres", 
 #'     host = "hh-pgsql-public.ebi.ac.uk",
 #'     port = 5432,
 #'     user = I("reader"),
@@ -226,8 +226,8 @@
 #' example_db_tbl <- 
 #'   db_tbl(
 #'     table = "<table_name>",
+#'     dbtype = "<database_type_shortname>",
 #'     dbname = "<database_name>",
-#'     dbtype = "<database_type_shortname>", 
 #'     host = "<connection_url>",
 #'     port = "<connection_port>",
 #'     user = "<DB_USER_NAME>",
@@ -250,8 +250,8 @@
 #'   tbl_store(
 #'     small_table_duck ~ db_tbl(
 #'       table = pointblank::small_table,
-#'       dbname = ":memory:",
-#'       dbtype = "duckdb"
+#'       dbtype = "duckdb",
+#'       dbname = ":memory:"
 #'     ),
 #'     small_high_duck ~ {{ small_table_duck }} %>%
 #'       dplyr::filter(f == "high")
@@ -335,8 +335,8 @@
 #' @export
 db_tbl <- function(
     table,
-    dbname,
     dbtype,
+    dbname = NULL,
     host = NULL,
     port = NULL,
     user = NULL,
@@ -347,6 +347,18 @@ db_tbl <- function(
 ) {
   
   force(table)
+  
+  # For BigQuery, the `bq_*` arguments are to be provided but there is
+  # some redundancy with `dbname`; this copies the `bq_project` name
+  # to `dbname` for the later connection statement
+  if (
+    is.null(dbname) &&
+    !is.null(bq_project) &&
+    !is.null(bq_dataset) &&
+    !is.null(bq_billing)
+  ) {
+    dbname <- bq_project
+  }
   
   if (!requireNamespace("DBI", quietly = TRUE)) {
     
@@ -387,7 +399,23 @@ db_tbl <- function(
   
   if (any(c("bq", "bigquery") %in% tolower(dbtype))) {
   
-    # BigQuery connection
+    #
+    # Connection object for BigQuery
+    #
+    
+    # Stop function if any of the required values for
+    # BigQuery are missing
+    if (
+      is.null(bq_project) ||
+      is.null(bq_dataset) ||
+      is.null(bq_billing)
+    ) {
+      
+      stop(
+        "When getting a BigQuery table, all `bq_*` arguments are required.",
+        call. = FALSE
+      )
+    }
       
     connection <-
       DBI::dbConnect(
@@ -443,7 +471,7 @@ db_tbl <- function(
     
     if (any(c("bq", "bigquery") %in% tolower(dbtype))) {
       
-      table_name <- paste0(bq_dataset, ".", table_name)
+      table_name <- paste0(bq_dataset, ".", table)
       table_stmt <- table
     
     } else if (length(table) == 1) {
@@ -474,6 +502,12 @@ db_tbl <- function(
   attr(x, "pb_tbl_name") <- table_name
   attr(x, "pb_con_desc") <- con_desc
   attr(x, "pb_access_time") <- access_time
+  
+  if (any(c("bq", "bigquery") %in% tolower(dbtype))) {
+    
+    attr(x, "pb_bq_project") <- bq_project
+    attr(x, "pb_bq_dataset") <- bq_dataset
+  }
   
   x
 }

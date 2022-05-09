@@ -360,9 +360,11 @@ interrogate <- function(
       columns_str_add <- paste0("pb_is_good_", seq(j), collapse = " + ")
 
       # Create function for validating step functions conjointly
-      tbl_val_conjointly <- function(columns_str_add,
-                                     columns_str_vec,
-                                     validation_n) {
+      tbl_val_conjointly <- function(
+        columns_str_add,
+        columns_str_vec,
+        validation_n
+      ) {
        
         # TODO: Require check to ensure that the validation functions used
         # are entirely of the combined set of `col_vals_*()`, `col_is_*()`,
@@ -723,10 +725,12 @@ interrogate <- function(
 
 # nocov start
 
-get_time_duration <- function(start_time,
-                              end_time,
-                              units = "secs",
-                              round = 4) {
+get_time_duration <- function(
+    start_time,
+    end_time,
+    units = "secs",
+    round = 4
+) {
   
   round(
     as.numeric(difftime(time1 = end_time, time2 = start_time, units = units)),
@@ -734,8 +738,10 @@ get_time_duration <- function(start_time,
   )
 }
 
-create_cli_header_a <- function(validation_steps,
-                                quiet) {
+create_cli_header_a <- function(
+    validation_steps,
+    quiet
+) {
   
   if (quiet) return()
   
@@ -1305,9 +1311,11 @@ interrogate_set <- function(
   if (assertion_type == "col_vals_in_set") {
     
     # Create function for validating the `col_vals_in_set()` step
-    tbl_val_in_set <- function(table,
-                               column,
-                               na_pass) {
+    tbl_val_in_set <- function(
+      table,
+      column,
+      na_pass
+    ) {
       
       # Ensure that the input `table` is actually a table object
       tbl_validity_check(table = table)
@@ -1344,9 +1352,11 @@ interrogate_set <- function(
   if (assertion_type == "col_vals_make_set") {
     
     # Create function for validating the `col_vals_make_set()` step
-    tbl_vals_make_set <- function(table,
-                                  column,
-                                  na_pass) {
+    tbl_vals_make_set <- function(
+      table,
+      column,
+      na_pass
+    ) {
       
       # Ensure that the input `table` is actually a table object
       tbl_validity_check(table = table)
@@ -1416,9 +1426,11 @@ interrogate_set <- function(
   if (assertion_type == "col_vals_make_subset") {
     
     # Create function for validating the `col_vals_make_subset()` step
-    tbl_vals_make_subset <- function(table,
-                                     column,
-                                     na_pass) {
+    tbl_vals_make_subset <- function(
+      table,
+      column,
+      na_pass
+    ) {
       
       # Ensure that the input `table` is actually a table object
       tbl_validity_check(table = table)
@@ -1479,9 +1491,11 @@ interrogate_set <- function(
   if (assertion_type == "col_vals_not_in_set") {
     
     # Create function for validating the `col_vals_not_in_set()` step function
-    tbl_val_not_in_set <- function(table,
-                                   column,
-                                   na_pass) {
+    tbl_val_not_in_set <- function(
+      table,
+      column,
+      na_pass
+    ) {
       
       # Ensure that the input `table` is actually a table object
       tbl_validity_check(table = table)
@@ -1543,10 +1557,12 @@ interrogate_direction <- function(
 
   # Create function for validating any `col_vals_increasing()` and
   # `col_vals_decreasing()` steps
-  tbl_val_direction <- function(table,
-                                column,
-                                na_pass,
-                                direction) {
+  tbl_val_direction <- function(
+    table,
+    column,
+    na_pass,
+    direction
+  ) {
     
     # Exit if the table is from the `mssql` source 
     if (is_tbl_mssql(table)) {
@@ -1680,11 +1696,13 @@ interrogate_regex <- function(
   tbl_type <- agent$tbl_src
   
   # Create function for validating the `col_vals_regex()` step function
-  tbl_val_regex <- function(table,
-                            tbl_type,
-                            column,
-                            regex,
-                            na_pass) {
+  tbl_val_regex <- function(
+    table,
+    tbl_type,
+    column,
+    regex,
+    na_pass
+  ) {
     
     # Ensure that the input `table` is actually a table object
     tbl_validity_check(table = table)
@@ -1731,6 +1749,19 @@ interrogate_regex <- function(
         table %>%
         dplyr::mutate(pb_is_good_ = ifelse(
           !is.na({{ column }}), {{ column }} %REGEXP% regex, NA)
+        ) %>%
+        dplyr::mutate(pb_is_good_ = dplyr::case_when(
+          is.na(pb_is_good_) ~ na_pass,
+          TRUE ~ pb_is_good_
+        ))
+    
+    } else if (tbl_type == "bigquery") {
+      
+      tbl <- 
+        table %>%
+        dplyr::mutate(
+          pb_is_good_ = ifelse(
+            !is.na({{ column }}), REGEXP_CONTAINS({{ column }}, regex), NA)
         ) %>%
         dplyr::mutate(pb_is_good_ = dplyr::case_when(
           is.na(pb_is_good_) ~ na_pass,
@@ -1798,11 +1829,13 @@ interrogate_within_spec <- function(
   tbl_type <- agent$tbl_src
   
   # Create function for validating the `col_vals_within_spec()` step function
-  tbl_val_within_spec <- function(table,
-                                  tbl_type,
-                                  column,
-                                  spec,
-                                  na_pass) {
+  tbl_val_within_spec <- function(
+    table,
+    tbl_type,
+    column,
+    spec,
+    na_pass
+  ) {
     
     # Ensure that the input `table` is actually a table object
     tbl_validity_check(table = table)
@@ -2005,8 +2038,10 @@ interrogate_expr <- function(
   expr <- get_values_at_idx(agent = agent, idx = idx)
   
   # Create function for validating the `col_vals_expr()` step function
-  tbl_val_expr <- function(table,
-                           expr) {
+  tbl_val_expr <- function(
+    table,
+    expr
+  ) {
     
     # Ensure that the input `table` is actually a table object
     tbl_validity_check(table = table)
@@ -2088,8 +2123,10 @@ interrogate_null <- function(
   column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
   
   # Create function for validating the `col_vals_null()` step function
-  tbl_val_null <- function(table,
-                           column) {
+  tbl_val_null <- function(
+    table,
+    column
+  ) {
     
     # Ensure that the input `table` is actually a table object
     tbl_validity_check(table = table)
@@ -2121,8 +2158,10 @@ interrogate_not_null <- function(
   column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
   
   # Create function for validating the `col_vals_null()` step function
-  tbl_val_not_null <- function(table,
-                               column) {
+  tbl_val_not_null <- function(
+    table,
+    column
+  ) {
     
     # Ensure that the input `table` is actually a table object
     tbl_validity_check(table = table)
@@ -2157,9 +2196,11 @@ interrogate_col_exists <- function(
   column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
   
   # Create function for validating the `col_exists()` step function
-  tbl_col_exists <- function(table,
-                             column,
-                             column_names) {
+  tbl_col_exists <- function(
+    table,
+    column,
+    column_names
+  ) {
     
     # Ensure that the input `table` is actually a table object
     tbl_validity_check(table = table)
@@ -2188,9 +2229,11 @@ interrogate_col_type <- function(
   column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
   
   # Create function for validating the `col_is_*()` step functions
-  tbl_col_is <- function(table,
-                         column,
-                         assertion_type) {
+  tbl_col_is <- function(
+    table,
+    column,
+    assertion_type
+  ) {
     
     # Ensure that the input `table` is actually a table object
     tbl_validity_check(table = table)
@@ -2260,9 +2303,11 @@ interrogate_distinct <- function(
   col_syms <- rlang::syms(column_names)
   
   # Create function for validating the `rows_distinct()` step function
-  tbl_rows_distinct <- function(table,
-                                column_names,
-                                col_syms) {
+  tbl_rows_distinct <- function(
+    table,
+    column_names,
+    col_syms
+  ) {
     
     # Ensure that the input `table` is actually a table object
     tbl_validity_check(table = table)
@@ -2277,9 +2322,11 @@ interrogate_distinct <- function(
   # nocov start
   
   # Create another variation of `tbl_rows_distinct()` that works for MySQL
-  tbl_rows_distinct_mysql <- function(table,
-                                      column_names,
-                                      col_syms) {
+  tbl_rows_distinct_mysql <- function(
+    table,
+    column_names,
+    col_syms
+  ) {
 
     # Ensure that the input `table` is actually a table object
     tbl_validity_check(table = table)
@@ -2348,9 +2395,11 @@ interrogate_complete <- function(
   col_syms <- rlang::syms(column_names)
   
   # Create function for validating the `rows_complete()` step function
-  tbl_rows_complete <- function(table,
-                                column_names,
-                                col_syms) {
+  tbl_rows_complete <- function(
+    table,
+    column_names,
+    col_syms
+  ) {
     
     # Ensure that the input `table` is actually a table object
     tbl_validity_check(table = table)
@@ -2403,6 +2452,7 @@ interrogate_col_schema_match <- function(
   if (inherits(table, "tbl_dbi") || inherits(table, "tbl_spark")) {
     
     if (inherits(table_schema_y, "sql_type")) {
+      
       if (all(!is.na(agent$db_col_types))) {
         
         table_schema_x <-
@@ -2429,9 +2479,11 @@ interrogate_col_schema_match <- function(
   }
   
   # Create function for validating the `col_schema_match()` step function
-  tbl_col_schema_match <- function(table,
-                                   table_schema_x,
-                                   table_schema_y) {
+  tbl_col_schema_match <- function(
+    table,
+    table_schema_x,
+    table_schema_y
+  ) {
 
     # Ensure that the input `table` is actually a table object
     tbl_validity_check(table = table)
@@ -2510,7 +2562,7 @@ interrogate_col_schema_match <- function(
       dplyr::tibble(pb_is_good_ = all(unit_results))
       
     } else {
-    
+      
       # Check for exact matching between the reference schema and
       # the user-defined schema
       if (identical(table_schema_x, table_schema_y)) {
@@ -2617,8 +2669,10 @@ interrogate_tbl_match <- function(
   tbl_compare <- materialize_table(tbl = agent$validation_set$values[[idx]])
   
   # Create function for validating the `tbl_match()` step function
-  tbl_match <- function(table,
-                        tbl_compare) {
+  tbl_match <- function(
+    table,
+    tbl_compare
+  ) {
     
     # Ensure that the input `table` and `tbl_compare` objects
     # are actually table objects

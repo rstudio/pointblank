@@ -68,6 +68,10 @@ is_tbl_spark <- function(x) {
   inherits(x, "tbl_spark")
 }
 
+is_tbl_bigquery <- function(x) {
+  inherits(x, "tbl_BigQueryConnection")
+}
+
 is_arrow_object <- function(x) {
   inherits(x, "ArrowObject")
 }
@@ -783,13 +787,22 @@ get_tbl_information_dbi <- function(tbl) {
   if (grepl("sql server|sqlserver", tbl_src_details)) {
     
     # nocov start
-    
     tbl_src <- "mssql"
-    
     # nocov end
     
-  } else {
+  } else if (grepl("sql server|sqlserver", tbl_src_details)) {
     
+    # nocov start
+    tbl_src <- "mssql"
+    # nocov end
+      
+  } else if (grepl("bq_|bigquery", tbl_src_details)) {
+      
+    # nocov start
+    tbl_src <- "bigquery"
+    # nocov end
+      
+  } else {
     tbl_src <- gsub("^([a-z]*).*", "\\1", get_tbl_dbi_src_details(tbl))
   }
   
@@ -817,7 +830,37 @@ get_tbl_information_dbi <- function(tbl) {
       )
     
     # nocov end
-
+    
+  } else if (tbl_src == "bigquery") {
+    
+    # nocov start
+    
+    # Obtain BigQuery attrs for project and dataset names
+    # of the data table
+    if (
+      "pb_bq_project" %in% names(attributes(tbl)) &&
+      "pb_bq_dataset" %in% names(attributes(tbl))
+      ) {
+      
+      bq_project <- attr(tbl, "pb_bq_project", exact = TRUE)
+      bq_dataset <- attr(tbl, "pb_bq_dataset", exact = TRUE)
+      
+      q_types <-
+        as.character(
+          glue::glue(
+            "select column_name, data_type \\
+        from `{bq_project}.{bq_dataset}.INFORMATION_SCHEMA.COLUMNS` \\
+        where table_name = '{db_tbl_name}' \\
+        order by ordinal_position"
+          )
+        )
+      
+    } else {
+      q_types <- NULL
+    }
+    
+    # nocov end
+  
   } else {
 
     if (tbl_src == "mssql") {
@@ -836,7 +879,7 @@ get_tbl_information_dbi <- function(tbl) {
       
     } else { 
       
-      q_types <-
+        q_types <-
         as.character(
           glue::glue(
             "SELECT DATA_TYPE FROM \\
@@ -890,7 +933,7 @@ get_tbl_information_dbi <- function(tbl) {
     db_col_types <- 
       DBI::dbGetQuery(tbl_connection, q_types) %>%
       dplyr::collect() %>%
-      dplyr::pull(DATA_TYPE) %>%
+      dplyr::pull(ifelse(tbl_src == "bigquery", "data_type", "DATA_TYPE")) %>%
       tolower()
     
     # nocov end

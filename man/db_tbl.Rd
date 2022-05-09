@@ -6,12 +6,15 @@
 \usage{
 db_tbl(
   table,
-  dbname,
   dbtype,
+  dbname = NULL,
   host = NULL,
   port = NULL,
   user = NULL,
-  password = NULL
+  password = NULL,
+  bq_project = NULL,
+  bq_dataset = NULL,
+  bq_billing = bq_project
 )
 }
 \arguments{
@@ -22,20 +25,28 @@ connection. This only works if: (1) the \code{db} is chosen as either \code{"sql
 or \code{"duckdb"}, (2) the \code{dbname} was is set to \code{":memory:"}, and (3) the
 object supplied to \code{table} is a data frame or a tibble object.}
 
-\item{dbname}{The database name.}
-
 \item{dbtype}{Either an appropriate driver function (e.g.,
 \code{RPostgres::Postgres()}) or a shortname for the database type. Valid names
 are: \code{"postgresql"}, \code{"postgres"}, or \code{"pgsql"} (PostgreSQL, using the
 \code{RPostgres::Postgres()} driver function); \code{"mysql"} (MySQL, using
-\code{RMySQL::MySQL()}); \code{"duckdb"} (DuckDB, using \code{duckdb::duckdb()}); and
-\code{"sqlite"} (SQLite, using \code{RSQLite::SQLite()}).}
+\code{RMySQL::MySQL()}); \code{bigquery} or \code{bq} (BigQuery, using
+\code{bigrquery::bigquery()}); \code{"duckdb"} (DuckDB, using \code{duckdb::duckdb()});
+and \code{"sqlite"} (SQLite, using \code{RSQLite::SQLite()}).}
+
+\item{dbname}{The database name.}
 
 \item{host, port}{The database host and optional port number.}
 
 \item{user, password}{The environment variables used to access the username
 and password for the database. Enclose in \code{\link[=I]{I()}} when using literal username
 or password values.}
+
+\item{bq_project, bq_dataset, bq_billing}{If accessing a table from a
+\emph{BigQuery} data source, there's the requirement to provide the table's
+associated project (\code{bq_project}) and dataset (\code{bq_dataset}) names. By
+default, the project to be billed will be the same as the one provided for
+\code{bq_project} but the \code{bq_billing} argument can be changed to reflect a
+different BigQuery project.}
 }
 \value{
 A \code{tbl_dbi} object.
@@ -64,8 +75,8 @@ table. This works with the DuckDB database and the key thing is to use
 \code{dbname = ":memory"} in the \code{db_tbl()} call.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table_duckdb <- 
   db_tbl(
     table = small_table,
-    dbname = ":memory:",
-    dbtype = "duckdb"
+    dbtype = "duckdb",
+    dbname = ":memory:"
   )
 
 small_table_duckdb
@@ -93,8 +104,8 @@ The in-memory option also works using the SQLite database. The only change
 required is setting the \code{dbtype} to \code{"sqlite"}:\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table_sqlite <- 
   db_tbl(
     table = small_table,
-    dbname = ":memory:",
-    dbtype = "sqlite"
+    dbtype = "sqlite",
+    dbname = ":memory:"
   )
 
 small_table_sqlite
@@ -129,8 +140,8 @@ in-memory database. For this, we can use the all-powerful \code{\link[=file_tbl]
         subdir = "data-large"
       )
     ),
-    dbname = ":memory:",
-    dbtype = "duckdb"
+    dbtype = "duckdb",
+    dbname = ":memory:"
   )
   
 all_revenue_large_duckdb
@@ -168,8 +179,8 @@ and \code{password} entries we are using the literal username and password value
 values in \code{I()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{rna_db_tbl <- 
   db_tbl(
     table = "rna",
+    dbtype = "postgres",
     dbname = "pfmegrnargs",
-    dbtype = "postgres", 
     host = "hh-pgsql-public.ebi.ac.uk",
     port = 5432,
     user = I("reader"),
@@ -203,8 +214,8 @@ more securely access the appropriate username and password values when
 connecting to a DB. Here are all the necessary inputs:\if{html}{\out{<div class="sourceCode r">}}\preformatted{example_db_tbl <- 
   db_tbl(
     table = "<table_name>",
+    dbtype = "<database_type_shortname>",
     dbname = "<database_name>",
-    dbtype = "<database_type_shortname>", 
     host = "<connection_url>",
     port = "<connection_port>",
     user = "<DB_USER_NAME>",
@@ -225,8 +236,8 @@ with two named entries for table preparations involving the \code{\link[=tbl_sto
   tbl_store(
     small_table_duck ~ db_tbl(
       table = pointblank::small_table,
-      dbname = ":memory:",
-      dbtype = "duckdb"
+      dbtype = "duckdb",
+      dbname = ":memory:"
     ),
     small_high_duck ~ \{\{ small_table_duck \}\} \%>\%
       dplyr::filter(f == "high")

@@ -86,6 +86,28 @@ will result in a reporting table. This reporting can also be accessed with
 the \code{\link[=get_informant_report]{get_informant_report()}} function, where there are more reporting
 options.
 }
+\section{Supported Input Tables}{
+
+The types of data tables that are officially supported are:
+\itemize{
+\item data frames (\code{data.frame}) and tibbles (\code{tbl_df})
+\item Spark DataFrames (\code{tbl_spark})
+\item the following database tables (\code{tbl_dbi}):
+\itemize{
+\item \emph{PostgreSQL} tables (using the \code{RPostgres::Postgres()} as driver)
+\item \emph{MySQL} tables (with \code{RMySQL::MySQL()})
+\item \emph{Microsoft SQL Server} tables (via \strong{odbc})
+\item \emph{BigQuery} tables (using \code{bigrquery::bigquery()})
+\item \emph{DuckDB} tables (through \code{duckdb::duckdb()})
+\item \emph{SQLite} (with \code{RSQLite::SQLite()})
+}
+}
+
+Other database tables may work to varying degrees but they haven't been
+formally tested (so be mindful of this when using unsupported backends with
+\strong{pointblank}).
+}
+
 \section{YAML}{
 
 A \strong{pointblank} informant can be written to YAML with \code{\link[=yaml_write]{yaml_write()}} and the

@@ -136,12 +136,33 @@ exact comparison used in this function is \code{col_val > value}). The \code{val
 be specified as a single, literal value or as a column name given in
 \code{vars()}. The validation function can be used directly on a data table or
 with an \emph{agent} object (technically, a \code{ptblank_agent} object) whereas the
-expectation and test functions can only be used with a data table. The types
-of data tables that can be used include data frames, tibbles, database tables
-(\code{tbl_dbi}), and Spark DataFrames (\code{tbl_spark}). Each validation step or
-expectation will operate over the number of test units that is equal to the
-number of rows in the table (after any \code{preconditions} have been applied).
+expectation and test functions can only be used with a data table. Each
+validation step or expectation will operate over the number of test units
+that is equal to the number of rows in the table (after any \code{preconditions}
+have been applied).
 }
+\section{Supported Input Tables}{
+
+The types of data tables that are officially supported are:
+\itemize{
+\item data frames (\code{data.frame}) and tibbles (\code{tbl_df})
+\item Spark DataFrames (\code{tbl_spark})
+\item the following database tables (\code{tbl_dbi}):
+\itemize{
+\item \emph{PostgreSQL} tables (using the \code{RPostgres::Postgres()} as driver)
+\item \emph{MySQL} tables (with \code{RMySQL::MySQL()})
+\item \emph{Microsoft SQL Server} tables (via \strong{odbc})
+\item \emph{BigQuery} tables (using \code{bigrquery::bigquery()})
+\item \emph{DuckDB} tables (through \code{duckdb::duckdb()})
+\item \emph{SQLite} (with \code{RSQLite::SQLite()})
+}
+}
+
+Other database tables may work to varying degrees but they haven't been
+formally tested (so be mindful of this when using unsupported backends with
+\strong{pointblank}).
+}
+
 \section{Column Names}{
 
 If providing multiple column names to \code{columns}, the result will be an

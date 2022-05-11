@@ -38,6 +38,23 @@
 #' the *agent* has intel. Calling the *agent* itself will result in a reporting
 #' table. This reporting of the interrogation can also be accessed with the
 #' [get_agent_report()] function, where there are more reporting options.
+#' 
+#' @section Supported Input Tables:
+#' The types of data tables that are officially supported are:
+#' 
+#'  - data frames (`data.frame`) and tibbles (`tbl_df`)
+#'  - Spark DataFrames (`tbl_spark`)
+#'  - the following database tables (`tbl_dbi`):
+#'    - *PostgreSQL* tables (using the `RPostgres::Postgres()` as driver)
+#'    - *MySQL* tables (with `RMySQL::MySQL()`)
+#'    - *Microsoft SQL Server* tables (via **odbc**)
+#'    - *BigQuery* tables (using `bigrquery::bigquery()`)
+#'    - *DuckDB* tables (through `duckdb::duckdb()`)
+#'    - *SQLite* (with `RSQLite::SQLite()`)
+#'    
+#' Other database tables may work to varying degrees but they haven't been
+#' formally tested (so be mindful of this when using unsupported backends with
+#' **pointblank**).
 #'
 #' @section The Use of an Agent for Validation Is Just One Option of Several:
 #' 

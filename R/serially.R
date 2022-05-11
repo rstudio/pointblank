@@ -64,6 +64,23 @@
 #' integer value (as an absolute threshold of failing test units) or a
 #' decimal value between `0` and `1` (serving as a fractional threshold of
 #' failing test units).
+#' 
+#' @section Supported Input Tables:
+#' The types of data tables that are officially supported are:
+#' 
+#'  - data frames (`data.frame`) and tibbles (`tbl_df`)
+#'  - Spark DataFrames (`tbl_spark`)
+#'  - the following database tables (`tbl_dbi`):
+#'    - *PostgreSQL* tables (using the `RPostgres::Postgres()` as driver)
+#'    - *MySQL* tables (with `RMySQL::MySQL()`)
+#'    - *Microsoft SQL Server* tables (via **odbc**)
+#'    - *BigQuery* tables (using `bigrquery::bigquery()`)
+#'    - *DuckDB* tables (through `duckdb::duckdb()`)
+#'    - *SQLite* (with `RSQLite::SQLite()`)
+#'    
+#' Other database tables may work to varying degrees but they haven't been
+#' formally tested (so be mindful of this when using unsupported backends with
+#' **pointblank**).
 #'
 #' @section Column Names:
 #' If providing multiple column names in any of the supplied validation steps,

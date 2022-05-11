@@ -71,6 +71,28 @@ values without domain expertise. However, using \code{draft_validation()} could
 get you started on floor 10 of tackling data quality issues and is in any
 case better than starting with an empty code editor view.
 }
+\section{Supported Input Tables}{
+
+The types of data tables that are officially supported are:
+\itemize{
+\item data frames (\code{data.frame}) and tibbles (\code{tbl_df})
+\item Spark DataFrames (\code{tbl_spark})
+\item the following database tables (\code{tbl_dbi}):
+\itemize{
+\item \emph{PostgreSQL} tables (using the \code{RPostgres::Postgres()} as driver)
+\item \emph{MySQL} tables (with \code{RMySQL::MySQL()})
+\item \emph{Microsoft SQL Server} tables (via \strong{odbc})
+\item \emph{BigQuery} tables (using \code{bigrquery::bigquery()})
+\item \emph{DuckDB} tables (through \code{duckdb::duckdb()})
+\item \emph{SQLite} (with \code{RSQLite::SQLite()})
+}
+}
+
+Other database tables may work to varying degrees but they haven't been
+formally tested (so be mindful of this when using unsupported backends with
+\strong{pointblank}).
+}
+
 \section{Examples}{
 
 

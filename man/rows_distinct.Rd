@@ -117,17 +117,37 @@ whether row values (optionally constrained to a selection of specified
 \code{columns}) are, when taken as a complete unit, distinct from all other units
 in the table. The validation function can be used directly on a data table or
 with an \emph{agent} object (technically, a \code{ptblank_agent} object) whereas the
-expectation and test functions can only be used with a data table. The types
-of data tables that can be used include data frames, tibbles, database tables
-(\code{tbl_dbi}), and Spark DataFrames (\code{tbl_spark}). As a validation step or as
-an expectation, this will operate over the number of test units that is equal
-to the number of rows in the table (after any \code{preconditions} have been
-applied).
+expectation and test functions can only be used with a data table. As a
+validation step or as an expectation, this will operate over the number of
+test units that is equal to the number of rows in the table (after any
+\code{preconditions} have been applied).
 
 We can specify the constraining column names in quotes, in \code{vars()}, and with
 the following \strong{tidyselect} helper functions: \code{starts_with()},
 \code{ends_with()}, \code{contains()}, \code{matches()}, and \code{everything()}.
 }
+\section{Supported Input Tables}{
+
+The types of data tables that are officially supported are:
+\itemize{
+\item data frames (\code{data.frame}) and tibbles (\code{tbl_df})
+\item Spark DataFrames (\code{tbl_spark})
+\item the following database tables (\code{tbl_dbi}):
+\itemize{
+\item \emph{PostgreSQL} tables (using the \code{RPostgres::Postgres()} as driver)
+\item \emph{MySQL} tables (with \code{RMySQL::MySQL()})
+\item \emph{Microsoft SQL Server} tables (via \strong{odbc})
+\item \emph{BigQuery} tables (using \code{bigrquery::bigquery()})
+\item \emph{DuckDB} tables (through \code{duckdb::duckdb()})
+\item \emph{SQLite} (with \code{RSQLite::SQLite()})
+}
+}
+
+Other database tables may work to varying degrees but they haven't been
+formally tested (so be mindful of this when using unsupported backends with
+\strong{pointblank}).
+}
+
 \section{Preconditions}{
 
 Providing expressions as \code{preconditions} means \strong{pointblank} will preprocess

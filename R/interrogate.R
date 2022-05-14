@@ -2321,8 +2321,9 @@ interrogate_distinct <- function(
   
   # nocov start
   
-  # Create another variation of `tbl_rows_distinct()` that works for MySQL
-  tbl_rows_distinct_mysql <- function(
+  # Create a variation of `tbl_rows_distinct()` that works
+  # for MySQL and for BigQuery
+  tbl_rows_distinct_2 <- function(
     table,
     column_names,
     col_syms
@@ -2347,9 +2348,9 @@ interrogate_distinct <- function(
   }
   
   # Perform the validation of the table
-  if (agent$tbl_src == "mysql") {
+  if (agent$tbl_src %in% c("mysql", "bigquery")) {
     pointblank_try_catch(
-      tbl_rows_distinct_mysql(
+      tbl_rows_distinct_2(
         table = table,
         column_names = {{ column_names }},
         col_syms = col_syms

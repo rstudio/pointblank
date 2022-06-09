@@ -60,7 +60,7 @@ gt_tbl <-
   ) %>%
   tab_header(title = md("Upcoming Tasks and Milestones for **pointblank**")) %>%
   fmt_markdown(columns = title) %>%
-  fmt_missing(columns = c(priority, difficulty, effort), missing_text = "") %>%
+  sub_missing(columns = c(priority, difficulty, effort), missing_text = "") %>%
   data_color(
     columns = c(priority, difficulty, effort),
     colors = scales::col_numeric(

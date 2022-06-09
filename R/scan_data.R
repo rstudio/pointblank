@@ -796,7 +796,7 @@ get_common_values_gt <- function(
         n = get_lsv("table_scan/tbl_lab_count")[[lang]],
         frequency = get_lsv("table_scan/tbl_lab_frequency")[[lang]],
       ) %>%
-      gt::fmt_missing(columns = "value", missing_text = "**NA**") %>%
+      gt_missing(columns = "value", missing_text = "**NA**") %>%
       gt::text_transform(
         locations = gt::cells_body(columns = "value"),
         fn = function(x) {
@@ -834,7 +834,7 @@ get_common_values_gt <- function(
         n = get_lsv("table_scan/tbl_lab_count")[[lang]],
         frequency = get_lsv("table_scan/tbl_lab_frequency")[[lang]],
       ) %>%
-      gt::fmt_missing(columns = "value", missing_text = "**NA**") %>%
+      gt_missing(columns = "value", missing_text = "**NA**") %>%
       gt::text_transform(
         locations = gt::cells_body(columns = "value"),
         fn = function(x) ifelse(x == "**NA**", "<code>NA</code>", x)
@@ -1526,7 +1526,7 @@ probe_sample <- function(data) {
   probe_sample <-
     data %>%
     gt::gt_preview(top_n = 5, bottom_n = 5) %>%
-    gt::fmt_missing(columns = gt::everything(), missing_text = "**NA**") %>%
+    gt_missing(columns = gt::everything(), missing_text = "**NA**") %>%
     gt::text_transform(
       locations = gt::cells_body(columns = gt::everything()),
       fn = function(x) ifelse(x == "**NA**", "<code>NA</code>", x)

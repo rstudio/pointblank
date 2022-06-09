@@ -1571,6 +1571,13 @@ print_time <- function(time_diff_s) {
   }
 }
 
+gt_missing <- 
+  if (packageVersion("gt") >= "0.6.0") {
+    gt::sub_missing 
+  } else {
+    gt::fmt_missing
+  }
+
 pb_get_image_tag <- function(file, dir = "images") {
   
   repo_url <- "https://raw.githubusercontent.com/rich-iannone/pointblank/main"

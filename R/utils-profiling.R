@@ -615,7 +615,7 @@ get_table_slice_gt <- function(data_column,
   data_column %>%
     gt::gt() %>%
     gt::fmt_percent(columns = 3, locale = locale) %>%
-    gt::sub_missing(columns = 1, missing_text = "**NA**") %>%
+    gt_missing(columns = 1, missing_text = "**NA**") %>%
     gt::text_transform(
       locations = gt::cells_body(columns = 1),
       fn = function(x) ifelse(x == "**NA**", "<code>NA</code>", x)

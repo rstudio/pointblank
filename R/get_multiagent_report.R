@@ -788,7 +788,7 @@ get_multiagent_report <- function(
     ) %>%
     gt::fmt_markdown(columns = 2:n_columns) %>%
     gt::fmt_markdown(columns = "sha1") %>%
-    gt::sub_missing(
+    gt_missing(
       columns = columns_used_tbl,
       missing_text = gt::html(
         as.character(
@@ -803,7 +803,7 @@ get_multiagent_report <- function(
         )
       )
     ) %>%
-    gt::sub_missing(
+    gt_missing(
       columns = columns_not_used,
       missing_text = ""
     ) %>%

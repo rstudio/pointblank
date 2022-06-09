@@ -1537,8 +1537,8 @@ get_agent_report <- function(
         "eval_sym", "W", "S", "N", "extract"
       )
     ) %>%
-    gt::sub_missing(columns = c("columns", "values", "units", "extract")) %>%
-    gt::sub_missing(columns = "status_color", missing_text = "") %>%
+    gt_missing(columns = c("columns", "values", "units", "extract")) %>%
+    gt_missing(columns = "status_color", missing_text = "") %>%
     gt::cols_hide(columns = c("W_val", "S_val", "N_val", "active", "eval")) %>%
     gt::text_transform(
       locations = gt::cells_body(columns = "units"),

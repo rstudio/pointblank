@@ -871,6 +871,8 @@ set_tbl <- function(
     # set the relevant list elements
     tbl_info <- get_tbl_information(tbl = tbl_material)
     
+    # nolint start
+    
     table.type <- tbl_info$tbl_src
     table.columns <- get_table_total_columns(data = tbl_material)
     
@@ -879,8 +881,6 @@ set_tbl <- function(
     } else {
       table.rows <- get_table_total_rows(data = tbl_material)
     }
-    
-    # nolint start
     
     x$metadata$table$`_columns` <- table.columns
     x$metadata$table$`_rows` <- table.rows

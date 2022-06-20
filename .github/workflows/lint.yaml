@@ -57,9 +57,11 @@ jobs:
             exclusions = c(
               list.files("tests", recursive = TRUE, full.names = TRUE),
               list.files("man", recursive = TRUE, full.names = TRUE),
-              list.files("vignettes", recursive = TRUE, full.names = TRUE)
-              )
+              list.files("vignettes", recursive = TRUE, full.names = TRUE),
+              list.files("data-raw", recursive = TRUE, full.names = TRUE),
+              list.files("inst", recursive = TRUE, full.names = TRUE)
             )
+          )
           print(out)
           if (length(out)) stop("lints found")
         shell: Rscript {0}

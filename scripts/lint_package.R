@@ -9,6 +9,8 @@ lintr::lint_package(
   exclusions = c(
     list.files("tests", recursive = TRUE, full.names = TRUE),
     list.files("man", recursive = TRUE, full.names = TRUE),
-    list.files("vignettes", recursive = TRUE, full.names = TRUE)
+    list.files("vignettes", recursive = TRUE, full.names = TRUE),
+    list.files("data-raw", recursive = TRUE, full.names = TRUE),
+    list.files("inst", recursive = TRUE, full.names = TRUE)
   )
 )

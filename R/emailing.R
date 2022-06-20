@@ -406,7 +406,7 @@ email_create <- function(
 
 check_msg_components_all_null <- function(msg_header, msg_body, msg_footer) {
   
-  if (is.null(msg_header) & is.null(msg_body) & is.null(msg_footer)) {
+  if (is.null(msg_header) && is.null(msg_body) && is.null(msg_footer)) {
     warning("There is no content provided for the email message")
   }
 }

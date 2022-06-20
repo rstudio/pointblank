@@ -2296,6 +2296,12 @@ interrogate_distinct <- function(
         unlist()
     }
     
+    if (length(column_names) == 1 && column_names == "NA") {
+      if (uses_tidyselect(expr_text = agent$validation_set$columns_expr[idx])) {
+        column_names <- character(0)
+      }
+    }
+    
   } else if (is.na(agent$validation_set$column[idx] %>% unlist())) {
     column_names <- get_all_cols(agent = agent)
   }
@@ -2311,6 +2317,7 @@ interrogate_distinct <- function(
     
     # Ensure that the input `table` is actually a table object
     tbl_validity_check(table = table)
+    column_validity_has_columns(columns = column_names)
     
     table %>%
       dplyr::select({{ column_names }}) %>%
@@ -2389,6 +2396,12 @@ interrogate_complete <- function(
         unlist()
     }
     
+    if (length(column_names) == 1 && column_names == "NA") {
+      if (uses_tidyselect(expr_text = agent$validation_set$columns_expr[idx])) {
+        column_names <- character(0)
+      }
+    }
+    
   } else if (is.na(agent$validation_set$column[idx] %>% unlist())) {
     column_names <- get_all_cols(agent = agent)
   }
@@ -2404,6 +2417,7 @@ interrogate_complete <- function(
     
     # Ensure that the input `table` is actually a table object
     tbl_validity_check(table = table)
+    column_validity_has_columns(columns = column_names)
     
     if (is_tbl_dbi(table) || is_tbl_spark(table)) {
       
@@ -2802,6 +2816,17 @@ column_validity_checks_column_value <- function(
 }
 
 # nolint end
+
+# Validity check for presence of columns
+column_validity_has_columns <- function(columns) {
+  
+  if (length(columns) < 1) {
+    stop(
+      "The column selection statement that was used yielded no columns.",
+      call. = FALSE
+    )
+  }
+}
 
 # Validity check for the column
 column_validity_checks_column <- function(

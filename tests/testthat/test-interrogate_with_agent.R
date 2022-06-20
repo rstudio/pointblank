@@ -840,6 +840,116 @@ test_that("Interrogating for valid row values", {
   expect_equivalent(validation$validation_set$f_failed, 0.15385)
   expect_equivalent(nrow(validation$validation_set), 1)
   
+  # Use the `rows_distinct()` function to create
+  # a validation step for columns queried with a
+  # tidyselect statement, then `interrogate()`
+  validation <-
+    create_agent(tbl = small_table) %>%
+    rows_distinct(columns = starts_with(c("date", "a"))) %>%
+    interrogate()
+  
+  # Expect certain values in `validation$validation_set`
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$validation_set$assertion_type, "rows_distinct")
+  expect_equivalent(validation$validation_set$column %>% unlist(), "date_time, date, a")
+  expect_true(is.null(validation$validation_set[["values"]][[1]]))
+  expect_false(validation$validation_set$all_passed)
+  expect_equivalent(validation$validation_set$n, 13)
+  expect_equivalent(validation$validation_set$n_passed, 11)
+  expect_equivalent(validation$validation_set$n_failed, 2)
+  expect_equivalent(validation$validation_set$f_passed, 0.84615)
+  expect_equivalent(validation$validation_set$f_failed, 0.15385)
+  expect_equivalent(nrow(validation$validation_set), 1)
+  
+  #
+  # rows_complete()
+  #
+  
+  # Use the `rows_complete()` function to create
+  # a validation step, then, `interrogate()`
+  validation <-
+    create_agent(tbl = small_table) %>%
+    rows_complete() %>%
+    interrogate()
+  
+  # Expect certain values in `validation$validation_set`
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$validation_set$assertion_type, "rows_complete")
+  expect_true(is.na(validation$validation_set$column %>% unlist()))
+  expect_true(is.null(validation$validation_set[["values"]][[1]]))
+  expect_false(validation$validation_set$all_passed)
+  expect_equivalent(validation$validation_set$n, 13)
+  expect_equivalent(validation$validation_set$n_passed, 11)
+  expect_equivalent(validation$validation_set$n_failed, 2)
+  expect_equivalent(validation$validation_set$f_passed, 0.84615)
+  expect_equivalent(validation$validation_set$f_failed, 0.15385)
+  expect_equivalent(nrow(validation$validation_set), 1)
+  
+  # Use the `rows_complete()` function to create
+  # a validation step (with a precondition), then,
+  # `interrogate()`
+  validation <-
+    create_agent(tbl = small_table) %>%
+    rows_complete(
+      preconditions = ~ . %>% dplyr::filter(date < "2016-01-06")
+    ) %>%
+    interrogate()
+  
+  # Expect certain values in `validation$validation_set`
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$validation_set$assertion_type, "rows_complete")
+  expect_true(is.na(validation$validation_set$column %>% unlist()))
+  expect_true(is.null(validation$validation_set[["values"]][[1]]))
+  expect_true(validation$validation_set$all_passed)
+  expect_equivalent(validation$validation_set$n, 3)
+  expect_equivalent(validation$validation_set$n_passed, 3)
+  expect_equivalent(validation$validation_set$n_failed, 0)
+  expect_equivalent(validation$validation_set$f_passed, 1)
+  expect_equivalent(validation$validation_set$f_failed, 0)
+  expect_equivalent(nrow(validation$validation_set), 1)
+  
+  # Use the `rows_complete()` function to create
+  # a validation step for selected columns, then,
+  # `interrogate()`
+  validation <-
+    create_agent(tbl = small_table) %>%
+    rows_complete(columns = vars(date_time, a)) %>%
+    interrogate()
+  
+  # Expect certain values in `validation$validation_set`
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$validation_set$assertion_type, "rows_complete")
+  expect_equivalent(validation$validation_set$column %>% unlist(), "date_time, a")
+  expect_true(is.null(validation$validation_set[["values"]][[1]]))
+  expect_true(validation$validation_set$all_passed)
+  expect_equivalent(validation$validation_set$n, 13)
+  expect_equivalent(validation$validation_set$n_passed, 13)
+  expect_equivalent(validation$validation_set$n_failed, 0)
+  expect_equivalent(validation$validation_set$f_passed, 1)
+  expect_equivalent(validation$validation_set$f_failed, 0)
+  expect_equivalent(nrow(validation$validation_set), 1)
+  
+  # Use the `rows_complete()` function to create
+  # a validation step for columns queried with a
+  # tidyselect statement, then `interrogate()`
+  validation <-
+    create_agent(tbl = small_table) %>%
+    rows_complete(columns = starts_with(c("date", "a"))) %>%
+    interrogate()
+  
+  # Expect certain values in `validation$validation_set`
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$validation_set$assertion_type, "rows_complete")
+  expect_equivalent(validation$validation_set$column %>% unlist(), "date_time, date, a")
+  expect_true(is.null(validation$validation_set[["values"]][[1]]))
+  expect_true(validation$validation_set$all_passed)
+  expect_equivalent(validation$validation_set$n, 13)
+  expect_equivalent(validation$validation_set$n_passed, 13)
+  expect_equivalent(validation$validation_set$n_failed, 0)
+  expect_equivalent(validation$validation_set$f_passed, 1)
+  expect_equivalent(validation$validation_set$f_failed, 0)
+  expect_equivalent(nrow(validation$validation_set), 1)
+  
   #
   # col_vals_in_set()
   #

@@ -271,11 +271,19 @@ rows_distinct <- function(
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
   
-  # Resolve the columns based on the expression
-  if (!is.null(rlang::eval_tidy(columns)) && !is.null(columns)) {
-    columns <- resolve_columns(x = x, var_expr = columns, preconditions)
+  if (uses_tidyselect(expr_text = columns_expr)) {
+    
+    # Resolve the columns based on the expression
+    columns <- resolve_columns(x = x, var_expr = columns, preconditions = NULL)
+    
   } else {
-    columns <- NULL
+    
+    # Resolve the columns based on the expression
+    if (!is.null(rlang::eval_tidy(columns)) && !is.null(columns)) {
+      columns <- resolve_columns(x = x, var_expr = columns, preconditions)
+    } else {
+      columns <- NULL
+    }
   }
   
   # Resolve segments into list

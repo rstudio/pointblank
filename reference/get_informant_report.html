@@ -95,12 +95,16 @@ to <strong>pointblank</strong> YAML with <code>yaml_write(informant = &lt;inform
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>informant</dt>
 <dd><p>An informant object of class <code>ptblank_informant</code>.</p></dd>
+
+
 <dt>size</dt>
 <dd><p>The size of the display table, which can be either <code>"standard"</code>
 (the default, with a width of 875px), <code>"small"</code> (width of 575px), or, a
 pixel- or percent-based width of your choosing (supply an integer value for
 the width in pixels, or values with <code>"px"</code> or <code>"%"</code> appended, like <code>"75%"</code>,
 <code>"500px"</code>, etc.).</p></dd>
+
+
 <dt>title</dt>
 <dd><p>Options for customizing the title of the report. The default is
 the keyword <code>":default:"</code> which produces generic title text that refers to
@@ -113,6 +117,8 @@ the text string. If providing text, it will be interpreted as Markdown text
 and transformed internally to HTML. To circumvent such a transformation,
 use text in <code><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I()</a></code> to explicitly state that the supplied text should not be
 transformed.</p></dd>
+
+
 <dt>lang</dt>
 <dd><p>The language to use for the <em>information report</em>.
 By default, <code>NULL</code> will create English (<code>"en"</code>) text. Other options include
@@ -121,6 +127,8 @@ Portuguese (<code>"pt"</code>), Turkish (<code>"tr"</code>), Chinese (<code>"zh"
 Polish (<code>"pl"</code>), Danish (<code>"da"</code>), Swedish (<code>"sv"</code>), and Dutch (<code>"nl"</code>).
 This <code>lang</code> option will override any previously set language setting (e.g.,
 by the <code><a href="create_informant.html">create_informant()</a></code> call).</p></dd>
+
+
 <dt>locale</dt>
 <dd><p>An optional locale ID to use for formatting values in the
 <em>information report</em> summary table according the locale's rules. Examples
@@ -129,10 +137,13 @@ include <code>"en_US"</code> for English (United States) and <code>"fr_FR"</code
 designation, like <code>"es"</code> for Spanish (Spain, same as <code>"es_ES"</code>). This
 <code>locale</code> option will override any previously set locale value (e.g., by the
 <code><a href="create_informant.html">create_informant()</a></code> call).</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A <strong>gt</strong> table object.</p>
+    
+
+<p>A <strong>gt</strong> table object.</p>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
@@ -177,7 +188,7 @@ designation, like <code>"es"</code> for Spanish (Spain, same as <code>"es_ES"</c
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

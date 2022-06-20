@@ -108,27 +108,38 @@ accepted: (1) an ISO 8601 formatted time string (as a date or a date-time),
     <dl><dt>tbl</dt>
 <dd><p>A table object to be used as input for the transformation. This
 can be a data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spark</code> object.</p></dd>
+
+
 <dt>time_column</dt>
 <dd><p>The time-based column that will be used as a basis for the
 slicing. If no time column is provided then the first one found will be
 used.</p></dd>
+
+
 <dt>slice_point</dt>
 <dd><p>The location on the <code>time_column</code> where the slicing will
 occur. This can either be a decimal value from <code>0</code> to <code>1</code>, an ISO 8601
 formatted time string (as a date or a date-time), a <code>POSIXct</code> time, or a
 <code>Date</code> object.</p></dd>
+
+
 <dt>keep</dt>
 <dd><p>Which slice should be kept? The <code>"left"</code> side (the default)
 contains data rows that are earlier than the <code>slice_point</code> and the
 <code>"right"</code> side will have rows that are later.</p></dd>
+
+
 <dt>arrange</dt>
 <dd><p>Should the slice be arranged by the <code>time_column</code>? This may be
 useful if the input <code>tbl</code> isn't ordered by the <code>time_column</code>. By default,
 this is <code>FALSE</code> and the original ordering is retained.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spark</code> object
+    
+
+<p>A data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spark</code> object
 depending on what was provided as <code>tbl</code>.</p>
     </div>
     <div class="section level2">
@@ -139,7 +150,7 @@ the <code>time_column</code>. This ordering is always done in an ascending manne
 can being removed (no matter which slice is retained).</p>
     </div>
     <div class="section level2">
-    <h2 id="demos">Demos<a class="anchor" aria-label="anchor" href="#demos"></a></h2>
+    <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
     
 
 
@@ -214,7 +225,7 @@ that begins at <code>2016-01-04 11:00:00</code> and ends at <code>2016-01-30 11:
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

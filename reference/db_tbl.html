@@ -102,12 +102,15 @@ enclosing such values in <code><a href="https://rdrr.io/r/base/AsIs.html" class=
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">db_tbl</span><span class="op">(</span>
   <span class="va">table</span>,
-  <span class="va">dbname</span>,
   <span class="va">dbtype</span>,
+  dbname <span class="op">=</span> <span class="cn">NULL</span>,
   host <span class="op">=</span> <span class="cn">NULL</span>,
   port <span class="op">=</span> <span class="cn">NULL</span>,
   user <span class="op">=</span> <span class="cn">NULL</span>,
-  password <span class="op">=</span> <span class="cn">NULL</span>
+  password <span class="op">=</span> <span class="cn">NULL</span>,
+  bq_project <span class="op">=</span> <span class="cn">NULL</span>,
+  bq_dataset <span class="op">=</span> <span class="cn">NULL</span>,
+  bq_billing <span class="op">=</span> <span class="va">bq_project</span>
 <span class="op">)</span></code></pre></div>
     </div>
 
@@ -120,28 +123,49 @@ this can be supplied as a data table to copy into an in-memory database
 connection. This only works if: (1) the <code>db</code> is chosen as either <code>"sqlite"</code>
 or <code>"duckdb"</code>, (2) the <code>dbname</code> was is set to <code>":memory:"</code>, and (3) the
 object supplied to <code>table</code> is a data frame or a tibble object.</p></dd>
-<dt>dbname</dt>
-<dd><p>The database name.</p></dd>
+
+
 <dt>dbtype</dt>
 <dd><p>Either an appropriate driver function (e.g.,
 <code><a href="https://rpostgres.r-dbi.org/reference/Postgres.html" class="external-link">RPostgres::Postgres()</a></code>) or a shortname for the database type. Valid names
 are: <code>"postgresql"</code>, <code>"postgres"</code>, or <code>"pgsql"</code> (PostgreSQL, using the
 <code><a href="https://rpostgres.r-dbi.org/reference/Postgres.html" class="external-link">RPostgres::Postgres()</a></code> driver function); <code>"mysql"</code> (MySQL, using
-<code><a href="https://rdrr.io/pkg/RMySQL/man/MySQLDriver-class.html" class="external-link">RMySQL::MySQL()</a></code>); <code>"duckdb"</code> (DuckDB, using <code><a href="https://rdrr.io/pkg/duckdb/man/duckdb.html" class="external-link">duckdb::duckdb()</a></code>); and
-<code>"sqlite"</code> (SQLite, using <code><a href="https://rsqlite.r-dbi.org/reference/SQLite.html" class="external-link">RSQLite::SQLite()</a></code>).</p></dd>
+<code><a href="https://rdrr.io/pkg/RMySQL/man/MySQLDriver-class.html" class="external-link">RMySQL::MySQL()</a></code>); <code>bigquery</code> or <code>bq</code> (BigQuery, using
+<code><a href="https://bigrquery.r-dbi.org/reference/bigquery.html" class="external-link">bigrquery::bigquery()</a></code>); <code>"duckdb"</code> (DuckDB, using <code><a href="https://rdrr.io/pkg/duckdb/man/duckdb.html" class="external-link">duckdb::duckdb()</a></code>);
+and <code>"sqlite"</code> (SQLite, using <code><a href="https://rsqlite.r-dbi.org/reference/SQLite.html" class="external-link">RSQLite::SQLite()</a></code>).</p></dd>
+
+
+<dt>dbname</dt>
+<dd><p>The database name.</p></dd>
+
+
 <dt>host, port</dt>
 <dd><p>The database host and optional port number.</p></dd>
+
+
 <dt>user, password</dt>
 <dd><p>The environment variables used to access the username
 and password for the database. Enclose in <code><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I()</a></code> when using literal username
 or password values.</p></dd>
+
+
+<dt>bq_project, bq_dataset, bq_billing</dt>
+<dd><p>If accessing a table from a
+<em>BigQuery</em> data source, there's the requirement to provide the table's
+associated project (<code>bq_project</code>) and dataset (<code>bq_dataset</code>) names. By
+default, the project to be billed will be the same as the one provided for
+<code>bq_project</code> but the <code>bq_billing</code> argument can be changed to reflect a
+different BigQuery project.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A <code>tbl_dbi</code> object.</p>
+    
+
+<p>A <code>tbl_dbi</code> object.</p>
     </div>
     <div class="section level2">
-    <h2 id="demos">Demos<a class="anchor" aria-label="anchor" href="#demos"></a></h2>
+    <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
     
 
 <div class="section">
@@ -153,8 +177,8 @@ table. This works with the DuckDB database and the key thing is to use
 <code>dbname = ":memory"</code> in the <code>db_tbl()</code> call.</p><div class="sourceCode r"><pre><code><span class="va">small_table_duckdb</span> <span class="op">&lt;-</span> 
   <span class="fu"><a href="../reference/db_tbl.html">db_tbl</a></span><span class="op">(</span>
     table <span class="op">=</span> <span class="va">small_table</span>,
-    dbname <span class="op">=</span> <span class="st">":memory:"</span>,
-    dbtype <span class="op">=</span> <span class="st">"duckdb"</span>
+    dbtype <span class="op">=</span> <span class="st">"duckdb"</span>,
+    dbname <span class="op">=</span> <span class="st">":memory:"</span>
   <span class="op">)</span>
 
 <span class="va">small_table_duckdb</span></code></pre><p></p></div>
@@ -180,8 +204,8 @@ table. This works with the DuckDB database and the key thing is to use
 required is setting the <code>dbtype</code> to <code>"sqlite"</code>:</p><div class="sourceCode r"><pre><code><span class="va">small_table_sqlite</span> <span class="op">&lt;-</span> 
   <span class="fu"><a href="../reference/db_tbl.html">db_tbl</a></span><span class="op">(</span>
     table <span class="op">=</span> <span class="va">small_table</span>,
-    dbname <span class="op">=</span> <span class="st">":memory:"</span>,
-    dbtype <span class="op">=</span> <span class="st">"sqlite"</span>
+    dbtype <span class="op">=</span> <span class="st">"sqlite"</span>,
+    dbname <span class="op">=</span> <span class="st">":memory:"</span>
   <span class="op">)</span>
 
 <span class="va">small_table_sqlite</span></code></pre><p></p></div>
@@ -214,8 +238,8 @@ in-memory database. For this, we can use the all-powerful <code><a href="file_tb
         subdir <span class="op">=</span> <span class="st">"data-large"</span>
       <span class="op">)</span>
     <span class="op">)</span>,
-    dbname <span class="op">=</span> <span class="st">":memory:"</span>,
-    dbtype <span class="op">=</span> <span class="st">"duckdb"</span>
+    dbtype <span class="op">=</span> <span class="st">"duckdb"</span>,
+    dbname <span class="op">=</span> <span class="st">":memory:"</span>
   <span class="op">)</span>
   
 <span class="va">all_revenue_large_duckdb</span></code></pre><p></p></div>
@@ -253,8 +277,8 @@ and <code>password</code> entries we are using the literal username and password
 values in <code><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I()</a></code>.</p><div class="sourceCode r"><pre><code><span class="va">rna_db_tbl</span> <span class="op">&lt;-</span> 
   <span class="fu"><a href="../reference/db_tbl.html">db_tbl</a></span><span class="op">(</span>
     table <span class="op">=</span> <span class="st">"rna"</span>,
+    dbtype <span class="op">=</span> <span class="st">"postgres"</span>,
     dbname <span class="op">=</span> <span class="st">"pfmegrnargs"</span>,
-    dbtype <span class="op">=</span> <span class="st">"postgres"</span>, 
     host <span class="op">=</span> <span class="st">"hh-pgsql-public.ebi.ac.uk"</span>,
     port <span class="op">=</span> <span class="fl">5432</span>,
     user <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="st">"reader"</span><span class="op">)</span>,
@@ -286,8 +310,8 @@ more securely access the appropriate username and password values when
 connecting to a DB. Here are all the necessary inputs:</p><div class="sourceCode r"><pre><code><span class="va">example_db_tbl</span> <span class="op">&lt;-</span> 
   <span class="fu"><a href="../reference/db_tbl.html">db_tbl</a></span><span class="op">(</span>
     table <span class="op">=</span> <span class="st">"&lt;table_name&gt;"</span>,
+    dbtype <span class="op">=</span> <span class="st">"&lt;database_type_shortname&gt;"</span>,
     dbname <span class="op">=</span> <span class="st">"&lt;database_name&gt;"</span>,
-    dbtype <span class="op">=</span> <span class="st">"&lt;database_type_shortname&gt;"</span>, 
     host <span class="op">=</span> <span class="st">"&lt;connection_url&gt;"</span>,
     port <span class="op">=</span> <span class="st">"&lt;connection_port&gt;"</span>,
     user <span class="op">=</span> <span class="st">"&lt;DB_USER_NAME&gt;"</span>,
@@ -308,8 +332,8 @@ with two named entries for table preparations involving the <code><a href="tbl_s
   <span class="fu"><a href="../reference/tbl_store.html">tbl_store</a></span><span class="op">(</span>
     <span class="va">small_table_duck</span> <span class="op">~</span> <span class="fu"><a href="../reference/db_tbl.html">db_tbl</a></span><span class="op">(</span>
       table <span class="op">=</span> <span class="fu">pointblank</span><span class="fu">::</span><span class="va"><a href="../reference/small_table.html">small_table</a></span>,
-      dbname <span class="op">=</span> <span class="st">":memory:"</span>,
-      dbtype <span class="op">=</span> <span class="st">"duckdb"</span>
+      dbtype <span class="op">=</span> <span class="st">"duckdb"</span>,
+      dbname <span class="op">=</span> <span class="st">":memory:"</span>
     <span class="op">)</span>,
     <span class="va">small_high_duck</span> <span class="op">~</span> <span class="op">{</span><span class="op">{</span> <span class="va">small_table_duck</span> <span class="op">}</span><span class="op">}</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
       <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">f</span> <span class="op">==</span> <span class="st">"high"</span><span class="op">)</span>
@@ -399,7 +423,7 @@ is accomplished most easily with the <code><a href="tbl_source.html">tbl_source(
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

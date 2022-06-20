@@ -94,20 +94,28 @@ how the interrogation went down.</p>
     <dl><dt>agent</dt>
 <dd><p>An agent object of class <code>ptblank_agent</code> that is created with
 <code><a href="create_agent.html">create_agent()</a></code>.</p></dd>
+
+
 <dt>extract_failed</dt>
 <dd><p>An option to collect rows that didn't pass a particular
 validation step. The default is <code>TRUE</code> and further options allow for fine
 control of how these rows are collected.</p></dd>
+
+
 <dt>get_first_n</dt>
 <dd><p>If the option to collect non-passing rows is chosen, there
 is the option here to collect the first <code>n</code> rows here. Supply the number of
 rows to extract from the top of the non-passing rows table (the ordering of
 data from the original table is retained).</p></dd>
+
+
 <dt>sample_n</dt>
 <dd><p>If the option to collect non-passing rows is chosen, this
 option allows for the sampling of <code>n</code> rows. Supply the number of rows to
 sample from the non-passing rows table. If <code>n</code> is greater than the number
 of non-passing rows, then all the rows will be returned.</p></dd>
+
+
 <dt>sample_frac</dt>
 <dd><p>If the option to collect non-passing rows is chosen, this
 option allows for the sampling of a fraction of those rows. Provide a
@@ -115,16 +123,21 @@ number in the range of <code>0</code> and <code>1</code>. The number of rows to 
 extremely large (and this is especially when querying remote databases),
 however, the <code>sample_limit</code> option will apply a hard limit to the returned
 rows.</p></dd>
+
+
 <dt>sample_limit</dt>
 <dd><p>A value that limits the possible number of rows returned
 when sampling non-passing rows using the <code>sample_frac</code> option.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A <code>ptblank_agent</code> object.</p>
+    
+
+<p>A <code>ptblank_agent</code> object.</p>
     </div>
     <div class="section level2">
-    <h2 id="demos">Demos<a class="anchor" aria-label="anchor" href="#demos"></a></h2>
+    <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
     
 
 
@@ -177,7 +190,7 @@ process.</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

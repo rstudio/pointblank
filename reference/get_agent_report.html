@@ -308,23 +308,33 @@ in a data extract. Will be <code>NA</code> if no extract is available.</p></li>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>agent</dt>
 <dd><p>An agent object of class <code>ptblank_agent</code>.</p></dd>
+
+
 <dt>arrange_by</dt>
 <dd><p>A choice to arrange the report table rows by the validation
 step number (<code>"i"</code>, the default), or, to arrange in descending order by
 severity of the failure state (with <code>"severity"</code>).</p></dd>
+
+
 <dt>keep</dt>
 <dd><p>An option to keep <code>"all"</code> of the report's table rows (the
 default), or, keep only those rows that reflect one or more
 <code>"fail_states"</code>.</p></dd>
+
+
 <dt>display_table</dt>
 <dd><p>Should a display table be generated? If <code>TRUE</code> (the
 default), and if the <strong>gt</strong> package is installed, a display table for the
 report will be shown in the Viewer. If <code>FALSE</code>, or if <strong>gt</strong> is not
 available, then a tibble will be returned.</p></dd>
+
+
 <dt>size</dt>
 <dd><p>The size of the display table, which can be either <code>"standard"</code>
 (the default) or <code>"small"</code>. This only applies to a display table (where
 <code>display_table = TRUE</code>).</p></dd>
+
+
 <dt>title</dt>
 <dd><p>Options for customizing the title of the report. The default is
 the keyword <code>":default:"</code> which produces generic title text that refers to
@@ -337,6 +347,8 @@ the text string. If providing text, it will be interpreted as Markdown text
 and transformed internally to HTML. To circumvent such a transformation,
 use text in <code><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I()</a></code> to explicitly state that the supplied text should not be
 transformed.</p></dd>
+
+
 <dt>lang</dt>
 <dd><p>The language to use for automatic creation of briefs (short
 descriptions for each validation step) and for the <em>agent report</em> (a
@@ -347,6 +359,8 @@ options include French (<code>"fr"</code>), German (<code>"de"</code>), Italian 
 (<code>"ru"</code>), Polish (<code>"pl"</code>), Danish (<code>"da"</code>), Swedish (<code>"sv"</code>), and Dutch
 (<code>"nl"</code>). This <code>lang</code> option will override any previously set language
 setting (e.g., by the <code><a href="create_agent.html">create_agent()</a></code> call).</p></dd>
+
+
 <dt>locale</dt>
 <dd><p>An optional locale ID to use for formatting values in the
 <em>agent report</em> summary table according the locale's rules. Examples include
@@ -355,10 +369,13 @@ more simply, this can be a language identifier without a country
 designation, like <code>"es"</code> for Spanish (Spain, same as <code>"es_ES"</code>). This
 <code>locale</code> option will override any previously set locale value (e.g., by the
 <code><a href="create_agent.html">create_agent()</a></code> call).</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A <code>ptblank_agent_report</code> object if <code>display_table = TRUE</code> or a tibble
+    
+
+<p>A <code>ptblank_agent_report</code> object if <code>display_table = TRUE</code> or a tibble
 if <code>display_table = FALSE</code>.</p>
     </div>
     <div class="section level2">
@@ -438,7 +455,7 @@ if <code>display_table = FALSE</code>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

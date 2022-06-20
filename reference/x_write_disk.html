@@ -103,12 +103,18 @@ is not of the <code>tbl_dbi</code> or the <code>tbl_spark</code> class.</p>
     <dl><dt>x</dt>
 <dd><p>An <em>agent</em> object of class <code>ptblank_agent</code>, an <em>informant</em> of class
 <code>ptblank_informant</code>, or an table scan of class <code>ptblank_tbl_scan</code>.</p></dd>
+
+
 <dt>filename</dt>
 <dd><p>The filename to create on disk for the <code>agent</code>, <code>informant</code>,
 or table scan.</p></dd>
+
+
 <dt>path</dt>
 <dd><p>An optional path to which the file should be saved (this is
 automatically combined with <code>filename</code>).</p></dd>
+
+
 <dt>keep_tbl</dt>
 <dd><p>An option to keep a data table that is associated with the
 <em>agent</em> or <em>informant</em> (which is the case when the <em>agent</em>, for example, is
@@ -117,17 +123,24 @@ created using <code>create_agent(tbl = &lt;data table, ...)</code>). The default
 database tables of the class <code>tbl_dbi</code> and for Spark DataFrames
 (<code>tbl_spark</code>) the table is always removed (even if <code>keep_tbl</code> is set to
 <code>TRUE</code>).</p></dd>
+
+
 <dt>keep_extracts</dt>
 <dd><p>An option to keep any collected extract data for failing
 rows. Only applies to <em>agent</em> objects. By default, this is <code>FALSE</code> (i.e.,
 extract data is removed).</p></dd>
+
+
 <dt>quiet</dt>
 <dd><p>Should the function <em>not</em> inform when the file is written? By
 default this is <code>FALSE</code>.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Invisibly returns <code>TRUE</code> if the file has been written.</p>
+    
+
+<p>Invisibly returns <code>TRUE</code> if the file has been written.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -138,6 +151,159 @@ default this is <code>FALSE</code>.</p></dd>
 function that can obtain the target table when invoked. Alternatively, we can
 use the <code><a href="set_tbl.html">set_tbl()</a></code> with a similarly crafted <code>tbl</code> expression to ensure that
 an <em>agent</em> or <em>informant</em> can retrieve a table at a later time.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
+    
+
+<div class="section">
+<h3 id="a-writing-an-agent-to-disk">A: Writing an <code>agent</code> to disk<a class="anchor" aria-label="anchor" href="#a-writing-an-agent-to-disk"></a></h3>
+
+
+<p>Let's go through the process of (1) developing an agent with a validation
+plan (to be used for the data quality analysis of the <code><a href="small_table.html">small_table</a></code>
+dataset), (2) interrogating the agent with the <code><a href="interrogate.html">interrogate()</a></code> function, and
+(3) writing the agent and all its intel to a file.</p>
+<p>Creating an <code>action_levels</code> object is a common workflow step when creating a
+pointblank agent. We designate failure thresholds to the <code>warn</code>, <code>stop</code>, and
+<code>notify</code> states using <code><a href="action_levels.html">action_levels()</a></code>.</p><div class="sourceCode r"><pre><code><span class="va">al</span> <span class="op">&lt;-</span> 
+  <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span>
+    warn_at <span class="op">=</span> <span class="fl">0.10</span>,
+    stop_at <span class="op">=</span> <span class="fl">0.25</span>,
+    notify_at <span class="op">=</span> <span class="fl">0.35</span>
+  <span class="op">)</span></code></pre><p></p></div>
+<p>Now, let's create a pointblank <code>agent</code> object and give it the <code>al</code> object
+(which serves as a default for all validation steps which can be overridden).
+The data will be referenced in the <code>tbl</code> argument with a leading <code>~</code>.</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span> 
+  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>
+    tbl <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,
+    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,
+    label <span class="op">=</span> <span class="st">"`x_write_disk()`"</span>,
+    actions <span class="op">=</span> <span class="va">al</span>
+  <span class="op">)</span></code></pre><p></p></div>
+<p>Then, as with any <code>agent</code> object, we can add steps to the validation plan by
+using as many validation functions as we want. After that, use
+<code><a href="interrogate.html">interrogate()</a></code>.</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span>
+  <span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="../reference/col_exists.html">col_exists</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">date_time</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>,
+    regex <span class="op">=</span> <span class="st">"[0-9]-[a-z]{3}-[0-9]{3}"</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/rows_distinct.html">rows_distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_vals_lte.html">col_vals_lte</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
+<p>The <code>agent</code> can be written to a file with the <code>x_write_disk()</code> function.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/x_write_disk.html">x_write_disk</a></span><span class="op">(</span>
+  <span class="va">agent</span>,
+  filename <span class="op">=</span> <span class="st">"agent-small_table.rds"</span>
+<span class="op">)</span></code></pre><p></p></div>
+<p>We can read the file back as an agent with the <code><a href="x_read_disk.html">x_read_disk()</a></code> function and
+we'll get all of the intel along with the restored agent.</p>
+<p>If you're consistently writing agent reports when periodically checking data,
+we could make use of the <code><a href="affix_date.html">affix_date()</a></code> or <code><a href="affix_datetime.html">affix_datetime()</a></code> depending on
+the granularity you need. Here's an example that writes the file with the
+format: <code>"&lt;filename&gt;-YYYY-mm-dd_HH-MM-SS.rds"</code>.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/x_write_disk.html">x_write_disk</a></span><span class="op">(</span>
+  <span class="va">agent</span>,
+  filename <span class="op">=</span> <span class="fu"><a href="../reference/affix_datetime.html">affix_datetime</a></span><span class="op">(</span>
+    <span class="st">"agent-small_table.rds"</span>
+  <span class="op">)</span>
+<span class="op">)</span></code></pre><p></p></div>
+</div>
+
+<div class="section">
+<h3 id="b-writing-an-informant-to-disk">B: Writing an <code>informant</code> to disk<a class="anchor" aria-label="anchor" href="#b-writing-an-informant-to-disk"></a></h3>
+
+
+<p>Let's go through the process of (1) creating an informant object that
+minimally describes the <code><a href="small_table.html">small_table</a></code> dataset, (2) ensuring that data is
+captured from the target table using the <code><a href="incorporate.html">incorporate()</a></code> function, and (3)
+writing the informant to a file.</p>
+<p>Create a pointblank <code>informant</code> object with <code><a href="create_informant.html">create_informant()</a></code> and the
+<code><a href="small_table.html">small_table</a></code> dataset. Use <code><a href="incorporate.html">incorporate()</a></code> so that info snippets are
+integrated into the text.</p><div class="sourceCode r"><pre><code><span class="va">informant</span> <span class="op">&lt;-</span> 
+  <span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span>
+    tbl <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,
+    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,
+    label <span class="op">=</span> <span class="st">"`x_write_disk()`"</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/info_snippet.html">info_snippet</a></span><span class="op">(</span>
+    snippet_name <span class="op">=</span> <span class="st">"high_a"</span>,
+    fn <span class="op">=</span> <span class="fu"><a href="../reference/snip_highest.html">snip_highest</a></span><span class="op">(</span>column <span class="op">=</span> <span class="st">"a"</span><span class="op">)</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/info_snippet.html">info_snippet</a></span><span class="op">(</span>
+    snippet_name <span class="op">=</span> <span class="st">"low_a"</span>,
+    fn <span class="op">=</span> <span class="fu"><a href="../reference/snip_lowest.html">snip_lowest</a></span><span class="op">(</span>column <span class="op">=</span> <span class="st">"a"</span><span class="op">)</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>,
+    info <span class="op">=</span> <span class="st">"From {low_a} to {high_a}."</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"date"</span><span class="op">)</span>,
+    info <span class="op">=</span> <span class="st">"Time-based values."</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="st">"date"</span>,
+    info <span class="op">=</span> <span class="st">"The date part of `date_time`."</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/incorporate.html">incorporate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
+<p>The <code>informant</code> can be written to a file with <code>x_write_disk()</code>. Let's do this
+with <code><a href="affix_date.html">affix_date()</a></code> so that the filename has a datestamp.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/x_write_disk.html">x_write_disk</a></span><span class="op">(</span>
+  <span class="va">informant</span>,
+  filename <span class="op">=</span> <span class="fu"><a href="../reference/affix_date.html">affix_date</a></span><span class="op">(</span>
+    <span class="st">"informant-small_table.rds"</span>
+  <span class="op">)</span>
+<span class="op">)</span></code></pre><p></p></div>
+<p>We can read the file back into a new informant object (in the same state as
+when it was saved) by using <code><a href="x_read_disk.html">x_read_disk()</a></code>.</p>
+</div>
+
+<div class="section">
+<h3 id="c-writing-a-multiagent-to-disk">C: Writing a multiagent to disk<a class="anchor" aria-label="anchor" href="#c-writing-a-multiagent-to-disk"></a></h3>
+
+
+<p>Let's create one more pointblank agent object, provide it with some
+validation steps, and <code><a href="interrogate.html">interrogate()</a></code>.</p><div class="sourceCode r"><pre><code><span class="va">agent_b</span> <span class="op">&lt;-</span>
+  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>
+    tbl <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,
+    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,
+    label <span class="op">=</span> <span class="st">"`x_write_disk()`"</span>,
+    actions <span class="op">=</span> <span class="va">al</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>,
+    value <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span>,
+    na_pass <span class="op">=</span> <span class="cn">TRUE</span>,
+    label <span class="op">=</span> <span class="st">"b &gt; g"</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_is_character.html">col_is_character</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span>, <span class="va">f</span><span class="op">)</span>,
+    label <span class="op">=</span> <span class="st">"Verifying character-type columns"</span> 
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
+<p>Now we can combine the earlier <code>agent</code> object with the newer <code>agent_b</code> to
+create a <code>multiagent</code>.</p><div class="sourceCode r"><pre><code><span class="va">multiagent</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_multiagent.html">create_multiagent</a></span><span class="op">(</span><span class="va">agent</span>, <span class="va">agent_b</span><span class="op">)</span></code></pre><p></p></div>
+<p>The <code>multiagent</code> can be written to a file with the <code>x_write_disk()</code> function.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/x_write_disk.html">x_write_disk</a></span><span class="op">(</span>
+  <span class="va">multiagent</span>,
+  filename <span class="op">=</span> <span class="st">"multiagent-small_table.rds"</span>
+<span class="op">)</span></code></pre><p></p></div>
+<p>We can read the file back as a multiagent with the <code><a href="x_read_disk.html">x_read_disk()</a></code> function
+and we'll get all of the constituent agents and their associated intel back
+as well.</p>
+</div>
+
+<div class="section">
+<h3 id="d-writing-a-table-scan-to-disk">D: Writing a table scan to disk<a class="anchor" aria-label="anchor" href="#d-writing-a-table-scan-to-disk"></a></h3>
+
+
+<p>We can get a report that describes all of the data in the <code>storms</code> dataset.</p><div class="sourceCode r"><pre><code><span class="va">tbl_scan</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scan_data.html">scan_data</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/storms.html" class="external-link">storms</a></span><span class="op">)</span></code></pre><p></p></div>
+<p>The table scan object can be written to a file with <code>x_write_disk()</code>.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/x_write_disk.html">x_write_disk</a></span><span class="op">(</span>
+  <span class="va">tbl_scan</span>,
+  filename <span class="op">=</span> <span class="st">"tbl_scan-storms.rds"</span>
+<span class="op">)</span></code></pre><p></p></div>
+</div>
+
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
@@ -156,202 +322,6 @@ an <em>agent</em> or <em>informant</em> can retrieve a table at a later time.</p
 <code><a href="x_read_disk.html">x_read_disk</a>()</code></p></div>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># A: Writing an `agent` to disk </span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Let's go through the process of (1)</span></span>
-<span class="r-in"><span class="co"># developing an agent with a validation</span></span>
-<span class="r-in"><span class="co"># plan (to be used for the data quality</span></span>
-<span class="r-in"><span class="co"># analysis of the `small_table` dataset),</span></span>
-<span class="r-in"><span class="co"># (2) interrogating the agent with the</span></span>
-<span class="r-in"><span class="co"># `interrogate()` function, and (3) writing</span></span>
-<span class="r-in"><span class="co"># the agent and all its intel to a file</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Creating an `action_levels` object is a</span></span>
-<span class="r-in"><span class="co"># common workflow step when creating a</span></span>
-<span class="r-in"><span class="co"># pointblank agent; we designate failure</span></span>
-<span class="r-in"><span class="co"># thresholds to the `warn`, `stop`, and</span></span>
-<span class="r-in"><span class="co"># `notify` states using `action_levels()`</span></span>
-<span class="r-in"><span class="va">al</span> <span class="op">&lt;-</span> </span>
-<span class="r-in">  <span class="fu"><a href="action_levels.html">action_levels</a></span><span class="op">(</span></span>
-<span class="r-in">    warn_at <span class="op">=</span> <span class="fl">0.10</span>,</span>
-<span class="r-in">    stop_at <span class="op">=</span> <span class="fl">0.25</span>,</span>
-<span class="r-in">    notify_at <span class="op">=</span> <span class="fl">0.35</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Now create a pointblank `agent` object</span></span>
-<span class="r-in"><span class="co"># and give it the `al` object (which</span></span>
-<span class="r-in"><span class="co"># serves as a default for all validation</span></span>
-<span class="r-in"><span class="co"># steps which can be overridden); the</span></span>
-<span class="r-in"><span class="co"># data will be referenced in `tbl`</span></span>
-<span class="r-in"><span class="va">agent</span> <span class="op">&lt;-</span> </span>
-<span class="r-in">  <span class="fu"><a href="create_agent.html">create_agent</a></span><span class="op">(</span></span>
-<span class="r-in">    tbl <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,</span>
-<span class="r-in">    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,</span>
-<span class="r-in">    label <span class="op">=</span> <span class="st">"`x_write_disk()`"</span>,</span>
-<span class="r-in">    actions <span class="op">=</span> <span class="va">al</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Then, as with any `agent` object, we</span></span>
-<span class="r-in"><span class="co"># can add steps to the validation plan by</span></span>
-<span class="r-in"><span class="co"># using as many validation functions as we</span></span>
-<span class="r-in"><span class="co"># want; then, we `interrogate()`</span></span>
-<span class="r-in"><span class="va">agent</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="va">agent</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu"><a href="col_exists.html">col_exists</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">date_time</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span></span>
-<span class="r-in">    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>, regex <span class="op">=</span> <span class="st">"[0-9]-[a-z]{3}-[0-9]{3}"</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="rows_distinct.html">rows_distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_lte.html">col_vals_lte</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># The `agent` can be written to a file with</span></span>
-<span class="r-in"><span class="co"># the `x_write_disk()` function</span></span>
-<span class="r-in"><span class="fu">x_write_disk</span><span class="op">(</span></span>
-<span class="r-in">  <span class="va">agent</span>,</span>
-<span class="r-in">  filename <span class="op">=</span> <span class="st">"agent-small_table.rds"</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># We can read the file back as an agent</span></span>
-<span class="r-in"><span class="co"># with the `x_read_disk()` function and</span></span>
-<span class="r-in"><span class="co"># we'll get all of the intel along with the</span></span>
-<span class="r-in"><span class="co"># restored agent</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># If you're consistently writing agent</span></span>
-<span class="r-in"><span class="co"># reports when periodically checking data,</span></span>
-<span class="r-in"><span class="co"># we could make use of the `affix_date()`</span></span>
-<span class="r-in"><span class="co"># or `affix_datetime()` depending on the</span></span>
-<span class="r-in"><span class="co"># granularity you need; here's an example</span></span>
-<span class="r-in"><span class="co"># that writes the file with the format:</span></span>
-<span class="r-in"><span class="co"># 'agent-small_table-YYYY-mm-dd_HH-MM-SS.rds'</span></span>
-<span class="r-in"><span class="fu">x_write_disk</span><span class="op">(</span></span>
-<span class="r-in">  <span class="va">agent</span>,</span>
-<span class="r-in">  filename <span class="op">=</span> <span class="fu"><a href="affix_datetime.html">affix_datetime</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="st">"agent-small_table.rds"</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># B: Writing an `informant` to disk</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Let's go through the process of (1)</span></span>
-<span class="r-in"><span class="co"># creating an informant object that</span></span>
-<span class="r-in"><span class="co"># minimally describes the `small_table`</span></span>
-<span class="r-in"><span class="co"># dataset, (2) ensuring that data is</span></span>
-<span class="r-in"><span class="co"># captured from the target table using</span></span>
-<span class="r-in"><span class="co"># the `incorporate()` function, and (3)</span></span>
-<span class="r-in"><span class="co"># writing the informant to a file</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Create a pointblank `informant`</span></span>
-<span class="r-in"><span class="co"># object with `create_informant()`</span></span>
-<span class="r-in"><span class="co"># and the `small_table` dataset; use</span></span>
-<span class="r-in"><span class="co"># `incorporate()` so that info snippets</span></span>
-<span class="r-in"><span class="co"># are integrated into the text</span></span>
-<span class="r-in"><span class="va">informant</span> <span class="op">&lt;-</span> </span>
-<span class="r-in">  <span class="fu"><a href="create_informant.html">create_informant</a></span><span class="op">(</span></span>
-<span class="r-in">    tbl <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,</span>
-<span class="r-in">    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,</span>
-<span class="r-in">    label <span class="op">=</span> <span class="st">"`x_write_disk()`"</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="info_snippet.html">info_snippet</a></span><span class="op">(</span></span>
-<span class="r-in">    snippet_name <span class="op">=</span> <span class="st">"high_a"</span>,</span>
-<span class="r-in">    fn <span class="op">=</span> <span class="fu"><a href="snip_highest.html">snip_highest</a></span><span class="op">(</span>column <span class="op">=</span> <span class="st">"a"</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="info_snippet.html">info_snippet</a></span><span class="op">(</span></span>
-<span class="r-in">    snippet_name <span class="op">=</span> <span class="st">"low_a"</span>,</span>
-<span class="r-in">    fn <span class="op">=</span> <span class="fu"><a href="snip_lowest.html">snip_lowest</a></span><span class="op">(</span>column <span class="op">=</span> <span class="st">"a"</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span class="r-in">    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>,</span>
-<span class="r-in">    info <span class="op">=</span> <span class="st">"From {low_a} to {high_a}."</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span class="r-in">    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"date"</span><span class="op">)</span>,</span>
-<span class="r-in">    info <span class="op">=</span> <span class="st">"Time-based values."</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span class="r-in">    columns <span class="op">=</span> <span class="st">"date"</span>,</span>
-<span class="r-in">    info <span class="op">=</span> <span class="st">"The date part of `date_time`."</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="incorporate.html">incorporate</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># The `informant` can be written to a</span></span>
-<span class="r-in"><span class="co"># file with `x_write_disk()`; let's do</span></span>
-<span class="r-in"><span class="co"># this with `affix_date()` so that the</span></span>
-<span class="r-in"><span class="co"># filename has a datestamp</span></span>
-<span class="r-in"><span class="fu">x_write_disk</span><span class="op">(</span></span>
-<span class="r-in">  <span class="va">informant</span>,</span>
-<span class="r-in">  filename <span class="op">=</span> <span class="fu"><a href="affix_date.html">affix_date</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="st">"informant-small_table.rds"</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># We can read the file back into a</span></span>
-<span class="r-in"><span class="co"># new informant object (in the same</span></span>
-<span class="r-in"><span class="co"># state as when it was saved) by using</span></span>
-<span class="r-in"><span class="co"># `x_read_disk()`</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># C: Writing a multiagent to disk</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Let's create one more pointblank</span></span>
-<span class="r-in"><span class="co"># agent object, provide it with some</span></span>
-<span class="r-in"><span class="co"># validation steps, and `interrogate()`</span></span>
-<span class="r-in"><span class="va">agent_b</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="create_agent.html">create_agent</a></span><span class="op">(</span></span>
-<span class="r-in">    tbl <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,</span>
-<span class="r-in">    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,</span>
-<span class="r-in">    label <span class="op">=</span> <span class="st">"`x_write_disk()`"</span>,</span>
-<span class="r-in">    actions <span class="op">=</span> <span class="va">al</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span></span>
-<span class="r-in">    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span>, na_pass <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">    label <span class="op">=</span> <span class="st">"b &gt; g"</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_is_character.html">col_is_character</a></span><span class="op">(</span></span>
-<span class="r-in">    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span>, <span class="va">f</span><span class="op">)</span>,</span>
-<span class="r-in">    label <span class="op">=</span> <span class="st">"Verifying character-type columns"</span> </span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Now we can combine the earlier `agent`</span></span>
-<span class="r-in"><span class="co"># object with the newer `agent_b` to </span></span>
-<span class="r-in"><span class="co"># create a `multiagent`</span></span>
-<span class="r-in"><span class="va">multiagent</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="create_multiagent.html">create_multiagent</a></span><span class="op">(</span><span class="va">agent</span>, <span class="va">agent_b</span><span class="op">)</span></span>
-<span class="r-in">  </span>
-<span class="r-in"><span class="co"># The `multiagent` can be written to</span></span>
-<span class="r-in"><span class="co"># a file with the `x_write_disk()` function</span></span>
-<span class="r-in"><span class="fu">x_write_disk</span><span class="op">(</span></span>
-<span class="r-in">  <span class="va">multiagent</span>,</span>
-<span class="r-in">  filename <span class="op">=</span> <span class="st">"multiagent-small_table.rds"</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># We can read the file back as a multiagent</span></span>
-<span class="r-in"><span class="co"># with the `x_read_disk()` function and</span></span>
-<span class="r-in"><span class="co"># we'll get all of the constituent agents</span></span>
-<span class="r-in"><span class="co"># and their associated intel back as well</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># D: Writing a table scan to disk</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># We can get an report that describes all</span></span>
-<span class="r-in"><span class="co"># of the data in the `storms` dataset</span></span>
-<span class="r-in"><span class="va">tbl_scan</span> <span class="op">&lt;-</span> <span class="fu"><a href="scan_data.html">scan_data</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/storms.html" class="external-link">storms</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># The table scan object can be written</span></span>
-<span class="r-in"><span class="co"># to a file with `x_write_disk()`</span></span>
-<span class="r-in"><span class="fu">x_write_disk</span><span class="op">(</span></span>
-<span class="r-in">  <span class="va">tbl_scan</span>,</span>
-<span class="r-in">  filename <span class="op">=</span> <span class="st">"tbl_scan-storms.rds"</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in">  </span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
@@ -361,7 +331,7 @@ an <em>agent</em> or <em>informant</em> can retrieve a table at a later time.</p
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

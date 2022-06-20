@@ -177,28 +177,39 @@ processed agents and informants</p></li>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>path</dt>
 <dd><p>The path that contains the YAML files for agents and informants.</p></dd>
+
+
 <dt>files</dt>
 <dd><p>A vector of YAML files to use in the execution workflow. By
 default, <code>yaml_exec()</code> will attempt to process every valid YAML file in
 <code>path</code> but supplying a vector here limits the scope to the specified files.</p></dd>
+
+
 <dt>write_to_disk</dt>
 <dd><p>Should the execution workflow include a step that writes
 output files to disk? This internally calls <code><a href="x_write_disk.html">x_write_disk()</a></code> to write RDS
 files and uses the base filename of the agent/informant YAML file as part
 of the output filename, appending the date-time to the basename.</p></dd>
+
+
 <dt>output_path</dt>
 <dd><p>The output path for any generated output files. By
 default, this will be a subdirectory of the provided <code>path</code> called
 <code>"output"</code>.</p></dd>
+
+
 <dt>keep_tbl, keep_extracts</dt>
 <dd><p>For agents, the table may be kept if it is a
 data frame object (databases tables will never be pulled for storage) and
 <em>extracts</em>, collections of table rows that failed a validation step, may
 also be stored. By default, both of these options are set to <code>FALSE</code>.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Invisibly returns a named vector of file paths for the input files
+    
+
+<p>Invisibly returns a named vector of file paths for the input files
 that were processed; file output paths (for wherever writing occurred) are
 given as the names.</p>
     </div>
@@ -271,7 +282,7 @@ given as the names.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

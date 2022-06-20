@@ -181,6 +181,8 @@ it's to export that to a file with the <code><a href="export_report.html">export
     <dl><dt>tbl</dt>
 <dd><p>The input table. This can be a data frame, tibble, a <code>tbl_dbi</code>
 object, or a <code>tbl_spark</code> object.</p></dd>
+
+
 <dt>sections</dt>
 <dd><p>The sections to include in the finalized <code>Table Scan</code> report.
 A string with key characters representing section names is required here.
@@ -191,31 +193,42 @@ following sections in their default order: <code>"O"</code>: <code>"overview"</c
 characters and the order can be changed to suit the desired layout of the
 report. For <code>tbl_dbi</code> and <code>tbl_spark</code> objects supplied to <code>tbl</code>, the
 <code>"interactions"</code> and <code>"correlations"</code> sections are currently excluded.</p></dd>
+
+
 <dt>navbar</dt>
 <dd><p>Should there be a navigation bar anchored to the top of the
 report page? By default this is <code>TRUE</code>.</p></dd>
+
+
 <dt>width</dt>
 <dd><p>An optional fixed width (in pixels) for the HTML report. By
 default, no fixed width is applied.</p></dd>
+
+
 <dt>lang</dt>
 <dd><p>The language to use for label text in the report. By default,
 <code>NULL</code> will create English (<code>"en"</code>) text. Other options include French
 (<code>"fr"</code>), German (<code>"de"</code>), Italian (<code>"it"</code>), Spanish (<code>"es"</code>), Portuguese
 (<code>"pt"</code>), Turkish (<code>"tr"</code>), Chinese (<code>"zh"</code>),  Russian (<code>"ru"</code>), Polish
 (<code>"pl"</code>), Danish (<code>"da"</code>), Swedish (<code>"sv"</code>), and Dutch (<code>"nl"</code>).</p></dd>
+
+
 <dt>locale</dt>
 <dd><p>An optional locale ID to use for formatting values in the
 report according the locale's rules. Examples include <code>"en_US"</code> for English
 (United States) and <code>"fr_FR"</code> for French (France); more simply, this can be
 a language identifier without a country designation, like <code>"es"</code> for
 Spanish (Spain, same as <code>"es_ES"</code>).</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A <code>ptblank_tbl_scan</code> object.</p>
+    
+
+<p>A <code>ptblank_tbl_scan</code> object.</p>
     </div>
     <div class="section level2">
-    <h2 id="demos">Demos<a class="anchor" aria-label="anchor" href="#demos"></a></h2>
+    <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
     
 
 
@@ -253,7 +266,7 @@ dataset.</p><div class="sourceCode r"><pre><code><span class="va">tbl_scan</span
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

@@ -146,6 +146,8 @@ then the designated failure state is entered). Absolute values starting
 from <code>1</code> can be used instead, and this constitutes an absolute failure
 threshold (e.g., <code>10</code> means that if 10 of the test units are found to
 <em>fail</em>, the failure state is entered).</p></dd>
+
+
 <dt>fns</dt>
 <dd><p>A named list of functions that is to be paired with the
 appropriate failure states. The syntax for this list involves using failure
@@ -153,6 +155,7 @@ state names from the set of <code>warn</code>, <code>stop</code>, and <code>noti
 corresponding to the failure states are provided as formulas (e.g.,
 <code>list(warn = ~ warning("Too many failures."))</code>. A series of expressions for
 each named state can be used by enclosing the set of statements with <code><a href="https://rdrr.io/r/base/Paren.html" class="external-link">{ }</a></code>.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -179,7 +182,7 @@ on the entire interrogation, allowing for finer control on side effects and
 reducing potential for duplicating any side effects.</p>
     </div>
     <div class="section level2">
-    <h2 id="demos">Demos<a class="anchor" aria-label="anchor" href="#demos"></a></h2>
+    <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
     
 
 
@@ -327,7 +330,7 @@ case (when operating on data) for your convenience. Behind the scenes a
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

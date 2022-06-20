@@ -116,29 +116,40 @@ timestamps should approximate the time components affixed to the filenames.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>filename</dt>
 <dd><p>The filename to modify.</p></dd>
+
+
 <dt>position</dt>
 <dd><p>Where to place the formatted date. This could either be at
 the <code>"end"</code> of the filename (the default) or at the <code>"start"</code>.</p></dd>
+
+
 <dt>format</dt>
 <dd><p>A <code><a href="https://rdrr.io/r/base/strptime.html" class="external-link">base::strptime()</a></code> format string for formatting the date. By
 default, this is <code>"%Y-%m-%d"</code> which expresses the date according to the ISO
 8601 standard (as <code>YYYY-MM-DD</code>). Refer to the documentation on
 <code><a href="https://rdrr.io/r/base/strptime.html" class="external-link">base::strptime()</a></code> for conversion specifications if planning to use a
 different format string.</p></dd>
+
+
 <dt>delimiter</dt>
 <dd><p>The delimiter characters to use for separating the date
 string from the original file name.</p></dd>
+
+
 <dt>utc_time</dt>
 <dd><p>An option for whether to use the current UTC time to
 establish the date (the default, with <code>TRUE</code>), or, use the system's local
 time (<code>FALSE</code>).</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A character vector.</p>
+    
+
+<p>A character vector.</p>
     </div>
     <div class="section level2">
-    <h2 id="demos">Demos<a class="anchor" aria-label="anchor" href="#demos"></a></h2>
+    <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
     
 
 <div class="section">
@@ -221,7 +232,7 @@ produces a datetime string by default.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

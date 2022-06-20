@@ -108,6 +108,8 @@ but their values can be easily customized.</p>
 <dd><p>An agent object of class <code>ptblank_agent</code>. It should have had
 <code><a href="interrogate.html">interrogate()</a></code> called on it, such that the validation steps were actually
 carried out.</p></dd>
+
+
 <dt>type</dt>
 <dd><p>The desired piece of data resulting from the splitting. Options
 for returning a single table are <code>"pass"</code> (the default) and <code>"fail"</code>. Each
@@ -119,19 +121,26 @@ split data tables in a list (with the names of <code>"pass"</code> and <code>"fa
 option <code>"combined"</code> applies a categorical (pass/fail) label (settable in
 the <code>pass_fail</code> argument) in a new <code>.pb_combined</code> flag column. For this
 case the ordering of rows is fully retained from the input table.</p></dd>
+
+
 <dt>pass_fail</dt>
 <dd><p>A vector for encoding the flag column with 'pass' and 'fail'
 values when <code>type = "combined"</code>. The default is <code>c("pass", "fail")</code> but
 other options could be <code>c(TRUE, FALSE)</code>, <code>c(1, 0)</code>, or <code>c(1L, 0L)</code>.</p></dd>
+
+
 <dt>id_cols</dt>
 <dd><p>An optional specification of one or more identifying columns.
 When taken together, we can count on this single column or grouping of
 columns to distinguish rows. If the table undergoing validation is not a
 data frame or tibble, then columns need to be specified for <code>id_cols</code>.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A list of table objects if <code>type</code> is <code>NULL</code>, or, a single table if a
+    
+
+<p>A list of table objects if <code>type</code> is <code>NULL</code>, or, a single table if a
 <code>type</code> is given.</p>
     </div>
     <div class="section level2">
@@ -150,7 +159,7 @@ collection of in-consideration validation steps that use different forms of
 the input table.</p>
     </div>
     <div class="section level2">
-    <h2 id="demos">Demos<a class="anchor" aria-label="anchor" href="#demos"></a></h2>
+    <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
     
 
 
@@ -278,7 +287,7 @@ with the <code>pass_fail</code> argument. One possibility is <code>TRUE</code>/<
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

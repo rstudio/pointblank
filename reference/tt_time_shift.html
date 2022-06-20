@@ -90,6 +90,8 @@ function).</p>
     <dl><dt>tbl</dt>
 <dd><p>A table object to be used as input for the transformation. This
 can be a data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spark</code> object.</p></dd>
+
+
 <dt>time_shift</dt>
 <dd><p>Either a character-based representation that specifies the
 time difference by which all time values in time-based columns will be
@@ -98,10 +100,13 @@ the format <code>"0y 0m 0d 0H 0M 0S"</code> and individual time components can b
 omitted (i.e., <code>"1y 5d"</code> is a valid specification of shifting time values
 ahead one year and five days). Adding a <code>"-"</code> at the beginning of the
 string (e.g., <code>"-2y"</code>) will shift time values back.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spark</code> object
+    
+
+<p>A data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spark</code> object
 depending on what was provided as <code>tbl</code>.</p>
     </div>
     <div class="section level2">
@@ -116,7 +121,7 @@ altered in the same circumstances, however, the object will resolved to an
 exact number of days through rounding.</p>
     </div>
     <div class="section level2">
-    <h2 id="demos">Demos<a class="anchor" aria-label="anchor" href="#demos"></a></h2>
+    <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
     
 
 
@@ -192,7 +197,7 @@ included in the package, shift the times back 2 days and 12 hours with the
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

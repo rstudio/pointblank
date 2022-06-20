@@ -91,10 +91,14 @@ the of items in that list with the <code>limit</code> value.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>column</dt>
 <dd><p>The name of the column that contains the target values.</p></dd>
+
+
 <dt>limit</dt>
 <dd><p>A limit of items put into the generated list. The returned text
 will state the remaining number of items beyond the <code>limit</code>. By default,
 the limit is <code>5</code>.</p></dd>
+
+
 <dt>sorting</dt>
 <dd><p>A keyword used to designate the type of sorting to use for the
 list. The three options are <code>"inorder"</code> (the default), <code>"infreq"</code>, and
@@ -102,32 +106,46 @@ list. The three options are <code>"inorder"</code> (the default), <code>"infreq"
 which they first appear. Using <code>"infreq"</code> orders the items by the
 decreasing frequency of each item. The <code>"inseq"</code> option applies an
 alphanumeric sorting to the distinct list items.</p></dd>
+
+
 <dt>reverse</dt>
 <dd><p>An option to reverse the ordering of list items. By default,
 this is <code>FALSE</code> but using <code>TRUE</code> will reverse the items before applying the
 <code>limit</code>.</p></dd>
+
+
 <dt>sep</dt>
 <dd><p>The separator to use between list items. By default, this is a
 comma.</p></dd>
+
+
 <dt>and_or</dt>
 <dd><p>The type of conjunction to use between the final and
 penultimate list items (should the item length be below the <code>limit</code> value).
 If <code>NULL</code> (the default) is used, then the 'and' conjunction will be used.
 Alternatively, the following keywords can be used: <code>"and"</code>, <code>"or"</code>, or
 an empty string (for no conjunction at all).</p></dd>
+
+
 <dt>oxford</dt>
 <dd><p>Whether to use an Oxford comma under certain conditions. By
 default, this is <code>TRUE</code>.</p></dd>
+
+
 <dt>as_code</dt>
 <dd><p>Should each list item appear in a 'code font' (i.e., as
 monospaced text)? By default this is <code>TRUE</code>. Using <code>FALSE</code> keeps all list
 items in the same font as the rest of the information report.</p></dd>
+
+
 <dt>quot_str</dt>
 <dd><p>An option for whether list items should be set in double
 quotes. If <code>NULL</code> (the default), the quotation marks are mainly associated
 with list items derived from <code>character</code> or <code>factor</code> values; numbers,
 dates, and logical values won't have quotation marks. We can explicitly use
 quotations (or not) with either <code>TRUE</code> or <code>FALSE</code> here.</p></dd>
+
+
 <dt>lang</dt>
 <dd><p>The language to use for any joining words (from the <code>and_or</code>
 option) or additional words in the generated list string. By default,
@@ -138,10 +156,13 @@ English (<code>"en"</code>), French (<code>"fr"</code>), German (<code>"de"</cod
 Spanish (<code>"es"</code>), Portuguese (<code>"pt"</code>), Turkish (<code>"tr"</code>), Chinese (<code>"zh"</code>),
 Russian (<code>"ru"</code>), Polish (<code>"pl"</code>), Danish (<code>"da"</code>), Swedish (<code>"sv"</code>), and
 Dutch (<code>"nl"</code>).</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A formula needed for <code><a href="info_snippet.html">info_snippet()</a></code>'s <code>fn</code> argument.</p>
+    
+
+<p>A formula needed for <code><a href="info_snippet.html">info_snippet()</a></code>'s <code>fn</code> argument.</p>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
@@ -203,7 +224,7 @@ Dutch (<code>"nl"</code>).</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

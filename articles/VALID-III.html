@@ -87,7 +87,7 @@
 
 
 <div class="row">
-  <main id="main"><div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Introduction to the Expectations in Unit Tests Workflow (VALID-III)</h1>
             
       
@@ -98,78 +98,148 @@
     
     
 <p><img src="images/VALID-III.svg" width="100%"></p>
-<p>The <em>VALID-III: Expectations in Unit Tests</em> workflow is all about checking your data alongside your usual <strong>testthat</strong> tests. The functions used for this workflow all begin with the <code>expect_</code> prefix and are based on the set of validation functions used in the <a href="../articles/VALID-I.html"><strong>VALID-I</strong></a> and <a href="../articles/VALID-II.html"><strong>VALID-II</strong></a> workflows. Here’s the complete list of functions with a phrase for each function’s expectation:</p>
+<p>The <em>VALID-III: Expectations in Unit Tests</em> workflow is all
+about checking your data alongside your usual <strong>testthat</strong>
+tests. The functions used for this workflow all begin with the
+<code>expect_</code> prefix and are based on the set of validation
+functions used in the <a href="../articles/VALID-I.html"><strong>VALID-I</strong></a> and <a href="../articles/VALID-II.html"><strong>VALID-II</strong></a>
+workflows. Here’s the complete list of functions with a phrase for each
+function’s expectation:</p>
 <ul>
 <li>
-<code><a href="../reference/col_vals_lt.html">expect_col_vals_lt()</a></code>: Expect that column data are less than a specified value.</li>
+<code><a href="../reference/col_vals_lt.html">expect_col_vals_lt()</a></code>: Expect that column data are less
+than a specified value.</li>
 <li>
-<code><a href="../reference/col_vals_lte.html">expect_col_vals_lte()</a></code>: Expect that column data are less than or equal to a specified value.</li>
+<code><a href="../reference/col_vals_lte.html">expect_col_vals_lte()</a></code>: Expect that column data are less
+than or equal to a specified value.</li>
 <li>
-<code><a href="../reference/col_vals_equal.html">expect_col_vals_equal()</a></code>: Expect that column data are equal to a specified value.</li>
+<code><a href="../reference/col_vals_equal.html">expect_col_vals_equal()</a></code>: Expect that column data are
+equal to a specified value.</li>
 <li>
-<code><a href="../reference/col_vals_not_equal.html">expect_col_vals_not_equal()</a></code>: Expect that column data are not equal to a specified value.</li>
+<code><a href="../reference/col_vals_not_equal.html">expect_col_vals_not_equal()</a></code>: Expect that column data
+are not equal to a specified value.</li>
 <li>
-<code><a href="../reference/col_vals_gte.html">expect_col_vals_gte()</a></code>: Expect that column data are greater than or equal to a specified value.</li>
+<code><a href="../reference/col_vals_gte.html">expect_col_vals_gte()</a></code>: Expect that column data are
+greater than or equal to a specified value.</li>
 <li>
-<code><a href="../reference/col_vals_gt.html">expect_col_vals_gt()</a></code>: Expect that column data are greater than a specified value.</li>
+<code><a href="../reference/col_vals_gt.html">expect_col_vals_gt()</a></code>: Expect that column data are
+greater than a specified value.</li>
 <li>
-<code><a href="../reference/col_vals_between.html">expect_col_vals_between()</a></code>: Expect that column data are between two specified values.</li>
+<code><a href="../reference/col_vals_between.html">expect_col_vals_between()</a></code>: Expect that column data are
+between two specified values.</li>
 <li>
-<code><a href="../reference/col_vals_not_between.html">expect_col_vals_not_between()</a></code>: Expect that column data are not between two specified values.</li>
+<code><a href="../reference/col_vals_not_between.html">expect_col_vals_not_between()</a></code>: Expect that column data
+are not between two specified values.</li>
 <li>
-<code><a href="../reference/col_vals_in_set.html">expect_col_vals_in_set()</a></code>: Expect that column data are part of a specified set of values.</li>
+<code><a href="../reference/col_vals_in_set.html">expect_col_vals_in_set()</a></code>: Expect that column data are
+part of a specified set of values.</li>
 <li>
-<code><a href="../reference/col_vals_not_in_set.html">expect_col_vals_not_in_set()</a></code>: Expect that column data are not part of a specified set of values.</li>
+<code><a href="../reference/col_vals_not_in_set.html">expect_col_vals_not_in_set()</a></code>: Expect that column data
+are not part of a specified set of values.</li>
 <li>
-<code><a href="../reference/col_vals_null.html">expect_col_vals_null()</a></code>: Expect that column data are <code>NULL</code>/<code>NA</code>.</li>
+<code><a href="../reference/col_vals_null.html">expect_col_vals_null()</a></code>: Expect that column data are
+<code>NULL</code>/<code>NA</code>.</li>
 <li>
-<code><a href="../reference/col_vals_not_null.html">expect_col_vals_not_null()</a></code>: Expect that column data are not <code>NULL</code>/<code>NA</code>.</li>
+<code><a href="../reference/col_vals_not_null.html">expect_col_vals_not_null()</a></code>: Expect that column data are
+not <code>NULL</code>/<code>NA</code>.</li>
 <li>
-<code><a href="../reference/col_vals_regex.html">expect_col_vals_regex()</a></code>: Expect that strings in column data match a regex pattern.</li>
+<code><a href="../reference/col_vals_regex.html">expect_col_vals_regex()</a></code>: Expect that strings in column
+data match a regex pattern.</li>
 <li>
-<code><a href="../reference/col_vals_expr.html">expect_col_vals_expr()</a></code>: Expect that column data agree with a predicate expression.</li>
+<code><a href="../reference/col_vals_expr.html">expect_col_vals_expr()</a></code>: Expect that column data agree
+with a predicate expression.</li>
 <li>
-<code><a href="../reference/conjointly.html">expect_conjointly()</a></code>: Expect that multiple rowwise validations result in joint validity.</li>
+<code><a href="../reference/conjointly.html">expect_conjointly()</a></code>: Expect that multiple rowwise
+validations result in joint validity.</li>
 <li>
-<code><a href="../reference/rows_distinct.html">expect_rows_distinct()</a></code>: Expect that row data are distinct.</li>
+<code><a href="../reference/rows_distinct.html">expect_rows_distinct()</a></code>: Expect that row data are
+distinct.</li>
 <li>
-<code><a href="../reference/col_is_character.html">expect_col_is_character()</a></code>: Expect that the columns contain character/string data.</li>
+<code><a href="../reference/col_is_character.html">expect_col_is_character()</a></code>: Expect that the columns
+contain character/string data.</li>
 <li>
-<code><a href="../reference/col_is_numeric.html">expect_col_is_numeric()</a></code>: Expect that the columns contain numeric values.</li>
+<code><a href="../reference/col_is_numeric.html">expect_col_is_numeric()</a></code>: Expect that the columns
+contain numeric values.</li>
 <li>
-<code><a href="../reference/col_is_integer.html">expect_col_is_integer()</a></code>: Expect that the columns contain integer values.</li>
+<code><a href="../reference/col_is_integer.html">expect_col_is_integer()</a></code>: Expect that the columns
+contain integer values.</li>
 <li>
-<code><a href="../reference/col_is_logical.html">expect_col_is_logical()</a></code>: Expect that the columns contain logical values.</li>
+<code><a href="../reference/col_is_logical.html">expect_col_is_logical()</a></code>: Expect that the columns
+contain logical values.</li>
 <li>
-<code><a href="../reference/col_is_date.html">expect_col_is_date()</a></code>: Expect that the columns contain R <code>Date</code> objects.</li>
+<code><a href="../reference/col_is_date.html">expect_col_is_date()</a></code>: Expect that the columns contain R
+<code>Date</code> objects.</li>
 <li>
-<code><a href="../reference/col_is_posix.html">expect_col_is_posix()</a></code>: Expect that the columns contain <code>POSIXct</code> dates.</li>
+<code><a href="../reference/col_is_posix.html">expect_col_is_posix()</a></code>: Expect that the columns contain
+<code>POSIXct</code> dates.</li>
 <li>
-<code><a href="../reference/col_is_factor.html">expect_col_is_factor()</a></code>: Expect that the columns contain R <code>factor</code> objects.</li>
+<code><a href="../reference/col_is_factor.html">expect_col_is_factor()</a></code>: Expect that the columns contain
+R <code>factor</code> objects.</li>
 <li>
-<code><a href="../reference/col_exists.html">expect_col_exists()</a></code>: Expect that one or more columns actually exist.</li>
+<code><a href="../reference/col_exists.html">expect_col_exists()</a></code>: Expect that one or more columns
+actually exist.</li>
 <li>
-<code><a href="../reference/col_schema_match.html">expect_col_schema_match()</a></code>: Expect that columns in the table (and their types) match a predefined schema.</li>
+<code><a href="../reference/col_schema_match.html">expect_col_schema_match()</a></code>: Expect that columns in the
+table (and their types) match a predefined schema.</li>
 </ul>
-<p>Now that we know that the functions are similar in intent but different in name, let’s learn how to use these functions effectively.</p>
+<p>Now that we know that the functions are similar in intent but
+different in name, let’s learn how to use these functions
+effectively.</p>
 <div class="section level2">
-<h2 id="using-expect_-functions-in-the-testthat-way">Using <code>expect_*()</code> Functions in the <strong>testthat</strong> Way<a class="anchor" aria-label="anchor" href="#using-expect_-functions-in-the-testthat-way"></a>
+<h2 id="using-expect_-functions-in-the-testthat-way">Using <code>expect_*()</code> Functions in the
+<strong>testthat</strong> Way<a class="anchor" aria-label="anchor" href="#using-expect_-functions-in-the-testthat-way"></a>
 </h2>
-<p>The <strong>testthat</strong> package has collection of functions that begin with <code>expect_</code>. It’s no coincidence that the <strong>pointblank</strong> for the <strong>VALID-III</strong> workflow adopts the same naming convention. The idea is to use these functions interchangeably with those from <strong>testthat</strong> in the standard <strong>testthat</strong> workflow (in a <code>test-&lt;name&gt;.R</code> file, inside the <code>tests/testthat</code> folder). The big difference here is that instead of testing function outputs, we are testing data tables. However, tables may be returned from function calls and the <code>expect_*()</code> functions offered up by <strong>pointblank</strong> might offer more flexibility for testing that data. For instance <code><a href="../reference/col_vals_between.html">expect_col_vals_between()</a></code> allows us to write an expectation with fine control on boundary values (and whether they are inclusive bounds), whether <code>NA</code> values should be ignored, and we can even set a failure threshold if that makes sense for the expectation.</p>
-<p>Here’s an example of how to generate some tests on data with <strong>testthat</strong> and also with <strong>pointblank</strong>. For the <code>small_table</code> dataset, let’s write expectations that show that non-NA values in column <code>c</code> are between <code>2</code> and <code>9</code>.</p>
+<p>The <strong>testthat</strong> package has collection of functions
+that begin with <code>expect_</code>. It’s no coincidence that the
+<strong>pointblank</strong> for the <strong>VALID-III</strong> workflow
+adopts the same naming convention. The idea is to use these functions
+interchangeably with those from <strong>testthat</strong> in the
+standard <strong>testthat</strong> workflow (in a
+<code>test-&lt;name&gt;.R</code> file, inside the
+<code>tests/testthat</code> folder). The big difference here is that
+instead of testing function outputs, we are testing data tables.
+However, tables may be returned from function calls and the
+<code>expect_*()</code> functions offered up by
+<strong>pointblank</strong> might offer more flexibility for testing
+that data. For instance <code><a href="../reference/col_vals_between.html">expect_col_vals_between()</a></code> allows us
+to write an expectation with fine control on boundary values (and
+whether they are inclusive bounds), whether <code>NA</code> values
+should be ignored, and we can even set a failure threshold if that makes
+sense for the expectation.</p>
+<p>Here’s an example of how to generate some tests on data with
+<strong>testthat</strong> and also with <strong>pointblank</strong>. For
+the <code>small_table</code> dataset, let’s write expectations that show
+that non-NA values in column <code>c</code> are between <code>2</code>
+and <code>9</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">testthat</span><span class="fu">::</span><span class="fu"><a href="https://testthat.r-lib.org/reference/logical-expectations.html" class="external-link">expect_true</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="va">small_table</span><span class="op">$</span><span class="va">c</span><span class="op">)</span> <span class="op">&gt;=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 <span class="fu">testthat</span><span class="fu">::</span><span class="fu"><a href="https://testthat.r-lib.org/reference/logical-expectations.html" class="external-link">expect_true</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="va">small_table</span><span class="op">$</span><span class="va">c</span><span class="op">)</span> <span class="op">&lt;=</span> <span class="fl">9</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p>There is no <strong>testthat</strong> function that tests for values between two values. The original strategy was to use <code><a href="https://testthat.r-lib.org/reference/comparison-expectations.html" class="external-link">testthat::expect_gte()</a></code> and <code>testthat::lte()</code> with <code>small_table$c</code> as the <code>object</code> in both, however, that doesn’t work because that results in a logical vector greater than length 1. Also, there is no allowance for <code>NA</code> values to be skipped. The best I could do was the above.</p>
-<p>The <strong>pointblank</strong> version of this task makes for a more succinct and understandable expectation expression:</p>
+<p>There is no <strong>testthat</strong> function that tests for values
+between two values. The original strategy was to use
+<code><a href="https://testthat.r-lib.org/reference/comparison-expectations.html" class="external-link">testthat::expect_gte()</a></code> and <code>testthat::lte()</code>
+with <code>small_table$c</code> as the <code>object</code> in both,
+however, that doesn’t work because that results in a logical vector
+greater than length 1. Also, there is no allowance for <code>NA</code>
+values to be skipped. The best I could do was the above.</p>
+<p>The <strong>pointblank</strong> version of this task makes for a more
+succinct and understandable expectation expression:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/col_vals_between.html">expect_col_vals_between</a></span><span class="op">(</span><span class="va">small_table</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, <span class="fl">2</span>, <span class="fl">9</span>, na_pass <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<p>The arguments in the <code><a href="../reference/col_vals_between.html">expect_col_vals_between()</a></code> give us everything we need to check tabular data without having to do subsetting and perform other transformations. There are a few added benefits. Should data come from a data source other than a local data frame, the SQL expressions are handled internally and they have been tested extensively across all the supported database types and in Spark DataFrames as well.</p>
+<p>The arguments in the <code><a href="../reference/col_vals_between.html">expect_col_vals_between()</a></code> give us
+everything we need to check tabular data without having to do subsetting
+and perform other transformations. There are a few added benefits.
+Should data come from a data source other than a local data frame, the
+SQL expressions are handled internally and they have been tested
+extensively across all the supported database types and in Spark
+DataFrames as well.</p>
 </div>
 <div class="section level2">
-<h2 id="these-expect_-functions-are-simpler-than-their-counterparts">These <code>expect_*()</code> Functions Are Simpler Than Their Counterparts<a class="anchor" aria-label="anchor" href="#these-expect_-functions-are-simpler-than-their-counterparts"></a>
+<h2 id="these-expect_-functions-are-simpler-than-their-counterparts">These <code>expect_*()</code> Functions Are Simpler Than Their
+Counterparts<a class="anchor" aria-label="anchor" href="#these-expect_-functions-are-simpler-than-their-counterparts"></a>
 </h2>
-<p>All of the <code>expect_*()</code> functions have the same leading arguments of their validation function counterparts but they omit the following arguments at the end of their signatures:</p>
+<p>All of the <code>expect_*()</code> functions have the same leading
+arguments of their validation function counterparts but they omit the
+following arguments at the end of their signatures:</p>
 <ul>
 <li><code>actions</code></li>
 <li><code>step_id</code></li>
@@ -177,9 +247,25 @@
 <li><code>brief</code></li>
 <li><code>active</code></li>
 </ul>
-<p>While we lose the <code>actions</code> argument, we get in its place the <code>threshold</code> argument. This is a simple failure threshold value for use with the expectation (<code>expect_*</code>) and the test (<code>test_*</code>) functions. By default, <code>threshold</code> is set to <code>1</code> which means that any single test unit failing will result in an overall failure (i.e., the expectation will fail).</p>
-<p>As with the thresholds set in the <code><a href="../reference/action_levels.html">action_levels()</a></code> functions (or the shortcut functions <code><a href="../reference/action_levels.html">warn_on_fail()</a></code> and <code><a href="../reference/action_levels.html">stop_on_fail()</a></code>), whole numbers beyond <code>1</code> indicate that any failing units up to that absolute threshold value will result in a succeeding expectation. Likewise, fractional values (between <code>0</code> and <code>1</code>) act as a proportional failure threshold, where <code>0.25</code> means that 25% of failing test units results in a failed expectation.</p>
-<p>The <code>preconditions</code> argument can be used to transform the input data before evaluation of the expectation. This is useful is some cases where you might need to summarize the input data table, mutate columns, perform some filtering, or even perform table joins beforehand.</p>
+<p>While we lose the <code>actions</code> argument, we get in its place
+the <code>threshold</code> argument. This is a simple failure threshold
+value for use with the expectation (<code>expect_*</code>) and the test
+(<code>test_*</code>) functions. By default, <code>threshold</code> is
+set to <code>1</code> which means that any single test unit failing will
+result in an overall failure (i.e., the expectation will fail).</p>
+<p>As with the thresholds set in the <code><a href="../reference/action_levels.html">action_levels()</a></code>
+functions (or the shortcut functions <code><a href="../reference/action_levels.html">warn_on_fail()</a></code> and
+<code><a href="../reference/action_levels.html">stop_on_fail()</a></code>), whole numbers beyond <code>1</code>
+indicate that any failing units up to that absolute threshold value will
+result in a succeeding expectation. Likewise, fractional values (between
+<code>0</code> and <code>1</code>) act as a proportional failure
+threshold, where <code>0.25</code> means that 25% of failing test units
+results in a failed expectation.</p>
+<p>The <code>preconditions</code> argument can be used to transform the
+input data before evaluation of the expectation. This is useful is some
+cases where you might need to summarize the input data table, mutate
+columns, perform some filtering, or even perform table joins
+beforehand.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
@@ -194,7 +280,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer>

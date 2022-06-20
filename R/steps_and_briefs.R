@@ -535,7 +535,7 @@ generate_autobriefs <- function(
     columns,
     USE.NAMES = FALSE,
     FUN.VALUE = character(1),
-    FUN = function(x)
+    FUN = function(x) {
       create_autobrief(
         agent = agent,
         assertion_type = assertion_type,
@@ -543,6 +543,7 @@ generate_autobriefs <- function(
         column = x,
         values = values
       )
+    }
   )
 }
 

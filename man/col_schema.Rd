@@ -40,14 +40,18 @@ is collected and loaded into R.
 
 
 Create a simple table with two columns: one \code{integer} and the other
-\code{character}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- 
+\code{character}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- 
   dplyr::tibble(
     a = 1:5,
     b = letters[1:5]
   )
 
 tbl
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 5 × 2
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 5 × 2
 ##       a b    
 ##   <int> <chr>
 ## 1     1 a    
@@ -55,17 +59,21 @@ tbl
 ## 3     3 c    
 ## 4     4 d    
 ## 5     5 e
-}
+}\if{html}{\out{</div>}}
 
 Create a column schema object that describes the columns and their types (in
-the expected order).\if{html}{\out{<div class="sourceCode r">}}\preformatted{schema_obj <- 
+the expected order).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{schema_obj <- 
   col_schema(
     a = "integer",
     b = "character"
   )
 
 schema_obj
-}\if{html}{\out{</div>}}\preformatted{## $a
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## $a
 ## [1] "integer"
 ## 
 ## $b
@@ -73,20 +81,28 @@ schema_obj
 ## 
 ## attr(,"class")
 ## [1] "r_type"     "col_schema"
-}
+}\if{html}{\out{</div>}}
 
 Validate that the schema object \code{schema_obj} exactly defines the column names
-and column types of the \code{tbl} table.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
+and column types of the \code{tbl} table.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = tbl) \%>\%
   col_schema_match(schema_obj) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
 
-Determine if this validation step passed by using \code{all_passed()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{all_passed(agent)
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+Determine if this validation step passed by using \code{all_passed()}.
 
-We can alternatively create a column schema object from a \code{tbl_df} object.\if{html}{\out{<div class="sourceCode r">}}\preformatted{schema_obj <-
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{all_passed(agent)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+}\if{html}{\out{</div>}}
+
+We can alternatively create a column schema object from a \code{tbl_df} object.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{schema_obj <-
   col_schema(
     .tbl = dplyr::tibble(
       a = integer(0),
@@ -96,12 +112,16 @@ We can alternatively create a column schema object from a \code{tbl_df} object.\
 }\if{html}{\out{</div>}}
 
 This should provide the same interrogation results as in the previous
-example.\if{html}{\out{<div class="sourceCode r">}}\preformatted{create_agent(tbl = tbl) \%>\%
+example.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{create_agent(tbl = tbl) \%>\%
   col_schema_match(schema_obj) \%>\%
   interrogate() \%>\%
   all_passed()
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+}\if{html}{\out{</div>}}
 }
 
 \section{Function ID}{

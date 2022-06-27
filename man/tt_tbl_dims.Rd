@@ -24,33 +24,45 @@ second column, \code{"value"}, contains the row and column counts.
 
 
 Get the dimensions of the \code{game_revenue} dataset that is included in the
-\strong{pointblank} package.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_tbl_dims(tbl = game_revenue)
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 2 × 2
+\strong{pointblank} package.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_tbl_dims(tbl = game_revenue)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 2 × 2
 ##   .param. value
 ##   <chr>   <int>
 ## 1 rows     2000
 ## 2 columns    11
-}
+}\if{html}{\out{</div>}}
 
 This output table is useful when a table validation depends on its
-dimensions. Here, we check that \code{game_revenue} has at least \code{1500} rows.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_tbl_dims(tbl = game_revenue) \%>\%
+dimensions. Here, we check that \code{game_revenue} has at least \code{1500} rows.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_tbl_dims(tbl = game_revenue) \%>\%
   dplyr::filter(.param. == "rows") \%>\%
   test_col_vals_gt(
     columns = vars(value),
     value = 1500
   )
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+}\if{html}{\out{</div>}}
 
 We can check \code{small_table} to ensure that number of columns is less than
-\code{10}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_tbl_dims(tbl = small_table) \%>\%
+\code{10}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_tbl_dims(tbl = small_table) \%>\%
   dplyr::filter(.param. == "columns") \%>\%
   test_col_vals_lt(
     columns = vars(value),
     value = 10
   )
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+}\if{html}{\out{</div>}}
 }
 
 \section{Function ID}{

@@ -61,7 +61,9 @@ resulting YAML can be used to regenerate an informant (with
 table (via \code{\link[=yaml_informant_incorporate]{yaml_informant_incorporate()}}). Snippets are stored in the YAML
 representation and here is is how they are expressed in both R code and in
 the YAML output (showing both the \code{meta_snippets} and \code{columns} keys to
-demonstrate their relationship here).\preformatted{# R statement
+demonstrate their relationship here).
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{# R statement
 informant \%>\% 
   info_columns(
     columns = "date_time",
@@ -85,7 +87,7 @@ columns:
     _type: Date
   item_count:
     _type: integer
-}
+}\if{html}{\out{</div>}}
 }
 
 \section{Figures}{

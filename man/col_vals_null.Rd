@@ -236,7 +236,9 @@ function. Here is an example of how a complex call of \code{col_vals_null()} as 
 validation step is expressed in R code and in the corresponding YAML
 representation.
 
-R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
+R statement:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
   col_vals_null(
     columns = vars(a),
     preconditions = ~ . \%>\% dplyr::filter(a < 10),
@@ -247,7 +249,9 @@ R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
   )
 }\if{html}{\out{</div>}}
 
-YAML representation:\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
+YAML representation:
+
+\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
 - col_vals_null:
     columns: vars(a)
     preconditions: ~. \%>\% dplyr::filter(a < 10)
@@ -271,7 +275,9 @@ by using the \code{\link[=yaml_agent_string]{yaml_agent_string()}} function.
 
 
 For all examples here, we'll use a simple table with four columns: \code{a}, \code{b},
-\code{c}, and \code{d}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <-
+\code{c}, and \code{d}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <-
   dplyr::tibble(
     a = c( 5,  7,  6,  5,  8),
     b = c( 7,  1,  0,  0,  0),
@@ -280,7 +286,9 @@ For all examples here, we'll use a simple table with four columns: \code{a}, \co
   )
 
 tbl
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 5 × 4
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 5 × 4
 ##       a     b c         d
 ##   <dbl> <dbl> <lgl> <dbl>
 ## 1     5     7 NA       35
@@ -288,13 +296,15 @@ tbl
 ## 3     6     0 NA       NA
 ## 4     5     0 NA       NA
 ## 5     8     0 NA       NA
-}
+}\if{html}{\out{</div>}}
 \subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
 Validate that all values in column \code{c} are \code{NA} (they would be \code{NULL} in a
 database context, which isn't the case here). We'll determine if this
 validation has any failing test units (there are 5 test units, one for each
-row).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
+row).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = tbl) \%>\%
   col_vals_null(columns = vars(c)) \%>\%
   interrogate()
@@ -315,26 +325,36 @@ that corresponds to the validation step demonstrated here.
 
 This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
-behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
+behavior of side effects can be customized with the \code{actions} option.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   col_vals_null(columns = vars(c)) \%>\%
   dplyr::pull(c)
-}\if{html}{\out{</div>}}\preformatted{## [1] NA NA NA NA NA
-}
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] NA NA NA NA NA
+}\if{html}{\out{</div>}}
 }
 
 \subsection{C: Using the expectation function}{
 
 With the \verb{expect_*()} form, we would typically perform one validation at a
-time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_null(tbl, columns = vars(c))
+time. This is primarily used in \strong{testthat} tests.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_null(tbl, columns = vars(c))
 }\if{html}{\out{</div>}}
 }
 
 \subsection{D: Using the test function}{
 
 With the \verb{test_*()} form, we should get a single logical value returned to
-us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% test_col_vals_null(columns = vars(c))
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+us.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% test_col_vals_null(columns = vars(c))
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+}\if{html}{\out{</div>}}
 }
 }
 

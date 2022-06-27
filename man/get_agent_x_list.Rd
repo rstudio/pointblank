@@ -94,20 +94,26 @@ HTML has inlined styles, making it more suitable for email message bodies
 \section{Examples}{
 
 
-Create a simple data frame with a column of numerical values.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- dplyr::tibble(a = c(5, 7, 8, 5))
+Create a simple data frame with a column of numerical values.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- dplyr::tibble(a = c(5, 7, 8, 5))
 
 tbl
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 4 × 1
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 4 × 1
 ##       a
 ##   <dbl>
 ## 1     5
 ## 2     7
 ## 3     8
 ## 4     5
-}
+}\if{html}{\out{</div>}}
 
 Create an \code{action_levels()} list with fractional values for the \code{warn},
-\code{stop}, and \code{notify} states.\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <-
+\code{stop}, and \code{notify} states.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <-
   action_levels(
     warn_at = 0.2,
     stop_at = 0.8,
@@ -115,15 +121,19 @@ Create an \code{action_levels()} list with fractional values for the \code{warn}
   )
   
 al
-}\if{html}{\out{</div>}}\preformatted{## -- The `action_levels` settings
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## -- The `action_levels` settings
 ## WARN failure threshold of 0.2 of all test units.
 ## STOP failure threshold of 0.8 of all test units.
 ## NOTIFY failure threshold of 0.345 of all test units.
 ## ----
-}
+}\if{html}{\out{</div>}}
 
 Create an agent (giving it the \code{tbl} and the \code{al} objects), supply two
-validation step functions, then interrogate.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
+validation step functions, then interrogate.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(
     tbl = tbl,
     actions = al
@@ -133,10 +143,14 @@ validation step functions, then interrogate.\if{html}{\out{<div class="sourceCod
   interrogate()
 }\if{html}{\out{</div>}}
 
-Get the agent x-list.\if{html}{\out{<div class="sourceCode r">}}\preformatted{x <- get_agent_x_list(agent)
+Get the agent x-list.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x <- get_agent_x_list(agent)
 
 x
-}\if{html}{\out{</div>}}\preformatted{## -- The x-list for table `tbl`
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## -- The x-list for table `tbl`
 ## ---- ALL STEPS ----
 ## $time_start $time_end (POSIXct [1])
 ## $label $tbl_name $tbl_src $tbl_src_details (chr [1])
@@ -152,11 +166,15 @@ x
 ## $report_object (blastula_message)
 ## $report_html $report_html_small (chr [1])
 ## ----
-}
+}\if{html}{\out{</div>}}
 
-Get the \code{f_passed} component of the x-list \code{x}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{x$f_passed
-}\if{html}{\out{</div>}}\preformatted{## [1] 0.25 1.00
-}
+Get the \code{f_passed} component of the x-list \code{x}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x$f_passed
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] 0.25 1.00
+}\if{html}{\out{</div>}}
 }
 
 \section{Function ID}{

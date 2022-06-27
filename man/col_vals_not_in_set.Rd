@@ -252,7 +252,9 @@ validation function. Here is an example of how a complex call of
 \code{col_vals_not_in_set()} as a validation step is expressed in R code and in
 the corresponding YAML representation.
 
-R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
+R statement:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
   col_vals_not_in_set(
     columns = vars(a),
     set = c(1, 2, 3, 4),
@@ -264,7 +266,9 @@ R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
   )
 }\if{html}{\out{</div>}}
 
-YAML representation:\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
+YAML representation:
+
+\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
 - col_vals_not_in_set:
    columns: vars(a)
    set:
@@ -298,7 +302,9 @@ values are not part of a given set.
 
 Validate that values in column \code{f} contain none of the values \code{lows}, \code{mids},
 and \code{highs}. We'll determine if this validation has any failing test units
-(there are 13 test units, one for each row).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
+(there are 13 test units, one for each row).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = small_table) \%>\%
   col_vals_not_in_set(
     columns = vars(f), set = c("lows", "mids", "highs")
@@ -321,19 +327,23 @@ that corresponds to the validation step demonstrated here.
 
 This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
-behavior of side effects can be customized with the \code{actions} option.\preformatted{small_table \%>\%
+behavior of side effects can be customized with the \code{actions} option.
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{small_table \%>\%
   col_vals_not_in_set(
     columns = vars(f), set = c("lows", "mids", "highs")
   ) \%>\%
   dplyr::pull(f) \%>\%
   unique()
-}
+}\if{html}{\out{</div>}}
 }
 
 \subsection{C: Using the expectation function}{
 
 With the \verb{expect_*()} form, we would typically perform one validation at a
-time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_not_in_set(
+time. This is primarily used in \strong{testthat} tests.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_not_in_set(
   small_table,
   columns = vars(f), set = c("lows", "mids", "highs")
 )
@@ -343,12 +353,16 @@ time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div clas
 \subsection{D: Using the test function}{
 
 With the \verb{test_*()} form, we should get a single logical value returned to
-us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
+us.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   test_col_vals_not_in_set(
     columns = vars(f), set = c("lows", "mids", "highs")
   )
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+}\if{html}{\out{</div>}}
 }
 }
 

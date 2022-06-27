@@ -316,7 +316,9 @@ validation function. Here is an example of how a complex call of
 \code{col_vals_within_spec()} as a validation step is expressed in R code and in
 the corresponding YAML representation.
 
-R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
+R statement:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
   col_vals_within_spec(
     columns = vars(a),
     spec = "email",
@@ -329,7 +331,9 @@ R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
   )
 }\if{html}{\out{</div>}}
 
-YAML representation:\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
+YAML representation:
+
+\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
 - col_vals_within_spec:
     columns: vars(a)
     spec: email
@@ -358,10 +362,14 @@ The \code{specifications} dataset in the package has columns of character data
 that correspond to each of the specifications that can be tested. The
 following examples will validate that the \code{email_addresses} column has 5
 correct values (this is true if we get a subset of the data: the first five
-rows).\if{html}{\out{<div class="sourceCode r">}}\preformatted{spec_slice <- specifications[1:5, ]
+rows).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{spec_slice <- specifications[1:5, ]
 
 spec_slice
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 5 × 12
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 5 × 12
 ##   isbn_numbers vin_numbers zip_codes credit_card_num… iban_austria swift_numbers
 ##   <chr>        <chr>       <chr>     <chr>            <chr>        <chr>        
 ## 1 978 1 85715… 4UZAANDH85… 99553     340000000000009  AT582774098… RBOSGGSX     
@@ -371,12 +379,14 @@ spec_slice
 ## 5 978 1 85715… 4UZAANDH85… 90309     4035501000000008 AT535755326… GENODEF1JEV  
 ## # … with 6 more variables: phone_numbers <chr>, email_addresses <chr>,
 ## #   urls <chr>, ipv4_addresses <chr>, ipv6_addresses <chr>, mac_addresses <chr>
-}
+}\if{html}{\out{</div>}}
 \subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
 Validate that all values in the column \code{email_addresses} are correct. We'll
 determine if this validation has any failing test units (there are 5 test
-units, one for each row).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
+units, one for each row).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = spec_slice) \%>\%
   col_vals_within_spec(
     columns = vars(email_addresses),
@@ -400,13 +410,17 @@ that corresponds to the validation step demonstrated here.
 
 This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
-behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{spec_slice \%>\%
+behavior of side effects can be customized with the \code{actions} option.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{spec_slice \%>\%
   col_vals_within_spec(
     columns = vars(email_addresses),
     spec = "email"
   ) \%>\%
   dplyr::select(email_addresses)
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 5 × 1
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 5 × 1
 ##   email_addresses                                                          
 ##   <chr>                                                                    
 ## 1 test@test.com                                                            
@@ -414,13 +428,15 @@ behavior of side effects can be customized with the \code{actions} option.\if{ht
 ## 3 mail.email@e.test.com                                                    
 ## 4 abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@letters-in-local.org
 ## 5 01234567890@numbers-in-local.net
-}
+}\if{html}{\out{</div>}}
 }
 
 \subsection{C: Using the expectation function}{
 
 With the \verb{expect_*()} form, we would typically perform one validation at a
-time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_within_spec(
+time. This is primarily used in \strong{testthat} tests.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_within_spec(
   spec_slice,
   columns = vars(email_addresses),
   spec = "email"
@@ -431,13 +447,17 @@ time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div clas
 \subsection{D: Using the test function}{
 
 With the \verb{test_*()} form, we should get a single logical value returned to
-us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{spec_slice \%>\%
+us.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{spec_slice \%>\%
   test_col_vals_within_spec(
     columns = vars(email_addresses),
     spec = "email"
   )
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+}\if{html}{\out{</div>}}
 }
 }
 

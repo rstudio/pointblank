@@ -55,28 +55,44 @@ timestamps should approximate the time components affixed to the filenames.
 \subsection{The basics of creating a filename with the current date}{
 
 Taking the generic \code{"pb_file"} name for a file, we add the current date to it
-as a suffix.\if{html}{\out{<div class="sourceCode r">}}\preformatted{affix_date(filename = "pb_file")
-}\if{html}{\out{</div>}}\preformatted{## [1] "pb_file_2022-04-01"
-}
+as a suffix.
 
-File extensions won't get in the way:\if{html}{\out{<div class="sourceCode r">}}\preformatted{affix_date(filename = "pb_file.rds")
-}\if{html}{\out{</div>}}\preformatted{## [1] "pb_file_2022-04-01.rds"
-}
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{affix_date(filename = "pb_file")
+}\if{html}{\out{</div>}}
 
-The date can be used as a prefix.\if{html}{\out{<div class="sourceCode r">}}\preformatted{affix_date(
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "pb_file_2022-04-01"
+}\if{html}{\out{</div>}}
+
+File extensions won't get in the way:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{affix_date(filename = "pb_file.rds")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "pb_file_2022-04-01.rds"
+}\if{html}{\out{</div>}}
+
+The date can be used as a prefix.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{affix_date(
   filename = "pb_file",
   position = "start"
 )
-}\if{html}{\out{</div>}}\preformatted{## [1] "2022-04-01_pb_file"
-}
+}\if{html}{\out{</div>}}
 
-The date pattern can be changed and so can the delimiter.\if{html}{\out{<div class="sourceCode r">}}\preformatted{affix_date(
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "2022-04-01_pb_file"
+}\if{html}{\out{</div>}}
+
+The date pattern can be changed and so can the delimiter.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{affix_date(
   filename = "pb_file.yml",
   format = "\%Y\%m\%d",
   delimiter = "-"
 )
-}\if{html}{\out{</div>}}\preformatted{## [1] "pb_file-20220401.yml"
-}
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "pb_file-20220401.yml"
+}\if{html}{\out{</div>}}
 }
 
 \subsection{Using a date-based filename in a \strong{pointblank} workflow}{
@@ -85,7 +101,9 @@ We can use a file-naming convention involving dates when writing output files
 immediately after interrogating. This is just one example (any workflow
 involving a \code{filename} argument is applicable). It's really advantageous to
 use date-based filenames when interrogating directly from YAML in a scheduled
-process.\if{html}{\out{<div class="sourceCode r">}}\preformatted{yaml_agent_interrogate(
+process.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{yaml_agent_interrogate(
   filename = system.file(
     "yaml", "agent-small_table.yml",
     package = "pointblank"

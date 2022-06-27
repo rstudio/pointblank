@@ -54,14 +54,18 @@ how the interrogation went down.
 \section{Examples}{
 
 
-Create a simple table with two columns of numerical values.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <-
+Create a simple table with two columns of numerical values.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <-
   dplyr::tibble(
     a = c(5, 7, 6, 5, 8, 7),
     b = c(7, 1, 0, 0, 0, 3)
   )
 
 tbl
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 6 × 2
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 6 × 2
 ##       a     b
 ##   <dbl> <dbl>
 ## 1     5     7
@@ -70,11 +74,13 @@ tbl
 ## 4     5     0
 ## 5     8     0
 ## 6     7     3
-}
+}\if{html}{\out{</div>}}
 
 Validate that values in column \code{a} from \code{tbl} are always less than \code{5}. Using
 \code{interrogate()} carries out the validation plan and completes the whole
-process.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
+process.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(
     tbl = tbl,
     label = "`interrogate()` example"
@@ -83,7 +89,9 @@ process.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   interrogate()
 }\if{html}{\out{</div>}}
 
-We can print the resulting object to see the validation report.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent
+We can print the resulting object to see the validation report.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent
 }\if{html}{\out{</div>}}
 
 \if{html}{

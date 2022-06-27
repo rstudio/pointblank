@@ -82,8 +82,12 @@ reducing potential for duplicating any side effects.
 \section{Examples}{
 
 
-For these examples, we will use the included \code{small_table} dataset.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 13 × 8
+For these examples, we will use the included \code{small_table} dataset.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 13 × 8
 ##    date_time           date           a b             c      d e     f    
 ##    <dttm>              <date>     <int> <chr>     <dbl>  <dbl> <lgl> <chr>
 ##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high 
@@ -99,10 +103,12 @@ For these examples, we will use the included \code{small_table} dataset.\if{html
 ## 11 2016-01-26 20:07:00 2016-01-26     4 2-dmx-010     7   834. TRUE  low  
 ## 12 2016-01-28 02:51:00 2016-01-28     2 7-dmx-010     8   108. FALSE low  
 ## 13 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA  2230. TRUE  high
-}
+}\if{html}{\out{</div>}}
 
 Create an \code{action_levels} object with fractional values for the \code{warn},
-\code{stop}, and \code{notify} states.\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <- 
+\code{stop}, and \code{notify} states.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <- 
   action_levels(
     warn_at = 0.2,
     stop_at = 0.8,
@@ -110,16 +116,22 @@ Create an \code{action_levels} object with fractional values for the \code{warn}
   )
 }\if{html}{\out{</div>}}
 
-A summary of settings for the \code{al} object is shown by printing it.\if{html}{\out{<div class="sourceCode r">}}\preformatted{al
-}\if{html}{\out{</div>}}\preformatted{## -- The `action_levels` settings
+A summary of settings for the \code{al} object is shown by printing it.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{al
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## -- The `action_levels` settings
 ## WARN failure threshold of 0.2 of all test units.
 ## STOP failure threshold of 0.8 of all test units.
 ## NOTIFY failure threshold of 0.5 of all test units.
 ## ----
-}
+}\if{html}{\out{</div>}}
 
 Create a pointblank agent and apply the \code{al} object to \code{actions}. Add two
-validation steps and interrogate the \code{small_table}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_1 <-
+validation steps and interrogate the \code{small_table}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_1 <-
   create_agent(
     tbl = small_table,
     actions = al
@@ -135,16 +147,22 @@ validation steps and interrogate the \code{small_table}.\if{html}{\out{<div clas
 
 The report from the agent will show that the \code{warn} state has been entered
 for the first validation step but not the second one. We can confirm this in
-the console by inspecting the \code{warn} component in the agent's x-list.\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_list <- get_agent_x_list(agent = agent_1)
+the console by inspecting the \code{warn} component in the agent's x-list.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_list <- get_agent_x_list(agent = agent_1)
 
 x_list$warn
-}\if{html}{\out{</div>}}\preformatted{## [1]  TRUE FALSE
-}
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1]  TRUE FALSE
+}\if{html}{\out{</div>}}
 
 Applying the \code{action_levels} object to the agent means that all validation
 steps will inherit these settings but we can override this by applying
 another such object to the validation step instead (this time using the
-\code{warn_on_fail()} shorthand).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_2 <-
+\code{warn_on_fail()} shorthand).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_2 <-
   create_agent(
     tbl = small_table,
     actions = al
@@ -162,24 +180,34 @@ another such object to the validation step instead (this time using the
 In this case, the first validation step has a less stringent failure
 threshold for the \code{warn} state and it's high enough that the condition is not
 entered. This can be confirmed in the console through inspection of the
-x-list \code{warn} component.\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_list <- get_agent_x_list(agent = agent_2)
+x-list \code{warn} component.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_list <- get_agent_x_list(agent = agent_2)
 
 x_list$warn
-}\if{html}{\out{</div>}}\preformatted{## [1] FALSE FALSE
-}
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] FALSE FALSE
+}\if{html}{\out{</div>}}
 
 In the context of using validation functions directly on data (i.e., no
 involvement of an agent) we want to trigger warnings and raise errors. The
 following will yield a warning if it is executed (returning the \code{small_table}
-data).\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
+data).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   col_vals_gt(
     columns = vars(a), value = 2,
     actions = warn_on_fail(warn_at = 2)
   )
-}\if{html}{\out{</div>}}\preformatted{## Warning: Exceedance of failed test units where values in `a` should have been > `2`.
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## Warning: Exceedance of failed test units where values in `a` should have been > `2`.
 ## The `col_vals_gt()` validation failed beyond the absolute threshold level (2).
 ## * failure level (4) >= failure threshold (2)
-}\preformatted{## # A tibble: 13 × 8
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 13 × 8
 ##    date_time           date           a b             c      d e     f    
 ##    <dttm>              <date>     <int> <chr>     <dbl>  <dbl> <lgl> <chr>
 ##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high 
@@ -195,23 +223,31 @@ data).\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
 ## 11 2016-01-26 20:07:00 2016-01-26     4 2-dmx-010     7   834. TRUE  low  
 ## 12 2016-01-28 02:51:00 2016-01-28     2 7-dmx-010     8   108. FALSE low  
 ## 13 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA  2230. TRUE  high
-}
+}\if{html}{\out{</div>}}
 
 With the same pipeline, not supplying anything for \code{actions} (it's \code{NULL} by
-default) will have the same effect as using \code{stop_on_fail(stop_at = 1)}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
+default) will have the same effect as using \code{stop_on_fail(stop_at = 1)}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   col_vals_gt(columns = vars(a), value = 2)
-}\if{html}{\out{</div>}}\preformatted{## Error: Exceedance of failed test units where values in `a` should have been > `2`.
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## Error: Exceedance of failed test units where values in `a` should have been > `2`.
 ## The `col_vals_gt()` validation failed beyond the absolute threshold level (1).
 ## * failure level (4) >= failure threshold (1)
-}\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   col_vals_gt(
     columns = vars(a), value = 2,
     actions = stop_on_fail(stop_at = 1)
   )
-}\if{html}{\out{</div>}}\preformatted{## Error: Exceedance of failed test units where values in `a` should have been > `2`.
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## Error: Exceedance of failed test units where values in `a` should have been > `2`.
 ## The `col_vals_gt()` validation failed beyond the absolute threshold level (1).
 ## * failure level (4) >= failure threshold (1)
-}
+}\if{html}{\out{</div>}}
 
 This is because the \code{stop_on_fail()} call is auto-injected in the default
 case (when operating on data) for your convenience. Behind the scenes a

@@ -241,7 +241,9 @@ function. Here is an example of how a complex call of \code{row_count_match()} a
 a validation step is expressed in R code and in the corresponding YAML
 representation.
 
-R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
+R statement:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
   row_count_match(
     count = ~ file_tbl(
       file = from_github(
@@ -258,7 +260,9 @@ R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
   )
 }\if{html}{\out{</div>}}
 
-YAML representation:\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
+YAML representation:
+
+\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
 - row_count_match:
     count: ~ file_tbl(
       file = from_github(
@@ -287,7 +291,9 @@ function.
 \section{Examples}{
 
 
-Create a simple table with three columns and four rows of values.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <-
+Create a simple table with three columns and four rows of values.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <-
   dplyr::tibble(
     a = c(5, 7, 6, 5),
     b = c(7, 1, 0, 0),
@@ -295,35 +301,43 @@ Create a simple table with three columns and four rows of values.\if{html}{\out{
   )
 
 tbl
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 4 × 3
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 4 × 3
 ##       a     b     c
 ##   <dbl> <dbl> <dbl>
 ## 1     5     7     1
 ## 2     7     1     1
 ## 3     6     0     1
 ## 4     5     0     3
-}
+}\if{html}{\out{</div>}}
 
 Create a second table which is quite different but has the same number of
-rows as \code{tbl}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_2 <-
+rows as \code{tbl}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_2 <-
   dplyr::tibble(
     e = c("a", NA, "a", "c"),
     f = c(2.6, 1.2, 0, NA)
   )
 
 tbl_2
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 4 × 2
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 4 × 2
 ##   e         f
 ##   <chr> <dbl>
 ## 1 a       2.6
 ## 2 <NA>    1.2
 ## 3 a       0  
 ## 4 c      NA
-}
+}\if{html}{\out{</div>}}
 \subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
 Validate that the count of rows in the target table (\code{tbl}) matches that of
-the comparison table (\code{tbl_2}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
+the comparison table (\code{tbl_2}).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = tbl) \%>\%
   row_count_match(count = tbl_2) \%>\%
   interrogate()
@@ -344,30 +358,40 @@ that corresponds to the validation step demonstrated here.
 
 This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
-behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% row_count_match(count = tbl_2)
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 4 × 3
+behavior of side effects can be customized with the \code{actions} option.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% row_count_match(count = tbl_2)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 4 × 3
 ##       a     b     c
 ##   <dbl> <dbl> <dbl>
 ## 1     5     7     1
 ## 2     7     1     1
 ## 3     6     0     1
 ## 4     5     0     3
-}
+}\if{html}{\out{</div>}}
 }
 
 \subsection{C: Using the expectation function}{
 
 With the \verb{expect_*()} form, we would typically perform one validation at a
-time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_row_count_match(tbl, count = tbl_2)
+time. This is primarily used in \strong{testthat} tests.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_row_count_match(tbl, count = tbl_2)
 }\if{html}{\out{</div>}}
 }
 
 \subsection{D: Using the test function}{
 
 With the \verb{test_*()} form, we should get a single logical value returned to
-us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% test_row_count_match(count = 4)
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+us.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% test_row_count_match(count = 4)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+}\if{html}{\out{</div>}}
 }
 }
 

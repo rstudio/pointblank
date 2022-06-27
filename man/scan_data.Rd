@@ -77,7 +77,9 @@ it's to export that to a file with the \code{\link[=export_report]{export_report
 
 
 Get an HTML document that describes all of the data in the \code{dplyr::storms}
-dataset.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_scan <- scan_data(tbl = dplyr::storms)
+dataset.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_scan <- scan_data(tbl = dplyr::storms)
 }\if{html}{\out{</div>}}
 
 \if{html}{

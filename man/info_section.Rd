@@ -81,7 +81,9 @@ resulting YAML can be used to regenerate an informant (with
 table (via \code{\link[=yaml_informant_incorporate]{yaml_informant_incorporate()}}). Extra sections (i.e., neither the
 \code{table} nor the \code{columns} sections) can be generated and filled with \emph{info
 text} by using one or more calls of \code{info_section()}. This is how it is
-expressed in both R code and in the YAML representation.\preformatted{# R statement
+expressed in both R code and in the YAML representation.
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{# R statement
 informant \%>\% 
   info_section(
     section_name = "History",
@@ -108,7 +110,7 @@ History:
 Additional Notes:
   Notes 1: Notes with a \{snippet\}.
   Notes 2: '**Bold notes**.'
-}
+}\if{html}{\out{</div>}}
 
 Subsections represented as column names are automatically generated when
 creating an informant. Within each of the top-level sections (i.e., \code{History}

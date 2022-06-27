@@ -168,7 +168,9 @@ function. Here is an example of how a complex call of \code{col_is_integer()} as
 validation step is expressed in R code and in the corresponding YAML
 representation.
 
-R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
+R statement:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
   col_is_integer(
     columns = vars(a),
     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
@@ -177,7 +179,9 @@ R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
   )
 }\if{html}{\out{</div>}}
 
-YAML representation:\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
+YAML representation:
+
+\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
 - col_is_integer:
     columns: vars(a)
     actions:
@@ -199,14 +203,18 @@ by using the \code{\link[=yaml_agent_string]{yaml_agent_string()}} function.
 
 
 For all examples here, we'll use a simple table with a character column (\code{a})
-and a integer column (\code{b}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <-
+and a integer column (\code{b}).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <-
   dplyr::tibble(
     a = letters[1:6],
     b = 2:7
   )
 
 tbl
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 6 × 2
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 6 × 2
 ##   a         b
 ##   <chr> <int>
 ## 1 a         2
@@ -215,10 +223,12 @@ tbl
 ## 4 d         5
 ## 5 e         6
 ## 6 f         7
-}
+}\if{html}{\out{</div>}}
 \subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
-Validate that column \code{b} has the \code{integer} class.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
+Validate that column \code{b} has the \code{integer} class.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = tbl) \%>\%
   col_is_integer(columns = vars(b)) \%>\%
   interrogate()
@@ -239,8 +249,12 @@ that corresponds to the validation step demonstrated here.
 
 This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
-behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% col_is_integer(columns = vars(b))
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 6 × 2
+behavior of side effects can be customized with the \code{actions} option.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% col_is_integer(columns = vars(b))
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 6 × 2
 ##   a         b
 ##   <chr> <int>
 ## 1 a         2
@@ -249,22 +263,28 @@ behavior of side effects can be customized with the \code{actions} option.\if{ht
 ## 4 d         5
 ## 5 e         6
 ## 6 f         7
-}
+}\if{html}{\out{</div>}}
 }
 
 \subsection{C: Using the expectation function}{
 
 With the \verb{expect_*()} form, we would typically perform one validation at a
-time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_is_integer(tbl, columns = vars(b))
+time. This is primarily used in \strong{testthat} tests.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_is_integer(tbl, columns = vars(b))
 }\if{html}{\out{</div>}}
 }
 
 \subsection{D: Using the test function}{
 
 With the \verb{test_*()} form, we should get a single logical value returned to
-us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% test_col_is_integer(columns = vars(b))
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+us.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% test_col_is_integer(columns = vars(b))
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+}\if{html}{\out{</div>}}
 }
 }
 

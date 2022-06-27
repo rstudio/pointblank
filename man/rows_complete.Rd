@@ -230,7 +230,9 @@ function. Here is an example of how a complex call of \code{rows_complete()} as 
 validation step is expressed in R code and in the corresponding YAML
 representation.
 
-R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
+R statement:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
   rows_complete(
     columns = vars(a, b),
     preconditions = ~ . \%>\% dplyr::filter(a < 10),
@@ -241,7 +243,9 @@ R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
   )
 }\if{html}{\out{</div>}}
 
-YAML representation:\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
+YAML representation:
+
+\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
 - rows_complete:
     columns: vars(a, b)
     preconditions: ~. \%>\% dplyr::filter(a < 10)
@@ -265,7 +269,9 @@ transformation of an agent to YAML without any writing to disk by using the
 \section{Examples}{
 
 
-Create a simple table with three columns of numerical values.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <-
+Create a simple table with three columns of numerical values.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <-
   dplyr::tibble(
     a = c(5, 7, 6, 5, 8, 7),
     b = c(7, 1, 0, 0, 8, 3),
@@ -273,7 +279,9 @@ Create a simple table with three columns of numerical values.\if{html}{\out{<div
   )
 
 tbl
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 6 × 3
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 6 × 3
 ##       a     b     c
 ##   <dbl> <dbl> <dbl>
 ## 1     5     7     1
@@ -282,11 +290,13 @@ tbl
 ## 4     5     0     3
 ## 5     8     8     3
 ## 6     7     3     3
-}
+}\if{html}{\out{</div>}}
 \subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
 Validate that when considering only data in columns \code{a} and \code{b}, there are
-only complete rows (i.e., all rows have no \code{NA} values).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
+only complete rows (i.e., all rows have no \code{NA} values).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = tbl) \%>\%
   rows_complete(columns = vars(a, b)) \%>\%
   interrogate()
@@ -307,26 +317,36 @@ that corresponds to the validation step demonstrated here.
 
 This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
-behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
+behavior of side effects can be customized with the \code{actions} option.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   rows_complete(columns = vars(a, b)) \%>\%
   dplyr::pull(a)
-}\if{html}{\out{</div>}}\preformatted{## [1] 5 7 6 5 8 7
-}
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] 5 7 6 5 8 7
+}\if{html}{\out{</div>}}
 }
 
 \subsection{C: Using the expectation function}{
 
 With the \verb{expect_*()} form, we would typically perform one validation at a
-time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_rows_complete(tbl, columns = vars(a, b))
+time. This is primarily used in \strong{testthat} tests.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_rows_complete(tbl, columns = vars(a, b))
 }\if{html}{\out{</div>}}
 }
 
 \subsection{D: Using the test function}{
 
 With the \verb{test_*()} form, we should get a single logical value returned to
-us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{test_rows_complete(tbl, columns = vars(a, b))
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+us.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{test_rows_complete(tbl, columns = vars(a, b))
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+}\if{html}{\out{</div>}}
 }
 }
 

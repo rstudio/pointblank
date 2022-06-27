@@ -252,7 +252,9 @@ validation function. Here is an example of how a complex call of
 \code{col_vals_make_subset()} as a validation step is expressed in R code and in
 the corresponding YAML representation.
 
-R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
+R statement:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
   col_vals_make_subset(
     columns = vars(a),
     set = c(1, 2, 3, 4),
@@ -264,7 +266,9 @@ R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
   )
 }\if{html}{\out{</div>}}
 
-YAML representation:\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
+YAML representation:
+
+\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
 - col_vals_make_subset:
    columns: vars(a)
    set:
@@ -293,8 +297,12 @@ writing to disk by using the \code{\link[=yaml_agent_string]{yaml_agent_string()
 
 
 The \code{small_table} dataset in the package will be used to validate that column
-values are part of a given set.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 13 × 8
+values are part of a given set.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 13 × 8
 ##    date_time           date           a b             c      d e     f    
 ##    <dttm>              <date>     <int> <chr>     <dbl>  <dbl> <lgl> <chr>
 ##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high 
@@ -310,13 +318,15 @@ values are part of a given set.\if{html}{\out{<div class="sourceCode r">}}\prefo
 ## 11 2016-01-26 20:07:00 2016-01-26     4 2-dmx-010     7   834. TRUE  low  
 ## 12 2016-01-28 02:51:00 2016-01-28     2 7-dmx-010     8   108. FALSE low  
 ## 13 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA  2230. TRUE  high
-}
+}\if{html}{\out{</div>}}
 \subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
 Validate that the distinct set of values in column \code{f} contains at least the
 subset defined as \code{low} and \code{high} (the column actually has both of those and
 some \code{mid} values). We'll determine if this validation has any failing test
-units (there are 2 test units, one per element in the \code{set}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
+units (there are 2 test units, one per element in the \code{set}).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = small_table) \%>\%
   col_vals_make_subset(
     columns = vars(f), set = c("low", "high")
@@ -339,20 +349,26 @@ that corresponds to the validation step demonstrated here.
 
 This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
-behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
+behavior of side effects can be customized with the \code{actions} option.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   col_vals_make_subset(
     columns = vars(f), set = c("low", "high")
   ) \%>\%
   dplyr::pull(f) \%>\%
   unique()
-}\if{html}{\out{</div>}}\preformatted{## [1] "high" "low"  "mid"
-}
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "high" "low"  "mid"
+}\if{html}{\out{</div>}}
 }
 
 \subsection{C: Using the expectation function}{
 
 With the \verb{expect_*()} form, we would typically perform one validation at a
-time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_make_subset(
+time. This is primarily used in \strong{testthat} tests.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_make_subset(
   small_table,
   columns = vars(f), set = c("low", "high")
 )
@@ -362,12 +378,16 @@ time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div clas
 \subsection{D: Using the test function}{
 
 With the \verb{test_*()} form, we should get a single logical value returned to
-us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
+us.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   test_col_vals_make_subset(
     columns = vars(f), set = c("low", "high")
   )
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+}\if{html}{\out{</div>}}
 }
 }
 

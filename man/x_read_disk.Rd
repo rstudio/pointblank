@@ -49,7 +49,9 @@ table dimensions, and info snippets/text will be regenerated.
 The process of developing an agent and writing it to disk with the
 \code{\link[=x_write_disk]{x_write_disk()}} function is explained in that function's documentation.
 Suppose we have such a written file that's named \code{"agent-small_table.rds"},
-we could read that to a new agent object with \code{x_read_disk()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- x_read_disk("agent-small_table.rds")
+we could read that to a new agent object with \code{x_read_disk()}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- x_read_disk("agent-small_table.rds")
 }\if{html}{\out{</div>}}
 }
 
@@ -57,7 +59,9 @@ we could read that to a new agent object with \code{x_read_disk()}.\if{html}{\ou
 
 If there is an informant written to disk via \code{\link[=x_write_disk]{x_write_disk()}} and it's named
 \code{"informant-small_table.rds"}. We could read that to a new informant object
-with \code{x_read_disk()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- x_read_disk("informant-small_table.rds")
+with \code{x_read_disk()}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- x_read_disk("informant-small_table.rds")
 }\if{html}{\out{</div>}}
 }
 
@@ -66,14 +70,18 @@ with \code{x_read_disk()}.\if{html}{\out{<div class="sourceCode r">}}\preformatt
 The process of creating a multiagent and writing it to disk with the
 \code{\link[=x_write_disk]{x_write_disk()}} function is shown in that function's documentation. Should
 we have such a written file called \code{"multiagent-small_table.rds"}, we could
-read that to a new multiagent object with \code{x_read_disk()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{multiagent <- x_read_disk("multiagent-small_table.rds")
+read that to a new multiagent object with \code{x_read_disk()}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{multiagent <- x_read_disk("multiagent-small_table.rds")
 }\if{html}{\out{</div>}}
 }
 
 \subsection{D: Reading a table scan from disk}{
 
 If there is a table scan written to disk via \code{\link[=x_write_disk]{x_write_disk()}} and it's named
-\code{"tbl_scan-storms.rds"}, we could read it back into R with \code{x_read_disk()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_scan <- x_read_disk("tbl_scan-storms.rds")
+\code{"tbl_scan-storms.rds"}, we could read it back into R with \code{x_read_disk()}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_scan <- x_read_disk("tbl_scan-storms.rds")
 }\if{html}{\out{</div>}}
 }
 }

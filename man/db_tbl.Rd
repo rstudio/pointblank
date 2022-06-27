@@ -72,7 +72,9 @@ enclosing such values in \code{\link[=I]{I()}}.
 
 You can use an in-memory database table and by supplying it with an in-memory
 table. This works with the DuckDB database and the key thing is to use
-\code{dbname = ":memory"} in the \code{db_tbl()} call.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table_duckdb <- 
+\code{dbname = ":memory"} in the \code{db_tbl()} call.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table_duckdb <- 
   db_tbl(
     table = small_table,
     dbtype = "duckdb",
@@ -101,7 +103,9 @@ small_table_duckdb
 
 
 The in-memory option also works using the SQLite database. The only change
-required is setting the \code{dbtype} to \code{"sqlite"}:\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table_sqlite <- 
+required is setting the \code{dbtype} to \code{"sqlite"}:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table_sqlite <- 
   db_tbl(
     table = small_table,
     dbtype = "sqlite",
@@ -131,7 +135,9 @@ small_table_sqlite
 
 It's also possible to obtain a table from a remote file and shove it into an
 in-memory database. For this, we can use the all-powerful \code{\link[=file_tbl]{file_tbl()}} +
-\code{db_tbl()} combo.\if{html}{\out{<div class="sourceCode r">}}\preformatted{all_revenue_large_duckdb <-
+\code{db_tbl()} combo.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{all_revenue_large_duckdb <-
   db_tbl(
     table = file_tbl(
       file = from_github(
@@ -176,7 +182,9 @@ one-step process nonetheless. Here's an example that accesses the \code{rna} tab
 (in the \emph{RNA Central} public database) using \code{db_tbl()}. Here, for the \code{user}
 and \code{password} entries we are using the literal username and password values
 (publicly available when visiting the \emph{RNA Central} website) by enclosing the
-values in \code{I()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{rna_db_tbl <- 
+values in \code{I()}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{rna_db_tbl <- 
   db_tbl(
     table = "rna",
     dbtype = "postgres",
@@ -211,7 +219,9 @@ rna_db_tbl
 
 You'd normally want to use the names of environment variables (envvars) to
 more securely access the appropriate username and password values when
-connecting to a DB. Here are all the necessary inputs:\if{html}{\out{<div class="sourceCode r">}}\preformatted{example_db_tbl <- 
+connecting to a DB. Here are all the necessary inputs:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{example_db_tbl <- 
   db_tbl(
     table = "<table_name>",
     dbtype = "<database_type_shortname>",
@@ -232,7 +242,9 @@ the \code{usethis::edit_r_environ()} function makes this pretty easy to do.
 Using table-prep formulas in a centralized table store can make it easier to
 work with DB tables in \strong{pointblank}. Here's how to generate a table store
 with two named entries for table preparations involving the \code{\link[=tbl_store]{tbl_store()}} and
-\code{db_tbl()} functions.\if{html}{\out{<div class="sourceCode r">}}\preformatted{store <-
+\code{db_tbl()} functions.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{store <-
   tbl_store(
     small_table_duck ~ db_tbl(
       table = pointblank::small_table,
@@ -245,7 +257,9 @@ with two named entries for table preparations involving the \code{\link[=tbl_sto
 }\if{html}{\out{</div>}}
 
 Now it's easy to obtain either of these tables via \code{\link[=tbl_get]{tbl_get()}}. We can
-reference the table in the store by its name (given to the left of the \code{~}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_get(tbl = "small_table_duck", store = store)
+reference the table in the store by its name (given to the left of the \code{~}).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_get(tbl = "small_table_duck", store = store)
 }\if{html}{\out{</div>}}
 
 \preformatted{## # Source:   table<pointblank::small_table> [?? x 8]
@@ -267,8 +281,10 @@ reference the table in the store by its name (given to the left of the \code{~})
 
 
 The second table in the table store is a mutated
-version of the first. It's just as easily obtainable via \code{\link[=tbl_get]{tbl_get()}}:\preformatted{tbl_get(tbl = "small_high_duck", store = store)
-}
+version of the first. It's just as easily obtainable via \code{\link[=tbl_get]{tbl_get()}}:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{tbl_get(tbl = "small_high_duck", store = store)
+}\if{html}{\out{</div>}}
 
 \preformatted{## # Source:   lazy query [?? x 8]
 ## # Database: duckdb_connection
@@ -286,14 +302,18 @@ version of the first. It's just as easily obtainable via \code{\link[=tbl_get]{t
 
 The table-prep formulas in the \code{store} object could also be used in functions
 with a \code{tbl} argument (like \code{\link[=create_agent]{create_agent()}} and \code{\link[=create_informant]{create_informant()}}). This
-is accomplished most easily with the \code{\link[=tbl_source]{tbl_source()}} function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- 
+is accomplished most easily with the \code{\link[=tbl_source]{tbl_source()}} function.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- 
   create_agent(
     tbl = ~ tbl_source(
       tbl = "small_table_duck",
       store = tbls
     )
   )
-}\if{html}{\out{</div>}}\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- 
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- 
   create_informant(
     tbl = ~ tbl_source(
       tbl = "small_high_duck",

@@ -131,10 +131,14 @@ use validation functions (the same ones you would with an \emph{agent}) directly
 on the data. This acts as a sort of data filter in that the input table will
 become output data (without modification), but there may be warnings, errors,
 or other side effects that you can define if validation fails. Basically,
-instead of this\if{html}{\out{<div class="sourceCode r">}}\preformatted{create_agent(tbl = small_table) \%>\% rows_distinct() \%>\% interrogate()
+instead of this
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{create_agent(tbl = small_table) \%>\% rows_distinct() \%>\% interrogate()
 }\if{html}{\out{</div>}}
 
-you would use this:\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% rows_distinct()
+you would use this:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% rows_distinct()
 }\if{html}{\out{</div>}}
 
 This results in an error (with the default failure threshold settings),
@@ -143,13 +147,17 @@ passed though.
 
 We can use variants of the validation functions, the \emph{test} (\verb{test_*()}) and
 \emph{expectation} (\verb{expect_*()}) versions, directly on the data for different
-workflows. The first returns to us a logical value. So this\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% test_rows_distinct()
+workflows. The first returns to us a logical value. So this
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% test_rows_distinct()
 }\if{html}{\out{</div>}}
 
 returns \code{FALSE} instead of an error.
 
 In a unit testing scenario, we can use \emph{expectation} functions exactly as we
-would with \strong{testthat}'s library of \verb{expect_*()} functions:\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% expect_rows_distinct()
+would with \strong{testthat}'s library of \verb{expect_*()} functions:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% expect_rows_distinct()
 }\if{html}{\out{</div>}}
 
 This test of \code{small_table} would be counted as a failure.
@@ -210,7 +218,9 @@ or interrogate the target table (via \code{\link[=yaml_agent_interrogate]{yaml_a
 example of how a complex call of \code{create_agent()} is expressed in R code and
 in the corresponding YAML representation.
 
-R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{create_agent(
+R statement:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{create_agent(
   tbl = ~ small_table,
   tbl_name = "small_table",
   label = "An example.",
@@ -238,7 +248,9 @@ R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{create_agen
 )
 }\if{html}{\out{</div>}}
 
-YAML representation:\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{type: agent
+YAML representation:
+
+\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{type: agent
 tbl: ~small_table
 tbl_name: small_table
 label: An example.
@@ -311,8 +323,12 @@ a given target table.
 
 Let's walk through a data quality analysis of an extremely small table. It's
 actually called \code{small_table} and we can find it as a dataset in this
-package.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 13 × 8
+package.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 13 × 8
 ##    date_time           date           a b             c      d e     f    
 ##    <dttm>              <date>     <int> <chr>     <dbl>  <dbl> <lgl> <chr>
 ##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high 
@@ -328,11 +344,13 @@ package.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table
 ## 11 2016-01-26 20:07:00 2016-01-26     4 2-dmx-010     7   834. TRUE  low  
 ## 12 2016-01-28 02:51:00 2016-01-28     2 7-dmx-010     8   108. FALSE low  
 ## 13 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA  2230. TRUE  high
-}
+}\if{html}{\out{</div>}}
 
 We ought to think about what's tolerable in terms of data quality so let's
 designate proportional failure thresholds to the \code{warn}, \code{stop}, and \code{notify}
-states using \code{\link[=action_levels]{action_levels()}}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <- 
+states using \code{\link[=action_levels]{action_levels()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <- 
   action_levels(
       warn_at = 0.10,
       stop_at = 0.25,
@@ -343,7 +361,9 @@ states using \code{\link[=action_levels]{action_levels()}}.\if{html}{\out{<div c
 Now create a pointblank \code{agent} object and give it the \code{al} object (which
 serves as a default for all validation steps which can be overridden). The
 static thresholds provided by \code{al} will make the reporting a bit more useful.
-We also provide a target table and we'll use \code{pointblank::small_table}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- 
+We also provide a target table and we'll use \code{pointblank::small_table}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- 
   create_agent(
     tbl = pointblank::small_table,
     tbl_name = "small_table",
@@ -354,7 +374,9 @@ We also provide a target table and we'll use \code{pointblank::small_table}.\if{
 
 Then, as with any \code{agent} object, we can add steps to the validation plan by
 using as many validation functions as we want. then, we use \code{\link[=interrogate]{interrogate()}}
-to actually perform the validations and gather intel.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
+to actually perform the validations and gather intel.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   agent \%>\% 
   col_exists(columns = vars(date, date_time)) \%>\%
   col_vals_regex(
@@ -373,7 +395,9 @@ to actually perform the validations and gather intel.\if{html}{\out{<div class="
 }\if{html}{\out{</div>}}
 
 The \code{agent} object can be printed to see the validation report in the
-Viewer.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent
+Viewer.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent
 }\if{html}{\out{</div>}}
 
 \if{html}{
@@ -384,7 +408,9 @@ Viewer.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent
 }
 
 If we want to make use of more report display options, we can alternatively
-use the \code{\link[=get_agent_report]{get_agent_report()}} function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{report <-
+use the \code{\link[=get_agent_report]{get_agent_report()}} function.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{report <-
   get_agent_report(
     agent = agent,
     arrange_by = "severity",
@@ -410,25 +436,39 @@ of the information collected during interrogation.
 We can see from the validation report that Step 4 (which used the
 \code{\link[=rows_distinct]{rows_distinct()}} validation function) had two test units, corresponding to
 duplicated rows, that failed. We can see those rows with
-\code{\link[=get_data_extracts]{get_data_extracts()}}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% get_data_extracts(i = 4)
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 2 × 8
+\code{\link[=get_data_extracts]{get_data_extracts()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% get_data_extracts(i = 4)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 2 × 8
 ##   date_time           date           a b             c     d e     f    
 ##   <dttm>              <date>     <int> <chr>     <dbl> <dbl> <lgl> <chr>
 ## 1 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high 
 ## 2 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high
-}
+}\if{html}{\out{</div>}}
 
 We can get an x-list for the entire validation process (7 steps), or, just
-for the 4th step with \code{\link[=get_agent_x_list]{get_agent_x_list()}}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{xl_step_4 <- agent \%>\% get_agent_x_list(i = 4)
+for the 4th step with \code{\link[=get_agent_x_list]{get_agent_x_list()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{xl_step_4 <- agent \%>\% get_agent_x_list(i = 4)
 }\if{html}{\out{</div>}}
 
 And then we can peruse the different parts of the list. Let's get the
-fraction of test units that failed.\if{html}{\out{<div class="sourceCode r">}}\preformatted{xl_step_4$f_failed
-}\if{html}{\out{</div>}}\preformatted{## [1] 0.15385
-}
+fraction of test units that failed.
 
-Just printing the x-list will tell us what's available.\if{html}{\out{<div class="sourceCode r">}}\preformatted{xl_step_4
-}\if{html}{\out{</div>}}\preformatted{## -- The x-list for table `small_table`
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{xl_step_4$f_failed
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] 0.15385
+}\if{html}{\out{</div>}}
+
+Just printing the x-list will tell us what's available.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{xl_step_4
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## -- The x-list for table `small_table`
 ## ---- STEP 4 ----
 ## $time_start $time_end (POSIXct [1])
 ## $label $tbl_name $tbl_src $tbl_src_details (chr [1])
@@ -441,7 +481,7 @@ Just printing the x-list will tell us what's available.\if{html}{\out{<div class
 ## $warn $stop $notify (lgl [1])
 ## $lang (chr [1])
 ## ----
-}
+}\if{html}{\out{</div>}}
 
 An x-list not specific to any step will have way more information and a
 slightly different structure. See \code{help(get_agent_x_list)} for more info.

@@ -280,7 +280,9 @@ validation function. Here is an example of how a complex call of
 \code{col_vals_increasing()} as a validation step is expressed in R code and in
 the corresponding YAML representation.
 
-R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
+R statement:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
   col_vals_increasing(
     columns = vars(a),
     allow_stationary = TRUE,
@@ -294,7 +296,9 @@ R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
   )
 }\if{html}{\out{</div>}}
 
-YAML representation:\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
+YAML representation:
+
+\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
 - col_vals_increasing:
     columns: vars(a)
     allow_stationary: true
@@ -322,8 +326,12 @@ by using the \code{\link[=yaml_agent_string]{yaml_agent_string()}} function.
 
 The \code{game_revenue} dataset in the package has the column \code{session_start},
 which contains date-time values. Let's ensure that this column has values
-that are increasing from top to bottom.\if{html}{\out{<div class="sourceCode r">}}\preformatted{game_revenue
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 2,000 × 11
+that are increasing from top to bottom.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{game_revenue
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 2,000 × 11
 ##    player_id       session_id  session_start       time                item_type
 ##    <chr>           <chr>       <dttm>              <dttm>              <chr>    
 ##  1 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 01:31:03 2015-01-01 01:31:27 iap      
@@ -339,13 +347,15 @@ that are increasing from top to bottom.\if{html}{\out{<div class="sourceCode r">
 ## # … with 1,990 more rows, and 6 more variables: item_name <chr>,
 ## #   item_revenue <dbl>, session_duration <dbl>, start_day <date>,
 ## #   acquisition <chr>, country <chr>
-}
+}\if{html}{\out{</div>}}
 \subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
 Validate that all date-time values in the column \code{session_start} are
 increasing, and, allow for repeating values (\code{allow_stationary} will be set
 to \code{TRUE}). We'll determine if this validation has any failing test units
-(there are 2000 test units).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
+(there are 2000 test units).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = game_revenue) \%>\%
   col_vals_increasing(
     columns = vars(session_start),
@@ -369,7 +379,9 @@ that corresponds to the validation step demonstrated here.
 
 This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
-behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{game_revenue \%>\%
+behavior of side effects can be customized with the \code{actions} option.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{game_revenue \%>\%
   col_vals_increasing(
     columns = vars(session_start),
     allow_stationary = TRUE
@@ -377,17 +389,21 @@ behavior of side effects can be customized with the \code{actions} option.\if{ht
   dplyr::select(session_start) \%>\%
   dplyr::distinct() \%>\%
   dplyr::count()
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 1 × 1
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 1 × 1
 ##       n
 ##   <int>
 ## 1   618
-}
+}\if{html}{\out{</div>}}
 }
 
 \subsection{C: Using the expectation function}{
 
 With the \verb{expect_*()} form, we would typically perform one validation at a
-time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_increasing(
+time. This is primarily used in \strong{testthat} tests.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_increasing(
   game_revenue,
   columns = vars(session_start),
   allow_stationary = TRUE
@@ -398,13 +414,17 @@ time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div clas
 \subsection{D: Using the test function}{
 
 With the \verb{test_*()} form, we should get a single logical value returned to
-us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{game_revenue \%>\%
+us.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{game_revenue \%>\%
   test_col_vals_increasing(
     columns = vars(session_start),
     allow_stationary = TRUE
   )
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+}\if{html}{\out{</div>}}
 }
 }
 

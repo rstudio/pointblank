@@ -30,7 +30,9 @@ time, it has intel from the interrogation.
 
 There's a YAML file available in the \strong{pointblank} package that's also
 called \code{"agent-small_table.yml"}. The path for it can be accessed through
-\code{system.file()}:\if{html}{\out{<div class="sourceCode r">}}\preformatted{yml_file_path <- 
+\code{system.file()}:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{yml_file_path <- 
   system.file(
     "yaml", "agent-small_table.yml",
     package = "pointblank"
@@ -38,7 +40,9 @@ called \code{"agent-small_table.yml"}. The path for it can be accessed through
 }\if{html}{\out{</div>}}
 
 The YAML file can be read as an agent with a pre-existing validation plan by
-using the \code{\link[=yaml_read_agent]{yaml_read_agent()}} function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- yaml_read_agent(filename = yml_file_path)
+using the \code{\link[=yaml_read_agent]{yaml_read_agent()}} function.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- yaml_read_agent(filename = yml_file_path)
 
 agent
 }\if{html}{\out{</div>}}
@@ -53,7 +57,9 @@ This particular agent is using \code{~ tbl_source("small_table", "tbl_store.yml"
 to source the table-prep from a YAML file that holds a table store (can be
 seen using \code{yaml_agent_string(agent = agent)}). Let's put that file in the
 working directory (the \strong{pointblank} package has the corresponding YAML
-file):\if{html}{\out{<div class="sourceCode r">}}\preformatted{yml_tbl_store_path <-
+file):
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{yml_tbl_store_path <-
   system.file(
     "yaml", "tbl_store.yml",
     package = "pointblank"
@@ -67,7 +73,9 @@ performed. Saving an agent to YAML will remove any traces of interrogation
 data and serve as a plan for a new interrogation on the same target table. We
 can either follow this up with with \code{\link[=interrogate]{interrogate()}} and get an agent with
 intel, or, we can interrogate directly from the YAML file with
-\code{yaml_agent_interrogate()}:\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- yaml_agent_interrogate(filename = yml_file_path)
+\code{yaml_agent_interrogate()}:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- yaml_agent_interrogate(filename = yml_file_path)
 
 agent
 }\if{html}{\out{</div>}}

@@ -63,12 +63,16 @@ as the input table for the first demo. It has entries in the first 21 days of
 2015 and we'll elect to get all of the records where the \code{time} values are
 strictly for the first 15 days of 2015. The \code{keep} argument has a default of
 \code{"left"} so all rows where the \code{time} column is less than
-\code{"2015-01-16 00:00:00"} will be kept.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_time_slice(
+\code{"2015-01-16 00:00:00"} will be kept.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_time_slice(
   tbl = game_revenue,
   time_column = "time",
   slice_point = "2015-01-16"
 )
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 1,208 × 11
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 1,208 × 11
 ##    player_id       session_id  session_start       time                item_type
 ##    <chr>           <chr>       <dttm>              <dttm>              <chr>    
 ##  1 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 01:31:03 2015-01-01 01:31:27 iap      
@@ -84,16 +88,20 @@ strictly for the first 15 days of 2015. The \code{keep} argument has a default o
 ## # … with 1,198 more rows, and 6 more variables: item_name <chr>,
 ## #   item_revenue <dbl>, session_duration <dbl>, start_day <date>,
 ## #   acquisition <chr>, country <chr>
-}
+}\if{html}{\out{</div>}}
 
 Omit the first 25\% of records from \code{small_table}, also included in the
 package, with a fractional \code{slice_point} of \code{0.25} on the basis of a timeline
-that begins at \verb{2016-01-04 11:00:00} and ends at \verb{2016-01-30 11:23:00}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
+that begins at \verb{2016-01-04 11:00:00} and ends at \verb{2016-01-30 11:23:00}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   tt_time_slice(
     slice_point = 0.25,
     keep = "right"
   )
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 8 × 8
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 8 × 8
 ##   date_time           date           a b             c     d e     f    
 ##   <dttm>              <date>     <int> <chr>     <dbl> <dbl> <lgl> <chr>
 ## 1 2016-01-11 06:15:00 2016-01-11     4 2-dhe-923     4 3291. TRUE  mid  
@@ -104,7 +112,7 @@ that begins at \verb{2016-01-04 11:00:00} and ends at \verb{2016-01-30 11:23:00}
 ## 6 2016-01-26 20:07:00 2016-01-26     4 2-dmx-010     7  834. TRUE  low  
 ## 7 2016-01-28 02:51:00 2016-01-28     2 7-dmx-010     8  108. FALSE low  
 ## 8 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA 2230. TRUE  high
-}
+}\if{html}{\out{</div>}}
 }
 
 \section{Function ID}{

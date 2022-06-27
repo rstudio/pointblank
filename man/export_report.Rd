@@ -45,7 +45,9 @@ dataset), (2) interrogating the agent with the \code{\link[=interrogate]{interro
 
 Creating an \code{action_levels} object is a common workflow step when creating a
 pointblank agent. We designate failure thresholds to the \code{warn}, \code{stop}, and
-\code{notify} states using \code{\link[=action_levels]{action_levels()}}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <- 
+\code{notify} states using \code{\link[=action_levels]{action_levels()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <- 
   action_levels(
     warn_at = 0.10,
     stop_at = 0.25,
@@ -55,7 +57,9 @@ pointblank agent. We designate failure thresholds to the \code{warn}, \code{stop
 
 Now create a pointblank \code{agent} object and give it the \code{al} object (which
 serves as a default for all validation steps which can be overridden). The
-data will be referenced in the \code{tbl} argument with a leading \code{~}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- 
+data will be referenced in the \code{tbl} argument with a leading \code{~}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- 
   create_agent(
     tbl = ~ small_table,
     tbl_name = "small_table",
@@ -65,7 +69,9 @@ data will be referenced in the \code{tbl} argument with a leading \code{~}.\if{h
 }\if{html}{\out{</div>}}
 
 As with any agent object, we can add steps to the validation plan by using as
-many validation functions as we want. Then, we \code{\link[=interrogate]{interrogate()}}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
+many validation functions as we want. Then, we \code{\link[=interrogate]{interrogate()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   agent \%>\% 
   col_exists(columns = vars(date, date_time)) \%>\%
   col_vals_regex(
@@ -78,7 +84,9 @@ many validation functions as we want. Then, we \code{\link[=interrogate]{interro
   interrogate()
 }\if{html}{\out{</div>}}
 
-The agent report can be written to an HTML file with \code{export_report()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{export_report(
+The agent report can be written to an HTML file with \code{export_report()}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{export_report(
   agent,
   filename = "agent-small_table.html"
 )
@@ -87,7 +95,9 @@ The agent report can be written to an HTML file with \code{export_report()}.\if{
 If you're consistently writing agent reports when periodically checking data,
 we could make use of \code{affix_date()} or \code{affix_datetime()} depending on the
 granularity you need. Here's an example that writes the file with the format:
-\code{"<filename>-YYYY-mm-dd_HH-MM-SS.html"}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{export_report(
+\code{"<filename>-YYYY-mm-dd_HH-MM-SS.html"}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{export_report(
   agent,
   filename = affix_datetime(
     "agent-small_table.html"
@@ -105,7 +115,9 @@ writing the informant report to HTML.
 
 Create a pointblank \code{informant} object with \code{\link[=create_informant]{create_informant()}} and the
 \code{\link{small_table}} dataset. Use \code{\link[=incorporate]{incorporate()}} so that info snippets are
-integrated into the text.\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- 
+integrated into the text.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- 
   create_informant(
     tbl = ~ small_table,
     tbl_name = "small_table",
@@ -135,7 +147,9 @@ integrated into the text.\if{html}{\out{<div class="sourceCode r">}}\preformatte
 }\if{html}{\out{</div>}}
 
 The informant report can be written to an HTML file with \code{export_report()}.
-Let's do this with \code{\link[=affix_date]{affix_date()}} so the filename has a datestamp.\if{html}{\out{<div class="sourceCode r">}}\preformatted{export_report(
+Let's do this with \code{\link[=affix_date]{affix_date()}} so the filename has a datestamp.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{export_report(
   informant,
   filename = affix_date(
     "informant-small_table.html"
@@ -146,10 +160,14 @@ Let's do this with \code{\link[=affix_date]{affix_date()}} so the filename has a
 
 \subsection{C: Writing a table scan as HTML}{
 
-We can get a report that describes all of the data in the \code{storms} dataset.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_scan <- scan_data(tbl = dplyr::storms)
+We can get a report that describes all of the data in the \code{storms} dataset.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_scan <- scan_data(tbl = dplyr::storms)
 }\if{html}{\out{</div>}}
 
-The table scan object can be written to an HTML file with \code{export_report()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{export_report(
+The table scan object can be written to an HTML file with \code{export_report()}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{export_report(
   tbl_scan,
   filename = "tbl_scan-storms.html"
 )

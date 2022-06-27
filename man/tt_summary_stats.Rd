@@ -38,8 +38,12 @@ order as well.
 
 
 Get summary statistics for the \code{game_revenue} dataset that is included in the
-\strong{pointblank} package.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_summary_stats(tbl = game_revenue)
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 9 × 3
+\strong{pointblank} package.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_summary_stats(tbl = game_revenue)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 9 × 3
 ##   .param. item_revenue session_duration
 ##   <chr>          <dbl>            <dbl>
 ## 1 min             0                 3.2
@@ -51,17 +55,21 @@ Get summary statistics for the \code{game_revenue} dataset that is included in t
 ## 7 max           143.               41  
 ## 8 iqr             1.16             15.3
 ## 9 range         143.               37.8
-}
+}\if{html}{\out{</div>}}
 
 Table transformers work great in conjunction with validation functions. Let's
 ensure that the maximum revenue for individual purchases in the
-\code{game_revenue} table is less than $150.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_summary_stats(tbl = game_revenue) \%>\%
+\code{game_revenue} table is less than $150.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_summary_stats(tbl = game_revenue) \%>\%
   col_vals_lt(
     columns = vars(item_revenue),
     value = 150,
     segments = .param. ~ "max"
   )
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 9 × 3
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 9 × 3
 ##   .param. item_revenue session_duration
 ##   <chr>          <dbl>            <dbl>
 ## 1 min             0                 3.2
@@ -73,12 +81,14 @@ ensure that the maximum revenue for individual purchases in the
 ## 7 max           143.               41  
 ## 8 iqr             1.16             15.3
 ## 9 range         143.               37.8
-}
+}\if{html}{\out{</div>}}
 
 We see data, and not an error, so the validation was successful!
 
 Let's do another: for in-app purchases in the \code{game_revenue} table, check
-that the median revenue is somewhere between $8 and $12.\if{html}{\out{<div class="sourceCode r">}}\preformatted{game_revenue \%>\% 
+that the median revenue is somewhere between $8 and $12.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{game_revenue \%>\% 
   dplyr::filter(item_type == "iap") \%>\%
   tt_summary_stats() \%>\%
   col_vals_between(
@@ -86,7 +96,9 @@ that the median revenue is somewhere between $8 and $12.\if{html}{\out{<div clas
     left = 8, right = 12,
     segments = .param. ~ "med"
   )
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 9 × 3
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 9 × 3
 ##   .param. item_revenue session_duration
 ##   <chr>          <dbl>            <dbl>
 ## 1 min             0.4              3.2 
@@ -98,7 +110,7 @@ that the median revenue is somewhere between $8 and $12.\if{html}{\out{<div clas
 ## 7 max           143.              41   
 ## 8 iqr            15.8             16.7 
 ## 9 range         143.              37.8
-}
+}\if{html}{\out{</div>}}
 
 We can get more creative with this transformer. Why not use a transformed
 table in a validation plan? While performing validations of the
@@ -106,7 +118,9 @@ table in a validation plan? While performing validations of the
 above by using \code{tt_summary_stats()} in the \code{preconditions} argument. This
 transforms the target table into a summary table for the validation step. The
 final step of the transformation in \code{preconditions} is a \code{dplyr::filter()}
-step that isolates the row of the median statistic.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- 
+step that isolates the row of the median statistic.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- 
   create_agent(
     tbl = game_revenue,
     tbl_name = "game_revenue",

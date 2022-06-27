@@ -26,10 +26,14 @@ info text, etc.) and we can print the \emph{informant} object or use the
 
 
 Take the \code{small_table} and assign it to \code{changing_table} (we'll modify it
-later):\if{html}{\out{<div class="sourceCode r">}}\preformatted{changing_table <- small_table
+later):
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{changing_table <- small_table
 
 changing_table
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 13 × 8
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 13 × 8
 ##    date_time           date           a b             c      d e     f    
 ##    <dttm>              <date>     <int> <chr>     <dbl>  <dbl> <lgl> <chr>
 ##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high 
@@ -45,14 +49,16 @@ changing_table
 ## 11 2016-01-26 20:07:00 2016-01-26     4 2-dmx-010     7   834. TRUE  low  
 ## 12 2016-01-28 02:51:00 2016-01-28     2 7-dmx-010     8   108. FALSE low  
 ## 13 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA  2230. TRUE  high
-}
+}\if{html}{\out{</div>}}
 
 Use \code{\link[=create_informant]{create_informant()}} to generate an informant object with
 \code{changing_table} given to the \code{tbl} argument with a leading \code{~} (ensures that
 the table will be fetched each time it is needed, instead of being statically
 stored in the object). We'll add two snippets with \code{\link[=info_snippet]{info_snippet()}}, add
 information with the \code{\link[=info_columns]{info_columns()}} and \code{\link[=info_section]{info_section()}} functions and then
-use \code{incorporate()} to work the snippets into the info text.\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- 
+use \code{incorporate()} to work the snippets into the info text.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- 
   create_informant(
     tbl = ~ changing_table,
     tbl_name = "changing_table",
@@ -85,7 +91,9 @@ use \code{incorporate()} to work the snippets into the info text.\if{html}{\out{
   incorporate()
 }\if{html}{\out{</div>}}
 
-We can print the resulting object to see the information report.\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant
+We can print the resulting object to see the information report.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant
 }\if{html}{\out{</div>}}
 
 \if{html}{
@@ -95,20 +103,26 @@ We can print the resulting object to see the information report.\if{html}{\out{<
 }
 }
 
-Let's modify \code{test_table} to give it more rows and an extra column.\if{html}{\out{<div class="sourceCode r">}}\preformatted{changing_table <- 
+Let's modify \code{test_table} to give it more rows and an extra column.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{changing_table <- 
   dplyr::bind_rows(changing_table, changing_table) \%>\%
   dplyr::mutate(h = a + c)
 }\if{html}{\out{</div>}}
 
 Using \code{incorporate()} will cause the snippets to be reprocessed and
 accordingly the content of the report will be updated to keep up with the
-current state of the \code{changing_table}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- informant \%>\% incorporate()
+current state of the \code{changing_table}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- informant \%>\% incorporate()
 }\if{html}{\out{</div>}}
 
 When printed again, we'll also see that the row and column counts in the
 header have been updated to reflect the new dimensions of the target table.
 Furthermore, the info text in the \code{ROWS} section has updated text
-(\code{"There are 26 rows available."}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant
+(\code{"There are 26 rows available."}).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant
 }\if{html}{\out{</div>}}
 
 \if{html}{

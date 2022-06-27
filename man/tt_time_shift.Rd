@@ -47,11 +47,15 @@ Let's use the \code{game_revenue} dataset, included in the \strong{pointblank} p
 as the input table for the first demo. It has entries in the first 21 days of
 2015 and we'll move all of the date and date-time values to the beginning of
 2021 with the \code{tt_time_shift()} function and the \code{"6y"} \code{time_shift}
-specification.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_time_shift(
+specification.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_time_shift(
   tbl = game_revenue,
   time_shift = "6y"
 )
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 2,000 × 11
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 2,000 × 11
 ##    player_id       session_id  session_start       time                item_type
 ##    <chr>           <chr>       <dttm>              <dttm>              <chr>    
 ##  1 ECPANOIXLZHF896 ECPANOIXLZ… 2021-01-01 01:31:03 2021-01-01 01:31:27 iap      
@@ -67,14 +71,18 @@ specification.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_time_s
 ## # … with 1,990 more rows, and 6 more variables: item_name <chr>,
 ## #   item_revenue <dbl>, session_duration <dbl>, start_day <date>,
 ## #   acquisition <chr>, country <chr>
-}
+}\if{html}{\out{</div>}}
 
 Keeping only the \code{date_time} and \code{a}-\code{f} columns of \code{small_table}, also
 included in the package, shift the times back 2 days and 12 hours with the
-\code{"-2d 12H"} specification.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
+\code{"-2d 12H"} specification.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   dplyr::select(-date) \%>\%
   tt_time_shift("-2d 12H")
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 13 × 7
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 13 × 7
 ##    date_time               a b             c      d e     f    
 ##    <dttm>              <int> <chr>     <dbl>  <dbl> <lgl> <chr>
 ##  1 2016-01-01 23:00:00     2 1-bcd-345     3  3423. TRUE  high 
@@ -90,7 +98,7 @@ included in the package, shift the times back 2 days and 12 hours with the
 ## 11 2016-01-24 08:07:00     4 2-dmx-010     7   834. TRUE  low  
 ## 12 2016-01-25 14:51:00     2 7-dmx-010     8   108. FALSE low  
 ## 13 2016-01-27 23:23:00     1 3-dka-303    NA  2230. TRUE  high
-}
+}\if{html}{\out{</div>}}
 }
 
 \section{Function ID}{

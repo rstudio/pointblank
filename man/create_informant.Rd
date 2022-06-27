@@ -117,7 +117,9 @@ table (via \code{\link[=yaml_informant_incorporate]{yaml_informant_incorporate()
 complex call of \code{create_informant()} is expressed in R code and in the
 corresponding YAML representation.
 
-R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{create_informant(
+R statement:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{create_informant(
   tbl = ~ small_table,
   tbl_name = "small_table",
   label = "An example.",
@@ -126,7 +128,9 @@ R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{create_info
 )
 }\if{html}{\out{</div>}}
 
-YAML representation:\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{type: informant
+YAML representation:
+
+\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{type: informant
 tbl: ~small_table
 tbl_name: small_table
 info_label: An example.
@@ -186,8 +190,12 @@ may changed, hence the need to use an expression for this).
 
 Let's walk through how we can generate some useful information for a really
 small table. It's actually called \code{small_table} and we can find it as a
-dataset in this package.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 13 × 8
+dataset in this package.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 13 × 8
 ##    date_time           date           a b             c      d e     f    
 ##    <dttm>              <date>     <int> <chr>     <dbl>  <dbl> <lgl> <chr>
 ##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high 
@@ -203,10 +211,12 @@ dataset in this package.\if{html}{\out{<div class="sourceCode r">}}\preformatted
 ## 11 2016-01-26 20:07:00 2016-01-26     4 2-dmx-010     7   834. TRUE  low  
 ## 12 2016-01-28 02:51:00 2016-01-28     2 7-dmx-010     8   108. FALSE low  
 ## 13 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA  2230. TRUE  high
-}
+}\if{html}{\out{</div>}}
 
 Create a pointblank \code{informant} object with \code{create_informant()} and the
-\code{small_table} dataset.\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- 
+\code{small_table} dataset.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- 
   create_informant(
     tbl = pointblank::small_table,
     tbl_name = "small_table",
@@ -219,7 +229,9 @@ the supplied table object. It adds the \code{COLUMNS} section with stubs for eac
 of the target table's columns. We can use the \code{\link[=info_columns]{info_columns()}} or
 \code{\link[=info_columns_from_tbl]{info_columns_from_tbl()}} to provide descriptions for each of the columns.
 The \code{informant} object can be printed to see the information report in the
-Viewer.\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant
+Viewer.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant
 }\if{html}{\out{</div>}}
 
 \if{html}{
@@ -230,7 +242,9 @@ Viewer.\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant
 }
 
 If we want to make use of more report display options, we can alternatively
-use the \code{\link[=get_informant_report]{get_informant_report()}} function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{report <- 
+use the \code{\link[=get_informant_report]{get_informant_report()}} function.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{report <- 
   get_informant_report(
     informant,
     title = "Data Dictionary for `small_table`"

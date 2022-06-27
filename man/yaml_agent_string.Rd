@@ -38,7 +38,9 @@ without needing to write the YAML to disk beforehand.
 
 There's a YAML file available in the \strong{pointblank} package that's called
 \code{"agent-small_table.yml"}. The path for it can be accessed through
-\code{system.file()}:\if{html}{\out{<div class="sourceCode r">}}\preformatted{yml_file_path <- 
+\code{system.file()}:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{yml_file_path <- 
   system.file(
     "yaml", "agent-small_table.yml",
     package = "pointblank"
@@ -46,8 +48,12 @@ There's a YAML file available in the \strong{pointblank} package that's called
 }\if{html}{\out{</div>}}
 
 We can view the contents of the YAML file in the console with the
-\code{yaml_agent_string()} function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{yaml_agent_string(filename = yml_file_path)
-}\if{html}{\out{</div>}}\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{type: agent
+\code{yaml_agent_string()} function.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{yaml_agent_string(filename = yml_file_path)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{type: agent
 tbl: ~ tbl_source("small_table", "tbl_store.yml")
 tbl_name: small_table
 label: A simple example with the `small_table`.

@@ -25,8 +25,12 @@ column names from the input table.
 
 
 Get the column names of the \code{game_revenue} dataset that is included in the
-\strong{pointblank} package.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_tbl_colnames(tbl = game_revenue)
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 11 × 2
+\strong{pointblank} package.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_tbl_colnames(tbl = game_revenue)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 11 × 2
 ##    .param. value           
 ##      <int> <chr>           
 ##  1       1 player_id       
@@ -40,31 +44,39 @@ Get the column names of the \code{game_revenue} dataset that is included in the
 ##  9       9 start_day       
 ## 10      10 acquisition     
 ## 11      11 country
-}
+}\if{html}{\out{</div>}}
 
 This output table is useful when you want to validate the column names of the
 table. Here, we check that \code{game_revenue} table, included in the
 \strong{pointblank} package, has certain column names present with
-\code{\link[=test_col_vals_make_subset]{test_col_vals_make_subset()}}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_tbl_colnames(tbl = game_revenue) \%>\%
+\code{\link[=test_col_vals_make_subset]{test_col_vals_make_subset()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_tbl_colnames(tbl = game_revenue) \%>\%
   test_col_vals_make_subset(
     columns = vars(value),
     set = c("acquisition", "country")
   )
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+}\if{html}{\out{</div>}}
 
 We can check to see whether the column names in the \code{specifications} table
 are all less than \code{15} characters in length. For this, we would use the
 combination of \code{tt_tbl_colnames()}, then \code{\link[=tt_string_info]{tt_string_info()}}, and finally
-\code{\link[=test_col_vals_lt]{test_col_vals_lt()}} to perform the test.\if{html}{\out{<div class="sourceCode r">}}\preformatted{specifications \%>\%
+\code{\link[=test_col_vals_lt]{test_col_vals_lt()}} to perform the test.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{specifications \%>\%
   tt_tbl_colnames() \%>\%
   tt_string_info() \%>\%
   test_col_vals_lt(
     columns = vars(value),
     value = 15
   )
-}\if{html}{\out{</div>}}\preformatted{## [1] FALSE
-}
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] FALSE
+}\if{html}{\out{</div>}}
 
 This returned \code{FALSE} and this is because the column name
 \code{credit_card_numbers} is 16 characters long.

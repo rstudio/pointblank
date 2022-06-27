@@ -71,7 +71,9 @@ dataset), (2) interrogating the agent with the \code{\link[=interrogate]{interro
 
 Creating an \code{action_levels} object is a common workflow step when creating a
 pointblank agent. We designate failure thresholds to the \code{warn}, \code{stop}, and
-\code{notify} states using \code{\link[=action_levels]{action_levels()}}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <- 
+\code{notify} states using \code{\link[=action_levels]{action_levels()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <- 
   action_levels(
     warn_at = 0.10,
     stop_at = 0.25,
@@ -81,7 +83,9 @@ pointblank agent. We designate failure thresholds to the \code{warn}, \code{stop
 
 Now, let's create a pointblank \code{agent} object and give it the \code{al} object
 (which serves as a default for all validation steps which can be overridden).
-The data will be referenced in the \code{tbl} argument with a leading \code{~}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- 
+The data will be referenced in the \code{tbl} argument with a leading \code{~}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- 
   create_agent(
     tbl = ~ small_table,
     tbl_name = "small_table",
@@ -92,7 +96,9 @@ The data will be referenced in the \code{tbl} argument with a leading \code{~}.\
 
 Then, as with any \code{agent} object, we can add steps to the validation plan by
 using as many validation functions as we want. After that, use
-\code{\link[=interrogate]{interrogate()}}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
+\code{\link[=interrogate]{interrogate()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   agent \%>\% 
   col_exists(columns = vars(date, date_time)) \%>\%
   col_vals_regex(
@@ -105,7 +111,9 @@ using as many validation functions as we want. After that, use
   interrogate()
 }\if{html}{\out{</div>}}
 
-The \code{agent} can be written to a file with the \code{x_write_disk()} function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_write_disk(
+The \code{agent} can be written to a file with the \code{x_write_disk()} function.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_write_disk(
   agent,
   filename = "agent-small_table.rds"
 )
@@ -117,7 +125,9 @@ we'll get all of the intel along with the restored agent.
 If you're consistently writing agent reports when periodically checking data,
 we could make use of the \code{\link[=affix_date]{affix_date()}} or \code{\link[=affix_datetime]{affix_datetime()}} depending on
 the granularity you need. Here's an example that writes the file with the
-format: \code{"<filename>-YYYY-mm-dd_HH-MM-SS.rds"}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_write_disk(
+format: \code{"<filename>-YYYY-mm-dd_HH-MM-SS.rds"}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_write_disk(
   agent,
   filename = affix_datetime(
     "agent-small_table.rds"
@@ -135,7 +145,9 @@ writing the informant to a file.
 
 Create a pointblank \code{informant} object with \code{\link[=create_informant]{create_informant()}} and the
 \code{\link{small_table}} dataset. Use \code{\link[=incorporate]{incorporate()}} so that info snippets are
-integrated into the text.\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- 
+integrated into the text.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- 
   create_informant(
     tbl = ~ small_table,
     tbl_name = "small_table",
@@ -165,7 +177,9 @@ integrated into the text.\if{html}{\out{<div class="sourceCode r">}}\preformatte
 }\if{html}{\out{</div>}}
 
 The \code{informant} can be written to a file with \code{x_write_disk()}. Let's do this
-with \code{\link[=affix_date]{affix_date()}} so that the filename has a datestamp.\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_write_disk(
+with \code{\link[=affix_date]{affix_date()}} so that the filename has a datestamp.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_write_disk(
   informant,
   filename = affix_date(
     "informant-small_table.rds"
@@ -180,7 +194,9 @@ when it was saved) by using \code{\link[=x_read_disk]{x_read_disk()}}.
 \subsection{C: Writing a multiagent to disk}{
 
 Let's create one more pointblank agent object, provide it with some
-validation steps, and \code{\link[=interrogate]{interrogate()}}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_b <-
+validation steps, and \code{\link[=interrogate]{interrogate()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_b <-
   create_agent(
     tbl = ~ small_table,
     tbl_name = "small_table",
@@ -201,10 +217,14 @@ validation steps, and \code{\link[=interrogate]{interrogate()}}.\if{html}{\out{<
 }\if{html}{\out{</div>}}
 
 Now we can combine the earlier \code{agent} object with the newer \code{agent_b} to
-create a \code{multiagent}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{multiagent <- create_multiagent(agent, agent_b)
+create a \code{multiagent}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{multiagent <- create_multiagent(agent, agent_b)
 }\if{html}{\out{</div>}}
 
-The \code{multiagent} can be written to a file with the \code{x_write_disk()} function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_write_disk(
+The \code{multiagent} can be written to a file with the \code{x_write_disk()} function.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_write_disk(
   multiagent,
   filename = "multiagent-small_table.rds"
 )
@@ -217,10 +237,14 @@ as well.
 
 \subsection{D: Writing a table scan to disk}{
 
-We can get a report that describes all of the data in the \code{storms} dataset.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_scan <- scan_data(tbl = dplyr::storms)
+We can get a report that describes all of the data in the \code{storms} dataset.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_scan <- scan_data(tbl = dplyr::storms)
 }\if{html}{\out{</div>}}
 
-The table scan object can be written to a file with \code{x_write_disk()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_write_disk(
+The table scan object can be written to a file with \code{x_write_disk()}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_write_disk(
   tbl_scan,
   filename = "tbl_scan-storms.rds"
 )

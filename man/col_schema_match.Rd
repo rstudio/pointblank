@@ -213,7 +213,9 @@ function. Here is an example of how a complex call of \code{col_schema_match()} 
 a validation step is expressed in R code and in the corresponding YAML
 representation.
 
-R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
+R statement:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
   col_schema_match(
     schema = col_schema(
       a = "integer",
@@ -228,7 +230,9 @@ R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
   )
 }\if{html}{\out{</div>}}
 
-YAML representation:\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
+YAML representation:
+
+\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
 - col_schema_match:
     schema:
       a: integer
@@ -256,14 +260,18 @@ by using the \code{\link[=yaml_agent_string]{yaml_agent_string()}} function.
 For all examples here, we'll use a simple table with two columns: one
 \code{integer} (\code{a}) and the other \code{character} (\code{b}). The following examples will
 validate that the table columns abides match a schema object as created by
-\code{\link[=col_schema]{col_schema()}}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- 
+\code{\link[=col_schema]{col_schema()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- 
   dplyr::tibble(
     a = 1:5,
     b = letters[1:5]
   )
   
 tbl
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 5 × 2
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 5 × 2
 ##       a b    
 ##   <int> <chr>
 ## 1     1 a    
@@ -271,17 +279,21 @@ tbl
 ## 3     3 c    
 ## 4     4 d    
 ## 5     5 e
-}
+}\if{html}{\out{</div>}}
 
 Create a column schema object with the helper function \code{col_schema()} that
-describes the columns and their types (in the expected order).\if{html}{\out{<div class="sourceCode r">}}\preformatted{schema_obj <- 
+describes the columns and their types (in the expected order).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{schema_obj <- 
   col_schema(
     a = "integer",
     b = "character"
   )
 
 schema_obj
-}\if{html}{\out{</div>}}\preformatted{## $a
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## $a
 ## [1] "integer"
 ## 
 ## $b
@@ -289,12 +301,14 @@ schema_obj
 ## 
 ## attr(,"class")
 ## [1] "r_type"     "col_schema"
-}
+}\if{html}{\out{</div>}}
 \subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
 Validate that the schema object \code{schema_obj} exactly defines the column names
 and column types. We'll determine if this validation has a failing test unit
-(there is a single test unit governed by whether there is a match).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
+(there is a single test unit governed by whether there is a match).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = tbl) \%>\%
   col_schema_match(schema = schema_obj) \%>\%
   interrogate()
@@ -315,8 +329,12 @@ that corresponds to the validation step demonstrated here.
 
 This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
-behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% col_schema_match(schema = schema_obj)
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 5 × 2
+behavior of side effects can be customized with the \code{actions} option.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% col_schema_match(schema = schema_obj)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 5 × 2
 ##       a b    
 ##   <int> <chr>
 ## 1     1 a    
@@ -324,22 +342,28 @@ behavior of side effects can be customized with the \code{actions} option.\if{ht
 ## 3     3 c    
 ## 4     4 d    
 ## 5     5 e
-}
+}\if{html}{\out{</div>}}
 }
 
 \subsection{C: Using the expectation function}{
 
 With the \verb{expect_*()} form, we would typically perform one validation at a
-time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_schema_match(tbl, scheam = schema_obj)
+time. This is primarily used in \strong{testthat} tests.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_schema_match(tbl, scheam = schema_obj)
 }\if{html}{\out{</div>}}
 }
 
 \subsection{D: Using the test function}{
 
 With the \verb{test_*()} form, we should get a single logical value returned to
-us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% test_col_schema_match(schema = schema_obj)
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+us.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% test_col_schema_match(schema = schema_obj)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+}\if{html}{\out{</div>}}
 }
 }
 

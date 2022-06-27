@@ -34,7 +34,9 @@ a look at the \code{\link[=tbl_source]{tbl_source()}} function.
 
 
 Define a \code{tbl_store} object by adding several table-prep formulas in
-\code{\link[=tbl_store]{tbl_store()}}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{store <- 
+\code{\link[=tbl_store]{tbl_store()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{store <- 
   tbl_store(
     small_table_duck ~ db_tbl(
       table = small_table,
@@ -56,7 +58,9 @@ Define a \code{tbl_store} object by adding several table-prep formulas in
 
 Once this object is available, we can access the tables named:
 \code{"small_table_duck"}, \code{"rna"}, and \code{"sml_table"}. Let's check that the
-\code{"rna"} table is accessible through \code{\link[=tbl_get]{tbl_get()}}:\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_get(
+\code{"rna"} table is accessible through \code{\link[=tbl_get]{tbl_get()}}:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_get(
   tbl = "rna",
   store = store
 )
@@ -82,7 +86,9 @@ Once this object is available, we can access the tables named:
 An alternative method for getting the same table materialized is by using \code{$}
 to get the formula of choice from \code{tbls} and passing that to \code{tbl_get()}. The
 benefit of this is that we can use autocompletion to show us what's available
-in the table store (i.e., appears after typing the \code{$}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{store$small_table_duck \%>\% tbl_get()
+in the table store (i.e., appears after typing the \code{$}).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{store$small_table_duck \%>\% tbl_get()
 }\if{html}{\out{</div>}}
 
 \preformatted{## # Source:   table<small_table> [?? x 8]
@@ -100,8 +106,6 @@ in the table store (i.e., appears after typing the \code{$}).\if{html}{\out{<div
 ##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
 ## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
 ## # … with more rows}
-
-
 }
 
 \section{Function ID}{

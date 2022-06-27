@@ -266,7 +266,9 @@ function. Here is an example of how a complex call of \code{col_vals_regex()} as
 validation step is expressed in R code and in the corresponding YAML
 representation.
 
-R statement:\preformatted{agent \%>\% 
+R statement:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{agent \%>\% 
   col_vals_regex(
     columns = vars(a),
     regex = "[0-9]-[a-z]\{3\}-[0-9]\{3\}",
@@ -277,9 +279,11 @@ R statement:\preformatted{agent \%>\%
     label = "The `col_vals_regex()` step.",
     active = FALSE
   )
-}
+}\if{html}{\out{</div>}}
 
-YAML representation:\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
+YAML representation:
+
+\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
 - col_vals_regex:
     columns: vars(a)
     regex: '[0-9]-[a-z]\{3\}-[0-9]\{3\}'
@@ -306,8 +310,12 @@ writing to disk by using the \code{\link[=yaml_agent_string]{yaml_agent_string()
 
 The \code{small_table} dataset in the package has a character-based \code{b} column
 with values that adhere to a very particular pattern. The following examples
-will validate that that column abides by a regex pattern.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 13 × 8
+will validate that that column abides by a regex pattern.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 13 × 8
 ##    date_time           date           a b             c      d e     f    
 ##    <dttm>              <date>     <int> <chr>     <dbl>  <dbl> <lgl> <chr>
 ##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high 
@@ -323,15 +331,19 @@ will validate that that column abides by a regex pattern.\if{html}{\out{<div cla
 ## 11 2016-01-26 20:07:00 2016-01-26     4 2-dmx-010     7   834. TRUE  low  
 ## 12 2016-01-28 02:51:00 2016-01-28     2 7-dmx-010     8   108. FALSE low  
 ## 13 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA  2230. TRUE  high
-}
+}\if{html}{\out{</div>}}
 
-This is the regex pattern that will be used throughout:\if{html}{\out{<div class="sourceCode r">}}\preformatted{pattern <- "[0-9]-[a-z]\{3\}-[0-9]\{3\}"
+This is the regex pattern that will be used throughout:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pattern <- "[0-9]-[a-z]\{3\}-[0-9]\{3\}"
 }\if{html}{\out{</div>}}
 \subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
 Validate that all values in column \code{b} match the regex \code{pattern}. We'll
 determine if this validation has any failing test units (there are 13 test
-units, one for each row).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
+units, one for each row).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = small_table) \%>\%
   col_vals_regex(columns = vars(b), regex = pattern) \%>\%
   interrogate()
@@ -352,10 +364,14 @@ that corresponds to the validation step demonstrated here.
 
 This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
-behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
+behavior of side effects can be customized with the \code{actions} option.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   col_vals_regex(columns = vars(b), regex = pattern) \%>\%
   dplyr::slice(1:5)
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 5 × 8
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 5 × 8
 ##   date_time           date           a b             c      d e     f    
 ##   <dttm>              <date>     <int> <chr>     <dbl>  <dbl> <lgl> <chr>
 ## 1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high 
@@ -363,22 +379,28 @@ behavior of side effects can be customized with the \code{actions} option.\if{ht
 ## 3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3  2343. TRUE  high 
 ## 4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-903    NA  3892. FALSE mid  
 ## 5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-038     7   284. TRUE  low
-}
+}\if{html}{\out{</div>}}
 }
 
 \subsection{C: Using the expectation function}{
 
 With the \verb{expect_*()} form, we would typically perform one validation at a
-time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_regex(small_table, columns = vars(b), regex = pattern)
+time. This is primarily used in \strong{testthat} tests.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_regex(small_table, columns = vars(b), regex = pattern)
 }\if{html}{\out{</div>}}
 }
 
 \subsection{D: Using the test function}{
 
 With the \verb{test_*()} form, we should get a single logical value returned to
-us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% test_col_vals_regex(columns = vars(b), regex = pattern)
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+us.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% test_col_vals_regex(columns = vars(b), regex = pattern)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+}\if{html}{\out{</div>}}
 }
 }
 

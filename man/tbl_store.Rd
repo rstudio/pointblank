@@ -56,7 +56,9 @@ following R code, a table store with two table-prep formulas is generated and
 written to YAML (if no filename is given then the YAML is written to
 \code{"tbl_store.yml"}).
 
-R statement for generating the \code{"tbl_store.yml"} file:\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_store(
+R statement for generating the \code{"tbl_store.yml"} file:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_store(
   tbl_duckdb ~ db_tbl(small_table, dbname = ":memory:", dbtype = "duckdb"),
   sml_table_high ~ small_table \%>\% dplyr::filter(f == "high"),
   .init = ~ library(tidyverse)
@@ -64,7 +66,9 @@ R statement for generating the \code{"tbl_store.yml"} file:\if{html}{\out{<div c
   yaml_write()
 }\if{html}{\out{</div>}}
 
-YAML representation (\code{"tbl_store.yml"}):\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{type: tbl_store
+YAML representation (\code{"tbl_store.yml"}):
+
+\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{type: tbl_store
 tbls:
   tbl_duckdb: ~ db_tbl(small_table, dbname = ":memory:", dbtype = "duckdb")
   sml_table_high: ~ small_table \%>\% dplyr::filter(f == "high")
@@ -79,7 +83,9 @@ prepared data periodically, then the following example with \code{\link[=tbl_sou
 will be useful:
 
 R code to generate agent that checks \code{sml_table_high} and writing the agent
-to YAML:\if{html}{\out{<div class="sourceCode r">}}\preformatted{create_agent(
+to YAML:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{create_agent(
   tbl = ~ tbl_source("sml_table_high", "tbl_store.yml"),
   label = "An example that uses a table store.",
   actions = action_levels(warn_at = 0.10)
@@ -88,7 +94,9 @@ to YAML:\if{html}{\out{<div class="sourceCode r">}}\preformatted{create_agent(
   write_yaml()
 }\if{html}{\out{</div>}}
 
-The YAML representation (\code{"agent-sml_table_high.yml"}):\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{tbl: ~ tbl_source("sml_table_high", "tbl_store.yml")
+The YAML representation (\code{"agent-sml_table_high.yml"}):
+
+\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{tbl: ~ tbl_source("sml_table_high", "tbl_store.yml")
 tbl_name: sml_table_high
 label: An example that uses a table store.
 actions:
@@ -114,7 +122,9 @@ to obtain that table. Then repeat as many times as you like!
 
 Here we'll define two tables that can be materialized later: \code{tbl_duckdb} (an
 in-memory DuckDB database table with \strong{pointblank}'s \code{small_table} dataset)
-and \code{sml_table_high} (a filtered version of \code{tbl_duckdb}):\if{html}{\out{<div class="sourceCode r">}}\preformatted{store_1 <-
+and \code{sml_table_high} (a filtered version of \code{tbl_duckdb}):
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{store_1 <-
   tbl_store(
     tbl_duckdb ~ 
       db_tbl(
@@ -132,7 +142,9 @@ and \code{sml_table_high} (a filtered version of \code{tbl_duckdb}):\if{html}{\o
   )
 }\if{html}{\out{</div>}}
 
-We can see what's in the table store \code{store_1} by printing it out:\if{html}{\out{<div class="sourceCode r">}}\preformatted{store_1
+We can see what's in the table store \code{store_1} by printing it out:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{store_1
 }\if{html}{\out{</div>}}
 
 \preformatted{## -- The `table_store` table-prep formulas
@@ -144,7 +156,9 @@ We can see what's in the table store \code{store_1} by printing it out:\if{html}
 
 It's good to check that the tables can be obtained without error. We can do
 this with the \code{\link[=tbl_get]{tbl_get()}} function. With that function, we need to supply the
-given name of the table-prep formula (in quotes) and the table store object.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_get(tbl = "tbl_duckdb", store = store_1)
+given name of the table-prep formula (in quotes) and the table store object.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_get(tbl = "tbl_duckdb", store = store_1)
 }\if{html}{\out{</div>}}
 
 \preformatted{## # Source:   table<pointblank::small_table> [?? x 8]
@@ -162,6 +176,8 @@ given name of the table-prep formula (in quotes) and the table store object.\if{
 ##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
 ## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
 ## # … with more rows}
+
+
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_get(tbl = "sml_table_high", store = store_1)
 }\if{html}{\out{</div>}}
@@ -183,7 +199,9 @@ transformation of \code{tbl_duckdb}, so, we can use \code{{{ tbl_duckdb }}} in p
 the repeated statement. Additionally, we can provide a \code{library()} call to
 the \code{.init} argument of \code{tbl_store()} so that \strong{dplyr} is available (thus
 allowing us to use \code{filter(...)} instead of \code{dplyr::filter(...)}). Here is
-the revised \code{tbl_store()} call:\if{html}{\out{<div class="sourceCode r">}}\preformatted{store_2 <- 
+the revised \code{tbl_store()} call:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{store_2 <- 
   tbl_store(
     tbl_duckdb ~ 
       db_tbl(
@@ -199,7 +217,9 @@ the revised \code{tbl_store()} call:\if{html}{\out{<div class="sourceCode r">}}\
 }\if{html}{\out{</div>}}
 
 Printing the table store \code{store_2} now shows that we used an \code{.init}
-statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{store_2
+statement:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{store_2
 }\if{html}{\out{</div>}}
 
 \preformatted{## -- The `table_store` table-prep formulas
@@ -210,7 +230,9 @@ statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{store_2
 ## INIT // ~library(tidyverse)
 ## ----}
 
-Checking again with \code{\link[=tbl_get]{tbl_get()}} should provide the same tables as before:\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_get(tbl = "tbl_duckdb", store = store_2)
+Checking again with \code{\link[=tbl_get]{tbl_get()}} should provide the same tables as before:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_get(tbl = "tbl_duckdb", store = store_2)
 }\if{html}{\out{</div>}}
 
 \preformatted{## # Source:   table<pointblank::small_table> [?? x 8]
@@ -228,6 +250,8 @@ Checking again with \code{\link[=tbl_get]{tbl_get()}} should provide the same ta
 ##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
 ## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
 ## # … with more rows}
+
+
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_get(tbl = "sml_table_high", store = store_2)
 }\if{html}{\out{</div>}}
@@ -247,7 +271,9 @@ Checking again with \code{\link[=tbl_get]{tbl_get()}} should provide the same ta
 \subsection{Using a table store in a data validation workflow}{
 
 Define a \code{tbl_store} object by adding table-prep formulas inside the
-\code{\link[=tbl_store]{tbl_store()}} call.\if{html}{\out{<div class="sourceCode r">}}\preformatted{store_3 <- 
+\code{\link[=tbl_store]{tbl_store()}} call.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{store_3 <- 
   tbl_store(
     small_table_duck ~ db_tbl(
       table = small_table,
@@ -278,7 +304,9 @@ Define a \code{tbl_store} object by adding table-prep formulas inside the
   )
 }\if{html}{\out{</div>}}
 
-Let's get a summary of what's in the table store \code{store_3} through printing:\if{html}{\out{<div class="sourceCode r">}}\preformatted{store_3
+Let's get a summary of what's in the table store \code{store_3} through printing:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{store_3
 }\if{html}{\out{</div>}}
 
 \preformatted{## -- The `table_store` table-prep formulas
@@ -294,7 +322,9 @@ Let's get a summary of what's in the table store \code{store_3} through printing
 ## ----}
 
 Once this object is available, you can check that the table of interest is
-produced to your specification with the \code{\link[=tbl_get]{tbl_get()}} function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_get(
+produced to your specification with the \code{\link[=tbl_get]{tbl_get()}} function.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_get(
   tbl = "small_table_duck",
   store = store_3
 )
@@ -318,7 +348,9 @@ produced to your specification with the \code{\link[=tbl_get]{tbl_get()}} functi
 
 
 Another way to get the same table materialized is by using \code{$} to get the
-entry of choice for \code{\link[=tbl_get]{tbl_get()}}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{store_3$small_table_duck \%>\% tbl_get()
+entry of choice for \code{\link[=tbl_get]{tbl_get()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{store_3$small_table_duck \%>\% tbl_get()
 }\if{html}{\out{</div>}}
 
 \preformatted{## # Source:   table<small_table> [?? x 8]
@@ -340,7 +372,9 @@ entry of choice for \code{\link[=tbl_get]{tbl_get()}}.\if{html}{\out{<div class=
 
 Creating an agent is easy when all table-prep formulas are encapsulated in a
 \code{tbl_store} object. Use \code{$} notation to pass the appropriate procedure for
-reading a table to the \code{tbl} argument.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_1 <-
+reading a table to the \code{tbl} argument.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_1 <-
   create_agent(
     tbl = store_3$small_table_duck
   )
@@ -348,7 +382,9 @@ reading a table to the \code{tbl} argument.\if{html}{\out{<div class="sourceCode
 
 There are other ways to use the table store to assign a target table to an
 agent, like using the \code{\link[=tbl_source]{tbl_source()}} function (which extracts the table-prep
-formula from the table store).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_2 <-
+formula from the table store).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_2 <-
   create_agent(
     tbl = ~ tbl_source(
       tbl = "small_table_duck",
@@ -362,7 +398,9 @@ formula from the table store).\if{html}{\out{<div class="sourceCode r">}}\prefor
 
 The table store can be moved to YAML with \code{yaml_write} and the \code{\link[=tbl_source]{tbl_source()}}
 call could then refer to that on-disk table store. Let's do that YAML
-conversion.\if{html}{\out{<div class="sourceCode r">}}\preformatted{yaml_write(store_3)
+conversion.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{yaml_write(store_3)
 }\if{html}{\out{</div>}}
 
 The above writes the \code{tbl_store.yml} file (by not providing a \code{filename} this
@@ -370,7 +408,9 @@ default filename is chosen).
 
 It can be convenient to read table-prep formulas from a YAML file that's a
 table store. To achieve this, we can modify the \code{\link[=tbl_source]{tbl_source()}} statement in
-the \code{\link[=create_agent]{create_agent()}} call so that \code{store} refers to the on-disk YAML file.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_3 <-
+the \code{\link[=create_agent]{create_agent()}} call so that \code{store} refers to the on-disk YAML file.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_3 <-
   create_agent(
     tbl = ~ tbl_source(
       tbl = "small_table_duck",

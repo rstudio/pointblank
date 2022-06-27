@@ -35,7 +35,9 @@ replaces any associated table (a data frame, a tibble, objects of class
 
 
 Set proportional failure thresholds to the \code{warn}, \code{stop}, and \code{notify}
-states using \code{\link[=action_levels]{action_levels()}}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <- 
+states using \code{\link[=action_levels]{action_levels()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <- 
   action_levels(
       warn_at = 0.10,
       stop_at = 0.25,
@@ -44,7 +46,9 @@ states using \code{\link[=action_levels]{action_levels()}}.\if{html}{\out{<div c
 }\if{html}{\out{</div>}}
 
 Create an agent that has \code{small_table} set as the target table via \code{tbl}.
-Apply the actions, add some validation steps and then interrogate the data.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_1 <- 
+Apply the actions, add some validation steps and then interrogate the data.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_1 <- 
   create_agent(
     tbl = small_table,
     tbl_name = "small_table",
@@ -61,7 +65,9 @@ Apply the actions, add some validation steps and then interrogate the data.\if{h
 }\if{html}{\out{</div>}}
 
 Replace the agent's association to \code{small_table} with a mutated version of it
-(one that removes duplicate rows). Then, interrogate the new target table.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_2 <-
+(one that removes duplicate rows). Then, interrogate the new target table.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_2 <-
   agent_1 \%>\%
   set_tbl(
     tbl = small_table \%>\% dplyr::distinct()

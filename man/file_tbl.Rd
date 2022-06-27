@@ -56,7 +56,9 @@ in a repository.
 A local CSV file can be obtained as a tbl object by supplying a path to the
 file and some CSV reading options (the ones used by \code{readr::read_csv()}) to
 the \code{file_tbl()} function. For this example we could obtain a path to a CSV
-file in the \strong{pointblank} package with \code{system.file()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{csv_path <- 
+file in the \strong{pointblank} package with \code{system.file()}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{csv_path <- 
   system.file(
     "data_files", "small_table.csv",
     package = "pointblank"
@@ -64,7 +66,9 @@ file in the \strong{pointblank} package with \code{system.file()}.\if{html}{\out
 }\if{html}{\out{</div>}}
 
 Then use that path in \code{file_tbl()} with the option to specify the column
-types in that CSV.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- 
+types in that CSV.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- 
   file_tbl(
     file = csv_path,
     col_types = "TDdcddlc"
@@ -93,11 +97,15 @@ tbl
 
 
 Now that we have a `tbl` object that is a tibble it could be introduced to
-\code{\link[=create_agent]{create_agent()}} for validation.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- create_agent(tbl = tbl)
+\code{\link[=create_agent]{create_agent()}} for validation.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- create_agent(tbl = tbl)
 }\if{html}{\out{</div>}}
 
 A different strategy is to provide the data-reading function call directly to
-\code{\link[=create_agent]{create_agent()}}:\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- 
+\code{\link[=create_agent]{create_agent()}}:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- 
   create_agent(
     tbl = ~ file_tbl(
       file = system.file(
@@ -120,7 +128,9 @@ use).
 
 A CSV can be obtained from a public GitHub repo by using the \code{\link[=from_github]{from_github()}}
 helper function. Let's create an agent a supply a table-prep formula that
-gets the same CSV file from the GitHub repository for the pointblank package.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- 
+gets the same CSV file from the GitHub repository for the pointblank package.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- 
   create_agent(
     tbl = ~ file_tbl(
       file = from_github(
@@ -134,7 +144,9 @@ gets the same CSV file from the GitHub repository for the pointblank package.\if
   ) \%>\%
   col_vals_gt(columns = vars(a), value = 0) \%>\%
   interrogate()
-}\if{html}{\out{</div>}}\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent
 }\if{html}{\out{</div>}}
 
 \if{html}{
@@ -154,7 +166,9 @@ system temp directory).
 Using table-prep formulas in a centralized table store can make it easier to
 work with tables from disparate sources. Here's how to generate a table store
 with two named entries for table preparations involving the \code{\link[=tbl_store]{tbl_store()}} and
-\code{file_tbl()} functions.\if{html}{\out{<div class="sourceCode r">}}\preformatted{store <-
+\code{file_tbl()} functions.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{store <-
   tbl_store(
     small_table_file ~ file_tbl(
       file = system.file(
@@ -169,7 +183,9 @@ with two named entries for table preparations involving the \code{\link[=tbl_sto
 }\if{html}{\out{</div>}}
 
 Now it's easy to access either of these tables via \code{\link[=tbl_get]{tbl_get()}}. We can
-reference the table in the store by its name (given to the left of the \code{~}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_get(tbl = "small_table_file", store = store)
+reference the table in the store by its name (given to the left of the \code{~}).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_get(tbl = "small_table_file", store = store)
 }\if{html}{\out{</div>}}
 
 \preformatted{## # A tibble: 13 × 8
@@ -192,7 +208,9 @@ reference the table in the store by its name (given to the left of the \code{~})
 
 
 The second table in the table store is a mutated version of the first. It's
-just as easily obtainable via \code{\link[=tbl_get]{tbl_get()}}:\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_get(tbl = "small_high_file", store = store)
+just as easily obtainable via \code{\link[=tbl_get]{tbl_get()}}:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_get(tbl = "small_high_file", store = store)
 }\if{html}{\out{</div>}}
 
 \preformatted{## # A tibble: 6 × 8
@@ -208,14 +226,18 @@ just as easily obtainable via \code{\link[=tbl_get]{tbl_get()}}:\if{html}{\out{<
 
 The table-prep formulas in the \code{store} object could also be used in functions
 with a \code{tbl} argument (like \code{\link[=create_agent]{create_agent()}} and \code{\link[=create_informant]{create_informant()}}). This
-is accomplished most easily with the \code{\link[=tbl_source]{tbl_source()}} function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- 
+is accomplished most easily with the \code{\link[=tbl_source]{tbl_source()}} function.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- 
   create_agent(
     tbl = ~ tbl_source(
       tbl = "small_table_file",
       store = store
     )
   )
-}\if{html}{\out{</div>}}\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- 
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- 
   create_informant(
     tbl = ~ tbl_source(
       tbl = "small_high_file",

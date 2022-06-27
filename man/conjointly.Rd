@@ -243,7 +243,9 @@ function. Here is an example of how a complex call of \code{conjointly()} as a
 validation step is expressed in R code and in the corresponding YAML
 representation.
 
-R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
+R statement:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
   conjointly(
     ~ col_vals_lt(., columns = vars(a), value = 8),
     ~ col_vals_gt(., columns = vars(c), value = vars(a)),
@@ -256,7 +258,9 @@ R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
   )
 }\if{html}{\out{</div>}}
 
-YAML representation:\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
+YAML representation:
+
+\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
 - conjointly:
     fns:
     - ~col_vals_lt(., columns = vars(a), value = 8)
@@ -284,7 +288,9 @@ writing to disk by using the \code{\link[=yaml_agent_string]{yaml_agent_string()
 
 For all examples here, we'll use a simple table with three numeric columns
 (\code{a}, \code{b}, and \code{c}). This is a very basic table but it'll be more useful when
-explaining things later.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <-
+explaining things later.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <-
   dplyr::tibble(
     a = c(5, 2, 6),
     b = c(3, 4, 6),
@@ -292,13 +298,15 @@ explaining things later.\if{html}{\out{<div class="sourceCode r">}}\preformatted
   )
   
 tbl
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 3 × 3
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 3 × 3
 ##       a     b     c
 ##   <dbl> <dbl> <dbl>
 ## 1     5     3     9
 ## 2     2     4     8
 ## 3     6     6     7
-}
+}\if{html}{\out{</div>}}
 \subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
 Validate a number of things on a row-by-row basis using validation functions
@@ -306,7 +314,9 @@ of the \verb{col_vals*} type (all have the same number of test units): (1) value
 in \code{a} are less than \code{8}, (2) values in \code{c} are greater than the adjacent
 values in \code{a}, and (3) there aren't any NA values in \code{b}. We'll determine if
 this validation has any failing test units (there are 3 test units, one for
-each row).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
+each row).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = tbl) \%>\%
   conjointly(
     ~ col_vals_lt(., columns = vars(a), value = 8),
@@ -336,25 +346,31 @@ them up side-by-side, any rows with any \code{FALSE} values results in a conjoin
 
 This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
-behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
+behavior of side effects can be customized with the \code{actions} option.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   conjointly(
     ~ col_vals_lt(., columns = vars(a), value = 8),
     ~ col_vals_gt(., columns = vars(c), value = vars(a)),
     ~ col_vals_not_null(., columns = vars(b))
   )
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 3 × 3
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 3 × 3
 ##       a     b     c
 ##   <dbl> <dbl> <dbl>
 ## 1     5     3     9
 ## 2     2     4     8
 ## 3     6     6     7
-}
+}\if{html}{\out{</div>}}
 }
 
 \subsection{C: Using the expectation function}{
 
 With the \verb{expect_*()} form, we would typically perform one validation at a
-time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_conjointly(
+time. This is primarily used in \strong{testthat} tests.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_conjointly(
   tbl,
   ~ col_vals_lt(., columns = vars(a), value = 8),
   ~ col_vals_gt(., columns = vars(c), value = vars(a)),
@@ -366,14 +382,18 @@ time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div clas
 \subsection{D: Using the test function}{
 
 With the \verb{test_*()} form, we should get a single logical value returned to
-us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
+us.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   test_conjointly(
     ~ col_vals_lt(., columns = vars(a), value = 8),
     ~ col_vals_gt(., columns = vars(c), value = vars(a)),
     ~ col_vals_not_null(., columns = vars(b))
   )
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+}\if{html}{\out{</div>}}
 }
 }
 

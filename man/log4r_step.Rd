@@ -44,7 +44,9 @@ example of how \code{log4r_step()} can be expressed in R code (within
 \code{\link[=action_levels]{action_levels()}}, itself inside \code{\link[=create_agent]{create_agent()}}) and in the corresponding
 YAML representation.
 
-R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{create_agent(
+R statement:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{create_agent(
   tbl = ~ small_table,
   tbl_name = "small_table",
   label = "An example.",
@@ -59,7 +61,9 @@ R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{create_agen
 )
 }\if{html}{\out{</div>}}
 
-YAML representation:\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{type: agent
+YAML representation:
+
+\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{type: agent
 tbl: ~small_table
 tbl_name: small_table
 label: An example.

@@ -33,7 +33,9 @@ table-prep formula), then the \code{\link[=tbl_get]{tbl_get()}} function should 
 
 
 Let's create a \code{tbl_store} object by giving two table-prep formulas to
-\code{\link[=tbl_store]{tbl_store()}}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{store <- 
+\code{\link[=tbl_store]{tbl_store()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{store <- 
   tbl_store(
     small_table_duck ~ db_tbl(
       table = small_table,
@@ -45,7 +47,9 @@ Let's create a \code{tbl_store} object by giving two table-prep formulas to
 }\if{html}{\out{</div>}}
 
 We can pass a table-prep formula to \code{\link[=create_agent]{create_agent()}} via \code{\link[=tbl_source]{tbl_source()}}, add
-some validation steps, and interrogate the table shortly thereafter.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_1 <- 
+some validation steps, and interrogate the table shortly thereafter.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_1 <- 
   create_agent(
     tbl = ~ tbl_source("sml_table", store),
     label = "`tbl_source()` example",
@@ -56,7 +60,9 @@ some validation steps, and interrogate the table shortly thereafter.\if{html}{\o
 }\if{html}{\out{</div>}}
 
 The \code{agent_1} object can be printed to see the validation report in the
-Viewer.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_1
+Viewer.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_1
 }\if{html}{\out{</div>}}
 
 \if{html}{
@@ -68,11 +74,15 @@ Viewer.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_1
 
 The \code{tbl_store} object can be transformed to YAML with the \code{\link[=yaml_write]{yaml_write()}}
 function. The following statement writes the \code{tbl_store.yml} file by default
-(but a different name could be used with the \code{filename} argument):\if{html}{\out{<div class="sourceCode r">}}\preformatted{yaml_write(store)
+(but a different name could be used with the \code{filename} argument):
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{yaml_write(store)
 }\if{html}{\out{</div>}}
 
 Let's modify the agent's target to point to the table labeled as
-\code{"sml_table"} in the YAML representation of the \code{tbl_store}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_2 <-
+\code{"sml_table"} in the YAML representation of the \code{tbl_store}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_2 <-
   agent_1 \%>\% 
   set_tbl(
     ~ tbl_source(
@@ -84,11 +94,15 @@ Let's modify the agent's target to point to the table labeled as
 
 We can likewise write the agent to a YAML file with \code{\link[=yaml_write]{yaml_write()}} (writes to
 \code{agent-sml_table.yml} by default but the \code{filename} allows for any filename
-you want).\if{html}{\out{<div class="sourceCode r">}}\preformatted{yaml_write(agent_2)
+you want).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{yaml_write(agent_2)
 }\if{html}{\out{</div>}}
 
 Now that both the agent and the associated table store are present as on-disk
-YAML, interrogations can be done by using \code{\link[=yaml_agent_interrogate]{yaml_agent_interrogate()}}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- yaml_agent_interrogate(filename = "agent-sml_table.yml")
+YAML, interrogations can be done by using \code{\link[=yaml_agent_interrogate]{yaml_agent_interrogate()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- yaml_agent_interrogate(filename = "agent-sml_table.yml")
 }\if{html}{\out{</div>}}
 }
 

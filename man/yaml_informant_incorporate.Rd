@@ -31,7 +31,9 @@ information from the target table.
 
 There's a YAML file available in the \strong{pointblank} package that's called
 \code{"informant-small_table.yml"}. The path for it can be accessed through
-\code{system.file()}:\if{html}{\out{<div class="sourceCode r">}}\preformatted{yml_file_path <- 
+\code{system.file()}:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{yml_file_path <- 
   system.file(
     "yaml", "informant-small_table.yml",
     package = "pointblank"
@@ -42,7 +44,9 @@ The YAML file can be read as an informant by using the
 \code{yaml_informant_incorporate()} function. If you expect metadata to change
 with time, it's best to use \code{yaml_informant_incorporate()} instead of
 \code{\link[=yaml_read_informant]{yaml_read_informant()}} since the former will go the extra mile and perform
-\code{\link[=incorporate]{incorporate()}} in addition to the reading.\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- yaml_informant_incorporate(filename = yml_file_path)
+\code{\link[=incorporate]{incorporate()}} in addition to the reading.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- yaml_informant_incorporate(filename = yml_file_path)
 
 informant
 }\if{html}{\out{</div>}}

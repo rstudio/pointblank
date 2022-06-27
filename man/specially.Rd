@@ -167,7 +167,9 @@ function. Here is an example of how a complex call of \code{specially()} as a
 validation step is expressed in R code and in the corresponding YAML
 representation.
 
-R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
+R statement:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
   specially(
     fn = function(x) \{ ... \},
     preconditions = ~ . \%>\% dplyr::filter(a < 10),
@@ -177,7 +179,9 @@ R statement:\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
   )
 }\if{html}{\out{</div>}}
 
-YAML representation:\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
+YAML representation:
+
+\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
 - specially:
     fn: function(x) \{ ... \}
     preconditions: ~. \%>\% dplyr::filter(a < 10)
@@ -201,7 +205,9 @@ writing to disk by using the \code{\link[=yaml_agent_string]{yaml_agent_string()
 
 For all examples here, we'll use a simple table with three numeric columns
 (\code{a}, \code{b}, and \code{c}). This is a very basic table but it'll be more useful when
-explaining things later.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <-
+explaining things later.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <-
   dplyr::tibble(
     a = c(5, 2, 6),
     b = c(3, 4, 6),
@@ -209,19 +215,23 @@ explaining things later.\if{html}{\out{<div class="sourceCode r">}}\preformatted
   )
   
 tbl
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 3 × 3
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 3 × 3
 ##       a     b     c
 ##   <dbl> <dbl> <dbl>
 ## 1     5     3     9
 ## 2     2     4     8
 ## 3     6     6     7
-}
+}\if{html}{\out{</div>}}
 \subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
 Validate that the target table has exactly three rows. This single validation
 with \code{specially()} has 1 test unit since the function executed on \code{x} (the
 target table) results in a logical vector with a length of 1. We'll determine
-if this validation has any failing test units (there is 1 test unit).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
+if this validation has any failing test units (there is 1 test unit).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = tbl) \%>\%
   specially(fn = function(x) nrow(x) == 3) \%>\%
   interrogate()
@@ -242,54 +252,74 @@ that corresponds to the validation step demonstrated here.
 
 This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
-behavior of side effects can be customized with the \code{actions} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% specially(fn = function(x) nrow(x) == 3)
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 3 × 3
+behavior of side effects can be customized with the \code{actions} option.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% specially(fn = function(x) nrow(x) == 3)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 3 × 3
 ##       a     b     c
 ##   <dbl> <dbl> <dbl>
 ## 1     5     3     9
 ## 2     2     4     8
 ## 3     6     6     7
-}
+}\if{html}{\out{</div>}}
 }
 
 \subsection{C: Using the expectation function}{
 
 With the \verb{expect_*()} form, we would typically perform one validation at a
-time. This is primarily used in \strong{testthat} tests.\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_specially(tbl, fn = function(x) nrow(x) == 3)
+time. This is primarily used in \strong{testthat} tests.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_specially(tbl, fn = function(x) nrow(x) == 3)
 }\if{html}{\out{</div>}}
 }
 
 \subsection{D: Using the test function}{
 
 With the \verb{test_*()} form, we should get a single logical value returned to
-us.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% test_specially(fn = function(x) nrow(x) == 3)
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+us.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% test_specially(fn = function(x) nrow(x) == 3)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+}\if{html}{\out{</div>}}
 }
 
 \subsection{Variations}{
 
 We can do more complex things with \code{specially()} and its variants.
 
-Check the class of the target table.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% 
+Check the class of the target table.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% 
   test_specially(
     fn = function(x) \{
       inherits(x, "data.frame")
     \}
   )
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+}\if{html}{\out{</div>}}
 
-Check that the number of rows in the target table is less than \code{small_table}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% 
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+}\if{html}{\out{</div>}}
+
+Check that the number of rows in the target table is less than \code{small_table}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% 
   test_specially(
     fn = function(x) \{
       nrow(x) < nrow(small_table)
     \}
   )
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+}\if{html}{\out{</div>}}
 
-Check that all numbers across all numeric column are less than \code{10}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% 
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+}\if{html}{\out{</div>}}
+
+Check that all numbers across all numeric column are less than \code{10}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% 
   test_specially(
     fn = function(x) \{
       (x \%>\% 
@@ -298,13 +328,17 @@ Check that all numbers across all numeric column are less than \code{10}.\if{htm
       ) < 10
     \}
   )
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+}\if{html}{\out{</div>}}
 
 Check that all values in column \code{c} are greater than b and greater than \code{a}
 (in each row) and always less than \code{10}. This creates a table with the new
 column \code{d} which is a logical column (that is used as the evaluation of test
-units).\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% 
+units).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% 
   test_specially(
     fn = function(x) \{
       x \%>\%
@@ -313,18 +347,24 @@ units).\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
         )
     \}
   )
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+}\if{html}{\out{</div>}}
 
 Check that the \code{game_revenue} table (which is not the target table) has
-exactly 2000 rows.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% 
+exactly 2000 rows.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% 
   test_specially(
     fn = function(x) \{
       nrow(game_revenue) == 2000
     \}
   )
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+}\if{html}{\out{</div>}}
 }
 }
 

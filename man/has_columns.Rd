@@ -29,8 +29,12 @@ are both present.
 
 
 The \code{small_table} dataset in the package has the columns \code{date_time}, \code{date},
-and the \code{a} through \code{f} columns.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 13 × 8
+and the \code{a} through \code{f} columns.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 13 × 8
 ##    date_time           date           a b             c      d e     f    
 ##    <dttm>              <date>     <int> <chr>     <dbl>  <dbl> <lgl> <chr>
 ##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high 
@@ -46,27 +50,43 @@ and the \code{a} through \code{f} columns.\if{html}{\out{<div class="sourceCode 
 ## 11 2016-01-26 20:07:00 2016-01-26     4 2-dmx-010     7   834. TRUE  low  
 ## 12 2016-01-28 02:51:00 2016-01-28     2 7-dmx-010     8   108. FALSE low  
 ## 13 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA  2230. TRUE  high
-}
+}\if{html}{\out{</div>}}
 
 With \code{has_columns()} we can check for column existence by using it directly
 on the table. A column name can be verified as present by using it in double
-quotes.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% has_columns(columns = "date")
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+quotes.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% has_columns(columns = "date")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+}\if{html}{\out{</div>}}
 
 Multiple column names can be supplied. The following is \code{TRUE} because both
-columns are present in \code{small_table}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% has_columns(columns = c("a", "b"))
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+columns are present in \code{small_table}.
 
-It's possible to supply column names in \code{vars()} as well:\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% has_columns(columns = vars(a, b))
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% has_columns(columns = c("a", "b"))
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+}\if{html}{\out{</div>}}
+
+It's possible to supply column names in \code{vars()} as well:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% has_columns(columns = vars(a, b))
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+}\if{html}{\out{</div>}}
 
 Because column \code{h} isn't present, this returns \code{FALSE} (all specified columns
-need to be present to obtain \code{TRUE}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% has_columns(columns = vars(a, h))
-}\if{html}{\out{</div>}}\preformatted{## [1] FALSE
-}
+need to be present to obtain \code{TRUE}).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% has_columns(columns = vars(a, h))
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] FALSE
+}\if{html}{\out{</div>}}
 
 The \code{has_columns()} function can be useful in expressions that involve the
 target table, especially if it is uncertain that the table will contain a
@@ -75,7 +95,9 @@ column that's involved in a validation.
 In the following agent-based validation, the first two steps will be 'active'
 because all columns checked for in the expressions are present. The third
 step becomes inactive because column \code{j} isn't there (without the \code{active}
-statement there we would get an evaluation failure in the agent report).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- 
+statement there we would get an evaluation failure in the agent report).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- 
   create_agent(
     tbl = small_table,
     tbl_name = "small_table"
@@ -99,11 +121,15 @@ statement there we would get an evaluation failure in the agent report).\if{html
 Through the agent's x-list, we can verify that no evaluation error (any
 evaluation at all, really) had occurred. The third value, representative of
 the third validation step, is actually \code{NA} instead of \code{FALSE} because the
-step became inactive.\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_list <- get_agent_x_list(agent = agent)
+step became inactive.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_list <- get_agent_x_list(agent = agent)
 
 x_list$eval_warning
-}\if{html}{\out{</div>}}\preformatted{## [1] FALSE FALSE    NA
-}
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] FALSE FALSE    NA
+}\if{html}{\out{</div>}}
 }
 
 \section{Function ID}{

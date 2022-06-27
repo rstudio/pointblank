@@ -26,7 +26,9 @@ written by hand.
 
 Let's create a validation plan for the data quality analysis of the
 \code{small_table} dataset. We need an agent and its table-prep formula enables
-retrieval of the target table.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- 
+retrieval of the target table.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- 
   create_agent(
     tbl = ~ small_table,
     tbl_name = "small_table",
@@ -47,14 +49,18 @@ retrieval of the target table.\if{html}{\out{<div class="sourceCode r">}}\prefor
   col_vals_lte(columns = vars(c), value = 5)
 }\if{html}{\out{</div>}}
 
-The agent can be written to a \strong{pointblank} YAML file with \code{\link[=yaml_write]{yaml_write()}}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{yaml_write(
+The agent can be written to a \strong{pointblank} YAML file with \code{\link[=yaml_write]{yaml_write()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{yaml_write(
   agent = agent,
   filename = "agent-small_table.yml"
 )
 }\if{html}{\out{</div>}}
 
 At a later time, the YAML file can be read into a new agent with the
-\code{\link[=yaml_read_agent]{yaml_read_agent()}} function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- yaml_read_agent(filename = "agent-small_table.yml")
+\code{\link[=yaml_read_agent]{yaml_read_agent()}} function.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- yaml_read_agent(filename = "agent-small_table.yml")
 
 agent
 }\if{html}{\out{</div>}}
@@ -66,8 +72,12 @@ agent
 }
 
 To get a sense of which expressions are being used to generate the new agent,
-we can use \code{yaml_agent_show_exprs()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{yaml_agent_show_exprs(filename = "agent-small_table.yml")
-}\if{html}{\out{</div>}}\preformatted{create_agent(
+we can use \code{yaml_agent_show_exprs()}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{yaml_agent_show_exprs(filename = "agent-small_table.yml")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{create_agent(
   tbl = ~small_table,
   actions = action_levels(
     warn_at = 0.1,
@@ -93,7 +103,7 @@ we can use \code{yaml_agent_show_exprs()}.\if{html}{\out{<div class="sourceCode 
     columns = vars(c),
     value = 5
   ) 
-}
+}\if{html}{\out{</div>}}
 }
 
 \section{Function ID}{

@@ -2,7 +2,7 @@
 % Please edit documentation in R/emailing.R
 \name{email_create}
 \alias{email_create}
-\title{Create an email object from a \strong{pointblank} \emph{agent} or \emph{informant}}
+\title{Create an email object from a \strong{pointblank} \emph{agent}}
 \usage{
 email_create(
   x,
@@ -12,12 +12,7 @@ email_create(
 )
 }
 \arguments{
-\item{x}{A \strong{pointblank} \emph{agent}, an \emph{agent} x-list, or a \strong{pointblank}
-\emph{informant}. The x-list object can be created with the \code{\link[=get_agent_x_list]{get_agent_x_list()}}
-function. It is recommended that the option \code{i = NULL} be used with
-\code{\link[=get_agent_x_list]{get_agent_x_list()}} if supplying an x-list as \code{x}. Furthermore, The option
-\code{generate_report = TRUE} could be used with \code{\link[=create_agent]{create_agent()}} so that the
-agent report is available within the email.}
+\item{x}{A \strong{pointblank} \emph{agent}.}
 
 \item{msg_header, msg_body, msg_footer}{Content for the header, body, and
 footer components of the HTML email message.}
@@ -27,41 +22,35 @@ A \strong{blastula} \code{email_message} object.
 }
 \description{
 The \code{email_create()} function produces an email message object that could be
-sent using the \strong{blastula} package. The \code{x} that we need for this could
-either be a \strong{pointblank} agent, the \emph{agent} x-list (produced from the
-\emph{agent} with the \code{\link[=get_agent_x_list]{get_agent_x_list()}} function), or a \strong{pointblank}
-\emph{informant}. In all cases, the email message will appear in the Viewer and a
-\strong{blastula} \code{email_message} object will be returned.
+sent using the \strong{blastula} package. By supplying a \strong{pointblank} agent, a
+\strong{blastula} \code{email_message} message object will be created and printing it
+will make the HTML email message appear in the Viewer.
 }
-\section{Function ID}{
+\section{Examples}{
 
-4-2
-}
 
-\examples{
-if (interactive()) {
+For the example provided here, we'll use the included \code{small_table} dataset.
+We are also going to create an \code{action_levels()} list object since this is
+useful for demonstrating an emailing scenario. It will have absolute values
+for the \code{warn} and \code{notify} states (with thresholds of \code{1} and \code{2} 'fail'
+units, respectively, for the two states).
 
-# Create an `action_levels()` list
-# with absolute values for the
-# `warn`, and `notify` states (with
-# thresholds of 1 and 2 'fail' units)
-al <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <- 
   action_levels(
     warn_at = 1,
     notify_at = 2
   )
+}\if{html}{\out{</div>}}
 
-# In a workflow that involves an
-# `agent` object, we can make use of
-# the `end_fns` argument and
-# programmatically email the report
-# with the `email_blast()` function,
-# however, an alternate workflow is to
-# produce the email object and choose
-# to send outside of the pointblank API;
-# the `email_create()` function lets
-# us do this with an `agent` object
-email_object_1 <-
+In a workflow that involves an \code{agent} object, we can make use of the
+\code{end_fns} argument and programmatically email the report with the
+\code{\link[=email_blast]{email_blast()}} function. However, an alternate workflow that is demonstrated
+here is to produce the email object directly. This provides the flexibility
+to send the email outside of the \strong{pointblank} API. The \code{email_create()}
+function lets us do this with an \code{agent} object. We can then view the HTML
+email just by printing \code{email_object}. It should appear in the Viewer.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{email_object <-
   create_agent(
     tbl = small_table,
     tbl_name = "small_table",
@@ -72,57 +61,22 @@ email_object_1 <-
   col_vals_lt(vars(a), value = 7) \%>\%
   interrogate() \%>\%
   email_create()
+  
+email_object
+}\if{html}{\out{</div>}}
 
-# We can view the HTML email just
-# by printing `email_object`; it
-# should appear in the Viewer
-
-# The `email_create()` function can
-# also be used on an agent x-list to
-# get the same email message object
-email_object_2 <-
-  create_agent(
-    tbl = small_table,
-    tbl_name = "small_table",
-    label = "An example.",
-    actions = al
-  ) \%>\%
-  col_vals_gt(vars(a), value = 5) \%>\%
-  col_vals_lt(vars(b), value = 5) \%>\%
-  interrogate() \%>\%
-  get_agent_x_list() \%>\%
-  email_create()
-
-# An information report that's
-# produced by the informant can
-# made into an email message object;
-# let's create an informant and use
-# `email_create()`
-email_object_3 <-
-  create_informant(
-    tbl = small_table,
-    tbl_name = "small_table",
-    label = "An example."
-  ) \%>\%
-  info_tabular(
-    info = "A simple table in the
-    *Examples* section of the function
-    called `email_create()`."
-  ) \%>\%
-  info_columns(
-    columns = vars(a),
-    info = "Numbers. On the high side."
-  ) \%>\%
-  info_columns(
-    columns = vars(b),
-    info = "Lower numbers. Zeroes, even."
-  ) \%>\%
-  incorporate() \%>\%
-  email_create()
-
+\if{html}{
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_email_create_1.png" style="width:100\%;">
+}
+}
 }
 
+\section{Function ID}{
+
+4-2
 }
+
 \seealso{
 Other Emailing: 
 \code{\link{email_blast}()},

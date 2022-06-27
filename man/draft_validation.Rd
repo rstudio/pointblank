@@ -96,8 +96,12 @@ formally tested (so be mindful of this when using unsupported backends with
 \section{Examples}{
 
 
-Let's draft a validation plan for the \code{dplyr::storms} dataset.\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::storms
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 11,859 × 13
+Let's draft a validation plan for the \code{dplyr::storms} dataset.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::storms
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 11,859 × 13
 ##    name   year month   day  hour   lat  long status      category  wind pressure
 ##    <chr> <dbl> <dbl> <int> <dbl> <dbl> <dbl> <chr>       <ord>    <int>    <int>
 ##  1 Amy    1975     6    27     0  27.5 -79   tropical d… -1          25     1013
@@ -112,11 +116,13 @@ Let's draft a validation plan for the \code{dplyr::storms} dataset.\if{html}{\ou
 ## 10 Amy    1975     6    29     6  34   -74.8 tropical s… 0           40     1002
 ## # … with 11,849 more rows, and 2 more variables:
 ## #   tropicalstorm_force_diameter <int>, hurricane_force_diameter <int>
-}
+}\if{html}{\out{</div>}}
 
 The \code{draft_validation()} function creates an .R file by default. Using just
 the defaults with \code{dplyr::storms} will yield the \code{"dplyr__storms.R"} file
-in the working directory. Here are the contents of the file:\if{html}{\out{<div class="sourceCode r">}}\preformatted{library(pointblank)
+in the working directory. Here are the contents of the file:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{library(pointblank)
 
 agent <-
   create_agent(

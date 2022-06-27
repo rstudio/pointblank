@@ -41,19 +41,25 @@ in producing a single logical value from an interrogation.
 \section{Examples}{
 
 
-Create a simple table with a column of numerical values.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- dplyr::tibble(a = c(4, 5, 7, 8))
+Create a simple table with a column of numerical values.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- dplyr::tibble(a = c(4, 5, 7, 8))
 
 tbl
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 4 × 1
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 4 × 1
 ##       a
 ##   <dbl>
 ## 1     4
 ## 2     5
 ## 3     7
 ## 4     8
-}
+}\if{html}{\out{</div>}}
 
-Validate that values in column \code{a} are always greater than 4.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
+Validate that values in column \code{a} are always greater than 4.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = tbl) \%>\%
   col_vals_gt(columns = vars(a), value = 3) \%>\%
   col_vals_lte(columns = vars(a), value = 10) \%>\%
@@ -62,9 +68,13 @@ Validate that values in column \code{a} are always greater than 4.\if{html}{\out
 }\if{html}{\out{</div>}}
 
 Determine if these column validations have all passed by using \code{all_passed()}
-(they do).\if{html}{\out{<div class="sourceCode r">}}\preformatted{all_passed(agent = agent)
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+(they do).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{all_passed(agent = agent)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+}\if{html}{\out{</div>}}
 }
 
 \section{Function ID}{

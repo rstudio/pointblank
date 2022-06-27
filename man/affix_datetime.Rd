@@ -63,44 +63,68 @@ components affixed to the filenames.
 \subsection{The basics of creating a filename with the current date and time}{
 
 Taking the generic \code{"pb_file"} name for a file, we add the current datetime
-to it as a suffix.\if{html}{\out{<div class="sourceCode r">}}\preformatted{affix_datetime(filename = "pb_file")
-}\if{html}{\out{</div>}}\preformatted{## [1] "pb_file_2022-04-01_00-32-53"
-}
+to it as a suffix.
 
-File extensions won't get in the way:\if{html}{\out{<div class="sourceCode r">}}\preformatted{affix_datetime(filename = "pb_file.rds")
-}\if{html}{\out{</div>}}\preformatted{## [1] "pb_file_2022-04-01_00-32-53.rds"
-}
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{affix_datetime(filename = "pb_file")
+}\if{html}{\out{</div>}}
 
-The datetime can be used as a prefix.\if{html}{\out{<div class="sourceCode r">}}\preformatted{affix_datetime(
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "pb_file_2022-04-01_00-32-53"
+}\if{html}{\out{</div>}}
+
+File extensions won't get in the way:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{affix_datetime(filename = "pb_file.rds")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "pb_file_2022-04-01_00-32-53.rds"
+}\if{html}{\out{</div>}}
+
+The datetime can be used as a prefix.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{affix_datetime(
   filename = "pb_file",
   position = "start"
 )
-}\if{html}{\out{</div>}}\preformatted{## [1] "2022-04-01_00-32-53_pb_file"
-}
+}\if{html}{\out{</div>}}
 
-The datetime pattern can be changed and so can the delimiter.\if{html}{\out{<div class="sourceCode r">}}\preformatted{affix_datetime(
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "2022-04-01_00-32-53_pb_file"
+}\if{html}{\out{</div>}}
+
+The datetime pattern can be changed and so can the delimiter.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{affix_datetime(
   filename = "pb_file.yml",
   format = "\%Y\%m\%d_\%H\%M\%S",
   delimiter = "-"
 )
-}\if{html}{\out{</div>}}\preformatted{## [1] "pb_file-20220401_003253.yml"
-}
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "pb_file-20220401_003253.yml"
+}\if{html}{\out{</div>}}
 
 Time zone information can be included. By default, all datetimes are given in
-the UTC time zone.\if{html}{\out{<div class="sourceCode r">}}\preformatted{affix_datetime(
+the UTC time zone.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{affix_datetime(
   filename = "pb_file.yml",
   add_tz = TRUE
 )
-}\if{html}{\out{</div>}}\preformatted{## [1] "pb_file_2022-04-01_00-32-53Z.yml"
-}
+}\if{html}{\out{</div>}}
 
-We can use the system's local time zone with \code{utc_time = FALSE}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{affix_datetime(
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "pb_file_2022-04-01_00-32-53Z.yml"
+}\if{html}{\out{</div>}}
+
+We can use the system's local time zone with \code{utc_time = FALSE}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{affix_datetime(
   filename = "pb_file.yml",
   utc_time = FALSE,
   add_tz = TRUE
 )
-}\if{html}{\out{</div>}}\preformatted{## [1] "pb_file_2022-03-31_20-32-53-0400.yml"
-}
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "pb_file_2022-03-31_20-32-53-0400.yml"
+}\if{html}{\out{</div>}}
 }
 
 \subsection{Using a datetime-based filename in a \strong{pointblank} workflow}{
@@ -110,7 +134,9 @@ files immediately after interrogating. This is just one example (any workflow
 involving a \code{filename} argument is applicable). It's really advantageous to
 use datetime-based filenames when interrogating directly from YAML in a
 scheduled process, especially if multiple validation runs per day are being
-executed on the same target table.\if{html}{\out{<div class="sourceCode r">}}\preformatted{yaml_agent_interrogate(
+executed on the same target table.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{yaml_agent_interrogate(
   filename = system.file(
     "yaml", "agent-small_table.yml",
     package = "pointblank"

@@ -43,8 +43,12 @@ are equivalent across interrogations.
 
 Let's walk through several theoretical data quality analyses of an extremely
 small table. that table is called \code{small_table} and we can find it as a
-dataset in this package.\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 13 × 8
+dataset in this package.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 13 × 8
 ##    date_time           date           a b             c      d e     f    
 ##    <dttm>              <date>     <int> <chr>     <dbl>  <dbl> <lgl> <chr>
 ##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high 
@@ -60,11 +64,13 @@ dataset in this package.\if{html}{\out{<div class="sourceCode r">}}\preformatted
 ## 11 2016-01-26 20:07:00 2016-01-26     4 2-dmx-010     7   834. TRUE  low  
 ## 12 2016-01-28 02:51:00 2016-01-28     2 7-dmx-010     8   108. FALSE low  
 ## 13 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA  2230. TRUE  high
-}
+}\if{html}{\out{</div>}}
 
 To set failure limits and signal conditions, we designate proportional
 failure thresholds to the \code{warn}, \code{stop}, and \code{notify} states using
-\code{action_levels()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <- 
+\code{action_levels()}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <- 
   action_levels(
     warn_at = 0.05,
     stop_at = 0.10,
@@ -74,7 +80,9 @@ failure thresholds to the \code{warn}, \code{stop}, and \code{notify} states usi
 
 We will create four different agents and have slightly different validation
 steps in each of them. In the first, \code{agent_1}, eight different validation
-steps are created and the agent will interrogate the \code{small_table}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_1 <-
+steps are created and the agent will interrogate the \code{small_table}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_1 <-
   create_agent(
     tbl = small_table,
     label = "An example.",
@@ -111,7 +119,9 @@ steps are created and the agent will interrogate the \code{small_table}.\if{html
 }\if{html}{\out{</div>}}
 
 The second agent, \code{agent_2}, retains all of the steps of \code{agent_1} and adds
-two more (the last of which is inactive).\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_2 <- 
+two more (the last of which is inactive).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_2 <- 
   agent_1 \%>\%
   col_exists(columns = vars(date, date_time)) \%>\%
   col_vals_regex(
@@ -123,7 +133,9 @@ two more (the last of which is inactive).\if{html}{\out{<div class="sourceCode r
 }\if{html}{\out{</div>}}
 
 The third agent, \code{agent_3}, adds a single validation step, removes the fifth
-one, and deactivates the first.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_3 <- 
+one, and deactivates the first.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_3 <- 
   agent_2 \%>\%
   col_vals_in_set(
     columns = vars(f),
@@ -135,7 +147,9 @@ one, and deactivates the first.\if{html}{\out{<div class="sourceCode r">}}\prefo
 }\if{html}{\out{</div>}}
 
 The fourth and final agent, \code{agent_4}, reactivates steps 1 and 10, and
-removes the sixth step.\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_4 <-
+removes the sixth step.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_4 <-
   agent_3 \%>\%
   activate_steps(i = 1) \%>\%
   activate_steps(i = 10) \%>\%
@@ -144,18 +158,26 @@ removes the sixth step.\if{html}{\out{<div class="sourceCode r">}}\preformatted{
 }\if{html}{\out{</div>}}
 
 While all the agents are slightly different from each other, we can still get
-a combined report of them by creating a 'multiagent'.\if{html}{\out{<div class="sourceCode r">}}\preformatted{multiagent <-
+a combined report of them by creating a 'multiagent'.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{multiagent <-
   create_multiagent(
     agent_1, agent_2, agent_3, agent_4
   )
 }\if{html}{\out{</div>}}
 
 Calling \code{multiagent} in the console prints the multiagent report. But we can
-get a \code{gt_tbl} object with the \code{get_multiagent_report()} function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{report <- get_multiagent_report(multiagent)
-}\if{html}{\out{</div>}}\if{html}{\out{<div class="sourceCode r">}}\preformatted{class(report)
-}\if{html}{\out{</div>}}\preformatted{## [1] "ptblank_multiagent_report.long" "shiny.tag.list"                
+get a \code{gt_tbl} object with the \code{get_multiagent_report()} function.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{report <- get_multiagent_report(multiagent)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{class(report)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "ptblank_multiagent_report.long" "shiny.tag.list"                
 ## [3] "list"
-}
+}\if{html}{\out{</div>}}
 }
 
 \section{Figures}{

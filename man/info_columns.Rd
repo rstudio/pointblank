@@ -90,7 +90,9 @@ columns is represented in YAML works like this: \emph{info text} goes into
 subsections of YAML keys named for the columns, which are themselves part of
 the top-level \code{columns} key. Here is an example of how several calls of
 \code{info_columns()} are expressed in R code and how the result corresponds to
-the YAML representation.\preformatted{# R statement
+the YAML representation.
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{# R statement
 informant \%>\% 
   info_columns(
     columns = "date_time",
@@ -120,7 +122,7 @@ columns:
   item_count:
     _type: integer
     info: '*info text* 3. Statistics: \{snippet_1\}.'
-}
+}\if{html}{\out{</div>}}
 
 Subsections represented as column names are automatically generated when
 creating an informant. Within these, there can be multiple subsections used

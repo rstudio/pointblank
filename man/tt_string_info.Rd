@@ -32,17 +32,23 @@ order as well.
 
 
 Get string information for the string-based columns in the \code{game_revenue}
-dataset that is included in the \strong{pointblank} package.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_string_info(tbl = game_revenue)
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 3 × 7
+dataset that is included in the \strong{pointblank} package.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_string_info(tbl = game_revenue)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 3 × 7
 ##   .param.     player_id session_id item_type item_name acquisition country
 ##   <chr>           <dbl>      <dbl>     <dbl>     <dbl>       <dbl>   <dbl>
 ## 1 length_mean        15         24      2.22      7.35        7.97    8.53
 ## 2 length_min         15         24      2         5           5       5   
 ## 3 length_max         15         24      3        11          14      14
-}
+}\if{html}{\out{</div>}}
 
 Ensure that \code{player_id} and \code{session_id} values always have the same fixed
-numbers of characters (\code{15} and \code{24}, respectively) throughout the table.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_string_info(tbl = game_revenue) \%>\%
+numbers of characters (\code{15} and \code{24}, respectively) throughout the table.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_string_info(tbl = game_revenue) \%>\%
   col_vals_equal(
     columns = vars(player_id),
     value = 15
@@ -51,25 +57,31 @@ numbers of characters (\code{15} and \code{24}, respectively) throughout the tab
     columns = vars(session_id),
     value = 24
   )
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 3 × 7
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 3 × 7
 ##   .param.     player_id session_id item_type item_name acquisition country
 ##   <chr>           <dbl>      <dbl>     <dbl>     <dbl>       <dbl>   <dbl>
 ## 1 length_mean        15         24      2.22      7.35        7.97    8.53
 ## 2 length_min         15         24      2         5           5       5   
 ## 3 length_max         15         24      3        11          14      14
-}
+}\if{html}{\out{</div>}}
 
 We see data, and not an error, so both validations were successful!
 
 Let's use a \code{tt_string_info()}-transformed table with the
 \code{\link[=test_col_vals_lte]{test_col_vals_lte()}} to check that the maximum string length in column \code{f}
-of the \code{small_table} dataset is no greater than \code{4}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_string_info(tbl = small_table) \%>\%
+of the \code{small_table} dataset is no greater than \code{4}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_string_info(tbl = small_table) \%>\%
   test_col_vals_lte(
     columns = vars(f),
     value = 4
   )
-}\if{html}{\out{</div>}}\preformatted{## [1] TRUE
-}
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+}\if{html}{\out{</div>}}
 }
 
 \section{Function ID}{

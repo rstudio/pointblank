@@ -17,7 +17,7 @@
 #
 
 
-#' Send email at a validation step or at the end of an interrogation
+#' Conditionally send email during interrogation
 #' 
 #' @description
 #' The `email_blast()` function is useful for sending an email message that
@@ -29,8 +29,7 @@
 #' different validation steps exceeding failure thresholds).
 #'
 #' To better get a handle on emailing with `email_blast()`, the analogous
-#' [email_create()] function can be used with a **pointblank** agent object or
-#' an x-list obtained from using the [get_agent_x_list()] function.
+#' [email_create()] function can be used with a **pointblank** agent object.
 #' 
 #' @section YAML: 
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
@@ -107,10 +106,10 @@
 #'   of length 1. If evaluated as `TRUE` then the email will be sent, if `FALSE`
 #'   then that won't happen. The expression can use x-list variables (e.g.,
 #'   `x$notify`, `x$type`, etc.) and all of those variables can be explored
-#'   using the [get_agent_x_list()] function. The default expression is `~TRUE
+#'   using the [get_agent_x_list()] function. The default expression is `~ TRUE
 #'   %in% x$notify`, which results in `TRUE` if there are any `TRUE` values in
-#'   the `x$notify` logical vector (i.e., any validation step results in a
-#'   'notify' condition).
+#'   the `x$notify` logical vector (i.e., any validation step that results in a
+#'   'notify' state).
 #'   
 #' @section Examples:
 #' 

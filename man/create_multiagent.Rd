@@ -41,148 +41,105 @@ are equivalent across interrogations.
 \section{Examples}{
 
 
-Let's walk through several theoretical data quality analyses of an extremely
-small table. that table is called \code{small_table} and we can find it as a
-dataset in this package.
+For the example below, we'll use two different, yet simple tables.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table
-}\if{html}{\out{</div>}}
+First, \code{tbl_1}:
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 13 × 8
-##    date_time           date           a b             c      d e     f    
-##    <dttm>              <date>     <int> <chr>     <dbl>  <dbl> <lgl> <chr>
-##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high 
-##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-163     8 10000. TRUE  low  
-##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3  2343. TRUE  high 
-##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-903    NA  3892. FALSE mid  
-##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-038     7   284. TRUE  low  
-##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-923     4  3291. TRUE  mid  
-##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3   843. TRUE  high 
-##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-639     2  1036. FALSE low  
-##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
-## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
-## 11 2016-01-26 20:07:00 2016-01-26     4 2-dmx-010     7   834. TRUE  low  
-## 12 2016-01-28 02:51:00 2016-01-28     2 7-dmx-010     8   108. FALSE low  
-## 13 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA  2230. TRUE  high
-}\if{html}{\out{</div>}}
-
-To set failure limits and signal conditions, we designate proportional
-failure thresholds to the \code{warn}, \code{stop}, and \code{notify} states using
-\code{action_levels()}.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <- 
-  action_levels(
-    warn_at = 0.05,
-    stop_at = 0.10,
-    notify_at = 0.20
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_1 <-
+  dplyr::tibble(
+    a = c(5, 5, 5, 5, 5, 5),
+    b = c(1, 1, 1, 2, 2, 2),
+    c = c(1, 1, 1, 2, 3, 4),
+    d = LETTERS[a],
+    e = LETTERS[b],
+    f = LETTERS[c]
   )
+  
+tbl_1
 }\if{html}{\out{</div>}}
 
-We will create four different agents and have slightly different validation
-steps in each of them. In the first, \code{agent_1}, eight different validation
-steps are created and the agent will interrogate the \code{small_table}.
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 6 × 6
+##       a     b     c d     e     f    
+##   <dbl> <dbl> <dbl> <chr> <chr> <chr>
+## 1     5     1     1 E     A     A    
+## 2     5     1     1 E     A     A    
+## 3     5     1     1 E     A     A    
+## 4     5     2     2 E     B     B    
+## 5     5     2     3 E     B     C    
+## 6     5     2     4 E     B     D
+}\if{html}{\out{</div>}}
+
+And next, \code{tbl_2}:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_2 <-
+  dplyr::tibble(
+    a = c(5, 7, 6, 5, 8, 7),
+    b = LETTERS[1:6]
+  )
+
+tbl_2
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 6 × 2
+##       a b    
+##   <dbl> <chr>
+## 1     5 A    
+## 2     7 B    
+## 3     6 C    
+## 4     5 D    
+## 5     8 E    
+## 6     7 F
+}\if{html}{\out{</div>}}
+
+Next, we'll create two different agents, each interrogating a different
+table.
+
+First up, is \code{agent_1}:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_1 <-
   create_agent(
-    tbl = small_table,
-    label = "An example.",
-    actions = al
+    tbl = tbl_1,
+    tbl_name = "tbl_1",
+    label = "Example table 1."
   ) \%>\%
-  col_vals_gt(
-    columns = vars(date_time),
-    value = vars(date),
-    na_pass = TRUE
-  ) \%>\%
-  col_vals_gt(
-    columns = vars(b), 
-    value = vars(g),
-    na_pass = TRUE
-  ) \%>\%
-  rows_distinct() \%>\%
-  col_vals_equal(
-    columns = vars(d), 
-    value = vars(d),
-    na_pass = TRUE
-  ) \%>\%
-  col_vals_between(
-    columns = vars(c), 
-    left = vars(a), right = vars(d)
-  ) \%>\%
-  col_vals_not_between(
-    columns = vars(c),
-    left = 10, right = 20,
-    na_pass = TRUE
-  ) \%>\%
-  rows_distinct(columns = vars(d, e, f)) \%>\%
-  col_is_integer(columns = vars(a)) \%>\%
+  col_vals_gt(columns = vars(a), value = 4) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
 
-The second agent, \code{agent_2}, retains all of the steps of \code{agent_1} and adds
-two more (the last of which is inactive).
+Then, \code{agent_2}:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_2 <- 
-  agent_1 \%>\%
-  col_exists(columns = vars(date, date_time)) \%>\%
-  col_vals_regex(
-    columns = vars(b), 
-    regex = "[0-9]-[a-z]\{3\}-[0-9]\{3\}",
-    active = FALSE
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_2 <-
+  create_agent(
+    tbl = tbl_2,
+    tbl_name = "tbl_2",
+    label = "Example table 2."
   ) \%>\%
+  col_is_character(columns = vars(b)) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
 
-The third agent, \code{agent_3}, adds a single validation step, removes the fifth
-one, and deactivates the first.
+Now, we'll combine the two agents into a \emph{multiagent} with the
+\code{create_multiagent()} function. Printing the \code{"ptblank_multiagent"} object
+displays the multiagent report with its default options (i.e., a 'long'
+report view).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_3 <- 
-  agent_2 \%>\%
-  col_vals_in_set(
-    columns = vars(f),
-    set = c("low", "mid", "high")
-  ) \%>\%
-  remove_steps(i = 5) \%>\%
-  deactivate_steps(i = 1) \%>\%
-  interrogate()
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{multiagent <- create_multiagent(agent_1, agent_2)
+  
+multiagent
 }\if{html}{\out{</div>}}
 
-The fourth and final agent, \code{agent_4}, reactivates steps 1 and 10, and
-removes the sixth step.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_4 <-
-  agent_3 \%>\%
-  activate_steps(i = 1) \%>\%
-  activate_steps(i = 10) \%>\%
-  remove_steps(i = 6) \%>\%
-  interrogate()
-}\if{html}{\out{</div>}}
-
-While all the agents are slightly different from each other, we can still get
-a combined report of them by creating a 'multiagent'.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{multiagent <-
-  create_multiagent(
-    agent_1, agent_2, agent_3, agent_4
-  )
-}\if{html}{\out{</div>}}
-
-Calling \code{multiagent} in the console prints the multiagent report. But we can
-get a \code{gt_tbl} object with the \code{get_multiagent_report()} function.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{report <- get_multiagent_report(multiagent)
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{class(report)
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "ptblank_multiagent_report.long" "shiny.tag.list"                
-## [3] "list"
-}\if{html}{\out{</div>}}
+\if{html}{
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_create_multiagent_1.png" style="width:100\%;">
+}
 }
 
-\section{Figures}{
-
-\if{html}{\figure{man_create_multiagent_1.png}{options: width=100\%}}
+To take advantage of more display options, we could use the
+\code{\link[=get_multiagent_report]{get_multiagent_report()}} function. The added functionality there allows for
+a 'wide' view of the data (useful for monitoring validations of the same
+table over repeated interrogations), the ability to modify the title of the
+multiagent report, and a means to export the report to HTML (via
+\code{\link[=export_report]{export_report()}}).
 }
 
 \section{Function ID}{

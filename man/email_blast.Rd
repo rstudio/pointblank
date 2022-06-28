@@ -2,7 +2,7 @@
 % Please edit documentation in R/emailing.R
 \name{email_blast}
 \alias{email_blast}
-\title{Send email at a validation step or at the end of an interrogation}
+\title{Conditionally send email during interrogation}
 \usage{
 email_blast(
   x,
@@ -39,9 +39,9 @@ footer components of the HTML email message.}
 of length 1. If evaluated as \code{TRUE} then the email will be sent, if \code{FALSE}
 then that won't happen. The expression can use x-list variables (e.g.,
 \code{x$notify}, \code{x$type}, etc.) and all of those variables can be explored
-using the \code{\link[=get_agent_x_list]{get_agent_x_list()}} function. The default expression is \code{~TRUE \%in\% x$notify}, which results in \code{TRUE} if there are any \code{TRUE} values in
-the \code{x$notify} logical vector (i.e., any validation step results in a
-'notify' condition).}
+using the \code{\link[=get_agent_x_list]{get_agent_x_list()}} function. The default expression is \code{~ TRUE \%in\% x$notify}, which results in \code{TRUE} if there are any \code{TRUE} values in
+the \code{x$notify} logical vector (i.e., any validation step that results in a
+'notify' state).}
 }
 \description{
 The \code{email_blast()} function is useful for sending an email message that
@@ -53,8 +53,7 @@ function (i.e., to send multiple email messages at the granularity of
 different validation steps exceeding failure thresholds).
 
 To better get a handle on emailing with \code{email_blast()}, the analogous
-\code{\link[=email_create]{email_create()}} function can be used with a \strong{pointblank} agent object or
-an x-list obtained from using the \code{\link[=get_agent_x_list]{get_agent_x_list()}} function.
+\code{\link[=email_create]{email_create()}} function can be used with a \strong{pointblank} agent object.
 }
 \section{YAML}{
 

@@ -99,43 +99,54 @@ each interrogation is shown as the column label.
 }
 }
 
-\section{Function ID}{
+\section{Examples}{
 
-10-3
-}
 
-\examples{
-if (interactive()) {
+Let's walk through several theoretical data quality analyses of an extremely
+small table. that table is called \code{small_table} and we can find it as a
+dataset in this package.
 
-# Let's walk through several theoretical
-# data quality analyses of an extremely
-# small table; that table is called
-# `small_table` and we can find it as a
-# dataset in this package
-small_table
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table
+}\if{html}{\out{</div>}}
 
-# To set failure limits and signal
-# conditions, we designate proportional
-# failure thresholds to the `warn`, `stop`,
-# and `notify` states using `action_levels()`
-al <- 
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 13 × 8
+##    date_time           date           a b             c      d e     f    
+##    <dttm>              <date>     <int> <chr>     <dbl>  <dbl> <lgl> <chr>
+##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high 
+##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-163     8 10000. TRUE  low  
+##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3  2343. TRUE  high 
+##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-903    NA  3892. FALSE mid  
+##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-038     7   284. TRUE  low  
+##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-923     4  3291. TRUE  mid  
+##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3   843. TRUE  high 
+##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-639     2  1036. FALSE low  
+##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
+## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
+## 11 2016-01-26 20:07:00 2016-01-26     4 2-dmx-010     7   834. TRUE  low  
+## 12 2016-01-28 02:51:00 2016-01-28     2 7-dmx-010     8   108. FALSE low  
+## 13 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA  2230. TRUE  high
+}\if{html}{\out{</div>}}
+
+To set failure limits and signal conditions, we designate proportional
+failure thresholds to the \code{warn}, \code{stop}, and \code{notify} states using
+\code{action_levels()}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <- 
   action_levels(
     warn_at = 0.05,
     stop_at = 0.10,
     notify_at = 0.20
   )
+}\if{html}{\out{</div>}}
 
-# We will create four different agents
-# and have slightly different validation
-# steps in each of them; in the first,
-# `agent_1`, eight different validation
-# steps are created and the agent will
-# interrogate the `small_table`
-agent_1 <-
+We will create four different agents and have slightly different validation
+steps in each of them. In the first, \code{agent_1}, eight different validation
+steps are created and the agent will interrogate the \code{small_table}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_1 <-
   create_agent(
     tbl = small_table,
-    tbl_name = "small_table",
-    label = "`get_multiagent_report()`",
+    label = "An example.",
     actions = al
   ) \%>\%
   col_vals_gt(
@@ -166,24 +177,26 @@ agent_1 <-
   rows_distinct(columns = vars(d, e, f)) \%>\%
   col_is_integer(columns = vars(a)) \%>\%
   interrogate()
+}\if{html}{\out{</div>}}
 
-# The second agent, `agent_2`, retains
-# all of the steps of `agent_1` and adds
-# two more (the last of which is inactive)
-agent_2 <- 
+The second agent, \code{agent_2}, retains all of the steps of \code{agent_1} and adds
+two more (the last of which is inactive).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_2 <- 
   agent_1 \%>\%
   col_exists(columns = vars(date, date_time)) \%>\%
   col_vals_regex(
     columns = vars(b), 
-    regex = "[0-9]-[a-z]{3}-[0-9]{3}",
+    regex = "[0-9]-[a-z]\{3\}-[0-9]\{3\}",
     active = FALSE
   ) \%>\%
   interrogate()
+}\if{html}{\out{</div>}}
 
-# The third agent, `agent_3`, adds a single
-# validation step, removes the fifth one,
-# and deactivates the first
-agent_3 <- 
+The third agent, \code{agent_3}, adds a single validation step, removes the fifth
+one, and deactivates the first.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_3 <- 
   agent_2 \%>\%
   col_vals_in_set(
     columns = vars(f),
@@ -192,60 +205,61 @@ agent_3 <-
   remove_steps(i = 5) \%>\%
   deactivate_steps(i = 1) \%>\%
   interrogate()
+}\if{html}{\out{</div>}}
 
-# The fourth and final agent, `agent_4`,
-# reactivates steps 1 and 10, and removes
-# the sixth step
-agent_4 <-
+The fourth and final agent, \code{agent_4}, reactivates steps 1 and 10, and
+removes the sixth step.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_4 <-
   agent_3 \%>\%
   activate_steps(i = 1) \%>\%
   activate_steps(i = 10) \%>\%
   remove_steps(i = 6) \%>\%
   interrogate()
+}\if{html}{\out{</div>}}
 
-# While all the agents are slightly
-# different from each other, we can still
-# get a combined report of them by
-# creating a 'multiagent'
-multiagent <-
+While all the agents are slightly different from each other, we can still get
+a combined report of them by creating a 'multiagent'.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{multiagent <-
   create_multiagent(
     agent_1, agent_2, agent_3, agent_4
   )
+}\if{html}{\out{</div>}}
 
-# Calling `multiagent` in the console
-# prints the multiagent report; but we
-# can use some non-default option with
-# the `get_multiagent_report()` function
+Calling \code{multiagent} in the console prints the multiagent report. But we can
+generate a \code{"ptblank_multiagent_report"} object with the
+\code{get_multiagent_report()} function and specify options for layout and
+presentation.
 
-# By default, `get_multiagent_report()`
-# gives you a tall report with agent
-# reports being stacked
-report_1 <- 
-  get_multiagent_report(multiagent)
-  
-# We can modify the title with that's
-# more suitable or use a keyword like
-# `:tbl_name:` to give us the target
-# table name in each section
-report_2 <- 
-  get_multiagent_report(
-    multiagent,
-    title = ":tbl_name:"
-  )
+By default, \code{get_multiagent_report()} gives you a long report with agent
+reports being stacked. Think of this \code{"long"} option as the serial mode of
+agent reports. However if we want to view interrogation results of the same
+table over time, the wide view may be preferable. In this way we can see
+whether the results of common validation steps improved or worsened over
+consecutive interrogations of the data.
 
-# We can opt for a wide display of
-# the reporting info, and this is
-# great when reporting on multiple
-# validations of the same target
-# table
-report_3 <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{report_wide <- 
   get_multiagent_report(
     multiagent,
     display_mode = "wide"
   )
+  
+report_wide
+}\if{html}{\out{</div>}}
+
+\if{html}{
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_get_multiagent_report_1.png" style="width:100\%;">
+}
+}
 }
 
+\section{Function ID}{
+
+10-3
 }
+
 \seealso{
 Other The multiagent: 
 \code{\link{create_multiagent}()},

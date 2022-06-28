@@ -83,26 +83,17 @@ of the R expressions that are used to regenerate that agent with
 \code{\link[=yaml_agent_show_exprs]{yaml_agent_show_exprs()}}.
 }
 
-\section{Function ID}{
+\section{Examples}{
 
-5-1
-}
 
-\examples{
-# We can create an `action_levels`
-# object that has a threshold for
-# the `warn` state, and, an
-# associated function that should
-# be invoked whenever the `warn`
-# state is entered. Here, the
-# function call with `log4r_step()`
-# will be invoked whenever there
-# is one failing test unit. It's
-# important to match things up here;
-# notice that `warn_at` is given a
-# threshold and the list of functions
-# given to `fns` has a `warn` component
-al <-
+For the example provided here, we'll use the included \code{small_table} dataset.
+We are also going to create an \code{action_levels()} list object since this is
+useful for demonstrating a logging scenario. It will have a threshold for
+the \code{warn} state, and, an associated function that should be invoked
+whenever the \code{warn} state is entered. Here, the function call with
+\code{log4r_step()} will be invoked whenever there is one failing test unit.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <-
   action_levels(
     warn_at = 1,
     fns = list(
@@ -111,53 +102,64 @@ al <-
       )
     )
   )
+}\if{html}{\out{</div>}}
 
-# Printing `al` will show us the
-# settings for the
-# `action_levels` object:
-al
+Within the \code{\link[=action_levels]{action_levels()}}-produced object, it's important to match things
+up: notice that \code{warn_at} is given a threshold and the list of functions
+given to \code{fns} has a \code{warn} component.
 
-# Let's create an agent with
-# `small_table` as the target
-# table, apply the `action_levels`
-# object created above as `al`,
-# add two validation steps, and
-# then `interrogate()` the data
-agent <- 
+Printing \code{al} will show us the settings for the \code{action_levels} object:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{al
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## -- The `action_levels` settings
+## WARN failure threshold of 1test units.
+## \\fns\\ ~ log4r_step(x, append_to = "example_log")
+## ----
+}\if{html}{\out{</div>}}
+
+Let's create an agent with \code{small_table} as the target table. We'll apply the
+\code{action_levels} object created above as \code{al}, add two validation steps, and
+then \code{\link[=interrogate]{interrogate()}} the data.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- 
   create_agent(
     tbl = ~ small_table,
     tbl_name = "small_table",
+    label = "An example.",
     actions = al
   ) \%>\%
   col_vals_gt(columns = vars(d), 300) \%>\%
-  col_vals_in_set(
-    columns = vars(f), c("low", "high")
-  ) \%>\%
+  col_vals_in_set(columns = vars(f), c("low", "high")) \%>\%
   interrogate()
 
-# From the agent report, we can
-# see that both steps have yielded
-# warnings upon interrogation
-# (i.e., filled yellow circles
-# in the `W` column).
+agent
+}\if{html}{\out{</div>}}
 
-# We can see this more directly
-# by inspecting the `warn`
-# component of the agent's x-list:
-get_agent_x_list(agent)$warn
-
-# Upon entering the `warn` state
-# in each validation step during
-# interrogation, the `log4r_step()`
-# function call was invoked! This
-# will generate an `"example_log"`
-# file in the working directory
-# and log entries will be appended
-# to the file
-
-if (file.exists("example_log")) {
-  file.remove("example_log")
+\if{html}{
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_log4r_step_1.png" style="width:100\%;">
+}
 }
 
+From the agent report, we can see that both steps have yielded warnings upon
+interrogation (i.e., filled yellow circles in the \code{W} column).
+
+What's not immediately apparent is that when entering the \code{warn} state
+in each validation step during interrogation, the \code{log4r_step()} function
+call was twice invoked! This generated an \code{"example_log"} file in the working
+directory (since it was not present before the interrogation) and log entries
+were appended to the file. Here are the contents of the file:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{WARN  [2022-06-28 10:06:01] Step 1 exceeded the WARN failure threshold (f_failed = 0.15385) ['col_vals_gt']
+WARN  [2022-06-28 10:06:01] Step 2 exceeded the WARN failure threshold (f_failed = 0.15385) ['col_vals_in_set']
+}\if{html}{\out{</div>}}
 }
+
+\section{Function ID}{
+
+5-1
+}
+
 \concept{Logging}

@@ -152,58 +152,120 @@ states were entered. Will be \code{NA} for states that are unset.
 in a data extract. Will be \code{NA} if no extract is available.
 }
 }
+\section{Examples}{
+
+
+For the example here, we'll use a simple table with a single numerical column
+\code{a}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- dplyr::tibble(a = c(5, 7, 8, 5))
+
+tbl
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 4 × 1
+##       a
+##   <dbl>
+## 1     5
+## 2     7
+## 3     8
+## 4     5
+}\if{html}{\out{</div>}}
+
+Let's create an \emph{agent} and validate that values in column \code{a} are always
+greater than \code{4}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
+  create_agent(
+    tbl = tbl,
+    tbl_name = "small_table",
+    label = "An example."
+  ) \%>\%
+  col_vals_gt(columns = vars(a), value = 4) \%>\%
+  interrogate()
+}\if{html}{\out{</div>}}
+
+We can get a tibble-based report from the agent by using \code{get_agent_report()}
+with \code{display_table = FALSE}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% get_agent_report(display_table = FALSE)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 1 × 14
+##       i type  columns values precon active eval  units n_pass f_pass W     S    
+##   <int> <chr> <chr>   <chr>  <chr>  <lgl>  <chr> <dbl>  <dbl>  <dbl> <lgl> <lgl>
+## 1     1 col_… a       4      <NA>   TRUE   OK        4      4      1 NA    NA   
+## # … with 2 more variables: N <lgl>, extract <int>
+}\if{html}{\out{</div>}}
+
+The full-featured display-table-based report can be viewed by printing the
+\code{agent} object, but, we can get a \code{"ptblank_agent_report"} object returned to
+us when using \code{display_table = TRUE} (the default for \code{get_agent_report}).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{report <- get_agent_report(agent)
+
+report
+}\if{html}{\out{</div>}}
+
+\if{html}{
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_get_agent_report_1.png" style="width:100\%;">
+}
+}
+
+What can you do with the \code{report} object? Print it at will wherever, and, it
+can serve as an input to the \code{\link[=export_report]{export_report()}} function.
+
+However, the better reason to use \code{get_agent_report()} over just printing the
+agent for display-table purposes is to make use of the different display
+options.
+
+The agent report as a \strong{gt} display table comes in two sizes: \code{"standard"}
+(the default, 875px wide) and \code{"small"} (575px wide). Let's take a look at
+the smaller-sized version of the report.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_report <- 
+  get_agent_report(
+    agent = agent,
+    size = "small"
+  )
+  
+small_report
+}\if{html}{\out{</div>}}
+
+\if{html}{
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_get_agent_report_2.png" style="width:100\%;">
+}
+}
+
+We can use our own title by supplying it to the \code{title} argument, or, use
+a special keyword like \code{":tbl_name:"} to get the table name (set in the
+\code{\link[=create_agent]{create_agent()}} call) as the title.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{report_title <- get_agent_report(agent, title = ":tbl_name:")
+
+report_title
+}\if{html}{\out{</div>}}
+
+\if{html}{
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_get_agent_report_3.png" style="width:100\%;">
+}
+}
+
+There are more options! You can change the language of the display table with
+the \code{lang} argument (this overrides the language set in \code{\link[=create_agent]{create_agent()}}),
+validation steps can be rearranged using the \code{arrange_by} argument, and we
+can also apply some filtering with the \code{keep} argument in
+\code{get_agent_report()}.
+}
+
 \section{Function ID}{
 
 6-2
 }
 
-\examples{
-# Create a simple table with a
-# column of numerical values
-tbl <- 
-  dplyr::tibble(a = c(5, 7, 8, 5))
-
-# Validate that values in column
-# `a` are always greater than 4
-agent <-
-  create_agent(tbl = tbl) \%>\%
-  col_vals_gt(columns = vars(a), value = 4) \%>\%
-  interrogate()
-
-# Get a tibble-based report from the
-# agent by using `get_agent_report()`
-# with `display_table = FALSE`
-agent \%>\%
-  get_agent_report(display_table = FALSE)
-  
-# View a the report by printing the
-# `agent` object anytime, but, return a
-# gt table object by using this with
-# `display_table = TRUE` (the default)
-report <- get_agent_report(agent)
-class(report)
-
-# What can you do with the report?
-# Print it from an R Markdown code,
-# use it in an email, put it in a
-# webpage, or further modify it with
-# the **gt** package
-
-# The agent report as a **gt** display
-# table comes in two sizes: "standard"
-# (the default) and "small"
-small_report <- 
-  get_agent_report(
-    agent = agent,
-    size = "small"
-  )
-
-class(small_report)
-
-# The standard report is 875px wide
-# the small one is 575px wide
-
-}
 \seealso{
 Other Interrogate and Report: 
 \code{\link{interrogate}()}

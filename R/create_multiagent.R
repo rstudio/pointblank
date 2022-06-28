@@ -49,133 +49,87 @@
 #' 
 #' @section Examples:
 #' 
-#' Let's walk through several theoretical data quality analyses of an extremely
-#' small table. that table is called `small_table` and we can find it as a
-#' dataset in this package.
+#' For the example below, we'll use two different, yet simple tables.
+#' 
+#' First, `tbl_1`:
 #' 
 #' ```{r}
-#' small_table
-#' ```
-#' 
-#' To set failure limits and signal conditions, we designate proportional
-#' failure thresholds to the `warn`, `stop`, and `notify` states using
-#' `action_levels()`.
-#' 
-#' ```{r}
-#' al <- 
-#'   action_levels(
-#'     warn_at = 0.05,
-#'     stop_at = 0.10,
-#'     notify_at = 0.20
+#' tbl_1 <-
+#'   dplyr::tibble(
+#'     a = c(5, 5, 5, 5, 5, 5),
+#'     b = c(1, 1, 1, 2, 2, 2),
+#'     c = c(1, 1, 1, 2, 3, 4),
+#'     d = LETTERS[a],
+#'     e = LETTERS[b],
+#'     f = LETTERS[c]
 #'   )
+#'   
+#' tbl_1
 #' ```
-#' 
-#' We will create four different agents and have slightly different validation
-#' steps in each of them. In the first, `agent_1`, eight different validation
-#' steps are created and the agent will interrogate the `small_table`.
+#' And next, `tbl_2`:
 #' 
 #' ```{r}
+#' tbl_2 <-
+#'   dplyr::tibble(
+#'     a = c(5, 7, 6, 5, 8, 7),
+#'     b = LETTERS[1:6]
+#'   )
+#' 
+#' tbl_2
+#' ```
+#' 
+#' Next, we'll create two different agents, each interrogating a different
+#' table.
+#' 
+#' First up, is `agent_1`:
+#' 
+#' ```r
 #' agent_1 <-
 #'   create_agent(
-#'     tbl = small_table,
-#'     label = "An example.",
-#'     actions = al
+#'     tbl = tbl_1,
+#'     tbl_name = "tbl_1",
+#'     label = "Example table 1."
 #'   ) %>%
-#'   col_vals_gt(
-#'     columns = vars(date_time),
-#'     value = vars(date),
-#'     na_pass = TRUE
-#'   ) %>%
-#'   col_vals_gt(
-#'     columns = vars(b), 
-#'     value = vars(g),
-#'     na_pass = TRUE
-#'   ) %>%
-#'   rows_distinct() %>%
-#'   col_vals_equal(
-#'     columns = vars(d), 
-#'     value = vars(d),
-#'     na_pass = TRUE
-#'   ) %>%
-#'   col_vals_between(
-#'     columns = vars(c), 
-#'     left = vars(a), right = vars(d)
-#'   ) %>%
-#'   col_vals_not_between(
-#'     columns = vars(c),
-#'     left = 10, right = 20,
-#'     na_pass = TRUE
-#'   ) %>%
-#'   rows_distinct(columns = vars(d, e, f)) %>%
-#'   col_is_integer(columns = vars(a)) %>%
+#'   col_vals_gt(columns = vars(a), value = 4) %>%
 #'   interrogate()
 #' ```
 #' 
-#' The second agent, `agent_2`, retains all of the steps of `agent_1` and adds
-#' two more (the last of which is inactive).
+#' Then, `agent_2`:
 #' 
-#' ```{r}
-#' agent_2 <- 
-#'   agent_1 %>%
-#'   col_exists(columns = vars(date, date_time)) %>%
-#'   col_vals_regex(
-#'     columns = vars(b), 
-#'     regex = "[0-9]-[a-z]{3}-[0-9]{3}",
-#'     active = FALSE
+#' ```r
+#' agent_2 <-
+#'   create_agent(
+#'     tbl = tbl_2,
+#'     tbl_name = "tbl_2",
+#'     label = "Example table 2."
 #'   ) %>%
+#'   col_is_character(columns = vars(b)) %>%
 #'   interrogate()
 #' ```
 #' 
-#' The third agent, `agent_3`, adds a single validation step, removes the fifth
-#' one, and deactivates the first.
+#' Now, we'll combine the two agents into a *multiagent* with the
+#' `create_multiagent()` function. Printing the `"ptblank_multiagent"` object
+#' displays the multiagent report with its default options (i.e., a 'long'
+#' report view).
 #' 
-#' ```{r}
-#' agent_3 <- 
-#'   agent_2 %>%
-#'   col_vals_in_set(
-#'     columns = vars(f),
-#'     set = c("low", "mid", "high")
-#'   ) %>%
-#'   remove_steps(i = 5) %>%
-#'   deactivate_steps(i = 1) %>%
-#'   interrogate()
+#' ```r
+#' multiagent <- create_multiagent(agent_1, agent_2)
+#'   
+#' multiagent
 #' ```
 #' 
-#' The fourth and final agent, `agent_4`, reactivates steps 1 and 10, and
-#' removes the sixth step.
+#' \if{html}{
+#' \out{
+#' `r pb_get_image_tag(file = "man_create_multiagent_1.png")`
+#' }
+#' }
 #' 
-#' ```{r}
-#' agent_4 <-
-#'   agent_3 %>%
-#'   activate_steps(i = 1) %>%
-#'   activate_steps(i = 10) %>%
-#'   remove_steps(i = 6) %>%
-#'   interrogate()
-#' ```
-#' 
-#' While all the agents are slightly different from each other, we can still get
-#' a combined report of them by creating a 'multiagent'.
-#' 
-#' ```{r}
-#' multiagent <-
-#'   create_multiagent(
-#'     agent_1, agent_2, agent_3, agent_4
-#'   )
-#' ```
-#' 
-#' Calling `multiagent` in the console prints the multiagent report. But we can
-#' get a `gt_tbl` object with the `get_multiagent_report()` function.
-#' 
-#' ```{r}
-#' report <- get_multiagent_report(multiagent)
-#' ```
-#' 
-#' ```{r}
-#' class(report)
-#' ```
-#' 
-#' @section Figures:
-#' \if{html}{\figure{man_create_multiagent_1.png}{options: width=100\%}}
+#' To take advantage of more display options, we could use the
+#' [get_multiagent_report()] function. The added functionality there allows for
+#' a 'wide' view of the data (useful for monitoring validations of the same
+#' table over repeated interrogations), the ability to modify the title of the
+#' multiagent report, and a means to export the report to HTML (via
+#' [export_report()]).
 #' 
 #' @family The multiagent
 #' @section Function ID:

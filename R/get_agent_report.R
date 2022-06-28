@@ -147,51 +147,102 @@
 #' @return A `ptblank_agent_report` object if `display_table = TRUE` or a tibble
 #'   if `display_table = FALSE`.
 #' 
-#' @examples
-#' # Create a simple table with a
-#' # column of numerical values
-#' tbl <- 
-#'   dplyr::tibble(a = c(5, 7, 8, 5))
+#' @section Examples:
 #' 
-#' # Validate that values in column
-#' # `a` are always greater than 4
+#' For the example here, we'll use a simple table with a single numerical column
+#' `a`.
+#' 
+#' ```{r}
+#' tbl <- dplyr::tibble(a = c(5, 7, 8, 5))
+#' 
+#' tbl
+#' ```
+#' 
+#' Let's create an *agent* and validate that values in column `a` are always
+#' greater than `4`.
+#' 
+#' ```{r}
 #' agent <-
-#'   create_agent(tbl = tbl) %>%
+#'   create_agent(
+#'     tbl = tbl,
+#'     tbl_name = "small_table",
+#'     label = "An example."
+#'   ) %>%
 #'   col_vals_gt(columns = vars(a), value = 4) %>%
 #'   interrogate()
+#' ```
 #' 
-#' # Get a tibble-based report from the
-#' # agent by using `get_agent_report()`
-#' # with `display_table = FALSE`
-#' agent %>%
-#'   get_agent_report(display_table = FALSE)
-#'   
-#' # View a the report by printing the
-#' # `agent` object anytime, but, return a
-#' # gt table object by using this with
-#' # `display_table = TRUE` (the default)
+#' We can get a tibble-based report from the agent by using `get_agent_report()`
+#' with `display_table = FALSE`.
+#' 
+#' ```{r}
+#' agent %>% get_agent_report(display_table = FALSE)
+#' ```
+#'
+#' The full-featured display-table-based report can be viewed by printing the
+#' `agent` object, but, we can get a `"ptblank_agent_report"` object returned to
+#' us when using `display_table = TRUE` (the default for `get_agent_report`).
+#' 
+#' ```r
 #' report <- get_agent_report(agent)
-#' class(report)
 #' 
-#' # What can you do with the report?
-#' # Print it from an R Markdown code,
-#' # use it in an email, put it in a
-#' # webpage, or further modify it with
-#' # the **gt** package
+#' report
+#' ```
 #' 
-#' # The agent report as a **gt** display
-#' # table comes in two sizes: "standard"
-#' # (the default) and "small"
+#' \if{html}{
+#' \out{
+#' `r pb_get_image_tag(file = "man_get_agent_report_1.png")`
+#' }
+#' }
+#' 
+#' What can you do with the `report` object? Print it at will wherever, and, it
+#' can serve as an input to the [export_report()] function.
+#' 
+#' However, the better reason to use `get_agent_report()` over just printing the
+#' agent for display-table purposes is to make use of the different display
+#' options.
+#' 
+#' The agent report as a **gt** display table comes in two sizes: `"standard"`
+#' (the default, 875px wide) and `"small"` (575px wide). Let's take a look at
+#' the smaller-sized version of the report.
+#' 
+#' ```r
 #' small_report <- 
 #'   get_agent_report(
 #'     agent = agent,
 #'     size = "small"
 #'   )
+#'   
+#' small_report
+#' ```
 #' 
-#' class(small_report)
+#' \if{html}{
+#' \out{
+#' `r pb_get_image_tag(file = "man_get_agent_report_2.png")`
+#' }
+#' }
 #' 
-#' # The standard report is 875px wide
-#' # the small one is 575px wide
+#' We can use our own title by supplying it to the `title` argument, or, use
+#' a special keyword like `":tbl_name:"` to get the table name (set in the
+#' [create_agent()] call) as the title.
+#' 
+#' ```r
+#' report_title <- get_agent_report(agent, title = ":tbl_name:")
+#' 
+#' report_title
+#' ```
+#' 
+#' \if{html}{
+#' \out{
+#' `r pb_get_image_tag(file = "man_get_agent_report_3.png")`
+#' }
+#' }
+#' 
+#' There are more options! You can change the language of the display table with
+#' the `lang` argument (this overrides the language set in [create_agent()]),
+#' validation steps can be rearranged using the `arrange_by` argument, and we
+#' can also apply some filtering with the `keep` argument in
+#' `get_agent_report()`.
 #' 
 #' @family Interrogate and Report
 #' @section Function ID:

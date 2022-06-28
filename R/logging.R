@@ -94,20 +94,16 @@
 #' @return Nothing is returned however log files may be written in very specific
 #'   conditions.
 #' 
-#' @examples 
-#' # We can create an `action_levels`
-#' # object that has a threshold for
-#' # the `warn` state, and, an
-#' # associated function that should
-#' # be invoked whenever the `warn`
-#' # state is entered. Here, the
-#' # function call with `log4r_step()`
-#' # will be invoked whenever there
-#' # is one failing test unit. It's
-#' # important to match things up here;
-#' # notice that `warn_at` is given a
-#' # threshold and the list of functions
-#' # given to `fns` has a `warn` component
+#' @section Examples:
+#' 
+#' For the example provided here, we'll use the included `small_table` dataset.
+#' We are also going to create an `action_levels()` list object since this is
+#' useful for demonstrating a logging scenario. It will have a threshold for
+#' the `warn` state, and, an associated function that should be invoked
+#' whenever the `warn` state is entered. Here, the function call with
+#' `log4r_step()` will be invoked whenever there is one failing test unit. 
+#' 
+#' ```{r}
 #' al <-
 #'   action_levels(
 #'     warn_at = 1,
@@ -117,53 +113,56 @@
 #'       )
 #'     )
 #'   )
+#' ```
 #' 
-#' # Printing `al` will show us the
-#' # settings for the
-#' # `action_levels` object:
+#' Within the [action_levels()]-produced object, it's important to match things
+#' up: notice that `warn_at` is given a threshold and the list of functions
+#' given to `fns` has a `warn` component.
+#' 
+#' Printing `al` will show us the settings for the `action_levels` object:
+#' 
+#' ```{r}
 #' al
+#' ```
 #' 
-#' # Let's create an agent with
-#' # `small_table` as the target
-#' # table, apply the `action_levels`
-#' # object created above as `al`,
-#' # add two validation steps, and
-#' # then `interrogate()` the data
+#' Let's create an agent with `small_table` as the target table. We'll apply the
+#' `action_levels` object created above as `al`, add two validation steps, and
+#' then [interrogate()] the data.
+#' 
+#' ```r
 #' agent <- 
 #'   create_agent(
 #'     tbl = ~ small_table,
 #'     tbl_name = "small_table",
+#'     label = "An example.",
 #'     actions = al
 #'   ) %>%
 #'   col_vals_gt(columns = vars(d), 300) %>%
-#'   col_vals_in_set(
-#'     columns = vars(f), c("low", "high")
-#'   ) %>%
+#'   col_vals_in_set(columns = vars(f), c("low", "high")) %>%
 #'   interrogate()
 #' 
-#' # From the agent report, we can
-#' # see that both steps have yielded
-#' # warnings upon interrogation
-#' # (i.e., filled yellow circles
-#' # in the `W` column).
+#' agent
+#' ```
 #' 
-#' # We can see this more directly
-#' # by inspecting the `warn`
-#' # component of the agent's x-list:
-#' get_agent_x_list(agent)$warn
-#' 
-#' # Upon entering the `warn` state
-#' # in each validation step during
-#' # interrogation, the `log4r_step()`
-#' # function call was invoked! This
-#' # will generate an `"example_log"`
-#' # file in the working directory
-#' # and log entries will be appended
-#' # to the file
-#' 
-#' if (file.exists("example_log")) {
-#'   file.remove("example_log")
+#' \if{html}{
+#' \out{
+#' `r pb_get_image_tag(file = "man_log4r_step_1.png")`
 #' }
+#' }
+#' 
+#' From the agent report, we can see that both steps have yielded warnings upon
+#' interrogation (i.e., filled yellow circles in the `W` column).
+#' 
+#' What's not immediately apparent is that when entering the `warn` state
+#' in each validation step during interrogation, the `log4r_step()` function
+#' call was twice invoked! This generated an `"example_log"` file in the working
+#' directory (since it was not present before the interrogation) and log entries
+#' were appended to the file. Here are the contents of the file:
+#' 
+#' ```
+#' WARN  [2022-06-28 10:06:01] Step 1 exceeded the WARN failure threshold (f_failed = 0.15385) ['col_vals_gt']
+#' WARN  [2022-06-28 10:06:01] Step 2 exceeded the WARN failure threshold (f_failed = 0.15385) ['col_vals_in_set']
+#' ```
 #' 
 #' @family Logging
 #' @section Function ID:

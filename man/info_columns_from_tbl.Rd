@@ -36,49 +36,74 @@ Each column that matches across tables (i.e., the \code{tbl} and the target tabl
 of the informant) will have a new entry for the \code{"info"} property. Empty or
 missing info text will be pruned from \code{tbl}.
 }
-\section{Function ID}{
+\section{Examples}{
 
-3-3
-}
 
-\examples{
-# Create a pointblank `informant`
-# object with `create_informant()`;
-# we can specify a `tbl` with the
-# `~` followed by a statement that
-# gets the `game_revenue` dataset
-informant <- 
+Create a pointblank \code{informant} object with \code{\link[=create_informant]{create_informant()}}. We can
+specify a \code{tbl} with the \code{~} followed by a statement that gets the
+\code{game_revenue} dataset.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- 
   create_informant(
     tbl = ~ game_revenue,
     tbl_name = "game_revenue",
     label = "An example."
   )
+}\if{html}{\out{</div>}}
 
-# We can add *info text* to describe
-# the columns in the table by using
-# information in another table; the
-# `game_revenue_info` dataset contains
-# metadata for `game_revenue`
+We can add \emph{info text} to describe the data in the various columns of the
+table by using \code{\link[=info_columns]{info_columns()}} or information in another table (with
+\code{\link[=info_columns_from_tbl]{info_columns_from_tbl()}}). Here, we'll do the latter. The
+\code{game_revenue_info} dataset is included in \strong{pointblank} and it contains
+metadata for \code{game_revenue}.
 
-game_revenue_info
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{game_revenue_info
+}\if{html}{\out{</div>}}
 
-# The `info_columns_from_tbl()`
-# function takes a table object
-# where the first column has the
-# column names and the second
-# contains the *info text*
-informant <-
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 11 × 2
+##    column           info                                                        
+##    <chr>            <chr>                                                       
+##  1 player_id        A `character` column with unique identifiers for each user/…
+##  2 session_id       A `character` column that contains unique identifiers for e…
+##  3 session_start    A date-time column that indicates when the session (contain…
+##  4 time             A date-time column that indicates exactly when the player p…
+##  5 item_type        A `character` column that provides the class of the item pu…
+##  6 item_name        A `character` column that provides the name of the item pur…
+##  7 item_revenue     A `numeric` column with the revenue amounts per item purcha…
+##  8 session_duration A `numeric` column that states the length of the session (i…
+##  9 start_day        A `Date` column that provides the date of first login for t…
+## 10 acquisition      A `character` column that provides the method of acquisitio…
+## 11 country          A `character` column that provides the probable country of …
+}\if{html}{\out{</div>}}
+
+The \code{info_columns_from_tbl()} function takes a table object where the first
+column has the column names and the second contains the \emph{info text}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <-
   informant \%>\%
-  info_columns_from_tbl(
-    tbl = game_revenue_info
-  )
+  info_columns_from_tbl(tbl = game_revenue_info)
+}\if{html}{\out{</div>}}
 
-# We can continue to add more *info
-# text* since the process is additive;
-# the `info_columns_from_tbl()`
-# function populates the `info`
-# subsection
-informant <-
+Upon printing the \code{informant} object, we see the additions made to the
+'Columns' section by the \code{info_columns_from_tbl(tbl = game_revenue_info)}
+call.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant
+}\if{html}{\out{</div>}}
+
+\if{html}{
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_info_columns_from_tbl_1.png" style="width:100\%;">
+}
+}
+
+We can continue to add more \emph{info text} to describe the columns since the
+process is additive. The \code{info_columns_from_tbl()} function populates the
+\code{info} subsection and any calls of \code{\link[=info_columns]{info_columns()}} that also target a \code{info}
+subsection will append text. Here, we'll add content for the \code{item_revenue}
+and \code{acquisition} columns and view the updated report.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <-
   informant \%>\%
   info_columns(
     columns = "item_revenue",
@@ -86,7 +111,7 @@ informant <-
   ) \%>\%
   info_columns(
     columns = "acquisition",
-    `top list` = "{top5_aq}"
+    `top list` = "\{top5_aq\}"
   ) \%>\%
   info_snippet(
     snippet_name = "top5_aq",
@@ -94,7 +119,21 @@ informant <-
   ) \%>\%
   incorporate()
 
+informant
+}\if{html}{\out{</div>}}
+
+\if{html}{
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_info_columns_from_tbl_2.png" style="width:100\%;">
 }
+}
+}
+
+\section{Function ID}{
+
+3-3
+}
+
 \seealso{
 The \code{\link[=info_columns]{info_columns()}} function, which allows for manual entry of
 \emph{info text}.

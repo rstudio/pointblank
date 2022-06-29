@@ -127,34 +127,28 @@ done when using the \code{\link[=incorporate]{incorporate()}} function. Thus, th
 maintained in the YAML representation and is never written in processed form.
 }
 
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_info_section_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
+Create a pointblank \code{informant} object with \code{\link[=create_informant]{create_informant()}}. We can
+specify a \code{tbl} with the \code{~} followed by a statement that gets the
+\code{small_table} dataset.
 
-3-4
-}
-
-\examples{
-# Create a pointblank `informant`
-# object with `create_informant()`;
-# we can specify a `tbl` with the
-# `~` followed by a statement that
-# gets the `small_table` dataset
-informant <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- 
   create_informant(
     tbl = ~ small_table,
     tbl_name = "small_table",
     label = "An example."
   )
+}\if{html}{\out{</div>}}
 
-# The `informant` object has the 'table'
-# and 'columns' sections; we can create
-# entirely different sections with their
-# own properties using `info_section()`
-informant <-
+An \code{informant} typically has the 'Table' and 'Columns' sections. We can also
+create entirely different sections (that follow these) with their
+own properties using the \code{info_section()} function. Let's create a subsection
+in the report called \code{"Notes"} and add text to two parts of that:
+\code{"creation"} and \code{"usage"}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <-
   informant \%>\%
   info_section(
     section_name = "Notes",
@@ -162,33 +156,26 @@ informant <-
     usage = "`small_table \%>\% dplyr::glimpse()`"
   ) \%>\%
   incorporate()
+}\if{html}{\out{</div>}}
 
-# Upon printing the `informant` object, we see
-# the addition of the 'Notes' section and its
-# own information
+Upon printing the \code{informant} object, we see the addition of the 'Notes'
+section and its own information.
 
-if (interactive()) {
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant
+}\if{html}{\out{</div>}}
 
-# The `informant` object can be written to
-# a YAML file with the `yaml_write()`
-# function; then, information can
-# be directly edited or modified
-yaml_write(
-  informant = informant,
-  filename = "informant.yml"
-)
-
-# The YAML file can then be read back
-# into an informant object with the
-# `yaml_read_informant()` function
-informant <-
-  yaml_read_informant(
-    filename = "informant.yml"
-  )
-
+\if{html}{
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_info_section_1.png" style="width:100\%;">
+}
+}
 }
 
+\section{Function ID}{
+
+3-4
 }
+
 \seealso{
 Other Information Functions: 
 \code{\link{info_columns_from_tbl}()},

@@ -17,21 +17,16 @@ The \code{snip_highest()} function can be used as an \code{\link[=info_snippet]{
 (i.e., provided to \code{fn}) to get the highest numerical, time value, or
 alphabetical value from a column in the target table.
 }
-\section{Function ID}{
+\section{Examples}{
 
-3-9
-}
 
-\examples{
-# Generate an informant object, add
-# a snippet with `info_snippet()`
-# and `snip_highest()` (giving us a
-# method to get the highest value in
-# column `a`); define a location for
-# the snippet result in `{ }` and
-# then `incorporate()` the snippet
-# into the info text
-informant <- 
+Generate an informant object, add a snippet with \code{\link[=info_snippet]{info_snippet()}} and
+\code{snip_highest()} (giving us a method to get the highest value in column \code{a});
+define a location for the snippet result in \code{{ }} and then \code{\link[=incorporate]{incorporate()}}
+the snippet into the info text. Note here that the order of the
+\code{\link[=info_columns]{info_columns()}} and \code{\link[=info_snippet]{info_snippet()}} calls doesn't matter.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- 
   create_informant(
     tbl = ~ small_table,
     tbl_name = "small_table",
@@ -39,18 +34,32 @@ informant <-
   ) \%>\% 
   info_columns(
     columns = "a",
-    `Highest Value` = "Highest value is {highest_a}."
+    `Highest Value` = "Highest value is \{highest_a\}."
   ) \%>\%
   info_snippet(
     snippet_name = "highest_a",
     fn = snip_highest(column = "a")
   ) \%>\%
   incorporate()
+}\if{html}{\out{</div>}}
 
-# We can print the `informant` object
-# to see the information report
+We can print the \code{informant} object to see the information report.
 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant
+}\if{html}{\out{</div>}}
+
+\if{html}{
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_snip_highest_1.png" style="width:100\%;">
 }
+}
+}
+
+\section{Function ID}{
+
+3-9
+}
+
 \seealso{
 Other Information Functions: 
 \code{\link{info_columns_from_tbl}()},

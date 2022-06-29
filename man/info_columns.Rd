@@ -141,6 +141,57 @@ done when using the \code{\link[=incorporate]{incorporate()}} function. Thus, th
 maintained in the YAML representation and is never written in processed form.
 }
 
+\section{Examples}{
+
+
+Create a pointblank \code{informant} object with \code{\link[=create_informant]{create_informant()}}. We can
+specify a \code{tbl} with the \code{~} followed by a statement that gets the
+\code{small_table} dataset.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- 
+  create_informant(
+    tbl = ~ small_table,
+    tbl_name = "small_table",
+    label = "An example."
+  )
+}\if{html}{\out{</div>}}
+
+We can add \emph{info text} to describe the table with the various \verb{⁠info_*(}
+functions. In this example, we'll use \code{info_columns()} multiple times to
+describe some of the columns in the \code{small_table} dataset. Note here that
+\emph{info text} calls are additive to the existing content inside of the
+various subsections (i.e., the text will be appended and won't overwrite
+existing if it lands in the same area).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <-
+  informant \%>\%
+  info_columns(
+    columns = vars(a),
+    info = "In the range of 1 to 10. ((SIMPLE))"
+  ) \%>\%
+  info_columns(
+    columns = starts_with("date"),
+    info = "Time-based values (e.g., `Sys.time()`)."
+  ) \%>\%
+  info_columns(
+    columns = "date",
+    info = "The date part of `date_time`. ((CALC))"
+  )
+}\if{html}{\out{</div>}}
+
+Upon printing the \code{informant} object, we see the additions made to the
+'Columns' section.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant
+}\if{html}{\out{</div>}}
+
+\if{html}{
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_info_columns_1.png" style="width:100\%;">
+}
+}
+}
+
 \section{Figures}{
 
 \if{html}{\figure{man_info_columns_1.png}{options: width=100\%}}
@@ -151,64 +202,6 @@ maintained in the YAML representation and is never written in processed form.
 3-2
 }
 
-\examples{
-# Create a pointblank `informant`
-# object with `create_informant()`;
-# we can specify a `tbl` with the
-# `~` followed by a statement that
-# gets the `small_table` dataset
-informant <- 
-  create_informant(
-    tbl = ~ small_table,
-    tbl_name = "small_table",
-    label = "An example."
-  )
-
-# We can add *info text* to describe
-# the columns in the table with multiple
-# `info_columns()` calls; the *info text*
-# calls are additive to existing content
-# in subsections
-informant <-
-  informant \%>\%
-  info_columns(
-    columns = vars(a),
-    info = "In the range of 1 to 10. (SIMPLE)"
-  ) \%>\%
-  info_columns(
-    columns = starts_with("date"),
-    info = "Time-based values (e.g., `Sys.time()`)."
-  ) \%>\%
-  info_columns(
-    columns = "date",
-    info = "The date part of `date_time`. (CALC)"
-  )
-
-# Upon printing the `informant` object, we see
-# the additions made to the 'Columns' section
-
-if (interactive()) {
-
-# The `informant` object can be written to
-# a YAML file with the `yaml_write()`
-# function; then, information can
-# be directly edited or modified
-yaml_write(
-  informant = informant,
-  filename = "informant.yml"
-)
-
-# The YAML file can then be read back
-# into an informant object with the
-# `yaml_read_informant()` function
-informant <-
-  yaml_read_informant(
-    filename = "informant.yml"
-  )
-
-}
-
-}
 \seealso{
 Other Information Functions: 
 \code{\link{info_columns_from_tbl}()},

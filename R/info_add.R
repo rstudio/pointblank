@@ -117,27 +117,32 @@
 #' 
 #' @param x An informant object of class `ptblank_informant`.
 #' @param ... Information entries as a series of named arguments. The names
-#'   refer to subsection titles within the `TABLE` section and the RHS is the
-#'   *info text* (informational text that can be written as Markdown and further
-#'   styled with *Text Tricks*).
+#'   refer to subsection titles within the `TABLE` section and the values are
+#'   the *info text* (informational text that can be written as Markdown and
+#'   further styled with *Text Tricks*).
 #' 
 #' @return A `ptblank_informant` object.
 #' 
-#' @examples 
-#' # Create a pointblank `informant`
-#' # object with `create_informant()`;
-#' # we can specify a `tbl` with the
-#' # `~` followed by a statement that
-#' # gets the `small_table` dataset
+#' @section Examples:
+#'  
+#' Create a pointblank `informant` object with [create_informant()]. We can
+#' specify a `tbl` with the `~` followed by a statement that gets the
+#' `small_table` dataset.
+#' 
+#' ```r
 #' informant <- 
 #'   create_informant(
 #'     tbl = ~ small_table,
 #'     tbl_name = "small_table",
 #'     label = "An example."
 #'   )
+#' ```
 #' 
-#' # We can add *info text* to describe
-#' # the table with `info_tabular()`
+#' We can add *info text* to describe the table with the various `info_*()`
+#' functions. In this example, we'll use [info_tabular()] to generally describe
+#' the `small_table` dataset.
+#' 
+#' ```r
 #' informant <-
 #'   informant %>%
 #'   info_tabular(
@@ -147,33 +152,21 @@
 #'       "- [https://rich-iannone.github.io/pointblank/]()"
 #'      )
 #'    )
+#' ```
 #' 
-#' # Upon printing the `informant` object, we see
-#' # the additions made to the 'Table' section
+#' Upon printing the `informant` object, we see the additions made to the
+#' 'Table' section of the report.
 #' 
-#' if (interactive()) {
+#' ```r
+#' informant
+#' ```
 #' 
-#' # The `informant` object can be written to
-#' # a YAML file with the `yaml_write()`
-#' # function; then information can
-#' # be directly edited or modified
-#' yaml_write(
-#'   informant = informant,
-#'   filename = "informant.yml"
-#' )
-#' 
-#' # The YAML file can then be read back
-#' # into an informant object with the
-#' # `yaml_read_informant()` function
-#' informant <-
-#'   yaml_read_informant(
-#'     filename = "informant.yml"
-#'   )
-#' 
+#' \if{html}{
+#' \out{
+#' `r pb_get_image_tag(file = "man_info_tabular_1.png")`
 #' }
-#'
-#' @section Figures:
-#' \if{html}{\figure{man_info_tabular_1.png}{options: width=100\%}}
+#' }
+#' 
 #'
 #' @family Information Functions
 #' @section Function ID:
@@ -345,29 +338,34 @@ info_tabular <- function(
 #' 
 #' @return A `ptblank_informant` object.
 #' 
-#' @examples 
-#' # Create a pointblank `informant`
-#' # object with `create_informant()`;
-#' # we can specify a `tbl` with the
-#' # `~` followed by a statement that
-#' # gets the `small_table` dataset
+#' @section Examples:
+#'  
+#' Create a pointblank `informant` object with [create_informant()]. We can
+#' specify a `tbl` with the `~` followed by a statement that gets the
+#' `small_table` dataset.
+#' 
+#' ```r
 #' informant <- 
 #'   create_informant(
 #'     tbl = ~ small_table,
 #'     tbl_name = "small_table",
 #'     label = "An example."
 #'   )
+#' ```
 #' 
-#' # We can add *info text* to describe
-#' # the columns in the table with multiple
-#' # `info_columns()` calls; the *info text*
-#' # calls are additive to existing content
-#' # in subsections
+#' We can add *info text* to describe the table with the various `⁠info_*(`
+#' functions. In this example, we'll use `info_columns()` multiple times to
+#' describe some of the columns in the `small_table` dataset. Note here that
+#' *info text* calls are additive to the existing content inside of the
+#' various subsections (i.e., the text will be appended and won't overwrite
+#' existing if it lands in the same area).
+#' 
+#' ```r
 #' informant <-
 #'   informant %>%
 #'   info_columns(
 #'     columns = vars(a),
-#'     info = "In the range of 1 to 10. (SIMPLE)"
+#'     info = "In the range of 1 to 10. ((SIMPLE))"
 #'   ) %>%
 #'   info_columns(
 #'     columns = starts_with("date"),
@@ -375,31 +373,21 @@ info_tabular <- function(
 #'   ) %>%
 #'   info_columns(
 #'     columns = "date",
-#'     info = "The date part of `date_time`. (CALC)"
+#'     info = "The date part of `date_time`. ((CALC))"
 #'   )
+#' ```
 #' 
-#' # Upon printing the `informant` object, we see
-#' # the additions made to the 'Columns' section
+#' Upon printing the `informant` object, we see the additions made to the
+#' 'Columns' section.
 #' 
-#' if (interactive()) {
+#' ```r
+#' informant
+#' ```
 #' 
-#' # The `informant` object can be written to
-#' # a YAML file with the `yaml_write()`
-#' # function; then, information can
-#' # be directly edited or modified
-#' yaml_write(
-#'   informant = informant,
-#'   filename = "informant.yml"
-#' )
-#' 
-#' # The YAML file can then be read back
-#' # into an informant object with the
-#' # `yaml_read_informant()` function
-#' informant <-
-#'   yaml_read_informant(
-#'     filename = "informant.yml"
-#'   )
-#' 
+#' \if{html}{
+#' \out{
+#' `r pb_get_image_tag(file = "man_info_columns_1.png")`
+#' }
 #' }
 #' 
 #' @section Figures:
@@ -510,43 +498,61 @@ info_columns <- function(
 #' 
 #' @return A `ptblank_informant` object.
 #' 
-#' @examples 
-#' # Create a pointblank `informant`
-#' # object with `create_informant()`;
-#' # we can specify a `tbl` with the
-#' # `~` followed by a statement that
-#' # gets the `game_revenue` dataset
+#' @section Examples:
+#' 
+#' Create a pointblank `informant` object with [create_informant()]. We can
+#' specify a `tbl` with the `~` followed by a statement that gets the
+#' `game_revenue` dataset.
+#' 
+#' ```r
 #' informant <- 
 #'   create_informant(
 #'     tbl = ~ game_revenue,
 #'     tbl_name = "game_revenue",
 #'     label = "An example."
 #'   )
+#' ```
 #' 
-#' # We can add *info text* to describe
-#' # the columns in the table by using
-#' # information in another table; the
-#' # `game_revenue_info` dataset contains
-#' # metadata for `game_revenue`
+#' We can add *info text* to describe the data in the various columns of the
+#' table by using [info_columns()] or information in another table (with
+#' [info_columns_from_tbl()]). Here, we'll do the latter. The
+#' `game_revenue_info` dataset is included in **pointblank** and it contains
+#' metadata for `game_revenue`.
 #' 
+#' ```{r}
 #' game_revenue_info
+#' ```
 #' 
-#' # The `info_columns_from_tbl()`
-#' # function takes a table object
-#' # where the first column has the
-#' # column names and the second
-#' # contains the *info text*
+#' The `info_columns_from_tbl()` function takes a table object where the first
+#' column has the column names and the second contains the *info text*.
+#' 
+#' ```r
 #' informant <-
 #'   informant %>%
-#'   info_columns_from_tbl(
-#'     tbl = game_revenue_info
-#'   )
+#'   info_columns_from_tbl(tbl = game_revenue_info)
+#' ```
 #' 
-#' # We can continue to add more *info
-#' # text* since the process is additive;
-#' # the `info_columns_from_tbl()`
-#' # function populates the `info`
-#' # subsection
+#' Upon printing the `informant` object, we see the additions made to the
+#' 'Columns' section by the `info_columns_from_tbl(tbl = game_revenue_info)`
+#' call.
+#' 
+#' ```r
+#' informant
+#' ```
+#' 
+#' \if{html}{
+#' \out{
+#' `r pb_get_image_tag(file = "man_info_columns_from_tbl_1.png")`
+#' }
+#' }
+#' 
+#' We can continue to add more *info text* to describe the columns since the
+#' process is additive. The `info_columns_from_tbl()` function populates the
+#' `info` subsection and any calls of [info_columns()] that also target a `info`
+#' subsection will append text. Here, we'll add content for the `item_revenue`
+#' and `acquisition` columns and view the updated report.
+#' 
+#' ```r
 #' informant <-
 #'   informant %>%
 #'   info_columns(
@@ -562,6 +568,15 @@ info_columns <- function(
 #'     fn = snip_list(column = "acquisition")
 #'   ) %>%
 #'   incorporate()
+#' 
+#' informant
+#' ```
+#' 
+#' \if{html}{
+#' \out{
+#' `r pb_get_image_tag(file = "man_info_columns_from_tbl_2.png")`
+#' }
+#' }
 #' 
 #' @family Information Functions
 #' @section Function ID:
@@ -750,23 +765,28 @@ check_info_columns_tbl <- function(tbl) {
 #' 
 #' @return A `ptblank_informant` object.
 #' 
-#' @examples 
-#' # Create a pointblank `informant`
-#' # object with `create_informant()`;
-#' # we can specify a `tbl` with the
-#' # `~` followed by a statement that
-#' # gets the `small_table` dataset
+#' @section Examples:
+#' 
+#' Create a pointblank `informant` object with [create_informant()]. We can
+#' specify a `tbl` with the `~` followed by a statement that gets the
+#' `small_table` dataset.
+#' 
+#' ```r
 #' informant <- 
 #'   create_informant(
 #'     tbl = ~ small_table,
 #'     tbl_name = "small_table",
 #'     label = "An example."
 #'   )
+#' ```
 #' 
-#' # The `informant` object has the 'table'
-#' # and 'columns' sections; we can create
-#' # entirely different sections with their
-#' # own properties using `info_section()`
+#' An `informant` typically has the 'Table' and 'Columns' sections. We can also
+#' create entirely different sections (that follow these) with their
+#' own properties using the `info_section()` function. Let's create a subsection
+#' in the report called `"Notes"` and add text to two parts of that:
+#' `"creation"` and `"usage"`.
+#' 
+#' ```r
 #' informant <-
 #'   informant %>%
 #'   info_section(
@@ -775,34 +795,20 @@ check_info_columns_tbl <- function(tbl) {
 #'     usage = "`small_table %>% dplyr::glimpse()`"
 #'   ) %>%
 #'   incorporate()
+#' ```
 #' 
-#' # Upon printing the `informant` object, we see
-#' # the addition of the 'Notes' section and its
-#' # own information
+#' Upon printing the `informant` object, we see the addition of the 'Notes'
+#' section and its own information.
 #' 
-#' if (interactive()) {
+#' ```r
+#' informant
+#' ```
 #' 
-#' # The `informant` object can be written to
-#' # a YAML file with the `yaml_write()`
-#' # function; then, information can
-#' # be directly edited or modified
-#' yaml_write(
-#'   informant = informant,
-#'   filename = "informant.yml"
-#' )
-#' 
-#' # The YAML file can then be read back
-#' # into an informant object with the
-#' # `yaml_read_informant()` function
-#' informant <-
-#'   yaml_read_informant(
-#'     filename = "informant.yml"
-#'   )
-#' 
+#' \if{html}{
+#' \out{
+#' `r pb_get_image_tag(file = "man_info_section_1.png")`
 #' }
-#' 
-#' @section Figures:
-#' \if{html}{\figure{man_info_section_1.png}{options: width=100\%}}
+#' }
 #'
 #' @family Information Functions
 #' @section Function ID:
@@ -1082,16 +1088,15 @@ info_snippet <- function(
 #'   
 #' @return A formula needed for [info_snippet()]'s `fn` argument.
 #' 
-#' @examples 
-#' # Generate an informant object, add
-#' # a snippet with `info_snippet()`
-#' # and `snip_list()` (giving us a
-#' # method to get a distinct list of
-#' # column values for column `f`);
-#' # define a location for the snippet
-#' # result in `{ }` and then
-#' # `incorporate()` the snippet into
-#' # the info text
+#' @section Examples:
+#'  
+#' Generate an informant object, add a snippet with [info_snippet()] and
+#' `snip_list()` (giving us a method to get a distinct list of column values for
+#' column `f`). Define a location for the snippet result in `{ }` and then
+#' [incorporate()] the snippet into the info text. Note here that the order of
+#' the [info_columns()] and [info_snippet()] calls doesn't matter.
+#' 
+#' ```r
 #' informant <- 
 #'   create_informant(
 #'     tbl = ~ small_table,
@@ -1107,9 +1112,19 @@ info_snippet <- function(
 #'     fn = snip_list(column = "f")
 #'   ) %>%
 #'   incorporate()
+#' ```
 #' 
-#' # We can print the `informant` object
-#' # to see the information report
+#' We can print the `informant` object to see the information report.
+#' 
+#' ```r
+#' informant
+#' ```
+#' 
+#' \if{html}{
+#' \out{
+#' `r pb_get_image_tag(file = "man_snip_list_1.png")`
+#' }
+#' }
 #' 
 #' @family Information Functions
 #' @section Function ID:
@@ -1294,15 +1309,15 @@ snip_list <- function(
 #'   
 #' @return A formula needed for [info_snippet()]'s `fn` argument.
 #' 
-#' @examples 
-#' # Generate an informant object, add
-#' # a snippet with `info_snippet()`
-#' # and `snip_stats()` (giving us a
-#' # method to get some summary stats for
-#' # column `a`); define a location for
-#' # the snippet result in `{ }` and
-#' # then `incorporate()` the snippet
-#' # into the info text
+#' @section Examples:
+#' 
+#' Generate an informant object, add a snippet with [info_snippet()] and
+#' `snip_stats()` (giving us a method to get some summary stats for column `d`).
+#' Define a location for the snippet result in `{ }` and then [incorporate()]
+#' the snippet into the info text. Note here that the order of the
+#' [info_columns()] and [info_snippet()] calls doesn't matter.
+#' 
+#' ```r
 #' informant <- 
 #'   create_informant(
 #'     tbl = ~ small_table,
@@ -1310,17 +1325,27 @@ snip_list <- function(
 #'     label = "An example."
 #'   ) %>% 
 #'   info_columns(
-#'     columns = "a",
-#'     `Stats` = "Stats (fivenum): {stats_a}."
+#'     columns = "d",
+#'     `Stats` = "Stats (fivenum): {stats_d}."
 #'   ) %>%
 #'   info_snippet(
-#'     snippet_name = "stats_a",
-#'     fn = snip_stats(column = "a")
+#'     snippet_name = "stats_d",
+#'     fn = snip_stats(column = "d")
 #'   ) %>%
 #'   incorporate()
+#' ```
 #' 
-#' # We can print the `informant` object
-#' # to see the information report
+#' We can print the `informant` object to see the information report.
+#' 
+#' ```r
+#' informant
+#' ```
+#' 
+#' \if{html}{
+#' \out{
+#' `r pb_get_image_tag(file = "man_snip_stats_1.png")`
+#' }
+#' }
 #' 
 #' @family Information Functions
 #' @section Function ID:
@@ -1357,15 +1382,15 @@ snip_stats <- function(
 #'   
 #' @return A formula needed for [info_snippet()]'s `fn` argument.
 #' 
-#' @examples 
-#' # Generate an informant object, add
-#' # a snippet with `info_snippet()`
-#' # and `snip_lowest()` (giving us a
-#' # method to get the lowest value in
-#' # column `a`); define a location for
-#' # the snippet result in `{ }` and
-#' # then `incorporate()` the snippet
-#' # into the info text
+#' @section Examples:
+#' 
+#' Generate an informant object, add a snippet with [info_snippet()] and
+#' `snip_lowest()` (giving us a method to get the lowest value in column `a`).
+#' Define a location for the snippet result in `{ }` and then [incorporate()]
+#' the snippet into the info text. Note here that the order of the
+#' [info_columns()] and [info_snippet()] calls doesn't matter.
+#' 
+#' ```r
 #' informant <- 
 #'   create_informant(
 #'     tbl = ~ small_table,
@@ -1381,9 +1406,19 @@ snip_stats <- function(
 #'     fn = snip_lowest(column = "a")
 #'   ) %>%
 #'   incorporate()
+#' ```
 #' 
-#' # We can print the `informant` object
-#' # to see the information report
+#' We can print the `informant` object to see the information report.
+#' 
+#' ```r
+#' informant
+#' ```
+#' 
+#' \if{html}{
+#' \out{
+#' `r pb_get_image_tag(file = "man_snip_lowest_1.png")`
+#' }
+#' }
 #' 
 #' @family Information Functions
 #' @section Function ID:
@@ -1415,15 +1450,15 @@ snip_lowest <- function(column) {
 #'   
 #' @return A formula needed for [info_snippet()]'s `fn` argument.
 #' 
-#' @examples 
-#' # Generate an informant object, add
-#' # a snippet with `info_snippet()`
-#' # and `snip_highest()` (giving us a
-#' # method to get the highest value in
-#' # column `a`); define a location for
-#' # the snippet result in `{ }` and
-#' # then `incorporate()` the snippet
-#' # into the info text
+#' @section Examples:
+#' 
+#' Generate an informant object, add a snippet with [info_snippet()] and
+#' `snip_highest()` (giving us a method to get the highest value in column `a`);
+#' define a location for the snippet result in `{ }` and then [incorporate()]
+#' the snippet into the info text. Note here that the order of the
+#' [info_columns()] and [info_snippet()] calls doesn't matter.
+#' 
+#' ```r
 #' informant <- 
 #'   create_informant(
 #'     tbl = ~ small_table,
@@ -1439,9 +1474,19 @@ snip_lowest <- function(column) {
 #'     fn = snip_highest(column = "a")
 #'   ) %>%
 #'   incorporate()
+#' ```
 #' 
-#' # We can print the `informant` object
-#' # to see the information report
+#' We can print the `informant` object to see the information report.
+#' 
+#' ```r
+#' informant
+#' ```
+#' 
+#' \if{html}{
+#' \out{
+#' `r pb_get_image_tag(file = "man_snip_highest_1.png")`
+#' }
+#' }
 #' 
 #' @family Information Functions
 #' @section Function ID:

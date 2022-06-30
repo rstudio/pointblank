@@ -417,7 +417,8 @@ key as a list member), the syntax closely follows the signature of the
 validation function. Here is an example of how a complex call of
 <code>col_vals_within_spec()</code> as a validation step is expressed in R code and in
 the corresponding YAML representation.</p>
-<p>R statement:</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+<p>R statement:</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/col_vals_within_spec.html">col_vals_within_spec</a></span><span class="op">(</span>
     columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>,
     spec <span class="op">=</span> <span class="st">"email"</span>,
@@ -428,7 +429,8 @@ the corresponding YAML representation.</p>
     label <span class="op">=</span> <span class="st">"The `col_vals_within_spec()` step."</span>,
     active <span class="op">=</span> <span class="cn">FALSE</span>
   <span class="op">)</span></code></pre><p></p></div>
-<p>YAML representation:</p><div class="sourceCode yaml"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">steps</span><span class="kw">:</span></span>
+<p>YAML representation:</p>
+<p></p><div class="sourceCode yaml"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">steps</span><span class="kw">:</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">col_vals_within_spec</span><span class="kw">:</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">columns</span><span class="kw">:</span><span class="at"> vars(a)</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">spec</span><span class="kw">:</span><span class="at"> email</span></span>
@@ -456,25 +458,27 @@ writing to disk by using the <code><a href="yaml_agent_string.html">yaml_agent_s
 that correspond to each of the specifications that can be tested. The
 following examples will validate that the <code>email_addresses</code> column has 5
 correct values (this is true if we get a subset of the data: the first five
-rows).</p><div class="sourceCode r"><pre><code><span class="va">spec_slice</span> <span class="op">&lt;-</span> <span class="va">specifications</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="op">]</span>
+rows).</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">spec_slice</span> <span class="op">&lt;-</span> <span class="va">specifications</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="op">]</span>
 
-<span class="va">spec_slice</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 5 × 12</span>
-<span class="co">##   isbn_numbers vin_numbers zip_codes credit_card_num… iban_austria swift_numbers</span>
-<span class="co">##   &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;            &lt;chr&gt;        &lt;chr&gt;        </span>
-<span class="co">## 1 978 1 85715… 4UZAANDH85… 99553     340000000000009  AT582774098… RBOSGGSX     </span>
-<span class="co">## 2 978-1-84159… JM1BL1S59A… 36264     378734493671000  AT220332087… RZTIAT22263  </span>
-<span class="co">## 3 978 1 84159… 1GCEK14R3W… 71660     6703444444444449 AT328650112… BCEELULL     </span>
-<span class="co">## 4 978 1 85715… 2B7JB21Y0X… 85225     670300000000000… AT193357281… MARKDEFF     </span>
-<span class="co">## 5 978 1 85715… 4UZAANDH85… 90309     4035501000000008 AT535755326… GENODEF1JEV  </span>
-<span class="co">## # … with 6 more variables: phone_numbers &lt;chr&gt;, email_addresses &lt;chr&gt;,</span>
-<span class="co">## #   urls &lt;chr&gt;, ipv4_addresses &lt;chr&gt;, ipv6_addresses &lt;chr&gt;, mac_addresses &lt;chr&gt;</span></code></pre></div>
-<div class="section">
+<span class="va">spec_slice</span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 5 × 12</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   isbn_numbers vin_numbers zip_codes credit_card_num… iban_austria swift_numbers</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;            &lt;chr&gt;        &lt;chr&gt;        </span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 978 1 85715… 4UZAANDH85… 99553     340000000000009  AT582774098… RBOSGGSX     </span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 978-1-84159… JM1BL1S59A… 36264     378734493671000  AT220332087… RZTIAT22263  </span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 978 1 84159… 1GCEK14R3W… 71660     6703444444444449 AT328650112… BCEELULL     </span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 978 1 85715… 2B7JB21Y0X… 85225     670300000000000… AT193357281… MARKDEFF     </span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 978 1 85715… 4UZAANDH85… 90309     4035501000000008 AT535755326… GENODEF1JEV  </span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 6 more variables: phone_numbers &lt;chr&gt;, email_addresses &lt;chr&gt;,</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="do">## #   urls &lt;chr&gt;, ipv4_addresses &lt;chr&gt;, ipv6_addresses &lt;chr&gt;, mac_addresses &lt;chr&gt;</span></span></code></pre><p></p></div><div class="section">
 <h3 id="a-using-an-agent-with-validation-functions-and-then-interrogate-">A: Using an <code>agent</code> with validation functions and then <code><a href="interrogate.html">interrogate()</a></code><a class="anchor" aria-label="anchor" href="#a-using-an-agent-with-validation-functions-and-then-interrogate-"></a></h3>
 
 
 <p>Validate that all values in the column <code>email_addresses</code> are correct. We'll
 determine if this validation has any failing test units (there are 5 test
-units, one for each row).</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span>
+units, one for each row).</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span>
   <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">spec_slice</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/col_vals_within_spec.html">col_vals_within_spec</a></span><span class="op">(</span>
     columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">email_addresses</span><span class="op">)</span>,
@@ -493,20 +497,21 @@ that corresponds to the validation step demonstrated here.</p>
 
 <p>This way of using validation functions acts as a data filter. Data is passed
 through but should <code><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop()</a></code> if there is a single test unit failing. The
-behavior of side effects can be customized with the <code>actions</code> option.</p><div class="sourceCode r"><pre><code><span class="va">spec_slice</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+behavior of side effects can be customized with the <code>actions</code> option.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">spec_slice</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/col_vals_within_spec.html">col_vals_within_spec</a></span><span class="op">(</span>
     columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">email_addresses</span><span class="op">)</span>,
     spec <span class="op">=</span> <span class="st">"email"</span>
   <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">email_addresses</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 5 × 1</span>
-<span class="co">##   email_addresses                                                          </span>
-<span class="co">##   &lt;chr&gt;                                                                    </span>
-<span class="co">## 1 test@test.com                                                            </span>
-<span class="co">## 2 mail+mail@example.com                                                    </span>
-<span class="co">## 3 mail.email@e.test.com                                                    </span>
-<span class="co">## 4 abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@letters-in-local.org</span>
-<span class="co">## 5 01234567890@numbers-in-local.net</span></code></pre></div>
-
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">email_addresses</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 5 × 1</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   email_addresses                                                          </span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;                                                                    </span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 test@test.com                                                            </span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 mail+mail@example.com                                                    </span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 mail.email@e.test.com                                                    </span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@letters-in-local.org</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 01234567890@numbers-in-local.net</span></span></code></pre><p></p></div>
 </div>
 
 <div class="section">
@@ -514,7 +519,8 @@ behavior of side effects can be customized with the <code>actions</code> option.
 
 
 <p>With the <code>expect_*()</code> form, we would typically perform one validation at a
-time. This is primarily used in <strong>testthat</strong> tests.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/col_vals_within_spec.html">expect_col_vals_within_spec</a></span><span class="op">(</span>
+time. This is primarily used in <strong>testthat</strong> tests.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/col_vals_within_spec.html">expect_col_vals_within_spec</a></span><span class="op">(</span>
   <span class="va">spec_slice</span>,
   columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">email_addresses</span><span class="op">)</span>,
   spec <span class="op">=</span> <span class="st">"email"</span>
@@ -526,12 +532,13 @@ time. This is primarily used in <strong>testthat</strong> tests.</p><div class="
 
 
 <p>With the <code>test_*()</code> form, we should get a single logical value returned to
-us.</p><div class="sourceCode r"><pre><code><span class="va">spec_slice</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+us.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">spec_slice</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/col_vals_within_spec.html">test_col_vals_within_spec</a></span><span class="op">(</span>
     columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">email_addresses</span><span class="op">)</span>,
     spec <span class="op">=</span> <span class="st">"email"</span>
-  <span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] TRUE</span></code></pre></div>
-
+  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span></code></pre><p></p></div>
 </div>
 
     </div>
@@ -590,7 +597,7 @@ us.</p><div class="sourceCode r"><pre><code><span class="va">spec_slice</span> <
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

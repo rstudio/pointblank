@@ -137,68 +137,72 @@ can be a data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spa
 
 
 <p>Get summary statistics for the <code>game_revenue</code> dataset that is included in the
-<strong>pointblank</strong> package.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/tt_summary_stats.html">tt_summary_stats</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">game_revenue</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 9 × 3</span>
-<span class="co">##   .param. item_revenue session_duration</span>
-<span class="co">##   &lt;chr&gt;          &lt;dbl&gt;            &lt;dbl&gt;</span>
-<span class="co">## 1 min             0                 3.2</span>
-<span class="co">## 2 p05             0.02              8.2</span>
-<span class="co">## 3 q_1             0.09             18.5</span>
-<span class="co">## 4 med             0.38             26.5</span>
-<span class="co">## 5 q_3             1.25             33.8</span>
-<span class="co">## 6 p95            22.0              39.5</span>
-<span class="co">## 7 max           143.               41  </span>
-<span class="co">## 8 iqr             1.16             15.3</span>
-<span class="co">## 9 range         143.               37.8</span></code></pre></div>
-
+<strong>pointblank</strong> package.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/tt_summary_stats.html">tt_summary_stats</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">game_revenue</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 9 × 3</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   .param. item_revenue session_duration</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;          &lt;dbl&gt;            &lt;dbl&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 min             0                 3.2</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 p05             0.02              8.2</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 q_1             0.09             18.5</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 med             0.38             26.5</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 q_3             1.25             33.8</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 p95            22.0              39.5</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 7 max           143.               41  </span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 8 iqr             1.16             15.3</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 9 range         143.               37.8</span></span></code></pre><p></p></div>
 <p>Table transformers work great in conjunction with validation functions. Let's
 ensure that the maximum revenue for individual purchases in the
-<code>game_revenue</code> table is less than $150.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/tt_summary_stats.html">tt_summary_stats</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">game_revenue</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+<code>game_revenue</code> table is less than $150.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/tt_summary_stats.html">tt_summary_stats</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">game_revenue</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span>
     columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">item_revenue</span><span class="op">)</span>,
     value <span class="op">=</span> <span class="fl">150</span>,
     segments <span class="op">=</span> <span class="va">.param.</span> <span class="op">~</span> <span class="st">"max"</span>
-  <span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 9 × 3</span>
-<span class="co">##   .param. item_revenue session_duration</span>
-<span class="co">##   &lt;chr&gt;          &lt;dbl&gt;            &lt;dbl&gt;</span>
-<span class="co">## 1 min             0                 3.2</span>
-<span class="co">## 2 p05             0.02              8.2</span>
-<span class="co">## 3 q_1             0.09             18.5</span>
-<span class="co">## 4 med             0.38             26.5</span>
-<span class="co">## 5 q_3             1.25             33.8</span>
-<span class="co">## 6 p95            22.0              39.5</span>
-<span class="co">## 7 max           143.               41  </span>
-<span class="co">## 8 iqr             1.16             15.3</span>
-<span class="co">## 9 range         143.               37.8</span></code></pre></div>
-
+  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 9 × 3</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   .param. item_revenue session_duration</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;          &lt;dbl&gt;            &lt;dbl&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 min             0                 3.2</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 p05             0.02              8.2</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 q_1             0.09             18.5</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 med             0.38             26.5</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 q_3             1.25             33.8</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 p95            22.0              39.5</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 7 max           143.               41  </span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 8 iqr             1.16             15.3</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 9 range         143.               37.8</span></span></code></pre><p></p></div>
 <p>We see data, and not an error, so the validation was successful!</p>
 <p>Let's do another: for in-app purchases in the <code>game_revenue</code> table, check
-that the median revenue is somewhere between $8 and $12.</p><div class="sourceCode r"><pre><code><span class="va">game_revenue</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+that the median revenue is somewhere between $8 and $12.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">game_revenue</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">item_type</span> <span class="op">==</span> <span class="st">"iap"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/tt_summary_stats.html">tt_summary_stats</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span>
     columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">item_revenue</span><span class="op">)</span>,
     left <span class="op">=</span> <span class="fl">8</span>, right <span class="op">=</span> <span class="fl">12</span>,
     segments <span class="op">=</span> <span class="va">.param.</span> <span class="op">~</span> <span class="st">"med"</span>
-  <span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 9 × 3</span>
-<span class="co">##   .param. item_revenue session_duration</span>
-<span class="co">##   &lt;chr&gt;          &lt;dbl&gt;            &lt;dbl&gt;</span>
-<span class="co">## 1 min             0.4              3.2 </span>
-<span class="co">## 2 p05             1.39             5.99</span>
-<span class="co">## 3 q_1             4.49            14.0 </span>
-<span class="co">## 4 med            10.5             22.6 </span>
-<span class="co">## 5 q_3            20.3             30.6 </span>
-<span class="co">## 6 p95            66.0             38.8 </span>
-<span class="co">## 7 max           143.              41   </span>
-<span class="co">## 8 iqr            15.8             16.7 </span>
-<span class="co">## 9 range         143.              37.8</span></code></pre></div>
-
+  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 9 × 3</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   .param. item_revenue session_duration</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;          &lt;dbl&gt;            &lt;dbl&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 min             0.4              3.2 </span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 p05             1.39             5.99</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 q_1             4.49            14.0 </span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 med            10.5             22.6 </span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 q_3            20.3             30.6 </span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 p95            66.0             38.8 </span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 7 max           143.              41   </span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 8 iqr            15.8             16.7 </span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 9 range         143.              37.8</span></span></code></pre><p></p></div>
 <p>We can get more creative with this transformer. Why not use a transformed
 table in a validation plan? While performing validations of the
 <code>game_revenue</code> table with an agent we can include the same revenue check as
 above by using <code>tt_summary_stats()</code> in the <code>preconditions</code> argument. This
 transforms the target table into a summary table for the validation step. The
 final step of the transformation in <code>preconditions</code> is a <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">dplyr::filter()</a></code>
-step that isolates the row of the median statistic.</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span> 
+step that isolates the row of the median statistic.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span> 
   <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>
     tbl <span class="op">=</span> <span class="va">game_revenue</span>,
     tbl_name <span class="op">=</span> <span class="st">"game_revenue"</span>,
@@ -252,7 +256,7 @@ validation step that uses the summary stats table as its target.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

@@ -379,6 +379,77 @@ designation, like <code>"es"</code> for Spanish (Spain, same as <code>"es_ES"</c
 if <code>display_table = FALSE</code>.</p>
     </div>
     <div class="section level2">
+    <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
+    
+
+
+<p>For the example here, we'll use a simple table with a single numerical column
+<code>a</code>.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">tbl</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">8</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">tbl</span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 4 × 1</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">##       a</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;dbl&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1     5</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2     7</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3     8</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4     5</span></span></code></pre><p></p></div>
+<p>Let's create an <em>agent</em> and validate that values in column <code>a</code> are always
+greater than <code>4</code>.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span>
+  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>
+    tbl <span class="op">=</span> <span class="va">tbl</span>,
+    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,
+    label <span class="op">=</span> <span class="st">"An example."</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
+<p>We can get a tibble-based report from the agent by using <code>get_agent_report()</code>
+with <code>display_table = FALSE</code>.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/get_agent_report.html">get_agent_report</a></span><span class="op">(</span>display_table <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 1 × 14</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">##       i type  columns values precon active eval  units n_pass f_pass W     S    </span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;int&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;  &lt;lgl&gt;  &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt; &lt;lgl&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1     1 col_… a       4      &lt;NA&gt;   TRUE   OK        4      4      1 NA    NA   </span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 2 more variables: N &lt;lgl&gt;, extract &lt;int&gt;</span></span></code></pre><p></p></div>
+<p>The full-featured display-table-based report can be viewed by printing the
+<code>agent</code> object, but, we can get a <code>"ptblank_agent_report"</code> object returned to
+us when using <code>display_table = TRUE</code> (the default for <code>get_agent_report</code>).</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">report</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_agent_report.html">get_agent_report</a></span><span class="op">(</span><span class="va">agent</span><span class="op">)</span>
+
+<span class="va">report</span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_get_agent_report_1.png" style="width:100%;"></p>
+<p>What can you do with the <code>report</code> object? Print it at will wherever, and, it
+can serve as an input to the <code><a href="export_report.html">export_report()</a></code> function.</p>
+<p>However, the better reason to use <code>get_agent_report()</code> over just printing the
+agent for display-table purposes is to make use of the different display
+options.</p>
+<p>The agent report as a <strong>gt</strong> display table comes in two sizes: <code>"standard"</code>
+(the default, 875px wide) and <code>"small"</code> (575px wide). Let's take a look at
+the smaller-sized version of the report.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">small_report</span> <span class="op">&lt;-</span> 
+  <span class="fu"><a href="../reference/get_agent_report.html">get_agent_report</a></span><span class="op">(</span>
+    agent <span class="op">=</span> <span class="va">agent</span>,
+    size <span class="op">=</span> <span class="st">"small"</span>
+  <span class="op">)</span>
+  
+<span class="va">small_report</span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_get_agent_report_2.png" style="width:100%;"></p>
+<p>We can use our own title by supplying it to the <code>title</code> argument, or, use
+a special keyword like <code>":tbl_name:"</code> to get the table name (set in the
+<code><a href="create_agent.html">create_agent()</a></code> call) as the title.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">report_title</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_agent_report.html">get_agent_report</a></span><span class="op">(</span><span class="va">agent</span>, title <span class="op">=</span> <span class="st">":tbl_name:"</span><span class="op">)</span>
+
+<span class="va">report_title</span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_get_agent_report_3.png" style="width:100%;"></p>
+<p>There are more options! You can change the language of the display table with
+the <code>lang</code> argument (this overrides the language set in <code><a href="create_agent.html">create_agent()</a></code>),
+validation steps can be rearranged using the <code>arrange_by</code> argument, and we
+can also apply some filtering with the <code>keep</code> argument in
+<code>get_agent_report()</code>.</p>
+    </div>
+    <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
     
 
@@ -390,62 +461,6 @@ if <code>display_table = FALSE</code>.</p>
 <code><a href="interrogate.html">interrogate</a>()</code></p></div>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Create a simple table with a</span></span>
-<span class="r-in"><span class="co"># column of numerical values</span></span>
-<span class="r-in"><span class="va">tbl</span> <span class="op">&lt;-</span> </span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">8</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Validate that values in column</span></span>
-<span class="r-in"><span class="co"># `a` are always greater than 4</span></span>
-<span class="r-in"><span class="va">agent</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">tbl</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Get a tibble-based report from the</span></span>
-<span class="r-in"><span class="co"># agent by using `get_agent_report()`</span></span>
-<span class="r-in"><span class="co"># with `display_table = FALSE`</span></span>
-<span class="r-in"><span class="va">agent</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">get_agent_report</span><span class="op">(</span>display_table <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 14</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       i type  columns values precon active eval  units n_pass f_pass W     S    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     1 col_… a       4      <span style="color: #BB0000;">NA</span>     TRUE   OK        4      4      1 <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 2 more variables: N &lt;lgl&gt;, extract &lt;int&gt;</span></span>
-<span class="r-in">  </span>
-<span class="r-in"><span class="co"># View a the report by printing the</span></span>
-<span class="r-in"><span class="co"># `agent` object anytime, but, return a</span></span>
-<span class="r-in"><span class="co"># gt table object by using this with</span></span>
-<span class="r-in"><span class="co"># `display_table = TRUE` (the default)</span></span>
-<span class="r-in"><span class="va">report</span> <span class="op">&lt;-</span> <span class="fu">get_agent_report</span><span class="op">(</span><span class="va">agent</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">report</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ptblank_agent_report" "gt_tbl"               "list"                </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># What can you do with the report?</span></span>
-<span class="r-in"><span class="co"># Print it from an R Markdown code,</span></span>
-<span class="r-in"><span class="co"># use it in an email, put it in a</span></span>
-<span class="r-in"><span class="co"># webpage, or further modify it with</span></span>
-<span class="r-in"><span class="co"># the **gt** package</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># The agent report as a **gt** display</span></span>
-<span class="r-in"><span class="co"># table comes in two sizes: "standard"</span></span>
-<span class="r-in"><span class="co"># (the default) and "small"</span></span>
-<span class="r-in"><span class="va">small_report</span> <span class="op">&lt;-</span> </span>
-<span class="r-in">  <span class="fu">get_agent_report</span><span class="op">(</span></span>
-<span class="r-in">    agent <span class="op">=</span> <span class="va">agent</span>,</span>
-<span class="r-in">    size <span class="op">=</span> <span class="st">"small"</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">small_report</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ptblank_agent_report" "gt_tbl"               "list"                </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># The standard report is 875px wide</span></span>
-<span class="r-in"><span class="co"># the small one is 575px wide</span></span>
-<span class="r-in"></span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
@@ -455,7 +470,7 @@ if <code>display_table = FALSE</code>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

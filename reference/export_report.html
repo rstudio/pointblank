@@ -133,7 +133,8 @@ dataset), (2) interrogating the agent with the <code><a href="interrogate.html">
 (3) writing the agent and all its intel to a file.</p>
 <p>Creating an <code>action_levels</code> object is a common workflow step when creating a
 pointblank agent. We designate failure thresholds to the <code>warn</code>, <code>stop</code>, and
-<code>notify</code> states using <code><a href="action_levels.html">action_levels()</a></code>.</p><div class="sourceCode r"><pre><code><span class="va">al</span> <span class="op">&lt;-</span> 
+<code>notify</code> states using <code><a href="action_levels.html">action_levels()</a></code>.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">al</span> <span class="op">&lt;-</span> 
   <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span>
     warn_at <span class="op">=</span> <span class="fl">0.10</span>,
     stop_at <span class="op">=</span> <span class="fl">0.25</span>,
@@ -141,7 +142,8 @@ pointblank agent. We designate failure thresholds to the <code>warn</code>, <cod
   <span class="op">)</span></code></pre><p></p></div>
 <p>Now create a pointblank <code>agent</code> object and give it the <code>al</code> object (which
 serves as a default for all validation steps which can be overridden). The
-data will be referenced in the <code>tbl</code> argument with a leading <code>~</code>.</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span> 
+data will be referenced in the <code>tbl</code> argument with a leading <code>~</code>.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span> 
   <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>
     tbl <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,
     tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,
@@ -149,7 +151,8 @@ data will be referenced in the <code>tbl</code> argument with a leading <code>~<
     actions <span class="op">=</span> <span class="va">al</span>
   <span class="op">)</span></code></pre><p></p></div>
 <p>As with any agent object, we can add steps to the validation plan by using as
-many validation functions as we want. Then, we <code><a href="interrogate.html">interrogate()</a></code>.</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span>
+many validation functions as we want. Then, we <code><a href="interrogate.html">interrogate()</a></code>.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span>
   <span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/col_exists.html">col_exists</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">date_time</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span>
@@ -160,14 +163,16 @@ many validation functions as we want. Then, we <code><a href="interrogate.html">
   <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/col_vals_lte.html">col_vals_lte</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
-<p>The agent report can be written to an HTML file with <code>export_report()</code>.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/export_report.html">export_report</a></span><span class="op">(</span>
+<p>The agent report can be written to an HTML file with <code>export_report()</code>.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/export_report.html">export_report</a></span><span class="op">(</span>
   <span class="va">agent</span>,
   filename <span class="op">=</span> <span class="st">"agent-small_table.html"</span>
 <span class="op">)</span></code></pre><p></p></div>
 <p>If you're consistently writing agent reports when periodically checking data,
 we could make use of <code><a href="affix_date.html">affix_date()</a></code> or <code><a href="affix_datetime.html">affix_datetime()</a></code> depending on the
 granularity you need. Here's an example that writes the file with the format:
-<code>"&lt;filename&gt;-YYYY-mm-dd_HH-MM-SS.html"</code>.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/export_report.html">export_report</a></span><span class="op">(</span>
+<code>"&lt;filename&gt;-YYYY-mm-dd_HH-MM-SS.html"</code>.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/export_report.html">export_report</a></span><span class="op">(</span>
   <span class="va">agent</span>,
   filename <span class="op">=</span> <span class="fu"><a href="../reference/affix_datetime.html">affix_datetime</a></span><span class="op">(</span>
     <span class="st">"agent-small_table.html"</span>
@@ -185,7 +190,8 @@ captured from the target table using the <code><a href="incorporate.html">incorp
 writing the informant report to HTML.</p>
 <p>Create a pointblank <code>informant</code> object with <code><a href="create_informant.html">create_informant()</a></code> and the
 <code><a href="small_table.html">small_table</a></code> dataset. Use <code><a href="incorporate.html">incorporate()</a></code> so that info snippets are
-integrated into the text.</p><div class="sourceCode r"><pre><code><span class="va">informant</span> <span class="op">&lt;-</span> 
+integrated into the text.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">informant</span> <span class="op">&lt;-</span> 
   <span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span>
     tbl <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,
     tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,
@@ -213,7 +219,8 @@ integrated into the text.</p><div class="sourceCode r"><pre><code><span class="v
   <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/incorporate.html">incorporate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
 <p>The informant report can be written to an HTML file with <code>export_report()</code>.
-Let's do this with <code><a href="affix_date.html">affix_date()</a></code> so the filename has a datestamp.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/export_report.html">export_report</a></span><span class="op">(</span>
+Let's do this with <code><a href="affix_date.html">affix_date()</a></code> so the filename has a datestamp.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/export_report.html">export_report</a></span><span class="op">(</span>
   <span class="va">informant</span>,
   filename <span class="op">=</span> <span class="fu"><a href="../reference/affix_date.html">affix_date</a></span><span class="op">(</span>
     <span class="st">"informant-small_table.html"</span>
@@ -225,8 +232,10 @@ Let's do this with <code><a href="affix_date.html">affix_date()</a></code> so th
 <h3 id="c-writing-a-table-scan-as-html">C: Writing a table scan as HTML<a class="anchor" aria-label="anchor" href="#c-writing-a-table-scan-as-html"></a></h3>
 
 
-<p>We can get a report that describes all of the data in the <code>storms</code> dataset.</p><div class="sourceCode r"><pre><code><span class="va">tbl_scan</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scan_data.html">scan_data</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/storms.html" class="external-link">storms</a></span><span class="op">)</span></code></pre><p></p></div>
-<p>The table scan object can be written to an HTML file with <code>export_report()</code>.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/export_report.html">export_report</a></span><span class="op">(</span>
+<p>We can get a report that describes all of the data in the <code>storms</code> dataset.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">tbl_scan</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scan_data.html">scan_data</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/storms.html" class="external-link">storms</a></span><span class="op">)</span></code></pre><p></p></div>
+<p>The table scan object can be written to an HTML file with <code>export_report()</code>.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/export_report.html">export_report</a></span><span class="op">(</span>
   <span class="va">tbl_scan</span>,
   filename <span class="op">=</span> <span class="st">"tbl_scan-storms.html"</span>
 <span class="op">)</span></code></pre><p></p></div>
@@ -259,7 +268,7 @@ Let's do this with <code><a href="affix_date.html">affix_date()</a></code> so th
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

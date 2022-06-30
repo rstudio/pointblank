@@ -24,10 +24,10 @@ multiple validation steps (this may happen when providing multiple columns
 or any segments)
 
 
-Here's an example of how to arrange expressions:~ test_col_exists(., columns = vars(count)),
+Here's an example of how to arrange expressions:
+~ test_col_exists(., columns = vars(count)),
 ~ test_col_is_numeric(., columns = vars(count)),
 ~ col_vals_gt(., columns = vars(count), value = 2)
-
 
 This series concentrates on the column called count and first checks
 whether the column exists, then checks if that column is numeric, and then
@@ -63,10 +63,10 @@ multiple validation steps (this may happen when providing multiple columns
 or any segments)
 
 
-Here's an example of how to arrange expressions:~ test_col_exists(., columns = vars(count)),
+Here's an example of how to arrange expressions:
+~ test_col_exists(., columns = vars(count)),
 ~ test_col_is_numeric(., columns = vars(count)),
 ~ col_vals_gt(., columns = vars(count), value = 2)
-
 
 This series concentrates on the column called count and first checks
 whether the column exists, then checks if that column is numeric, and then
@@ -162,11 +162,10 @@ these sequences are bad: (1) <strong>T</strong> -&gt; <strong>V</strong> -&gt; <
 <li><p>a validation function call (<strong>V</strong>), if included, mustn't itself yield
 multiple validation steps (this may happen when providing multiple <code>columns</code>
 or any <code>segments</code>)</p></li>
-</ul><p>Here's an example of how to arrange expressions:</p><div class="sourceCode"><pre><code>~ test_col_exists(., columns = vars(count)),
-~ test_col_is_numeric(., columns = vars(count)),
-~ col_vals_gt(., columns = vars(count), value = 2)
-</code></pre></div>
-
+</ul><p>Here's an example of how to arrange expressions:</p>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="sc">~</span> <span class="fu">test_col_exists</span>(., <span class="at">columns =</span> <span class="fu">vars</span>(count)),</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="sc">~</span> <span class="fu">test_col_is_numeric</span>(., <span class="at">columns =</span> <span class="fu">vars</span>(count)),</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="sc">~</span> <span class="fu">col_vals_gt</span>(., <span class="at">columns =</span> <span class="fu">vars</span>(count), <span class="at">value =</span> <span class="dv">2</span>)</span></code></pre><p></p></div>
 <p>This series concentrates on the column called <code>count</code> and first checks
 whether the column exists, then checks if that column is numeric, and then
 finally validates whether all values in the column are greater than <code>2</code>.</p>
@@ -409,7 +408,8 @@ list member), the syntax closely follows the signature of the validation
 function. Here is an example of how a complex call of <code>serially()</code> as a
 validation step is expressed in R code and in the corresponding YAML
 representation.</p>
-<p>R statement:</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+<p>R statement:</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/serially.html">serially</a></span><span class="op">(</span>
     <span class="op">~</span> <span class="fu"><a href="../reference/col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span><span class="va">.</span>, columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">8</span><span class="op">)</span>,
     <span class="op">~</span> <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="va">.</span>, columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, value <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span>,
@@ -419,7 +419,8 @@ representation.</p>
     label <span class="op">=</span> <span class="st">"The `serially()` step."</span>,
     active <span class="op">=</span> <span class="cn">FALSE</span>
   <span class="op">)</span></code></pre><p></p></div>
-<p>YAML representation:</p><div class="sourceCode yaml"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">steps</span><span class="kw">:</span></span>
+<p>YAML representation:</p>
+<p></p><div class="sourceCode yaml"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">steps</span><span class="kw">:</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">serially</span><span class="kw">:</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">fns</span><span class="kw">:</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> ~col_vals_lt(., columns = vars(a), value = 8)</span></span>
@@ -445,20 +446,21 @@ writing to disk by using the <code><a href="yaml_agent_string.html">yaml_agent_s
 
 <p>For all examples here, we'll use a simple table with three numeric columns
 (<code>a</code>, <code>b</code>, and <code>c</code>). This is a very basic table but it'll be more useful when
-explaining things later.</p><div class="sourceCode r"><pre><code><span class="va">tbl</span> <span class="op">&lt;-</span>
+explaining things later.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">tbl</span> <span class="op">&lt;-</span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>
     a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">2</span>, <span class="fl">6</span><span class="op">)</span>,
     b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">4</span>, <span class="fl">9</span><span class="op">)</span>,
     c <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>
   <span class="op">)</span>
   
-<span class="va">tbl</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 3 × 3</span>
-<span class="co">##       a     b     c</span>
-<span class="co">##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">## 1     5     6     1</span>
-<span class="co">## 2     2     4     2</span>
-<span class="co">## 3     6     9     3</span></code></pre></div>
-<div class="section">
+<span class="va">tbl</span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 × 3</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">##       a     b     c</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1     5     6     1</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2     2     4     2</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3     6     9     3</span></span></code></pre><p></p></div><div class="section">
 <h3 id="a-using-an-agent-with-validation-functions-and-then-interrogate-">A: Using an <code>agent</code> with validation functions and then <code><a href="interrogate.html">interrogate()</a></code><a class="anchor" aria-label="anchor" href="#a-using-an-agent-with-validation-functions-and-then-interrogate-"></a></h3>
 
 
@@ -468,7 +470,8 @@ whether columns <code>a</code> and <code>b</code> are numeric, (2) check that bo
 <code>NA</code> values, and (3) perform a finalizing validation that checks whether
 values in <code>b</code> are greater than values in <code>a</code>. We'll determine if this
 validation has any failing test units (there are 4 tests and a final
-validation).</p><div class="sourceCode r"><pre><code><span class="va">agent_1</span> <span class="op">&lt;-</span>
+validation).</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">agent_1</span> <span class="op">&lt;-</span>
   <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">tbl</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/serially.html">serially</a></span><span class="op">(</span>
     <span class="op">~</span> <span class="fu"><a href="../reference/col_is_numeric.html">test_col_is_numeric</a></span><span class="op">(</span><span class="va">.</span>, columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span><span class="op">)</span>,
@@ -483,7 +486,8 @@ that corresponds to the validation step demonstrated here.</p>
 <p>What's going on? All four of the tests passed and so the final validation
 occurred. There were no failing test units in that either!</p>
 <p>The final validation is optional and so here is a variation where only the
-serial tests are performed.</p><div class="sourceCode r"><pre><code><span class="va">agent_2</span> <span class="op">&lt;-</span>
+serial tests are performed.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">agent_2</span> <span class="op">&lt;-</span>
   <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">tbl</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/serially.html">serially</a></span><span class="op">(</span>
     <span class="op">~</span> <span class="fu"><a href="../reference/col_is_numeric.html">test_col_is_numeric</a></span><span class="op">(</span><span class="va">.</span>, columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span><span class="op">)</span>,
@@ -500,18 +504,19 @@ serial tests are performed.</p><div class="sourceCode r"><pre><code><span class=
 
 <p>This way of using validation functions acts as a data filter. Data is passed
 through but should <code><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop()</a></code> if there is a single test unit failing. The
-behavior of side effects can be customized with the <code>actions</code> option.</p><div class="sourceCode r"><pre><code><span class="va">tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+behavior of side effects can be customized with the <code>actions</code> option.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/serially.html">serially</a></span><span class="op">(</span>
     <span class="op">~</span> <span class="fu"><a href="../reference/col_is_numeric.html">test_col_is_numeric</a></span><span class="op">(</span><span class="va">.</span>, columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span><span class="op">)</span>,
     <span class="op">~</span> <span class="fu"><a href="../reference/col_vals_not_null.html">test_col_vals_not_null</a></span><span class="op">(</span><span class="va">.</span>, columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span><span class="op">)</span>,
     <span class="op">~</span> <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="va">.</span>, columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>, value <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span>
-  <span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 3 × 3</span>
-<span class="co">##       a     b     c</span>
-<span class="co">##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">## 1     5     6     1</span>
-<span class="co">## 2     2     4     2</span>
-<span class="co">## 3     6     9     3</span></code></pre></div>
-
+  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 × 3</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">##       a     b     c</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1     5     6     1</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2     2     4     2</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3     6     9     3</span></span></code></pre><p></p></div>
 </div>
 
 <div class="section">
@@ -519,7 +524,8 @@ behavior of side effects can be customized with the <code>actions</code> option.
 
 
 <p>With the <code>expect_*()</code> form, we would typically perform one validation at a
-time. This is primarily used in <strong>testthat</strong> tests.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/serially.html">expect_serially</a></span><span class="op">(</span>
+time. This is primarily used in <strong>testthat</strong> tests.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/serially.html">expect_serially</a></span><span class="op">(</span>
   <span class="va">tbl</span>,
   <span class="op">~</span> <span class="fu"><a href="../reference/col_is_numeric.html">test_col_is_numeric</a></span><span class="op">(</span><span class="va">.</span>, columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span><span class="op">)</span>,
   <span class="op">~</span> <span class="fu"><a href="../reference/col_vals_not_null.html">test_col_vals_not_null</a></span><span class="op">(</span><span class="va">.</span>, columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span><span class="op">)</span>,
@@ -532,13 +538,14 @@ time. This is primarily used in <strong>testthat</strong> tests.</p><div class="
 
 
 <p>With the <code>test_*()</code> form, we should get a single logical value returned to
-us.</p><div class="sourceCode r"><pre><code><span class="va">tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+us.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/serially.html">test_serially</a></span><span class="op">(</span>
     <span class="op">~</span> <span class="fu"><a href="../reference/col_is_numeric.html">test_col_is_numeric</a></span><span class="op">(</span><span class="va">.</span>, columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span><span class="op">)</span>,
     <span class="op">~</span> <span class="fu"><a href="../reference/col_vals_not_null.html">test_col_vals_not_null</a></span><span class="op">(</span><span class="va">.</span>, columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span><span class="op">)</span>,
     <span class="op">~</span> <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="va">.</span>, columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>, value <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span>
-  <span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## [1] TRUE</span></code></pre></div>
-
+  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span></code></pre><p></p></div>
 </div>
 
     </div>
@@ -597,7 +604,7 @@ us.</p><div class="sourceCode r"><pre><code><span class="va">tbl</span> <span cl
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

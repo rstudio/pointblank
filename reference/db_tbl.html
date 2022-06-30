@@ -174,7 +174,8 @@ different BigQuery project.</p></dd>
 
 <p>You can use an in-memory database table and by supplying it with an in-memory
 table. This works with the DuckDB database and the key thing is to use
-<code>dbname = ":memory"</code> in the <code>db_tbl()</code> call.</p><div class="sourceCode r"><pre><code><span class="va">small_table_duckdb</span> <span class="op">&lt;-</span> 
+<code>dbname = ":memory"</code> in the <code>db_tbl()</code> call.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">small_table_duckdb</span> <span class="op">&lt;-</span> 
   <span class="fu"><a href="../reference/db_tbl.html">db_tbl</a></span><span class="op">(</span>
     table <span class="op">=</span> <span class="va">small_table</span>,
     dbtype <span class="op">=</span> <span class="st">"duckdb"</span>,
@@ -201,7 +202,8 @@ table. This works with the DuckDB database and the key thing is to use
 
 
 <p>The in-memory option also works using the SQLite database. The only change
-required is setting the <code>dbtype</code> to <code>"sqlite"</code>:</p><div class="sourceCode r"><pre><code><span class="va">small_table_sqlite</span> <span class="op">&lt;-</span> 
+required is setting the <code>dbtype</code> to <code>"sqlite"</code>:</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">small_table_sqlite</span> <span class="op">&lt;-</span> 
   <span class="fu"><a href="../reference/db_tbl.html">db_tbl</a></span><span class="op">(</span>
     table <span class="op">=</span> <span class="va">small_table</span>,
     dbtype <span class="op">=</span> <span class="st">"sqlite"</span>,
@@ -229,7 +231,8 @@ required is setting the <code>dbtype</code> to <code>"sqlite"</code>:</p><div cl
 
 <p>It's also possible to obtain a table from a remote file and shove it into an
 in-memory database. For this, we can use the all-powerful <code><a href="file_tbl.html">file_tbl()</a></code> +
-<code>db_tbl()</code> combo.</p><div class="sourceCode r"><pre><code><span class="va">all_revenue_large_duckdb</span> <span class="op">&lt;-</span>
+<code>db_tbl()</code> combo.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">all_revenue_large_duckdb</span> <span class="op">&lt;-</span>
   <span class="fu"><a href="../reference/db_tbl.html">db_tbl</a></span><span class="op">(</span>
     table <span class="op">=</span> <span class="fu"><a href="../reference/file_tbl.html">file_tbl</a></span><span class="op">(</span>
       file <span class="op">=</span> <span class="fu"><a href="../reference/from_github.html">from_github</a></span><span class="op">(</span>
@@ -274,7 +277,8 @@ one-step process nonetheless. Here's an example that accesses the <code>rna</cod
 (in the <em>RNA Central</em> public database) using <code>db_tbl()</code>. Here, for the <code>user</code>
 and <code>password</code> entries we are using the literal username and password values
 (publicly available when visiting the <em>RNA Central</em> website) by enclosing the
-values in <code><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I()</a></code>.</p><div class="sourceCode r"><pre><code><span class="va">rna_db_tbl</span> <span class="op">&lt;-</span> 
+values in <code><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I()</a></code>.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">rna_db_tbl</span> <span class="op">&lt;-</span> 
   <span class="fu"><a href="../reference/db_tbl.html">db_tbl</a></span><span class="op">(</span>
     table <span class="op">=</span> <span class="st">"rna"</span>,
     dbtype <span class="op">=</span> <span class="st">"postgres"</span>,
@@ -307,7 +311,8 @@ values in <code><a href="https://rdrr.io/r/base/AsIs.html" class="external-link"
 
 <p>You'd normally want to use the names of environment variables (envvars) to
 more securely access the appropriate username and password values when
-connecting to a DB. Here are all the necessary inputs:</p><div class="sourceCode r"><pre><code><span class="va">example_db_tbl</span> <span class="op">&lt;-</span> 
+connecting to a DB. Here are all the necessary inputs:</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">example_db_tbl</span> <span class="op">&lt;-</span> 
   <span class="fu"><a href="../reference/db_tbl.html">db_tbl</a></span><span class="op">(</span>
     table <span class="op">=</span> <span class="st">"&lt;table_name&gt;"</span>,
     dbtype <span class="op">=</span> <span class="st">"&lt;database_type_shortname&gt;"</span>,
@@ -328,7 +333,8 @@ the <code><a href="https://usethis.r-lib.org/reference/edit.html" class="externa
 <p>Using table-prep formulas in a centralized table store can make it easier to
 work with DB tables in <strong>pointblank</strong>. Here's how to generate a table store
 with two named entries for table preparations involving the <code><a href="tbl_store.html">tbl_store()</a></code> and
-<code>db_tbl()</code> functions.</p><div class="sourceCode r"><pre><code><span class="va">store</span> <span class="op">&lt;-</span>
+<code>db_tbl()</code> functions.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">store</span> <span class="op">&lt;-</span>
   <span class="fu"><a href="../reference/tbl_store.html">tbl_store</a></span><span class="op">(</span>
     <span class="va">small_table_duck</span> <span class="op">~</span> <span class="fu"><a href="../reference/db_tbl.html">db_tbl</a></span><span class="op">(</span>
       table <span class="op">=</span> <span class="fu">pointblank</span><span class="fu">::</span><span class="va"><a href="../reference/small_table.html">small_table</a></span>,
@@ -339,7 +345,8 @@ with two named entries for table preparations involving the <code><a href="tbl_s
       <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">f</span> <span class="op">==</span> <span class="st">"high"</span><span class="op">)</span>
   <span class="op">)</span></code></pre><p></p></div>
 <p>Now it's easy to obtain either of these tables via <code><a href="tbl_get.html">tbl_get()</a></code>. We can
-reference the table in the store by its name (given to the left of the <code>~</code>).</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/tbl_get.html">tbl_get</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="st">"small_table_duck"</span>, store <span class="op">=</span> <span class="va">store</span><span class="op">)</span></code></pre><p></p></div>
+reference the table in the store by its name (given to the left of the <code>~</code>).</p>
+<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/tbl_get.html">tbl_get</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="st">"small_table_duck"</span>, store <span class="op">=</span> <span class="va">store</span><span class="op">)</span></code></pre><p></p></div>
 <div class="sourceCode"><pre><code><span class="co">## # Source:   table&lt;pointblank::small_table&gt; [?? x 8]</span>
 <span class="co">## # Database: duckdb_connection</span>
 <span class="co">##    date_time           date           a b           c      d e    </span>
@@ -359,8 +366,8 @@ reference the table in the store by its name (given to the left of the <code>~</
 
 
 <p>The second table in the table store is a mutated
-version of the first. It's just as easily obtainable via <code><a href="tbl_get.html">tbl_get()</a></code>:</p><div class="sourceCode"><pre><code><span class="fu"><a href="../reference/tbl_get.html">tbl_get</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="st">"small_high_duck"</span>, store <span class="op">=</span> <span class="va">store</span><span class="op">)</span></code></pre></div>
-
+version of the first. It's just as easily obtainable via <code><a href="tbl_get.html">tbl_get()</a></code>:</p>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_get</span>(<span class="at">tbl =</span> <span class="st">"small_high_duck"</span>, <span class="at">store =</span> store)</span></code></pre><p></p></div>
 <div class="sourceCode"><pre><code><span class="co">## # Source:   lazy query [?? x 8]</span>
 <span class="co">## # Database: duckdb_connection</span>
 <span class="co">##   date_time           date           a b             c     d e    </span>
@@ -377,13 +384,15 @@ version of the first. It's just as easily obtainable via <code><a href="tbl_get.
 
 <p>The table-prep formulas in the <code>store</code> object could also be used in functions
 with a <code>tbl</code> argument (like <code><a href="create_agent.html">create_agent()</a></code> and <code><a href="create_informant.html">create_informant()</a></code>). This
-is accomplished most easily with the <code><a href="tbl_source.html">tbl_source()</a></code> function.</p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span> 
+is accomplished most easily with the <code><a href="tbl_source.html">tbl_source()</a></code> function.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span> 
   <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>
     tbl <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="../reference/tbl_source.html">tbl_source</a></span><span class="op">(</span>
       tbl <span class="op">=</span> <span class="st">"small_table_duck"</span>,
       store <span class="op">=</span> <span class="va">tbls</span>
     <span class="op">)</span>
-  <span class="op">)</span></code></pre><p></p></div><div class="sourceCode r"><pre><code><span class="va">informant</span> <span class="op">&lt;-</span> 
+  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span class="va">informant</span> <span class="op">&lt;-</span> 
   <span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span>
     tbl <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="../reference/tbl_source.html">tbl_source</a></span><span class="op">(</span>
       tbl <span class="op">=</span> <span class="st">"small_high_duck"</span>,
@@ -423,7 +432,7 @@ is accomplished most easily with the <code><a href="tbl_source.html">tbl_source(
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

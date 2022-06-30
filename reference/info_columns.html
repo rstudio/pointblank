@@ -171,38 +171,37 @@ columns is represented in YAML works like this: <em>info text</em> goes into
 subsections of YAML keys named for the columns, which are themselves part of
 the top-level <code>columns</code> key. Here is an example of how several calls of
 <code>info_columns()</code> are expressed in R code and how the result corresponds to
-the YAML representation.</p><div class="sourceCode"><pre><code># R statement
-informant %&gt;% 
-  info_columns(
-    columns = "date_time",
-    info = "*info text* 1."
-  ) %&gt;%
-  info_columns(
-    columns = "date",
-    info = "*info text* 2."
-  ) %&gt;%
-  info_columns(
-    columns = "item_count",
-    info = "*info text* 3. Statistics: {snippet_1}."
-  ) %&gt;%
-  info_columns(
-    columns = vars(date, date_time),
-    info = "UTC time."
-  )
-
-# YAML representation
-columns:
-  date_time:
-    _type: POSIXct, POSIXt
-    info: '*info text* 1. UTC time.'
-  date:
-    _type: Date
-    info: '*info text* 2. UTC time.'
-  item_count:
-    _type: integer
-    info: '*info text* 3. Statistics: {snippet_1}.'
-</code></pre></div>
-
+the YAML representation.</p>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R statement</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>informant <span class="sc">%&gt;%</span> </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">info_columns</span>(</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="st">"date_time"</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">info =</span> <span class="st">"*info text* 1."</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">info_columns</span>(</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="st">"date"</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">info =</span> <span class="st">"*info text* 2."</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">info_columns</span>(</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="st">"item_count"</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">info =</span> <span class="st">"*info text* 3. Statistics: {snippet_1}."</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">info_columns</span>(</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="fu">vars</span>(date, date_time),</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">info =</span> <span class="st">"UTC time."</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># YAML representation</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>columns<span class="sc">:</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  date_time<span class="sc">:</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    _type<span class="sc">:</span> POSIXct, POSIXt</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    info<span class="sc">:</span> <span class="st">'*info text* 1. UTC time.'</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  date<span class="sc">:</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    _type<span class="sc">:</span> Date</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    info<span class="sc">:</span> <span class="st">'*info text* 2. UTC time.'</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  item_count<span class="sc">:</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    _type<span class="sc">:</span> integer</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    info<span class="sc">:</span> <span class="st">'*info text* 3. Statistics: {snippet_1}.'</span></span></code></pre><p></p></div>
 <p>Subsections represented as column names are automatically generated when
 creating an informant. Within these, there can be multiple subsections used
 for holding <em>info text</em> on each column. The subsections used across the
@@ -219,10 +218,43 @@ done when using the <code><a href="incorporate.html">incorporate()</a></code> fu
 maintained in the YAML representation and is never written in processed form.</p>
     </div>
     <div class="section level2">
-    <h2 id="figures">Figures<a class="anchor" aria-label="anchor" href="#figures"></a></h2>
+    <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
     
 
-<p><img src="figures/man_info_columns_1.png" width="100%"></p>
+
+<p>Create a pointblank <code>informant</code> object with <code><a href="create_informant.html">create_informant()</a></code>. We can
+specify a <code>tbl</code> with the <code>~</code> followed by a statement that gets the
+<code>small_table</code> dataset.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">informant</span> <span class="op">&lt;-</span> 
+  <span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span>
+    tbl <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,
+    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,
+    label <span class="op">=</span> <span class="st">"An example."</span>
+  <span class="op">)</span></code></pre><p></p></div>
+<p>We can add <em>info text</em> to describe the table with the various <code>⁠info_*(</code>
+functions. In this example, we'll use <code>info_columns()</code> multiple times to
+describe some of the columns in the <code>small_table</code> dataset. Note here that
+<em>info text</em> calls are additive to the existing content inside of the
+various subsections (i.e., the text will be appended and won't overwrite
+existing if it lands in the same area).</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">informant</span> <span class="op">&lt;-</span>
+  <span class="va">informant</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>,
+    info <span class="op">=</span> <span class="st">"In the range of 1 to 10. ((SIMPLE))"</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"date"</span><span class="op">)</span>,
+    info <span class="op">=</span> <span class="st">"Time-based values (e.g., `Sys.time()`)."</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="st">"date"</span>,
+    info <span class="op">=</span> <span class="st">"The date part of `date_time`. ((CALC))"</span>
+  <span class="op">)</span></code></pre><p></p></div>
+<p>Upon printing the <code>informant</code> object, we see the additions made to the
+'Columns' section.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">informant</span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_info_columns_1.png" style="width:100%;"></p>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
@@ -243,66 +275,6 @@ maintained in the YAML representation and is never written in processed form.</p
 <code><a href="snip_stats.html">snip_stats</a>()</code></p></div>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Create a pointblank `informant`</span></span>
-<span class="r-in"><span class="co"># object with `create_informant()`;</span></span>
-<span class="r-in"><span class="co"># we can specify a `tbl` with the</span></span>
-<span class="r-in"><span class="co"># `~` followed by a statement that</span></span>
-<span class="r-in"><span class="co"># gets the `small_table` dataset</span></span>
-<span class="r-in"><span class="va">informant</span> <span class="op">&lt;-</span> </span>
-<span class="r-in">  <span class="fu"><a href="create_informant.html">create_informant</a></span><span class="op">(</span></span>
-<span class="r-in">    tbl <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,</span>
-<span class="r-in">    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,</span>
-<span class="r-in">    label <span class="op">=</span> <span class="st">"An example."</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># We can add *info text* to describe</span></span>
-<span class="r-in"><span class="co"># the columns in the table with multiple</span></span>
-<span class="r-in"><span class="co"># `info_columns()` calls; the *info text*</span></span>
-<span class="r-in"><span class="co"># calls are additive to existing content</span></span>
-<span class="r-in"><span class="co"># in subsections</span></span>
-<span class="r-in"><span class="va">informant</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="va">informant</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">info_columns</span><span class="op">(</span></span>
-<span class="r-in">    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>,</span>
-<span class="r-in">    info <span class="op">=</span> <span class="st">"In the range of 1 to 10. (SIMPLE)"</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">info_columns</span><span class="op">(</span></span>
-<span class="r-in">    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"date"</span><span class="op">)</span>,</span>
-<span class="r-in">    info <span class="op">=</span> <span class="st">"Time-based values (e.g., `Sys.time()`)."</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">info_columns</span><span class="op">(</span></span>
-<span class="r-in">    columns <span class="op">=</span> <span class="st">"date"</span>,</span>
-<span class="r-in">    info <span class="op">=</span> <span class="st">"The date part of `date_time`. (CALC)"</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Upon printing the `informant` object, we see</span></span>
-<span class="r-in"><span class="co"># the additions made to the 'Columns' section</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># The `informant` object can be written to</span></span>
-<span class="r-in"><span class="co"># a YAML file with the `yaml_write()`</span></span>
-<span class="r-in"><span class="co"># function; then, information can</span></span>
-<span class="r-in"><span class="co"># be directly edited or modified</span></span>
-<span class="r-in"><span class="fu"><a href="yaml_write.html">yaml_write</a></span><span class="op">(</span></span>
-<span class="r-in">  informant <span class="op">=</span> <span class="va">informant</span>,</span>
-<span class="r-in">  filename <span class="op">=</span> <span class="st">"informant.yml"</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># The YAML file can then be read back</span></span>
-<span class="r-in"><span class="co"># into an informant object with the</span></span>
-<span class="r-in"><span class="co"># `yaml_read_informant()` function</span></span>
-<span class="r-in"><span class="va">informant</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="yaml_read_informant.html">yaml_read_informant</a></span><span class="op">(</span></span>
-<span class="r-in">    filename <span class="op">=</span> <span class="st">"informant.yml"</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
@@ -312,7 +284,7 @@ maintained in the YAML representation and is never written in processed form.</p
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

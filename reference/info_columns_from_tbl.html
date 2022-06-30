@@ -130,6 +130,74 @@ property.</p></dd>
 <p>A <code>ptblank_informant</code> object.</p>
     </div>
     <div class="section level2">
+    <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
+    
+
+
+<p>Create a pointblank <code>informant</code> object with <code><a href="create_informant.html">create_informant()</a></code>. We can
+specify a <code>tbl</code> with the <code>~</code> followed by a statement that gets the
+<code>game_revenue</code> dataset.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">informant</span> <span class="op">&lt;-</span> 
+  <span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span>
+    tbl <span class="op">=</span> <span class="op">~</span> <span class="va">game_revenue</span>,
+    tbl_name <span class="op">=</span> <span class="st">"game_revenue"</span>,
+    label <span class="op">=</span> <span class="st">"An example."</span>
+  <span class="op">)</span></code></pre><p></p></div>
+<p>We can add <em>info text</em> to describe the data in the various columns of the
+table by using <code><a href="info_columns.html">info_columns()</a></code> or information in another table (with
+<code>info_columns_from_tbl()</code>). Here, we'll do the latter. The
+<code>game_revenue_info</code> dataset is included in <strong>pointblank</strong> and it contains
+metadata for <code>game_revenue</code>.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">game_revenue_info</span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 11 × 2</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    column           info                                                        </span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;            &lt;chr&gt;                                                       </span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 player_id        A `character` column with unique identifiers for each user/…</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 session_id       A `character` column that contains unique identifiers for e…</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 session_start    A date-time column that indicates when the session (contain…</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 time             A date-time column that indicates exactly when the player p…</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 item_type        A `character` column that provides the class of the item pu…</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 item_name        A `character` column that provides the name of the item pur…</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 item_revenue     A `numeric` column with the revenue amounts per item purcha…</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 session_duration A `numeric` column that states the length of the session (i…</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 start_day        A `Date` column that provides the date of first login for t…</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 acquisition      A `character` column that provides the method of acquisitio…</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 11 country          A `character` column that provides the probable country of …</span></span></code></pre><p></p></div>
+<p>The <code>info_columns_from_tbl()</code> function takes a table object where the first
+column has the column names and the second contains the <em>info text</em>.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">informant</span> <span class="op">&lt;-</span>
+  <span class="va">informant</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/info_columns_from_tbl.html">info_columns_from_tbl</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">game_revenue_info</span><span class="op">)</span></code></pre><p></p></div>
+<p>Upon printing the <code>informant</code> object, we see the additions made to the
+'Columns' section by the <code>info_columns_from_tbl(tbl = game_revenue_info)</code>
+call.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">informant</span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_info_columns_from_tbl_1.png" style="width:100%;"></p>
+<p>We can continue to add more <em>info text</em> to describe the columns since the
+process is additive. The <code>info_columns_from_tbl()</code> function populates the
+<code>info</code> subsection and any calls of <code><a href="info_columns.html">info_columns()</a></code> that also target a <code>info</code>
+subsection will append text. Here, we'll add content for the <code>item_revenue</code>
+and <code>acquisition</code> columns and view the updated report.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">informant</span> <span class="op">&lt;-</span>
+  <span class="va">informant</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="st">"item_revenue"</span>,
+    info <span class="op">=</span> <span class="st">"Revenue reported in USD."</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="st">"acquisition"</span>,
+    `top list` <span class="op">=</span> <span class="st">"{top5_aq}"</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/info_snippet.html">info_snippet</a></span><span class="op">(</span>
+    snippet_name <span class="op">=</span> <span class="st">"top5_aq"</span>,
+    fn <span class="op">=</span> <span class="fu"><a href="../reference/snip_list.html">snip_list</a></span><span class="op">(</span>column <span class="op">=</span> <span class="st">"acquisition"</span><span class="op">)</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/incorporate.html">incorporate</a></span><span class="op">(</span><span class="op">)</span>
+
+<span class="va">informant</span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_info_columns_from_tbl_2.png" style="width:100%;"></p>
+    </div>
+    <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
     
 
@@ -150,76 +218,6 @@ property.</p></dd>
 <code><a href="snip_stats.html">snip_stats</a>()</code></p></div>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Create a pointblank `informant`</span></span>
-<span class="r-in"><span class="co"># object with `create_informant()`;</span></span>
-<span class="r-in"><span class="co"># we can specify a `tbl` with the</span></span>
-<span class="r-in"><span class="co"># `~` followed by a statement that</span></span>
-<span class="r-in"><span class="co"># gets the `game_revenue` dataset</span></span>
-<span class="r-in"><span class="va">informant</span> <span class="op">&lt;-</span> </span>
-<span class="r-in">  <span class="fu"><a href="create_informant.html">create_informant</a></span><span class="op">(</span></span>
-<span class="r-in">    tbl <span class="op">=</span> <span class="op">~</span> <span class="va">game_revenue</span>,</span>
-<span class="r-in">    tbl_name <span class="op">=</span> <span class="st">"game_revenue"</span>,</span>
-<span class="r-in">    label <span class="op">=</span> <span class="st">"An example."</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># We can add *info text* to describe</span></span>
-<span class="r-in"><span class="co"># the columns in the table by using</span></span>
-<span class="r-in"><span class="co"># information in another table; the</span></span>
-<span class="r-in"><span class="co"># `game_revenue_info` dataset contains</span></span>
-<span class="r-in"><span class="co"># metadata for `game_revenue`</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">game_revenue_info</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 11 × 2</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    column           info                                                        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> player_id        A `character` column with unique identifiers for each user/…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> session_id       A `character` column that contains unique identifiers for e…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> session_start    A date-time column that indicates when the session (contain…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> time             A date-time column that indicates exactly when the player p…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> item_type        A `character` column that provides the class of the item pu…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> item_name        A `character` column that provides the name of the item pur…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> item_revenue     A `numeric` column with the revenue amounts per item purcha…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> session_duration A `numeric` column that states the length of the session (i…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> start_day        A `Date` column that provides the date of first login for t…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> acquisition      A `character` column that provides the method of acquisitio…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> country          A `character` column that provides the probable country of …</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># The `info_columns_from_tbl()`</span></span>
-<span class="r-in"><span class="co"># function takes a table object</span></span>
-<span class="r-in"><span class="co"># where the first column has the</span></span>
-<span class="r-in"><span class="co"># column names and the second</span></span>
-<span class="r-in"><span class="co"># contains the *info text*</span></span>
-<span class="r-in"><span class="va">informant</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="va">informant</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">info_columns_from_tbl</span><span class="op">(</span></span>
-<span class="r-in">    tbl <span class="op">=</span> <span class="va">game_revenue_info</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># We can continue to add more *info</span></span>
-<span class="r-in"><span class="co"># text* since the process is additive;</span></span>
-<span class="r-in"><span class="co"># the `info_columns_from_tbl()`</span></span>
-<span class="r-in"><span class="co"># function populates the `info`</span></span>
-<span class="r-in"><span class="co"># subsection</span></span>
-<span class="r-in"><span class="va">informant</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="va">informant</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span class="r-in">    columns <span class="op">=</span> <span class="st">"item_revenue"</span>,</span>
-<span class="r-in">    info <span class="op">=</span> <span class="st">"Revenue reported in USD."</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span class="r-in">    columns <span class="op">=</span> <span class="st">"acquisition"</span>,</span>
-<span class="r-in">    `top list` <span class="op">=</span> <span class="st">"{top5_aq}"</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="info_snippet.html">info_snippet</a></span><span class="op">(</span></span>
-<span class="r-in">    snippet_name <span class="op">=</span> <span class="st">"top5_aq"</span>,</span>
-<span class="r-in">    fn <span class="op">=</span> <span class="fu"><a href="snip_list.html">snip_list</a></span><span class="op">(</span>column <span class="op">=</span> <span class="st">"acquisition"</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="incorporate.html">incorporate</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
@@ -229,7 +227,7 @@ property.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

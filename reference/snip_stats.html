@@ -119,6 +119,35 @@ summaries: <code>"7num"</code> and <code>"bowley"</code>.</p></dd>
 <p>A formula needed for <code><a href="info_snippet.html">info_snippet()</a></code>'s <code>fn</code> argument.</p>
     </div>
     <div class="section level2">
+    <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
+    
+
+
+<p>Generate an informant object, add a snippet with <code><a href="info_snippet.html">info_snippet()</a></code> and
+<code>snip_stats()</code> (giving us a method to get some summary stats for column <code>d</code>).
+Define a location for the snippet result in <code><a href="https://rdrr.io/r/base/Paren.html" class="external-link">{ }</a></code> and then <code><a href="incorporate.html">incorporate()</a></code>
+the snippet into the info text. Note here that the order of the
+<code><a href="info_columns.html">info_columns()</a></code> and <code><a href="info_snippet.html">info_snippet()</a></code> calls doesn't matter.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">informant</span> <span class="op">&lt;-</span> 
+  <span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span>
+    tbl <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,
+    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,
+    label <span class="op">=</span> <span class="st">"An example."</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="st">"d"</span>,
+    `Stats` <span class="op">=</span> <span class="st">"Stats (fivenum): {stats_d}."</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/info_snippet.html">info_snippet</a></span><span class="op">(</span>
+    snippet_name <span class="op">=</span> <span class="st">"stats_d"</span>,
+    fn <span class="op">=</span> <span class="fu"><a href="../reference/snip_stats.html">snip_stats</a></span><span class="op">(</span>column <span class="op">=</span> <span class="st">"d"</span><span class="op">)</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/incorporate.html">incorporate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
+<p>We can print the <code>informant</code> object to see the information report.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">informant</span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_snip_stats_1.png" style="width:100%;"></p>
+    </div>
+    <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
     
 
@@ -137,37 +166,6 @@ summaries: <code>"7num"</code> and <code>"bowley"</code>.</p></dd>
 <code><a href="snip_lowest.html">snip_lowest</a>()</code></p></div>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Generate an informant object, add</span></span>
-<span class="r-in"><span class="co"># a snippet with `info_snippet()`</span></span>
-<span class="r-in"><span class="co"># and `snip_stats()` (giving us a</span></span>
-<span class="r-in"><span class="co"># method to get some summary stats for</span></span>
-<span class="r-in"><span class="co"># column `a`); define a location for</span></span>
-<span class="r-in"><span class="co"># the snippet result in `{ }` and</span></span>
-<span class="r-in"><span class="co"># then `incorporate()` the snippet</span></span>
-<span class="r-in"><span class="co"># into the info text</span></span>
-<span class="r-in"><span class="va">informant</span> <span class="op">&lt;-</span> </span>
-<span class="r-in">  <span class="fu"><a href="create_informant.html">create_informant</a></span><span class="op">(</span></span>
-<span class="r-in">    tbl <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,</span>
-<span class="r-in">    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,</span>
-<span class="r-in">    label <span class="op">=</span> <span class="st">"An example."</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu"><a href="info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span class="r-in">    columns <span class="op">=</span> <span class="st">"a"</span>,</span>
-<span class="r-in">    `Stats` <span class="op">=</span> <span class="st">"Stats (fivenum): {stats_a}."</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="info_snippet.html">info_snippet</a></span><span class="op">(</span></span>
-<span class="r-in">    snippet_name <span class="op">=</span> <span class="st">"stats_a"</span>,</span>
-<span class="r-in">    fn <span class="op">=</span> <span class="fu">snip_stats</span><span class="op">(</span>column <span class="op">=</span> <span class="st">"a"</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="incorporate.html">incorporate</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># We can print the `informant` object</span></span>
-<span class="r-in"><span class="co"># to see the information report</span></span>
-<span class="r-in"></span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
@@ -177,7 +175,7 @@ summaries: <code>"7num"</code> and <code>"bowley"</code>.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

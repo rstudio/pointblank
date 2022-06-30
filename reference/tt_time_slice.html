@@ -159,45 +159,47 @@ as the input table for the first demo. It has entries in the first 21 days of
 2015 and we'll elect to get all of the records where the <code>time</code> values are
 strictly for the first 15 days of 2015. The <code>keep</code> argument has a default of
 <code>"left"</code> so all rows where the <code>time</code> column is less than
-<code>"2015-01-16 00:00:00"</code> will be kept.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/tt_time_slice.html">tt_time_slice</a></span><span class="op">(</span>
+<code>"2015-01-16 00:00:00"</code> will be kept.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/tt_time_slice.html">tt_time_slice</a></span><span class="op">(</span>
   tbl <span class="op">=</span> <span class="va">game_revenue</span>,
   time_column <span class="op">=</span> <span class="st">"time"</span>,
   slice_point <span class="op">=</span> <span class="st">"2015-01-16"</span>
-<span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 1,208 × 11</span>
-<span class="co">##    player_id       session_id  session_start       time                item_type</span>
-<span class="co">##    &lt;chr&gt;           &lt;chr&gt;       &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;    </span>
-<span class="co">##  1 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 01:31:03 2015-01-01 01:31:27 iap      </span>
-<span class="co">##  2 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 01:31:03 2015-01-01 01:36:57 iap      </span>
-<span class="co">##  3 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 01:31:03 2015-01-01 01:37:45 iap      </span>
-<span class="co">##  4 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 01:31:03 2015-01-01 01:42:33 ad       </span>
-<span class="co">##  5 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 11:55:20 ad       </span>
-<span class="co">##  6 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 12:08:56 ad       </span>
-<span class="co">##  7 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 12:14:08 ad       </span>
-<span class="co">##  8 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 12:21:44 ad       </span>
-<span class="co">##  9 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 12:24:20 ad       </span>
-<span class="co">## 10 FXWUORGYNJAE271 FXWUORGYNJ… 2015-01-01 15:17:18 2015-01-01 15:19:36 ad       </span>
-<span class="co">## # … with 1,198 more rows, and 6 more variables: item_name &lt;chr&gt;,</span>
-<span class="co">## #   item_revenue &lt;dbl&gt;, session_duration &lt;dbl&gt;, start_day &lt;date&gt;,</span>
-<span class="co">## #   acquisition &lt;chr&gt;, country &lt;chr&gt;</span></code></pre></div>
-
+<span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 1,208 × 11</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    player_id       session_id  session_start       time                item_type</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;           &lt;chr&gt;       &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;    </span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 01:31:03 2015-01-01 01:31:27 iap      </span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 01:31:03 2015-01-01 01:36:57 iap      </span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 01:31:03 2015-01-01 01:37:45 iap      </span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 01:31:03 2015-01-01 01:42:33 ad       </span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 11:55:20 ad       </span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 12:08:56 ad       </span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 12:14:08 ad       </span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 12:21:44 ad       </span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 12:24:20 ad       </span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 FXWUORGYNJAE271 FXWUORGYNJ… 2015-01-01 15:17:18 2015-01-01 15:19:36 ad       </span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 1,198 more rows, and 6 more variables: item_name &lt;chr&gt;,</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="do">## #   item_revenue &lt;dbl&gt;, session_duration &lt;dbl&gt;, start_day &lt;date&gt;,</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="do">## #   acquisition &lt;chr&gt;, country &lt;chr&gt;</span></span></code></pre><p></p></div>
 <p>Omit the first 25% of records from <code>small_table</code>, also included in the
 package, with a fractional <code>slice_point</code> of <code>0.25</code> on the basis of a timeline
-that begins at <code>2016-01-04 11:00:00</code> and ends at <code>2016-01-30 11:23:00</code>.</p><div class="sourceCode r"><pre><code><span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+that begins at <code>2016-01-04 11:00:00</code> and ends at <code>2016-01-30 11:23:00</code>.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/tt_time_slice.html">tt_time_slice</a></span><span class="op">(</span>
     slice_point <span class="op">=</span> <span class="fl">0.25</span>,
     keep <span class="op">=</span> <span class="st">"right"</span>
-  <span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 8 × 8</span>
-<span class="co">##   date_time           date           a b             c     d e     f    </span>
-<span class="co">##   &lt;dttm&gt;              &lt;date&gt;     &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;</span>
-<span class="co">## 1 2016-01-11 06:15:00 2016-01-11     4 2-dhe-923     4 3291. TRUE  mid  </span>
-<span class="co">## 2 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3  843. TRUE  high </span>
-<span class="co">## 3 2016-01-17 11:27:00 2016-01-17     4 5-boe-639     2 1036. FALSE low  </span>
-<span class="co">## 4 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high </span>
-<span class="co">## 5 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high </span>
-<span class="co">## 6 2016-01-26 20:07:00 2016-01-26     4 2-dmx-010     7  834. TRUE  low  </span>
-<span class="co">## 7 2016-01-28 02:51:00 2016-01-28     2 7-dmx-010     8  108. FALSE low  </span>
-<span class="co">## 8 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA 2230. TRUE  high</span></code></pre></div>
-
+  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 8 × 8</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   date_time           date           a b             c     d e     f    </span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;dttm&gt;              &lt;date&gt;     &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 2016-01-11 06:15:00 2016-01-11     4 2-dhe-923     4 3291. TRUE  mid  </span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3  843. TRUE  high </span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 2016-01-17 11:27:00 2016-01-17     4 5-boe-639     2 1036. FALSE low  </span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high </span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high </span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 2016-01-26 20:07:00 2016-01-26     4 2-dmx-010     7  834. TRUE  low  </span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 7 2016-01-28 02:51:00 2016-01-28     2 7-dmx-010     8  108. FALSE low  </span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 8 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA 2230. TRUE  high</span></span></code></pre><p></p></div>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
@@ -225,7 +227,7 @@ that begins at <code>2016-01-04 11:00:00</code> and ends at <code>2016-01-30 11:
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

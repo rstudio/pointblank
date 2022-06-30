@@ -90,29 +90,23 @@ columns:
 }\if{html}{\out{</div>}}
 }
 
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_info_snippet_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
+Take the \code{small_table} dataset included in \strong{pointblank} and assign it to
+\code{test_table}. We'll modify it later.
 
-3-5
-}
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{test_table <- small_table
+}\if{html}{\out{</div>}}
 
-\examples{
-# Take the `small_table` and
-# assign it to `test_table`; we'll
-# modify it later
-test_table <- small_table
+Generate an informant object, add two snippets with \code{info_snippet()},
+add information with some other \verb{info_*()} functions and then \code{\link[=incorporate]{incorporate()}}
+the snippets into the info text. The first snippet will be made with the
+expression \code{~ . \%>\% nrow()} (giving us the number of rows in the dataset) and
+the second uses the \code{\link[=snip_highest]{snip_highest()}} function with column \code{a} (giving us
+the highest value in that column).
 
-# Generate an informant object, add
-# two snippets with `info_snippet()`,
-# add information with some other
-# `info_*()` functions and then
-# `incorporate()` the snippets into
-# the info text
-informant <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- 
   create_informant(
     tbl = ~ test_table,
     tbl_name = "test_table",
@@ -128,7 +122,7 @@ informant <-
   ) \%>\%
   info_columns(
     columns = vars(a),
-    info = "In the range of 1 to {max_a}. (SIMPLE)"
+    info = "In the range of 1 to \{max_a\}. ((SIMPLE))"
   ) \%>\%
   info_columns(
     columns = starts_with("date"),
@@ -136,30 +130,54 @@ informant <-
   ) \%>\%
   info_columns(
     columns = "date",
-    info = "The date part of `date_time`. (CALC)"
+    info = "The date part of `date_time`. ((CALC))"
   ) \%>\%
   info_section(
     section_name = "rows",
-    row_count = "There are {row_count} rows available."
+    row_count = "There are \{row_count\} rows available."
   ) \%>\%
   incorporate()
+}\if{html}{\out{</div>}}
 
-# We can print the `informant` object
-# to see the information report
+We can print the \code{informant} object to see the information report.
 
-# Let's modify `test_table` to give
-# it more rows and an extra column
-test_table <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant
+}\if{html}{\out{</div>}}
+
+\if{html}{
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_info_snippet_1.png" style="width:100\%;">
+}
+}
+
+Let's modify \code{test_table} with some \strong{dplyr} to give it more rows and an
+extra column.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{test_table <- 
   dplyr::bind_rows(test_table, test_table) \%>\%
   dplyr::mutate(h = a + c)
+}\if{html}{\out{</div>}}
 
-# Using `incorporate()` will cause
-# the snippets to be reprocessed, and,
-# the info text to be updated
-informant <-
-  informant \%>\% incorporate()
-  
+Using \code{\link[=incorporate]{incorporate()}} on the \code{informant} object will cause the snippets to be
+reprocessed, and, the info text to be updated.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- informant \%>\% incorporate()
+
+informant
+}\if{html}{\out{</div>}}
+
+\if{html}{
+\out{
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_info_snippet_2.png" style="width:100\%;">
 }
+}
+}
+
+\section{Function ID}{
+
+3-5
+}
+
 \seealso{
 Other Information Functions: 
 \code{\link{info_columns_from_tbl}()},

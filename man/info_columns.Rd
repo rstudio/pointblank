@@ -192,11 +192,6 @@ Upon printing the \code{informant} object, we see the additions made to the
 }
 }
 
-\section{Figures}{
-
-\if{html}{\figure{man_info_columns_1.png}{options: width=100\%}}
-}
-
 \section{Function ID}{
 
 3-2

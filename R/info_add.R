@@ -389,9 +389,6 @@ info_tabular <- function(
 #' `r pb_get_image_tag(file = "man_info_columns_1.png")`
 #' }
 #' }
-#' 
-#' @section Figures:
-#' \if{html}{\figure{man_info_columns_1.png}{options: width=100\%}}
 #'
 #' @family Information Functions
 #' @section Function ID:
@@ -577,6 +574,7 @@ info_columns <- function(
 #' `r pb_get_image_tag(file = "man_info_columns_from_tbl_2.png")`
 #' }
 #' }
+#' 
 #' 
 #' @family Information Functions
 #' @section Function ID:
@@ -810,6 +808,7 @@ check_info_columns_tbl <- function(tbl) {
 #' }
 #' }
 #'
+#'
 #' @family Information Functions
 #' @section Function ID:
 #' 3-4
@@ -948,18 +947,23 @@ info_section <- function(
 #' 
 #' @return A `ptblank_informant` object.
 #' 
-#' @examples 
-#' # Take the `small_table` and
-#' # assign it to `test_table`; we'll
-#' # modify it later
-#' test_table <- small_table
+#' @section Examples:
 #' 
-#' # Generate an informant object, add
-#' # two snippets with `info_snippet()`,
-#' # add information with some other
-#' # `info_*()` functions and then
-#' # `incorporate()` the snippets into
-#' # the info text
+#' Take the `small_table` dataset included in **pointblank** and assign it to
+#' `test_table`. We'll modify it later.
+#' 
+#' ```r
+#' test_table <- small_table
+#' ```
+#' 
+#' Generate an informant object, add two snippets with `info_snippet()`,
+#' add information with some other `info_*()` functions and then [incorporate()]
+#' the snippets into the info text. The first snippet will be made with the
+#' expression `~ . %>% nrow()` (giving us the number of rows in the dataset) and
+#' the second uses the [snip_highest()] function with column `a` (giving us
+#' the highest value in that column).
+#' 
+#' ```r
 #' informant <- 
 #'   create_informant(
 #'     tbl = ~ test_table,
@@ -976,7 +980,7 @@ info_section <- function(
 #'   ) %>%
 #'   info_columns(
 #'     columns = vars(a),
-#'     info = "In the range of 1 to {max_a}. (SIMPLE)"
+#'     info = "In the range of 1 to {max_a}. ((SIMPLE))"
 #'   ) %>%
 #'   info_columns(
 #'     columns = starts_with("date"),
@@ -984,31 +988,50 @@ info_section <- function(
 #'   ) %>%
 #'   info_columns(
 #'     columns = "date",
-#'     info = "The date part of `date_time`. (CALC)"
+#'     info = "The date part of `date_time`. ((CALC))"
 #'   ) %>%
 #'   info_section(
 #'     section_name = "rows",
 #'     row_count = "There are {row_count} rows available."
 #'   ) %>%
 #'   incorporate()
+#' ```
 #' 
-#' # We can print the `informant` object
-#' # to see the information report
+#' We can print the `informant` object to see the information report.
 #' 
-#' # Let's modify `test_table` to give
-#' # it more rows and an extra column
+#' ```r
+#' informant
+#' ```
+#' 
+#' \if{html}{
+#' \out{
+#' `r pb_get_image_tag(file = "man_info_snippet_1.png")`
+#' }
+#' }
+#' 
+#' Let's modify `test_table` with some **dplyr** to give it more rows and an
+#' extra column.
+#' 
+#' ```r
 #' test_table <- 
 #'   dplyr::bind_rows(test_table, test_table) %>%
 #'   dplyr::mutate(h = a + c)
+#' ```
 #' 
-#' # Using `incorporate()` will cause
-#' # the snippets to be reprocessed, and,
-#' # the info text to be updated
-#' informant <-
-#'   informant %>% incorporate()
-#'   
-#' @section Figures:
-#' \if{html}{\figure{man_info_snippet_1.png}{options: width=100\%}}
+#' Using [incorporate()] on the `informant` object will cause the snippets to be
+#' reprocessed, and, the info text to be updated.
+#' 
+#' ```r
+#' informant <- informant %>% incorporate()
+#' 
+#' informant
+#' ```
+#' 
+#' \if{html}{
+#' \out{
+#' `r pb_get_image_tag(file = "man_info_snippet_2.png")`
+#' }
+#' }
 #' 
 #' @family Information Functions
 #' @section Function ID:

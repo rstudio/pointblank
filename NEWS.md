@@ -1,4 +1,4 @@
-# pointblank (development version)
+# pointblank 0.11.0
 
 * The `row_count_match()` function can now match the count of rows in the target table to a literal value (in addition to comparing row counts to a secondary table).
 

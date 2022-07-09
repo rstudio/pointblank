@@ -8,6 +8,8 @@
 
 * The `get_informant_report()` has been enhanced with more `width` options. Aside from the `"standard"` and `"small"` sizes we can now supply any pixel- or percent-based width to precisely size the reporting.
 
+* Added support for validating data in BigQuery tables.
+
 # pointblank 0.10.0
 
 ## New features

@@ -22,12 +22,17 @@ The *VALID-III: Expectations in Unit Tests* workflow is all about checking your 
 - `expect_col_vals_not_between()`: Expect that column data are not between two specified values.
 - `expect_col_vals_in_set()`: Expect that column data are part of a specified set of values.
 - `expect_col_vals_not_in_set()`: Expect that column data are not part of a specified set of values.
+- `expect_col_vals_make_set()`: Expect that a set of values entirely accounted for in a column of values.
+- `expect_col_vals_make_subset()`: Expect that a set of values a subset of a column of values.
+- `expect_col_vals_increasing()`: Expect column data increasing by row.
+- `expect_col_vals_decreasing()`: Expect column data decreasing by row.
 - `expect_col_vals_null()`: Expect that column data are `NULL`/`NA`.
 - `expect_col_vals_not_null()`: Expect that column data are not `NULL`/`NA`.
 - `expect_col_vals_regex()`: Expect that strings in column data match a regex pattern.
+- `expect_col_vals_within_spec()`: Expect that values in column data fit within a specification.
 - `expect_col_vals_expr()`: Expect that column data agree with a predicate expression.
-- `expect_conjointly()`: Expect that multiple rowwise validations result in joint validity.
 - `expect_rows_distinct()`: Expect that row data are distinct.
+- `expect_rows_complete()`: Expect that row data are complete.
 - `expect_col_is_character()`: Expect that the columns contain character/string data.
 - `expect_col_is_numeric()`: Expect that the columns contain numeric values.
 - `expect_col_is_integer()`: Expect that the columns contain integer values.
@@ -37,6 +42,11 @@ The *VALID-III: Expectations in Unit Tests* workflow is all about checking your 
 - `expect_col_is_factor()`: Expect that the columns contain R `factor` objects.
 - `expect_col_exists()`: Expect that one or more columns actually exist.
 - `expect_col_schema_match()`: Expect that columns in the table (and their types) match a predefined schema.
+- `expect_row_count_match()`: Expect that the row count matches that of a different table.
+- `expect_col_count_match()`: Expect that the column count matches that of a different table.
+- `expect_conjointly()`: Expect that multiple rowwise validations result in joint validity.
+- `expect_serially()`: Run several tests and a final validation in a serial manner with a passing expectation.
+- `expect_specially()`: Perform a specialized validation with a user-defined function with a passing expectation.
 
 Now that we know that the functions are similar in intent but different in name, let's learn how to use these functions effectively.
 

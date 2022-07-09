@@ -21,12 +21,17 @@ The *VALID-IV: Data Tests for Conditionals* workflow is probably not much of a w
 - `test_col_vals_not_between()`: Test whether column data are not between two specified values.
 - `test_col_vals_in_set()`: Test whether column data are part of a specified set of values.
 - `test_col_vals_not_in_set()`: Test whether column data are not part of a specified set of values.
+- `test_col_vals_make_set()`: Test whether a set of values is entirely accounted for in a column of values.
+- `test_col_vals_make_subset()`: Test whether a set of values is a subset of a column of values.
+- `test_col_vals_increasing()`: Test whether column data increase by row.
+- `test_col_vals_decreasing()`: Test whether column data decrease by row.
 - `test_col_vals_null()`: Test whether column data are `NULL`/`NA`.
 - `test_col_vals_not_null()`: Test whether column data are not `NULL`/`NA`.
 - `test_col_vals_regex()`: Test whether strings in column data match a regex pattern.
+- `test_col_vals_within_spec()`: Test whether values in column data fit within a specification.
 - `test_col_vals_expr()`: Test whether column data agree with a predicate expression.
-- `test_conjointly()`: Test whether multiple rowwise validations result in joint validity.
 - `test_rows_distinct()`: Test whether row data are distinct.
+- `test_rows_complete()`: Test whether row data are complete.
 - `test_col_is_character()`: Test whether the columns contain character/string data.
 - `test_col_is_numeric()`: Test whether the columns contain numeric values.
 - `test_col_is_integer()`: Test whether the columns contain integer values.
@@ -36,6 +41,11 @@ The *VALID-IV: Data Tests for Conditionals* workflow is probably not much of a w
 - `test_col_is_factor()`: Test whether the columns contain R `factor` objects.
 - `test_col_exists()`: Test whether one or more columns actually exist.
 - `test_col_schema_match()`: Test whether columns in the table (and their types) match a predefined schema.
+- `test_row_count_match()`: Test whether the row count matches that of a different table.
+- `test_col_count_match()`: Test whether the column count matches that of a different table.
+- `test_conjointly()`: Test whether multiple rowwise validations result in joint validity.
+- `test_serially()`: Run several tests and a final validation in a serial manner as a combined test.
+- `test_specially()`: Perform a test based on a user-defined function.
 
 ## Exactly Like the `expect_*()` Functions Except You Get a `TRUE` or `FALSE`
 

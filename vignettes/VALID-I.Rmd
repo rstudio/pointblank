@@ -49,7 +49,7 @@ The *agent* needs directives on what to do with the table, so, we provide valida
 - `col_exists()`: Do one or more columns actually exist?
 - `col_schema_match()`: Do columns in the table (and their types) match a predefined schema?
 - `row_count_match()`: Does the row count match that of a different table?
-- `col_count_match()`:  Does the column count match that of a different table?
+- `col_count_match()`: Does the column count match that of a different table?
 - `tbl_match()`: Does the target table match a comparison table?
 - `conjointly()`: Do multiple rowwise validations result in joint validity?
 - `serially()`: Run several tests and a final validation in a serial manner

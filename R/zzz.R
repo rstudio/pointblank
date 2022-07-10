@@ -166,6 +166,7 @@ utils::globalVariables(
     "q_1",
     "q_3",
     "%REGEXP%",
+    "REGEXP_CONTAINS",
     "regexp_matches",
     "RLIKE",
     "rowid",

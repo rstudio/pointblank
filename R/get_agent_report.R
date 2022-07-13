@@ -161,7 +161,7 @@
 #' Let's create an *agent* and validate that values in column `a` are always
 #' greater than `4`.
 #' 
-#' ```{r}
+#' ```r
 #' agent <-
 #'   create_agent(
 #'     tbl = tbl,
@@ -175,9 +175,18 @@
 #' We can get a tibble-based report from the agent by using `get_agent_report()`
 #' with `display_table = FALSE`.
 #' 
-#' ```{r}
+#' ```r
 #' agent %>% get_agent_report(display_table = FALSE)
 #' ```
+#' 
+#' \preformatted{## # A tibble: 1 × 14
+#' ##       i type    columns values precon active eval  units n_pass
+#' ##   <int> <chr>   <chr>   <chr>  <chr>  <lgl>  <chr> <dbl>  <dbl>
+#' ## 1     1 col_va… a       4      NA     TRUE   OK        4      4
+#' ## # … with 5 more variables: f_pass <dbl>, W <lgl>, S <lgl>,
+#' ## #   N <lgl>, extract <int>}
+#' 
+#' 
 #'
 #' The full-featured display-table-based report can be viewed by printing the
 #' `agent` object, but, we can get a `"ptblank_agent_report"` object returned to

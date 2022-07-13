@@ -1,14 +1,20 @@
 # pointblank 0.11.0
 
+## New features
+
 * The `row_count_match()` function can now match the count of rows in the target table to a literal value (in addition to comparing row counts to a secondary table).
 
-* The `col_count_match()` function was added to compare column counts in the target table to secondary table, or, to match on a literal value.
+* The analogous `col_count_match()` function was added to compare column counts in the target table to a secondary table, or, to match on a literal value.
 
 * Substitution syntax has been added to the `tbl_store()` function with `{{ <name> }}`. This is a great way to make table-prep more concise, readable, and less prone to errors.
 
 * The `get_informant_report()` has been enhanced with more `width` options. Aside from the `"standard"` and `"small"` sizes we can now supply any pixel- or percent-based width to precisely size the reporting.
 
 * Added support for validating data in BigQuery tables.
+
+## Documentation
+
+* All functions in the package now have *better* usage examples.
 
 # pointblank 0.10.0
 

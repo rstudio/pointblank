@@ -118,16 +118,6 @@ Create an \code{action_levels} object with fractional values for the \code{warn}
 
 A summary of settings for the \code{al} object is shown by printing it.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{al
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## -- The `action_levels` settings
-## WARN failure threshold of 0.2 of all test units.
-## STOP failure threshold of 0.8 of all test units.
-## NOTIFY failure threshold of 0.5 of all test units.
-## ----
-}\if{html}{\out{</div>}}
-
 Create a pointblank agent and apply the \code{al} object to \code{actions}. Add two
 validation steps and interrogate the \code{small_table}.
 
@@ -202,28 +192,31 @@ data).
   )
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## Warning: Exceedance of failed test units where values in `a` should have been > `2`.
-## The `col_vals_gt()` validation failed beyond the absolute threshold level (2).
-## * failure level (4) >= failure threshold (2)
-}\if{html}{\out{</div>}}
+\preformatted{## # A tibble: 13 × 8
+##    date_time           date           a b           c      d e    
+##    <dttm>              <date>     <int> <chr>   <dbl>  <dbl> <lgl>
+##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-…     3  3423. TRUE 
+##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-…     8 10000. TRUE 
+##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-…     3  2343. TRUE 
+##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-…    NA  3892. FALSE
+##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-…     7   284. TRUE 
+##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-…     4  3291. TRUE 
+##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-…     3   843. TRUE 
+##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-…     2  1036. FALSE
+##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-…     9   838. FALSE
+## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-…     9   838. FALSE
+## 11 2016-01-26 20:07:00 2016-01-26     4 2-dmx-…     7   834. TRUE 
+## 12 2016-01-28 02:51:00 2016-01-28     2 7-dmx-…     8   108. FALSE
+## 13 2016-01-30 11:23:00 2016-01-30     1 3-dka-…    NA  2230. TRUE 
+## # … with 1 more variable: f <chr>
+## Warning message:
+## Exceedance of failed test units where values in `a` should have been >
+## `2`.
+## The `col_vals_gt()` validation failed beyond the absolute threshold
+## level (2).
+## * failure level (4) >= failure threshold (2)}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 13 × 8
-##    date_time           date           a b             c      d e     f    
-##    <dttm>              <date>     <int> <chr>     <dbl>  <dbl> <lgl> <chr>
-##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high 
-##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-163     8 10000. TRUE  low  
-##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3  2343. TRUE  high 
-##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-903    NA  3892. FALSE mid  
-##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-038     7   284. TRUE  low  
-##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-923     4  3291. TRUE  mid  
-##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3   843. TRUE  high 
-##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-639     2  1036. FALSE low  
-##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
-## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
-## 11 2016-01-26 20:07:00 2016-01-26     4 2-dmx-010     7   834. TRUE  low  
-## 12 2016-01-28 02:51:00 2016-01-28     2 7-dmx-010     8   108. FALSE low  
-## 13 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA  2230. TRUE  high
-}\if{html}{\out{</div>}}
+
 
 With the same pipeline, not supplying anything for \code{actions} (it's \code{NULL} by
 default) will have the same effect as using \code{stop_on_fail(stop_at = 1)}.
@@ -232,10 +225,14 @@ default) will have the same effect as using \code{stop_on_fail(stop_at = 1)}.
   col_vals_gt(columns = vars(a), value = 2)
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## Error: Exceedance of failed test units where values in `a` should have been > `2`.
-## The `col_vals_gt()` validation failed beyond the absolute threshold level (1).
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## Error: Exceedance of failed test units where values in `a` should have
+## been > `2`.
+## The `col_vals_gt()` validation failed beyond the absolute threshold
+## level (1).
 ## * failure level (4) >= failure threshold (1)
 }\if{html}{\out{</div>}}
+
+Here's the equivalent set of statements:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   col_vals_gt(
@@ -244,8 +241,10 @@ default) will have the same effect as using \code{stop_on_fail(stop_at = 1)}.
   )
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## Error: Exceedance of failed test units where values in `a` should have been > `2`.
-## The `col_vals_gt()` validation failed beyond the absolute threshold level (1).
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## Error: Exceedance of failed test units where values in `a` should have
+## been > `2`.
+## The `col_vals_gt()` validation failed beyond the absolute threshold
+## level (1).
 ## * failure level (4) >= failure threshold (1)
 }\if{html}{\out{</div>}}
 

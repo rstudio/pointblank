@@ -56,9 +56,9 @@
 #' @section Examples:
 #' 
 #' Create a series of two validation steps focused on testing row values for
-#' part of the `small_table` object. `interrogate()` immediately.
+#' part of the `small_table` object. Use [interrogate()] right after that.
 #' 
-#' ```{r}
+#' ```r
 #' agent <-
 #'   create_agent(
 #'     tbl = small_table %>%
@@ -78,17 +78,51 @@
 #' where each table is named after the validation step that has an extract
 #' available.
 #' 
-#' ```{r}
+#' ```r
 #' agent %>% get_data_extracts()
 #' ```
 #' 
+#' \preformatted{## $`1`
+#' ## # A tibble: 6 × 6
+#' ##       a b             c     d e     f    
+#' ##   <int> <chr>     <dbl> <dbl> <lgl> <chr>
+#' ## 1     8 3-ldm-038     7  284. TRUE  low  
+#' ## 2     7 1-knw-093     3  843. TRUE  high 
+#' ## 3     3 5-bce-642     9  838. FALSE high 
+#' ## 4     3 5-bce-642     9  838. FALSE high 
+#' ## 5     4 2-dmx-010     7  834. TRUE  low  
+#' ## 6     2 7-dmx-010     8  108. FALSE low  
+#' ## 
+#' ## $`2`
+#' ## # A tibble: 4 × 6
+#' ##       a b             c     d e     f    
+#' ##   <int> <chr>     <dbl> <dbl> <lgl> <chr>
+#' ## 1     6 8-kdg-938     3 2343. TRUE  high 
+#' ## 2     8 3-ldm-038     7  284. TRUE  low  
+#' ## 3     7 1-knw-093     3  843. TRUE  high 
+#' ## 4     4 5-boe-639     2 1036. FALSE low}
+#' 
+#' 
+#' 
 #' We can get an extract for a specific step by specifying it in the `i`
 #' argument. Let's get the failing rows from the first validation step (the
-#' `col_vals_gt()` one).
+#' [col_vals_gt()] one).
 #' 
-#' ```{r}
+#' ```r
 #' agent %>% get_data_extracts(i = 1)
 #' ```
+#' 
+#' \preformatted{## # A tibble: 6 × 6
+#' ##       a b             c     d e     f    
+#' ##   <int> <chr>     <dbl> <dbl> <lgl> <chr>
+#' ## 1     8 3-ldm-038     7  284. TRUE  low  
+#' ## 2     7 1-knw-093     3  843. TRUE  high 
+#' ## 3     3 5-bce-642     9  838. FALSE high 
+#' ## 4     3 5-bce-642     9  838. FALSE high 
+#' ## 5     4 2-dmx-010     7  834. TRUE  low  
+#' ## 6     2 7-dmx-010     8  108. FALSE low}
+#' 
+#' 
 #' 
 #' @family Post-interrogation
 #' @section Function ID:

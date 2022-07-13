@@ -50,28 +50,44 @@
 #' on the table. A column name can be verified as present by using it in double
 #' quotes.
 #' 
-#' ```{r}
+#' ```r
 #' small_table %>% has_columns(columns = "date")
+#' ```
+#' 
+#' ```
+#' ## [1] TRUE
 #' ```
 #' 
 #' Multiple column names can be supplied. The following is `TRUE` because both
 #' columns are present in `small_table`.
 #' 
-#' ```{r}
+#' ```r
 #' small_table %>% has_columns(columns = c("a", "b"))
+#' ```
+#' 
+#' ```
+#' ## [1] TRUE
 #' ```
 #' 
 #' It's possible to supply column names in `vars()` as well:
 #' 
-#' ```{r}
+#' ```r
 #' small_table %>% has_columns(columns = vars(a, b))
+#' ```
+#' 
+#' ```
+#' ## [1] TRUE
 #' ```
 #' 
 #' Because column `h` isn't present, this returns `FALSE` (all specified columns
 #' need to be present to obtain `TRUE`).
 #' 
-#' ```{r}
+#' ```r
 #' small_table %>% has_columns(columns = vars(a, h))
+#' ```
+#' 
+#' ```
+#' ## [1] FALSE
 #' ```
 #' 
 #' The `has_columns()` function can be useful in expressions that involve the
@@ -83,7 +99,7 @@
 #' step becomes inactive because column `j` isn't there (without the `active`
 #' statement there we would get an evaluation failure in the agent report).
 #' 
-#' ```{r}
+#' ```r
 #' agent <- 
 #'   create_agent(
 #'     tbl = small_table,
@@ -110,10 +126,14 @@
 #' the third validation step, is actually `NA` instead of `FALSE` because the
 #' step became inactive.
 #' 
-#' ```{r}
+#' ```r
 #' x_list <- get_agent_x_list(agent = agent)
 #' 
 #' x_list$eval_warning
+#' ```
+#' 
+#' ```
+#' ## [1] FALSE FALSE    NA
 #' ```
 #' 
 #' @family Utility and Helper Functions

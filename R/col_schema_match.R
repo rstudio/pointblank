@@ -507,7 +507,7 @@ test_col_schema_match <- function(
 #' Validate that the schema object `schema_obj` exactly defines the column names
 #' and column types of the `tbl` table.
 #' 
-#' ```{r}
+#' ```r
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
 #'   col_schema_match(schema_obj) %>%
@@ -516,13 +516,17 @@ test_col_schema_match <- function(
 #' 
 #' Determine if this validation step passed by using `all_passed()`.
 #' 
-#' ```{r}
+#' ```r
 #' all_passed(agent)
+#' ```
+#' 
+#' ```
+#' ## [1] TRUE
 #' ```
 #' 
 #' We can alternatively create a column schema object from a `tbl_df` object.
 #' 
-#' ```{r}
+#' ```r
 #' schema_obj <-
 #'   col_schema(
 #'     .tbl = dplyr::tibble(
@@ -535,11 +539,15 @@ test_col_schema_match <- function(
 #' This should provide the same interrogation results as in the previous
 #' example.
 #' 
-#' ```{r}
+#' ```r
 #' create_agent(tbl = tbl) %>%
 #'   col_schema_match(schema_obj) %>%
 #'   interrogate() %>%
 #'   all_passed()
+#' ```
+#' 
+#' ```
+#' ## [1] TRUE
 #' ```
 #' 
 #' @family Utility and Helper Functions

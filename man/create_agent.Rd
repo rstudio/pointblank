@@ -441,12 +441,13 @@ duplicated rows, that failed. We can see those rows with
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% get_data_extracts(i = 4)
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 2 × 8
-##   date_time           date           a b             c     d e     f    
-##   <dttm>              <date>     <int> <chr>     <dbl> <dbl> <lgl> <chr>
-## 1 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high 
-## 2 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high
-}\if{html}{\out{</div>}}
+\preformatted{## # A tibble: 2 × 8
+##   date_time           date           a b            c     d e     f    
+##   <dttm>              <date>     <int> <chr>    <dbl> <dbl> <lgl> <chr>
+## 1 2016-01-20 04:30:00 2016-01-20     3 5-bce-6…     9  838. FALSE high 
+## 2 2016-01-20 04:30:00 2016-01-20     3 5-bce-6…     9  838. FALSE high}
+
+
 
 We can get an x-list for the entire validation process (7 steps), or, just
 for the 4th step with \code{\link[=get_agent_x_list]{get_agent_x_list()}}.
@@ -460,27 +461,7 @@ fraction of test units that failed.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{xl_step_4$f_failed
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] 0.15385
-}\if{html}{\out{</div>}}
-
-Just printing the x-list will tell us what's available.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{xl_step_4
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## -- The x-list for table `small_table`
-## ---- STEP 4 ----
-## $time_start $time_end (POSIXct [1])
-## $label $tbl_name $tbl_src $tbl_src_details (chr [1])
-## $tbl (spec_tbl_df tbl_df tbl data.frame)
-## $col_names $col_types (chr [8])
-## $i $type $columns $values $label $briefs (mixed [1])
-## $eval_error $eval_warning (lgl [1])
-## $capture_stack (list [1])
-## $n $n_passed $n_failed $f_passed $f_failed (num [1])
-## $warn $stop $notify (lgl [1])
-## $lang (chr [1])
-## ----
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] 0.15385
 }\if{html}{\out{</div>}}
 
 An x-list not specific to any step will have way more information and a

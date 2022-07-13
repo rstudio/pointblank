@@ -156,7 +156,7 @@ specify a \code{tbl} with the \code{~} followed by a statement that gets the
   )
 }\if{html}{\out{</div>}}
 
-We can add \emph{info text} to describe the table with the various \verb{⁠info_*(}
+We can add \emph{info text} to describe the table with the various \verb{info_*()}
 functions. In this example, we'll use \code{info_columns()} multiple times to
 describe some of the columns in the \code{small_table} dataset. Note here that
 \emph{info text} calls are additive to the existing content inside of the

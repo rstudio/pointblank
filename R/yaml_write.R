@@ -78,15 +78,13 @@
 #' **pointblank** agent. We designate failure thresholds to the `warn`, `stop`,
 #' and `notify` states using [action_levels()].
 #' 
-#' ```{r}
+#' ```r
 #' al <- 
 #'   action_levels(
 #'     warn_at = 0.10,
 #'     stop_at = 0.25,
 #'     notify_at = 0.35
 #'   )
-#'   
-#' al
 #' ```
 #' 
 #' Now let's create the `agent` and pass it the `al` object (which serves as a

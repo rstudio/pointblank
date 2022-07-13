@@ -352,8 +352,7 @@ info_tabular <- function(
 #'     label = "An example."
 #'   )
 #' ```
-#' 
-#' We can add *info text* to describe the table with the various `⁠info_*(`
+#' We can add *info text* to describe the table with the various `info_*()`
 #' functions. In this example, we'll use `info_columns()` multiple times to
 #' describe some of the columns in the `small_table` dataset. Note here that
 #' *info text* calls are additive to the existing content inside of the

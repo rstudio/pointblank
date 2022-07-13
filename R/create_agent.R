@@ -316,7 +316,7 @@
 #' designate proportional failure thresholds to the `warn`, `stop`, and `notify`
 #' states using [action_levels()].
 #' 
-#' ```{r}
+#' ```r
 #' al <- 
 #'   action_levels(
 #'       warn_at = 0.10,
@@ -330,7 +330,7 @@
 #' static thresholds provided by `al` will make the reporting a bit more useful.
 #' We also provide a target table and we'll use `pointblank::small_table`.
 #' 
-#' ```{r}
+#' ```r
 #' agent <- 
 #'   create_agent(
 #'     tbl = pointblank::small_table,
@@ -344,7 +344,7 @@
 #' using as many validation functions as we want. then, we use [interrogate()]
 #' to actually perform the validations and gather intel.
 #' 
-#' ```{r}
+#' ```r
 #' agent <-
 #'   agent %>% 
 #'   col_exists(columns = vars(date, date_time)) %>%
@@ -408,28 +408,34 @@
 #' duplicated rows, that failed. We can see those rows with
 #' [get_data_extracts()].
 #' 
-#' ```{r}
+#' ```r
 #' agent %>% get_data_extracts(i = 4)
 #' ```
+#' 
+#' \preformatted{## # A tibble: 2 × 8
+#' ##   date_time           date           a b            c     d e     f    
+#' ##   <dttm>              <date>     <int> <chr>    <dbl> <dbl> <lgl> <chr>
+#' ## 1 2016-01-20 04:30:00 2016-01-20     3 5-bce-6…     9  838. FALSE high 
+#' ## 2 2016-01-20 04:30:00 2016-01-20     3 5-bce-6…     9  838. FALSE high}
+#' 
+#' 
 #' 
 #' We can get an x-list for the entire validation process (7 steps), or, just
 #' for the 4th step with [get_agent_x_list()].
 #' 
-#' ```{r}
+#' ```r
 #' xl_step_4 <- agent %>% get_agent_x_list(i = 4)
 #' ```
 #' 
 #' And then we can peruse the different parts of the list. Let's get the
 #' fraction of test units that failed.
 #' 
-#' ```{r}
+#' ```r
 #' xl_step_4$f_failed
 #' ```
 #' 
-#' Just printing the x-list will tell us what's available.
-#' 
-#' ```{r}
-#' xl_step_4
+#' ```
+#' #> [1] 0.15385
 #' ```
 #' 
 #' An x-list not specific to any step will have way more information and a

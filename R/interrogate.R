@@ -68,7 +68,7 @@
 #' `interrogate()` carries out the validation plan and completes the whole
 #' process.
 #' 
-#' ```{r}
+#' ```r
 #' agent <-
 #'   create_agent(
 #'     tbl = tbl,

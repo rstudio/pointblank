@@ -191,12 +191,14 @@ with \code{display_table = FALSE}.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% get_agent_report(display_table = FALSE)
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 1 × 14
-##       i type  columns values precon active eval  units n_pass f_pass W     S    
-##   <int> <chr> <chr>   <chr>  <chr>  <lgl>  <chr> <dbl>  <dbl>  <dbl> <lgl> <lgl>
-## 1     1 col_… a       4      <NA>   TRUE   OK        4      4      1 NA    NA   
-## # … with 2 more variables: N <lgl>, extract <int>
-}\if{html}{\out{</div>}}
+\preformatted{## # A tibble: 1 × 14
+##       i type    columns values precon active eval  units n_pass
+##   <int> <chr>   <chr>   <chr>  <chr>  <lgl>  <chr> <dbl>  <dbl>
+## 1     1 col_va… a       4      NA     TRUE   OK        4      4
+## # … with 5 more variables: f_pass <dbl>, W <lgl>, S <lgl>,
+## #   N <lgl>, extract <int>}
+
+
 
 The full-featured display-table-based report can be viewed by printing the
 \code{agent} object, but, we can get a \code{"ptblank_agent_report"} object returned to

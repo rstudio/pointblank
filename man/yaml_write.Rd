@@ -102,15 +102,6 @@ and \code{notify} states using \code{\link[=action_levels]{action_levels()}}.
     stop_at = 0.25,
     notify_at = 0.35
   )
-  
-al
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## -- The `action_levels` settings
-## WARN failure threshold of 0.1 of all test units.
-## STOP failure threshold of 0.25 of all test units.
-## NOTIFY failure threshold of 0.35 of all test units.
-## ----
 }\if{html}{\out{</div>}}
 
 Now let's create the \code{agent} and pass it the \code{al} object (which serves as a

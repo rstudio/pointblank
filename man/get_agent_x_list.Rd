@@ -119,15 +119,6 @@ Create an \code{action_levels()} list with fractional values for the \code{warn}
     stop_at = 0.8,
     notify_at = 0.345
   )
-  
-al
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## -- The `action_levels` settings
-## WARN failure threshold of 0.2 of all test units.
-## STOP failure threshold of 0.8 of all test units.
-## NOTIFY failure threshold of 0.345 of all test units.
-## ----
 }\if{html}{\out{</div>}}
 
 Create an agent (giving it the \code{tbl} and the \code{al} objects), supply two
@@ -143,37 +134,14 @@ validation step functions, then interrogate.
   interrogate()
 }\if{html}{\out{</div>}}
 
-Get the agent x-list.
+Get the \code{f_passed} component of the agent x-list.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{x <- get_agent_x_list(agent)
 
-x
+x$f_passed
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## -- The x-list for table `tbl`
-## ---- ALL STEPS ----
-## $time_start $time_end (POSIXct [1])
-## $label $tbl_name $tbl_src $tbl_src_details (chr [1])
-## $tbl (tbl_df tbl data.frame)
-## $col_names $col_types (chr [1])
-## $i $type $columns $values $label $briefs (mixed [2])
-## $eval_error $eval_warning (lgl [2])
-## $capture_stack (list [2])
-## $n $n_passed $n_failed $f_passed $f_failed (num [2])
-## $warn $stop $notify (lgl [2])
-## $validation_set (tbl_df [2, 35])
-## $lang (chr [1])
-## $report_object (blastula_message)
-## $report_html $report_html_small (chr [1])
-## ----
-}\if{html}{\out{</div>}}
-
-Get the \code{f_passed} component of the x-list \code{x}.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{x$f_passed
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] 0.25 1.00
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] 0.25 1.00
 }\if{html}{\out{</div>}}
 }
 

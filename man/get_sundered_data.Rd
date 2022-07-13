@@ -71,7 +71,8 @@ the input table.
 
 
 Create a series of two validation steps focused on testing row values for
-part of the \code{small_table} object. Then, \code{interrogate()}.
+part of the \code{small_table} object. Then, use \code{\link[=interrogate]{interrogate()}} to put the
+validation plan into action.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(
@@ -94,15 +95,15 @@ validation steps (the default piece). This yields 5 of 13 total rows.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% get_sundered_data()
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 5 × 6
+\preformatted{## # A tibble: 5 × 6
 ##       a b             c      d e     f    
 ##   <int> <chr>     <dbl>  <dbl> <lgl> <chr>
 ## 1     2 1-bcd-345     3  3423. TRUE  high 
 ## 2     3 5-egh-163     8 10000. TRUE  low  
 ## 3     2 5-jdo-903    NA  3892. FALSE mid  
 ## 4     4 2-dhe-923     4  3291. TRUE  mid  
-## 5     1 3-dka-303    NA  2230. TRUE  high
-}\if{html}{\out{</div>}}
+## 5     1 3-dka-303    NA  2230. TRUE  high}
+
 
 Get the complementary data piece: all of those rows that failed either of the
 two validation steps. This yields 8 of 13 total rows.
@@ -110,7 +111,7 @@ two validation steps. This yields 8 of 13 total rows.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% get_sundered_data(type = "fail")
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 8 × 6
+\preformatted{## # A tibble: 8 × 6
 ##       a b             c     d e     f    
 ##   <int> <chr>     <dbl> <dbl> <lgl> <chr>
 ## 1     6 8-kdg-938     3 2343. TRUE  high 
@@ -120,8 +121,8 @@ two validation steps. This yields 8 of 13 total rows.
 ## 5     3 5-bce-642     9  838. FALSE high 
 ## 6     3 5-bce-642     9  838. FALSE high 
 ## 7     4 2-dmx-010     7  834. TRUE  low  
-## 8     2 7-dmx-010     8  108. FALSE low
-}\if{html}{\out{</div>}}
+## 8     2 7-dmx-010     8  108. FALSE low}
+
 
 We can get all of the input data returned with a flag column (called
 \code{.pb_combined}). This is done by using \code{type = "combined"} and that rightmost
@@ -130,23 +131,23 @@ column will contain \code{"pass"} and \code{"fail"} values.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% get_sundered_data(type = "combined")
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 13 × 7
+\preformatted{## # A tibble: 13 × 7
 ##        a b             c      d e     f     .pb_combined
-##    <int> <chr>     <dbl>  <dbl> <lgl> <chr> <chr>       
-##  1     2 1-bcd-345     3  3423. TRUE  high  pass        
-##  2     3 5-egh-163     8 10000. TRUE  low   pass        
-##  3     6 8-kdg-938     3  2343. TRUE  high  fail        
-##  4     2 5-jdo-903    NA  3892. FALSE mid   pass        
-##  5     8 3-ldm-038     7   284. TRUE  low   fail        
-##  6     4 2-dhe-923     4  3291. TRUE  mid   pass        
-##  7     7 1-knw-093     3   843. TRUE  high  fail        
-##  8     4 5-boe-639     2  1036. FALSE low   fail        
-##  9     3 5-bce-642     9   838. FALSE high  fail        
-## 10     3 5-bce-642     9   838. FALSE high  fail        
-## 11     4 2-dmx-010     7   834. TRUE  low   fail        
-## 12     2 7-dmx-010     8   108. FALSE low   fail        
-## 13     1 3-dka-303    NA  2230. TRUE  high  pass
-}\if{html}{\out{</div>}}
+##    <int> <chr>     <dbl>  <dbl> <lgl> <chr> <chr>
+##  1     2 1-bcd-345     3  3423. TRUE  high  pass
+##  2     3 5-egh-163     8 10000. TRUE  low   pass
+##  3     6 8-kdg-938     3  2343. TRUE  high  fail
+##  4     2 5-jdo-903    NA  3892. FALSE mid   pass
+##  5     8 3-ldm-038     7   284. TRUE  low   fail
+##  6     4 2-dhe-923     4  3291. TRUE  mid   pass
+##  7     7 1-knw-093     3   843. TRUE  high  fail
+##  8     4 5-boe-639     2  1036. FALSE low   fail
+##  9     3 5-bce-642     9   838. FALSE high  fail
+## 10     3 5-bce-642     9   838. FALSE high  fail
+## 11     4 2-dmx-010     7   834. TRUE  low   fail
+## 12     2 7-dmx-010     8   108. FALSE low   fail
+## 13     1 3-dka-303    NA  2230. TRUE  high  pass}
+
 
 We can change the \code{"pass"} or \code{"fail"} text values to another type of coding
 with the \code{pass_fail} argument. One possibility is \code{TRUE}/\code{FALSE}.
@@ -158,23 +159,23 @@ with the \code{pass_fail} argument. One possibility is \code{TRUE}/\code{FALSE}.
   )
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 13 × 7
+\preformatted{## # A tibble: 13 × 7
 ##        a b             c      d e     f     .pb_combined
-##    <int> <chr>     <dbl>  <dbl> <lgl> <chr> <lgl>       
-##  1     2 1-bcd-345     3  3423. TRUE  high  TRUE        
-##  2     3 5-egh-163     8 10000. TRUE  low   TRUE        
-##  3     6 8-kdg-938     3  2343. TRUE  high  FALSE       
-##  4     2 5-jdo-903    NA  3892. FALSE mid   TRUE        
-##  5     8 3-ldm-038     7   284. TRUE  low   FALSE       
-##  6     4 2-dhe-923     4  3291. TRUE  mid   TRUE        
-##  7     7 1-knw-093     3   843. TRUE  high  FALSE       
-##  8     4 5-boe-639     2  1036. FALSE low   FALSE       
-##  9     3 5-bce-642     9   838. FALSE high  FALSE       
-## 10     3 5-bce-642     9   838. FALSE high  FALSE       
-## 11     4 2-dmx-010     7   834. TRUE  low   FALSE       
-## 12     2 7-dmx-010     8   108. FALSE low   FALSE       
-## 13     1 3-dka-303    NA  2230. TRUE  high  TRUE
-}\if{html}{\out{</div>}}
+##    <int> <chr>     <dbl>  <dbl> <lgl> <chr> <lgl>
+##  1     2 1-bcd-345     3  3423. TRUE  high  TRUE
+##  2     3 5-egh-163     8 10000. TRUE  low   TRUE
+##  3     6 8-kdg-938     3  2343. TRUE  high  FALSE
+##  4     2 5-jdo-903    NA  3892. FALSE mid   TRUE
+##  5     8 3-ldm-038     7   284. TRUE  low   FALSE
+##  6     4 2-dhe-923     4  3291. TRUE  mid   TRUE
+##  7     7 1-knw-093     3   843. TRUE  high  FALSE
+##  8     4 5-boe-639     2  1036. FALSE low   FALSE
+##  9     3 5-bce-642     9   838. FALSE high  FALSE
+## 10     3 5-bce-642     9   838. FALSE high  FALSE
+## 11     4 2-dmx-010     7   834. TRUE  low   FALSE
+## 12     2 7-dmx-010     8   108. FALSE low   FALSE
+## 13     1 3-dka-303    NA  2230. TRUE  high  TRUE}
+
 
 ...and using \code{0} and \code{1} might be worthwhile in some situations.
 
@@ -185,7 +186,7 @@ with the \code{pass_fail} argument. One possibility is \code{TRUE}/\code{FALSE}.
   )
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 13 × 7
+\preformatted{## # A tibble: 13 × 7
 ##        a b             c      d e     f     .pb_combined
 ##    <int> <chr>     <dbl>  <dbl> <lgl> <chr>        <int>
 ##  1     2 1-bcd-345     3  3423. TRUE  high             0
@@ -200,8 +201,7 @@ with the \code{pass_fail} argument. One possibility is \code{TRUE}/\code{FALSE}.
 ## 10     3 5-bce-642     9   838. FALSE high             1
 ## 11     4 2-dmx-010     7   834. TRUE  low              1
 ## 12     2 7-dmx-010     8   108. FALSE low              1
-## 13     1 3-dka-303    NA  2230. TRUE  high             0
-}\if{html}{\out{</div>}}
+## 13     1 3-dka-303    NA  2230. TRUE  high             0}
 }
 
 \section{Function ID}{

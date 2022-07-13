@@ -73,7 +73,7 @@ Determine if these column validations have all passed by using \code{all_passed(
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{all_passed(agent = agent)
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] TRUE
 }\if{html}{\out{</div>}}
 }
 

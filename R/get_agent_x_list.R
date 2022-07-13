@@ -114,21 +114,19 @@
 #' Create an `action_levels()` list with fractional values for the `warn`,
 #' `stop`, and `notify` states.
 #' 
-#' ```{r}
+#' ```r
 #' al <-
 #'   action_levels(
 #'     warn_at = 0.2,
 #'     stop_at = 0.8,
 #'     notify_at = 0.345
 #'   )
-#'   
-#' al
 #' ```
 #' 
 #' Create an agent (giving it the `tbl` and the `al` objects), supply two
 #' validation step functions, then interrogate.
 #' 
-#' ```{r}
+#' ```r
 #' agent <-
 #'   create_agent(
 #'     tbl = tbl,
@@ -139,18 +137,16 @@
 #'   interrogate()
 #' ```
 #'   
-#' Get the agent x-list.
+#' Get the `f_passed` component of the agent x-list.
 #' 
-#' ```{r}
+#' ```r
 #' x <- get_agent_x_list(agent)
 #' 
-#' x
+#' x$f_passed
 #' ```
 #' 
-#' Get the `f_passed` component of the x-list `x`.
-#' 
-#' ```{r}
-#' x$f_passed
+#' ```
+#' #> [1] 0.25 1.00
 #' ```
 #' 
 #' @family Post-interrogation

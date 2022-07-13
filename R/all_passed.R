@@ -60,7 +60,7 @@
 #' 
 #' Validate that values in column `a` are always greater than 4.
 #' 
-#' ```{r}
+#' ```r
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
 #'   col_vals_gt(columns = vars(a), value = 3) %>%
@@ -72,8 +72,12 @@
 #' Determine if these column validations have all passed by using `all_passed()`
 #' (they do).
 #' 
-#' ```{r}
+#' ```r
 #' all_passed(agent = agent)
+#' ```
+#' 
+#' ```
+#' #> [1] TRUE
 #' ```
 #' 
 #' @family Post-interrogation

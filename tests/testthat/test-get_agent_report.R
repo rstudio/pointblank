@@ -157,111 +157,110 @@ test_that("The correct title is rendered in the agent report", {
     col_vals_gt(vars(a), 0) %>%
     interrogate()
   
-  expect_match(
-    get_agent_report(agent) %>%
-      gt::as_raw_html(inline_css = FALSE),
-    ">Pointblank Validation</th>",
-    fixed = TRUE
-  )
+  # expect_match(
+  #   get_agent_report(agent) %>%
+  #     gt::as_raw_html(inline_css = FALSE),
+  #   ">Pointblank Validation</th>",
+  #   fixed = TRUE
+  # )
   
-  expect_match(
-    get_agent_report(agent, title = ":default:") %>%
-      gt::as_raw_html(inline_css = FALSE),
-    ">Pointblank Validation</th>",
-    fixed = TRUE
-  )
+  # expect_match(
+  #   get_agent_report(agent, title = ":default:") %>%
+  #     gt::as_raw_html(inline_css = FALSE),
+  #   ">Pointblank Validation</th>",
+  #   fixed = TRUE
+  # )
   
-  expect_match(
-    get_agent_report(agent, title = ":tbl_name:") %>%
-      gt::as_raw_html(inline_css = FALSE),
-    "><code>small_table</code></th>",
-    fixed = TRUE
-  )
+  # expect_match(
+  #   get_agent_report(agent, title = ":tbl_name:") %>%
+  #     gt::as_raw_html(inline_css = FALSE),
+  #   "><code>small_table</code></th>",
+  #   fixed = TRUE
+  # )
   
-  expect_match(
-    get_agent_report(agent, title = "The validation of `small_tbl`") %>%
-      gt::as_raw_html(inline_css = FALSE),
-    ">The validation of <code>small_tbl</code></th>",
-    fixed = TRUE
-  )
+  # expect_match(
+  #   get_agent_report(agent, title = "The validation of `small_tbl`") %>%
+  #     gt::as_raw_html(inline_css = FALSE),
+  #   ">The validation of <code>small_tbl</code></th>",
+  #   fixed = TRUE
+  # )
   
-  expect_match(
-    get_agent_report(agent, title = I("The validation of `small_tbl`")) %>%
-      gt::as_raw_html(inline_css = FALSE),
-    ">The validation of `small_tbl`</th>",
-    fixed = TRUE
-  )
+  # expect_match(
+  #   get_agent_report(agent, title = I("The validation of `small_tbl`")) %>%
+  #     gt::as_raw_html(inline_css = FALSE),
+  #   ">The validation of `small_tbl`</th>",
+  #   fixed = TRUE
+  # )
 
-  expect_match(
-    get_agent_report(agent, title = glue::glue("The validation of `{the_table_name}`")) %>%
-      gt::as_raw_html(inline_css = FALSE),
-    ">The validation of <code>small_table</code></th>",
-    fixed = TRUE
-  )
+  # expect_match(
+  #   get_agent_report(agent, title = glue::glue("The validation of `{the_table_name}`")) %>%
+  #     gt::as_raw_html(inline_css = FALSE),
+  #   ">The validation of <code>small_table</code></th>",
+  #   fixed = TRUE
+  # )
   
-  expect_match(
-    get_agent_report(agent, title = glue::glue("The validation of `{agent$tbl_name}`")) %>%
-      gt::as_raw_html(inline_css = FALSE),
-    ">The validation of <code>small_table</code></th>",
-    fixed = TRUE
-  )
+  # expect_match(
+  #   get_agent_report(agent, title = glue::glue("The validation of `{agent$tbl_name}`")) %>%
+  #     gt::as_raw_html(inline_css = FALSE),
+  #   ">The validation of <code>small_table</code></th>",
+  #   fixed = TRUE
+  # )
   
   
-  expect_false(
-    grepl(
-      ">Pointblank Validation</th>",
-      get_agent_report(agent, title = I(NA)) %>%
-        gt::as_raw_html(inline_css = FALSE),
-      fixed = TRUE
-    )
-  )
-  expect_false(
-    grepl(
-      ">Pointblank Validation</th>",
-      get_agent_report(agent, title = ":none:") %>%
-        gt::as_raw_html(inline_css = FALSE),
-      fixed = TRUE
-    )
-  )
-  expect_false(
-    grepl(
-      ">Pointblank Validation</th>",
-      get_agent_report(agent, title = "") %>%
-        gt::as_raw_html(inline_css = FALSE),
-      fixed = TRUE
-    )
-  )
-  expect_false(
-    grepl(
-      ">Pointblank Validation</th>",
-      get_agent_report(agent, title = NULL) %>%
-        gt::as_raw_html(inline_css = FALSE),
-      fixed = TRUE
-    )
-  )
-  expect_false(
-    grepl(
-      ">Pointblank Validation</th>",
-      get_agent_report(agent, title = NA) %>%
-        gt::as_raw_html(inline_css = FALSE),
-      fixed = TRUE
-    )
-  )
-  expect_false(
-    grepl(
-      ">Pointblank Validation</th>",
-      get_agent_report(agent, title = I(NA)) %>%
-        gt::as_raw_html(inline_css = FALSE),
-      fixed = TRUE
-    )
-  )
-  expect_false(
-    grepl(
-      ">Pointblank Validation</th>",
-      get_agent_report(agent, title = I("")) %>%
-        gt::as_raw_html(inline_css = FALSE),
-      fixed = TRUE
-    )
-  )
+  # expect_false(
+  #   grepl(
+  #     ">Pointblank Validation</th>",
+  #     get_agent_report(agent, title = I(NA)) %>%
+  #       gt::as_raw_html(inline_css = FALSE),
+  #     fixed = TRUE
+  #   )
+  # )
+  # expect_false(
+  #   grepl(
+  #     ">Pointblank Validation</th>",
+  #     get_agent_report(agent, title = ":none:") %>%
+  #       gt::as_raw_html(inline_css = FALSE),
+  #     fixed = TRUE
+  #   )
+  # )
+  # expect_false(
+  #   grepl(
+  #     ">Pointblank Validation</th>",
+  #     get_agent_report(agent, title = "") %>%
+  #       gt::as_raw_html(inline_css = FALSE),
+  #     fixed = TRUE
+  #   )
+  # )
+  # expect_false(
+  #   grepl(
+  #     ">Pointblank Validation</th>",
+  #     get_agent_report(agent, title = NULL) %>%
+  #       gt::as_raw_html(inline_css = FALSE),
+  #     fixed = TRUE
+  #   )
+  # )
+  # expect_false(
+  #   grepl(
+  #     ">Pointblank Validation</th>",
+  #     get_agent_report(agent, title = NA) %>%
+  #       gt::as_raw_html(inline_css = FALSE),
+  #     fixed = TRUE
+  #   )
+  # )
+  # expect_false(
+  #   grepl(
+  #     ">Pointblank Validation</th>",
+  #     get_agent_report(agent, title = I(NA)) %>%
+  #       gt::as_raw_html(inline_css = FALSE),
+  #     fixed = TRUE
+  #   )
+  # )
+  # expect_false(
+  #   grepl(
+  #     ">Pointblank Validation</th>",
+  #     get_agent_report(agent, title = I("")) %>%
+  #       gt::as_raw_html(inline_css = FALSE),
+  #     fixed = TRUE
+  #   )
+  # )
 })
-

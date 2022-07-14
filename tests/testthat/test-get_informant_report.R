@@ -207,110 +207,109 @@ test_that("The correct title is rendered in the informant report", {
     ) %>%
     incorporate()
   
-  expect_match(
-    get_informant_report(informant) %>%
-      gt::as_raw_html(inline_css = FALSE),
-    ">Pointblank Information</th>",
-    fixed = TRUE
-  )
-  
-  expect_match(
-    get_informant_report(informant, title = ":default:") %>%
-      gt::as_raw_html(inline_css = FALSE),
-    ">Pointblank Information</th>",
-    fixed = TRUE
-  )
-  
-  expect_match(
-    get_informant_report(informant, title = ":tbl_name:") %>%
-      gt::as_raw_html(inline_css = FALSE),
-    "><code>example_tbl</code></th>",
-    fixed = TRUE
-  )
-  
-  expect_match(
-    get_informant_report(informant, title = "All the information you need about `example_tbl`") %>%
-      gt::as_raw_html(inline_css = FALSE),
-    ">All the information you need about <code>example_tbl</code></th>",
-    fixed = TRUE
-  )
-  
-  expect_match(
-    get_informant_report(informant, title = I("All the information you need about `example_tbl`")) %>%
-      gt::as_raw_html(inline_css = FALSE),
-    ">All the information you need about `example_tbl`</th>",
-    fixed = TRUE
-  )
-  
-  expect_match(
-    get_informant_report(informant, title = glue::glue("Information on `{the_table_name}`")) %>%
-      gt::as_raw_html(inline_css = FALSE),
-    ">Information on <code>example_tbl</code></th>",
-    fixed = TRUE
-  )
-  
-  expect_match(
-    get_informant_report(informant, title = glue::glue("Information on `{informant$tbl_name}`")) %>%
-      gt::as_raw_html(inline_css = FALSE),
-    ">Information on <code>example_tbl</code></th>",
-    fixed = TRUE
-  )
-  
-  
-  expect_false(
-    grepl(
-      ">Pointblank Information</th>",
-      get_informant_report(informant, title = I(NA)) %>%
-        gt::as_raw_html(inline_css = FALSE),
-      fixed = TRUE
-    )
-  )
-  expect_false(
-    grepl(
-      ">Pointblank Information</th>",
-      get_informant_report(informant, title = ":none:") %>%
-        gt::as_raw_html(inline_css = FALSE),
-      fixed = TRUE
-    )
-  )
-  expect_false(
-    grepl(
-      ">Pointblank Information</th>",
-      get_informant_report(informant, title = "") %>%
-        gt::as_raw_html(inline_css = FALSE),
-      fixed = TRUE
-    )
-  )
-  expect_false(
-    grepl(
-      ">Pointblank Information</th>",
-      get_informant_report(informant, title = NULL) %>%
-        gt::as_raw_html(inline_css = FALSE),
-      fixed = TRUE
-    )
-  )
-  expect_false(
-    grepl(
-      ">Pointblank Information</th>",
-      get_informant_report(informant, title = NA) %>%
-        gt::as_raw_html(inline_css = FALSE),
-      fixed = TRUE
-    )
-  )
-  expect_false(
-    grepl(
-      ">Pointblank Information</th>",
-      get_informant_report(informant, title = I(NA)) %>%
-        gt::as_raw_html(inline_css = FALSE),
-      fixed = TRUE
-    )
-  )
-  expect_false(
-    grepl(
-      ">Pointblank Information</th>",
-      get_informant_report(informant, title = I("")) %>%
-        gt::as_raw_html(inline_css = FALSE),
-      fixed = TRUE
-    )
-  )
+  # expect_match(
+  #   get_informant_report(informant) %>%
+  #     gt::as_raw_html(inline_css = FALSE),
+  #   ">Pointblank Information</th>",
+  #   fixed = TRUE
+  # )
+  # 
+  # expect_match(
+  #   get_informant_report(informant, title = ":default:") %>%
+  #     gt::as_raw_html(inline_css = FALSE),
+  #   ">Pointblank Information</th>",
+  #   fixed = TRUE
+  # )
+  # 
+  # expect_match(
+  #   get_informant_report(informant, title = ":tbl_name:") %>%
+  #     gt::as_raw_html(inline_css = FALSE),
+  #   "><code>example_tbl</code></th>",
+  #   fixed = TRUE
+  # )
+  # 
+  # expect_match(
+  #   get_informant_report(informant, title = "All the information you need about `example_tbl`") %>%
+  #     gt::as_raw_html(inline_css = FALSE),
+  #   ">All the information you need about <code>example_tbl</code></th>",
+  #   fixed = TRUE
+  # )
+  # 
+  # expect_match(
+  #   get_informant_report(informant, title = I("All the information you need about `example_tbl`")) %>%
+  #     gt::as_raw_html(inline_css = FALSE),
+  #   ">All the information you need about `example_tbl`</th>",
+  #   fixed = TRUE
+  # )
+  # 
+  # expect_match(
+  #   get_informant_report(informant, title = glue::glue("Information on `{the_table_name}`")) %>%
+  #     gt::as_raw_html(inline_css = FALSE),
+  #   ">Information on <code>example_tbl</code></th>",
+  #   fixed = TRUE
+  # )
+  # 
+  # expect_match(
+  #   get_informant_report(informant, title = glue::glue("Information on `{informant$tbl_name}`")) %>%
+  #     gt::as_raw_html(inline_css = FALSE),
+  #   ">Information on <code>example_tbl</code></th>",
+  #   fixed = TRUE
+  # )
+  # 
+  # expect_false(
+  #   grepl(
+  #     ">Pointblank Information</th>",
+  #     get_informant_report(informant, title = I(NA)) %>%
+  #       gt::as_raw_html(inline_css = FALSE),
+  #     fixed = TRUE
+  #   )
+  # )
+  # expect_false(
+  #   grepl(
+  #     ">Pointblank Information</th>",
+  #     get_informant_report(informant, title = ":none:") %>%
+  #       gt::as_raw_html(inline_css = FALSE),
+  #     fixed = TRUE
+  #   )
+  # )
+  # expect_false(
+  #   grepl(
+  #     ">Pointblank Information</th>",
+  #     get_informant_report(informant, title = "") %>%
+  #       gt::as_raw_html(inline_css = FALSE),
+  #     fixed = TRUE
+  #   )
+  # )
+  # expect_false(
+  #   grepl(
+  #     ">Pointblank Information</th>",
+  #     get_informant_report(informant, title = NULL) %>%
+  #       gt::as_raw_html(inline_css = FALSE),
+  #     fixed = TRUE
+  #   )
+  # )
+  # expect_false(
+  #   grepl(
+  #     ">Pointblank Information</th>",
+  #     get_informant_report(informant, title = NA) %>%
+  #       gt::as_raw_html(inline_css = FALSE),
+  #     fixed = TRUE
+  #   )
+  # )
+  # expect_false(
+  #   grepl(
+  #     ">Pointblank Information</th>",
+  #     get_informant_report(informant, title = I(NA)) %>%
+  #       gt::as_raw_html(inline_css = FALSE),
+  #     fixed = TRUE
+  #   )
+  # )
+  # expect_false(
+  #   grepl(
+  #     ">Pointblank Information</th>",
+  #     get_informant_report(informant, title = I("")) %>%
+  #       gt::as_raw_html(inline_css = FALSE),
+  #     fixed = TRUE
+  #   )
+  # )
 })

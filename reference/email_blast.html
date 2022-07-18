@@ -26,7 +26,7 @@ email_create() function can be used with a pointblank agent object."><meta prope
     
     <a class="navbar-brand me-2" href="../index.html">pointblank</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,17 +91,17 @@ different validation steps exceeding failure thresholds).</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">email_blast</span><span class="op">(</span>
-  <span class="va">x</span>,
-  <span class="va">to</span>,
-  <span class="va">from</span>,
-  credentials <span class="op">=</span> <span class="cn">NULL</span>,
-  msg_subject <span class="op">=</span> <span class="cn">NULL</span>,
-  msg_header <span class="op">=</span> <span class="cn">NULL</span>,
-  msg_body <span class="op">=</span> <span class="fu"><a href="stock_msg_body.html">stock_msg_body</a></span><span class="op">(</span><span class="op">)</span>,
-  msg_footer <span class="op">=</span> <span class="fu"><a href="stock_msg_footer.html">stock_msg_footer</a></span><span class="op">(</span><span class="op">)</span>,
-  send_condition <span class="op">=</span> <span class="op">~</span><span class="cn">TRUE</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">x</span><span class="op">$</span><span class="va">notify</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">email_blast</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  <span class="va">to</span>,</span>
+<span>  <span class="va">from</span>,</span>
+<span>  credentials <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  msg_subject <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  msg_header <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  msg_body <span class="op">=</span> <span class="fu"><a href="stock_msg_body.html">stock_msg_body</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  msg_footer <span class="op">=</span> <span class="fu"><a href="stock_msg_footer.html">stock_msg_footer</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  send_condition <span class="op">=</span> <span class="op">~</span><span class="cn">TRUE</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">x</span><span class="op">$</span><span class="va">notify</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -155,25 +155,25 @@ example of how the use of <code>email_blast()</code> inside the <code>end_fns</c
 <code><a href="create_agent.html">create_agent()</a></code> is expressed in R code and in the corresponding YAML
 representation.</p>
 <p>R statement:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>
-  tbl <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,
-  tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,
-  label <span class="op">=</span> <span class="st">"An example."</span>,
-  actions <span class="op">=</span> <span class="va">al</span>,
-  end_fns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
-    <span class="op">~</span> <span class="fu"><a href="../reference/email_blast.html">email_blast</a></span><span class="op">(</span>
-      <span class="va">x</span>,
-      to <span class="op">=</span> <span class="st">"joe_public@example.com"</span>,
-      from <span class="op">=</span> <span class="st">"pb_notif@example.com"</span>,
-      msg_subject <span class="op">=</span> <span class="st">"Table Validation"</span>,
-      credentials <span class="op">=</span> <span class="fu">blastula</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/blastula/man/credential_helpers.html" class="external-link">creds_key</a></span><span class="op">(</span>
-        id <span class="op">=</span> <span class="st">"smtp2go"</span>
-      <span class="op">)</span>
-    <span class="op">)</span>
-  <span class="op">)</span>
-<span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, <span class="fl">7</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span></span>
+<span>  tbl <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,</span>
+<span>  tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,</span>
+<span>  label <span class="op">=</span> <span class="st">"An example."</span>,</span>
+<span>  actions <span class="op">=</span> <span class="va">al</span>,</span>
+<span>  end_fns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    <span class="op">~</span> <span class="fu"><a href="../reference/email_blast.html">email_blast</a></span><span class="op">(</span></span>
+<span>      <span class="va">x</span>,</span>
+<span>      to <span class="op">=</span> <span class="st">"joe_public@example.com"</span>,</span>
+<span>      from <span class="op">=</span> <span class="st">"pb_notif@example.com"</span>,</span>
+<span>      msg_subject <span class="op">=</span> <span class="st">"Table Validation"</span>,</span>
+<span>      credentials <span class="op">=</span> <span class="fu">blastula</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/blastula/man/credential_helpers.html" class="external-link">creds_key</a></span><span class="op">(</span></span>
+<span>        id <span class="op">=</span> <span class="st">"smtp2go"</span></span>
+<span>      <span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, <span class="fl">7</span><span class="op">)</span> </span></code></pre><p></p></div>
 <p>YAML representation:</p>
 <p></p><div class="sourceCode yaml"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">type</span><span class="kw">:</span><span class="at"> agent</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl</span><span class="kw">:</span><span class="at"> ~small_table</span></span>
@@ -207,11 +207,11 @@ We are also going to create an <code><a href="action_levels.html">action_levels(
 useful for demonstrating an emailing scenario. It will have absolute values
 for the <code>warn</code> and <code>notify</code> states (with thresholds of <code>1</code> and <code>2</code> 'fail'
 units, respectively, for the two states).</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">al</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span>
-    warn_at <span class="op">=</span> <span class="fl">1</span>,
-    notify_at <span class="op">=</span> <span class="fl">2</span>
-  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">al</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span></span>
+<span>    warn_at <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    notify_at <span class="op">=</span> <span class="fl">2</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p>Validate that values in column <code>a</code> from <code>small_tbl</code> are always greater than
 <code>1</code> (with the <code><a href="col_vals_gt.html">col_vals_gt()</a></code> validation function), and, that values in <code>a</code>
 or are always less than <code>7</code>.</p>
@@ -229,26 +229,26 @@ happen), then the statement as a whole is <code>TRUE</code> and the email of the
 interrogation report will be sent. Here is the complete set of statements for
 the creation of an <em>agent</em>, the addition of validation steps, and the
 interrogation of data in <code>small_table</code>:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span>
-  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>
-    tbl <span class="op">=</span> <span class="va">small_table</span>,
-    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,
-    label <span class="op">=</span> <span class="st">"An example."</span>,
-    actions <span class="op">=</span> <span class="va">al</span>,
-    end_fns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
-      <span class="op">~</span> <span class="fu"><a href="../reference/email_blast.html">email_blast</a></span><span class="op">(</span>
-        <span class="va">x</span>,
-        to <span class="op">=</span>   <span class="st">"a_person@example.com"</span>,
-        from <span class="op">=</span> <span class="st">"pb_notif@example.com"</span>,
-        msg_subject <span class="op">=</span> <span class="st">"Table Validation"</span>,
-        credentials <span class="op">=</span> <span class="fu">blastula</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/blastula/man/credential_helpers.html" class="external-link">creds_key</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"smtp2go"</span><span class="op">)</span>,
-        send_condition <span class="op">=</span> <span class="op">~</span> <span class="cn">TRUE</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">x</span><span class="op">$</span><span class="va">notify</span>
-      <span class="op">)</span>
-    <span class="op">)</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">7</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span></span>
+<span>    tbl <span class="op">=</span> <span class="va">small_table</span>,</span>
+<span>    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,</span>
+<span>    label <span class="op">=</span> <span class="st">"An example."</span>,</span>
+<span>    actions <span class="op">=</span> <span class="va">al</span>,</span>
+<span>    end_fns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>      <span class="op">~</span> <span class="fu"><a href="../reference/email_blast.html">email_blast</a></span><span class="op">(</span></span>
+<span>        <span class="va">x</span>,</span>
+<span>        to <span class="op">=</span>   <span class="st">"a_person@example.com"</span>,</span>
+<span>        from <span class="op">=</span> <span class="st">"pb_notif@example.com"</span>,</span>
+<span>        msg_subject <span class="op">=</span> <span class="st">"Table Validation"</span>,</span>
+<span>        credentials <span class="op">=</span> <span class="fu">blastula</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/blastula/man/credential_helpers.html" class="external-link">creds_key</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"smtp2go"</span><span class="op">)</span>,</span>
+<span>        send_condition <span class="op">=</span> <span class="op">~</span> <span class="cn">TRUE</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">x</span><span class="op">$</span><span class="va">notify</span></span>
+<span>      <span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">7</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>The reason for the <code>~</code> present in the statements:</p><ul><li><p><code>~ email_blast(...)</code> and</p></li>
 <li><p><code>~ TRUE %in% x$notify</code></p></li>
 </ul><p>is because this defers evocation of the emailing functionality (and also

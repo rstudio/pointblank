@@ -78,7 +78,7 @@ it's to export that to a file with the export_report() function."><meta property
     
     <a class="navbar-brand me-2" href="../index.html">pointblank</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -166,14 +166,14 @@ it's to export that to a file with the <code><a href="export_report.html">export
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">scan_data</span><span class="op">(</span>
-  <span class="va">tbl</span>,
-  sections <span class="op">=</span> <span class="st">"OVICMS"</span>,
-  navbar <span class="op">=</span> <span class="cn">TRUE</span>,
-  width <span class="op">=</span> <span class="cn">NULL</span>,
-  lang <span class="op">=</span> <span class="cn">NULL</span>,
-  locale <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">scan_data</span><span class="op">(</span></span>
+<span>  <span class="va">tbl</span>,</span>
+<span>  sections <span class="op">=</span> <span class="st">"OVICMS"</span>,</span>
+<span>  navbar <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  lang <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  locale <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -234,7 +234,7 @@ Spanish (Spain, same as <code>"es_ES"</code>).</p></dd>
 
 <p>Get an HTML document that describes all of the data in the <code><a href="https://dplyr.tidyverse.org/reference/storms.html" class="external-link">dplyr::storms</a></code>
 dataset.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">tbl_scan</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scan_data.html">scan_data</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/storms.html" class="external-link">storms</a></span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">tbl_scan</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scan_data.html">scan_data</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/storms.html" class="external-link">storms</a></span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_scan_data_1.png" style="width:100%;"></p>
     </div>
     <div class="section level2">

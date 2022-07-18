@@ -34,7 +34,7 @@ in a repository."><meta property="og:image" content="https://rich-iannone.github
     
     <a class="navbar-brand me-2" href="../index.html">pointblank</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -103,7 +103,7 @@ in a repository.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">file_tbl</span><span class="op">(</span><span class="va">file</span>, type <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span>, keep <span class="op">=</span> <span class="cn">FALSE</span>, verify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">file_tbl</span><span class="op">(</span><span class="va">file</span>, type <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span>, keep <span class="op">=</span> <span class="cn">FALSE</span>, verify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -159,55 +159,55 @@ having the <code>data.frame</code> class will be carried out.</p></dd>
 file and some CSV reading options (the ones used by <code><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">readr::read_csv()</a></code>) to
 the <code>file_tbl()</code> function. For this example we could obtain a path to a CSV
 file in the <strong>pointblank</strong> package with <code><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file()</a></code>.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">csv_path</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span>
-    <span class="st">"data_files"</span>, <span class="st">"small_table.csv"</span>,
-    package <span class="op">=</span> <span class="st">"pointblank"</span>
-  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">csv_path</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span>
+<span>    <span class="st">"data_files"</span>, <span class="st">"small_table.csv"</span>,</span>
+<span>    package <span class="op">=</span> <span class="st">"pointblank"</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p>Then use that path in <code>file_tbl()</code> with the option to specify the column
 types in that CSV.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">tbl</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="../reference/file_tbl.html">file_tbl</a></span><span class="op">(</span>
-    file <span class="op">=</span> <span class="va">csv_path</span>,
-    col_types <span class="op">=</span> <span class="st">"TDdcddlc"</span>
-  <span class="op">)</span>
-
-<span class="va">tbl</span></code></pre><p></p></div>
-<div class="sourceCode"><pre><code><span class="co">## # A tibble: 13 × 8</span>
-<span class="co">##    date_time           date           a b           c      d e     f    </span>
-<span class="co">##    &lt;dttm&gt;              &lt;date&gt;     &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;</span>
-<span class="co">##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-…     3  3423. TRUE  high </span>
-<span class="co">##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-…     8 10000. TRUE  low  </span>
-<span class="co">##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-…     3  2343. TRUE  high </span>
-<span class="co">##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-…    NA  3892. FALSE mid  </span>
-<span class="co">##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-…     7   284. TRUE  low  </span>
-<span class="co">##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-…     4  3291. TRUE  mid  </span>
-<span class="co">##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-…     3   843. TRUE  high </span>
-<span class="co">##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-…     2  1036. FALSE low  </span>
-<span class="co">##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-…     9   838. FALSE high </span>
-<span class="co">## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-…     9   838. FALSE high </span>
-<span class="co">## 11 2016-01-26 20:07:00 2016-01-26     4 2-dmx-…     7   834. TRUE  low  </span>
-<span class="co">## 12 2016-01-28 02:51:00 2016-01-28     2 7-dmx-…     8   108. FALSE low  </span>
-<span class="co">## 13 2016-01-30 11:23:00 2016-01-30     1 3-dka-…    NA  2230. TRUE  high</span></code></pre></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">tbl</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="../reference/file_tbl.html">file_tbl</a></span><span class="op">(</span></span>
+<span>    file <span class="op">=</span> <span class="va">csv_path</span>,</span>
+<span>    col_types <span class="op">=</span> <span class="st">"TDdcddlc"</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">tbl</span></span></code></pre><p></p></div>
+<div class="sourceCode"><pre><code><span><span class="co">## # A tibble: 13 × 8</span></span>
+<span><span class="co">##    date_time           date           a b           c      d e     f    </span></span>
+<span><span class="co">##    &lt;dttm&gt;              &lt;date&gt;     &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;</span></span>
+<span><span class="co">##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-…     3  3423. TRUE  high </span></span>
+<span><span class="co">##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-…     8 10000. TRUE  low  </span></span>
+<span><span class="co">##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-…     3  2343. TRUE  high </span></span>
+<span><span class="co">##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-…    NA  3892. FALSE mid  </span></span>
+<span><span class="co">##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-…     7   284. TRUE  low  </span></span>
+<span><span class="co">##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-…     4  3291. TRUE  mid  </span></span>
+<span><span class="co">##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-…     3   843. TRUE  high </span></span>
+<span><span class="co">##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-…     2  1036. FALSE low  </span></span>
+<span><span class="co">##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-…     9   838. FALSE high </span></span>
+<span><span class="co">## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-…     9   838. FALSE high </span></span>
+<span><span class="co">## 11 2016-01-26 20:07:00 2016-01-26     4 2-dmx-…     7   834. TRUE  low  </span></span>
+<span><span class="co">## 12 2016-01-28 02:51:00 2016-01-28     2 7-dmx-…     8   108. FALSE low  </span></span>
+<span><span class="co">## 13 2016-01-30 11:23:00 2016-01-30     1 3-dka-…    NA  2230. TRUE  high</span></span></code></pre></div>
 
 
 
 <p>Now that we have a `tbl` object that is a tibble it could be introduced to
 <code><a href="create_agent.html">create_agent()</a></code> for validation.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">tbl</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">tbl</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>A different strategy is to provide the data-reading function call directly to
 <code><a href="create_agent.html">create_agent()</a></code>:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>
-    tbl <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="../reference/file_tbl.html">file_tbl</a></span><span class="op">(</span>
-      file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span>
-        <span class="st">"data_files"</span>, <span class="st">"small_table.csv"</span>,
-        package <span class="op">=</span> <span class="st">"pointblank"</span>
-      <span class="op">)</span>,
-      col_types <span class="op">=</span> <span class="st">"TDdcddlc"</span>
-    <span class="op">)</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span></span>
+<span>    tbl <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="../reference/file_tbl.html">file_tbl</a></span><span class="op">(</span></span>
+<span>      file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span>
+<span>        <span class="st">"data_files"</span>, <span class="st">"small_table.csv"</span>,</span>
+<span>        package <span class="op">=</span> <span class="st">"pointblank"</span></span>
+<span>      <span class="op">)</span>,</span>
+<span>      col_types <span class="op">=</span> <span class="st">"TDdcddlc"</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>All of the file-reading instructions are encapsulated in the <code>tbl</code> expression
 (with the leading <code>~</code>) so the agent will always obtain the most recent
 version of the table (and the logic can be translated to YAML, for later
@@ -221,21 +221,21 @@ use).</p>
 <p>A CSV can be obtained from a public GitHub repo by using the <code><a href="from_github.html">from_github()</a></code>
 helper function. Let's create an agent a supply a table-prep formula that
 gets the same CSV file from the GitHub repository for the pointblank package.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>
-    tbl <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="../reference/file_tbl.html">file_tbl</a></span><span class="op">(</span>
-      file <span class="op">=</span> <span class="fu"><a href="../reference/from_github.html">from_github</a></span><span class="op">(</span>
-        file <span class="op">=</span> <span class="st">"inst/data_files/small_table.csv"</span>,
-        repo <span class="op">=</span> <span class="st">"rich-iannone/pointblank"</span>
-      <span class="op">)</span>,
-      col_types <span class="op">=</span> <span class="st">"TDdcddlc"</span>
-    <span class="op">)</span>,
-    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,
-    label <span class="op">=</span> <span class="st">"`file_tbl()` example."</span>,
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
-<p></p><div class="sourceCode r"><pre><code><span class="va">agent</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span></span>
+<span>    tbl <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="../reference/file_tbl.html">file_tbl</a></span><span class="op">(</span></span>
+<span>      file <span class="op">=</span> <span class="fu"><a href="../reference/from_github.html">from_github</a></span><span class="op">(</span></span>
+<span>        file <span class="op">=</span> <span class="st">"inst/data_files/small_table.csv"</span>,</span>
+<span>        repo <span class="op">=</span> <span class="st">"rich-iannone/pointblank"</span></span>
+<span>      <span class="op">)</span>,</span>
+<span>      col_types <span class="op">=</span> <span class="st">"TDdcddlc"</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,</span>
+<span>    label <span class="op">=</span> <span class="st">"`file_tbl()` example."</span>,</span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_file_tbl_1.png" style="width:100%;"></p>
 <p>This interrogated the data that was obtained from the remote source file,
 and, there's nothing to clean up (by default, the downloaded file goes into a
@@ -250,71 +250,71 @@ system temp directory).</p>
 work with tables from disparate sources. Here's how to generate a table store
 with two named entries for table preparations involving the <code><a href="tbl_store.html">tbl_store()</a></code> and
 <code>file_tbl()</code> functions.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">store</span> <span class="op">&lt;-</span>
-  <span class="fu"><a href="../reference/tbl_store.html">tbl_store</a></span><span class="op">(</span>
-    <span class="va">small_table_file</span> <span class="op">~</span> <span class="fu"><a href="../reference/file_tbl.html">file_tbl</a></span><span class="op">(</span>
-      file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span>
-        <span class="st">"data_files"</span>, <span class="st">"small_table.csv"</span>,
-        package <span class="op">=</span> <span class="st">"pointblank"</span>
-      <span class="op">)</span>,
-      col_types <span class="op">=</span> <span class="st">"TDdcddlc"</span>
-    <span class="op">)</span>,
-    <span class="va">small_high_file</span> <span class="op">~</span> <span class="op">{</span><span class="op">{</span> <span class="va">small_table_file</span> <span class="op">}</span><span class="op">}</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">f</span> <span class="op">==</span> <span class="st">"high"</span><span class="op">)</span>
-  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">store</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="../reference/tbl_store.html">tbl_store</a></span><span class="op">(</span></span>
+<span>    <span class="va">small_table_file</span> <span class="op">~</span> <span class="fu"><a href="../reference/file_tbl.html">file_tbl</a></span><span class="op">(</span></span>
+<span>      file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span>
+<span>        <span class="st">"data_files"</span>, <span class="st">"small_table.csv"</span>,</span>
+<span>        package <span class="op">=</span> <span class="st">"pointblank"</span></span>
+<span>      <span class="op">)</span>,</span>
+<span>      col_types <span class="op">=</span> <span class="st">"TDdcddlc"</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    <span class="va">small_high_file</span> <span class="op">~</span> <span class="op">{</span><span class="op">{</span> <span class="va">small_table_file</span> <span class="op">}</span><span class="op">}</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">f</span> <span class="op">==</span> <span class="st">"high"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p>Now it's easy to access either of these tables via <code><a href="tbl_get.html">tbl_get()</a></code>. We can
 reference the table in the store by its name (given to the left of the <code>~</code>).</p>
-<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/tbl_get.html">tbl_get</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="st">"small_table_file"</span>, store <span class="op">=</span> <span class="va">store</span><span class="op">)</span></code></pre><p></p></div>
-<div class="sourceCode"><pre><code><span class="co">## # A tibble: 13 × 8</span>
-<span class="co">##    date_time           date           a b           c      d e     f    </span>
-<span class="co">##    &lt;dttm&gt;              &lt;date&gt;     &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;</span>
-<span class="co">##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-…     3  3423. TRUE  high </span>
-<span class="co">##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-…     8 10000. TRUE  low  </span>
-<span class="co">##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-…     3  2343. TRUE  high </span>
-<span class="co">##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-…    NA  3892. FALSE mid  </span>
-<span class="co">##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-…     7   284. TRUE  low  </span>
-<span class="co">##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-…     4  3291. TRUE  mid  </span>
-<span class="co">##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-…     3   843. TRUE  high </span>
-<span class="co">##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-…     2  1036. FALSE low  </span>
-<span class="co">##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-…     9   838. FALSE high </span>
-<span class="co">## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-…     9   838. FALSE high </span>
-<span class="co">## 11 2016-01-26 20:07:00 2016-01-26     4 2-dmx-…     7   834. TRUE  low  </span>
-<span class="co">## 12 2016-01-28 02:51:00 2016-01-28     2 7-dmx-…     8   108. FALSE low  </span>
-<span class="co">## 13 2016-01-30 11:23:00 2016-01-30     1 3-dka-…    NA  2230. TRUE  high</span></code></pre></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/tbl_get.html">tbl_get</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="st">"small_table_file"</span>, store <span class="op">=</span> <span class="va">store</span><span class="op">)</span></span></code></pre><p></p></div>
+<div class="sourceCode"><pre><code><span><span class="co">## # A tibble: 13 × 8</span></span>
+<span><span class="co">##    date_time           date           a b           c      d e     f    </span></span>
+<span><span class="co">##    &lt;dttm&gt;              &lt;date&gt;     &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;</span></span>
+<span><span class="co">##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-…     3  3423. TRUE  high </span></span>
+<span><span class="co">##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-…     8 10000. TRUE  low  </span></span>
+<span><span class="co">##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-…     3  2343. TRUE  high </span></span>
+<span><span class="co">##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-…    NA  3892. FALSE mid  </span></span>
+<span><span class="co">##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-…     7   284. TRUE  low  </span></span>
+<span><span class="co">##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-…     4  3291. TRUE  mid  </span></span>
+<span><span class="co">##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-…     3   843. TRUE  high </span></span>
+<span><span class="co">##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-…     2  1036. FALSE low  </span></span>
+<span><span class="co">##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-…     9   838. FALSE high </span></span>
+<span><span class="co">## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-…     9   838. FALSE high </span></span>
+<span><span class="co">## 11 2016-01-26 20:07:00 2016-01-26     4 2-dmx-…     7   834. TRUE  low  </span></span>
+<span><span class="co">## 12 2016-01-28 02:51:00 2016-01-28     2 7-dmx-…     8   108. FALSE low  </span></span>
+<span><span class="co">## 13 2016-01-30 11:23:00 2016-01-30     1 3-dka-…    NA  2230. TRUE  high</span></span></code></pre></div>
 
 
 
 <p>The second table in the table store is a mutated version of the first. It's
 just as easily obtainable via <code><a href="tbl_get.html">tbl_get()</a></code>:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/tbl_get.html">tbl_get</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="st">"small_high_file"</span>, store <span class="op">=</span> <span class="va">store</span><span class="op">)</span></code></pre><p></p></div>
-<div class="sourceCode"><pre><code><span class="co">## # A tibble: 6 × 8</span>
-<span class="co">##   date_time           date           a b             c     d e     f    </span>
-<span class="co">##   &lt;dttm&gt;              &lt;date&gt;     &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;</span>
-<span class="co">## 1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3 3423. TRUE  high </span>
-<span class="co">## 2 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3 2343. TRUE  high </span>
-<span class="co">## 3 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3  843. TRUE  high </span>
-<span class="co">## 4 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high </span>
-<span class="co">## 5 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high </span>
-<span class="co">## 6 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA 2230. TRUE  high</span></code></pre></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/tbl_get.html">tbl_get</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="st">"small_high_file"</span>, store <span class="op">=</span> <span class="va">store</span><span class="op">)</span></span></code></pre><p></p></div>
+<div class="sourceCode"><pre><code><span><span class="co">## # A tibble: 6 × 8</span></span>
+<span><span class="co">##   date_time           date           a b             c     d e     f    </span></span>
+<span><span class="co">##   &lt;dttm&gt;              &lt;date&gt;     &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;</span></span>
+<span><span class="co">## 1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3 3423. TRUE  high </span></span>
+<span><span class="co">## 2 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3 2343. TRUE  high </span></span>
+<span><span class="co">## 3 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3  843. TRUE  high </span></span>
+<span><span class="co">## 4 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high </span></span>
+<span><span class="co">## 5 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high </span></span>
+<span><span class="co">## 6 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA 2230. TRUE  high</span></span></code></pre></div>
 
 
 <p>The table-prep formulas in the <code>store</code> object could also be used in functions
 with a <code>tbl</code> argument (like <code><a href="create_agent.html">create_agent()</a></code> and <code><a href="create_informant.html">create_informant()</a></code>). This
 is accomplished most easily with the <code><a href="tbl_source.html">tbl_source()</a></code> function.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>
-    tbl <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="../reference/tbl_source.html">tbl_source</a></span><span class="op">(</span>
-      tbl <span class="op">=</span> <span class="st">"small_table_file"</span>,
-      store <span class="op">=</span> <span class="va">store</span>
-    <span class="op">)</span>
-  <span class="op">)</span></code></pre><p></p></div>
-<p></p><div class="sourceCode r"><pre><code><span class="va">informant</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span>
-    tbl <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="../reference/tbl_source.html">tbl_source</a></span><span class="op">(</span>
-      tbl <span class="op">=</span> <span class="st">"small_high_file"</span>,
-      store <span class="op">=</span> <span class="va">store</span>
-    <span class="op">)</span>
-  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span></span>
+<span>    tbl <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="../reference/tbl_source.html">tbl_source</a></span><span class="op">(</span></span>
+<span>      tbl <span class="op">=</span> <span class="st">"small_table_file"</span>,</span>
+<span>      store <span class="op">=</span> <span class="va">store</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">informant</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span></span>
+<span>    tbl <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="../reference/tbl_source.html">tbl_source</a></span><span class="op">(</span></span>
+<span>      tbl <span class="op">=</span> <span class="st">"small_high_file"</span>,</span>
+<span>      store <span class="op">=</span> <span class="va">store</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
 </div>
 
     </div>

@@ -22,7 +22,7 @@ table as a whole."><meta property="og:image" content="https://rich-iannone.githu
     
     <a class="navbar-brand me-2" href="../index.html">pointblank</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,7 +85,7 @@ table as a whole.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">info_tabular</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">info_tabular</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -156,11 +156,11 @@ represented in YAML, <em>info text</em> goes into subsections of the top-level
 <code>table</code> key. Here is an example of how a call of <code>info_tabular()</code> is
 expressed in R code and in the corresponding YAML representation.</p>
 <p>R statement:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">informant</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="../reference/info_tabular.html">info_tabular</a></span><span class="op">(</span>
-    section_1 <span class="op">=</span> <span class="st">"*info text* 1."</span>,
-    `section 2` <span class="op">=</span> <span class="st">"*info text* 2 and {snippet_1}"</span>
-  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">informant</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/info_tabular.html">info_tabular</a></span><span class="op">(</span></span>
+<span>    section_1 <span class="op">=</span> <span class="st">"*info text* 1."</span>,</span>
+<span>    `section 2` <span class="op">=</span> <span class="st">"*info text* 2 and {snippet_1}"</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p>YAML representation:</p>
 <p></p><div class="sourceCode yaml"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span><span class="kw">:</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">_columns</span><span class="kw">:</span><span class="at"> </span><span class="dv">23</span></span>
@@ -188,27 +188,27 @@ maintained in the YAML representation and is never written in processed form.</p
 <p>Create a pointblank <code>informant</code> object with <code><a href="create_informant.html">create_informant()</a></code>. We can
 specify a <code>tbl</code> with the <code>~</code> followed by a statement that gets the
 <code>small_table</code> dataset.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">informant</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span>
-    tbl <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,
-    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,
-    label <span class="op">=</span> <span class="st">"An example."</span>
-  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">informant</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span></span>
+<span>    tbl <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,</span>
+<span>    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,</span>
+<span>    label <span class="op">=</span> <span class="st">"An example."</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p>We can add <em>info text</em> to describe the table with the various <code>info_*()</code>
 functions. In this example, we'll use <code>info_tabular()</code> to generally describe
 the <code>small_table</code> dataset.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">informant</span> <span class="op">&lt;-</span>
-  <span class="va">informant</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/info_tabular.html">info_tabular</a></span><span class="op">(</span>
-    `Row Definition` <span class="op">=</span> <span class="st">"A row has randomized values."</span>,
-    Source <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
-      <span class="st">"- From the **pointblank** package."</span>,
-      <span class="st">"- [https://rich-iannone.github.io/pointblank/]()"</span>
-     <span class="op">)</span>
-   <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">informant</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">informant</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/info_tabular.html">info_tabular</a></span><span class="op">(</span></span>
+<span>    `Row Definition` <span class="op">=</span> <span class="st">"A row has randomized values."</span>,</span>
+<span>    Source <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>      <span class="st">"- From the **pointblank** package."</span>,</span>
+<span>      <span class="st">"- [https://rich-iannone.github.io/pointblank/]()"</span></span>
+<span>     <span class="op">)</span></span>
+<span>   <span class="op">)</span></span></code></pre><p></p></div>
 <p>Upon printing the <code>informant</code> object, we see the additions made to the
 'Table' section of the report.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">informant</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">informant</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_info_tabular_1.png" style="width:100%;"></p>
     </div>
     <div class="section level2">

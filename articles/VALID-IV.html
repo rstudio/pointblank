@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pointblank</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -141,6 +141,18 @@ part of a specified set of values.</li>
 <code><a href="../reference/col_vals_not_in_set.html">test_col_vals_not_in_set()</a></code>: Test whether column data
 are not part of a specified set of values.</li>
 <li>
+<code><a href="../reference/col_vals_make_set.html">test_col_vals_make_set()</a></code>: Test whether a set of values
+is entirely accounted for in a column of values.</li>
+<li>
+<code><a href="../reference/col_vals_make_subset.html">test_col_vals_make_subset()</a></code>: Test whether a set of
+values is a subset of a column of values.</li>
+<li>
+<code><a href="../reference/col_vals_increasing.html">test_col_vals_increasing()</a></code>: Test whether column data
+increase by row.</li>
+<li>
+<code><a href="../reference/col_vals_decreasing.html">test_col_vals_decreasing()</a></code>: Test whether column data
+decrease by row.</li>
+<li>
 <code><a href="../reference/col_vals_null.html">test_col_vals_null()</a></code>: Test whether column data are
 <code>NULL</code>/<code>NA</code>.</li>
 <li>
@@ -150,14 +162,17 @@ not <code>NULL</code>/<code>NA</code>.</li>
 <code><a href="../reference/col_vals_regex.html">test_col_vals_regex()</a></code>: Test whether strings in column
 data match a regex pattern.</li>
 <li>
+<code><a href="../reference/col_vals_within_spec.html">test_col_vals_within_spec()</a></code>: Test whether values in
+column data fit within a specification.</li>
+<li>
 <code><a href="../reference/col_vals_expr.html">test_col_vals_expr()</a></code>: Test whether column data agree
 with a predicate expression.</li>
 <li>
-<code><a href="../reference/conjointly.html">test_conjointly()</a></code>: Test whether multiple rowwise
-validations result in joint validity.</li>
-<li>
 <code><a href="../reference/rows_distinct.html">test_rows_distinct()</a></code>: Test whether row data are
 distinct.</li>
+<li>
+<code><a href="../reference/rows_complete.html">test_rows_complete()</a></code>: Test whether row data are
+complete.</li>
 <li>
 <code><a href="../reference/col_is_character.html">test_col_is_character()</a></code>: Test whether the columns
 contain character/string data.</li>
@@ -185,6 +200,21 @@ actually exist.</li>
 <li>
 <code><a href="../reference/col_schema_match.html">test_col_schema_match()</a></code>: Test whether columns in the
 table (and their types) match a predefined schema.</li>
+<li>
+<code><a href="../reference/row_count_match.html">test_row_count_match()</a></code>: Test whether the row count
+matches that of a different table.</li>
+<li>
+<code><a href="../reference/col_count_match.html">test_col_count_match()</a></code>: Test whether the column count
+matches that of a different table.</li>
+<li>
+<code><a href="../reference/conjointly.html">test_conjointly()</a></code>: Test whether multiple rowwise
+validations result in joint validity.</li>
+<li>
+<code><a href="../reference/serially.html">test_serially()</a></code>: Run several tests and a final
+validation in a serial manner as a combined test.</li>
+<li>
+<code><a href="../reference/specially.html">test_specially()</a></code>: Perform a test based on a
+user-defined function.</li>
 </ul>
 <div class="section level2">
 <h2 id="exactly-like-the-expect_-functions-except-you-get-a-true-or-false">Exactly Like the <code>expect_*()</code> Functions Except You Get a
@@ -229,23 +259,23 @@ etc., then this is a good way to go about that.</p>
 <p>Let’s have some examples before leaving this article. They will all
 use our <code>small_table</code>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">small_table</span></code></pre></div>
-<pre><code><span class="co">## <span style="color: #949494;"># A tibble: 13 × 8</span></span>
-<span class="co">##    date_time           date           a b             c      d e     f    </span>
-<span class="co">##    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
-<span class="co">## <span style="color: #BCBCBC;"> 1</span> 2016-01-04 <span style="color: #949494;">11:00:00</span> 2016-01-04     2 1-bcd-345     3  <span style="text-decoration: underline;">3</span>423. TRUE  high </span>
-<span class="co">## <span style="color: #BCBCBC;"> 2</span> 2016-01-04 <span style="color: #949494;">00:32:00</span> 2016-01-04     3 5-egh-163     8 <span style="text-decoration: underline;">10</span>000. TRUE  low  </span>
-<span class="co">## <span style="color: #BCBCBC;"> 3</span> 2016-01-05 <span style="color: #949494;">13:32:00</span> 2016-01-05     6 8-kdg-938     3  <span style="text-decoration: underline;">2</span>343. TRUE  high </span>
-<span class="co">## <span style="color: #BCBCBC;"> 4</span> 2016-01-06 <span style="color: #949494;">17:23:00</span> 2016-01-06     2 5-jdo-903    <span style="color: #BB0000;">NA</span>  <span style="text-decoration: underline;">3</span>892. FALSE mid  </span>
-<span class="co">## <span style="color: #BCBCBC;"> 5</span> 2016-01-09 <span style="color: #949494;">12:36:00</span> 2016-01-09     8 3-ldm-038     7   284. TRUE  low  </span>
-<span class="co">## <span style="color: #BCBCBC;"> 6</span> 2016-01-11 <span style="color: #949494;">06:15:00</span> 2016-01-11     4 2-dhe-923     4  <span style="text-decoration: underline;">3</span>291. TRUE  mid  </span>
-<span class="co">## <span style="color: #BCBCBC;"> 7</span> 2016-01-15 <span style="color: #949494;">18:46:00</span> 2016-01-15     7 1-knw-093     3   843. TRUE  high </span>
-<span class="co">## <span style="color: #BCBCBC;"> 8</span> 2016-01-17 <span style="color: #949494;">11:27:00</span> 2016-01-17     4 5-boe-639     2  <span style="text-decoration: underline;">1</span>036. FALSE low  </span>
-<span class="co">## <span style="color: #BCBCBC;"> 9</span> 2016-01-20 <span style="color: #949494;">04:30:00</span> 2016-01-20     3 5-bce-642     9   838. FALSE high </span>
-<span class="co">## <span style="color: #BCBCBC;">10</span> 2016-01-20 <span style="color: #949494;">04:30:00</span> 2016-01-20     3 5-bce-642     9   838. FALSE high </span>
-<span class="co">## <span style="color: #BCBCBC;">11</span> 2016-01-26 <span style="color: #949494;">20:07:00</span> 2016-01-26     4 2-dmx-010     7   834. TRUE  low  </span>
-<span class="co">## <span style="color: #BCBCBC;">12</span> 2016-01-28 <span style="color: #949494;">02:51:00</span> 2016-01-28     2 7-dmx-010     8   108. FALSE low  </span>
-<span class="co">## <span style="color: #BCBCBC;">13</span> 2016-01-30 <span style="color: #949494;">11:23:00</span> 2016-01-30     1 3-dka-303    <span style="color: #BB0000;">NA</span>  <span style="text-decoration: underline;">2</span>230. TRUE  high</span></code></pre>
+<code class="sourceCode R"><span><span class="va">small_table</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 13 × 8</span></span></span>
+<span><span class="co">##    date_time           date           a b             c      d e     f    </span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> 2016-01-04 <span style="color: #949494;">11:00:00</span> 2016-01-04     2 1-bcd-345     3  <span style="text-decoration: underline;">3</span>423. TRUE  high </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> 2016-01-04 <span style="color: #949494;">00:32:00</span> 2016-01-04     3 5-egh-163     8 <span style="text-decoration: underline;">10</span>000. TRUE  low  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> 2016-01-05 <span style="color: #949494;">13:32:00</span> 2016-01-05     6 8-kdg-938     3  <span style="text-decoration: underline;">2</span>343. TRUE  high </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> 2016-01-06 <span style="color: #949494;">17:23:00</span> 2016-01-06     2 5-jdo-903    <span style="color: #BB0000;">NA</span>  <span style="text-decoration: underline;">3</span>892. FALSE mid  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> 2016-01-09 <span style="color: #949494;">12:36:00</span> 2016-01-09     8 3-ldm-038     7   284. TRUE  low  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> 2016-01-11 <span style="color: #949494;">06:15:00</span> 2016-01-11     4 2-dhe-923     4  <span style="text-decoration: underline;">3</span>291. TRUE  mid  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> 2016-01-15 <span style="color: #949494;">18:46:00</span> 2016-01-15     7 1-knw-093     3   843. TRUE  high </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> 2016-01-17 <span style="color: #949494;">11:27:00</span> 2016-01-17     4 5-boe-639     2  <span style="text-decoration: underline;">1</span>036. FALSE low  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> 2016-01-20 <span style="color: #949494;">04:30:00</span> 2016-01-20     3 5-bce-642     9   838. FALSE high </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> 2016-01-20 <span style="color: #949494;">04:30:00</span> 2016-01-20     3 5-bce-642     9   838. FALSE high </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">11</span> 2016-01-26 <span style="color: #949494;">20:07:00</span> 2016-01-26     4 2-dmx-010     7   834. TRUE  low  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">12</span> 2016-01-28 <span style="color: #949494;">02:51:00</span> 2016-01-28     2 7-dmx-010     8   108. FALSE low  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">13</span> 2016-01-30 <span style="color: #949494;">11:23:00</span> 2016-01-30     1 3-dka-303    <span style="color: #BB0000;">NA</span>  <span style="text-decoration: underline;">2</span>230. TRUE  high</span></span></code></pre>
 <p>If you’d like to test your <strong>pointblank</strong> validation
 skill, guess whether each of these is <code>TRUE</code> or
 <code>FALSE</code> before hovering over the line of code. <br><br></p>

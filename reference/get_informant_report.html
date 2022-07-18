@@ -20,7 +20,7 @@ to pointblank YAML with yaml_write(informant = &amp;lt;informant&amp;gt;, ...)).
     
     <a class="navbar-brand me-2" href="../index.html">pointblank</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,13 +82,13 @@ to <strong>pointblank</strong> YAML with <code>yaml_write(informant = &lt;inform
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">get_informant_report</span><span class="op">(</span>
-  <span class="va">informant</span>,
-  size <span class="op">=</span> <span class="st">"standard"</span>,
-  title <span class="op">=</span> <span class="st">":default:"</span>,
-  lang <span class="op">=</span> <span class="cn">NULL</span>,
-  locale <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_informant_report</span><span class="op">(</span></span>
+<span>  <span class="va">informant</span>,</span>
+<span>  size <span class="op">=</span> <span class="st">"standard"</span>,</span>
+<span>  title <span class="op">=</span> <span class="st">":default:"</span>,</span>
+<span>  lang <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  locale <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -159,24 +159,24 @@ designation, like <code>"es"</code> for Spanish (Spain, same as <code>"es_ES"</c
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Generate an informant object using</span></span>
-<span class="r-in"><span class="co"># the `small_table` dataset</span></span>
-<span class="r-in"><span class="va">informant</span> <span class="op">&lt;-</span> <span class="fu"><a href="create_informant.html">create_informant</a></span><span class="op">(</span><span class="va">small_table</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># This function creates some information</span></span>
-<span class="r-in"><span class="co"># without any extra help by profiling</span></span>
-<span class="r-in"><span class="co"># the supplied table object; it adds</span></span>
-<span class="r-in"><span class="co"># the sections 'table' and columns' and</span></span>
-<span class="r-in"><span class="co"># we can print the object to see the</span></span>
-<span class="r-in"><span class="co"># table information report</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Alternatively, we can get the same report</span></span>
-<span class="r-in"><span class="co"># by using `get_informant_report()`</span></span>
-<span class="r-in"><span class="va">report</span> <span class="op">&lt;-</span> <span class="fu">get_informant_report</span><span class="op">(</span><span class="va">informant</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">report</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Generate an informant object using</span></span></span>
+<span class="r-in"><span><span class="co"># the `small_table` dataset</span></span></span>
+<span class="r-in"><span><span class="va">informant</span> <span class="op">&lt;-</span> <span class="fu"><a href="create_informant.html">create_informant</a></span><span class="op">(</span><span class="va">small_table</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># This function creates some information</span></span></span>
+<span class="r-in"><span><span class="co"># without any extra help by profiling</span></span></span>
+<span class="r-in"><span><span class="co"># the supplied table object; it adds</span></span></span>
+<span class="r-in"><span><span class="co"># the sections 'table' and columns' and</span></span></span>
+<span class="r-in"><span><span class="co"># we can print the object to see the</span></span></span>
+<span class="r-in"><span><span class="co"># table information report</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Alternatively, we can get the same report</span></span></span>
+<span class="r-in"><span><span class="co"># by using `get_informant_report()`</span></span></span>
+<span class="r-in"><span><span class="va">report</span> <span class="op">&lt;-</span> <span class="fu">get_informant_report</span><span class="op">(</span><span class="va">informant</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">report</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ptblank_informant_report" "gt_tbl"                  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [3] "list"                    </span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

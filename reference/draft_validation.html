@@ -30,7 +30,7 @@ case better than starting with an empty code editor view."><meta property="og:im
     
     <a class="navbar-brand me-2" href="../index.html">pointblank</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -97,17 +97,17 @@ case better than starting with an empty code editor view.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">draft_validation</span><span class="op">(</span>
-  <span class="va">tbl</span>,
-  tbl_name <span class="op">=</span> <span class="cn">NULL</span>,
-  file_name <span class="op">=</span> <span class="va">tbl_name</span>,
-  path <span class="op">=</span> <span class="cn">NULL</span>,
-  lang <span class="op">=</span> <span class="cn">NULL</span>,
-  output_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"R"</span>, <span class="st">"Rmd"</span><span class="op">)</span>,
-  add_comments <span class="op">=</span> <span class="cn">TRUE</span>,
-  overwrite <span class="op">=</span> <span class="cn">FALSE</span>,
-  quiet <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">draft_validation</span><span class="op">(</span></span>
+<span>  <span class="va">tbl</span>,</span>
+<span>  tbl_name <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  file_name <span class="op">=</span> <span class="va">tbl_name</span>,</span>
+<span>  path <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  lang <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  output_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"R"</span>, <span class="st">"Rmd"</span><span class="op">)</span>,</span>
+<span>  add_comments <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  overwrite <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  quiet <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -196,7 +196,7 @@ formally tested (so be mindful of this when using unsupported backends with
 
 
 <p>Let's draft a validation plan for the <code><a href="https://dplyr.tidyverse.org/reference/storms.html" class="external-link">dplyr::storms</a></code> dataset.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/storms.html" class="external-link">storms</a></span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/storms.html" class="external-link">storms</a></span></span></code></pre><p></p></div>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 11,859 × 13</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    name   year month   day  hour   lat  long status      category  wind pressure</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;ord&gt;    &lt;int&gt;    &lt;int&gt;</span></span>
@@ -215,155 +215,155 @@ formally tested (so be mindful of this when using unsupported backends with
 <p>The <code>draft_validation()</code> function creates an .R file by default. Using just
 the defaults with <code><a href="https://dplyr.tidyverse.org/reference/storms.html" class="external-link">dplyr::storms</a></code> will yield the <code>"dplyr__storms.R"</code> file
 in the working directory. Here are the contents of the file:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rich-iannone.github.io/pointblank/">pointblank</a></span><span class="op">)</span>
-
-<span class="va">agent</span> <span class="op">&lt;-</span>
-  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>
-    tbl <span class="op">=</span> <span class="op">~</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/storms.html" class="external-link">storms</a></span>,
-    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span>
-      warn_at <span class="op">=</span> <span class="fl">0.05</span>,
-      stop_at <span class="op">=</span> <span class="fl">0.10</span>
-    <span class="op">)</span>,
-    tbl_name <span class="op">=</span> <span class="st">"dplyr::storms"</span>,
-    label <span class="op">=</span> <span class="st">"Validation plan generated by `draft_validation()`."</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="co"># Expect that column `name` is of type: character</span>
-  <span class="fu"><a href="../reference/col_is_character.html">col_is_character</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">name</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="co"># Expect that column `year` is of type: numeric</span>
-  <span class="fu"><a href="../reference/col_is_numeric.html">col_is_numeric</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="co"># Expect that values in `year` should be between `1975` and `2020`</span>
-  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span>,
-    left <span class="op">=</span> <span class="fl">1975</span>,
-    right <span class="op">=</span> <span class="fl">2020</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="co"># Expect that column `month` is of type: numeric</span>
-  <span class="fu"><a href="../reference/col_is_numeric.html">col_is_numeric</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">month</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="co"># Expect that values in `month` should be between `1` and `12`</span>
-  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">month</span><span class="op">)</span>,
-    left <span class="op">=</span> <span class="fl">1</span>,
-    right <span class="op">=</span> <span class="fl">12</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="co"># Expect that column `day` is of type: integer</span>
-  <span class="fu"><a href="../reference/col_is_integer.html">col_is_integer</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">day</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="co"># Expect that values in `day` should be between `1` and `31`</span>
-  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">day</span><span class="op">)</span>,
-    left <span class="op">=</span> <span class="fl">1</span>,
-    right <span class="op">=</span> <span class="fl">31</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="co"># Expect that column `hour` is of type: numeric</span>
-  <span class="fu"><a href="../reference/col_is_numeric.html">col_is_numeric</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">hour</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="co"># Expect that values in `hour` should be between `0` and `23`</span>
-  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">hour</span><span class="op">)</span>,
-    left <span class="op">=</span> <span class="fl">0</span>,
-    right <span class="op">=</span> <span class="fl">23</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="co"># Expect that column `lat` is of type: numeric</span>
-  <span class="fu"><a href="../reference/col_is_numeric.html">col_is_numeric</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">lat</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="co"># Expect that values in `lat` should be between `-90` and `90`</span>
-  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">lat</span><span class="op">)</span>,
-    left <span class="op">=</span> <span class="op">-</span><span class="fl">90</span>,
-    right <span class="op">=</span> <span class="fl">90</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="co"># Expect that column `long` is of type: numeric</span>
-  <span class="fu"><a href="../reference/col_is_numeric.html">col_is_numeric</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">long</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="co"># Expect that values in `long` should be between `-180` and `180`</span>
-  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">long</span><span class="op">)</span>,
-    left <span class="op">=</span> <span class="op">-</span><span class="fl">180</span>,
-    right <span class="op">=</span> <span class="fl">180</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="co"># Expect that column `status` is of type: character</span>
-  <span class="fu"><a href="../reference/col_is_character.html">col_is_character</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">status</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="co"># Expect that column `category` is of type: factor</span>
-  <span class="fu"><a href="../reference/col_is_factor.html">col_is_factor</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">category</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="co"># Expect that column `wind` is of type: integer</span>
-  <span class="fu"><a href="../reference/col_is_integer.html">col_is_integer</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">wind</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="co"># Expect that values in `wind` should be between `10` and `160`</span>
-  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">wind</span><span class="op">)</span>,
-    left <span class="op">=</span> <span class="fl">10</span>,
-    right <span class="op">=</span> <span class="fl">160</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="co"># Expect that column `pressure` is of type: integer</span>
-  <span class="fu"><a href="../reference/col_is_integer.html">col_is_integer</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">pressure</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="co"># Expect that values in `pressure` should be between `882` and `1022`</span>
-  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">pressure</span><span class="op">)</span>,
-    left <span class="op">=</span> <span class="fl">882</span>,
-    right <span class="op">=</span> <span class="fl">1022</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="co"># Expect that column `tropicalstorm_force_diameter` is of type: integer</span>
-  <span class="fu"><a href="../reference/col_is_integer.html">col_is_integer</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">tropicalstorm_force_diameter</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="co"># Expect that values in `tropicalstorm_force_diameter` should be between `0` and `870`</span>
-  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">tropicalstorm_force_diameter</span><span class="op">)</span>,
-    left <span class="op">=</span> <span class="fl">0</span>,
-    right <span class="op">=</span> <span class="fl">870</span>,
-    na_pass <span class="op">=</span> <span class="cn">TRUE</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="co"># Expect that column `hurricane_force_diameter` is of type: integer</span>
-  <span class="fu"><a href="../reference/col_is_integer.html">col_is_integer</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">hurricane_force_diameter</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="co"># Expect that values in `hurricane_force_diameter` should be between `0` and `300`</span>
-  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">hurricane_force_diameter</span><span class="op">)</span>,
-    left <span class="op">=</span> <span class="fl">0</span>,
-    right <span class="op">=</span> <span class="fl">300</span>,
-    na_pass <span class="op">=</span> <span class="cn">TRUE</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="co"># Expect entirely distinct rows across all columns</span>
-  <span class="fu"><a href="../reference/rows_distinct.html">rows_distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="co"># Expect that column schemas match</span>
-  <span class="fu"><a href="../reference/col_schema_match.html">col_schema_match</a></span><span class="op">(</span>
-    schema <span class="op">=</span> <span class="fu"><a href="../reference/col_schema.html">col_schema</a></span><span class="op">(</span>
-      name <span class="op">=</span> <span class="st">"character"</span>,
-      year <span class="op">=</span> <span class="st">"numeric"</span>,
-      month <span class="op">=</span> <span class="st">"numeric"</span>,
-      day <span class="op">=</span> <span class="st">"integer"</span>,
-      hour <span class="op">=</span> <span class="st">"numeric"</span>,
-      lat <span class="op">=</span> <span class="st">"numeric"</span>,
-      long <span class="op">=</span> <span class="st">"numeric"</span>,
-      status <span class="op">=</span> <span class="st">"character"</span>,
-      category <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ordered"</span>, <span class="st">"factor"</span><span class="op">)</span>,
-      wind <span class="op">=</span> <span class="st">"integer"</span>,
-      pressure <span class="op">=</span> <span class="st">"integer"</span>,
-      tropicalstorm_force_diameter <span class="op">=</span> <span class="st">"integer"</span>,
-      hurricane_force_diameter <span class="op">=</span> <span class="st">"integer"</span>
-    <span class="op">)</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span>
-
-<span class="va">agent</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rich-iannone.github.io/pointblank/">pointblank</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">agent</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span></span>
+<span>    tbl <span class="op">=</span> <span class="op">~</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/storms.html" class="external-link">storms</a></span>,</span>
+<span>    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span></span>
+<span>      warn_at <span class="op">=</span> <span class="fl">0.05</span>,</span>
+<span>      stop_at <span class="op">=</span> <span class="fl">0.10</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    tbl_name <span class="op">=</span> <span class="st">"dplyr::storms"</span>,</span>
+<span>    label <span class="op">=</span> <span class="st">"Validation plan generated by `draft_validation()`."</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co"># Expect that column `name` is of type: character</span></span>
+<span>  <span class="fu"><a href="../reference/col_is_character.html">col_is_character</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">name</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co"># Expect that column `year` is of type: numeric</span></span>
+<span>  <span class="fu"><a href="../reference/col_is_numeric.html">col_is_numeric</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co"># Expect that values in `year` should be between `1975` and `2020`</span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span>,</span>
+<span>    left <span class="op">=</span> <span class="fl">1975</span>,</span>
+<span>    right <span class="op">=</span> <span class="fl">2020</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co"># Expect that column `month` is of type: numeric</span></span>
+<span>  <span class="fu"><a href="../reference/col_is_numeric.html">col_is_numeric</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">month</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co"># Expect that values in `month` should be between `1` and `12`</span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">month</span><span class="op">)</span>,</span>
+<span>    left <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    right <span class="op">=</span> <span class="fl">12</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co"># Expect that column `day` is of type: integer</span></span>
+<span>  <span class="fu"><a href="../reference/col_is_integer.html">col_is_integer</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">day</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co"># Expect that values in `day` should be between `1` and `31`</span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">day</span><span class="op">)</span>,</span>
+<span>    left <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    right <span class="op">=</span> <span class="fl">31</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co"># Expect that column `hour` is of type: numeric</span></span>
+<span>  <span class="fu"><a href="../reference/col_is_numeric.html">col_is_numeric</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">hour</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co"># Expect that values in `hour` should be between `0` and `23`</span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">hour</span><span class="op">)</span>,</span>
+<span>    left <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    right <span class="op">=</span> <span class="fl">23</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co"># Expect that column `lat` is of type: numeric</span></span>
+<span>  <span class="fu"><a href="../reference/col_is_numeric.html">col_is_numeric</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">lat</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co"># Expect that values in `lat` should be between `-90` and `90`</span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">lat</span><span class="op">)</span>,</span>
+<span>    left <span class="op">=</span> <span class="op">-</span><span class="fl">90</span>,</span>
+<span>    right <span class="op">=</span> <span class="fl">90</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co"># Expect that column `long` is of type: numeric</span></span>
+<span>  <span class="fu"><a href="../reference/col_is_numeric.html">col_is_numeric</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">long</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co"># Expect that values in `long` should be between `-180` and `180`</span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">long</span><span class="op">)</span>,</span>
+<span>    left <span class="op">=</span> <span class="op">-</span><span class="fl">180</span>,</span>
+<span>    right <span class="op">=</span> <span class="fl">180</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co"># Expect that column `status` is of type: character</span></span>
+<span>  <span class="fu"><a href="../reference/col_is_character.html">col_is_character</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">status</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co"># Expect that column `category` is of type: factor</span></span>
+<span>  <span class="fu"><a href="../reference/col_is_factor.html">col_is_factor</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">category</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co"># Expect that column `wind` is of type: integer</span></span>
+<span>  <span class="fu"><a href="../reference/col_is_integer.html">col_is_integer</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">wind</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co"># Expect that values in `wind` should be between `10` and `160`</span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">wind</span><span class="op">)</span>,</span>
+<span>    left <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>    right <span class="op">=</span> <span class="fl">160</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co"># Expect that column `pressure` is of type: integer</span></span>
+<span>  <span class="fu"><a href="../reference/col_is_integer.html">col_is_integer</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">pressure</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co"># Expect that values in `pressure` should be between `882` and `1022`</span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">pressure</span><span class="op">)</span>,</span>
+<span>    left <span class="op">=</span> <span class="fl">882</span>,</span>
+<span>    right <span class="op">=</span> <span class="fl">1022</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co"># Expect that column `tropicalstorm_force_diameter` is of type: integer</span></span>
+<span>  <span class="fu"><a href="../reference/col_is_integer.html">col_is_integer</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">tropicalstorm_force_diameter</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co"># Expect that values in `tropicalstorm_force_diameter` should be between `0` and `870`</span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">tropicalstorm_force_diameter</span><span class="op">)</span>,</span>
+<span>    left <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    right <span class="op">=</span> <span class="fl">870</span>,</span>
+<span>    na_pass <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co"># Expect that column `hurricane_force_diameter` is of type: integer</span></span>
+<span>  <span class="fu"><a href="../reference/col_is_integer.html">col_is_integer</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">hurricane_force_diameter</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co"># Expect that values in `hurricane_force_diameter` should be between `0` and `300`</span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">hurricane_force_diameter</span><span class="op">)</span>,</span>
+<span>    left <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    right <span class="op">=</span> <span class="fl">300</span>,</span>
+<span>    na_pass <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co"># Expect entirely distinct rows across all columns</span></span>
+<span>  <span class="fu"><a href="../reference/rows_distinct.html">rows_distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co"># Expect that column schemas match</span></span>
+<span>  <span class="fu"><a href="../reference/col_schema_match.html">col_schema_match</a></span><span class="op">(</span></span>
+<span>    schema <span class="op">=</span> <span class="fu"><a href="../reference/col_schema.html">col_schema</a></span><span class="op">(</span></span>
+<span>      name <span class="op">=</span> <span class="st">"character"</span>,</span>
+<span>      year <span class="op">=</span> <span class="st">"numeric"</span>,</span>
+<span>      month <span class="op">=</span> <span class="st">"numeric"</span>,</span>
+<span>      day <span class="op">=</span> <span class="st">"integer"</span>,</span>
+<span>      hour <span class="op">=</span> <span class="st">"numeric"</span>,</span>
+<span>      lat <span class="op">=</span> <span class="st">"numeric"</span>,</span>
+<span>      long <span class="op">=</span> <span class="st">"numeric"</span>,</span>
+<span>      status <span class="op">=</span> <span class="st">"character"</span>,</span>
+<span>      category <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ordered"</span>, <span class="st">"factor"</span><span class="op">)</span>,</span>
+<span>      wind <span class="op">=</span> <span class="st">"integer"</span>,</span>
+<span>      pressure <span class="op">=</span> <span class="st">"integer"</span>,</span>
+<span>      tropicalstorm_force_diameter <span class="op">=</span> <span class="st">"integer"</span>,</span>
+<span>      hurricane_force_diameter <span class="op">=</span> <span class="st">"integer"</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">agent</span></span></code></pre><p></p></div>
 <p>This is runnable as is, and the promise is that the interrogation should
 produce no failing test units. After execution, we get the following
 validation report:</p>

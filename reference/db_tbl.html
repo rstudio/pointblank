@@ -32,7 +32,7 @@ enclosing such values in I()."><meta property="og:image" content="https://rich-i
     
     <a class="navbar-brand me-2" href="../index.html">pointblank</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -100,18 +100,18 @@ enclosing such values in <code><a href="https://rdrr.io/r/base/AsIs.html" class=
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">db_tbl</span><span class="op">(</span>
-  <span class="va">table</span>,
-  <span class="va">dbtype</span>,
-  dbname <span class="op">=</span> <span class="cn">NULL</span>,
-  host <span class="op">=</span> <span class="cn">NULL</span>,
-  port <span class="op">=</span> <span class="cn">NULL</span>,
-  user <span class="op">=</span> <span class="cn">NULL</span>,
-  password <span class="op">=</span> <span class="cn">NULL</span>,
-  bq_project <span class="op">=</span> <span class="cn">NULL</span>,
-  bq_dataset <span class="op">=</span> <span class="cn">NULL</span>,
-  bq_billing <span class="op">=</span> <span class="va">bq_project</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">db_tbl</span><span class="op">(</span></span>
+<span>  <span class="va">table</span>,</span>
+<span>  <span class="va">dbtype</span>,</span>
+<span>  dbname <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  host <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  port <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  user <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  password <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  bq_project <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  bq_dataset <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  bq_billing <span class="op">=</span> <span class="va">bq_project</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -175,94 +175,94 @@ different BigQuery project.</p></dd>
 <p>You can use an in-memory database table and by supplying it with an in-memory
 table. This works with the DuckDB database and the key thing is to use
 <code>dbname = ":memory"</code> in the <code>db_tbl()</code> call.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">small_table_duckdb</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="../reference/db_tbl.html">db_tbl</a></span><span class="op">(</span>
-    table <span class="op">=</span> <span class="va">small_table</span>,
-    dbtype <span class="op">=</span> <span class="st">"duckdb"</span>,
-    dbname <span class="op">=</span> <span class="st">":memory:"</span>
-  <span class="op">)</span>
-
-<span class="va">small_table_duckdb</span></code></pre><p></p></div>
-<div class="sourceCode"><pre><code><span class="co">## # Source:   table&lt;small_table&gt; [?? x 8]</span>
-<span class="co">## # Database: duckdb_connection</span>
-<span class="co">##    date_time           date           a b         c      d e     f    </span>
-<span class="co">##    &lt;dttm&gt;              &lt;date&gt;     &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;</span>
-<span class="co">##  1 2016-01-04 11:00:00 2016-01-04     2 1-bc…     3  3423. TRUE  high </span>
-<span class="co">##  2 2016-01-04 00:32:00 2016-01-04     3 5-eg…     8 10000. TRUE  low  </span>
-<span class="co">##  3 2016-01-05 13:32:00 2016-01-05     6 8-kd…     3  2343. TRUE  high </span>
-<span class="co">##  4 2016-01-06 17:23:00 2016-01-06     2 5-jd…    NA  3892. FALSE mid  </span>
-<span class="co">##  5 2016-01-09 12:36:00 2016-01-09     8 3-ld…     7   284. TRUE  low  </span>
-<span class="co">##  6 2016-01-11 06:15:00 2016-01-11     4 2-dh…     4  3291. TRUE  mid  </span>
-<span class="co">##  7 2016-01-15 18:46:00 2016-01-15     7 1-kn…     3   843. TRUE  high </span>
-<span class="co">##  8 2016-01-17 11:27:00 2016-01-17     4 5-bo…     2  1036. FALSE low  </span>
-<span class="co">##  9 2016-01-20 04:30:00 2016-01-20     3 5-bc…     9   838. FALSE high </span>
-<span class="co">## 10 2016-01-20 04:30:00 2016-01-20     3 5-bc…     9   838. FALSE high </span>
-<span class="co">## # … with more rows</span></code></pre></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">small_table_duckdb</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="../reference/db_tbl.html">db_tbl</a></span><span class="op">(</span></span>
+<span>    table <span class="op">=</span> <span class="va">small_table</span>,</span>
+<span>    dbtype <span class="op">=</span> <span class="st">"duckdb"</span>,</span>
+<span>    dbname <span class="op">=</span> <span class="st">":memory:"</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">small_table_duckdb</span></span></code></pre><p></p></div>
+<div class="sourceCode"><pre><code><span><span class="co">## # Source:   table&lt;small_table&gt; [?? x 8]</span></span>
+<span><span class="co">## # Database: duckdb_connection</span></span>
+<span><span class="co">##    date_time           date           a b         c      d e     f    </span></span>
+<span><span class="co">##    &lt;dttm&gt;              &lt;date&gt;     &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;</span></span>
+<span><span class="co">##  1 2016-01-04 11:00:00 2016-01-04     2 1-bc…     3  3423. TRUE  high </span></span>
+<span><span class="co">##  2 2016-01-04 00:32:00 2016-01-04     3 5-eg…     8 10000. TRUE  low  </span></span>
+<span><span class="co">##  3 2016-01-05 13:32:00 2016-01-05     6 8-kd…     3  2343. TRUE  high </span></span>
+<span><span class="co">##  4 2016-01-06 17:23:00 2016-01-06     2 5-jd…    NA  3892. FALSE mid  </span></span>
+<span><span class="co">##  5 2016-01-09 12:36:00 2016-01-09     8 3-ld…     7   284. TRUE  low  </span></span>
+<span><span class="co">##  6 2016-01-11 06:15:00 2016-01-11     4 2-dh…     4  3291. TRUE  mid  </span></span>
+<span><span class="co">##  7 2016-01-15 18:46:00 2016-01-15     7 1-kn…     3   843. TRUE  high </span></span>
+<span><span class="co">##  8 2016-01-17 11:27:00 2016-01-17     4 5-bo…     2  1036. FALSE low  </span></span>
+<span><span class="co">##  9 2016-01-20 04:30:00 2016-01-20     3 5-bc…     9   838. FALSE high </span></span>
+<span><span class="co">## 10 2016-01-20 04:30:00 2016-01-20     3 5-bc…     9   838. FALSE high </span></span>
+<span><span class="co">## # … with more rows</span></span></code></pre></div>
 
 
 
 <p>The in-memory option also works using the SQLite database. The only change
 required is setting the <code>dbtype</code> to <code>"sqlite"</code>:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">small_table_sqlite</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="../reference/db_tbl.html">db_tbl</a></span><span class="op">(</span>
-    table <span class="op">=</span> <span class="va">small_table</span>,
-    dbtype <span class="op">=</span> <span class="st">"sqlite"</span>,
-    dbname <span class="op">=</span> <span class="st">":memory:"</span>
-  <span class="op">)</span>
-
-<span class="va">small_table_sqlite</span></code></pre><p></p></div>
-<div class="sourceCode"><pre><code><span class="co">## # Source:   table&lt;small_table&gt; [?? x 8]</span>
-<span class="co">## # Database: sqlite 3.37.0 [:memory:]</span>
-<span class="co">##     date_time  date     a b             c      d     e f    </span>
-<span class="co">##         &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;int&gt; &lt;chr&gt;</span>
-<span class="co">##  1 1451905200 16804     2 1-bcd-345     3  3423.     1 high </span>
-<span class="co">##  2 1451867520 16804     3 5-egh-163     8 10000.     1 low  </span>
-<span class="co">##  3 1452000720 16805     6 8-kdg-938     3  2343.     1 high </span>
-<span class="co">##  4 1452100980 16806     2 5-jdo-903    NA  3892.     0 mid  </span>
-<span class="co">##  5 1452342960 16809     8 3-ldm-038     7   284.     1 low  </span>
-<span class="co">##  6 1452492900 16811     4 2-dhe-923     4  3291.     1 mid  </span>
-<span class="co">##  7 1452883560 16815     7 1-knw-093     3   843.     1 high </span>
-<span class="co">##  8 1453030020 16817     4 5-boe-639     2  1036.     0 low  </span>
-<span class="co">##  9 1453264200 16820     3 5-bce-642     9   838.     0 high </span>
-<span class="co">## 10 1453264200 16820     3 5-bce-642     9   838.     0 high </span>
-<span class="co">## # … with more rows</span></code></pre></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">small_table_sqlite</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="../reference/db_tbl.html">db_tbl</a></span><span class="op">(</span></span>
+<span>    table <span class="op">=</span> <span class="va">small_table</span>,</span>
+<span>    dbtype <span class="op">=</span> <span class="st">"sqlite"</span>,</span>
+<span>    dbname <span class="op">=</span> <span class="st">":memory:"</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">small_table_sqlite</span></span></code></pre><p></p></div>
+<div class="sourceCode"><pre><code><span><span class="co">## # Source:   table&lt;small_table&gt; [?? x 8]</span></span>
+<span><span class="co">## # Database: sqlite 3.37.0 [:memory:]</span></span>
+<span><span class="co">##     date_time  date     a b             c      d     e f    </span></span>
+<span><span class="co">##         &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;int&gt; &lt;chr&gt;</span></span>
+<span><span class="co">##  1 1451905200 16804     2 1-bcd-345     3  3423.     1 high </span></span>
+<span><span class="co">##  2 1451867520 16804     3 5-egh-163     8 10000.     1 low  </span></span>
+<span><span class="co">##  3 1452000720 16805     6 8-kdg-938     3  2343.     1 high </span></span>
+<span><span class="co">##  4 1452100980 16806     2 5-jdo-903    NA  3892.     0 mid  </span></span>
+<span><span class="co">##  5 1452342960 16809     8 3-ldm-038     7   284.     1 low  </span></span>
+<span><span class="co">##  6 1452492900 16811     4 2-dhe-923     4  3291.     1 mid  </span></span>
+<span><span class="co">##  7 1452883560 16815     7 1-knw-093     3   843.     1 high </span></span>
+<span><span class="co">##  8 1453030020 16817     4 5-boe-639     2  1036.     0 low  </span></span>
+<span><span class="co">##  9 1453264200 16820     3 5-bce-642     9   838.     0 high </span></span>
+<span><span class="co">## 10 1453264200 16820     3 5-bce-642     9   838.     0 high </span></span>
+<span><span class="co">## # … with more rows</span></span></code></pre></div>
 
 
 
 <p>It's also possible to obtain a table from a remote file and shove it into an
 in-memory database. For this, we can use the all-powerful <code><a href="file_tbl.html">file_tbl()</a></code> +
 <code>db_tbl()</code> combo.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">all_revenue_large_duckdb</span> <span class="op">&lt;-</span>
-  <span class="fu"><a href="../reference/db_tbl.html">db_tbl</a></span><span class="op">(</span>
-    table <span class="op">=</span> <span class="fu"><a href="../reference/file_tbl.html">file_tbl</a></span><span class="op">(</span>
-      file <span class="op">=</span> <span class="fu"><a href="../reference/from_github.html">from_github</a></span><span class="op">(</span>
-        file <span class="op">=</span> <span class="st">"sj_all_revenue_large.rds"</span>,
-        repo <span class="op">=</span> <span class="st">"rich-iannone/intendo"</span>,
-        subdir <span class="op">=</span> <span class="st">"data-large"</span>
-      <span class="op">)</span>
-    <span class="op">)</span>,
-    dbtype <span class="op">=</span> <span class="st">"duckdb"</span>,
-    dbname <span class="op">=</span> <span class="st">":memory:"</span>
-  <span class="op">)</span>
-  
-<span class="va">all_revenue_large_duckdb</span></code></pre><p></p></div>
-<div class="sourceCode"><pre><code><span class="co">## # Source:   table&lt;sj_all_revenue_large.rds&gt; [?? x 11]</span>
-<span class="co">## # Database: duckdb_connection</span>
-<span class="co">##    player_id       session_id   session_start       time               </span>
-<span class="co">##    &lt;chr&gt;           &lt;chr&gt;        &lt;dttm&gt;              &lt;dttm&gt;             </span>
-<span class="co">##  1 IRZKSAOYUJME796 IRZKSAOYUJM… 2015-01-01 00:18:41 2015-01-01 00:18:53</span>
-<span class="co">##  2 CJVYRASDZTXO674 CJVYRASDZTX… 2015-01-01 01:13:01 2015-01-01 01:13:07</span>
-<span class="co">##  3 CJVYRASDZTXO674 CJVYRASDZTX… 2015-01-01 01:13:01 2015-01-01 01:23:37</span>
-<span class="co">##  4 CJVYRASDZTXO674 CJVYRASDZTX… 2015-01-01 01:13:01 2015-01-01 01:24:37</span>
-<span class="co">##  5 CJVYRASDZTXO674 CJVYRASDZTX… 2015-01-01 01:13:01 2015-01-01 01:31:01</span>
-<span class="co">##  6 CJVYRASDZTXO674 CJVYRASDZTX… 2015-01-01 01:13:01 2015-01-01 01:31:43</span>
-<span class="co">##  7 CJVYRASDZTXO674 CJVYRASDZTX… 2015-01-01 01:13:01 2015-01-01 01:36:01</span>
-<span class="co">##  8 ECPANOIXLZHF896 ECPANOIXLZH… 2015-01-01 01:31:03 2015-01-01 01:31:27</span>
-<span class="co">##  9 ECPANOIXLZHF896 ECPANOIXLZH… 2015-01-01 01:31:03 2015-01-01 01:36:57</span>
-<span class="co">## 10 ECPANOIXLZHF896 ECPANOIXLZH… 2015-01-01 01:31:03 2015-01-01 01:37:45</span>
-<span class="co">## # … with more rows, and 7 more variables: item_type &lt;chr&gt;,</span>
-<span class="co">## #   item_name &lt;chr&gt;, item_revenue &lt;dbl&gt;, session_duration &lt;dbl&gt;,</span>
-<span class="co">## #   start_day &lt;date&gt;, acquisition &lt;chr&gt;, country &lt;chr&gt;</span></code></pre></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">all_revenue_large_duckdb</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="../reference/db_tbl.html">db_tbl</a></span><span class="op">(</span></span>
+<span>    table <span class="op">=</span> <span class="fu"><a href="../reference/file_tbl.html">file_tbl</a></span><span class="op">(</span></span>
+<span>      file <span class="op">=</span> <span class="fu"><a href="../reference/from_github.html">from_github</a></span><span class="op">(</span></span>
+<span>        file <span class="op">=</span> <span class="st">"sj_all_revenue_large.rds"</span>,</span>
+<span>        repo <span class="op">=</span> <span class="st">"rich-iannone/intendo"</span>,</span>
+<span>        subdir <span class="op">=</span> <span class="st">"data-large"</span></span>
+<span>      <span class="op">)</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    dbtype <span class="op">=</span> <span class="st">"duckdb"</span>,</span>
+<span>    dbname <span class="op">=</span> <span class="st">":memory:"</span></span>
+<span>  <span class="op">)</span></span>
+<span>  </span>
+<span><span class="va">all_revenue_large_duckdb</span></span></code></pre><p></p></div>
+<div class="sourceCode"><pre><code><span><span class="co">## # Source:   table&lt;sj_all_revenue_large.rds&gt; [?? x 11]</span></span>
+<span><span class="co">## # Database: duckdb_connection</span></span>
+<span><span class="co">##    player_id       session_id   session_start       time               </span></span>
+<span><span class="co">##    &lt;chr&gt;           &lt;chr&gt;        &lt;dttm&gt;              &lt;dttm&gt;             </span></span>
+<span><span class="co">##  1 IRZKSAOYUJME796 IRZKSAOYUJM… 2015-01-01 00:18:41 2015-01-01 00:18:53</span></span>
+<span><span class="co">##  2 CJVYRASDZTXO674 CJVYRASDZTX… 2015-01-01 01:13:01 2015-01-01 01:13:07</span></span>
+<span><span class="co">##  3 CJVYRASDZTXO674 CJVYRASDZTX… 2015-01-01 01:13:01 2015-01-01 01:23:37</span></span>
+<span><span class="co">##  4 CJVYRASDZTXO674 CJVYRASDZTX… 2015-01-01 01:13:01 2015-01-01 01:24:37</span></span>
+<span><span class="co">##  5 CJVYRASDZTXO674 CJVYRASDZTX… 2015-01-01 01:13:01 2015-01-01 01:31:01</span></span>
+<span><span class="co">##  6 CJVYRASDZTXO674 CJVYRASDZTX… 2015-01-01 01:13:01 2015-01-01 01:31:43</span></span>
+<span><span class="co">##  7 CJVYRASDZTXO674 CJVYRASDZTX… 2015-01-01 01:13:01 2015-01-01 01:36:01</span></span>
+<span><span class="co">##  8 ECPANOIXLZHF896 ECPANOIXLZH… 2015-01-01 01:31:03 2015-01-01 01:31:27</span></span>
+<span><span class="co">##  9 ECPANOIXLZHF896 ECPANOIXLZH… 2015-01-01 01:31:03 2015-01-01 01:36:57</span></span>
+<span><span class="co">## 10 ECPANOIXLZHF896 ECPANOIXLZH… 2015-01-01 01:31:03 2015-01-01 01:37:45</span></span>
+<span><span class="co">## # … with more rows, and 7 more variables: item_type &lt;chr&gt;,</span></span>
+<span><span class="co">## #   item_name &lt;chr&gt;, item_revenue &lt;dbl&gt;, session_duration &lt;dbl&gt;,</span></span>
+<span><span class="co">## #   start_day &lt;date&gt;, acquisition &lt;chr&gt;, country &lt;chr&gt;</span></span></code></pre></div>
 
 
 <p>And that's really it.</p>
@@ -278,50 +278,50 @@ one-step process nonetheless. Here's an example that accesses the <code>rna</cod
 and <code>password</code> entries we are using the literal username and password values
 (publicly available when visiting the <em>RNA Central</em> website) by enclosing the
 values in <code><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I()</a></code>.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">rna_db_tbl</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="../reference/db_tbl.html">db_tbl</a></span><span class="op">(</span>
-    table <span class="op">=</span> <span class="st">"rna"</span>,
-    dbtype <span class="op">=</span> <span class="st">"postgres"</span>,
-    dbname <span class="op">=</span> <span class="st">"pfmegrnargs"</span>,
-    host <span class="op">=</span> <span class="st">"hh-pgsql-public.ebi.ac.uk"</span>,
-    port <span class="op">=</span> <span class="fl">5432</span>,
-    user <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="st">"reader"</span><span class="op">)</span>,
-    password <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="st">"NWDMCE5xdipIjRrp"</span><span class="op">)</span>
-  <span class="op">)</span>
-
-<span class="va">rna_db_tbl</span></code></pre><p></p></div>
-<div class="sourceCode"><pre><code><span class="co">## # Source:   table&lt;rna&gt; [?? x 9]</span>
-<span class="co">## # Database: postgres</span>
-<span class="co">## #   [reader@hh-pgsql-public.ebi.ac.uk:5432/pfmegrnargs]</span>
-<span class="co">##          id upi    timestamp           userstamp crc64   len seq_short</span>
-<span class="co">##     &lt;int64&gt; &lt;chr&gt;  &lt;dttm&gt;              &lt;chr&gt;     &lt;chr&gt; &lt;int&gt; &lt;chr&gt;    </span>
-<span class="co">##  1 25222431 URS00… 2019-12-02 13:26:46 rnacen    E65C…   521 AGAGTTTG…</span>
-<span class="co">##  2 25222432 URS00… 2019-12-02 13:26:46 rnacen    6B91…   520 AGAGTTCG…</span>
-<span class="co">##  3 25222433 URS00… 2019-12-02 13:26:46 rnacen    03B8…   257 TACGTAGG…</span>
-<span class="co">##  4 25222434 URS00… 2019-12-02 13:26:46 rnacen    E925…   533 AGGGTTTG…</span>
-<span class="co">##  5 25222435 URS00… 2019-12-02 13:26:46 rnacen    C2D0…   504 GACGAACG…</span>
-<span class="co">##  6 25222436 URS00… 2019-12-02 13:26:46 rnacen    9EF6…   253 TACAGAGG…</span>
-<span class="co">##  7 25222437 URS00… 2019-12-02 13:26:46 rnacen    685A…   175 GAGGCAGC…</span>
-<span class="co">##  8 25222438 URS00… 2019-12-02 13:26:46 rnacen    4228…   556 AAAACATC…</span>
-<span class="co">##  9 25222439 URS00… 2019-12-02 13:26:46 rnacen    B7CC…   515 AGGGTTCG…</span>
-<span class="co">## 10 25222440 URS00… 2019-12-02 13:26:46 rnacen    038B…   406 ATTGAACG…</span>
-<span class="co">## # … with more rows, and 2 more variables: seq_long &lt;chr&gt;, md5 &lt;chr&gt;</span></code></pre></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">rna_db_tbl</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="../reference/db_tbl.html">db_tbl</a></span><span class="op">(</span></span>
+<span>    table <span class="op">=</span> <span class="st">"rna"</span>,</span>
+<span>    dbtype <span class="op">=</span> <span class="st">"postgres"</span>,</span>
+<span>    dbname <span class="op">=</span> <span class="st">"pfmegrnargs"</span>,</span>
+<span>    host <span class="op">=</span> <span class="st">"hh-pgsql-public.ebi.ac.uk"</span>,</span>
+<span>    port <span class="op">=</span> <span class="fl">5432</span>,</span>
+<span>    user <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="st">"reader"</span><span class="op">)</span>,</span>
+<span>    password <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="st">"NWDMCE5xdipIjRrp"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">rna_db_tbl</span></span></code></pre><p></p></div>
+<div class="sourceCode"><pre><code><span><span class="co">## # Source:   table&lt;rna&gt; [?? x 9]</span></span>
+<span><span class="co">## # Database: postgres</span></span>
+<span><span class="co">## #   [reader@hh-pgsql-public.ebi.ac.uk:5432/pfmegrnargs]</span></span>
+<span><span class="co">##          id upi    timestamp           userstamp crc64   len seq_short</span></span>
+<span><span class="co">##     &lt;int64&gt; &lt;chr&gt;  &lt;dttm&gt;              &lt;chr&gt;     &lt;chr&gt; &lt;int&gt; &lt;chr&gt;    </span></span>
+<span><span class="co">##  1 25222431 URS00… 2019-12-02 13:26:46 rnacen    E65C…   521 AGAGTTTG…</span></span>
+<span><span class="co">##  2 25222432 URS00… 2019-12-02 13:26:46 rnacen    6B91…   520 AGAGTTCG…</span></span>
+<span><span class="co">##  3 25222433 URS00… 2019-12-02 13:26:46 rnacen    03B8…   257 TACGTAGG…</span></span>
+<span><span class="co">##  4 25222434 URS00… 2019-12-02 13:26:46 rnacen    E925…   533 AGGGTTTG…</span></span>
+<span><span class="co">##  5 25222435 URS00… 2019-12-02 13:26:46 rnacen    C2D0…   504 GACGAACG…</span></span>
+<span><span class="co">##  6 25222436 URS00… 2019-12-02 13:26:46 rnacen    9EF6…   253 TACAGAGG…</span></span>
+<span><span class="co">##  7 25222437 URS00… 2019-12-02 13:26:46 rnacen    685A…   175 GAGGCAGC…</span></span>
+<span><span class="co">##  8 25222438 URS00… 2019-12-02 13:26:46 rnacen    4228…   556 AAAACATC…</span></span>
+<span><span class="co">##  9 25222439 URS00… 2019-12-02 13:26:46 rnacen    B7CC…   515 AGGGTTCG…</span></span>
+<span><span class="co">## 10 25222440 URS00… 2019-12-02 13:26:46 rnacen    038B…   406 ATTGAACG…</span></span>
+<span><span class="co">## # … with more rows, and 2 more variables: seq_long &lt;chr&gt;, md5 &lt;chr&gt;</span></span></code></pre></div>
 
 
 
 <p>You'd normally want to use the names of environment variables (envvars) to
 more securely access the appropriate username and password values when
 connecting to a DB. Here are all the necessary inputs:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">example_db_tbl</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="../reference/db_tbl.html">db_tbl</a></span><span class="op">(</span>
-    table <span class="op">=</span> <span class="st">"&lt;table_name&gt;"</span>,
-    dbtype <span class="op">=</span> <span class="st">"&lt;database_type_shortname&gt;"</span>,
-    dbname <span class="op">=</span> <span class="st">"&lt;database_name&gt;"</span>,
-    host <span class="op">=</span> <span class="st">"&lt;connection_url&gt;"</span>,
-    port <span class="op">=</span> <span class="st">"&lt;connection_port&gt;"</span>,
-    user <span class="op">=</span> <span class="st">"&lt;DB_USER_NAME&gt;"</span>,
-    password <span class="op">=</span> <span class="st">"&lt;DB_PASSWORD&gt;"</span>
-  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">example_db_tbl</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="../reference/db_tbl.html">db_tbl</a></span><span class="op">(</span></span>
+<span>    table <span class="op">=</span> <span class="st">"&lt;table_name&gt;"</span>,</span>
+<span>    dbtype <span class="op">=</span> <span class="st">"&lt;database_type_shortname&gt;"</span>,</span>
+<span>    dbname <span class="op">=</span> <span class="st">"&lt;database_name&gt;"</span>,</span>
+<span>    host <span class="op">=</span> <span class="st">"&lt;connection_url&gt;"</span>,</span>
+<span>    port <span class="op">=</span> <span class="st">"&lt;connection_port&gt;"</span>,</span>
+<span>    user <span class="op">=</span> <span class="st">"&lt;DB_USER_NAME&gt;"</span>,</span>
+<span>    password <span class="op">=</span> <span class="st">"&lt;DB_PASSWORD&gt;"</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p>Environment variables can be created by editing the user <code>.Renviron</code> file and
 the <code><a href="https://usethis.r-lib.org/reference/edit.html" class="external-link">usethis::edit_r_environ()</a></code> function makes this pretty easy to do.</p>
 </div>
@@ -334,71 +334,71 @@ the <code><a href="https://usethis.r-lib.org/reference/edit.html" class="externa
 work with DB tables in <strong>pointblank</strong>. Here's how to generate a table store
 with two named entries for table preparations involving the <code><a href="tbl_store.html">tbl_store()</a></code> and
 <code>db_tbl()</code> functions.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">store</span> <span class="op">&lt;-</span>
-  <span class="fu"><a href="../reference/tbl_store.html">tbl_store</a></span><span class="op">(</span>
-    <span class="va">small_table_duck</span> <span class="op">~</span> <span class="fu"><a href="../reference/db_tbl.html">db_tbl</a></span><span class="op">(</span>
-      table <span class="op">=</span> <span class="fu">pointblank</span><span class="fu">::</span><span class="va"><a href="../reference/small_table.html">small_table</a></span>,
-      dbtype <span class="op">=</span> <span class="st">"duckdb"</span>,
-      dbname <span class="op">=</span> <span class="st">":memory:"</span>
-    <span class="op">)</span>,
-    <span class="va">small_high_duck</span> <span class="op">~</span> <span class="op">{</span><span class="op">{</span> <span class="va">small_table_duck</span> <span class="op">}</span><span class="op">}</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">f</span> <span class="op">==</span> <span class="st">"high"</span><span class="op">)</span>
-  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">store</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="../reference/tbl_store.html">tbl_store</a></span><span class="op">(</span></span>
+<span>    <span class="va">small_table_duck</span> <span class="op">~</span> <span class="fu"><a href="../reference/db_tbl.html">db_tbl</a></span><span class="op">(</span></span>
+<span>      table <span class="op">=</span> <span class="fu">pointblank</span><span class="fu">::</span><span class="va"><a href="../reference/small_table.html">small_table</a></span>,</span>
+<span>      dbtype <span class="op">=</span> <span class="st">"duckdb"</span>,</span>
+<span>      dbname <span class="op">=</span> <span class="st">":memory:"</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    <span class="va">small_high_duck</span> <span class="op">~</span> <span class="op">{</span><span class="op">{</span> <span class="va">small_table_duck</span> <span class="op">}</span><span class="op">}</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">f</span> <span class="op">==</span> <span class="st">"high"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p>Now it's easy to obtain either of these tables via <code><a href="tbl_get.html">tbl_get()</a></code>. We can
 reference the table in the store by its name (given to the left of the <code>~</code>).</p>
-<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/tbl_get.html">tbl_get</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="st">"small_table_duck"</span>, store <span class="op">=</span> <span class="va">store</span><span class="op">)</span></code></pre><p></p></div>
-<div class="sourceCode"><pre><code><span class="co">## # Source:   table&lt;pointblank::small_table&gt; [?? x 8]</span>
-<span class="co">## # Database: duckdb_connection</span>
-<span class="co">##    date_time           date           a b           c      d e    </span>
-<span class="co">##    &lt;dttm&gt;              &lt;date&gt;     &lt;int&gt; &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt;</span>
-<span class="co">##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-…     3  3423. TRUE </span>
-<span class="co">##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-…     8 10000. TRUE </span>
-<span class="co">##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-…     3  2343. TRUE </span>
-<span class="co">##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-…    NA  3892. FALSE</span>
-<span class="co">##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-…     7   284. TRUE </span>
-<span class="co">##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-…     4  3291. TRUE </span>
-<span class="co">##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-…     3   843. TRUE </span>
-<span class="co">##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-…     2  1036. FALSE</span>
-<span class="co">##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-…     9   838. FALSE</span>
-<span class="co">## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-…     9   838. FALSE</span>
-<span class="co">## # … with more rows, and 1 more variable: f &lt;chr&gt;</span></code></pre></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/tbl_get.html">tbl_get</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="st">"small_table_duck"</span>, store <span class="op">=</span> <span class="va">store</span><span class="op">)</span></span></code></pre><p></p></div>
+<div class="sourceCode"><pre><code><span><span class="co">## # Source:   table&lt;pointblank::small_table&gt; [?? x 8]</span></span>
+<span><span class="co">## # Database: duckdb_connection</span></span>
+<span><span class="co">##    date_time           date           a b           c      d e    </span></span>
+<span><span class="co">##    &lt;dttm&gt;              &lt;date&gt;     &lt;int&gt; &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt;</span></span>
+<span><span class="co">##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-…     3  3423. TRUE </span></span>
+<span><span class="co">##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-…     8 10000. TRUE </span></span>
+<span><span class="co">##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-…     3  2343. TRUE </span></span>
+<span><span class="co">##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-…    NA  3892. FALSE</span></span>
+<span><span class="co">##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-…     7   284. TRUE </span></span>
+<span><span class="co">##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-…     4  3291. TRUE </span></span>
+<span><span class="co">##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-…     3   843. TRUE </span></span>
+<span><span class="co">##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-…     2  1036. FALSE</span></span>
+<span><span class="co">##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-…     9   838. FALSE</span></span>
+<span><span class="co">## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-…     9   838. FALSE</span></span>
+<span><span class="co">## # … with more rows, and 1 more variable: f &lt;chr&gt;</span></span></code></pre></div>
 
 
 
 <p>The second table in the table store is a mutated
 version of the first. It's just as easily obtainable via <code><a href="tbl_get.html">tbl_get()</a></code>:</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_get</span>(<span class="at">tbl =</span> <span class="st">"small_high_duck"</span>, <span class="at">store =</span> store)</span></code></pre><p></p></div>
-<div class="sourceCode"><pre><code><span class="co">## # Source:   lazy query [?? x 8]</span>
-<span class="co">## # Database: duckdb_connection</span>
-<span class="co">##   date_time           date           a b             c     d e    </span>
-<span class="co">##   &lt;dttm&gt;              &lt;date&gt;     &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt;</span>
-<span class="co">## 1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3 3423. TRUE </span>
-<span class="co">## 2 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3 2343. TRUE </span>
-<span class="co">## 3 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3  843. TRUE </span>
-<span class="co">## 4 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE</span>
-<span class="co">## 5 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE</span>
-<span class="co">## 6 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA 2230. TRUE </span>
-<span class="co">## # … with more rows, and 1 more variable: f &lt;chr&gt;</span></code></pre></div>
+<div class="sourceCode"><pre><code><span><span class="co">## # Source:   lazy query [?? x 8]</span></span>
+<span><span class="co">## # Database: duckdb_connection</span></span>
+<span><span class="co">##   date_time           date           a b             c     d e    </span></span>
+<span><span class="co">##   &lt;dttm&gt;              &lt;date&gt;     &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt;</span></span>
+<span><span class="co">## 1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3 3423. TRUE </span></span>
+<span><span class="co">## 2 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3 2343. TRUE </span></span>
+<span><span class="co">## 3 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3  843. TRUE </span></span>
+<span><span class="co">## 4 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE</span></span>
+<span><span class="co">## 5 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE</span></span>
+<span><span class="co">## 6 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA 2230. TRUE </span></span>
+<span><span class="co">## # … with more rows, and 1 more variable: f &lt;chr&gt;</span></span></code></pre></div>
 
 
 
 <p>The table-prep formulas in the <code>store</code> object could also be used in functions
 with a <code>tbl</code> argument (like <code><a href="create_agent.html">create_agent()</a></code> and <code><a href="create_informant.html">create_informant()</a></code>). This
 is accomplished most easily with the <code><a href="tbl_source.html">tbl_source()</a></code> function.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>
-    tbl <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="../reference/tbl_source.html">tbl_source</a></span><span class="op">(</span>
-      tbl <span class="op">=</span> <span class="st">"small_table_duck"</span>,
-      store <span class="op">=</span> <span class="va">tbls</span>
-    <span class="op">)</span>
-  <span class="op">)</span></code></pre><p></p></div>
-<p></p><div class="sourceCode r"><pre><code><span class="va">informant</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span>
-    tbl <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="../reference/tbl_source.html">tbl_source</a></span><span class="op">(</span>
-      tbl <span class="op">=</span> <span class="st">"small_high_duck"</span>,
-      store <span class="op">=</span> <span class="va">tbls</span>
-    <span class="op">)</span>
-  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span></span>
+<span>    tbl <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="../reference/tbl_source.html">tbl_source</a></span><span class="op">(</span></span>
+<span>      tbl <span class="op">=</span> <span class="st">"small_table_duck"</span>,</span>
+<span>      store <span class="op">=</span> <span class="va">tbls</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">informant</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span></span>
+<span>    tbl <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="../reference/tbl_source.html">tbl_source</a></span><span class="op">(</span></span>
+<span>      tbl <span class="op">=</span> <span class="st">"small_high_duck"</span>,</span>
+<span>      store <span class="op">=</span> <span class="va">tbls</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
 </div>
 
     </div>

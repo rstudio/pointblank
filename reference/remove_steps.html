@@ -18,7 +18,7 @@ validation steps all stored data extracts will be removed from the agent."><meta
     
     <a class="navbar-brand me-2" href="../index.html">pointblank</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,7 +79,7 @@ validation steps all stored data extracts will be removed from the <em>agent</em
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">remove_steps</span><span class="op">(</span><span class="va">agent</span>, i <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">remove_steps</span><span class="op">(</span><span class="va">agent</span>, i <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -125,34 +125,34 @@ change the <code>active</code> status of one or more validation steps to <code>F
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Create an agent that has the</span></span>
-<span class="r-in"><span class="co"># `small_table` object as the</span></span>
-<span class="r-in"><span class="co"># target table, add a few</span></span>
-<span class="r-in"><span class="co"># validation steps, and then use</span></span>
-<span class="r-in"><span class="co"># `interrogate()`</span></span>
-<span class="r-in"><span class="va">agent_1</span> <span class="op">&lt;-</span> </span>
-<span class="r-in">  <span class="fu"><a href="create_agent.html">create_agent</a></span><span class="op">(</span></span>
-<span class="r-in">    tbl <span class="op">=</span> <span class="va">small_table</span>,</span>
-<span class="r-in">    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,</span>
-<span class="r-in">    label <span class="op">=</span> <span class="st">"An example."</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_exists.html">col_exists</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span></span>
-<span class="r-in">    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>,</span>
-<span class="r-in">    regex <span class="op">=</span> <span class="st">"[0-9]-[a-z]{3}-[0-9]"</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in">  </span>
-<span class="r-in"><span class="co"># The second validation step has</span></span>
-<span class="r-in"><span class="co"># been determined to be unneeded and</span></span>
-<span class="r-in"><span class="co"># is to be removed; this can be done</span></span>
-<span class="r-in"><span class="co"># by using `remove_steps()` with the</span></span>
-<span class="r-in"><span class="co"># agent object</span></span>
-<span class="r-in"><span class="va">agent_2</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="va">agent_1</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">remove_steps</span><span class="op">(</span>i <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Create an agent that has the</span></span></span>
+<span class="r-in"><span><span class="co"># `small_table` object as the</span></span></span>
+<span class="r-in"><span><span class="co"># target table, add a few</span></span></span>
+<span class="r-in"><span><span class="co"># validation steps, and then use</span></span></span>
+<span class="r-in"><span><span class="co"># `interrogate()`</span></span></span>
+<span class="r-in"><span><span class="va">agent_1</span> <span class="op">&lt;-</span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="create_agent.html">create_agent</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    tbl <span class="op">=</span> <span class="va">small_table</span>,</span></span>
+<span class="r-in"><span>    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,</span></span>
+<span class="r-in"><span>    label <span class="op">=</span> <span class="st">"An example."</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="col_exists.html">col_exists</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    regex <span class="op">=</span> <span class="st">"[0-9]-[a-z]{3}-[0-9]"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span><span class="co"># The second validation step has</span></span></span>
+<span class="r-in"><span><span class="co"># been determined to be unneeded and</span></span></span>
+<span class="r-in"><span><span class="co"># is to be removed; this can be done</span></span></span>
+<span class="r-in"><span><span class="co"># by using `remove_steps()` with the</span></span></span>
+<span class="r-in"><span><span class="co"># agent object</span></span></span>
+<span class="r-in"><span><span class="va">agent_2</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>  <span class="va">agent_1</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">remove_steps</span><span class="op">(</span>i <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

@@ -40,7 +40,7 @@ with set_tbl() (useful with an existing agent or informant object)."><meta prope
     
     <a class="navbar-brand me-2" href="../index.html">pointblank</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -112,14 +112,14 @@ with <code><a href="set_tbl.html">set_tbl()</a></code> (useful with an existing 
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">yaml_write</span><span class="op">(</span>
-  <span class="va">...</span>,
-  .list <span class="op">=</span> <span class="fu">list2</span><span class="op">(</span><span class="va">...</span><span class="op">)</span>,
-  filename <span class="op">=</span> <span class="cn">NULL</span>,
-  path <span class="op">=</span> <span class="cn">NULL</span>,
-  expanded <span class="op">=</span> <span class="cn">FALSE</span>,
-  quiet <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">yaml_write</span><span class="op">(</span></span>
+<span>  <span class="va">...</span>,</span>
+<span>  .list <span class="op">=</span> <span class="fu">list2</span><span class="op">(</span><span class="va">...</span><span class="op">)</span>,</span>
+<span>  filename <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  path <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  expanded <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  quiet <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -180,7 +180,7 @@ default this is <code>FALSE</code>.</p></dd>
 <p>Let's go through the process of developing an agent with a validation plan.
 We'll use the <code>small_table</code> dataset in the following examples, which will
 eventually offload the developed validation plan to a YAML file.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">small_table</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">small_table</span></span></code></pre><p></p></div>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 13 × 8</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    date_time           date           a b             c      d e     f    </span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;dttm&gt;              &lt;date&gt;     &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;</span></span>
@@ -200,50 +200,43 @@ eventually offload the developed validation plan to a YAML file.</p>
 <p>Creating an <code>action_levels</code> object is a common workflow step when creating a
 <strong>pointblank</strong> agent. We designate failure thresholds to the <code>warn</code>, <code>stop</code>,
 and <code>notify</code> states using <code><a href="action_levels.html">action_levels()</a></code>.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">al</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span>
-    warn_at <span class="op">=</span> <span class="fl">0.10</span>,
-    stop_at <span class="op">=</span> <span class="fl">0.25</span>,
-    notify_at <span class="op">=</span> <span class="fl">0.35</span>
-  <span class="op">)</span>
-  
-<span class="va">al</span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## -- The `action_levels` settings</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">## WARN failure threshold of 0.1 of all test units.</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">## STOP failure threshold of 0.25 of all test units.</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## NOTIFY failure threshold of 0.35 of all test units.</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## ----</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">al</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span></span>
+<span>    warn_at <span class="op">=</span> <span class="fl">0.10</span>,</span>
+<span>    stop_at <span class="op">=</span> <span class="fl">0.25</span>,</span>
+<span>    notify_at <span class="op">=</span> <span class="fl">0.35</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p>Now let's create the <code>agent</code> and pass it the <code>al</code> object (which serves as a
 default for all validation steps which can be overridden). The data will be
 referenced in <code>tbl</code> with a leading <code>~</code> and this is a requirement for writing
 to YAML since the preparation of the target table must be self contained.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>
-    tbl <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,
-    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,
-    label <span class="op">=</span> <span class="st">"A simple example with the `small_table`."</span>,
-    actions <span class="op">=</span> <span class="va">al</span>
-  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span></span>
+<span>    tbl <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,</span>
+<span>    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,</span>
+<span>    label <span class="op">=</span> <span class="st">"A simple example with the `small_table`."</span>,</span>
+<span>    actions <span class="op">=</span> <span class="va">al</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p>Then, as with any <code>agent</code> object, we can add steps to the validation plan by
 using as many validation functions as we want.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span>
-  <span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="../reference/col_exists.html">col_exists</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">date_time</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>,
-    regex <span class="op">=</span> <span class="st">"[0-9]-[a-z]{3}-[0-9]{3}"</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/rows_distinct.html">rows_distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_lte.html">col_vals_lte</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/col_exists.html">col_exists</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">date_time</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>,</span>
+<span>    regex <span class="op">=</span> <span class="st">"[0-9]-[a-z]{3}-[0-9]{3}"</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/rows_distinct.html">rows_distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_lte.html">col_vals_lte</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>The agent can be written to a <strong>pointblank</strong>-readable YAML file with the
 <code>yaml_write()</code> function. Here, we'll use the filename
 <code>"agent-small_table.yml"</code> and, after writing, the YAML file will be in the
 working directory:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/yaml_write.html">yaml_write</a></span><span class="op">(</span><span class="va">agent</span>, filename <span class="op">=</span> <span class="st">"agent-small_table.yml"</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/yaml_write.html">yaml_write</a></span><span class="op">(</span><span class="va">agent</span>, filename <span class="op">=</span> <span class="st">"agent-small_table.yml"</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>We can view the YAML file in the console with the <code><a href="yaml_agent_string.html">yaml_agent_string()</a></code>
 function.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/yaml_agent_string.html">yaml_agent_string</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="st">"agent-small_table.yml"</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/yaml_agent_string.html">yaml_agent_string</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="st">"agent-small_table.yml"</span><span class="op">)</span></span></code></pre><p></p></div>
 <p></p><div class="sourceCode yaml"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">type</span><span class="kw">:</span><span class="at"> agent</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl</span><span class="kw">:</span><span class="at"> ~small_table</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_name</span><span class="kw">:</span><span class="at"> small_table</span></span>
@@ -280,38 +273,38 @@ previewing YAML output just before writing it to disk with <code>yaml_write()</c
 <p>There's a YAML file available in the <strong>pointblank</strong> package that's also
 called <code>"agent-small_table.yml"</code>. The path for it can be accessed through
 <code><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file()</a></code>:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">yml_file_path</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span>
-    <span class="st">"yaml"</span>, <span class="st">"agent-small_table.yml"</span>,
-    package <span class="op">=</span> <span class="st">"pointblank"</span>
-  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">yml_file_path</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span>
+<span>    <span class="st">"yaml"</span>, <span class="st">"agent-small_table.yml"</span>,</span>
+<span>    package <span class="op">=</span> <span class="st">"pointblank"</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p>The YAML file can be read as an agent with a pre-existing validation plan by
 using the <code><a href="yaml_read_agent.html">yaml_read_agent()</a></code> function.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/yaml_read_agent.html">yaml_read_agent</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">yml_file_path</span><span class="op">)</span>
-
-<span class="va">agent</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/yaml_read_agent.html">yaml_read_agent</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">yml_file_path</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">agent</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_yaml_write_1.png" style="width:100%;"></p>
 <p>This particular agent is using <code>~ tbl_source("small_table", "tbl_store.yml")</code>
 to source the table-prep from a YAML file that holds a table store (can be
 seen using <code>yaml_agent_string(agent = agent)</code>). Let's put that file in the
 working directory (the <strong>pointblank</strong> package has the corresponding YAML
 file):</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">yml_tbl_store_path</span> <span class="op">&lt;-</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span>
-    <span class="st">"yaml"</span>, <span class="st">"tbl_store.yml"</span>,
-    package <span class="op">=</span> <span class="st">"pointblank"</span>
-  <span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.copy</a></span><span class="op">(</span>from <span class="op">=</span> <span class="va">yml_tbl_store_path</span>, to <span class="op">=</span> <span class="st">"."</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">yml_tbl_store_path</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span>
+<span>    <span class="st">"yaml"</span>, <span class="st">"tbl_store.yml"</span>,</span>
+<span>    package <span class="op">=</span> <span class="st">"pointblank"</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.copy</a></span><span class="op">(</span>from <span class="op">=</span> <span class="va">yml_tbl_store_path</span>, to <span class="op">=</span> <span class="st">"."</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>As can be seen from the validation report, no interrogation was yet
 performed. Saving an agent to YAML will remove any traces of interrogation
 data and serve as a plan for a new interrogation on the same target table. We
 can either follow this up with with <code><a href="interrogate.html">interrogate()</a></code> and get an agent with
 intel, or, we can interrogate directly from the YAML file with
 <code><a href="yaml_agent_interrogate.html">yaml_agent_interrogate()</a></code>:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/yaml_agent_interrogate.html">yaml_agent_interrogate</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">yml_file_path</span><span class="op">)</span>
-
-<span class="va">agent</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/yaml_agent_interrogate.html">yaml_agent_interrogate</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">yml_file_path</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">agent</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_yaml_write_2.png" style="width:100%;"></p>
 </div>
 
@@ -322,33 +315,33 @@ intel, or, we can interrogate directly from the YAML file with
 <p>Let's walk through how we can generate some useful information for a really
 small table. We can create an <code>informant</code> object with <code><a href="create_informant.html">create_informant()</a></code>
 and we'll again use the <code>small_table</code> dataset.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">informant</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span>
-    tbl <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,
-    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,
-    label <span class="op">=</span> <span class="st">"A simple example with the `small_table`."</span>
-  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">informant</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span></span>
+<span>    tbl <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,</span>
+<span>    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,</span>
+<span>    label <span class="op">=</span> <span class="st">"A simple example with the `small_table`."</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p>Then, as with any <code>informant</code> object, we can add info text to the
 using as many <code>info_*()</code> functions as we want.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">informant</span> <span class="op">&lt;-</span> 
-  <span class="va">informant</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>,
-    info <span class="op">=</span> <span class="st">"In the range of 1 to 10. (SIMPLE)"</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"date"</span><span class="op">)</span>,
-    info <span class="op">=</span> <span class="st">"Time-based values (e.g., `Sys.time()`)."</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="st">"date"</span>,
-    info <span class="op">=</span> <span class="st">"The date part of `date_time`. (CALC)"</span>
-  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">informant</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="va">informant</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>,</span>
+<span>    info <span class="op">=</span> <span class="st">"In the range of 1 to 10. (SIMPLE)"</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"date"</span><span class="op">)</span>,</span>
+<span>    info <span class="op">=</span> <span class="st">"Time-based values (e.g., `Sys.time()`)."</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="st">"date"</span>,</span>
+<span>    info <span class="op">=</span> <span class="st">"The date part of `date_time`. (CALC)"</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p>The informant can be written to a <strong>pointblank</strong>-readable YAML file with the
 <code>yaml_write()</code> function. Here, we'll use the filename
 <code>"informant-small_table.yml"</code> and, after writing, the YAML file will be in
 the working directory:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/yaml_write.html">yaml_write</a></span><span class="op">(</span><span class="va">informant</span>, filename <span class="op">=</span> <span class="st">"informant-small_table.yml"</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/yaml_write.html">yaml_write</a></span><span class="op">(</span><span class="va">informant</span>, filename <span class="op">=</span> <span class="st">"informant-small_table.yml"</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>We can inspect the YAML file in the working directory and expect to see the
 following:</p>
 <p></p><div class="sourceCode yaml"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">type</span><span class="kw">:</span><span class="at"> informant</span></span>
@@ -391,23 +384,23 @@ following:</p>
 <p>There's a YAML file available in the <strong>pointblank</strong> package that's also
 called <code>"informant-small_table.yml"</code>. The path for it can be accessed through
 <code><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file()</a></code>:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">yml_file_path</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span>
-    <span class="st">"yaml"</span>, <span class="st">"informant-small_table.yml"</span>,
-    package <span class="op">=</span> <span class="st">"pointblank"</span>
-  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">yml_file_path</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span>
+<span>    <span class="st">"yaml"</span>, <span class="st">"informant-small_table.yml"</span>,</span>
+<span>    package <span class="op">=</span> <span class="st">"pointblank"</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p>The YAML file can be read as an informant by using the
 <code><a href="yaml_read_informant.html">yaml_read_informant()</a></code> function.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">informant</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/yaml_read_informant.html">yaml_read_informant</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">yml_file_path</span><span class="op">)</span>
-
-<span class="va">informant</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">informant</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/yaml_read_informant.html">yaml_read_informant</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">yml_file_path</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">informant</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_yaml_write_3.png" style="width:100%;"></p>
 <p>As can be seen from the information report, the available table metadata was
 restored and reported. If you expect metadata to change with time, it might
 be beneficial to use <code><a href="incorporate.html">incorporate()</a></code> to query the target table. Or, we can
 perform this querying directly from the YAML file with
 <code><a href="yaml_informant_incorporate.html">yaml_informant_incorporate()</a></code>:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">informant</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/yaml_informant_incorporate.html">yaml_informant_incorporate</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">yml_file_path</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">informant</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/yaml_informant_incorporate.html">yaml_informant_incorporate</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">yml_file_path</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>There will be no apparent difference in this particular case since
 <code>small_data</code> is a static table with no alterations over time. However,
 using <code><a href="yaml_informant_incorporate.html">yaml_informant_incorporate()</a></code> is good practice since this refreshing

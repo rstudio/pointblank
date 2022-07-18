@@ -62,7 +62,7 @@ options."><meta property="og:image" content="https://rich-iannone.github.io/poin
     
     <a class="navbar-brand me-2" href="../index.html">pointblank</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -145,15 +145,15 @@ options.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">create_informant</span><span class="op">(</span>
-  tbl <span class="op">=</span> <span class="cn">NULL</span>,
-  tbl_name <span class="op">=</span> <span class="cn">NULL</span>,
-  label <span class="op">=</span> <span class="cn">NULL</span>,
-  agent <span class="op">=</span> <span class="cn">NULL</span>,
-  lang <span class="op">=</span> <span class="cn">NULL</span>,
-  locale <span class="op">=</span> <span class="cn">NULL</span>,
-  read_fn <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">create_informant</span><span class="op">(</span></span>
+<span>  tbl <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  tbl_name <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  label <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  agent <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  lang <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  locale <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  read_fn <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -243,13 +243,13 @@ table (via <code><a href="yaml_informant_incorporate.html">yaml_informant_incorp
 complex call of <code>create_informant()</code> is expressed in R code and in the
 corresponding YAML representation.</p>
 <p>R statement:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span>
-  tbl <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,
-  tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,
-  label <span class="op">=</span> <span class="st">"An example."</span>,
-  lang <span class="op">=</span> <span class="st">"fr"</span>, 
-  locale <span class="op">=</span> <span class="st">"fr_CA"</span>
-<span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span></span>
+<span>  tbl <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,</span>
+<span>  tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,</span>
+<span>  label <span class="op">=</span> <span class="st">"An example."</span>,</span>
+<span>  lang <span class="op">=</span> <span class="st">"fr"</span>, </span>
+<span>  locale <span class="op">=</span> <span class="st">"fr_CA"</span></span>
+<span><span class="op">)</span></span></code></pre><p></p></div>
 <p>YAML representation:</p>
 <p></p><div class="sourceCode yaml"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">type</span><span class="kw">:</span><span class="at"> informant</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl</span><span class="kw">:</span><span class="at"> ~small_table</span></span>
@@ -311,7 +311,7 @@ may changed, hence the need to use an expression for this).</p>
 <p>Let's walk through how we can generate some useful information for a really
 small table. It's actually called <code>small_table</code> and we can find it as a
 dataset in this package.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">small_table</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">small_table</span></span></code></pre><p></p></div>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 13 × 8</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    date_time           date           a b             c      d e     f    </span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;dttm&gt;              &lt;date&gt;     &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;</span></span>
@@ -330,29 +330,29 @@ dataset in this package.</p>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 13 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA  2230. TRUE  high</span></span></code></pre><p></p></div>
 <p>Create a pointblank <code>informant</code> object with <code>create_informant()</code> and the
 <code>small_table</code> dataset.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">informant</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span>
-    tbl <span class="op">=</span> <span class="fu">pointblank</span><span class="fu">::</span><span class="va"><a href="../reference/small_table.html">small_table</a></span>,
-    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,
-    label <span class="op">=</span> <span class="st">"`create_informant()` example."</span>
-  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">informant</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span></span>
+<span>    tbl <span class="op">=</span> <span class="fu">pointblank</span><span class="fu">::</span><span class="va"><a href="../reference/small_table.html">small_table</a></span>,</span>
+<span>    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,</span>
+<span>    label <span class="op">=</span> <span class="st">"`create_informant()` example."</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p>This function creates some information without any extra help by profiling
 the supplied table object. It adds the <code>COLUMNS</code> section with stubs for each
 of the target table's columns. We can use the <code><a href="info_columns.html">info_columns()</a></code> or
 <code><a href="info_columns_from_tbl.html">info_columns_from_tbl()</a></code> to provide descriptions for each of the columns.
 The <code>informant</code> object can be printed to see the information report in the
 Viewer.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">informant</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">informant</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_create_informant_1.png" style="width:100%;"></p>
 <p>If we want to make use of more report display options, we can alternatively
 use the <code><a href="get_informant_report.html">get_informant_report()</a></code> function.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">report</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="../reference/get_informant_report.html">get_informant_report</a></span><span class="op">(</span>
-    <span class="va">informant</span>,
-    title <span class="op">=</span> <span class="st">"Data Dictionary for `small_table`"</span>
-  <span class="op">)</span>
-  
-<span class="va">report</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">report</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="../reference/get_informant_report.html">get_informant_report</a></span><span class="op">(</span></span>
+<span>    <span class="va">informant</span>,</span>
+<span>    title <span class="op">=</span> <span class="st">"Data Dictionary for `small_table`"</span></span>
+<span>  <span class="op">)</span></span>
+<span>  </span>
+<span><span class="va">report</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_create_informant_2.png" style="width:100%;"></p>
     </div>
     <div class="section level2">

@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pointblank</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -126,15 +126,15 @@ package).</p>
 <p>Let’s adapt an example used in the <a href="../articles/VALID-I.html"><em>VALID-I: Data Quality Reporting
 Workflow</em></a> article to the pipeline data validation workflow:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_is_posix.html">col_is_posix</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">date_time</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_in_set.html">col_vals_in_set</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span>, set <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"low"</span>, <span class="st">"mid"</span>, <span class="st">"high"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>, regex <span class="op">=</span> <span class="st">"^[0-9]-[a-z]{3}-[0-9]{3}$"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, left <span class="op">=</span> <span class="fl">0</span>, right <span class="op">=</span> <span class="fl">5000</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Error: Exceedance of failed test units where values in `d` should have been between `0` and `5000`.</span>
-<span class="co">## The `col_vals_between()` validation failed beyond the absolute threshold level (1).</span>
-<span class="co">## * failure level (1) &gt;= failure threshold (1)</span></code></pre>
+<code class="sourceCode R"><span><span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_is_posix.html">col_is_posix</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">date_time</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_in_set.html">col_vals_in_set</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span>, set <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"low"</span>, <span class="st">"mid"</span>, <span class="st">"high"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>, regex <span class="op">=</span> <span class="st">"^[0-9]-[a-z]{3}-[0-9]{3}$"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, left <span class="op">=</span> <span class="fl">0</span>, right <span class="op">=</span> <span class="fl">5000</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Error: Exceedance of failed test units where values in `d` should have been between `0` and `5000`.</span></span>
+<span><span class="co">## The `col_vals_between()` validation failed beyond the absolute threshold level (1).</span></span>
+<span><span class="co">## * failure level (1) &gt;= failure threshold (1)</span></span></code></pre>
 <p>In terms of the expressions used in the pipeline, you might notice
 that the <code><a href="../reference/create_agent.html">create_agent()</a></code> and <code><a href="../reference/interrogate.html">interrogate()</a></code>
 functions are absent. This is due to the secondary role of the
@@ -192,74 +192,74 @@ helper is (behind the scenes) applied by default when using validation
 functions in the <em>VALID-II</em> workflow. So, the previous example is
 exactly the same as this expanded form:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_is_posix.html">col_is_posix</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">date_time</span><span class="op">)</span>,
-    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">stop_on_fail</a></span><span class="op">(</span>stop_at <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_in_set.html">col_vals_in_set</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span>, set <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"low"</span>, <span class="st">"mid"</span>, <span class="st">"high"</span><span class="op">)</span>,
-    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">stop_on_fail</a></span><span class="op">(</span>stop_at <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">10</span>,
-    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">stop_on_fail</a></span><span class="op">(</span>stop_at <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>, regex <span class="op">=</span> <span class="st">"^[0-9]-[a-z]{3}-[0-9]{3}$"</span>,
-    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">stop_on_fail</a></span><span class="op">(</span>stop_at <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, left <span class="op">=</span> <span class="fl">0</span>, right <span class="op">=</span> <span class="fl">5000</span>,
-    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">stop_on_fail</a></span><span class="op">(</span>stop_at <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-  <span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Error: Exceedance of failed test units where values in `d` should have been between `0` and `5000`.</span>
-<span class="co">## The `col_vals_between()` validation failed beyond the absolute threshold level (1).</span>
-<span class="co">## * failure level (1) &gt;= failure threshold (1)</span></code></pre>
+<code class="sourceCode R"><span><span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_is_posix.html">col_is_posix</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">date_time</span><span class="op">)</span>,</span>
+<span>    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">stop_on_fail</a></span><span class="op">(</span>stop_at <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_in_set.html">col_vals_in_set</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span>, set <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"low"</span>, <span class="st">"mid"</span>, <span class="st">"high"</span><span class="op">)</span>,</span>
+<span>    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">stop_on_fail</a></span><span class="op">(</span>stop_at <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">stop_on_fail</a></span><span class="op">(</span>stop_at <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>, regex <span class="op">=</span> <span class="st">"^[0-9]-[a-z]{3}-[0-9]{3}$"</span>,</span>
+<span>    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">stop_on_fail</a></span><span class="op">(</span>stop_at <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, left <span class="op">=</span> <span class="fl">0</span>, right <span class="op">=</span> <span class="fl">5000</span>,</span>
+<span>    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">stop_on_fail</a></span><span class="op">(</span>stop_at <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Error: Exceedance of failed test units where values in `d` should have been between `0` and `5000`.</span></span>
+<span><span class="co">## The `col_vals_between()` validation failed beyond the absolute threshold level (1).</span></span>
+<span><span class="co">## * failure level (1) &gt;= failure threshold (1)</span></span></code></pre>
 <p>If we want to instead issue warnings, perhaps with less stringent
 failure thresholds in certain steps, the <code><a href="../reference/action_levels.html">warn_on_fail()</a></code>
 function provides a simple way to express this.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_is_posix.html">col_is_posix</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">date_time</span><span class="op">)</span>,
-    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">warn_on_fail</a></span><span class="op">(</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_in_set.html">col_vals_in_set</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span>, set <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"low"</span>, <span class="st">"mid"</span>, <span class="st">"high"</span><span class="op">)</span>,
-    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">warn_on_fail</a></span><span class="op">(</span>warn_at <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">10</span>,
-    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">warn_on_fail</a></span><span class="op">(</span>warn_at <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>, regex <span class="op">=</span> <span class="st">"^[0-9]-[a-z]{3}-[0-9]{3}$"</span>,
-    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">warn_on_fail</a></span><span class="op">(</span>warn_at <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, left <span class="op">=</span> <span class="fl">0</span>, right <span class="op">=</span> <span class="fl">5000</span>,
-    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">warn_on_fail</a></span><span class="op">(</span>warn_at <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-  <span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Warning: Exceedance of failed test units where values in `d` should have been between `0` and `5000`.</span>
-<span class="co">## The `col_vals_between()` validation failed beyond the absolute threshold level (1).</span>
-<span class="co">## * failure level (1) &gt;= failure threshold (1)</span></code></pre>
-<pre><code><span class="co">## <span style="color: #949494;"># A tibble: 13 × 8</span></span>
-<span class="co">##    date_time           date           a b             c      d e     f    </span>
-<span class="co">##    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
-<span class="co">## <span style="color: #BCBCBC;"> 1</span> 2016-01-04 <span style="color: #949494;">11:00:00</span> 2016-01-04     2 1-bcd-345     3  <span style="text-decoration: underline;">3</span>423. TRUE  high </span>
-<span class="co">## <span style="color: #BCBCBC;"> 2</span> 2016-01-04 <span style="color: #949494;">00:32:00</span> 2016-01-04     3 5-egh-163     8 <span style="text-decoration: underline;">10</span>000. TRUE  low  </span>
-<span class="co">## <span style="color: #BCBCBC;"> 3</span> 2016-01-05 <span style="color: #949494;">13:32:00</span> 2016-01-05     6 8-kdg-938     3  <span style="text-decoration: underline;">2</span>343. TRUE  high </span>
-<span class="co">## <span style="color: #BCBCBC;"> 4</span> 2016-01-06 <span style="color: #949494;">17:23:00</span> 2016-01-06     2 5-jdo-903    <span style="color: #BB0000;">NA</span>  <span style="text-decoration: underline;">3</span>892. FALSE mid  </span>
-<span class="co">## <span style="color: #BCBCBC;"> 5</span> 2016-01-09 <span style="color: #949494;">12:36:00</span> 2016-01-09     8 3-ldm-038     7   284. TRUE  low  </span>
-<span class="co">## <span style="color: #BCBCBC;"> 6</span> 2016-01-11 <span style="color: #949494;">06:15:00</span> 2016-01-11     4 2-dhe-923     4  <span style="text-decoration: underline;">3</span>291. TRUE  mid  </span>
-<span class="co">## <span style="color: #BCBCBC;"> 7</span> 2016-01-15 <span style="color: #949494;">18:46:00</span> 2016-01-15     7 1-knw-093     3   843. TRUE  high </span>
-<span class="co">## <span style="color: #BCBCBC;"> 8</span> 2016-01-17 <span style="color: #949494;">11:27:00</span> 2016-01-17     4 5-boe-639     2  <span style="text-decoration: underline;">1</span>036. FALSE low  </span>
-<span class="co">## <span style="color: #BCBCBC;"> 9</span> 2016-01-20 <span style="color: #949494;">04:30:00</span> 2016-01-20     3 5-bce-642     9   838. FALSE high </span>
-<span class="co">## <span style="color: #BCBCBC;">10</span> 2016-01-20 <span style="color: #949494;">04:30:00</span> 2016-01-20     3 5-bce-642     9   838. FALSE high </span>
-<span class="co">## <span style="color: #BCBCBC;">11</span> 2016-01-26 <span style="color: #949494;">20:07:00</span> 2016-01-26     4 2-dmx-010     7   834. TRUE  low  </span>
-<span class="co">## <span style="color: #BCBCBC;">12</span> 2016-01-28 <span style="color: #949494;">02:51:00</span> 2016-01-28     2 7-dmx-010     8   108. FALSE low  </span>
-<span class="co">## <span style="color: #BCBCBC;">13</span> 2016-01-30 <span style="color: #949494;">11:23:00</span> 2016-01-30     1 3-dka-303    <span style="color: #BB0000;">NA</span>  <span style="text-decoration: underline;">2</span>230. TRUE  high</span></code></pre>
+<code class="sourceCode R"><span><span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_is_posix.html">col_is_posix</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">date_time</span><span class="op">)</span>,</span>
+<span>    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">warn_on_fail</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_in_set.html">col_vals_in_set</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span>, set <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"low"</span>, <span class="st">"mid"</span>, <span class="st">"high"</span><span class="op">)</span>,</span>
+<span>    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">warn_on_fail</a></span><span class="op">(</span>warn_at <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">warn_on_fail</a></span><span class="op">(</span>warn_at <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>, regex <span class="op">=</span> <span class="st">"^[0-9]-[a-z]{3}-[0-9]{3}$"</span>,</span>
+<span>    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">warn_on_fail</a></span><span class="op">(</span>warn_at <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, left <span class="op">=</span> <span class="fl">0</span>, right <span class="op">=</span> <span class="fl">5000</span>,</span>
+<span>    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">warn_on_fail</a></span><span class="op">(</span>warn_at <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Warning: Exceedance of failed test units where values in `d` should have been between `0` and `5000`.</span></span>
+<span><span class="co">## The `col_vals_between()` validation failed beyond the absolute threshold level (1).</span></span>
+<span><span class="co">## * failure level (1) &gt;= failure threshold (1)</span></span></code></pre>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 13 × 8</span></span></span>
+<span><span class="co">##    date_time           date           a b             c      d e     f    </span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> 2016-01-04 <span style="color: #949494;">11:00:00</span> 2016-01-04     2 1-bcd-345     3  <span style="text-decoration: underline;">3</span>423. TRUE  high </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> 2016-01-04 <span style="color: #949494;">00:32:00</span> 2016-01-04     3 5-egh-163     8 <span style="text-decoration: underline;">10</span>000. TRUE  low  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> 2016-01-05 <span style="color: #949494;">13:32:00</span> 2016-01-05     6 8-kdg-938     3  <span style="text-decoration: underline;">2</span>343. TRUE  high </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> 2016-01-06 <span style="color: #949494;">17:23:00</span> 2016-01-06     2 5-jdo-903    <span style="color: #BB0000;">NA</span>  <span style="text-decoration: underline;">3</span>892. FALSE mid  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> 2016-01-09 <span style="color: #949494;">12:36:00</span> 2016-01-09     8 3-ldm-038     7   284. TRUE  low  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> 2016-01-11 <span style="color: #949494;">06:15:00</span> 2016-01-11     4 2-dhe-923     4  <span style="text-decoration: underline;">3</span>291. TRUE  mid  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> 2016-01-15 <span style="color: #949494;">18:46:00</span> 2016-01-15     7 1-knw-093     3   843. TRUE  high </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> 2016-01-17 <span style="color: #949494;">11:27:00</span> 2016-01-17     4 5-boe-639     2  <span style="text-decoration: underline;">1</span>036. FALSE low  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> 2016-01-20 <span style="color: #949494;">04:30:00</span> 2016-01-20     3 5-bce-642     9   838. FALSE high </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> 2016-01-20 <span style="color: #949494;">04:30:00</span> 2016-01-20     3 5-bce-642     9   838. FALSE high </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">11</span> 2016-01-26 <span style="color: #949494;">20:07:00</span> 2016-01-26     4 2-dmx-010     7   834. TRUE  low  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">12</span> 2016-01-28 <span style="color: #949494;">02:51:00</span> 2016-01-28     2 7-dmx-010     8   108. FALSE low  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">13</span> 2016-01-30 <span style="color: #949494;">11:23:00</span> 2016-01-30     1 3-dka-303    <span style="color: #BB0000;">NA</span>  <span style="text-decoration: underline;">2</span>230. TRUE  high</span></span></code></pre>
 <p>While <code><a href="../reference/action_levels.html">warn_on_fail()</a></code> and <code><a href="../reference/action_levels.html">stop_on_fail()</a></code> are
 handy ways to generate <code>action_levels</code> objects for the
 <code>actions</code> argument in every validation function, it doesn’t
@@ -300,42 +300,42 @@ use a <code><a href="https://rdrr.io/r/base/warning.html" class="external-link">
 create such an <code>action_levels</code> object with
 <code><a href="../reference/action_levels.html">action_levels()</a></code>:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">al</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span>
-    warn_at <span class="op">=</span> <span class="fl">0.1</span>,
-    stop_at <span class="op">=</span> <span class="fl">0.2</span>,
-    notify_at <span class="op">=</span> <span class="fl">0.3</span>,
-    fns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
-      warn <span class="op">=</span> <span class="op">~</span> <span class="kw"><a href="https://rdrr.io/r/base/warning.html" class="external-link">warning</a></span><span class="op">(</span><span class="st">"WARN threshold exceeded."</span><span class="op">)</span>,
-      stop <span class="op">=</span> <span class="op">~</span> <span class="kw"><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop</a></span><span class="op">(</span><span class="st">"STOP threshold exceeded."</span><span class="op">)</span>,
-      notify <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="../reference/log4r_step.html">log4r_step</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-    <span class="op">)</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">al</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span></span>
+<span>    warn_at <span class="op">=</span> <span class="fl">0.1</span>,</span>
+<span>    stop_at <span class="op">=</span> <span class="fl">0.2</span>,</span>
+<span>    notify_at <span class="op">=</span> <span class="fl">0.3</span>,</span>
+<span>    fns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>      warn <span class="op">=</span> <span class="op">~</span> <span class="kw"><a href="https://rdrr.io/r/base/warning.html" class="external-link">warning</a></span><span class="op">(</span><span class="st">"WARN threshold exceeded."</span><span class="op">)</span>,</span>
+<span>      stop <span class="op">=</span> <span class="op">~</span> <span class="kw"><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop</a></span><span class="op">(</span><span class="st">"STOP threshold exceeded."</span><span class="op">)</span>,</span>
+<span>      notify <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="../reference/log4r_step.html">log4r_step</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <p>Once we assigned the <code>action_levels</code> to an object (in this
 case, as <code>al</code>) we can print it to get a summary of the
 settings.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">al</span></code></pre></div>
-<pre><code><span class="co">## -- The `action_levels` settings</span>
-<span class="co">## WARN failure threshold of 0.1 of all test units.</span>
-<span class="co">## \fns\ ~ warning("WARN threshold exceeded.")</span>
-<span class="co">## STOP failure threshold of 0.2 of all test units.</span>
-<span class="co">## \fns\ ~ stop("STOP threshold exceeded.")</span>
-<span class="co">## NOTIFY failure threshold of 0.3 of all test units.</span>
-<span class="co">## \fns\ ~ log4r_step(x)</span>
-<span class="co">## ----</span></code></pre>
+<code class="sourceCode R"><span><span class="va">al</span></span></code></pre></div>
+<pre><code><span><span class="co">## -- The `action_levels` settings</span></span>
+<span><span class="co">## WARN failure threshold of 0.1 of all test units.</span></span>
+<span><span class="co">## \fns\ ~ warning("WARN threshold exceeded.")</span></span>
+<span><span class="co">## STOP failure threshold of 0.2 of all test units.</span></span>
+<span><span class="co">## \fns\ ~ stop("STOP threshold exceeded.")</span></span>
+<span><span class="co">## NOTIFY failure threshold of 0.3 of all test units.</span></span>
+<span><span class="co">## \fns\ ~ log4r_step(x)</span></span>
+<span><span class="co">## ----</span></span></code></pre>
 <p>Finally, we will apply this object to every validation function call
 in the expression (changed slightly to result in more test units
 failing).</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_is_posix.html">col_is_posix</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">date_time</span><span class="op">)</span>, actions <span class="op">=</span> <span class="va">al</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_in_set.html">col_vals_in_set</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span>, set <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"low"</span>, <span class="st">"mid"</span><span class="op">)</span>, actions <span class="op">=</span> <span class="va">al</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">7</span>, actions <span class="op">=</span> <span class="va">al</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>, regex <span class="op">=</span> <span class="st">"^[0-9]-[a-w]{3}-[2-9]{3}$"</span>, actions <span class="op">=</span> <span class="va">al</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, left <span class="op">=</span> <span class="fl">0</span>, right <span class="op">=</span> <span class="fl">4000</span>, actions <span class="op">=</span> <span class="va">al</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Warning in rlang::eval_tidy(.): WARN threshold exceeded.</span></code></pre>
-<pre><code><span class="co">## Error in rlang::eval_tidy(.): STOP threshold exceeded.</span></code></pre>
+<code class="sourceCode R"><span><span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_is_posix.html">col_is_posix</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">date_time</span><span class="op">)</span>, actions <span class="op">=</span> <span class="va">al</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_in_set.html">col_vals_in_set</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span>, set <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"low"</span>, <span class="st">"mid"</span><span class="op">)</span>, actions <span class="op">=</span> <span class="va">al</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">7</span>, actions <span class="op">=</span> <span class="va">al</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>, regex <span class="op">=</span> <span class="st">"^[0-9]-[a-w]{3}-[2-9]{3}$"</span>, actions <span class="op">=</span> <span class="va">al</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, left <span class="op">=</span> <span class="fl">0</span>, right <span class="op">=</span> <span class="fl">4000</span>, actions <span class="op">=</span> <span class="va">al</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Warning in rlang::eval_tidy(.): WARN threshold exceeded.</span></span></code></pre>
+<pre><code><span><span class="co">## Error in rlang::eval_tidy(.): STOP threshold exceeded.</span></span></code></pre>
 <p>In addition to an error and a warning, the <code><a href="../reference/log4r_step.html">log4r_step()</a></code>
 function used for the <code>NOTIFY</code> condition generates, in this
 case, a new <code>"pb_log_file"</code> text file for logs. We can
@@ -343,7 +343,7 @@ examine it with <code><a href="https://rdrr.io/r/base/readLines.html" class="ext
 relates to <code>Step 1</code> (the <code><a href="../reference/col_vals_in_set.html">col_vals_in_set()</a></code>
 step):</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="st">"pb_log_file"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="st">"pb_log_file"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>FATAL [2020-11-09 00:23:48] Step 1 exceeded the NOTIFY failure threshold (f_failed = 0.46154) ['col_vals_in_set']</code></pre>
 <p>The <code><a href="../reference/log4r_step.html">log4r_step()</a></code> function offered by
 <strong>pointblank</strong> is shown in examples and explained in more

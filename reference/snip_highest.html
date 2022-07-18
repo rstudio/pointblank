@@ -14,7 +14,7 @@ alphabetical value from a column in the target table."><meta property="og:image"
     
     <a class="navbar-brand me-2" href="../index.html">pointblank</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,7 +73,7 @@ alphabetical value from a column in the target table.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">snip_highest</span><span class="op">(</span><span class="va">column</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">snip_highest</span><span class="op">(</span><span class="va">column</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -98,23 +98,23 @@ alphabetical value from a column in the target table.</p>
 define a location for the snippet result in <code><a href="https://rdrr.io/r/base/Paren.html" class="external-link">{ }</a></code> and then <code><a href="incorporate.html">incorporate()</a></code>
 the snippet into the info text. Note here that the order of the
 <code><a href="info_columns.html">info_columns()</a></code> and <code><a href="info_snippet.html">info_snippet()</a></code> calls doesn't matter.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">informant</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span>
-    tbl <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,
-    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,
-    label <span class="op">=</span> <span class="st">"An example."</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="st">"a"</span>,
-    `Highest Value` <span class="op">=</span> <span class="st">"Highest value is {highest_a}."</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/info_snippet.html">info_snippet</a></span><span class="op">(</span>
-    snippet_name <span class="op">=</span> <span class="st">"highest_a"</span>,
-    fn <span class="op">=</span> <span class="fu"><a href="../reference/snip_highest.html">snip_highest</a></span><span class="op">(</span>column <span class="op">=</span> <span class="st">"a"</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/incorporate.html">incorporate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">informant</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span></span>
+<span>    tbl <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,</span>
+<span>    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,</span>
+<span>    label <span class="op">=</span> <span class="st">"An example."</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="st">"a"</span>,</span>
+<span>    `Highest Value` <span class="op">=</span> <span class="st">"Highest value is {highest_a}."</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/info_snippet.html">info_snippet</a></span><span class="op">(</span></span>
+<span>    snippet_name <span class="op">=</span> <span class="st">"highest_a"</span>,</span>
+<span>    fn <span class="op">=</span> <span class="fu"><a href="../reference/snip_highest.html">snip_highest</a></span><span class="op">(</span>column <span class="op">=</span> <span class="st">"a"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/incorporate.html">incorporate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>We can print the <code>informant</code> object to see the information report.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">informant</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">informant</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_snip_highest_1.png" style="width:100%;"></p>
     </div>
     <div class="section level2">

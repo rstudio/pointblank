@@ -78,7 +78,7 @@ The directory itself can be accessed using system.file("yaml", package = "pointb
     
     <a class="navbar-brand me-2" href="../index.html">pointblank</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -163,14 +163,14 @@ processed agents and informants</p></li>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">yaml_exec</span><span class="op">(</span>
-  path <span class="op">=</span> <span class="cn">NULL</span>,
-  files <span class="op">=</span> <span class="cn">NULL</span>,
-  write_to_disk <span class="op">=</span> <span class="cn">TRUE</span>,
-  output_path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">path</span>, <span class="st">"output"</span><span class="op">)</span>,
-  keep_tbl <span class="op">=</span> <span class="cn">FALSE</span>,
-  keep_extracts <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">yaml_exec</span><span class="op">(</span></span>
+<span>  path <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  files <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  write_to_disk <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  output_path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">path</span>, <span class="st">"output"</span><span class="op">)</span>,</span>
+<span>  keep_tbl <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  keep_extracts <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -233,44 +233,44 @@ given as the names.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># The 'yaml' directory that is</span></span>
-<span class="r-in"><span class="co"># accessible in the package through</span></span>
-<span class="r-in"><span class="co"># `system.file()` contains the files</span></span>
-<span class="r-in"><span class="co"># 1. `agent-small_table.yml`</span></span>
-<span class="r-in"><span class="co"># 2. `informant-small_table.yml`</span></span>
-<span class="r-in"><span class="co"># 3. `tbl_store.yml`</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># There are references in YAML files</span></span>
-<span class="r-in"><span class="co"># 1 &amp; 2 to the table store YAML file,</span></span>
-<span class="r-in"><span class="co"># so, they all work together cohesively</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Let's process the agent and the</span></span>
-<span class="r-in"><span class="co"># informant YAML files with `yaml_exec()`;</span></span>
-<span class="r-in"><span class="co"># and we'll specify the working directory</span></span>
-<span class="r-in"><span class="co"># as the place where the output RDS files</span></span>
-<span class="r-in"><span class="co"># are written</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">output_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">yaml_exec</span><span class="op">(</span></span>
-<span class="r-in">  path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="st">"yaml"</span>, package <span class="op">=</span> <span class="st">"pointblank"</span></span>
-<span class="r-in">  <span class="op">)</span>,</span>
-<span class="r-in">  output <span class="op">=</span> <span class="va">output_dir</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># This generates two RDS files in the</span></span>
-<span class="r-in"><span class="co"># working directory: one for the agent</span></span>
-<span class="r-in"><span class="co"># and the other for the informant; each</span></span>
-<span class="r-in"><span class="co"># of them are automatically time-stamped</span></span>
-<span class="r-in"><span class="co"># so that periodic execution can be</span></span>
-<span class="r-in"><span class="co"># safely carried out without risk of</span></span>
-<span class="r-in"><span class="co"># overwriting </span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># The 'yaml' directory that is</span></span></span>
+<span class="r-in"><span><span class="co"># accessible in the package through</span></span></span>
+<span class="r-in"><span><span class="co"># `system.file()` contains the files</span></span></span>
+<span class="r-in"><span><span class="co"># 1. `agent-small_table.yml`</span></span></span>
+<span class="r-in"><span><span class="co"># 2. `informant-small_table.yml`</span></span></span>
+<span class="r-in"><span><span class="co"># 3. `tbl_store.yml`</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># There are references in YAML files</span></span></span>
+<span class="r-in"><span><span class="co"># 1 &amp; 2 to the table store YAML file,</span></span></span>
+<span class="r-in"><span><span class="co"># so, they all work together cohesively</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Let's process the agent and the</span></span></span>
+<span class="r-in"><span><span class="co"># informant YAML files with `yaml_exec()`;</span></span></span>
+<span class="r-in"><span><span class="co"># and we'll specify the working directory</span></span></span>
+<span class="r-in"><span><span class="co"># as the place where the output RDS files</span></span></span>
+<span class="r-in"><span><span class="co"># are written</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">output_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">yaml_exec</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="st">"yaml"</span>, package <span class="op">=</span> <span class="st">"pointblank"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span>,</span></span>
+<span class="r-in"><span>  output <span class="op">=</span> <span class="va">output_dir</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># This generates two RDS files in the</span></span></span>
+<span class="r-in"><span><span class="co"># working directory: one for the agent</span></span></span>
+<span class="r-in"><span><span class="co"># and the other for the informant; each</span></span></span>
+<span class="r-in"><span><span class="co"># of them are automatically time-stamped</span></span></span>
+<span class="r-in"><span><span class="co"># so that periodic execution can be</span></span></span>
+<span class="r-in"><span><span class="co"># safely carried out without risk of</span></span></span>
+<span class="r-in"><span><span class="co"># overwriting </span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

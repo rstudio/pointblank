@@ -42,7 +42,7 @@ get_agent_report() function, where there are more reporting options."><meta prop
     
     <a class="navbar-brand me-2" href="../index.html">pointblank</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -115,17 +115,17 @@ table. This reporting of the interrogation can also be accessed with the
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">create_agent</span><span class="op">(</span>
-  tbl <span class="op">=</span> <span class="cn">NULL</span>,
-  tbl_name <span class="op">=</span> <span class="cn">NULL</span>,
-  label <span class="op">=</span> <span class="cn">NULL</span>,
-  actions <span class="op">=</span> <span class="cn">NULL</span>,
-  end_fns <span class="op">=</span> <span class="cn">NULL</span>,
-  embed_report <span class="op">=</span> <span class="cn">FALSE</span>,
-  lang <span class="op">=</span> <span class="cn">NULL</span>,
-  locale <span class="op">=</span> <span class="cn">NULL</span>,
-  read_fn <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">create_agent</span><span class="op">(</span></span>
+<span>  tbl <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  tbl_name <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  label <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  actions <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  end_fns <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  embed_report <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  lang <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  locale <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  read_fn <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -242,20 +242,20 @@ on the data. This acts as a sort of data filter in that the input table will
 become output data (without modification), but there may be warnings, errors,
 or other side effects that you can define if validation fails. Basically,
 instead of this</p>
-<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">small_table</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/rows_distinct.html">rows_distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">small_table</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/rows_distinct.html">rows_distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>you would use this:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/rows_distinct.html">rows_distinct</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/rows_distinct.html">rows_distinct</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>This results in an error (with the default failure threshold settings),
 displaying the reason for the error in the console. Notably, the data is not
 passed though.</p>
 <p>We can use variants of the validation functions, the <em>test</em> (<code>test_*()</code>) and
 <em>expectation</em> (<code>expect_*()</code>) versions, directly on the data for different
 workflows. The first returns to us a logical value. So this</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/rows_distinct.html">test_rows_distinct</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/rows_distinct.html">test_rows_distinct</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>returns <code>FALSE</code> instead of an error.</p>
 <p>In a unit testing scenario, we can use <em>expectation</em> functions exactly as we
 would with <strong>testthat</strong>'s library of <code>expect_*()</code> functions:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/rows_distinct.html">expect_rows_distinct</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/rows_distinct.html">expect_rows_distinct</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>This test of <code>small_table</code> would be counted as a failure.</p>
     </div>
     <div class="section level2">
@@ -313,32 +313,32 @@ or interrogate the target table (via <code><a href="yaml_agent_interrogate.html"
 example of how a complex call of <code>create_agent()</code> is expressed in R code and
 in the corresponding YAML representation.</p>
 <p>R statement:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>
-  tbl <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,
-  tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,
-  label <span class="op">=</span> <span class="st">"An example."</span>,
-  actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span>
-    warn_at <span class="op">=</span> <span class="fl">0.10</span>,
-    stop_at <span class="op">=</span> <span class="fl">0.25</span>,
-    notify_at <span class="op">=</span> <span class="fl">0.35</span>,
-    fns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>notify <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="../reference/email_blast.html">email_blast</a></span><span class="op">(</span>
-      <span class="va">x</span>,
-      to <span class="op">=</span> <span class="st">"joe_public@example.com"</span>,
-      from <span class="op">=</span> <span class="st">"pb_notif@example.com"</span>,
-      msg_subject <span class="op">=</span> <span class="st">"Table Validation"</span>,
-      credentials <span class="op">=</span> <span class="fu">blastula</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/blastula/man/credential_helpers.html" class="external-link">creds_key</a></span><span class="op">(</span>
-        id <span class="op">=</span> <span class="st">"smtp2go"</span>
-      <span class="op">)</span>
-    <span class="op">)</span><span class="op">)</span>
-  <span class="op">)</span>, 
-  end_fns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
-    <span class="op">~</span> <span class="fu">beepr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/beepr/man/beep.html" class="external-link">beep</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>,
-    <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
-  <span class="op">)</span>, 
-  embed_report <span class="op">=</span> <span class="cn">TRUE</span>,
-  lang <span class="op">=</span> <span class="st">"fr"</span>, 
-  locale <span class="op">=</span> <span class="st">"fr_CA"</span>
-<span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span></span>
+<span>  tbl <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,</span>
+<span>  tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,</span>
+<span>  label <span class="op">=</span> <span class="st">"An example."</span>,</span>
+<span>  actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span></span>
+<span>    warn_at <span class="op">=</span> <span class="fl">0.10</span>,</span>
+<span>    stop_at <span class="op">=</span> <span class="fl">0.25</span>,</span>
+<span>    notify_at <span class="op">=</span> <span class="fl">0.35</span>,</span>
+<span>    fns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>notify <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="../reference/email_blast.html">email_blast</a></span><span class="op">(</span></span>
+<span>      <span class="va">x</span>,</span>
+<span>      to <span class="op">=</span> <span class="st">"joe_public@example.com"</span>,</span>
+<span>      from <span class="op">=</span> <span class="st">"pb_notif@example.com"</span>,</span>
+<span>      msg_subject <span class="op">=</span> <span class="st">"Table Validation"</span>,</span>
+<span>      credentials <span class="op">=</span> <span class="fu">blastula</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/blastula/man/credential_helpers.html" class="external-link">creds_key</a></span><span class="op">(</span></span>
+<span>        id <span class="op">=</span> <span class="st">"smtp2go"</span></span>
+<span>      <span class="op">)</span></span>
+<span>    <span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">)</span>, </span>
+<span>  end_fns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    <span class="op">~</span> <span class="fu">beepr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/beepr/man/beep.html" class="external-link">beep</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>,</span>
+<span>    <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span>  <span class="op">)</span>, </span>
+<span>  embed_report <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  lang <span class="op">=</span> <span class="st">"fr"</span>, </span>
+<span>  locale <span class="op">=</span> <span class="st">"fr_CA"</span></span>
+<span><span class="op">)</span></span></code></pre><p></p></div>
 <p>YAML representation:</p>
 <p></p><div class="sourceCode yaml"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">type</span><span class="kw">:</span><span class="at"> agent</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl</span><span class="kw">:</span><span class="at"> ~small_table</span></span>
@@ -414,7 +414,7 @@ a given target table.</p>
 <p>Let's walk through a data quality analysis of an extremely small table. It's
 actually called <code>small_table</code> and we can find it as a dataset in this
 package.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">small_table</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">small_table</span></span></code></pre><p></p></div>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 13 × 8</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    date_time           date           a b             c      d e     f    </span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;dttm&gt;              &lt;date&gt;     &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;</span></span>
@@ -434,56 +434,56 @@ package.</p>
 <p>We ought to think about what's tolerable in terms of data quality so let's
 designate proportional failure thresholds to the <code>warn</code>, <code>stop</code>, and <code>notify</code>
 states using <code><a href="action_levels.html">action_levels()</a></code>.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">al</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span>
-      warn_at <span class="op">=</span> <span class="fl">0.10</span>,
-      stop_at <span class="op">=</span> <span class="fl">0.25</span>,
-    notify_at <span class="op">=</span> <span class="fl">0.35</span>
-  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">al</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span></span>
+<span>      warn_at <span class="op">=</span> <span class="fl">0.10</span>,</span>
+<span>      stop_at <span class="op">=</span> <span class="fl">0.25</span>,</span>
+<span>    notify_at <span class="op">=</span> <span class="fl">0.35</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p>Now create a pointblank <code>agent</code> object and give it the <code>al</code> object (which
 serves as a default for all validation steps which can be overridden). The
 static thresholds provided by <code>al</code> will make the reporting a bit more useful.
 We also provide a target table and we'll use <code><a href="small_table.html">pointblank::small_table</a></code>.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>
-    tbl <span class="op">=</span> <span class="fu">pointblank</span><span class="fu">::</span><span class="va"><a href="../reference/small_table.html">small_table</a></span>,
-    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,
-    label <span class="op">=</span> <span class="st">"`create_agent()` example."</span>,
-    actions <span class="op">=</span> <span class="va">al</span>
-  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span></span>
+<span>    tbl <span class="op">=</span> <span class="fu">pointblank</span><span class="fu">::</span><span class="va"><a href="../reference/small_table.html">small_table</a></span>,</span>
+<span>    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,</span>
+<span>    label <span class="op">=</span> <span class="st">"`create_agent()` example."</span>,</span>
+<span>    actions <span class="op">=</span> <span class="va">al</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p>Then, as with any <code>agent</code> object, we can add steps to the validation plan by
 using as many validation functions as we want. then, we use <code><a href="interrogate.html">interrogate()</a></code>
 to actually perform the validations and gather intel.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span>
-  <span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="../reference/col_exists.html">col_exists</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">date_time</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>,
-    regex <span class="op">=</span> <span class="st">"[0-9]-[a-z]{3}-[0-9]{3}"</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/rows_distinct.html">rows_distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_lte.html">col_vals_lte</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>,
-    left <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, right <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>,
-    na_pass <span class="op">=</span> <span class="cn">TRUE</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/col_exists.html">col_exists</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">date_time</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>,</span>
+<span>    regex <span class="op">=</span> <span class="st">"[0-9]-[a-z]{3}-[0-9]{3}"</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/rows_distinct.html">rows_distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_lte.html">col_vals_lte</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>,</span>
+<span>    left <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, right <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>,</span>
+<span>    na_pass <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>The <code>agent</code> object can be printed to see the validation report in the
 Viewer.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">agent</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_create_agent_1.png" style="width:100%;"></p>
 <p>If we want to make use of more report display options, we can alternatively
 use the <code><a href="get_agent_report.html">get_agent_report()</a></code> function.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">report</span> <span class="op">&lt;-</span>
-  <span class="fu"><a href="../reference/get_agent_report.html">get_agent_report</a></span><span class="op">(</span>
-    agent <span class="op">=</span> <span class="va">agent</span>,
-    arrange_by <span class="op">=</span> <span class="st">"severity"</span>,
-    title <span class="op">=</span> <span class="st">"Validation of `small_table`"</span>
-  <span class="op">)</span>
-
-<span class="va">report</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">report</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="../reference/get_agent_report.html">get_agent_report</a></span><span class="op">(</span></span>
+<span>    agent <span class="op">=</span> <span class="va">agent</span>,</span>
+<span>    arrange_by <span class="op">=</span> <span class="st">"severity"</span>,</span>
+<span>    title <span class="op">=</span> <span class="st">"Validation of `small_table`"</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">report</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_create_agent_2.png" style="width:100%;"></p>
 </div>
 
@@ -497,34 +497,22 @@ of the information collected during interrogation.</p>
 <code><a href="rows_distinct.html">rows_distinct()</a></code> validation function) had two test units, corresponding to
 duplicated rows, that failed. We can see those rows with
 <code><a href="get_data_extracts.html">get_data_extracts()</a></code>.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/get_data_extracts.html">get_data_extracts</a></span><span class="op">(</span>i <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 2 × 8</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   date_time           date           a b             c     d e     f    </span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;dttm&gt;              &lt;date&gt;     &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high </span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/get_data_extracts.html">get_data_extracts</a></span><span class="op">(</span>i <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre><p></p></div>
+<div class="sourceCode"><pre><code><span><span class="co">## # A tibble: 2 × 8</span></span>
+<span><span class="co">##   date_time           date           a b            c     d e     f    </span></span>
+<span><span class="co">##   &lt;dttm&gt;              &lt;date&gt;     &lt;int&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;</span></span>
+<span><span class="co">## 1 2016-01-20 04:30:00 2016-01-20     3 5-bce-6…     9  838. FALSE high </span></span>
+<span><span class="co">## 2 2016-01-20 04:30:00 2016-01-20     3 5-bce-6…     9  838. FALSE high</span></span></code></pre></div>
+
+
+
 <p>We can get an x-list for the entire validation process (7 steps), or, just
 for the 4th step with <code><a href="get_agent_x_list.html">get_agent_x_list()</a></code>.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">xl_step_4</span> <span class="op">&lt;-</span> <span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/get_agent_x_list.html">get_agent_x_list</a></span><span class="op">(</span>i <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">xl_step_4</span> <span class="op">&lt;-</span> <span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/get_agent_x_list.html">get_agent_x_list</a></span><span class="op">(</span>i <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>And then we can peruse the different parts of the list. Let's get the
 fraction of test units that failed.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">xl_step_4</span><span class="op">$</span><span class="va">f_failed</span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.15385</span></span></code></pre><p></p></div>
-<p>Just printing the x-list will tell us what's available.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">xl_step_4</span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## -- The x-list for table `small_table`</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- STEP 4 ----</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">## $time_start $time_end (POSIXct [1])</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## $label $tbl_name $tbl_src $tbl_src_details (chr [1])</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## $tbl (spec_tbl_df tbl_df tbl data.frame)</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">## $col_names $col_types (chr [8])</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">## $i $type $columns $values $label $briefs (mixed [1])</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="do">## $eval_error $eval_warning (lgl [1])</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="do">## $capture_stack (list [1])</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="do">## $n $n_passed $n_failed $f_passed $f_failed (num [1])</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="do">## $warn $stop $notify (lgl [1])</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="do">## $lang (chr [1])</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="do">## ----</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">xl_step_4</span><span class="op">$</span><span class="va">f_failed</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.15385</span></span></code></pre><p></p></div>
 <p>An x-list not specific to any step will have way more information and a
 slightly different structure. See <code><a href="get_agent_x_list.html">help(get_agent_x_list)</a></code> for more info.</p>
 </div>

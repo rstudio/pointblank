@@ -20,7 +20,7 @@ with lower severity) so long as the call to log4r_step() is present."><meta prop
     
     <a class="navbar-brand me-2" href="../index.html">pointblank</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,7 +82,7 @@ with lower severity) so long as the call to <code>log4r_step()</code> is present
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">log4r_step</span><span class="op">(</span><span class="va">x</span>, message <span class="op">=</span> <span class="cn">NULL</span>, append_to <span class="op">=</span> <span class="st">"pb_log_file"</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">log4r_step</span><span class="op">(</span><span class="va">x</span>, message <span class="op">=</span> <span class="cn">NULL</span>, append_to <span class="op">=</span> <span class="st">"pb_log_file"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -127,19 +127,19 @@ example of how <code>log4r_step()</code> can be expressed in R code (within
 <code><a href="action_levels.html">action_levels()</a></code>, itself inside <code><a href="create_agent.html">create_agent()</a></code>) and in the corresponding
 YAML representation.</p>
 <p>R statement:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>
-  tbl <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,
-  tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,
-  label <span class="op">=</span> <span class="st">"An example."</span>,
-  actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span>
-    warn_at <span class="op">=</span> <span class="fl">1</span>,
-    fns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
-      warn <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="../reference/log4r_step.html">log4r_step</a></span><span class="op">(</span>
-        <span class="va">x</span>, append_to <span class="op">=</span> <span class="st">"example_log"</span>
-      <span class="op">)</span>
-    <span class="op">)</span>
-  <span class="op">)</span>
-<span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span></span>
+<span>  tbl <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,</span>
+<span>  tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,</span>
+<span>  label <span class="op">=</span> <span class="st">"An example."</span>,</span>
+<span>  actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span></span>
+<span>    warn_at <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    fns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>      warn <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="../reference/log4r_step.html">log4r_step</a></span><span class="op">(</span></span>
+<span>        <span class="va">x</span>, append_to <span class="op">=</span> <span class="st">"example_log"</span></span>
+<span>      <span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre><p></p></div>
 <p>YAML representation:</p>
 <p></p><div class="sourceCode yaml"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">type</span><span class="kw">:</span><span class="at"> agent</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl</span><span class="kw">:</span><span class="at"> ~small_table</span></span>
@@ -169,20 +169,20 @@ useful for demonstrating a logging scenario. It will have a threshold for
 the <code>warn</code> state, and, an associated function that should be invoked
 whenever the <code>warn</code> state is entered. Here, the function call with
 <code>log4r_step()</code> will be invoked whenever there is one failing test unit.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">al</span> <span class="op">&lt;-</span>
-  <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span>
-    warn_at <span class="op">=</span> <span class="fl">1</span>,
-    fns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
-      warn <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="../reference/log4r_step.html">log4r_step</a></span><span class="op">(</span>
-        <span class="va">x</span>, append_to <span class="op">=</span> <span class="st">"example_log"</span>
-      <span class="op">)</span>
-    <span class="op">)</span>
-  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">al</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span></span>
+<span>    warn_at <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    fns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>      warn <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="../reference/log4r_step.html">log4r_step</a></span><span class="op">(</span></span>
+<span>        <span class="va">x</span>, append_to <span class="op">=</span> <span class="st">"example_log"</span></span>
+<span>      <span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p>Within the <code><a href="action_levels.html">action_levels()</a></code>-produced object, it's important to match things
 up: notice that <code>warn_at</code> is given a threshold and the list of functions
 given to <code>fns</code> has a <code>warn</code> component.</p>
 <p>Printing <code>al</code> will show us the settings for the <code>action_levels</code> object:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">al</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">al</span></span></code></pre><p></p></div>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## -- The `action_levels` settings</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">## WARN failure threshold of 1test units.</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">## \fns\ ~ log4r_step(x, append_to = "example_log")</span></span>
@@ -190,18 +190,18 @@ given to <code>fns</code> has a <code>warn</code> component.</p>
 <p>Let's create an agent with <code>small_table</code> as the target table. We'll apply the
 <code>action_levels</code> object created above as <code>al</code>, add two validation steps, and
 then <code><a href="interrogate.html">interrogate()</a></code> the data.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>
-    tbl <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,
-    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,
-    label <span class="op">=</span> <span class="st">"An example."</span>,
-    actions <span class="op">=</span> <span class="va">al</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, <span class="fl">300</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_in_set.html">col_vals_in_set</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"low"</span>, <span class="st">"high"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span>
-
-<span class="va">agent</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span></span>
+<span>    tbl <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,</span>
+<span>    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,</span>
+<span>    label <span class="op">=</span> <span class="st">"An example."</span>,</span>
+<span>    actions <span class="op">=</span> <span class="va">al</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, <span class="fl">300</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_in_set.html">col_vals_in_set</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"low"</span>, <span class="st">"high"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">agent</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_log4r_step_1.png" style="width:100%;"></p>
 <p>From the agent report, we can see that both steps have yielded warnings upon
 interrogation (i.e., filled yellow circles in the <code>W</code> column).</p>

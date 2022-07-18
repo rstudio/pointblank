@@ -34,7 +34,7 @@ is collected and loaded into R."><meta property="og:image" content="https://rich
     
     <a class="navbar-brand me-2" href="../index.html">pointblank</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -103,7 +103,7 @@ is collected and loaded into R.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">col_schema</span><span class="op">(</span><span class="va">...</span>, .tbl <span class="op">=</span> <span class="cn">NULL</span>, .db_col_types <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"r"</span>, <span class="st">"sql"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">col_schema</span><span class="op">(</span><span class="va">...</span>, .tbl <span class="op">=</span> <span class="cn">NULL</span>, .db_col_types <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"r"</span>, <span class="st">"sql"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -135,13 +135,13 @@ types (<code>"r"</code>) or SQL column types (<code>"sql"</code>).</p></dd>
 
 <p>Create a simple table with two columns: one <code>integer</code> and the other
 <code>character</code>.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">tbl</span> <span class="op">&lt;-</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>
-    a <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,
-    b <span class="op">=</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>
-  <span class="op">)</span>
-
-<span class="va">tbl</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">tbl</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
+<span>    a <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,</span>
+<span>    b <span class="op">=</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">tbl</span></span></code></pre><p></p></div>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 5 × 2</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">##       a b    </span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;int&gt; &lt;chr&gt;</span></span>
@@ -152,13 +152,13 @@ types (<code>"r"</code>) or SQL column types (<code>"sql"</code>).</p></dd>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5     5 e</span></span></code></pre><p></p></div>
 <p>Create a column schema object that describes the columns and their types (in
 the expected order).</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">schema_obj</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="../reference/col_schema.html">col_schema</a></span><span class="op">(</span>
-    a <span class="op">=</span> <span class="st">"integer"</span>,
-    b <span class="op">=</span> <span class="st">"character"</span>
-  <span class="op">)</span>
-
-<span class="va">schema_obj</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">schema_obj</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="../reference/col_schema.html">col_schema</a></span><span class="op">(</span></span>
+<span>    a <span class="op">=</span> <span class="st">"integer"</span>,</span>
+<span>    b <span class="op">=</span> <span class="st">"character"</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">schema_obj</span></span></code></pre><p></p></div>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## $a</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "integer"</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
@@ -169,27 +169,27 @@ the expected order).</p>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "r_type"     "col_schema"</span></span></code></pre><p></p></div>
 <p>Validate that the schema object <code>schema_obj</code> exactly defines the column names
 and column types of the <code>tbl</code> table.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span>
-  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">tbl</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_schema_match.html">col_schema_match</a></span><span class="op">(</span><span class="va">schema_obj</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">tbl</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_schema_match.html">col_schema_match</a></span><span class="op">(</span><span class="va">schema_obj</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>Determine if this validation step passed by using <code><a href="all_passed.html">all_passed()</a></code>.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/all_passed.html">all_passed</a></span><span class="op">(</span><span class="va">agent</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/all_passed.html">all_passed</a></span><span class="op">(</span><span class="va">agent</span><span class="op">)</span></span></code></pre><p></p></div>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span></code></pre><p></p></div>
 <p>We can alternatively create a column schema object from a <code>tbl_df</code> object.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">schema_obj</span> <span class="op">&lt;-</span>
-  <span class="fu"><a href="../reference/col_schema.html">col_schema</a></span><span class="op">(</span>
-    .tbl <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>
-      a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>,
-      b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>
-    <span class="op">)</span>
-  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">schema_obj</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="../reference/col_schema.html">col_schema</a></span><span class="op">(</span></span>
+<span>    .tbl <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
+<span>      a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>,</span>
+<span>      b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p>This should provide the same interrogation results as in the previous
 example.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">tbl</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_schema_match.html">col_schema_match</a></span><span class="op">(</span><span class="va">schema_obj</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/all_passed.html">all_passed</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">tbl</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_schema_match.html">col_schema_match</a></span><span class="op">(</span><span class="va">schema_obj</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/all_passed.html">all_passed</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span></code></pre><p></p></div>
     </div>
     <div class="section level2">

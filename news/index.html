@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pointblank</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,11 +62,22 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="pointblank-development-version">pointblank (development version)<a class="anchor" aria-label="anchor" href="#pointblank-development-version"></a></h2>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.11.0" id="pointblank-0110">pointblank 0.11.0<a class="anchor" aria-label="anchor" href="#pointblank-0110"></a></h2><p class="text-muted">CRAN release: 2022-07-14</p>
+<div class="section level3">
+<h3 id="new-features-0-11-0">New features<a class="anchor" aria-label="anchor" href="#new-features-0-11-0"></a></h3>
 <ul><li><p>The <code><a href="../reference/row_count_match.html">row_count_match()</a></code> function can now match the count of rows in the target table to a literal value (in addition to comparing row counts to a secondary table).</p></li>
-<li><p>The <code><a href="../reference/col_count_match.html">col_count_match()</a></code> function was added to compare column counts in the target table to secondary table, or, to match on a literal value.</p></li>
+<li><p>The analogous <code><a href="../reference/col_count_match.html">col_count_match()</a></code> function was added to compare column counts in the target table to a secondary table, or, to match on a literal value.</p></li>
 <li><p>Substitution syntax has been added to the <code><a href="../reference/tbl_store.html">tbl_store()</a></code> function with <code>{{ &lt;name&gt; }}</code>. This is a great way to make table-prep more concise, readable, and less prone to errors.</p></li>
 <li><p>The <code><a href="../reference/get_informant_report.html">get_informant_report()</a></code> has been enhanced with more <code>width</code> options. Aside from the <code>"standard"</code> and <code>"small"</code> sizes we can now supply any pixel- or percent-based width to precisely size the reporting.</p></li>
+<li><p>Added support for validating data in BigQuery tables.</p></li>
 </ul></div>
+<div class="section level3">
+<h3 id="documentation-0-11-0">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-11-0"></a></h3>
+<ul><li>All functions in the package now have <em>better</em> usage examples.</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.10.0" id="pointblank-0100">pointblank 0.10.0<a class="anchor" aria-label="anchor" href="#pointblank-0100"></a></h2><p class="text-muted">CRAN release: 2022-01-23</p>
 <div class="section level3">

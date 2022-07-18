@@ -38,7 +38,7 @@ components affixed to the filenames."><meta property="og:image" content="https:/
     
     <a class="navbar-brand me-2" href="../index.html">pointblank</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -109,14 +109,14 @@ components affixed to the filenames.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">affix_datetime</span><span class="op">(</span>
-  <span class="va">filename</span>,
-  position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"end"</span>, <span class="st">"start"</span><span class="op">)</span>,
-  format <span class="op">=</span> <span class="st">"%Y-%m-%d_%H-%M-%S"</span>,
-  delimiter <span class="op">=</span> <span class="st">"_"</span>,
-  utc_time <span class="op">=</span> <span class="cn">TRUE</span>,
-  add_tz <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">affix_datetime</span><span class="op">(</span></span>
+<span>  <span class="va">filename</span>,</span>
+<span>  position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"end"</span>, <span class="st">"start"</span><span class="op">)</span>,</span>
+<span>  format <span class="op">=</span> <span class="st">"%Y-%m-%d_%H-%M-%S"</span>,</span>
+<span>  delimiter <span class="op">=</span> <span class="st">"_"</span>,</span>
+<span>  utc_time <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  add_tz <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -172,37 +172,37 @@ local time (<code>FALSE</code>).</p></dd>
 
 <p>Taking the generic <code>"pb_file"</code> name for a file, we add the current datetime
 to it as a suffix.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/affix_datetime.html">affix_datetime</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="st">"pb_file"</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/affix_datetime.html">affix_datetime</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="st">"pb_file"</span><span class="op">)</span></span></code></pre><p></p></div>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "pb_file_2022-04-01_00-32-53"</span></span></code></pre><p></p></div>
 <p>File extensions won't get in the way:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/affix_datetime.html">affix_datetime</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="st">"pb_file.rds"</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/affix_datetime.html">affix_datetime</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="st">"pb_file.rds"</span><span class="op">)</span></span></code></pre><p></p></div>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "pb_file_2022-04-01_00-32-53.rds"</span></span></code></pre><p></p></div>
 <p>The datetime can be used as a prefix.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/affix_datetime.html">affix_datetime</a></span><span class="op">(</span>
-  filename <span class="op">=</span> <span class="st">"pb_file"</span>,
-  position <span class="op">=</span> <span class="st">"start"</span>
-<span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/affix_datetime.html">affix_datetime</a></span><span class="op">(</span></span>
+<span>  filename <span class="op">=</span> <span class="st">"pb_file"</span>,</span>
+<span>  position <span class="op">=</span> <span class="st">"start"</span></span>
+<span><span class="op">)</span></span></code></pre><p></p></div>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "2022-04-01_00-32-53_pb_file"</span></span></code></pre><p></p></div>
 <p>The datetime pattern can be changed and so can the delimiter.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/affix_datetime.html">affix_datetime</a></span><span class="op">(</span>
-  filename <span class="op">=</span> <span class="st">"pb_file.yml"</span>,
-  format <span class="op">=</span> <span class="st">"%Y%m%d_%H%M%S"</span>,
-  delimiter <span class="op">=</span> <span class="st">"-"</span>
-<span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/affix_datetime.html">affix_datetime</a></span><span class="op">(</span></span>
+<span>  filename <span class="op">=</span> <span class="st">"pb_file.yml"</span>,</span>
+<span>  format <span class="op">=</span> <span class="st">"%Y%m%d_%H%M%S"</span>,</span>
+<span>  delimiter <span class="op">=</span> <span class="st">"-"</span></span>
+<span><span class="op">)</span></span></code></pre><p></p></div>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "pb_file-20220401_003253.yml"</span></span></code></pre><p></p></div>
 <p>Time zone information can be included. By default, all datetimes are given in
 the UTC time zone.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/affix_datetime.html">affix_datetime</a></span><span class="op">(</span>
-  filename <span class="op">=</span> <span class="st">"pb_file.yml"</span>,
-  add_tz <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/affix_datetime.html">affix_datetime</a></span><span class="op">(</span></span>
+<span>  filename <span class="op">=</span> <span class="st">"pb_file.yml"</span>,</span>
+<span>  add_tz <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre><p></p></div>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "pb_file_2022-04-01_00-32-53Z.yml"</span></span></code></pre><p></p></div>
 <p>We can use the system's local time zone with <code>utc_time = FALSE</code>.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/affix_datetime.html">affix_datetime</a></span><span class="op">(</span>
-  filename <span class="op">=</span> <span class="st">"pb_file.yml"</span>,
-  utc_time <span class="op">=</span> <span class="cn">FALSE</span>,
-  add_tz <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/affix_datetime.html">affix_datetime</a></span><span class="op">(</span></span>
+<span>  filename <span class="op">=</span> <span class="st">"pb_file.yml"</span>,</span>
+<span>  utc_time <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  add_tz <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre><p></p></div>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "pb_file_2022-03-31_20-32-53-0400.yml"</span></span></code></pre><p></p></div>
 </div>
 
@@ -216,20 +216,20 @@ involving a <code>filename</code> argument is applicable). It's really advantage
 use datetime-based filenames when interrogating directly from YAML in a
 scheduled process, especially if multiple validation runs per day are being
 executed on the same target table.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/yaml_agent_interrogate.html">yaml_agent_interrogate</a></span><span class="op">(</span>
-  filename <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span>
-    <span class="st">"yaml"</span>, <span class="st">"agent-small_table.yml"</span>,
-    package <span class="op">=</span> <span class="st">"pointblank"</span>
-  <span class="op">)</span>
-<span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="../reference/x_write_disk.html">x_write_disk</a></span><span class="op">(</span>
-    filename <span class="op">=</span> <span class="fu"><a href="../reference/affix_datetime.html">affix_datetime</a></span><span class="op">(</span>
-      filename <span class="op">=</span> <span class="st">"small_table_agent.rds"</span>,
-      delimiter <span class="op">=</span> <span class="st">"-"</span>
-    <span class="op">)</span>,
-    keep_tbl <span class="op">=</span> <span class="cn">TRUE</span>,
-    keep_extracts <span class="op">=</span> <span class="cn">TRUE</span>
-  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/yaml_agent_interrogate.html">yaml_agent_interrogate</a></span><span class="op">(</span></span>
+<span>  filename <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span>
+<span>    <span class="st">"yaml"</span>, <span class="st">"agent-small_table.yml"</span>,</span>
+<span>    package <span class="op">=</span> <span class="st">"pointblank"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/x_write_disk.html">x_write_disk</a></span><span class="op">(</span></span>
+<span>    filename <span class="op">=</span> <span class="fu"><a href="../reference/affix_datetime.html">affix_datetime</a></span><span class="op">(</span></span>
+<span>      filename <span class="op">=</span> <span class="st">"small_table_agent.rds"</span>,</span>
+<span>      delimiter <span class="op">=</span> <span class="st">"-"</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    keep_tbl <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    keep_extracts <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p>In the above, we used the written-to-disk agent (The
 <code>"agent-small_table.yml"</code> YAML file) for an interrogation via
 <code><a href="yaml_agent_interrogate.html">yaml_agent_interrogate()</a></code>. Then, the results were written to disk as an RDS

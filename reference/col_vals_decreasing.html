@@ -32,7 +32,7 @@ table (after any preconditions have been applied)."><meta property="og:image" co
     
     <a class="navbar-brand me-2" href="../index.html">pointblank</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -100,40 +100,40 @@ table (after any <code>preconditions</code> have been applied).</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">col_vals_decreasing</span><span class="op">(</span>
-  <span class="va">x</span>,
-  <span class="va">columns</span>,
-  allow_stationary <span class="op">=</span> <span class="cn">FALSE</span>,
-  increasing_tol <span class="op">=</span> <span class="cn">NULL</span>,
-  na_pass <span class="op">=</span> <span class="cn">FALSE</span>,
-  preconditions <span class="op">=</span> <span class="cn">NULL</span>,
-  segments <span class="op">=</span> <span class="cn">NULL</span>,
-  actions <span class="op">=</span> <span class="cn">NULL</span>,
-  step_id <span class="op">=</span> <span class="cn">NULL</span>,
-  label <span class="op">=</span> <span class="cn">NULL</span>,
-  brief <span class="op">=</span> <span class="cn">NULL</span>,
-  active <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span>
-
-<span class="fu">expect_col_vals_decreasing</span><span class="op">(</span>
-  <span class="va">object</span>,
-  <span class="va">columns</span>,
-  allow_stationary <span class="op">=</span> <span class="cn">FALSE</span>,
-  increasing_tol <span class="op">=</span> <span class="cn">NULL</span>,
-  na_pass <span class="op">=</span> <span class="cn">FALSE</span>,
-  preconditions <span class="op">=</span> <span class="cn">NULL</span>,
-  threshold <span class="op">=</span> <span class="fl">1</span>
-<span class="op">)</span>
-
-<span class="fu">test_col_vals_decreasing</span><span class="op">(</span>
-  <span class="va">object</span>,
-  <span class="va">columns</span>,
-  allow_stationary <span class="op">=</span> <span class="cn">FALSE</span>,
-  increasing_tol <span class="op">=</span> <span class="cn">NULL</span>,
-  na_pass <span class="op">=</span> <span class="cn">FALSE</span>,
-  preconditions <span class="op">=</span> <span class="cn">NULL</span>,
-  threshold <span class="op">=</span> <span class="fl">1</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">col_vals_decreasing</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  <span class="va">columns</span>,</span>
+<span>  allow_stationary <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  increasing_tol <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  na_pass <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  preconditions <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  segments <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  actions <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  step_id <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  label <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  brief <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  active <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">expect_col_vals_decreasing</span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  <span class="va">columns</span>,</span>
+<span>  allow_stationary <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  increasing_tol <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  na_pass <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  preconditions <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  threshold <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">test_col_vals_decreasing</span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  <span class="va">columns</span>,</span>
+<span>  allow_stationary <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  increasing_tol <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  na_pass <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  preconditions <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  threshold <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -391,18 +391,18 @@ validation function. Here is an example of how a complex call of
 <code>col_vals_decreasing()</code> as a validation step is expressed in R code and in
 the corresponding YAML representation.</p>
 <p>R statement:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="../reference/col_vals_decreasing.html">col_vals_decreasing</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>,
-    allow_stationary <span class="op">=</span> <span class="cn">TRUE</span>,
-    increasing_tol <span class="op">=</span> <span class="fl">0.5</span>,
-    na_pass <span class="op">=</span> <span class="cn">TRUE</span>,
-    preconditions <span class="op">=</span> <span class="op">~</span> <span class="va">.</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">a</span> <span class="op">&lt;</span> <span class="fl">10</span><span class="op">)</span>,
-    segments <span class="op">=</span> <span class="va">b</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"group_1"</span>, <span class="st">"group_2"</span><span class="op">)</span>,
-    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span>warn_at <span class="op">=</span> <span class="fl">0.1</span>, stop_at <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span>,
-    label <span class="op">=</span> <span class="st">"The `col_vals_decreasing()` step."</span>,
-    active <span class="op">=</span> <span class="cn">FALSE</span>
-  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/col_vals_decreasing.html">col_vals_decreasing</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>,</span>
+<span>    allow_stationary <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    increasing_tol <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>    na_pass <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    preconditions <span class="op">=</span> <span class="op">~</span> <span class="va">.</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">a</span> <span class="op">&lt;</span> <span class="fl">10</span><span class="op">)</span>,</span>
+<span>    segments <span class="op">=</span> <span class="va">b</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"group_1"</span>, <span class="st">"group_2"</span><span class="op">)</span>,</span>
+<span>    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span>warn_at <span class="op">=</span> <span class="fl">0.1</span>, stop_at <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span>,</span>
+<span>    label <span class="op">=</span> <span class="st">"The `col_vals_decreasing()` step."</span>,</span>
+<span>    active <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p>YAML representation:</p>
 <p></p><div class="sourceCode yaml"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">steps</span><span class="kw">:</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">col_vals_decreasing</span><span class="kw">:</span></span>
@@ -433,16 +433,16 @@ by using the <code><a href="yaml_agent_string.html">yaml_agent_string()</a></cod
 which contains date-time values. Let's create a column of difftime values (in
 <code>time_left</code>) that describes the time remaining in the month relative to the
 session start.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">game_revenue_2</span> <span class="op">&lt;-</span>
-  <span class="va">game_revenue</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>
-    time_left <span class="op">=</span> 
-      <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd_hms.html" class="external-link">ymd_hms</a></span><span class="op">(</span>
-        <span class="st">"2015-02-01 00:00:00"</span>
-      <span class="op">)</span> <span class="op">-</span> <span class="va">session_start</span>
-  <span class="op">)</span>
-
-<span class="va">game_revenue_2</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">game_revenue_2</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">game_revenue</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>    time_left <span class="op">=</span> </span>
+<span>      <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd_hms.html" class="external-link">ymd_hms</a></span><span class="op">(</span></span>
+<span>        <span class="st">"2015-02-01 00:00:00"</span></span>
+<span>      <span class="op">)</span> <span class="op">-</span> <span class="va">session_start</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">game_revenue_2</span></span></code></pre><p></p></div>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 2,000 × 12</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    player_id       session_id  session_start       time                item_type</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;           &lt;chr&gt;       &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;    </span></span>
@@ -467,13 +467,13 @@ values that are decreasing from top to bottom.</p><div class="section">
 <p>Validate that all <code>"difftime"</code> values in the column <code>time_left</code> are
 decreasing, and, allow for repeating values (<code>allow_stationary</code> will be set
 to <code>TRUE</code>).</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">agent</span> <span class="op">&lt;-</span>
-  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">game_revenue_2</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_decreasing.html">col_vals_decreasing</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">time_left</span><span class="op">)</span>,
-    allow_stationary <span class="op">=</span> <span class="cn">TRUE</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">game_revenue_2</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_decreasing.html">col_vals_decreasing</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">time_left</span><span class="op">)</span>,</span>
+<span>    allow_stationary <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>Printing the <code>agent</code> in the console shows the validation report in the
 Viewer. Here is an excerpt of validation report, showing the single entry
 that corresponds to the validation step demonstrated here.</p>
@@ -487,14 +487,14 @@ that corresponds to the validation step demonstrated here.</p>
 <p>This way of using validation functions acts as a data filter. Data is passed
 through but should <code><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop()</a></code> if there is a single test unit failing. The
 behavior of side effects can be customized with the <code>actions</code> option.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">game_revenue_2</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_decreasing.html">col_vals_decreasing</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">time_left</span><span class="op">)</span>,
-    allow_stationary <span class="op">=</span> <span class="cn">TRUE</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">time_left</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">game_revenue_2</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_decreasing.html">col_vals_decreasing</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">time_left</span><span class="op">)</span>,</span>
+<span>    allow_stationary <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">time_left</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 1 × 1</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">##       n</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;int&gt;</span></span>
@@ -507,11 +507,11 @@ behavior of side effects can be customized with the <code>actions</code> option.
 
 <p>With the <code>expect_*()</code> form, we would typically perform one validation at a
 time. This is primarily used in <strong>testthat</strong> tests.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/col_vals_decreasing.html">expect_col_vals_decreasing</a></span><span class="op">(</span>
-  <span class="va">game_revenue_2</span>,
-  columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">time_left</span><span class="op">)</span>,
-  allow_stationary <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/col_vals_decreasing.html">expect_col_vals_decreasing</a></span><span class="op">(</span></span>
+<span>  <span class="va">game_revenue_2</span>,</span>
+<span>  columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">time_left</span><span class="op">)</span>,</span>
+<span>  allow_stationary <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre><p></p></div>
 </div>
 
 <div class="section">
@@ -520,11 +520,11 @@ time. This is primarily used in <strong>testthat</strong> tests.</p>
 
 <p>With the <code>test_*()</code> form, we should get a single logical value returned to
 us.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">game_revenue_2</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_decreasing.html">test_col_vals_decreasing</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">time_left</span><span class="op">)</span>,
-    allow_stationary <span class="op">=</span> <span class="cn">TRUE</span>
-  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">game_revenue_2</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_decreasing.html">test_col_vals_decreasing</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">time_left</span><span class="op">)</span>,</span>
+<span>    allow_stationary <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span></code></pre><p></p></div>
 </div>
 

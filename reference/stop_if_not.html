@@ -20,7 +20,7 @@ stopifnot() does not."><meta property="og:image" content="https://rich-iannone.g
     
     <a class="navbar-brand me-2" href="../index.html">pointblank</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,7 +82,7 @@ will yield the correct reporting of successes and failures whereas
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">stop_if_not</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">stop_if_not</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -116,24 +116,24 @@ all) <code>TRUE</code>.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># This checks whether the number of</span></span>
-<span class="r-in"><span class="co"># rows in `small_table` is greater</span></span>
-<span class="r-in"><span class="co"># than `10`</span></span>
-<span class="r-in"><span class="fu">stop_if_not</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">small_table</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">10</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># This checks whether the number of</span></span></span>
+<span class="r-in"><span><span class="co"># rows in `small_table` is greater</span></span></span>
+<span class="r-in"><span><span class="co"># than `10`</span></span></span>
+<span class="r-in"><span><span class="fu">stop_if_not</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">small_table</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># This will stop for sure: there</span></span>
-<span class="r-in"><span class="co"># isn't a `time` column in `small_table`</span></span>
-<span class="r-in"><span class="co"># (but there are the `date_time` and</span></span>
-<span class="r-in"><span class="co"># `date` columns)</span></span>
-<span class="r-in"><span class="co"># stop_if_not("time" %in% colnames(small_table))</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># You're not bound to using tabular</span></span>
-<span class="r-in"><span class="co"># data here, any statements that</span></span>
-<span class="r-in"><span class="co"># evaluate to logical vectors will work</span></span>
-<span class="r-in"><span class="fu">stop_if_not</span><span class="op">(</span><span class="fl">1</span> <span class="op">&lt;</span> <span class="fl">20</span><span class="op">:</span><span class="fl">25</span> <span class="op">-</span> <span class="fl">18</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># This will stop for sure: there</span></span></span>
+<span class="r-in"><span><span class="co"># isn't a `time` column in `small_table`</span></span></span>
+<span class="r-in"><span><span class="co"># (but there are the `date_time` and</span></span></span>
+<span class="r-in"><span><span class="co"># `date` columns)</span></span></span>
+<span class="r-in"><span><span class="co"># stop_if_not("time" %in% colnames(small_table))</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># You're not bound to using tabular</span></span></span>
+<span class="r-in"><span><span class="co"># data here, any statements that</span></span></span>
+<span class="r-in"><span><span class="co"># evaluate to logical vectors will work</span></span></span>
+<span class="r-in"><span><span class="fu">stop_if_not</span><span class="op">(</span><span class="fl">1</span> <span class="op">&lt;</span> <span class="fl">20</span><span class="op">:</span><span class="fl">25</span> <span class="op">-</span> <span class="fl">18</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

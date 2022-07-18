@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pointblank</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -122,37 +122,37 @@ DataFrame (as a <code>tbl_spark</code> object).</p>
 <strong>pointblank</strong> package. It’s a small, uninteresting dataset
 but it’s useful for simple examples. This is what it looks like:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">small_table</span></code></pre></div>
-<pre><code><span class="co">## <span style="color: #949494;"># A tibble: 13 × 8</span></span>
-<span class="co">##    date_time           date           a b             c      d e     f    </span>
-<span class="co">##    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
-<span class="co">## <span style="color: #BCBCBC;"> 1</span> 2016-01-04 <span style="color: #949494;">11:00:00</span> 2016-01-04     2 1-bcd-345     3  <span style="text-decoration: underline;">3</span>423. TRUE  high </span>
-<span class="co">## <span style="color: #BCBCBC;"> 2</span> 2016-01-04 <span style="color: #949494;">00:32:00</span> 2016-01-04     3 5-egh-163     8 <span style="text-decoration: underline;">10</span>000. TRUE  low  </span>
-<span class="co">## <span style="color: #BCBCBC;"> 3</span> 2016-01-05 <span style="color: #949494;">13:32:00</span> 2016-01-05     6 8-kdg-938     3  <span style="text-decoration: underline;">2</span>343. TRUE  high </span>
-<span class="co">## <span style="color: #BCBCBC;"> 4</span> 2016-01-06 <span style="color: #949494;">17:23:00</span> 2016-01-06     2 5-jdo-903    <span style="color: #BB0000;">NA</span>  <span style="text-decoration: underline;">3</span>892. FALSE mid  </span>
-<span class="co">## <span style="color: #BCBCBC;"> 5</span> 2016-01-09 <span style="color: #949494;">12:36:00</span> 2016-01-09     8 3-ldm-038     7   284. TRUE  low  </span>
-<span class="co">## <span style="color: #BCBCBC;"> 6</span> 2016-01-11 <span style="color: #949494;">06:15:00</span> 2016-01-11     4 2-dhe-923     4  <span style="text-decoration: underline;">3</span>291. TRUE  mid  </span>
-<span class="co">## <span style="color: #BCBCBC;"> 7</span> 2016-01-15 <span style="color: #949494;">18:46:00</span> 2016-01-15     7 1-knw-093     3   843. TRUE  high </span>
-<span class="co">## <span style="color: #BCBCBC;"> 8</span> 2016-01-17 <span style="color: #949494;">11:27:00</span> 2016-01-17     4 5-boe-639     2  <span style="text-decoration: underline;">1</span>036. FALSE low  </span>
-<span class="co">## <span style="color: #BCBCBC;"> 9</span> 2016-01-20 <span style="color: #949494;">04:30:00</span> 2016-01-20     3 5-bce-642     9   838. FALSE high </span>
-<span class="co">## <span style="color: #BCBCBC;">10</span> 2016-01-20 <span style="color: #949494;">04:30:00</span> 2016-01-20     3 5-bce-642     9   838. FALSE high </span>
-<span class="co">## <span style="color: #BCBCBC;">11</span> 2016-01-26 <span style="color: #949494;">20:07:00</span> 2016-01-26     4 2-dmx-010     7   834. TRUE  low  </span>
-<span class="co">## <span style="color: #BCBCBC;">12</span> 2016-01-28 <span style="color: #949494;">02:51:00</span> 2016-01-28     2 7-dmx-010     8   108. FALSE low  </span>
-<span class="co">## <span style="color: #BCBCBC;">13</span> 2016-01-30 <span style="color: #949494;">11:23:00</span> 2016-01-30     1 3-dka-303    <span style="color: #BB0000;">NA</span>  <span style="text-decoration: underline;">2</span>230. TRUE  high</span></code></pre>
+<code class="sourceCode R"><span><span class="va">small_table</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 13 × 8</span></span></span>
+<span><span class="co">##    date_time           date           a b             c      d e     f    </span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> 2016-01-04 <span style="color: #949494;">11:00:00</span> 2016-01-04     2 1-bcd-345     3  <span style="text-decoration: underline;">3</span>423. TRUE  high </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> 2016-01-04 <span style="color: #949494;">00:32:00</span> 2016-01-04     3 5-egh-163     8 <span style="text-decoration: underline;">10</span>000. TRUE  low  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> 2016-01-05 <span style="color: #949494;">13:32:00</span> 2016-01-05     6 8-kdg-938     3  <span style="text-decoration: underline;">2</span>343. TRUE  high </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> 2016-01-06 <span style="color: #949494;">17:23:00</span> 2016-01-06     2 5-jdo-903    <span style="color: #BB0000;">NA</span>  <span style="text-decoration: underline;">3</span>892. FALSE mid  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> 2016-01-09 <span style="color: #949494;">12:36:00</span> 2016-01-09     8 3-ldm-038     7   284. TRUE  low  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> 2016-01-11 <span style="color: #949494;">06:15:00</span> 2016-01-11     4 2-dhe-923     4  <span style="text-decoration: underline;">3</span>291. TRUE  mid  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> 2016-01-15 <span style="color: #949494;">18:46:00</span> 2016-01-15     7 1-knw-093     3   843. TRUE  high </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> 2016-01-17 <span style="color: #949494;">11:27:00</span> 2016-01-17     4 5-boe-639     2  <span style="text-decoration: underline;">1</span>036. FALSE low  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> 2016-01-20 <span style="color: #949494;">04:30:00</span> 2016-01-20     3 5-bce-642     9   838. FALSE high </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> 2016-01-20 <span style="color: #949494;">04:30:00</span> 2016-01-20     3 5-bce-642     9   838. FALSE high </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">11</span> 2016-01-26 <span style="color: #949494;">20:07:00</span> 2016-01-26     4 2-dmx-010     7   834. TRUE  low  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">12</span> 2016-01-28 <span style="color: #949494;">02:51:00</span> 2016-01-28     2 7-dmx-010     8   108. FALSE low  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">13</span> 2016-01-30 <span style="color: #949494;">11:23:00</span> 2016-01-30     1 3-dka-303    <span style="color: #BB0000;">NA</span>  <span style="text-decoration: underline;">2</span>230. TRUE  high</span></span></code></pre>
 <p>Let’s use the <code>small_table</code> object and see what results
 from introducing it to the <em>informant</em>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">informant</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span>
-    tbl <span class="op">=</span> <span class="va">small_table</span>,
-    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,
-    label <span class="op">=</span> <span class="st">"Example No. 1"</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">informant</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span></span>
+<span>    tbl <span class="op">=</span> <span class="va">small_table</span>,</span>
+<span>    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,</span>
+<span>    label <span class="op">=</span> <span class="st">"Example No. 1"</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <p>Printing the <em>informant</em> will show us the
 automatically-generated information on the <code>small_table</code>
 dataset, adding the <em>Columns</em> section.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">informant</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">informant</span></span></code></pre></div>
 <div style="text-align: center;">
 <img src="https://silly-jackson-b3dec8.netlify.app/informant_report_1.png" alt="This is a tabular report entitled 'Pointblank Information'. The header contains information about the input table (identifying it as a tibble called 'small_table') and includes the number of rows (13) and columns (8). In the table body, the section entitled 'Columns' has a row for each column that has been identified in 'small_table'. Each row consists of the column name (enclosed in a box) and the column type (for example, 'Date', 'integer', etc.). There are 8 columns in the input table so there are 8 rows in this reporting table ('date_time', 'date', and 'a' through to 'f')." width="80%">
 </div>
@@ -161,7 +161,7 @@ dataset, adding the <em>Columns</em> section.</p>
 <code><a href="../reference/get_informant_report.html">get_informant_report()</a></code> and have access to additional output
 options, like producing a narrower version of the output.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/get_informant_report.html">get_informant_report</a></span><span class="op">(</span><span class="va">informant</span>, size <span class="op">=</span> <span class="st">"small"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_informant_report.html">get_informant_report</a></span><span class="op">(</span><span class="va">informant</span>, size <span class="op">=</span> <span class="st">"small"</span><span class="op">)</span></span></code></pre></div>
 <div style="text-align: center;">
 <img src="https://silly-jackson-b3dec8.netlify.app/informant_report_2.png" alt="This is a tabular report entitled 'Pointblank Information'. This report has the same content as in the previous figure (with 8 rows, one for each column in 'small_table'). The difference here is that the table is narrower (i.e., width reduced by 30%) and the text is slightly smaller in size." width="50%">
 </div>
@@ -183,27 +183,27 @@ key aspect of the data table</li>
 <p>Let’s try adding some information with each of these functions and
 then look at the resulting report.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">informant</span> <span class="op">&lt;-</span>
-  <span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span>
-    tbl <span class="op">=</span> <span class="va">small_table</span>,
-    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,
-    label <span class="op">=</span> <span class="st">"Example No. 2"</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/info_tabular.html">info_tabular</a></span><span class="op">(</span>
-    description <span class="op">=</span> <span class="st">"This table is included in the **pointblank** pkg."</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="st">"date_time"</span>,
-    info <span class="op">=</span> <span class="st">"This column is full of timestamps."</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/info_section.html">info_section</a></span><span class="op">(</span>
-    section_name <span class="op">=</span> <span class="st">"further information"</span>, 
-    `examples and documentation` <span class="op">=</span> <span class="st">"Examples for how to use the `info_*()` functions
-    (and many more) are available at the 
-    [**pointblank** site](https://rich-iannone.github.io/pointblank/)."</span>
-  <span class="op">)</span>
-
-<span class="va">informant</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">informant</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span></span>
+<span>    tbl <span class="op">=</span> <span class="va">small_table</span>,</span>
+<span>    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,</span>
+<span>    label <span class="op">=</span> <span class="st">"Example No. 2"</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/info_tabular.html">info_tabular</a></span><span class="op">(</span></span>
+<span>    description <span class="op">=</span> <span class="st">"This table is included in the **pointblank** pkg."</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="st">"date_time"</span>,</span>
+<span>    info <span class="op">=</span> <span class="st">"This column is full of timestamps."</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/info_section.html">info_section</a></span><span class="op">(</span></span>
+<span>    section_name <span class="op">=</span> <span class="st">"further information"</span>, </span>
+<span>    `examples and documentation` <span class="op">=</span> <span class="st">"Examples for how to use the `info_*()` functions</span></span>
+<span><span class="st">    (and many more) are available at the </span></span>
+<span><span class="st">    [**pointblank** site](https://rich-iannone.github.io/pointblank/)."</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">informant</span></span></code></pre></div>
 <div style="text-align: center;">
 <img src="https://silly-jackson-b3dec8.netlify.app/informant_report_3.png" alt="This is a tabular report entitled 'Pointblank Information'. The header contains information about the input table (identifying it as a tibble called 'small_table') and includes the number of rows (13) and columns (8). In the table body, the section entitled 'Columns' has a row for each column that has been identified in 'small_table'. Each row consists of the column name (enclosed in a box) and the column type (for example, 'Date', 'integer', etc.). There are 8 columns in the input table so there are 8 rows in this reporting table ('date_time', 'date', and 'a' through to 'f'). The first row (corresponding to the 'date_time' column in 'small_table') contains the following descriptive text: 'This column is full of timestamps'. This is preceded by a label with the word 'INFO'. Another table section is at the bottom, called 'Further Information'. It contains a subsection called 'Examples and Documentation', and, within that, there is the text 'Examples for how to use the info_* functions (and many more) are available at the pointblank site'." width="80%">
 </div>
@@ -233,8 +233,8 @@ multiple calls. If we want to use more complicated subsection names than
 a single word, then we can enclose that text in back ticks. For example,
 why not put some emoji in your subsection name?</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">informant</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="../reference/info_tabular.html">info_tabular</a></span><span class="op">(</span>`🔄 updates` <span class="op">=</span> <span class="st">"This table is not regularly updated."</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">informant</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/info_tabular.html">info_tabular</a></span><span class="op">(</span>`🔄 updates` <span class="op">=</span> <span class="st">"This table is not regularly updated."</span><span class="op">)</span></span></code></pre></div>
 <div style="text-align: center;">
 <img src="https://silly-jackson-b3dec8.netlify.app/informant_report_4.png" alt="This is the same tabular report entitled 'Pointblank Information' as in previous figures. This is an excerpt of the full output, showing the header and the first section (newly added). The header contains information about the input table (identifying it as a tibble called 'small_table') and includes the number of rows (13) and columns (8). In the table body, there is a section entitled 'Table' (the 'Columns' section, available in the full output, is not presented here). The 'Table' section (the first in the reporting table) contains subsections called 'Description' and 'Updates'. Within the 'Description' section there is the text 'This table is included in the pointblank package'. Within the 'Updates' section, we have the text 'This table is not regularly updated'." width="80%">
 </div>
@@ -270,55 +270,55 @@ within each column as well.</p>
 make multiple calls of <code><a href="../reference/info_columns.html">info_columns()</a></code> and disperse common
 pieces of <em>info text</em> to multiple columns and append the text to
 any existing. Let’s take a look at this in practice with the far more
-interesting <code>palmerpenguins::penguins</code> dataset. Here, we fill
+interesting <code><a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html" class="external-link">palmerpenguins::penguins</a></code> dataset. Here, we fill
 in information for each column by adapting <a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html" class="external-link">documentation</a>
 from the <strong>palmerpenguins</strong> package.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">informant_pp</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span>
-    tbl <span class="op">=</span> <span class="fu">palmerpenguins</span><span class="fu">::</span><span class="va">penguins</span>,
-    tbl_name <span class="op">=</span> <span class="st">"penguins"</span>,
-    label <span class="op">=</span> <span class="st">"The `penguins` dataset from the **palmerpenguins** 📦."</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="st">"species"</span>,
-    `ℹ️` <span class="op">=</span> <span class="st">"A factor denoting penguin species (*Adélie*, *Chinstrap*, and *Gentoo*)."</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="st">"island"</span>,
-    `ℹ️` <span class="op">=</span> <span class="st">"A factor denoting island in Palmer Archipelago, Antarctica
-    (*Biscoe*, *Dream*, or *Torgersen*)."</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="st">"bill_length_mm"</span>,
-    `ℹ️` <span class="op">=</span> <span class="st">"A number denoting bill length"</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="st">"bill_depth_mm"</span>,
-    `ℹ️` <span class="op">=</span> <span class="st">"A number denoting bill depth"</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="st">"flipper_length_mm"</span>,
-    `ℹ️` <span class="op">=</span> <span class="st">"An integer denoting flipper length"</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with</a></span><span class="op">(</span><span class="st">"mm"</span><span class="op">)</span>,
-    `ℹ️` <span class="op">=</span> <span class="st">"(in units of millimeters)."</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="st">"body_mass_g"</span>,
-    `ℹ️` <span class="op">=</span> <span class="st">"An integer denoting body mass (grams)."</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="st">"sex"</span>,
-    `ℹ️` <span class="op">=</span> <span class="st">"A factor denoting penguin sex (`\"female\"`, `\"male\"`)."</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="st">"year"</span>,
-    `ℹ️` <span class="op">=</span> <span class="st">"The study year (e.g., `2007`, `2008`, `2009`)."</span>
-  <span class="op">)</span>
-
-<span class="va">informant_pp</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">informant_pp</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span></span>
+<span>    tbl <span class="op">=</span> <span class="fu">palmerpenguins</span><span class="fu">::</span><span class="va"><a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html" class="external-link">penguins</a></span>,</span>
+<span>    tbl_name <span class="op">=</span> <span class="st">"penguins"</span>,</span>
+<span>    label <span class="op">=</span> <span class="st">"The `penguins` dataset from the **palmerpenguins** 📦."</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="st">"species"</span>,</span>
+<span>    `ℹ️` <span class="op">=</span> <span class="st">"A factor denoting penguin species (*Adélie*, *Chinstrap*, and *Gentoo*)."</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="st">"island"</span>,</span>
+<span>    `ℹ️` <span class="op">=</span> <span class="st">"A factor denoting island in Palmer Archipelago, Antarctica</span></span>
+<span><span class="st">    (*Biscoe*, *Dream*, or *Torgersen*)."</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="st">"bill_length_mm"</span>,</span>
+<span>    `ℹ️` <span class="op">=</span> <span class="st">"A number denoting bill length"</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="st">"bill_depth_mm"</span>,</span>
+<span>    `ℹ️` <span class="op">=</span> <span class="st">"A number denoting bill depth"</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="st">"flipper_length_mm"</span>,</span>
+<span>    `ℹ️` <span class="op">=</span> <span class="st">"An integer denoting flipper length"</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with</a></span><span class="op">(</span><span class="st">"mm"</span><span class="op">)</span>,</span>
+<span>    `ℹ️` <span class="op">=</span> <span class="st">"(in units of millimeters)."</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="st">"body_mass_g"</span>,</span>
+<span>    `ℹ️` <span class="op">=</span> <span class="st">"An integer denoting body mass (grams)."</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="st">"sex"</span>,</span>
+<span>    `ℹ️` <span class="op">=</span> <span class="st">"A factor denoting penguin sex (`\"female\"`, `\"male\"`)."</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="st">"year"</span>,</span>
+<span>    `ℹ️` <span class="op">=</span> <span class="st">"The study year (e.g., `2007`, `2008`, `2009`)."</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">informant_pp</span></span></code></pre></div>
 <div style="text-align: center;">
 <img src="https://silly-jackson-b3dec8.netlify.app/informant_report_5.png" alt="This is a tabular report entitled 'Pointblank Information'. The header contains information about the input table (identifying it as a tibble called 'penguins') and includes the number of rows (344) and columns (8). In the table body, the section entitled 'Columns' has a row for each column that has been identified in 'penguins'. Each row consists of the column name (enclosed in a box) and the column type (for example, 'Date', 'integer', etc.). Descriptive information for each column in the 'penguins' dataset is available in each row. Here is a listing for each: (1)
 species, A factor denoting penguin species (Adélie, Chinstrap, and Gentoo); (2) island, A factor denoting island in Palmer Archipelago, Antarctica (Biscoe, Dream, or Torgersen); (3) bill_length_mm, A number denoting bill length (in units of millimeters); (4) bill_depth_mm, A number denoting bill depth (in units of millimeters); (5) flipper_length_mm, An integer denoting flipper length (in units of millimeters); (6) body_mass_g, An integer denoting body mass (grams).; (7) sex, A factor denoting penguin sex (female, male); and (8) year, The study year (e.g., 2007, 2008, 2009)." width="80%">
@@ -358,40 +358,40 @@ place it extra sections (and their subsections) with the
 <code><a href="../reference/info_section.html">info_section()</a></code> function. These sections go below the
 aforementioned sections in the order of creation. Let’s put together
 some extra sections that further describe the
-<code>palmerpenguins::penguins</code> dataset.</p>
+<code><a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html" class="external-link">palmerpenguins::penguins</a></code> dataset.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">informant_pp</span> <span class="op">&lt;-</span> 
-  <span class="va">informant_pp</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/info_section.html">info_section</a></span><span class="op">(</span>
-    section_name <span class="op">=</span> <span class="st">"source"</span>,
-    <span class="st">"References"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
-<span class="st">"- Adélie penguins: Palmer Station Antarctica LTER and K. Gorman. 2020. Structural 
-size measurements and isotopic signatures of foraging among adult male and female 
-Adélie penguins (Pygoscelis adeliae) nesting along the Palmer Archipelago near
-Palmer Station, 2007-2009 ver 5. Environmental Data Initiative
-&lt;https://doi.org/10.6073/pasta/98b16d7d563f265cb52372c8ca99e60f&gt;"</span>,
-
-<span class="st">"- Gentoo penguins: Palmer Station Antarctica LTER and K. Gorman. 2020. Structural
-size measurements and isotopic signatures of foraging among adult male and female
-Gentoo penguin (Pygoscelis papua) nesting along the Palmer Archipelago near Palmer
-Station, 2007-2009 ver 5. Environmental Data Initiative
-&lt;https://doi.org/10.6073/pasta/7fca67fb28d56ee2ffa3d9370ebda689&gt;"</span>,
-
-<span class="st">"- Chinstrap penguins: Palmer Station Antarctica LTER and K. Gorman. 2020.
-Structural size measurements and isotopic signatures of foraging among adult male
-and female Chinstrap penguin (Pygoscelis antarcticus) nesting along the Palmer
-Archipelago near Palmer Station, 2007-2009 ver 6. Environmental Data Initiative
-&lt;https://doi.org/10.6073/pasta/c14dfcfada8ea13a17536e73eb6fbe9e&gt;
-"</span>
-    <span class="op">)</span>,
-    <span class="st">"Note"</span> <span class="op">=</span> <span class="st">"
-Originally published in: Gorman KB, Williams TD, Fraser WR (2014) Ecological Sexual
-Dimorphism and Environmental Variability within a Community of Antarctic Penguins
-(Genus Pygoscelis). PLoS ONE 9(3): e90081. doi:10.1371/journal.pone.0090081
-"</span>
-<span class="op">)</span>
-
-<span class="va">informant_pp</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">informant_pp</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="va">informant_pp</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/info_section.html">info_section</a></span><span class="op">(</span></span>
+<span>    section_name <span class="op">=</span> <span class="st">"source"</span>,</span>
+<span>    <span class="st">"References"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span><span class="st">"- Adélie penguins: Palmer Station Antarctica LTER and K. Gorman. 2020. Structural </span></span>
+<span><span class="st">size measurements and isotopic signatures of foraging among adult male and female </span></span>
+<span><span class="st">Adélie penguins (Pygoscelis adeliae) nesting along the Palmer Archipelago near</span></span>
+<span><span class="st">Palmer Station, 2007-2009 ver 5. Environmental Data Initiative</span></span>
+<span><span class="st">&lt;https://doi.org/10.6073/pasta/98b16d7d563f265cb52372c8ca99e60f&gt;"</span>,</span>
+<span></span>
+<span><span class="st">"- Gentoo penguins: Palmer Station Antarctica LTER and K. Gorman. 2020. Structural</span></span>
+<span><span class="st">size measurements and isotopic signatures of foraging among adult male and female</span></span>
+<span><span class="st">Gentoo penguin (Pygoscelis papua) nesting along the Palmer Archipelago near Palmer</span></span>
+<span><span class="st">Station, 2007-2009 ver 5. Environmental Data Initiative</span></span>
+<span><span class="st">&lt;https://doi.org/10.6073/pasta/7fca67fb28d56ee2ffa3d9370ebda689&gt;"</span>,</span>
+<span></span>
+<span><span class="st">"- Chinstrap penguins: Palmer Station Antarctica LTER and K. Gorman. 2020.</span></span>
+<span><span class="st">Structural size measurements and isotopic signatures of foraging among adult male</span></span>
+<span><span class="st">and female Chinstrap penguin (Pygoscelis antarcticus) nesting along the Palmer</span></span>
+<span><span class="st">Archipelago near Palmer Station, 2007-2009 ver 6. Environmental Data Initiative</span></span>
+<span><span class="st">&lt;https://doi.org/10.6073/pasta/c14dfcfada8ea13a17536e73eb6fbe9e&gt;</span></span>
+<span><span class="st">"</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    <span class="st">"Note"</span> <span class="op">=</span> <span class="st">"</span></span>
+<span><span class="st">Originally published in: Gorman KB, Williams TD, Fraser WR (2014) Ecological Sexual</span></span>
+<span><span class="st">Dimorphism and Environmental Variability within a Community of Antarctic Penguins</span></span>
+<span><span class="st">(Genus Pygoscelis). PLoS ONE 9(3): e90081. doi:10.1371/journal.pone.0090081</span></span>
+<span><span class="st">"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">informant_pp</span></span></code></pre></div>
 <div style="text-align: center;">
 <img src="https://silly-jackson-b3dec8.netlify.app/informant_report_6.png" alt="This is an excerpt of tabular report entitled 'Pointblank Information'. The header is not presented here. Instead the 'Source' section in the report table body is presented (it is the final section in the report table). The 'Source' section contains two subsections: 'References' and 'Note'. The 'References' subsection contains three journal citations that are present in the previous code listing. In the 'Note' subsection, there is a note concerning the original publication of the data in the penguins dataset, which is in Gorman et al. (2014)." width="80%">
 </div>

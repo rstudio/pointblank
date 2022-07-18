@@ -16,7 +16,7 @@ where GitHub URLs for raw user content are needed."><meta property="og:image" co
     
     <a class="navbar-brand me-2" href="../index.html">pointblank</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -76,7 +76,7 @@ where GitHub URLs for raw user content are needed.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">from_github</span><span class="op">(</span><span class="va">file</span>, <span class="va">repo</span>, subdir <span class="op">=</span> <span class="cn">NULL</span>, default_branch <span class="op">=</span> <span class="st">"main"</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">from_github</span><span class="op">(</span><span class="va">file</span>, <span class="va">repo</span>, subdir <span class="op">=</span> <span class="cn">NULL</span>, default_branch <span class="op">=</span> <span class="st">"main"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -126,65 +126,65 @@ usually <code>"main"</code> (the default used here).</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># A valid URL to a data file in GitHub can be</span></span>
-<span class="r-in"><span class="co"># obtained from the HEAD of the default branch</span></span>
-<span class="r-in"><span class="co"># from_github(</span></span>
-<span class="r-in"><span class="co">#   file = "inst/data_files/small_table.csv",</span></span>
-<span class="r-in"><span class="co">#   repo = "rich-iannone/pointblank"</span></span>
-<span class="r-in"><span class="co"># )</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># The path to the file location can be supplied</span></span>
-<span class="r-in"><span class="co"># fully or partially to `subdir`</span></span>
-<span class="r-in"><span class="co"># from_github(</span></span>
-<span class="r-in"><span class="co">#   file = "small_table.csv",</span></span>
-<span class="r-in"><span class="co">#   repo = "rich-iannone/pointblank",</span></span>
-<span class="r-in"><span class="co">#   subdir = "inst/data_files"</span></span>
-<span class="r-in"><span class="co"># )</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># We can use the first call in combination with</span></span>
-<span class="r-in"><span class="co"># `file_tbl()` and `create_agent()`; this</span></span>
-<span class="r-in"><span class="co"># supplies a table-prep formula that gets</span></span>
-<span class="r-in"><span class="co"># a CSV file from the GitHub repository for the</span></span>
-<span class="r-in"><span class="co"># pointblank package </span></span>
-<span class="r-in"><span class="co"># agent &lt;- </span></span>
-<span class="r-in"><span class="co">#   create_agent(</span></span>
-<span class="r-in"><span class="co">#     tbl = ~ file_tbl(</span></span>
-<span class="r-in"><span class="co">#       file = from_github(</span></span>
-<span class="r-in"><span class="co">#         file = "inst/data_files/small_table.csv",</span></span>
-<span class="r-in"><span class="co">#         repo = "rich-iannone/pointblank"</span></span>
-<span class="r-in"><span class="co">#       ),</span></span>
-<span class="r-in"><span class="co">#       col_types = "TDdcddlc"</span></span>
-<span class="r-in"><span class="co">#     )</span></span>
-<span class="r-in"><span class="co">#   ) %&gt;%</span></span>
-<span class="r-in"><span class="co">#   col_vals_gt(vars(a), 0) %&gt;%</span></span>
-<span class="r-in"><span class="co">#   interrogate()</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># The `from_github()` helper function is</span></span>
-<span class="r-in"><span class="co"># pretty powerful and can get at lots of</span></span>
-<span class="r-in"><span class="co"># different files in a repository</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># A data file from GitHub can be obtained from</span></span>
-<span class="r-in"><span class="co"># a commit at release time</span></span>
-<span class="r-in"><span class="co"># from_github(</span></span>
-<span class="r-in"><span class="co">#   file = "inst/extdata/small_table.csv",</span></span>
-<span class="r-in"><span class="co">#   repo = "rich-iannone/pointblank@v0.2.1"</span></span>
-<span class="r-in"><span class="co"># )</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># A file may also be obtained from a repo at the</span></span>
-<span class="r-in"><span class="co"># point in time of a specific commit (partial or</span></span>
-<span class="r-in"><span class="co"># full SHA-1 hash for the commit can be used)</span></span>
-<span class="r-in"><span class="co"># from_github(</span></span>
-<span class="r-in"><span class="co">#   file = "data-raw/small_table.csv",</span></span>
-<span class="r-in"><span class="co">#   repo = "rich-iannone/pointblank@e04a71"</span></span>
-<span class="r-in"><span class="co"># )</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># A file may also be obtained from an</span></span>
-<span class="r-in"><span class="co"># *open* pull request</span></span>
-<span class="r-in"><span class="co"># from_github(</span></span>
-<span class="r-in"><span class="co">#   file = "data-raw/small_table.csv",</span></span>
-<span class="r-in"><span class="co">#   repo = "rich-iannone/pointblank#248"</span></span>
-<span class="r-in"><span class="co"># )</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># A valid URL to a data file in GitHub can be</span></span></span>
+<span class="r-in"><span><span class="co"># obtained from the HEAD of the default branch</span></span></span>
+<span class="r-in"><span><span class="co"># from_github(</span></span></span>
+<span class="r-in"><span><span class="co">#   file = "inst/data_files/small_table.csv",</span></span></span>
+<span class="r-in"><span><span class="co">#   repo = "rich-iannone/pointblank"</span></span></span>
+<span class="r-in"><span><span class="co"># )</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># The path to the file location can be supplied</span></span></span>
+<span class="r-in"><span><span class="co"># fully or partially to `subdir`</span></span></span>
+<span class="r-in"><span><span class="co"># from_github(</span></span></span>
+<span class="r-in"><span><span class="co">#   file = "small_table.csv",</span></span></span>
+<span class="r-in"><span><span class="co">#   repo = "rich-iannone/pointblank",</span></span></span>
+<span class="r-in"><span><span class="co">#   subdir = "inst/data_files"</span></span></span>
+<span class="r-in"><span><span class="co"># )</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># We can use the first call in combination with</span></span></span>
+<span class="r-in"><span><span class="co"># `file_tbl()` and `create_agent()`; this</span></span></span>
+<span class="r-in"><span><span class="co"># supplies a table-prep formula that gets</span></span></span>
+<span class="r-in"><span><span class="co"># a CSV file from the GitHub repository for the</span></span></span>
+<span class="r-in"><span><span class="co"># pointblank package </span></span></span>
+<span class="r-in"><span><span class="co"># agent &lt;- </span></span></span>
+<span class="r-in"><span><span class="co">#   create_agent(</span></span></span>
+<span class="r-in"><span><span class="co">#     tbl = ~ file_tbl(</span></span></span>
+<span class="r-in"><span><span class="co">#       file = from_github(</span></span></span>
+<span class="r-in"><span><span class="co">#         file = "inst/data_files/small_table.csv",</span></span></span>
+<span class="r-in"><span><span class="co">#         repo = "rich-iannone/pointblank"</span></span></span>
+<span class="r-in"><span><span class="co">#       ),</span></span></span>
+<span class="r-in"><span><span class="co">#       col_types = "TDdcddlc"</span></span></span>
+<span class="r-in"><span><span class="co">#     )</span></span></span>
+<span class="r-in"><span><span class="co">#   ) %&gt;%</span></span></span>
+<span class="r-in"><span><span class="co">#   col_vals_gt(vars(a), 0) %&gt;%</span></span></span>
+<span class="r-in"><span><span class="co">#   interrogate()</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># The `from_github()` helper function is</span></span></span>
+<span class="r-in"><span><span class="co"># pretty powerful and can get at lots of</span></span></span>
+<span class="r-in"><span><span class="co"># different files in a repository</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># A data file from GitHub can be obtained from</span></span></span>
+<span class="r-in"><span><span class="co"># a commit at release time</span></span></span>
+<span class="r-in"><span><span class="co"># from_github(</span></span></span>
+<span class="r-in"><span><span class="co">#   file = "inst/extdata/small_table.csv",</span></span></span>
+<span class="r-in"><span><span class="co">#   repo = "rich-iannone/pointblank@v0.2.1"</span></span></span>
+<span class="r-in"><span><span class="co"># )</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># A file may also be obtained from a repo at the</span></span></span>
+<span class="r-in"><span><span class="co"># point in time of a specific commit (partial or</span></span></span>
+<span class="r-in"><span><span class="co"># full SHA-1 hash for the commit can be used)</span></span></span>
+<span class="r-in"><span><span class="co"># from_github(</span></span></span>
+<span class="r-in"><span><span class="co">#   file = "data-raw/small_table.csv",</span></span></span>
+<span class="r-in"><span><span class="co">#   repo = "rich-iannone/pointblank@e04a71"</span></span></span>
+<span class="r-in"><span><span class="co"># )</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># A file may also be obtained from an</span></span></span>
+<span class="r-in"><span><span class="co"># *open* pull request</span></span></span>
+<span class="r-in"><span><span class="co"># from_github(</span></span></span>
+<span class="r-in"><span><span class="co">#   file = "data-raw/small_table.csv",</span></span></span>
+<span class="r-in"><span><span class="co">#   repo = "rich-iannone/pointblank#248"</span></span></span>
+<span class="r-in"><span><span class="co"># )</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>

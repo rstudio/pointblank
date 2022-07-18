@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pointblank</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -137,6 +137,18 @@ part of a specified set of values.</li>
 <code><a href="../reference/col_vals_not_in_set.html">expect_col_vals_not_in_set()</a></code>: Expect that column data
 are not part of a specified set of values.</li>
 <li>
+<code><a href="../reference/col_vals_make_set.html">expect_col_vals_make_set()</a></code>: Expect that a set of values
+entirely accounted for in a column of values.</li>
+<li>
+<code><a href="../reference/col_vals_make_subset.html">expect_col_vals_make_subset()</a></code>: Expect that a set of
+values a subset of a column of values.</li>
+<li>
+<code><a href="../reference/col_vals_increasing.html">expect_col_vals_increasing()</a></code>: Expect column data
+increasing by row.</li>
+<li>
+<code><a href="../reference/col_vals_decreasing.html">expect_col_vals_decreasing()</a></code>: Expect column data
+decreasing by row.</li>
+<li>
 <code><a href="../reference/col_vals_null.html">expect_col_vals_null()</a></code>: Expect that column data are
 <code>NULL</code>/<code>NA</code>.</li>
 <li>
@@ -146,14 +158,17 @@ not <code>NULL</code>/<code>NA</code>.</li>
 <code><a href="../reference/col_vals_regex.html">expect_col_vals_regex()</a></code>: Expect that strings in column
 data match a regex pattern.</li>
 <li>
+<code><a href="../reference/col_vals_within_spec.html">expect_col_vals_within_spec()</a></code>: Expect that values in
+column data fit within a specification.</li>
+<li>
 <code><a href="../reference/col_vals_expr.html">expect_col_vals_expr()</a></code>: Expect that column data agree
 with a predicate expression.</li>
 <li>
-<code><a href="../reference/conjointly.html">expect_conjointly()</a></code>: Expect that multiple rowwise
-validations result in joint validity.</li>
-<li>
 <code><a href="../reference/rows_distinct.html">expect_rows_distinct()</a></code>: Expect that row data are
 distinct.</li>
+<li>
+<code><a href="../reference/rows_complete.html">expect_rows_complete()</a></code>: Expect that row data are
+complete.</li>
 <li>
 <code><a href="../reference/col_is_character.html">expect_col_is_character()</a></code>: Expect that the columns
 contain character/string data.</li>
@@ -181,6 +196,21 @@ actually exist.</li>
 <li>
 <code><a href="../reference/col_schema_match.html">expect_col_schema_match()</a></code>: Expect that columns in the
 table (and their types) match a predefined schema.</li>
+<li>
+<code><a href="../reference/row_count_match.html">expect_row_count_match()</a></code>: Expect that the row count
+matches that of a different table.</li>
+<li>
+<code><a href="../reference/col_count_match.html">expect_col_count_match()</a></code>: Expect that the column count
+matches that of a different table.</li>
+<li>
+<code><a href="../reference/conjointly.html">expect_conjointly()</a></code>: Expect that multiple rowwise
+validations result in joint validity.</li>
+<li>
+<code><a href="../reference/serially.html">expect_serially()</a></code>: Run several tests and a final
+validation in a serial manner with a passing expectation.</li>
+<li>
+<code><a href="../reference/specially.html">expect_specially()</a></code>: Perform a specialized validation
+with a user-defined function with a passing expectation.</li>
 </ul>
 <p>Now that we know that the functions are similar in intent but
 different in name, let’s learn how to use these functions
@@ -212,8 +242,8 @@ the <code>small_table</code> dataset, let’s write expectations that show
 that non-NA values in column <code>c</code> are between <code>2</code>
 and <code>9</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">testthat</span><span class="fu">::</span><span class="fu"><a href="https://testthat.r-lib.org/reference/logical-expectations.html" class="external-link">expect_true</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="va">small_table</span><span class="op">$</span><span class="va">c</span><span class="op">)</span> <span class="op">&gt;=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
-<span class="fu">testthat</span><span class="fu">::</span><span class="fu"><a href="https://testthat.r-lib.org/reference/logical-expectations.html" class="external-link">expect_true</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="va">small_table</span><span class="op">$</span><span class="va">c</span><span class="op">)</span> <span class="op">&lt;=</span> <span class="fl">9</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">testthat</span><span class="fu">::</span><span class="fu"><a href="https://testthat.r-lib.org/reference/logical-expectations.html" class="external-link">expect_true</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="va">small_table</span><span class="op">$</span><span class="va">c</span><span class="op">)</span> <span class="op">&gt;=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">testthat</span><span class="fu">::</span><span class="fu"><a href="https://testthat.r-lib.org/reference/logical-expectations.html" class="external-link">expect_true</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="va">small_table</span><span class="op">$</span><span class="va">c</span><span class="op">)</span> <span class="op">&lt;=</span> <span class="fl">9</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>There is no <strong>testthat</strong> function that tests for values
 between two values. The original strategy was to use
 <code><a href="https://testthat.r-lib.org/reference/comparison-expectations.html" class="external-link">testthat::expect_gte()</a></code> and <code>testthat::lte()</code>
@@ -224,7 +254,7 @@ values to be skipped. The best I could do was the above.</p>
 <p>The <strong>pointblank</strong> version of this task makes for a more
 succinct and understandable expectation expression:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/col_vals_between.html">expect_col_vals_between</a></span><span class="op">(</span><span class="va">small_table</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, <span class="fl">2</span>, <span class="fl">9</span>, na_pass <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/col_vals_between.html">expect_col_vals_between</a></span><span class="op">(</span><span class="va">small_table</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, <span class="fl">2</span>, <span class="fl">9</span>, na_pass <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>The arguments in the <code><a href="../reference/col_vals_between.html">expect_col_vals_between()</a></code> give us
 everything we need to check tabular data without having to do subsetting
 and perform other transformations. There are a few added benefits.

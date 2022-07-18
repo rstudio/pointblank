@@ -28,7 +28,7 @@ are equivalent across interrogations."><meta property="og:image" content="https:
     
     <a class="navbar-brand me-2" href="../index.html">pointblank</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -94,7 +94,7 @@ are equivalent across interrogations.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">create_multiagent</span><span class="op">(</span><span class="va">...</span>, lang <span class="op">=</span> <span class="cn">NULL</span>, locale <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">create_multiagent</span><span class="op">(</span><span class="va">...</span>, lang <span class="op">=</span> <span class="cn">NULL</span>, locale <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -134,17 +134,17 @@ for Spanish (Spain, same as <code>"es_ES"</code>).</p></dd>
 
 <p>For the example below, we'll use two different, yet simple tables.</p>
 <p>First, <code>tbl_1</code>:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">tbl_1</span> <span class="op">&lt;-</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>
-    a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span>,
-    b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>,
-    c <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>,
-    d <span class="op">=</span> <span class="va">LETTERS</span><span class="op">[</span><span class="va">a</span><span class="op">]</span>,
-    e <span class="op">=</span> <span class="va">LETTERS</span><span class="op">[</span><span class="va">b</span><span class="op">]</span>,
-    f <span class="op">=</span> <span class="va">LETTERS</span><span class="op">[</span><span class="va">c</span><span class="op">]</span>
-  <span class="op">)</span>
-  
-<span class="va">tbl_1</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">tbl_1</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
+<span>    a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span>,</span>
+<span>    b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>,</span>
+<span>    c <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>,</span>
+<span>    d <span class="op">=</span> <span class="va">LETTERS</span><span class="op">[</span><span class="va">a</span><span class="op">]</span>,</span>
+<span>    e <span class="op">=</span> <span class="va">LETTERS</span><span class="op">[</span><span class="va">b</span><span class="op">]</span>,</span>
+<span>    f <span class="op">=</span> <span class="va">LETTERS</span><span class="op">[</span><span class="va">c</span><span class="op">]</span></span>
+<span>  <span class="op">)</span></span>
+<span>  </span>
+<span><span class="va">tbl_1</span></span></code></pre><p></p></div>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 6 × 6</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">##       a     b     c d     e     f    </span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;</span></span>
@@ -155,13 +155,13 @@ for Spanish (Spain, same as <code>"es_ES"</code>).</p></dd>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5     5     2     3 E     B     C    </span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 6     5     2     4 E     B     D</span></span></code></pre><p></p></div>
 <p>And next, <code>tbl_2</code>:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">tbl_2</span> <span class="op">&lt;-</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>
-    a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">6</span>, <span class="fl">5</span>, <span class="fl">8</span>, <span class="fl">7</span><span class="op">)</span>,
-    b <span class="op">=</span> <span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>
-  <span class="op">)</span>
-
-<span class="va">tbl_2</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">tbl_2</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
+<span>    a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">6</span>, <span class="fl">5</span>, <span class="fl">8</span>, <span class="fl">7</span><span class="op">)</span>,</span>
+<span>    b <span class="op">=</span> <span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">tbl_2</span></span></code></pre><p></p></div>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 6 × 2</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">##       a b    </span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;dbl&gt; &lt;chr&gt;</span></span>
@@ -174,30 +174,30 @@ for Spanish (Spain, same as <code>"es_ES"</code>).</p></dd>
 <p>Next, we'll create two different agents, each interrogating a different
 table.</p>
 <p>First up, is <code>agent_1</code>:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">agent_1</span> <span class="op">&lt;-</span>
-  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>
-    tbl <span class="op">=</span> <span class="va">tbl_1</span>,
-    tbl_name <span class="op">=</span> <span class="st">"tbl_1"</span>,
-    label <span class="op">=</span> <span class="st">"Example table 1."</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent_1</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span></span>
+<span>    tbl <span class="op">=</span> <span class="va">tbl_1</span>,</span>
+<span>    tbl_name <span class="op">=</span> <span class="st">"tbl_1"</span>,</span>
+<span>    label <span class="op">=</span> <span class="st">"Example table 1."</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>Then, <code>agent_2</code>:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">agent_2</span> <span class="op">&lt;-</span>
-  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>
-    tbl <span class="op">=</span> <span class="va">tbl_2</span>,
-    tbl_name <span class="op">=</span> <span class="st">"tbl_2"</span>,
-    label <span class="op">=</span> <span class="st">"Example table 2."</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/col_is_character.html">col_is_character</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent_2</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span></span>
+<span>    tbl <span class="op">=</span> <span class="va">tbl_2</span>,</span>
+<span>    tbl_name <span class="op">=</span> <span class="st">"tbl_2"</span>,</span>
+<span>    label <span class="op">=</span> <span class="st">"Example table 2."</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_is_character.html">col_is_character</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>Now, we'll combine the two agents into a <em>multiagent</em> with the
 <code>create_multiagent()</code> function. Printing the <code>"ptblank_multiagent"</code> object
 displays the multiagent report with its default options (i.e., a 'long'
 report view).</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">multiagent</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_multiagent.html">create_multiagent</a></span><span class="op">(</span><span class="va">agent_1</span>, <span class="va">agent_2</span><span class="op">)</span>
-  
-<span class="va">multiagent</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">multiagent</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_multiagent.html">create_multiagent</a></span><span class="op">(</span><span class="va">agent_1</span>, <span class="va">agent_2</span><span class="op">)</span></span>
+<span>  </span>
+<span><span class="va">multiagent</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_create_multiagent_1.png" style="width:100%;"></p>
 <p>To take advantage of more display options, we could use the
 <code><a href="get_multiagent_report.html">get_multiagent_report()</a></code> function. The added functionality there allows for

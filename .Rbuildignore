@@ -1,10 +1,7 @@
 ^.*\.Rproj$
 ^\.github$
 ^\.Rproj\.user$
-^\.travis\.yml$
-^cran-comments\.md$
 ^codecov\.yml$
-^README\.Rmd$
 ^revdep$
 ^_pkgdown\.yml$
 ^docs$
@@ -12,7 +9,6 @@
 ^icons$
 ^images$
 ^pkgdown$
-^CRAN-RELEASE$
 ^data-raw$
 ^tests/manual_tests$
 ^inst/translations$

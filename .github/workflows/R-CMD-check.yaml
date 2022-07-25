@@ -19,11 +19,13 @@ jobs:
       matrix:
         config:
           - {os: macos-11, r: '4.1'}
-          - {os: windows-latest, r: '4.0'}
+          - {os: macos-11, r: '4.2'}
           - {os: windows-latest, r: '4.1'}
+          - {os: windows-latest, r: '4.2'}
           - {os: ubuntu-latest, r: '3.6'}
           - {os: ubuntu-latest, r: '4.0'}
           - {os: ubuntu-latest, r: '4.1'}
+          - {os: ubuntu-latest, r: '4.2'}
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true

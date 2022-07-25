@@ -211,17 +211,15 @@ For all examples here, we'll use a simple table with two columns: \code{a} and
   )
   
 tbl
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 6 × 2
-##       a     b
-##   <dbl> <dbl>
-## 1     5     7
-## 2     7     1
-## 3     6     0
-## 4     5     0
-## 5     8     0
-## 6     7     3
+#> # A tibble: 6 x 2
+#>       a     b
+#>   <dbl> <dbl>
+#> 1     5     7
+#> 2     7     1
+#> 3     6     0
+#> 4     5     0
+#> 5     8     0
+#> 6     7     3
 }\if{html}{\out{</div>}}
 
 We'll use this table with the different function variants.
@@ -253,17 +251,15 @@ passed through but should \code{stop()} if there is a single test unit failing.
 The behavior of side effects can be customized with the \code{actions} option.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% col_exists(columns = vars(a))
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 6 × 2
-##       a     b
-##   <dbl> <dbl>
-## 1     5     7
-## 2     7     1
-## 3     6     0
-## 4     5     0
-## 5     8     0
-## 6     7     3
+#> # A tibble: 6 x 2
+#>       a     b
+#>   <dbl> <dbl>
+#> 1     5     7
+#> 2     7     1
+#> 3     6     0
+#> 4     5     0
+#> 5     8     0
+#> 6     7     3
 }\if{html}{\out{</div>}}
 }
 
@@ -282,9 +278,7 @@ With the \verb{test_*()} form, we should get a single logical value returned to
 us.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% test_col_exists(columns = vars(a))
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+#> [1] TRUE
 }\if{html}{\out{</div>}}
 }
 }

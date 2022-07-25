@@ -28,22 +28,20 @@ Get the column names of the \code{game_revenue} dataset that is included in the
 \strong{pointblank} package.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_tbl_colnames(tbl = game_revenue)
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 11 × 2
-##    .param. value           
-##      <int> <chr>           
-##  1       1 player_id       
-##  2       2 session_id      
-##  3       3 session_start   
-##  4       4 time            
-##  5       5 item_type       
-##  6       6 item_name       
-##  7       7 item_revenue    
-##  8       8 session_duration
-##  9       9 start_day       
-## 10      10 acquisition     
-## 11      11 country
+#> # A tibble: 11 x 2
+#>    .param. value           
+#>      <int> <chr>           
+#>  1       1 player_id       
+#>  2       2 session_id      
+#>  3       3 session_start   
+#>  4       4 time            
+#>  5       5 item_type       
+#>  6       6 item_name       
+#>  7       7 item_revenue    
+#>  8       8 session_duration
+#>  9       9 start_day       
+#> 10      10 acquisition     
+#> 11      11 country
 }\if{html}{\out{</div>}}
 
 This output table is useful when you want to validate the column names of the
@@ -56,9 +54,7 @@ table. Here, we check that \code{game_revenue} table, included in the
     columns = vars(value),
     set = c("acquisition", "country")
   )
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+#> [1] TRUE
 }\if{html}{\out{</div>}}
 
 We can check to see whether the column names in the \code{specifications} table
@@ -73,9 +69,7 @@ combination of \code{tt_tbl_colnames()}, then \code{\link[=tt_string_info]{tt_st
     columns = vars(value),
     value = 15
   )
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] FALSE
+#> [1] FALSE
 }\if{html}{\out{</div>}}
 
 This returned \code{FALSE} and this is because the column name

@@ -359,9 +359,7 @@ us.
   test_col_vals_not_in_set(
     columns = vars(f), set = c("lows", "mids", "highs")
   )
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+#> [1] TRUE
 }\if{html}{\out{</div>}}
 }
 }

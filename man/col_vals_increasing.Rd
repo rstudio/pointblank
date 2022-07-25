@@ -329,24 +329,22 @@ which contains date-time values. Let's ensure that this column has values
 that are increasing from top to bottom.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{game_revenue
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 2,000 × 11
-##    player_id       session_id  session_start       time                item_type
-##    <chr>           <chr>       <dttm>              <dttm>              <chr>    
-##  1 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 01:31:03 2015-01-01 01:31:27 iap      
-##  2 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 01:31:03 2015-01-01 01:36:57 iap      
-##  3 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 01:31:03 2015-01-01 01:37:45 iap      
-##  4 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 01:31:03 2015-01-01 01:42:33 ad       
-##  5 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 11:55:20 ad       
-##  6 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 12:08:56 ad       
-##  7 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 12:14:08 ad       
-##  8 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 12:21:44 ad       
-##  9 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 12:24:20 ad       
-## 10 FXWUORGYNJAE271 FXWUORGYNJ… 2015-01-01 15:17:18 2015-01-01 15:19:36 ad       
-## # … with 1,990 more rows, and 6 more variables: item_name <chr>,
-## #   item_revenue <dbl>, session_duration <dbl>, start_day <date>,
-## #   acquisition <chr>, country <chr>
+#> # A tibble: 2,000 x 11
+#>    player_id       session_id  session_start       time                item_type
+#>    <chr>           <chr>       <dttm>              <dttm>              <chr>    
+#>  1 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 01:31:03 2015-01-01 01:31:27 iap      
+#>  2 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 01:31:03 2015-01-01 01:36:57 iap      
+#>  3 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 01:31:03 2015-01-01 01:37:45 iap      
+#>  4 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 01:31:03 2015-01-01 01:42:33 ad       
+#>  5 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 11:50:02 2015-01-01 11:55:20 ad       
+#>  6 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 11:50:02 2015-01-01 12:08:56 ad       
+#>  7 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 11:50:02 2015-01-01 12:14:08 ad       
+#>  8 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 11:50:02 2015-01-01 12:21:44 ad       
+#>  9 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 11:50:02 2015-01-01 12:24:20 ad       
+#> 10 FXWUORGYNJAE271 FXWUORGYNJ~ 2015-01-01 15:17:18 2015-01-01 15:19:36 ad       
+#> # ... with 1,990 more rows, and 6 more variables: item_name <chr>,
+#> #   item_revenue <dbl>, session_duration <dbl>, start_day <date>,
+#> #   acquisition <chr>, country <chr>
 }\if{html}{\out{</div>}}
 \subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
@@ -389,12 +387,10 @@ behavior of side effects can be customized with the \code{actions} option.
   dplyr::select(session_start) \%>\%
   dplyr::distinct() \%>\%
   dplyr::count()
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 1 × 1
-##       n
-##   <int>
-## 1   618
+#> # A tibble: 1 x 1
+#>       n
+#>   <int>
+#> 1   618
 }\if{html}{\out{</div>}}
 }
 
@@ -421,9 +417,7 @@ us.
     columns = vars(session_start),
     allow_stationary = TRUE
   )
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+#> [1] TRUE
 }\if{html}{\out{</div>}}
 }
 }

@@ -56,17 +56,15 @@ First, \code{tbl_1}:
   )
   
 tbl_1
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 6 × 6
-##       a     b     c d     e     f    
-##   <dbl> <dbl> <dbl> <chr> <chr> <chr>
-## 1     5     1     1 E     A     A    
-## 2     5     1     1 E     A     A    
-## 3     5     1     1 E     A     A    
-## 4     5     2     2 E     B     B    
-## 5     5     2     3 E     B     C    
-## 6     5     2     4 E     B     D
+#> # A tibble: 6 x 6
+#>       a     b     c d     e     f    
+#>   <dbl> <dbl> <dbl> <chr> <chr> <chr>
+#> 1     5     1     1 E     A     A    
+#> 2     5     1     1 E     A     A    
+#> 3     5     1     1 E     A     A    
+#> 4     5     2     2 E     B     B    
+#> 5     5     2     3 E     B     C    
+#> 6     5     2     4 E     B     D
 }\if{html}{\out{</div>}}
 
 And next, \code{tbl_2}:
@@ -78,17 +76,15 @@ And next, \code{tbl_2}:
   )
 
 tbl_2
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 6 × 2
-##       a b    
-##   <dbl> <chr>
-## 1     5 A    
-## 2     7 B    
-## 3     6 C    
-## 4     5 D    
-## 5     8 E    
-## 6     7 F
+#> # A tibble: 6 x 2
+#>       a b    
+#>   <dbl> <chr>
+#> 1     5 A    
+#> 2     7 B    
+#> 3     6 C    
+#> 4     5 D    
+#> 5     8 E    
+#> 6     7 F
 }\if{html}{\out{</div>}}
 
 Next, we'll create two different agents, each interrogating a different

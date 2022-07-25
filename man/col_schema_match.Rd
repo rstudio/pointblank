@@ -269,16 +269,14 @@ validate that the table columns abides match a schema object as created by
   )
   
 tbl
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 5 × 2
-##       a b    
-##   <int> <chr>
-## 1     1 a    
-## 2     2 b    
-## 3     3 c    
-## 4     4 d    
-## 5     5 e
+#> # A tibble: 5 x 2
+#>       a b    
+#>   <int> <chr>
+#> 1     1 a    
+#> 2     2 b    
+#> 3     3 c    
+#> 4     4 d    
+#> 5     5 e
 }\if{html}{\out{</div>}}
 
 Create a column schema object with the helper function \code{col_schema()} that
@@ -291,16 +289,14 @@ describes the columns and their types (in the expected order).
   )
 
 schema_obj
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## $a
-## [1] "integer"
-## 
-## $b
-## [1] "character"
-## 
-## attr(,"class")
-## [1] "r_type"     "col_schema"
+#> $a
+#> [1] "integer"
+#> 
+#> $b
+#> [1] "character"
+#> 
+#> attr(,"class")
+#> [1] "r_type"     "col_schema"
 }\if{html}{\out{</div>}}
 \subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
@@ -332,16 +328,14 @@ through but should \code{stop()} if there is a single test unit failing. The
 behavior of side effects can be customized with the \code{actions} option.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% col_schema_match(schema = schema_obj)
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 5 × 2
-##       a b    
-##   <int> <chr>
-## 1     1 a    
-## 2     2 b    
-## 3     3 c    
-## 4     4 d    
-## 5     5 e
+#> # A tibble: 5 x 2
+#>       a b    
+#>   <int> <chr>
+#> 1     1 a    
+#> 2     2 b    
+#> 3     3 c    
+#> 4     4 d    
+#> 5     5 e
 }\if{html}{\out{</div>}}
 }
 
@@ -360,9 +354,7 @@ With the \verb{test_*()} form, we should get a single logical value returned to
 us.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% test_col_schema_match(schema = schema_obj)
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+#> [1] TRUE
 }\if{html}{\out{</div>}}
 }
 }

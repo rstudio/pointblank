@@ -367,18 +367,16 @@ rows).
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{spec_slice <- specifications[1:5, ]
 
 spec_slice
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 5 × 12
-##   isbn_numbers vin_numbers zip_codes credit_card_num… iban_austria swift_numbers
-##   <chr>        <chr>       <chr>     <chr>            <chr>        <chr>        
-## 1 978 1 85715… 4UZAANDH85… 99553     340000000000009  AT582774098… RBOSGGSX     
-## 2 978-1-84159… JM1BL1S59A… 36264     378734493671000  AT220332087… RZTIAT22263  
-## 3 978 1 84159… 1GCEK14R3W… 71660     6703444444444449 AT328650112… BCEELULL     
-## 4 978 1 85715… 2B7JB21Y0X… 85225     670300000000000… AT193357281… MARKDEFF     
-## 5 978 1 85715… 4UZAANDH85… 90309     4035501000000008 AT535755326… GENODEF1JEV  
-## # … with 6 more variables: phone_numbers <chr>, email_addresses <chr>,
-## #   urls <chr>, ipv4_addresses <chr>, ipv6_addresses <chr>, mac_addresses <chr>
+#> # A tibble: 5 x 12
+#>   isbn_numbers vin_numbers zip_codes credit_card_num~ iban_austria swift_numbers
+#>   <chr>        <chr>       <chr>     <chr>            <chr>        <chr>        
+#> 1 978 1 85715~ 4UZAANDH85~ 99553     340000000000009  AT582774098~ RBOSGGSX     
+#> 2 978-1-84159~ JM1BL1S59A~ 36264     378734493671000  AT220332087~ RZTIAT22263  
+#> 3 978 1 84159~ 1GCEK14R3W~ 71660     6703444444444449 AT328650112~ BCEELULL     
+#> 4 978 1 85715~ 2B7JB21Y0X~ 85225     670300000000000~ AT193357281~ MARKDEFF     
+#> 5 978 1 85715~ 4UZAANDH85~ 90309     4035501000000008 AT535755326~ GENODEF1JEV  
+#> # ... with 6 more variables: phone_numbers <chr>, email_addresses <chr>,
+#> #   urls <chr>, ipv4_addresses <chr>, ipv6_addresses <chr>, mac_addresses <chr>
 }\if{html}{\out{</div>}}
 \subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
@@ -418,16 +416,14 @@ behavior of side effects can be customized with the \code{actions} option.
     spec = "email"
   ) \%>\%
   dplyr::select(email_addresses)
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 5 × 1
-##   email_addresses                                                          
-##   <chr>                                                                    
-## 1 test@test.com                                                            
-## 2 mail+mail@example.com                                                    
-## 3 mail.email@e.test.com                                                    
-## 4 abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@letters-in-local.org
-## 5 01234567890@numbers-in-local.net
+#> # A tibble: 5 x 1
+#>   email_addresses                                                          
+#>   <chr>                                                                    
+#> 1 test@test.com                                                            
+#> 2 mail+mail@example.com                                                    
+#> 3 mail.email@e.test.com                                                    
+#> 4 abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@letters-in-local.org
+#> 5 01234567890@numbers-in-local.net
 }\if{html}{\out{</div>}}
 }
 
@@ -454,9 +450,7 @@ us.
     columns = vars(email_addresses),
     spec = "email"
   )
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+#> [1] TRUE
 }\if{html}{\out{</div>}}
 }
 }

@@ -280,17 +280,15 @@ Create a simple table with three columns of numerical values.
   )
 
 tbl
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 6 × 3
-##       a     b     c
-##   <dbl> <dbl> <dbl>
-## 1     5     7     1
-## 2     7     1     1
-## 3     6     0     1
-## 4     5     0     3
-## 5     8     8     3
-## 6     7     3     3
+#> # A tibble: 6 x 3
+#>       a     b     c
+#>   <dbl> <dbl> <dbl>
+#> 1     5     7     1
+#> 2     7     1     1
+#> 3     6     0     1
+#> 4     5     0     3
+#> 5     8     8     3
+#> 6     7     3     3
 }\if{html}{\out{</div>}}
 \subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
@@ -323,9 +321,7 @@ behavior of side effects can be customized with the \code{actions} option.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   rows_distinct(columns = vars(a, b)) \%>\%
   dplyr::pull(a)
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] 5 7 6 5 8 7
+#> [1] 5 7 6 5 8 7
 }\if{html}{\out{</div>}}
 }
 
@@ -344,9 +340,7 @@ With the \verb{test_*()} form, we should get a single logical value returned to
 us.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{test_rows_distinct(tbl, columns = vars(a, b))
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+#> [1] TRUE
 }\if{html}{\out{</div>}}
 }
 }

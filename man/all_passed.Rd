@@ -46,15 +46,13 @@ Create a simple table with a column of numerical values.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- dplyr::tibble(a = c(4, 5, 7, 8))
 
 tbl
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 4 × 1
-##       a
-##   <dbl>
-## 1     4
-## 2     5
-## 3     7
-## 4     8
+#> # A tibble: 4 x 1
+#>       a
+#>   <dbl>
+#> 1     4
+#> 2     5
+#> 3     7
+#> 4     8
 }\if{html}{\out{</div>}}
 
 Validate that values in column \code{a} are always greater than 4.

@@ -99,15 +99,13 @@ Create a simple data frame with a column of numerical values.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- dplyr::tibble(a = c(5, 7, 8, 5))
 
 tbl
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 4 × 1
-##       a
-##   <dbl>
-## 1     5
-## 2     7
-## 3     8
-## 4     5
+#> # A tibble: 4 x 1
+#>       a
+#>   <dbl>
+#> 1     5
+#> 2     7
+#> 3     8
+#> 4     5
 }\if{html}{\out{</div>}}
 
 Create an \code{action_levels()} list with fractional values for the \code{warn},

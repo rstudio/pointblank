@@ -298,14 +298,12 @@ explaining things later.
   )
   
 tbl
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 3 × 3
-##       a     b     c
-##   <dbl> <dbl> <dbl>
-## 1     5     3     9
-## 2     2     4     8
-## 3     6     6     7
+#> # A tibble: 3 x 3
+#>       a     b     c
+#>   <dbl> <dbl> <dbl>
+#> 1     5     3     9
+#> 2     2     4     8
+#> 3     6     6     7
 }\if{html}{\out{</div>}}
 \subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
@@ -354,14 +352,12 @@ behavior of side effects can be customized with the \code{actions} option.
     ~ col_vals_gt(., columns = vars(c), value = vars(a)),
     ~ col_vals_not_null(., columns = vars(b))
   )
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 3 × 3
-##       a     b     c
-##   <dbl> <dbl> <dbl>
-## 1     5     3     9
-## 2     2     4     8
-## 3     6     6     7
+#> # A tibble: 3 x 3
+#>       a     b     c
+#>   <dbl> <dbl> <dbl>
+#> 1     5     3     9
+#> 2     2     4     8
+#> 3     6     6     7
 }\if{html}{\out{</div>}}
 }
 
@@ -390,9 +386,7 @@ us.
     ~ col_vals_gt(., columns = vars(c), value = vars(a)),
     ~ col_vals_not_null(., columns = vars(b))
   )
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+#> [1] TRUE
 }\if{html}{\out{</div>}}
 }
 }

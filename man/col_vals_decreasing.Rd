@@ -339,24 +339,22 @@ session start.
   )
 
 game_revenue_2
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 2,000 × 12
-##    player_id       session_id  session_start       time                item_type
-##    <chr>           <chr>       <dttm>              <dttm>              <chr>    
-##  1 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 01:31:03 2015-01-01 01:31:27 iap      
-##  2 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 01:31:03 2015-01-01 01:36:57 iap      
-##  3 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 01:31:03 2015-01-01 01:37:45 iap      
-##  4 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 01:31:03 2015-01-01 01:42:33 ad       
-##  5 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 11:55:20 ad       
-##  6 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 12:08:56 ad       
-##  7 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 12:14:08 ad       
-##  8 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 12:21:44 ad       
-##  9 ECPANOIXLZHF896 ECPANOIXLZ… 2015-01-01 11:50:02 2015-01-01 12:24:20 ad       
-## 10 FXWUORGYNJAE271 FXWUORGYNJ… 2015-01-01 15:17:18 2015-01-01 15:19:36 ad       
-## # … with 1,990 more rows, and 7 more variables: item_name <chr>,
-## #   item_revenue <dbl>, session_duration <dbl>, start_day <date>,
-## #   acquisition <chr>, country <chr>, time_left <drtn>
+#> # A tibble: 2,000 x 12
+#>    player_id       session_id  session_start       time                item_type
+#>    <chr>           <chr>       <dttm>              <dttm>              <chr>    
+#>  1 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 01:31:03 2015-01-01 01:31:27 iap      
+#>  2 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 01:31:03 2015-01-01 01:36:57 iap      
+#>  3 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 01:31:03 2015-01-01 01:37:45 iap      
+#>  4 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 01:31:03 2015-01-01 01:42:33 ad       
+#>  5 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 11:50:02 2015-01-01 11:55:20 ad       
+#>  6 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 11:50:02 2015-01-01 12:08:56 ad       
+#>  7 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 11:50:02 2015-01-01 12:14:08 ad       
+#>  8 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 11:50:02 2015-01-01 12:21:44 ad       
+#>  9 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 11:50:02 2015-01-01 12:24:20 ad       
+#> 10 FXWUORGYNJAE271 FXWUORGYNJ~ 2015-01-01 15:17:18 2015-01-01 15:19:36 ad       
+#> # ... with 1,990 more rows, and 7 more variables: item_name <chr>,
+#> #   item_revenue <dbl>, session_duration <dbl>, start_day <date>,
+#> #   acquisition <chr>, country <chr>, time_left <drtn>
 }\if{html}{\out{</div>}}
 
 Let's ensure that the \code{"difftime"} values in the new \code{time_left} column has
@@ -401,12 +399,10 @@ behavior of side effects can be customized with the \code{actions} option.
   dplyr::select(time_left) \%>\%
   dplyr::distinct() \%>\%
   dplyr::count()
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 1 × 1
-##       n
-##   <int>
-## 1   618
+#> # A tibble: 1 x 1
+#>       n
+#>   <int>
+#> 1   618
 }\if{html}{\out{</div>}}
 }
 
@@ -433,9 +429,7 @@ us.
     columns = vars(time_left),
     allow_stationary = TRUE
   )
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+#> [1] TRUE
 }\if{html}{\out{</div>}}
 }
 }

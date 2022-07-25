@@ -161,15 +161,13 @@ For the example here, we'll use a simple table with a single numerical column
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- dplyr::tibble(a = c(5, 7, 8, 5))
 
 tbl
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 4 × 1
-##       a
-##   <dbl>
-## 1     5
-## 2     7
-## 3     8
-## 4     5
+#> # A tibble: 4 x 1
+#>       a
+#>   <dbl>
+#> 1     5
+#> 2     7
+#> 3     8
+#> 4     5
 }\if{html}{\out{</div>}}
 
 Let's create an \emph{agent} and validate that values in column \code{a} are always

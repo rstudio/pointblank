@@ -49,16 +49,14 @@ Create a simple table with two columns: one \code{integer} and the other
   )
 
 tbl
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 5 × 2
-##       a b    
-##   <int> <chr>
-## 1     1 a    
-## 2     2 b    
-## 3     3 c    
-## 4     4 d    
-## 5     5 e
+#> # A tibble: 5 x 2
+#>       a b    
+#>   <int> <chr>
+#> 1     1 a    
+#> 2     2 b    
+#> 3     3 c    
+#> 4     4 d    
+#> 5     5 e
 }\if{html}{\out{</div>}}
 
 Create a column schema object that describes the columns and their types (in
@@ -71,16 +69,14 @@ the expected order).
   )
 
 schema_obj
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## $a
-## [1] "integer"
-## 
-## $b
-## [1] "character"
-## 
-## attr(,"class")
-## [1] "r_type"     "col_schema"
+#> $a
+#> [1] "integer"
+#> 
+#> $b
+#> [1] "character"
+#> 
+#> attr(,"class")
+#> [1] "r_type"     "col_schema"
 }\if{html}{\out{</div>}}
 
 Validate that the schema object \code{schema_obj} exactly defines the column names

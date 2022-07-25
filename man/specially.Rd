@@ -215,14 +215,12 @@ explaining things later.
   )
   
 tbl
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 3 × 3
-##       a     b     c
-##   <dbl> <dbl> <dbl>
-## 1     5     3     9
-## 2     2     4     8
-## 3     6     6     7
+#> # A tibble: 3 x 3
+#>       a     b     c
+#>   <dbl> <dbl> <dbl>
+#> 1     5     3     9
+#> 2     2     4     8
+#> 3     6     6     7
 }\if{html}{\out{</div>}}
 \subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
@@ -255,14 +253,12 @@ through but should \code{stop()} if there is a single test unit failing. The
 behavior of side effects can be customized with the \code{actions} option.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% specially(fn = function(x) nrow(x) == 3)
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 3 × 3
-##       a     b     c
-##   <dbl> <dbl> <dbl>
-## 1     5     3     9
-## 2     2     4     8
-## 3     6     6     7
+#> # A tibble: 3 x 3
+#>       a     b     c
+#>   <dbl> <dbl> <dbl>
+#> 1     5     3     9
+#> 2     2     4     8
+#> 3     6     6     7
 }\if{html}{\out{</div>}}
 }
 
@@ -281,9 +277,7 @@ With the \verb{test_*()} form, we should get a single logical value returned to
 us.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% test_specially(fn = function(x) nrow(x) == 3)
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+#> [1] TRUE
 }\if{html}{\out{</div>}}
 }
 
@@ -299,9 +293,7 @@ Check the class of the target table.
       inherits(x, "data.frame")
     \}
   )
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+#> [1] TRUE
 }\if{html}{\out{</div>}}
 
 Check that the number of rows in the target table is less than \code{small_table}.
@@ -312,9 +304,7 @@ Check that the number of rows in the target table is less than \code{small_table
       nrow(x) < nrow(small_table)
     \}
   )
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+#> [1] TRUE
 }\if{html}{\out{</div>}}
 
 Check that all numbers across all numeric column are less than \code{10}.
@@ -328,9 +318,7 @@ Check that all numbers across all numeric column are less than \code{10}.
       ) < 10
     \}
   )
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+#> [1] TRUE
 }\if{html}{\out{</div>}}
 
 Check that all values in column \code{c} are greater than b and greater than \code{a}
@@ -347,9 +335,7 @@ units).
         )
     \}
   )
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+#> [1] TRUE
 }\if{html}{\out{</div>}}
 
 Check that the \code{game_revenue} table (which is not the target table) has
@@ -361,9 +347,7 @@ exactly 2000 rows.
       nrow(game_revenue) == 2000
     \}
   )
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+#> [1] TRUE
 }\if{html}{\out{</div>}}
 }
 }

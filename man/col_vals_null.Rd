@@ -286,16 +286,14 @@ For all examples here, we'll use a simple table with four columns: \code{a}, \co
   )
 
 tbl
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 5 × 4
-##       a     b c         d
-##   <dbl> <dbl> <lgl> <dbl>
-## 1     5     7 NA       35
-## 2     7     1 NA       23
-## 3     6     0 NA       NA
-## 4     5     0 NA       NA
-## 5     8     0 NA       NA
+#> # A tibble: 5 x 4
+#>       a     b c         d
+#>   <dbl> <dbl> <lgl> <dbl>
+#> 1     5     7 NA       35
+#> 2     7     1 NA       23
+#> 3     6     0 NA       NA
+#> 4     5     0 NA       NA
+#> 5     8     0 NA       NA
 }\if{html}{\out{</div>}}
 \subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
@@ -330,9 +328,7 @@ behavior of side effects can be customized with the \code{actions} option.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   col_vals_null(columns = vars(c)) \%>\%
   dplyr::pull(c)
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] NA NA NA NA NA
+#> [1] NA NA NA NA NA
 }\if{html}{\out{</div>}}
 }
 
@@ -351,9 +347,7 @@ With the \verb{test_*()} form, we should get a single logical value returned to
 us.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% test_col_vals_null(columns = vars(c))
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+#> [1] TRUE
 }\if{html}{\out{</div>}}
 }
 }

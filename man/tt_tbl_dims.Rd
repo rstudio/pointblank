@@ -27,13 +27,11 @@ Get the dimensions of the \code{game_revenue} dataset that is included in the
 \strong{pointblank} package.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_tbl_dims(tbl = game_revenue)
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 2 × 2
-##   .param. value
-##   <chr>   <int>
-## 1 rows     2000
-## 2 columns    11
+#> # A tibble: 2 x 2
+#>   .param. value
+#>   <chr>   <int>
+#> 1 rows     2000
+#> 2 columns    11
 }\if{html}{\out{</div>}}
 
 This output table is useful when a table validation depends on its
@@ -45,9 +43,7 @@ dimensions. Here, we check that \code{game_revenue} has at least \code{1500} row
     columns = vars(value),
     value = 1500
   )
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+#> [1] TRUE
 }\if{html}{\out{</div>}}
 
 We can check \code{small_table} to ensure that number of columns is less than
@@ -59,9 +55,7 @@ We can check \code{small_table} to ensure that number of columns is less than
     columns = vars(value),
     value = 10
   )
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+#> [1] TRUE
 }\if{html}{\out{</div>}}
 }
 

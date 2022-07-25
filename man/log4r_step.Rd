@@ -111,12 +111,10 @@ given to \code{fns} has a \code{warn} component.
 Printing \code{al} will show us the settings for the \code{action_levels} object:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{al
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## -- The `action_levels` settings
-## WARN failure threshold of 1test units.
-## \\fns\\ ~ log4r_step(x, append_to = "example_log")
-## ----
+#> -- The `action_levels` settings
+#> WARN failure threshold of 1test units.
+#> \\fns\\ ~ log4r_step(x, append_to = "example_log")
+#> ----
 }\if{html}{\out{</div>}}
 
 Let's create an agent with \code{small_table} as the target table. We'll apply the

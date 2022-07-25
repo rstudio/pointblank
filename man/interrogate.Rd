@@ -63,17 +63,15 @@ Create a simple table with two columns of numerical values.
   )
 
 tbl
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 6 × 2
-##       a     b
-##   <dbl> <dbl>
-## 1     5     7
-## 2     7     1
-## 3     6     0
-## 4     5     0
-## 5     8     0
-## 6     7     3
+#> # A tibble: 6 x 2
+#>       a     b
+#>   <dbl> <dbl>
+#> 1     5     7
+#> 2     7     1
+#> 3     6     0
+#> 4     5     0
+#> 5     8     0
+#> 6     7     3
 }\if{html}{\out{</div>}}
 
 Validate that values in column \code{a} from \code{tbl} are always less than \code{5}. Using

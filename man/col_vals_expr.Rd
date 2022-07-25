@@ -276,17 +276,15 @@ columns (\code{a}, \code{b}, and \code{c}) and three character columns (\code{d}
   )
 
 tbl
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 6 × 3
-##       a     b     c
-##   <dbl> <dbl> <dbl>
-## 1     1     0   0.5
-## 2     2     0   0.3
-## 3     1     0   0.8
-## 4     7     1   1.4
-## 5     8     1   1.9
-## 6     6     1   1.2
+#> # A tibble: 6 x 3
+#>       a     b     c
+#>   <dbl> <dbl> <dbl>
+#> 1     1     0   0.5
+#> 2     2     0   0.3
+#> 3     1     0   0.8
+#> 4     7     1   1.4
+#> 5     8     1   1.9
+#> 6     6     1   1.2
 }\if{html}{\out{</div>}}
 \subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
@@ -320,9 +318,7 @@ behavior of side effects can be customized with the \code{actions} option.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% 
   col_vals_expr(expr = expr(a \%\% 1 == 0)) \%>\%
   dplyr::pull(a)
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] 1 2 1 7 8 6
+#> [1] 1 2 1 7 8 6
 }\if{html}{\out{</div>}}
 }
 
@@ -341,9 +337,7 @@ With the \verb{test_*()} form, we should get a single logical value returned to
 us.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{test_col_vals_expr(tbl, expr = ~ a \%\% 1 == 0)
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+#> [1] TRUE
 }\if{html}{\out{</div>}}
 }
 
@@ -357,9 +351,7 @@ We can do more complex things by taking advantage of the \code{case_when()} and
     b == 0 ~ a \%>\% between(0, 5) & c < 1,
     b == 1 ~ a > 5 & c >= 1
   ))
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+#> [1] TRUE
 }\if{html}{\out{</div>}}
 
 If you only want to test a subset of rows, then the \code{case_when()} statement
@@ -370,9 +362,7 @@ be pruned (giving us less test units overall).
   test_col_vals_expr(expr = ~ case_when(
     b == 1 ~ a > 5 & c >= 1
   ))
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+#> [1] TRUE
 }\if{html}{\out{</div>}}
 }
 }

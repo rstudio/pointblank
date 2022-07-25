@@ -324,17 +324,15 @@ columns (\code{a}, \code{b}, and \code{c}) and three character columns (\code{d}
   )
   
 tbl
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 6 × 6
-##       a     b     c d     e     f    
-##   <dbl> <dbl> <dbl> <chr> <chr> <chr>
-## 1     5     1     1 E     A     A    
-## 2     5     1     1 E     A     A    
-## 3     5     1     1 E     A     A    
-## 4     5     2     2 E     B     B    
-## 5     5     2     3 E     B     C    
-## 6     5     2     4 E     B     D
+#> # A tibble: 6 x 6
+#>       a     b     c d     e     f    
+#>   <dbl> <dbl> <dbl> <chr> <chr> <chr>
+#> 1     5     1     1 E     A     A    
+#> 2     5     1     1 E     A     A    
+#> 3     5     1     1 E     A     A    
+#> 4     5     2     2 E     B     B    
+#> 5     5     2     3 E     B     C    
+#> 6     5     2     4 E     B     D
 }\if{html}{\out{</div>}}
 \subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
@@ -366,17 +364,15 @@ through but should \code{stop()} if there is a single test unit failing. The
 behavior of side effects can be customized with the \code{actions} option.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% col_vals_gt(columns = vars(a), value = 4)
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 6 × 6
-##       a     b     c d     e     f    
-##   <dbl> <dbl> <dbl> <chr> <chr> <chr>
-## 1     5     1     1 E     A     A    
-## 2     5     1     1 E     A     A    
-## 3     5     1     1 E     A     A    
-## 4     5     2     2 E     B     B    
-## 5     5     2     3 E     B     C    
-## 6     5     2     4 E     B     D
+#> # A tibble: 6 x 6
+#>       a     b     c d     e     f    
+#>   <dbl> <dbl> <dbl> <chr> <chr> <chr>
+#> 1     5     1     1 E     A     A    
+#> 2     5     1     1 E     A     A    
+#> 3     5     1     1 E     A     A    
+#> 4     5     2     2 E     B     B    
+#> 5     5     2     3 E     B     C    
+#> 6     5     2     4 E     B     D
 }\if{html}{\out{</div>}}
 }
 
@@ -395,9 +391,7 @@ With the \verb{test_*()} form, we should get a single logical value returned to
 us.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{test_col_vals_gt(tbl, columns = vars(a), value = 4)
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+#> [1] TRUE
 }\if{html}{\out{</div>}}
 }
 }

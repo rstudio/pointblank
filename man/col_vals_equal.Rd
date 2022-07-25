@@ -323,17 +323,15 @@ columns (\code{a}, \code{b}, and \code{c}) and three character columns (\code{d}
   )
   
 tbl
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 6 × 6
-##       a     b     c d     e     f    
-##   <dbl> <dbl> <dbl> <chr> <chr> <chr>
-## 1     5     1     1 A     A     A    
-## 2     5     1     1 B     B     B    
-## 3     5     1     1 C     C     C    
-## 4     5     2     2 E     D     D    
-## 5     5     2     2 F     E     E    
-## 6     5     2     2 G     F     F
+#> # A tibble: 6 x 6
+#>       a     b     c d     e     f    
+#>   <dbl> <dbl> <dbl> <chr> <chr> <chr>
+#> 1     5     1     1 A     A     A    
+#> 2     5     1     1 B     B     B    
+#> 3     5     1     1 C     C     C    
+#> 4     5     2     2 E     D     D    
+#> 5     5     2     2 F     E     E    
+#> 6     5     2     2 G     F     F
 }\if{html}{\out{</div>}}
 \subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
@@ -367,9 +365,7 @@ behavior of side effects can be customized with the \code{actions} option.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% 
   col_vals_equal(columns = vars(a), value = 5) \%>\%
   dplyr::pull(a)
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] 5 5 5 5 5 5
+#> [1] 5 5 5 5 5 5
 }\if{html}{\out{</div>}}
 }
 
@@ -388,9 +384,7 @@ With the \verb{test_*()} form, we should get a single logical value returned to
 us.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{test_col_vals_equal(tbl, columns = vars(a), value = 5)
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
+#> [1] TRUE
 }\if{html}{\out{</div>}}
 }
 }

@@ -64,9 +64,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          if (Sys.info()[["sysname"]] == "Windows") {
-             options(install.packages.compile.from.source = "never")
-          }
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
         shell: Rscript {0}

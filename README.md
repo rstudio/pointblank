@@ -5,6 +5,7 @@
 <br />
 <!-- badges: start -->
 <a href="https://cran.r-project.org/package=pointblank"><img src="https://www.r-pkg.org/badges/version/pointblank" alt="CRAN status" /></a>
+<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" /></a>
 <a href="https://github.com/rich-iannone/pointblank/actions"><img src="https://github.com/rich-iannone/pointblank/workflows/R-CMD-check/badge.svg" alt="R build status" /></a>
 <a href="https://github.com/rich-iannone/pointblank/actions"><img src="https://github.com/rich-iannone/pointblank/workflows/lint/badge.svg" alt="Linting" /></a>
 <a href="https://app.codecov.io/gh/rich-iannone/pointblank?branch=main"><img src="https://codecov.io/gh/rich-iannone/pointblank/branch/main/graph/badge.svg" alt="Coverage status" /></a>

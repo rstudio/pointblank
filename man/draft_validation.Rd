@@ -100,20 +100,21 @@ Let's draft a validation plan for the \code{dplyr::storms} dataset.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::storms
 #> # A tibble: 11,859 x 13
-#>    name   year month   day  hour   lat  long status      category  wind pressure
-#>    <chr> <dbl> <dbl> <int> <dbl> <dbl> <dbl> <chr>       <ord>    <int>    <int>
-#>  1 Amy    1975     6    27     0  27.5 -79   tropical d~ -1          25     1013
-#>  2 Amy    1975     6    27     6  28.5 -79   tropical d~ -1          25     1013
-#>  3 Amy    1975     6    27    12  29.5 -79   tropical d~ -1          25     1013
-#>  4 Amy    1975     6    27    18  30.5 -79   tropical d~ -1          25     1013
-#>  5 Amy    1975     6    28     0  31.5 -78.8 tropical d~ -1          25     1012
-#>  6 Amy    1975     6    28     6  32.4 -78.7 tropical d~ -1          25     1012
-#>  7 Amy    1975     6    28    12  33.3 -78   tropical d~ -1          25     1011
-#>  8 Amy    1975     6    28    18  34   -77   tropical d~ -1          30     1006
-#>  9 Amy    1975     6    29     0  34.4 -75.8 tropical s~ 0           35     1004
-#> 10 Amy    1975     6    29     6  34   -74.8 tropical s~ 0           40     1002
-#> # ... with 11,849 more rows, and 2 more variables:
-#> #   tropicalstorm_force_diameter <int>, hurricane_force_diameter <int>
+#>    name   year month   day  hour   lat  long status        categ~1  wind press~2
+#>    <chr> <dbl> <dbl> <int> <dbl> <dbl> <dbl> <chr>         <ord>   <int>   <int>
+#>  1 Amy    1975     6    27     0  27.5 -79   tropical dep~ -1         25    1013
+#>  2 Amy    1975     6    27     6  28.5 -79   tropical dep~ -1         25    1013
+#>  3 Amy    1975     6    27    12  29.5 -79   tropical dep~ -1         25    1013
+#>  4 Amy    1975     6    27    18  30.5 -79   tropical dep~ -1         25    1013
+#>  5 Amy    1975     6    28     0  31.5 -78.8 tropical dep~ -1         25    1012
+#>  6 Amy    1975     6    28     6  32.4 -78.7 tropical dep~ -1         25    1012
+#>  7 Amy    1975     6    28    12  33.3 -78   tropical dep~ -1         25    1011
+#>  8 Amy    1975     6    28    18  34   -77   tropical dep~ -1         30    1006
+#>  9 Amy    1975     6    29     0  34.4 -75.8 tropical sto~ 0          35    1004
+#> 10 Amy    1975     6    29     6  34   -74.8 tropical sto~ 0          40    1002
+#> # ... with 11,849 more rows, 2 more variables:
+#> #   tropicalstorm_force_diameter <int>, hurricane_force_diameter <int>, and
+#> #   abbreviated variable names 1: category, 2: pressure
 }\if{html}{\out{</div>}}
 
 The \code{draft_validation()} function creates an .R file by default. Using just
@@ -277,7 +278,7 @@ validation report:
 
 \if{html}{
 \out{
-<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_draft_validation_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_draft_validation_1.png" alt="This image was generated from the first code example in the `draft_validation()` help file." style="width:100\%;">
 }
 }
 

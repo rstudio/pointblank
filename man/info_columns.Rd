@@ -187,7 +187,7 @@ Upon printing the \code{informant} object, we see the additions made to the
 
 \if{html}{
 \out{
-<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_info_columns_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_info_columns_1.png" alt="This image was generated from the first code example in the `info_columns()` help file." style="width:100\%;">
 }
 }
 }

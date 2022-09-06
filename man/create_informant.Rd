@@ -235,7 +235,7 @@ Viewer.
 \if{html}{
 
 \out{
-<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_create_informant_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_create_informant_1.png" alt="This image was generated from the first code example in the `create_informant()` help file." style="width:100\%;">
 }
 }
 
@@ -254,7 +254,7 @@ report
 \if{html}{
 
 \out{
-<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_create_informant_2.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_create_informant_2.png" alt="This image was generated from the second code example in the `create_informant()` help file." style="width:100\%;">
 }
 }
 }

@@ -209,7 +209,7 @@ report
 
 \if{html}{
 \out{
-<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_get_agent_report_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_get_agent_report_1.png" alt="This image was generated from the first code example in the `get_agent_report()` help file." style="width:100\%;">
 }
 }
 
@@ -235,7 +235,7 @@ small_report
 
 \if{html}{
 \out{
-<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_get_agent_report_2.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_get_agent_report_2.png" alt="This image was generated from the second code example in the `get_agent_report()` help file." style="width:100\%;">
 }
 }
 
@@ -250,7 +250,7 @@ report_title
 
 \if{html}{
 \out{
-<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_get_agent_report_3.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_get_agent_report_3.png" alt="This image was generated from the third code example in the `get_agent_report()` help file." style="width:100\%;">
 }
 }
 

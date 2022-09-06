@@ -53,7 +53,7 @@ informant
 
 \if{html}{
 \out{
-<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_yaml_write_3.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_yaml_write_3.png" alt="This image was generated from the third code example in the `yaml_write()` help file." style="width:100\%;">
 }
 }
 

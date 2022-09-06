@@ -145,7 +145,7 @@ validation step that uses the summary stats table as its target.
 
 \if{html}{
 \out{
-<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_tt_summary_stats_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_tt_summary_stats_1.png" alt="This image was generated from the first code example in the `tt_summary_stats()` help file." style="width:100\%;">
 }
 }
 }

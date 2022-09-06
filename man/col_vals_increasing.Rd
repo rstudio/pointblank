@@ -330,21 +330,21 @@ that are increasing from top to bottom.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{game_revenue
 #> # A tibble: 2,000 x 11
-#>    player_id       session_id  session_start       time                item_type
-#>    <chr>           <chr>       <dttm>              <dttm>              <chr>    
-#>  1 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 01:31:03 2015-01-01 01:31:27 iap      
-#>  2 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 01:31:03 2015-01-01 01:36:57 iap      
-#>  3 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 01:31:03 2015-01-01 01:37:45 iap      
-#>  4 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 01:31:03 2015-01-01 01:42:33 ad       
-#>  5 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 11:50:02 2015-01-01 11:55:20 ad       
-#>  6 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 11:50:02 2015-01-01 12:08:56 ad       
-#>  7 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 11:50:02 2015-01-01 12:14:08 ad       
-#>  8 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 11:50:02 2015-01-01 12:21:44 ad       
-#>  9 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 11:50:02 2015-01-01 12:24:20 ad       
-#> 10 FXWUORGYNJAE271 FXWUORGYNJ~ 2015-01-01 15:17:18 2015-01-01 15:19:36 ad       
-#> # ... with 1,990 more rows, and 6 more variables: item_name <chr>,
-#> #   item_revenue <dbl>, session_duration <dbl>, start_day <date>,
-#> #   acquisition <chr>, country <chr>
+#>    player_id     sessi~1 session_start       time                item_~2 item_~3
+#>    <chr>         <chr>   <dttm>              <dttm>              <chr>   <chr>  
+#>  1 ECPANOIXLZHF~ ECPANO~ 2015-01-01 01:31:03 2015-01-01 01:31:27 iap     offer2 
+#>  2 ECPANOIXLZHF~ ECPANO~ 2015-01-01 01:31:03 2015-01-01 01:36:57 iap     gems3  
+#>  3 ECPANOIXLZHF~ ECPANO~ 2015-01-01 01:31:03 2015-01-01 01:37:45 iap     gold7  
+#>  4 ECPANOIXLZHF~ ECPANO~ 2015-01-01 01:31:03 2015-01-01 01:42:33 ad      ad_20s~
+#>  5 ECPANOIXLZHF~ ECPANO~ 2015-01-01 11:50:02 2015-01-01 11:55:20 ad      ad_5sec
+#>  6 ECPANOIXLZHF~ ECPANO~ 2015-01-01 11:50:02 2015-01-01 12:08:56 ad      ad_10s~
+#>  7 ECPANOIXLZHF~ ECPANO~ 2015-01-01 11:50:02 2015-01-01 12:14:08 ad      ad_10s~
+#>  8 ECPANOIXLZHF~ ECPANO~ 2015-01-01 11:50:02 2015-01-01 12:21:44 ad      ad_30s~
+#>  9 ECPANOIXLZHF~ ECPANO~ 2015-01-01 11:50:02 2015-01-01 12:24:20 ad      ad_10s~
+#> 10 FXWUORGYNJAE~ FXWUOR~ 2015-01-01 15:17:18 2015-01-01 15:19:36 ad      ad_5sec
+#> # ... with 1,990 more rows, 5 more variables: item_revenue <dbl>,
+#> #   session_duration <dbl>, start_day <date>, acquisition <chr>, country <chr>,
+#> #   and abbreviated variable names 1: session_id, 2: item_type, 3: item_name
 }\if{html}{\out{</div>}}
 \subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
@@ -368,7 +368,7 @@ that corresponds to the validation step demonstrated here.
 
 \if{html}{
 \out{
-<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_col_vals_increasing_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_col_vals_increasing_1.png" alt="This image was generated from the first code example in the `col_vals_increasing()` help file." style="width:100\%;">
 }
 }
 }

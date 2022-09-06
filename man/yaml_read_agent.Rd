@@ -55,7 +55,7 @@ agent
 
 \if{html}{
 \out{
-<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_yaml_write_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_yaml_write_1.png" alt="This image was generated from the first code example in the `yaml_write()` help file." style="width:100\%;">
 }
 }
 
@@ -88,7 +88,7 @@ agent
 
 \if{html}{
 \out{
-<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_yaml_write_2.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_yaml_write_2.png" alt="This image was generated from the second code example in the `yaml_write()` help file." style="width:100\%;">
 }
 }
 }

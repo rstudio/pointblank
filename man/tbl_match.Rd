@@ -306,7 +306,7 @@ that corresponds to the validation step demonstrated here.
 
 \if{html}{
 \out{
-<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_tbl_match_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_tbl_match_1.png" alt="This image was generated from the first code example in the `tbl_match()` help file." style="width:100\%;">
 }
 }
 }

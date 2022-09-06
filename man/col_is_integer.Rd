@@ -238,7 +238,7 @@ that corresponds to the validation step demonstrated here.
 
 \if{html}{
 \out{
-<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_col_is_integer_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_col_is_integer_1.png" alt="This image was generated from the first code example in the `col_is_integer()` help file." style="width:100\%;">
 }
 }
 }

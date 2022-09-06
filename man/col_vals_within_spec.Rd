@@ -368,15 +368,17 @@ rows).
 
 spec_slice
 #> # A tibble: 5 x 12
-#>   isbn_numbers vin_numbers zip_codes credit_card_num~ iban_austria swift_numbers
-#>   <chr>        <chr>       <chr>     <chr>            <chr>        <chr>        
-#> 1 978 1 85715~ 4UZAANDH85~ 99553     340000000000009  AT582774098~ RBOSGGSX     
-#> 2 978-1-84159~ JM1BL1S59A~ 36264     378734493671000  AT220332087~ RZTIAT22263  
-#> 3 978 1 84159~ 1GCEK14R3W~ 71660     6703444444444449 AT328650112~ BCEELULL     
-#> 4 978 1 85715~ 2B7JB21Y0X~ 85225     670300000000000~ AT193357281~ MARKDEFF     
-#> 5 978 1 85715~ 4UZAANDH85~ 90309     4035501000000008 AT535755326~ GENODEF1JEV  
-#> # ... with 6 more variables: phone_numbers <chr>, email_addresses <chr>,
-#> #   urls <chr>, ipv4_addresses <chr>, ipv6_addresses <chr>, mac_addresses <chr>
+#>   isbn_n~1 vin_n~2 zip_c~3 credi~4 iban_~5 swift~6 phone~7 email~8 urls  ipv4_~9
+#>   <chr>    <chr>   <chr>   <chr>   <chr>   <chr>   <chr>   <chr>   <chr> <chr>  
+#> 1 978 1 8~ 4UZAAN~ 99553   340000~ AT5827~ RBOSGG~ +5-555~ test@t~ http~ 93.184~
+#> 2 978-1-8~ JM1BL1~ 36264   378734~ AT2203~ RZTIAT~ +5 555~ mail+m~ http~ 161.14~
+#> 3 978 1 8~ 1GCEK1~ 71660   670344~ AT3286~ BCEELU~ +5.555~ mail.e~ http~ 161.14~
+#> 4 978 1 8~ 2B7JB2~ 85225   670300~ AT1933~ MARKDE~ 5-555-~ abcdef~ http~ 73.194~
+#> 5 978 1 8~ 4UZAAN~ 90309   403550~ AT5357~ GENODE~ 5.555.~ 012345~ http~ 60.92.~
+#> # ... with 2 more variables: ipv6_addresses <chr>, mac_addresses <chr>, and
+#> #   abbreviated variable names 1: isbn_numbers, 2: vin_numbers, 3: zip_codes,
+#> #   4: credit_card_numbers, 5: iban_austria, 6: swift_numbers,
+#> #   7: phone_numbers, 8: email_addresses, 9: ipv4_addresses
 }\if{html}{\out{</div>}}
 \subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 
@@ -399,7 +401,7 @@ that corresponds to the validation step demonstrated here.
 
 \if{html}{
 \out{
-<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_col_vals_within_spec_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_col_vals_within_spec_1.png" alt="This image was generated from the first code example in the `col_vals_within_spec()` help file." style="width:100\%;">
 }
 }
 }

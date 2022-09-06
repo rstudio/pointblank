@@ -1,4 +1,6 @@
-# pointblank (development version)
+# pointblank 0.11.1
+
+* Updated all help files to pass HTML validation.
 
 # pointblank 0.11.0
 

@@ -1589,7 +1589,36 @@ pb_get_image_tag <- function(file, dir = "images") {
   
   repo_url <- "https://raw.githubusercontent.com/rich-iannone/pointblank/main"
   
+  function_name <- paste0(gsub("man_(.*)_[1-9].png", "\\1", file), "()")
+  example_code_idx <- gsub("man_.*?([1-9]).png", "\\1", file)
+  
+  ordinal_idx <-
+    switch(
+      example_code_idx,
+      `1` = "first",
+      `2` = "second",
+      `3` = "third",
+      `4` = "fourth",
+      `5` = "fifth",
+      `6` = "sixth",
+      `7` = "seventh",
+      `8` = "eighth",
+      `9` = "ninth",
+      "above"
+    )
+  
+  alt_text <-
+    paste0(
+      "This image was generated from the ", ordinal_idx,
+      " code example in the `", function_name, "` help file."
+    )
+  
   image_url <- file.path(repo_url, dir, file)
   
-  paste0("<img src=\"", image_url, "\" style=\"width:100\\%;\">")
+  paste0(
+    "<img ",
+    "src=\"", image_url, "\" ",
+    "alt=\"", alt_text, "\" ",
+    "style=\"width:100\\%;\">"
+  )
 }

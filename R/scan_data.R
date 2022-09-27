@@ -302,7 +302,6 @@ probe_overview_stats <- function(
   tbl_src <- tbl_info$tbl_src
   r_col_types <- tbl_info$r_col_types
   
-
   data_overview_tbl <-
     dplyr::tibble(
       label = c(
@@ -355,7 +354,6 @@ probe_overview_stats <- function(
     )
   
   r_col_types_gt <-
-    r_col_types_tbl %>%
     gt::gt(r_col_types_tbl) %>%
     gt::fmt_number(columns = "count", decimals = 0, locale = locale) %>%
     gt::cols_align(align = "right", columns = "count") %>%

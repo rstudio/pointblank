@@ -9,7 +9,7 @@ al <-
 
 agent_1 <-
   create_agent(
-    read_fn = ~ small_table,
+    tbl = ~ small_table,
     tbl_name = "table 1",
     label = "An example.",
     actions = al
@@ -27,7 +27,7 @@ agent_1 <-
 
 agent_2 <- 
   create_agent(
-    read_fn = ~ small_table,
+    tbl = ~ small_table,
     tbl_name = "table 2",
     label = "An example.",
     actions = al
@@ -42,7 +42,7 @@ agent_2 <-
 
 agent_3 <- 
   create_agent(
-    read_fn = ~ small_table,
+    tbl = ~ small_table,
     tbl_name = "table 3",
     label = "An example.",
     actions = al
@@ -73,7 +73,7 @@ agent_4 <-
 
 agent_5 <-
   create_agent(
-    read_fn = ~ small_table,
+    tbl = ~ small_table,
     tbl_name = "table 5",
     label = "An example.",
     actions = al
@@ -81,8 +81,7 @@ agent_5 <-
   col_vals_gt(vars(date_time), vars(date), na_pass = TRUE) %>%
   interrogate()
 
-multiagent <-
-  create_multiagent(agent_1, agent_2, agent_3, agent_5)
+multiagent <- create_multiagent(agent_1, agent_2, agent_3, agent_5)
 
 #
 # Long Report
@@ -90,7 +89,7 @@ multiagent <-
 
 multiagent
 
-get_multiagent_report(multiagent)
+get_multiagent_report(multiagent = multiagent)
 
 # Option for tibble output
 get_multiagent_report(

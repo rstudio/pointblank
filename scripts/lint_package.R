@@ -1,7 +1,7 @@
 library(lintr)
 
 lintr::lint_package(
-  linters = with_defaults(
+  linters = linters_with_defaults(
     object_usage_linter = NULL,
     trailing_whitespace_linter = NULL,
     cyclocomp_linter = NULL

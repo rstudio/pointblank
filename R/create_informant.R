@@ -263,7 +263,7 @@ create_informant <- function(
   }
   
   # Stop function if both a table and an agent are provided 
-  if ((!is.null(tbl) | !is.null(read_fn)) && !is.null(agent)) {
+  if ((!is.null(tbl) || !is.null(read_fn)) && !is.null(agent)) {
     
     stop(
       "A `tbl` and a `agent` cannot both be provided.",

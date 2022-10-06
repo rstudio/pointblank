@@ -116,7 +116,7 @@ get_informant_report <- function(
   if ("info_label" %in% names(informant)) {
     info_label <- informant[["info_label"]]
   } else {
-    info_label <- paste0("[", gsub(" ", "|", as.character(Sys.time())), "]")
+    info_label <- paste0("[", gsub(" ", "|", strftime(Sys.time())), "]")
   }
   info_label <- make_info_label_html(info_label = info_label)
   

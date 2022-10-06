@@ -372,7 +372,7 @@ probe_overview_stats <- function(
         get_lsv("table_scan/tbl_lab_system_os")[[lang]]
       ),
       value = c(
-        paste0("`", as.character(Sys.time()), "`"),
+        paste0("`", strftime(Sys.time()), "`"),
         paste0("`", as.character(utils::packageVersion("pointblank")), "`"),
         paste0(
           R.version$version.string,

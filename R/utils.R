@@ -93,7 +93,7 @@ generate_label <- function(label = NULL) {
   
   if (!is.null(label)) return(as.character(label))
   
-  paste0("[", gsub(" ", "|", as.character(Sys.time())), "]")
+  paste0("[", gsub(" ", "|", strftime(Sys.time())), "]")
 }
 
 safely_transformer <- function(otherwise = NA) {

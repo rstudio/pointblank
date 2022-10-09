@@ -1,6 +1,6 @@
 Type: Package
 Package: pointblank
-Version: 0.11.2
+Version: 0.11.2.9000
 Title: Data Validation and Organization of Metadata for Local and Remote Tables
 Description: Validate data in data frames, 'tibble' objects, 'Spark'
     'DataFrames', and database tables. Validation pipelines can be made using

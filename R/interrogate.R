@@ -315,7 +315,7 @@ interrogate <- function(
 
       tbl_checked <- table
       
-      for (j in seq(nrow(double_agent$validation_set))) {
+      for (j in seq_len(nrow(double_agent$validation_set))) {
         
         # Get the assertion type for this verification step
         assertion_type <- 

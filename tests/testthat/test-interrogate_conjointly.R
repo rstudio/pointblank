@@ -188,11 +188,13 @@ test_that("Interrogating conjointly with an agent yields the correct results", {
     as.character() %>%
     expect_equal(c("~", "col_vals_gt(., columns = vars(a), value = 2)"))
   
-  # Expect an error if there are no validation
+  # Expect an evaluation error if there are no validation
   # step functions supplied to `conjointly()`
-  expect_error(
+  expect_true(
     create_agent(tbl = tbl) %>%
       conjointly() %>%
-      interrogate()
+      interrogate() %>%
+      .$validation_set %>%
+      .$eval_error
   )
 })

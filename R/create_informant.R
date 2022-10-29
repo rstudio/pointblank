@@ -326,13 +326,13 @@ create_informant <- function(
   }
 
   tbl_info <- get_tbl_information(tbl = tbl)
-  table.type <- tbl_info$tbl_src
-  table.columns <- get_table_total_columns(data = tbl)
+  table_type <- tbl_info$tbl_src
+  tbl_columns <- get_table_total_columns(data = tbl)
   
   if (inherits(tbl, "ArrowObject")) {
-    table.rows <- nrow(tbl)
+    tbl_rows <- nrow(tbl)
   } else {
-    table.rows <- get_table_total_rows(data = tbl)
+    tbl_rows <- get_table_total_rows(data = tbl)
   }
   
   column_list <- list(columns = lapply(col_schema(.tbl = tbl), as.list))
@@ -365,9 +365,9 @@ create_informant <- function(
       list(
         table = list(
           name = tbl_list$tbl_name,
-          `_columns` = table.columns,
-          `_rows` = table.rows,
-          `_type` = table.type
+          `_columns` = tbl_columns,
+          `_rows` = tbl_rows,
+          `_type` = table_type
         )
       ),
       column_list

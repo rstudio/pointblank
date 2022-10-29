@@ -213,12 +213,12 @@ incorporate <- function(informant) {
   
   x <- create_agent(tbl = tbl)
   
-  table.type <- x$tbl_src
+  tbl_type <- x$tbl_src
   column_names <- x$col_names
   column_types_r <- x$col_types
   
-  table.columns <- length(column_names)
-  table.rows <- dplyr::count(tbl, name = "n") %>% dplyr::pull(n)
+  tbl_columns <- length(column_names)
+  tbl_rows <- dplyr::pull(dplyr::count(tbl, name = "n"), n)
   
   # TODO: Sync column names, determining which are newly seen
   # and those that are no longer seen
@@ -259,9 +259,11 @@ incorporate <- function(informant) {
       rlang::f_rhs() %>%
       as.character()
 
-    if (any(grepl("pb_str_catalog", snippet_f_rhs_str)) &&
-        any(grepl("lang = NULL", snippet_f_rhs_str)) &&
-        lang != "en") {
+    if (
+      any(grepl("pb_str_catalog", snippet_f_rhs_str)) &&
+      any(grepl("lang = NULL", snippet_f_rhs_str)) &&
+      lang != "en"
+    ) {
 
       # We are inside this conditional because the snippet involves
       # the use of `pb_str_catalog()` and it requires a resetting
@@ -386,9 +388,9 @@ incorporate <- function(informant) {
     )
   
   # nolint start
-  metadata_rev$table$`_columns` <- as.character(table.columns)
-  metadata_rev$table$`_rows` <- as.character(table.rows)
-  metadata_rev$table$`_type` <- table.type
+  metadata_rev$table$`_columns` <- as.character(tbl_columns)
+  metadata_rev$table$`_rows` <- as.character(tbl_rows)
+  metadata_rev$table$`_type` <- tbl_type
   # nolint end
   
   informant$metadata_rev <- metadata_rev

@@ -22,8 +22,9 @@ al <- action_levels(warn_at = 0.02, stop_at = 0.05, notify_at = 0.10)
 
 # Validate the `rna` table in the `pfmegrnargs` DB (contains 27M rows)
 agent <- 
-  dplyr::tbl(con, "rna") %>%
   create_agent(
+    tbl = dplyr::tbl(con, "rna"),
+    tbl_name = "rna",
     label = "pfmegrnargs: 'rna' table",
     actions = al
   ) %>%

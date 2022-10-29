@@ -150,8 +150,10 @@ call was twice invoked! This generated an \code{"example_log"} file in the worki
 directory (since it was not present before the interrogation) and log entries
 were appended to the file. Here are the contents of the file:
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{WARN  [2022-06-28 10:06:01] Step 1 exceeded the WARN failure threshold (f_failed = 0.15385) ['col_vals_gt']
-WARN  [2022-06-28 10:06:01] Step 2 exceeded the WARN failure threshold (f_failed = 0.15385) ['col_vals_in_set']
+\if{html}{\out{<div class="sourceCode">}}\preformatted{WARN  [2022-06-28 10:06:01] Step 1 exceeded the WARN failure threshold
+  (f_failed = 0.15385) ['col_vals_gt']
+WARN  [2022-06-28 10:06:01] Step 2 exceeded the WARN failure threshold
+  (f_failed = 0.15385) ['col_vals_in_set']
 }\if{html}{\out{</div>}}
 }
 

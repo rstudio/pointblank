@@ -959,7 +959,6 @@ get_tt_param <- function(
       summary_stats_params <-
         c("min", "p05", "q_1", "med", "q_3", "p95", "max", "iqr", "range")
       
-      
       if (!(param %in% summary_stats_params)) {
         
         stop(
@@ -984,7 +983,7 @@ get_tt_param <- function(
     # Obtain the value from the `tbl` through a `select()`, `filter()`, `pull()`
     param_value <-
       tbl %>%
-      dplyr::select(.data$.param., .env$column) %>%
+      dplyr::select(.param., .env$column) %>%
       dplyr::filter(.param. == .env$param) %>%
       dplyr::pull(.env$column)
     

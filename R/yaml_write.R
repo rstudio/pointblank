@@ -854,69 +854,90 @@ get_arg_value_lr <- function(value) {
 
 prune_lst_step <- function(lst_step) {
 
-  if ("preconditions" %in% names(lst_step[[1]]) &&
-      is.null(lst_step[[1]][["preconditions"]])) {
+  if (
+    "preconditions" %in% names(lst_step[[1]]) &&
+    is.null(lst_step[[1]][["preconditions"]])
+  ) {
     lst_step[[1]]["preconditions"] <- NULL
   }
-  if ("segments" %in% names(lst_step[[1]]) &&
-      is.null(lst_step[[1]][["segments"]])) {
+  if (
+    "segments" %in% names(lst_step[[1]]) &&
+    is.null(lst_step[[1]][["segments"]])
+  ) {
     lst_step[[1]]["segments"] <- NULL
   }
-  if ("na_pass" %in% names(lst_step[[1]]) &&
-      !lst_step[[1]][["na_pass"]]) {
+  if (
+    "na_pass" %in% names(lst_step[[1]]) &&
+    !lst_step[[1]][["na_pass"]]
+  ) {
     lst_step[[1]]["na_pass"] <- NULL
   }
-  if ("active" %in% names(lst_step[[1]]) &&
-      lst_step[[1]][["active"]] == "TRUE") {
+  if (
+    "active" %in% names(lst_step[[1]]) &&
+    lst_step[[1]][["active"]] == "TRUE"
+  ) {
     lst_step[[1]]["active"] <- NULL
   }
-  if ("complete" %in% names(lst_step[[1]]) &&
-      lst_step[[1]][["complete"]]) {
+  if (
+    "complete" %in% names(lst_step[[1]]) &&
+    lst_step[[1]][["complete"]]
+  ) {
     lst_step[[1]]["complete"] <- NULL
   }
-  if ("inclusive" %in% names(lst_step[[1]]) &&
-      (lst_step[[1]][["inclusive"]][1] & lst_step[[1]][["inclusive"]][2])) {
+  if (
+    "inclusive" %in% names(lst_step[[1]]) &&
+    (lst_step[[1]][["inclusive"]][1] && lst_step[[1]][["inclusive"]][2])
+  ) {
     lst_step[[1]]["inclusive"] <- NULL
   }
-  if ("in_order" %in% names(lst_step[[1]]) &&
-      lst_step[[1]][["in_order"]]) {
+  if (
+    "in_order" %in% names(lst_step[[1]]) &&
+    lst_step[[1]][["in_order"]]
+  ) {
     lst_step[[1]]["in_order"] <- NULL
   }
-  if ("is_exact" %in% names(lst_step[[1]]) &&
-      lst_step[[1]][["is_exact"]]) {
+  if (
+    "is_exact" %in% names(lst_step[[1]]) &&
+    lst_step[[1]][["is_exact"]]
+  ) {
     lst_step[[1]]["is_exact"] <- NULL
   }
-  if ("allow_stationary" %in% names(lst_step[[1]]) &&
-      !lst_step[[1]][["allow_stationary"]]) {
+  if (
+    "allow_stationary" %in% names(lst_step[[1]]) &&
+    !lst_step[[1]][["allow_stationary"]]
+  ) {
     lst_step[[1]]["allow_stationary"] <- NULL
   }
-  if ("decreasing_tol" %in% names(lst_step[[1]]) &&
-      is.null(lst_step[[1]][["decreasing_tol"]])) {
+  if (
+    "decreasing_tol" %in% names(lst_step[[1]]) &&
+    is.null(lst_step[[1]][["decreasing_tol"]])
+  ) {
     lst_step[[1]]["decreasing_tol"] <- NULL
   }
-  if ("increasing_tol" %in% names(lst_step[[1]]) &&
-      is.null(lst_step[[1]][["increasing_tol"]])) {
+  if (
+    "increasing_tol" %in% names(lst_step[[1]]) &&
+    is.null(lst_step[[1]][["increasing_tol"]])
+  ) {
     lst_step[[1]]["increasing_tol"] <- NULL
   }
   if ("actions" %in% names(lst_step[[1]])) {
-    if (length(lst_step[[1]][["actions"]][["action_levels"]]) == 1 &&
-        length(lst_step[[1]][["actions"]][["action_levels"]][["fns"]]) == 0) {
-      
+    if (
+      length(lst_step[[1]][["actions"]][["action_levels"]]) == 1 &&
+      length(lst_step[[1]][["actions"]][["action_levels"]][["fns"]]) == 0
+    ) {
       lst_step[[1]][["actions"]] <- NULL
     } else if (is.null(lst_step[[1]][["actions"]])) {
       lst_step[[1]][["actions"]] <- NULL
     }
   }
-  if ("label" %in% names(lst_step[[1]]) &&
-      is.na(lst_step[[1]][["label"]])) {
+  if ("label" %in% names(lst_step[[1]]) && is.na(lst_step[[1]][["label"]])) {
     lst_step[[1]]["label"] <- NULL
   }
   
   lst_step
 }
 
-as_agent_yaml_list <- function(agent,
-                               expanded) {
+as_agent_yaml_list <- function(agent, expanded) {
 
   if (is.null(agent$read_fn)) {
     stop(

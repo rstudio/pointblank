@@ -826,11 +826,11 @@ create_post_step_cli_output_a <- function(
         print_time(time_diff_s)
       )
     )
-  } else if (validation_condition == "NONE" & notify_condition == "NONE") {
+  } else if (validation_condition == "NONE" && notify_condition == "NONE") {
     cli::cli_alert_success(
       c("Step {.field {i}}: {.green OK}.", print_time(time_diff_s))
     )
-  } else if (validation_condition != "NONE" & notify_condition == "NONE") {
+  } else if (validation_condition != "NONE" && notify_condition == "NONE") {
     if (validation_condition == "STOP") {
       cli::cli_alert_danger(
         c(
@@ -846,7 +846,7 @@ create_post_step_cli_output_a <- function(
         )
       )
     }
-  } else if (validation_condition != "NONE" & notify_condition != "NONE") {
+  } else if (validation_condition != "NONE" && notify_condition != "NONE") {
     if (validation_condition == "STOP") {
       cli::cli_alert_danger(
         c(
@@ -864,7 +864,7 @@ create_post_step_cli_output_a <- function(
         )
       )
     }
-  } else if (validation_condition == "NONE" & notify_condition != "NONE") {
+  } else if (validation_condition == "NONE" && notify_condition != "NONE") {
     cli::cli_alert_warning(
       c(
         "Step {.field {i}}: {.blue NOTIFY} condition met.",

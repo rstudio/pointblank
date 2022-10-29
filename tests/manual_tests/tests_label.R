@@ -2,7 +2,7 @@ library(pointblank)
 
 agent <-
   create_agent(
-    read_fn = ~ small_table,
+    tbl = ~ small_table,
     actions = action_levels(stop_at = 0.1)
   ) %>%
   col_vals_gt(

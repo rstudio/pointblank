@@ -227,7 +227,7 @@ get_sundered_data <- function(
     pass_fail = c("pass", "fail"),
     id_cols = NULL
 ) {
-
+  
   # Match to one of the three choices (`pass`, `fail`, `combined`)
   # while still allowing for the NULL optiona
   if (!is.null(type)) {
@@ -272,7 +272,10 @@ get_sundered_data <- function(
     dplyr::filter(eval_error == FALSE) %>%
     dplyr::filter(
       assertion_type %in%
-        base::setdiff(row_based_validation_fns_vec(), "rows_distinct")
+        base::setdiff(
+          row_based_validation_fns_vec(),
+          c("rows_distinct", "col_vals_make_set", "col_vals_make_subset")
+        )
     ) %>%
     dplyr::filter(active == TRUE)
   

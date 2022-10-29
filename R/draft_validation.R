@@ -202,7 +202,8 @@
 #'   col_is_integer(
 #'     columns = vars(tropicalstorm_force_diameter)
 #'   ) %>%
-#'   # Expect that values in `tropicalstorm_force_diameter` should be between `0` and `870`
+#'   # Expect that values in `tropicalstorm_force_diameter` should be between
+#'   # `0` and `870`
 #'   col_vals_between(
 #'     columns = vars(tropicalstorm_force_diameter),
 #'     left = 0,
@@ -213,7 +214,8 @@
 #'   col_is_integer(
 #'     columns = vars(hurricane_force_diameter)
 #'   ) %>%
-#'   # Expect that values in `hurricane_force_diameter` should be between `0` and `300`
+#'   # Expect that values in `hurricane_force_diameter` should be between
+#'   # `0` and `300`
 #'   col_vals_between(
 #'     columns = vars(hurricane_force_diameter),
 #'     left = 0,

@@ -294,7 +294,7 @@
 #' info: Time-based values (e.g., `Sys.time()`).
 #' date:
 #'   _type: Date
-#'   info: Time-based values (e.g., `Sys.time()`). The date part of `date_time`. (CALC)
+#'   info: Time-based values (e.g., `Sys.time()`). The date part of `date_time`.
 #' a:
 #'   _type: integer
 #'   info: In the range of 1 to 10. (SIMPLE)

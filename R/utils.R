@@ -810,7 +810,7 @@ get_tbl_information_dbi <- function(tbl) {
     # nocov end
       
   } else {
-    tbl_src <- gsub("^([a-z]*).*", "\\1", get_tbl_dbi_src_details(tbl))
+    tbl_src <- gsub("^([a-z]*).*|", "\\1", tolower(get_tbl_dbi_src_details(tbl)))
   }
   
   db_tbl_name <- as.character(dbplyr::remote_name(tbl))

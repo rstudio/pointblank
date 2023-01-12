@@ -6,11 +6,13 @@ library(here)
 # *warn* and *stop* thresholds at 0.01 and 0.10
 al <- action_levels(warn_at = 0.01, stop_at = 0.10)
 
+all_revenue <- intendo::all_revenue()
+
 agent_revenue_duckdb <-
   create_agent(
-    read_fn = 
+    tbl = 
       ~ db_tbl(
-        table = intendo::intendo_revenue,
+        table = all_revenue,
         dbname = ":memory:",
         dbtype = "duckdb"
       ),
@@ -19,7 +21,7 @@ agent_revenue_duckdb <-
     actions = al
   ) %>%
   col_vals_lt(
-    vars(revenue), value = vars(price),
+    vars(item_revenue), value = vars(price),
     preconditions = ~ . %>% dplyr::filter(type != "ad"),
     label = "Comparison."
   ) %>%

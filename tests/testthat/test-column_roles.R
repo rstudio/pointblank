@@ -292,7 +292,7 @@ test_that("column roles can be satisfactorily determined", {
       "geo:latitude.numeric.continuous",
       "geo:longitude.numeric.continuous",
       "string.categorical",
-      "string.ordinal",
+      "numeric.discrete",
       "integer.discrete",
       "integer.discrete",
       "integer.discrete",

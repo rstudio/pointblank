@@ -26,3 +26,4 @@ tests/testthat/test-interrogate_simple.R
 tests/testthat/test-interrogate_with_agent_db.R
 tests/testthat/test-draft_validation.R
 tests/testthat/test-scan_data.R
+tests/testthat/test-object_ops.R

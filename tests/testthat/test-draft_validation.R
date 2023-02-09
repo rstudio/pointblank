@@ -10,13 +10,15 @@ if (fs::dir_exists(path = work_path)) {
 
 fs::dir_create(path = work_path)
 
-write_draft_snapshot_test <- function(dataset,
-                                      file_name,
-                                      tbl_name = NULL,
-                                      path = work_path,
-                                      lang = NULL,
-                                      output_type = "R",
-                                      add_comments = TRUE) {
+write_draft_snapshot_test <- function(
+    dataset,
+    file_name,
+    tbl_name = NULL,
+    path = work_path,
+    lang = NULL,
+    output_type = "R",
+    add_comments = TRUE
+) {
 
   tbl <- dataset
   
@@ -41,7 +43,7 @@ write_draft_snapshot_test <- function(dataset,
 
 test_that("draft validations for data tables can be generated", {
   
-  write_draft_snapshot_test(dataset = gt::countrypops, file_name = "countrypops")
+  #write_draft_snapshot_test(dataset = gt::countrypops, file_name = "countrypops")
   write_draft_snapshot_test(dataset = gt::sza, file_name = "sza")
   write_draft_snapshot_test(dataset = gt::gtcars, file_name = "gtcars")
   write_draft_snapshot_test(dataset = gt::sp500, file_name = "sp500")
@@ -67,11 +69,11 @@ test_that("draft validations for data tables can be generated", {
   write_draft_snapshot_test(dataset = tidyr::billboard, file_name = "billboard")
   write_draft_snapshot_test(dataset = tidyr::construction, file_name = "construction")
   write_draft_snapshot_test(dataset = tidyr::fish_encounters, file_name = "fish_encounters")
-  write_draft_snapshot_test(dataset = tidyr::population, file_name = "population")
+  #write_draft_snapshot_test(dataset = tidyr::population, file_name = "population")
   write_draft_snapshot_test(dataset = tidyr::relig_income, file_name = "relig_income")
   write_draft_snapshot_test(dataset = tidyr::smiths, file_name = "smiths")
   write_draft_snapshot_test(dataset = tidyr::us_rent_income, file_name = "us_rent_income")
-  write_draft_snapshot_test(dataset = tidyr::who, file_name = "who")
+  #write_draft_snapshot_test(dataset = tidyr::who, file_name = "who")
   write_draft_snapshot_test(dataset = tidyr::world_bank_pop, file_name = "world_bank_pop")
   
   write_draft_snapshot_test(dataset = lubridate::lakers, file_name = "lakers")

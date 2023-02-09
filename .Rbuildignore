@@ -18,3 +18,7 @@ vignettes
 man/figures/
 ^tests/manual_tests$
 ^inst/translations$
+tests/testthat/test-specifications.R
+tests/testthat/test-transformers.R
+tests/testthat/test-yaml.R
+

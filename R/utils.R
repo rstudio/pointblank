@@ -825,7 +825,13 @@ get_tbl_information_dbi <- function(tbl) {
     
     # nocov start
     
-    db_tbl_name_no_schema <- gsub(".*\\.", "", db_tbl_name)
+    if (length(db_tbl_name) == 1) {
+      db_tbl_name_no_schema <- gsub(".*\\.", "", db_tbl_name)
+    } else if (length(db_tbl_name) == 2) {
+      db_tbl_name_no_schema <- db_tbl_name[2]
+    } else {
+      stop("db_tbl_name has unexpected length")
+    }
     
     q_types <-
       as.character(

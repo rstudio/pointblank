@@ -35,7 +35,7 @@ Imports:
     dbplyr (>= 2.3.0),
     fs (>= 1.6.0),
     glue (>= 1.6.2),
-    gt (>= 0.8.0),
+    gt (>= 0.9.0),
     htmltools (>= 0.5.4),
     knitr (>= 1.42),
     rlang (>= 1.0.3),

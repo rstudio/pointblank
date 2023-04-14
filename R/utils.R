@@ -107,9 +107,12 @@ safely_transformer <- function(otherwise = NA) {
   }
 }
 
-glue_safely <- function(...,
-                        .otherwise = NA,
-                        .envir = parent.frame()) {
+glue_safely <- function(
+    ...,
+    .otherwise = NA,
+    .envir = parent.frame()
+) {
+  
   as.character(
     glue::glue(
       ...,
@@ -178,8 +181,7 @@ get_all_cols <- function(agent) {
   agent$col_names
 }
 
-materialize_table <- function(tbl,
-                              check = TRUE) {
+materialize_table <- function(tbl, check = TRUE) {
   
   if (is.null(tbl)) {
     stop("A table must be provided.", call. = FALSE)
@@ -1010,18 +1012,20 @@ get_tbl_information_arrow <- function(tbl) {
 
 # nocov end
 
-pb_fmt_number <- function(x,
-                          decimals = 2,
-                          n_sigfig = NULL,
-                          drop_trailing_zeros = FALSE,
-                          drop_trailing_dec_mark = TRUE,
-                          use_seps = TRUE,
-                          scale_by = 1,
-                          suffixing = FALSE,
-                          pattern = "{x}",
-                          sep_mark = ",",
-                          dec_mark = ".",
-                          locale = NULL) {
+pb_fmt_number <- function(
+    x,
+    decimals = 2,
+    n_sigfig = NULL,
+    drop_trailing_zeros = FALSE,
+    drop_trailing_dec_mark = TRUE,
+    use_seps = TRUE,
+    scale_by = 1,
+    suffixing = FALSE,
+    pattern = "{x}",
+    sep_mark = ",",
+    dec_mark = ".",
+    locale = NULL
+) {
   
   if (is.null(x)) return(NULL)
   
@@ -1048,9 +1052,11 @@ pb_fmt_number <- function(x,
       ))$`_formats`[[1]][[1]][[1]])(x)
 }
 
-add_icon_img <- function(icon,
-                         height = 30,
-                         v_align = "middle") {
+add_icon_img <- function(
+    icon,
+    height = 30,
+    v_align = "middle"
+) {
 
   file <- 
     system.file(
@@ -1084,9 +1090,11 @@ add_icon_img <- function(icon,
   gsub("\\s\\s+", " ", htmltools::HTML(as.character(img)))
 }
 
-add_icon_svg <- function(icon,
-                         height = 30,
-                         v_align = "middle") {
+add_icon_svg <- function(
+    icon,
+    height = 30,
+    v_align = "middle"
+) {
   
   file <- 
     system.file(
@@ -1111,18 +1119,21 @@ add_icon_svg <- function(icon,
     as.character()
 }
 
-tidy_gsub <- function(x,
-                      pattern,
-                      replacement,
-                      fixed = FALSE) {
-  
+tidy_gsub <- function(
+    x,
+    pattern,
+    replacement,
+    fixed = FALSE
+) {
   gsub(pattern, replacement, x, fixed = fixed)
 }
 
-capture_formula <- function(formula,
-                            separate = TRUE,
-                            remove_whitespace = TRUE,
-                            oneline = TRUE) {
+capture_formula <- function(
+    formula,
+    separate = TRUE,
+    remove_whitespace = TRUE,
+    oneline = TRUE
+) {
   
   # TODO: add option to use `htmltools::htmlEscape()`
   
@@ -1162,14 +1173,16 @@ capture_function <- function(fn, escape = TRUE) {
   output
 }
 
-pb_str_catalog <- function(item_vector,
-                           limit = 5,
-                           sep = ",",
-                           and_or = NULL,
-                           oxford = TRUE,
-                           as_code = TRUE,
-                           quot_str = NULL,
-                           lang = NULL) {
+pb_str_catalog <- function(
+    item_vector,
+    limit = 5,
+    sep = ",",
+    and_or = NULL,
+    oxford = TRUE,
+    as_code = TRUE,
+    quot_str = NULL,
+    lang = NULL
+) {
   
   if (is.null(lang)) lang <- "en"
   
@@ -1302,8 +1315,10 @@ pb_str_catalog <- function(item_vector,
   }
 }
 
-pb_str_summary <- function(column,
-                           type) {
+pb_str_summary <- function(
+    column,
+    type
+) {
 
   if (type == "5num") {
     
@@ -1408,9 +1423,11 @@ pb_str_summary <- function(column,
   summary_str
 }
 
-generate_number <- function(number,
-                            color,
-                            title) {
+generate_number <- function(
+    number,
+    color,
+    title
+) {
   
   number <- as.character(number)
   
@@ -1438,8 +1455,10 @@ generate_number <- function(number,
   )
 }
 
-pb_quantile_stats <- function(data_column,
-                              quantile) {
+pb_quantile_stats <- function(
+    data_column,
+    quantile
+) {
   
   if (is_tbl_spark(data_column)) {
     
@@ -1537,10 +1556,12 @@ pb_min_max_stats <- function(data_column) {
     as.list()
 }
 
-cli_bullet_msg <- function(msg,
-                           bullet = cli::symbol$bullet,
-                           color = NULL,
-                           .envir = parent.frame()) {
+cli_bullet_msg <- function(
+    msg,
+    bullet = cli::symbol$bullet,
+    color = NULL,
+    .envir = parent.frame()
+) {
   
   msg <- glue::glue_collapse(msg, "\n")
   msg <- glue::glue(msg, .envir = .envir)
@@ -1555,10 +1576,11 @@ cli_bullet_msg <- function(msg,
   rlang::inform(msg)
 }
 
-cli_ident <- function(x,
-                      initial = "  ",
-                      indent = initial) {
-
+cli_ident <- function(
+    x,
+    initial = "  ",
+    indent = initial
+) {
   paste0(initial, gsub("\n", paste0("\n", indent), x))
 }
 

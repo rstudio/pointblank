@@ -1,5 +1,7 @@
 # pointblank 0.11.4
 
+* Fixes issue with gt `0.9.0` compatibility.
+
 # pointblank 0.11.3
 
 * Fixes issue with tables not rendering due to interaction with the gt package.

@@ -43,7 +43,7 @@ autobriefs:
     nl: "en {num_omitted} meer"
   compare_expectation_text:
     en: "Expect that values in {column_text} {column_computed_text} should be {operator} {values_text}."
-    fr: "Attendez-vous à ce que les valeurs de {column_text} {column_computed_text} soient {operator} {values_text}."
+    fr: "On s'attend à ce que les valeurs de {column_text} {column_computed_text} soient {operator} {values_text}."
     de: "Erwarten Sie, dass die Werte in {column_text} {column_computed_text} {operator} {values_text} sein sollten."
     it: "Aspettatevi che i valori in {column_text} {column_computed_text} dovrebbero essere {operator} {values_text}."
     es: "Se espera que los valores en {column_text} {column_computed_text} sean {operator} {values_text}."
@@ -71,7 +71,7 @@ autobriefs:
     nl: "Overschrijding van mislukte testeenheden, waar de waarden in {column_text} {operator} {values_text} zouden moeten zijn."
   in_set_expectation_text:
     en: "Expect that values in {column_text} {column_computed_text} should be in the set of {values_text}."
-    fr: "Attendez-vous à ce que les valeurs de {column_text} {column_computed_text} soient dans l'ensemble de {values_text}."
+    fr: "On s'attend à ce que les valeurs de {column_text} {column_computed_text} soient une des valeurs suivantes :{values_text}."
     de: "Erwarten Sie, dass die Werte in {column_text} {column_computed_text} in der Menge von {values_text} enthalten sein sollten."
     it: "Aspettatevi che i valori in {column_text} {column_computed_text} siano nell'insieme di {values_text}."
     es: "Se espera que los valores en {column_text} {column_computed_text} estén en el conjunto de {values_text}."
@@ -85,7 +85,7 @@ autobriefs:
     nl: "Verwacht dat de waarden in {column_text} {column_computed_text} in de set {values_text} moeten staan."
   in_set_failure_text:
     en: "Exceedance of failed test units where values in {column_text} should have been in the set of {values_text}."
-    fr: "Dépassement des unités de test ayant échoué où les valeurs dans {column_text} auraient dû être dans l'ensemble de {values_text}."
+    fr: "Dépassement des unités de test ayant échoué où les valeurs dans {column_text} auraient dû être une des valeurs suivantes : {values_text}."
     de: "Überschreitung fehlgeschlagener Testeinheiten, bei denen Werte in {column_text} in der Menge von {values_text} enthalten sein sollten."
     it: "Superamento delle unità di test non riuscite in cui i valori in {column_text} avrebbero dovuto essere nel set di {values_text}."
     es: "Se superó el número de unidades de prueba fallidas donde los valores en {column_text} deberían haber estado en el conjunto de {values_text}."
@@ -99,7 +99,7 @@ autobriefs:
     nl: "Overschrijding van mislukte testeenheden waarbij waarden in {column_text} in de set van {values_text} hadden moeten staan."
   make_set_expectation_text:
     en: "Expect that values in {values_text} exactly match the unique set of values in {column_text} {column_computed_text}."
-    fr: "Attendez-vous à ce que les valeurs de {values_text} correspondent exactement à l'ensemble unique de valeurs de {column_text} {column_computed_text}."
+    fr: "On s'attend à ce que les valeurs de {values_text} correspondent exactement à l'ensemble unique de valeurs de {column_text} {column_computed_text}."
     de: "Erwarten Sie, dass die Werte in {values_text} genau mit den eindeutigen Werten in {column_text} {column_computed_text} übereinstimmen."
     it: "Aspettati che i valori in {values_text} corrispondano esattamente al set distinto di valori in {column_text} {column_computed_text}"
     es: "Se espera que los valores en {values_text} coincidan exactamente con el conjunto distinto de valores en {column_text} {column_computed_text}."
@@ -127,7 +127,7 @@ autobriefs:
     nl: "Overschrijding van mislukte testeenheden waarbij waarden in {values_text} exact overeen moesten komen met de unieke set waarden in {column_text}."
   make_subset_expectation_text:
     en: "Expect that values in {values_text} are a subset of the unique set of values in {column_text} {column_computed_text}."
-    fr: "Attendez-vous à ce que les valeurs de {values_text} soient un sous-ensemble de l'ensemble unique de valeurs de {column_text} {column_computed_text}."
+    fr: "On s'attend à ce que les valeurs de {values_text} soient un sous-ensemble de l'ensemble unique de valeurs de {column_text} {column_computed_text}."
     de: "Erwarten Sie, dass die Werte in {values_text} eine Teilmenge der eindeutigen Wertemenge in {column_text} {column_computed_text} sind."
     it: "Aspettati che i valori in {values_text} siano un sottoinsieme dell'insieme univoco di valori in {column_text} {column_computed_text}."
     es: "Se espera que los valores en {values_text} sean un subconjunto del conjunto único de valores en {column_text} {column_computed_text}."
@@ -155,7 +155,7 @@ autobriefs:
     nl: "Overschrijding van mislukte testeenheden waarbij waarden in {values_text} een subset hadden moeten zijn van de unieke set waarden in {column_text}."
   not_in_set_expectation_text:
     en: "Expect that values in {column_text} {column_computed_text} should not be in the set of {values_text}."
-    fr: "Attendez-vous à ce que les valeurs de {column_text} {column_computed_text} ne soient pas dans l'ensemble de {values_text}."
+    fr: "On s'attend à ce que les valeurs de {column_text} {column_computed_text} ne soient pas une des valeurs suivantes : {values_text}."
     de: "Erwarten Sie, dass die Werte in {column_text} {column_computed_text} nicht in der Menge von {values_text} enthalten sein sollten."
     it: "Aspettatevi che i valori in {column_text} {column_computed_text} non debbano essere nel set di {values_text}."
     es: "Se espera que los valores en {column_text} {column_computed_text} no estén en el conjunto de {values_text}."
@@ -169,7 +169,7 @@ autobriefs:
     nl: "Verwacht dat de waarden in {column_text} {column_computed_text} niet in de set van {values_text} mogen voorkomen."
   not_in_set_failure_text:
     en: "Exceedance of failed test units where values in {column_text} should not have been in the set of {values_text}."
-    fr: "Dépassement des unités de test ayant échoué où les valeurs dans {column_text} n'auraient pas dû être dans l'ensemble de {values_text}."
+    fr: "Dépassement des unités de test ayant échoué où les valeurs dans {column_text} n'auraient pas dû être une des valeurs suivantes : {values_text}."
     de: "Überschreitung fehlgeschlagener Testeinheiten, bei denen die Werte in {column_text} nicht in der Menge von {values_text} enthalten sein sollten."
     it: "Superamento delle unità di test non riuscite in cui i valori in {column_text} non avrebbero dovuto essere nel set di {values_text}."
     es: "Se superó el número de unidades de prueba fallidas en que los valores en {column_text} no deberían haber estado en el conjunto de {values_text}."
@@ -183,7 +183,7 @@ autobriefs:
     nl: "Overschrijding van mislukte testeenheden waarbij waarden in {column_text} niet in de set van {values_text} hadden mogen staan."
   between_expectation_text:
     en: "Expect that values in {column_text} {column_computed_text} should be between {value_1} and {value_2}."
-    fr: "Attendez-vous à ce que les valeurs de {column_text} {column_computed_text} soient comprises entre {value_1} et {value_2}."
+    fr: "On s'attend à ce que les valeurs de {column_text} {column_computed_text} soient comprises entre {value_1} et {value_2}."
     de: "Erwarten Sie, dass die Werte in {column_text} {column_computed_text} zwischen {value_1} und {value_2} liegen sollten."
     it: "Aspettati che i valori in {column_text} {column_computed_text} siano compresi tra {value_1} e {value_2}."
     es: "Se espera que los valores en {column_text} {column_computed_text} estén entre {value_1} y {value_2}."
@@ -211,7 +211,7 @@ autobriefs:
     nl: "Overschrijding van mislukte testeenheden waarbij waarden in {column_text} tussen {value_1} en {value_2} hadden moeten liggen."
   not_between_expectation_text:
     en: "Expect that values in {column_text} {column_computed_text} should not be between {value_1} and {value_2}."
-    fr: "Attendez-vous à ce que les valeurs de {column_text} {column_computed_text} ne soient pas comprises entre {value_1} et {value_2}."
+    fr: "On s'attend à ce que les valeurs de {column_text} {column_computed_text} ne soient pas comprises entre {value_1} et {value_2}."
     de: "Erwarten Sie, dass die Werte in {column_text} {column_computed_text} nicht zwischen {value_1} und {value_2} liegen sollten."
     it: "Aspettatevi che i valori in {column_text} {column_computed_text} non debbano essere compresi tra {value_1} e {value_2}."
     es: "Se espera que los valores en {column_text} {column_computed_text} no estén entre {value_1} y {value_2}."
@@ -239,7 +239,7 @@ autobriefs:
     nl: "Overschrijding van mislukte testeenheden waarbij waarden in {column_text} niet tussen {value_1} en {value_2} mogen liggen."
   null_expectation_text:
     en: "Expect that all values in {column_text} {column_computed_text} should be NULL."
-    fr: "Attendez-vous à ce que toutes les valeurs de {column_text} {column_computed_text} soient NULL."
+    fr: "On s'attend à ce que toutes les valeurs de {column_text} {column_computed_text} soient NULL."
     de: "Erwarten Sie, dass alle Werte in {column_text} {column_computed_text} NULL sein sollten."
     it: "Aspettatevi che tutti i valori in {column_text} {column_computed_text} siano NULL."
     es: "Se espera que todos los valores en {column_text} {column_computed_text} sean NULL."
@@ -267,7 +267,7 @@ autobriefs:
     nl: "Overschrijding van mislukte testeenheden waarbij waarden in {column_text} NULL hadden moeten zijn."
   not_null_expectation_text:
     en: "Expect that all values in {column_text} {column_computed_text} should not be NULL."
-    fr: "Attendez-vous à ce que toutes les valeurs de {column_text} {column_computed_text} ne soient pas NULL."
+    fr: "On s'attend à ce que toutes les valeurs de {column_text} {column_computed_text} ne soient pas NULL."
     de: "Erwarten Sie, dass alle Werte in {column_text} {column_computed_text} nicht NULL sein sollten."
     it: "Aspettatevi che tutti i valori in {column_text} {column_computed_text} non debbano essere NULL."
     es: "Se espera que todos los valores en {column_text} {column_computed_text} no sean NULL."
@@ -295,7 +295,7 @@ autobriefs:
     nl: "Overschrijding van mislukte testeenheden waarbij waarden in {column_text} niet NULL hadden mogen zijn."
   increasing_expectation_text:
     en: "Expect that values in {column_text} {column_computed_text} should be increasing."
-    fr: "Attendez-vous à ce que les valeurs de {column_text} {column_computed_text} augmentent."
+    fr: "On s'attend à ce que les valeurs de {column_text} {column_computed_text} augmentent."
     de: "Erwarten Sie, dass die Werte in {column_text} {column_computed_text} zunehmen."
     it: "Aspettati che i valori in {column_text} {column_computed_text} dovrebbero aumentare."
     es: "Espere que los valores en {column_text} {column_computed_text} aumenten."
@@ -323,7 +323,7 @@ autobriefs:
     nl: "Overschrijding van mislukte testeenheden waarbij waarden in {column_text} zouden moeten toenemen."
   decreasing_expectation_text:
     en: "Expect that values in {column_text} {column_computed_text} should be decreasing."
-    fr: "Attendez-vous à ce que les valeurs de {column_text} {column_computed_text} diminuent."
+    fr: "On s'attend à ce que les valeurs de {column_text} {column_computed_text} diminuent."
     de: "Erwarten Sie, dass die Werte in {column_text} {column_computed_text} abnehmen."
     it: "Aspettati che i valori in {column_text} {column_computed_text} dovrebbero diminuire."
     es: "Espere que los valores en {column_text} {column_computed_text} deberían estar disminuyendo."
@@ -351,7 +351,7 @@ autobriefs:
     nl: "Overschrijding van mislukte testeenheden waarbij waarden in {column_text} zouden moeten afnemen."
   col_vals_expr_expectation_text:
     en: "Expect that values should agree with the given R expression."
-    fr: "Attendez-vous à ce que les valeurs soient en accord avec l'expression R donnée."
+    fr: "On s'attend à ce que les valeurs soient en accord avec l'expression R donnée."
     de: "Erwarten Sie, dass die Werte mit dem angegebenen R-Ausdruck übereinstimmen."
     it: "Aspettatevi che i valori siano in accordo con l'espressione R fornita."
     es: "Se espera que los valores sean los mismos que en la expresión R dada."
@@ -379,7 +379,7 @@ autobriefs:
     nl: "Overschrijding van mislukte testeenheden waarbij waarden overeen hadden moeten komen met de gegeven R-uitdrukking."
   regex_expectation_text:
     en: "Expect that values in {column_text} {column_computed_text} should match the regular expression: {values_text}."
-    fr: "Attendez-vous à ce que les valeurs de {column_text} {column_computed_text} correspondent à l'expression régulière: {values_text}."
+    fr: "On s'attend à ce que les valeurs de {column_text} {column_computed_text} correspondent à l'expression régulière : {values_text}."
     de: "Erwarten Sie, dass die Werte in {column_text} {column_computed_text} mit dem regulären Ausdruck {values_text} übereinstimmen."
     it: "Aspettati che i valori in {column_text} {column_computed_text} debbano corrispondere all'espressione regolare: {values_text}."
     es: "Se espera que los valores en {column_text} {column_computed_text} coincidan con la expresión regular: {values_text}."
@@ -393,7 +393,7 @@ autobriefs:
     nl: "Verwacht dat de waarden in {column_text} {column_computed_text} overeenkomen met de reguliere expressie {values_text}."
   regex_failure_text:
     en: "Exceedance of failed test units where values in {column_text} should have matched the regular expression: {values_text}."
-    fr: "Dépassement des unités de test ayant échoué où les valeurs dans {column_text} auraient dû correspondre à l'expression régulière: {values_text}."
+    fr: "Dépassement des unités de test ayant échoué où les valeurs dans {column_text} auraient dû correspondre à l'expression régulière : {values_text}."
     de: "Überschreitung fehlgeschlagener Testeinheiten, bei denen die Werte in {column_text} mit dem regulären Ausdruck {values_text} übereinstimmen sollten."
     it: "Superamento delle unità di test non riuscite in cui i valori in {column_text} avrebbero dovuto corrispondere all'espressione regolare: {values_text}."
     es: "Se superó el número de unidades de prueba fallidas en que los valores en {column_text} deberían coincidir con la expresión regular: {values_text}."
@@ -407,7 +407,7 @@ autobriefs:
     nl: "Overschrijding van mislukte testeenheden waarbij waarden in {column_text} overeen moeten komen met de reguliere expressie: {values_text}."
   within_spec_expectation_text:
     en: "Expect that values in {column_text} {column_computed_text} should match the specification: {values_text}."
-    fr: "Attendez-vous à ce que les valeurs de {column_text} {column_computed_text} correspondent à la spécification: {values_text}."
+    fr: "On s'attend à ce que les valeurs de {column_text} {column_computed_text} correspondent à la spécification : {values_text}."
     de: "Erwarten Sie, dass die Werte in {column_text} {column_computed_text} mit der Spezifikation übereinstimmen: {values_text}."
     it: "Aspettati che i valori in {column_text} {column_computed_text} corrispondano alla specifica: {values_text}."
     es: "Se espera que los valores en {column_text} {column_computed_text} coincidan con la especificación: {values_text}."
@@ -421,7 +421,7 @@ autobriefs:
     nl: "Verwacht dat waarden in {column_text} {column_computed_text} overeenkomen met de specificatie: {values_text}."
   within_spec_failure_text:
     en: "Exceedance of failed test units where values in {column_text} should have matched the specification: {values_text}."
-    fr: "Dépassement des unités de test ayant échoué où les valeurs dans {column_text} auraient dû correspondre à la spécification: {values_text}."
+    fr: "Dépassement des unités de test ayant échoué où les valeurs dans {column_text} auraient dû correspondre à la spécification : {values_text}."
     de: "Überschreitung fehlgeschlagener Testeinheiten, bei denen die Werte in {column_text} mit der Spezifikation {values_text} übereinstimmen sollten."
     it: "Superamento delle unità di test non riuscite in cui i valori in {column_text} avrebbero dovuto corrispondere alla specifica: {values_text}."
     es: "Se superó el número de unidades de prueba fallidas en que los valores en {column_text} deberían coincidir con la especificación: {values_text}."
@@ -435,7 +435,7 @@ autobriefs:
     nl: "Overschrijding van mislukte testeenheden waarbij waarden in {column_text} overeen moeten komen met de specificatie: {values_text}."
   conjointly_expectation_text:
     en: "Expect conjoint 'pass' units across the following expressions: {values_text}."
-    fr: "Attendez-vous à des unités de «pass» conjointes dans les expressions suivantes: {values_text}."
+    fr: "On s'attend à que soient conjointement satisfaites les conditions des expressions suivantes : {values_text}."
     de: "Erwarten Sie gemeinsame 'Pass'-Einheiten für die folgenden Ausdrücke: {values_text}."
     it: "Aspettatevi unitá 'pass' congiunte tra le seguenti espressioni: {values_text}."
     es: "Se espera que se cumplan simultáneamente las condiciones de prueba en las siguientes expresiones"
@@ -449,7 +449,7 @@ autobriefs:
     nl: "Verwacht gemeenschappelijke 'pass'-eenheden voor de volgende expressies: {values_text}."
   conjointly_failure_text:
     en: "Exceedance of failed test units where there should have been conjoint 'pass' units across the following expressions: {values_text}."
-    fr: "Dépassement des unités de test ayant échoué là où il aurait dû y avoir des unités de «pass» conjointes dans les expressions suivantes: {values_text}."
+    fr: "Dépassement des unités de test échouant à satisfaire les conditions des expressions suivantes : {values_text}."
     de: "Überschreitung fehlgeschlagener Testeinheiten, bei denen über die folgenden Ausdrücke hinweg 'Pass'-Einheiten zusammengesetzt sein sollten: {values_text}."
     it: "Superamento delle unità di test fallite in cui avrebbero dovuto esserci unità di 'pass' congiunte tra le seguenti espressioni: {values_text}."
     es: "Se superó el número de unidades de prueba fallidas en que se deberían cumplir simultáneamente las condiciones de prueba para las siguientes expresiones"
@@ -491,7 +491,7 @@ autobriefs:
     nl: "Voer {test_step_count} testen uit."
   specially_expectation_text:
     en: "Expect that special testing with a given function yields agreement."
-    fr: "Attendez-vous à ce que des tests spéciaux avec une fonction donnée donnent des résultats positifs."
+    fr: "On s'attend à ce que des tests spéciaux avec une fonction donnée donnent des résultats positifs."
     de: "Erwarten Sie, dass spezielle Tests mit einer bestimmten Funktion positive Ergebnisse liefern."
     it: "Aspettati che test speciali con una determinata funzione diano risultati positivi."
     es: "Espere que las pruebas especiales con una función dada produzcan resultados positivos."
@@ -519,7 +519,7 @@ autobriefs:
     nl: "Overschrijding van mislukte testeenheden bij het uitvoeren van gespecialiseerde tests met een bepaalde functie."
   col_exists_expectation_text:
     en: "Expect that column {column_text} exists."
-    fr: "Attendez-vous à ce que la colonne {column_text} existe."
+    fr: "On s'attend à ce que la colonne {column_text} existe."
     de: "Erwarten Sie, dass die Spalte {column_text} vorhanden ist."
     it: "Aspettati che la colonna {column_text} esista."
     es: "Se espera que exista la columna {column_text}."
@@ -547,7 +547,7 @@ autobriefs:
     nl: "Het is mislukt om de kolom {column_text} te valideren."
   col_is_expectation_text:
     en: "Expect that column {column_text} is of type: {col_type}."
-    fr: "Attendez-vous à ce que la colonne {column_text} soit de type: {col_type}."
+    fr: "On s'attend à ce que la colonne {column_text} soit de type : {col_type}."
     de: "Erwarten Sie, dass die Spalte {column_text} vom Typ {col_type} ist."
     it: "Aspettati che la colonna {column_text} sia di tipo: {col_type}."
     es: "Se espera que la columna {column_text} sea del tipo"
@@ -575,7 +575,7 @@ autobriefs:
     nl: "Het niet valideren van die kolom {column_text} is van het type: {col_type}."
   all_row_distinct_expectation_text:
     en: "Expect entirely distinct rows across all columns."
-    fr: "Attendez-vous à des lignes entièrement distinctes dans toutes les colonnes."
+    fr: "On s'attend à des lignes entièrement distinctes dans toutes les colonnes."
     de: "Erwarten Sie in allen Spalten einzigartige Zeilen."
     it: "Aspettati righe completamente distinte su tutte le colonne."
     es: "Se esperan filas completamente distintas en todas las columnas."
@@ -603,7 +603,7 @@ autobriefs:
     nl: "Overschrijding van mislukte testeenheden waarbij er niet in alle kolommen verschillende rijen waren."
   across_row_distinct_expectation_text:
     en: "Expect entirely distinct rows across {column_text}."
-    fr: "Attendez-vous à des lignes entièrement distinctes sur {column_text}."
+    fr: "On s'attend à des lignes entièrement distinctes dans les colonnes {column_text}."
     de: "Erwarten Sie einzigartige Zeilen in {column_text}."
     it: "Aspettati righe completamente distinte su {column_text}."
     es: "Se esperan filas completamente distintas en {column_text}."
@@ -631,7 +631,7 @@ autobriefs:
     nl: "Overschrijding van mislukte testeenheden waarbij er geen afzonderlijke rijen waren over geselecteerde kolommen."
   all_row_complete_expectation_text:
     en: "Expect complete rows across all columns."
-    fr: "Attendez-vous à des lignes complètes dans toutes les colonnes."
+    fr: "On s'attend à des lignes complètes dans toutes les colonnes."
     de: "Erwarten Sie vollständige Zeilen über alle Spalten."
     it: "Aspettati righe complete su tutte le colonne."
     es: "Se esperan filas completas en todas las columnas."
@@ -659,7 +659,7 @@ autobriefs:
     nl: "Overschrijding van mislukte testeenheden waarbij er geen volledige rijen waren in alle kolommen."
   across_row_complete_expectation_text:
     en: "Expect complete rows across {column_text}."
-    fr: "Attendez-vous à des lignes complètes sur {column_text}."
+    fr: "On s'attend à des lignes complètes sur {column_text}."
     de: "Erwarten Sie vollständige Zeilen in {column_text}."
     it: "Aspettati righe complete su {column_text}."
     es: "Se esperan filas completas en {column_text}."
@@ -687,7 +687,7 @@ autobriefs:
     nl: "Overschrijding van mislukte testeenheden waarbij er geen volledige rijen waren in de geselecteerde kolommen."  
   col_schema_match_expectation_text:
     en: "Expect that column schemas match."
-    fr: "Attendez-vous à ce que les schémas de colonnes correspondent."
+    fr: "On s'attend à ce que les schémas de colonnes correspondent."
     de: "Erwarten Sie, dass die Spaltenschemata übereinstimmen."
     it: "Aspettati che gli schemi di colonna corrispondano."
     es: "Se espera que los esquemas de columna coincidan."
@@ -715,7 +715,7 @@ autobriefs:
     nl: "Het is mislukt om de overeenkomst van die kolomschema's te valideren."
   row_count_match_expectation_text:
     en: "Expect that row counts for two tables match."
-    fr: "Attendez-vous à ce que le nombre de lignes soit égal pour deux tables."
+    fr: "On s'attend à ce que le nombre de lignes soit égal pour deux tableaux."
     de: "Erwarten Sie, dass die Zeilenanzahl für zwei Tabellen gleich ist."
     it: "Si prevede che il conteggio delle righe per due tabelle corrisponda."
     es: "Se espera que coincidan los recuentos de filas de dos tablas."
@@ -729,7 +729,7 @@ autobriefs:
     nl: "Verwacht dat het aantal rijen gelijk is voor twee tabellen."
   row_count_match_failure_text:
     en: "Row counts for the two tables did not match."
-    fr: "Le nombre de lignes pour les deux tables ne correspondait pas."
+    fr: "Le nombre de lignes pour les deux tableaux ne correspondait pas."
     de: "Die Zeilenanzahl für die beiden Tabellen stimmte nicht überein."
     it: "Il conteggio delle righe per le due tabelle non corrispondeva."
     es: "Los recuentos de filas de las dos tablas no coincidían."
@@ -743,7 +743,7 @@ autobriefs:
     nl: "Het aantal rijen voor de twee tafels kwam niet overeen."
   row_count_match_n_expectation_text:
     en: "Expect that the row count is exactly {values_text}."
-    fr: "Attendez-vous à ce que le nombre de lignes soit exactement de {values_text}."
+    fr: "On s'attend à ce que le nombre de lignes soit exactement de {values_text}."
     de: "Erwarten Sie, dass die Zeilenzahl genau {values_text} beträgt."
     it: "Aspettatevi che il conteggio delle righe sia esattamente {values_text}."
     es: "Espera que el recuento de filas sea exactamente {values_text}."
@@ -771,7 +771,7 @@ autobriefs:
     nl: "Het rijtal kwam niet overeen met {values_text}."
   col_count_match_expectation_text:
     en: "Expect that column counts for two tables match."
-    fr: "Attendez-vous à ce que le nombre de colonnes de deux tables corresponde."
+    fr: "On s'attend à ce que le nombre de colonnes de deux tableaux corresponde."
     de: "Erwarten Sie, dass die Spaltenzahlen für zwei Tabellen übereinstimmen."
     it: "Aspettatevi che i conteggi delle colonne per due tabelle corrispondano."
     es: "Se espera que los recuentos de columnas de dos tablas coincidan."
@@ -799,7 +799,7 @@ autobriefs:
     nl: "Kolomtellingen voor de twee tabellen kwamen niet overeen."
   col_count_match_n_expectation_text:
     en: "Expect that the column count is exactly {values_text}."
-    fr: "Attendez-vous à ce que le nombre de colonnes soit exactement de {values_text}."
+    fr: "On s'attend à ce que le nombre de colonnes soit exactement de {values_text}."
     de: "Erwarten Sie, dass die Anzahl der Spalten genau {values_text} beträgt."
     it: "Aspettatevi che il numero di colonne sia esattamente {values_text}."
     es: "Espera que el recuento de columnas sea exactamente {values_text}."
@@ -827,7 +827,7 @@ autobriefs:
     nl: "De kolomtelling kwam niet overeen met {values_text}."
   tbl_match_expectation_text:
     en: "Expect that both tables match."
-    fr: "Attendez-vous à ce que les deux tables correspondent."
+    fr: "On s'attend à ce que les deux tableaux correspondent."
     de: "Erwarten Sie, dass beide Tabellen zusammenpassen."
     it: "Si prevede che entrambe le tabelle corrispondano."
     es: "Se espera que ambas tablas coincidan."
@@ -1139,7 +1139,7 @@ informant_report:
 table_scan:
   nav_title_ts:
     en: "Table Scan"
-    fr: "Scan de table"
+    fr: "Scan de tableau"
     de: "Scan der Tabelle"
     it: "Scansione della tabella"
     es: "Escaneo de Tabla"
@@ -1783,7 +1783,7 @@ table_scan:
     nl: "Andere waarden"
   footer_text_fragment:
     en: "Table scan generated with <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a>."
-    fr: "Scan de table généré avec <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a>."
+    fr: "Scan de tableau généré avec <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a>."
     de: "Mit <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a> generierter Scan der Tabelle."
     it: "Scansione della tabella generata con <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a>."
     es: "Escaneo de Tabla generado con <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a>."

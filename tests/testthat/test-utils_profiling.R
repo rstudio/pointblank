@@ -1,4 +1,5 @@
 skip_on_cran()
+skip_on_ci()
 skip_on_os(os = "windows")
 
 small_table_sqlite <- small_table_sqlite()

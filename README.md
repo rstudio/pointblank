@@ -1,8 +1,8 @@
 <div align="center">
-
-<a href='https://rich-iannone.github.io/pointblank/'><img src="man/figures/logo.svg" height="350px"/></a>
-
 <br />
+
+<a href='https://rich-iannone.github.io/pointblank/'><img src="man/figures/logo.svg" width="350px"/></a>
+
 <!-- badges: start -->
 <a href="https://cran.r-project.org/package=pointblank"><img src="https://www.r-pkg.org/badges/version/pointblank" alt="CRAN status" /></a>
 <a href="https://opensource.org/license/mit/"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" /></a>
@@ -17,8 +17,9 @@
 
 [![Posit Cloud](https://img.shields.io/badge/Posit%20Cloud-pointblank%20Test%20Drive-blue?style=social&logo=rstudio&logoColor=75AADB)](https://rstudio.cloud/project/3411822)
 
-<a href="https://www.contributor-covenant.org/version/2/0/code_of_conduct/"><img src="https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg" alt="Contributor Covenant" /></a>
+<a href="https://www.contributor-covenant.org/version/2/1/code_of_conduct.html"><img src="https://img.shields.io/badge/Contributor%20Covenant-v2.1%20adopted-ff69b4.svg" alt="Contributor Covenant" /></a>
 <!-- badges: end -->
+<hr style="color:transparent" />
 <br />
 </div>
 
@@ -331,7 +332,7 @@ There are many functions available in **pointblank** for understanding data
 quality and doing data documentation. Here is an overview of all of them,
 grouped by family. For much more information on these, visit the
 [documentation website](https://rich-iannone.github.io/pointblank/) or take
-a *Test Drive* in the [RStudio Cloud project](https://rstudio.cloud/project/3411822).
+a *Test Drive* in the [Posit Cloud project](https://rstudio.cloud/project/3411822).
 
 <p align="center">
 
@@ -387,7 +388,7 @@ The **pointblank** package isn’t the only one of its kind available for
     spoken languages
   - developing an API that closely follows tidyverse conventions by
     adhering to the [tidyverse style guide](https://style.tidyverse.org)
-  - ensuring that the package is *extremely* well-tested so that you can
+  - ensuring that the package is very well-tested so that you can
     trust the validations (there are over 6,000 unit tests so far)
   - putting lots of attention on making the package documentation and examples
     the best they can be
@@ -421,5 +422,3 @@ See the [`LICENSE.md`](LICENSE.md) file for more details.
 This project is primarily maintained by [Rich Iannone](https://twitter.com/riannone). Other authors may occasionally assist with some of these duties.
 
 <hr>
-
-<img src="man/figures/pointblank-milestones.svg" width="100%">

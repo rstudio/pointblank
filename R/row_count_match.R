@@ -20,6 +20,7 @@
 #' Does the row count match that of a different table?
 #'
 #' @description
+#' 
 #' The `row_count_match()` validation function, the `expect_row_count_match()`
 #' expectation function, and the `test_row_count_match()` test function all
 #' check whether the row count in the target table matches that of a comparison
@@ -30,7 +31,26 @@
 #' on whether the row counts for the two tables are the same (after any
 #' `preconditions` have been applied).
 #' 
+#' @inheritParams col_vals_gt
+#' @param count Either a literal value for the number of rows, or, a table to
+#'   compare against the target table in terms of row count values. If supplying
+#'   a comparison table, it can either be a table object such as a data frame, a
+#'   tibble, a `tbl_dbi` object, or a `tbl_spark` object. Alternatively, a
+#'   table-prep formula (`~ <table reading code>`) or a function
+#'   (`function() <table reading code>`) can be used to lazily read in the
+#'   comparison table at interrogation time.
+#' @param tbl_compare The `tbl_compare` argument is deprecated. Instead, use
+#'   `count`.
+#'   
+#' @return For the validation function, the return value is either a
+#'   `ptblank_agent` object or a table object (depending on whether an agent
+#'   object or a table was passed to `x`). The expectation function invisibly
+#'   returns its input but, in the context of testing data, the function is
+#'   called primarily for its potential side-effects (e.g., signaling failure).
+#'   The test function returns a logical value.
+#' 
 #' @section Supported Input Tables:
+#' 
 #' The types of data tables that are officially supported are:
 #' 
 #'  - data frames (`data.frame`) and tibbles (`tbl_df`)
@@ -48,6 +68,7 @@
 #' **pointblank**).
 #' 
 #' @section Preconditions:
+#' 
 #' Providing expressions as `preconditions` means **pointblank** will preprocess
 #' the target table during interrogation as a preparatory step. It might happen
 #' that this particular validation requires some operation on the target table
@@ -65,6 +86,7 @@
 #' could instead be supplied.
 #' 
 #' @section Segments:
+#' 
 #' By using the `segments` argument, it's possible to define a particular
 #' validation with segments (or row slices) of the target table. An optional
 #' expression or set of expressions that serve to segment the target table by
@@ -92,6 +114,7 @@
 #' generate a separate version of the target table.
 #' 
 #' @section Actions:
+#' 
 #' Often, we will want to specify `actions` for the validation. This argument,
 #' present in every validation function, takes a specially-crafted list object
 #' that is best produced by the [action_levels()] function. Read that function's
@@ -104,6 +127,7 @@
 #' `stop()`s).
 #' 
 #' @section Briefs:
+#' 
 #' Want to describe this validation step in some detail? Keep in mind that this
 #' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
 #' with some text that fits. Don't worry if you don't want to do it. The
@@ -111,6 +135,7 @@
 #' then be automatically generated.
 #' 
 #' @section YAML:
+#' 
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
 #' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
 #' or interrogate the target table (via [yaml_agent_interrogate()]). When
@@ -167,24 +192,6 @@
 #' other means). It is also possible to preview the transformation of an agent
 #' to YAML without any writing to disk by using the [yaml_agent_string()]
 #' function.
-#'
-#' @inheritParams col_vals_gt
-#' @param count Either a literal value for the number of rows, or, a table to
-#'   compare against the target table in terms of row count values. If supplying
-#'   a comparison table, it can either be a table object such as a data frame, a
-#'   tibble, a `tbl_dbi` object, or a `tbl_spark` object. Alternatively, a
-#'   table-prep formula (`~ <table reading code>`) or a function
-#'   (`function() <table reading code>`) can be used to lazily read in the
-#'   comparison table at interrogation time.
-#' @param tbl_compare The `tbl_compare` argument is deprecated. Instead, use
-#'   `count`.
-#'   
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
 #'   
 #' @section Examples:
 #' 

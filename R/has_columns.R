@@ -20,6 +20,7 @@
 #' Determine if one or more columns exist in a table
 #' 
 #' @description
+#' 
 #' This utility function can help you easily determine whether a column of a
 #' specified name is present in a table object. This function works well enough
 #' on a table object but it can also be used as part of a formula in any

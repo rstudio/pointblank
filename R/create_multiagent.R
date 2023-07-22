@@ -19,7 +19,8 @@
 
 #' Create a **pointblank** *multiagent* object
 #'
-#' @description 
+#' @description
+#' 
 #' Multiple *agents* can be part of a single object called the *multiagent*.
 #' This can be useful when gathering multiple agents that have performed
 #' interrogations in the past (perhaps saved to disk with [x_write_disk()]).

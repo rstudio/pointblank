@@ -71,21 +71,21 @@ strictly for the first 15 days of 2015. The \code{keep} argument has a default o
   slice_point = "2015-01-16"
 )
 #> # A tibble: 1,208 x 11
-#>    player_id     sessi~1 session_start       time                item_~2 item_~3
-#>    <chr>         <chr>   <dttm>              <dttm>              <chr>   <chr>  
-#>  1 ECPANOIXLZHF~ ECPANO~ 2015-01-01 01:31:03 2015-01-01 01:31:27 iap     offer2 
-#>  2 ECPANOIXLZHF~ ECPANO~ 2015-01-01 01:31:03 2015-01-01 01:36:57 iap     gems3  
-#>  3 ECPANOIXLZHF~ ECPANO~ 2015-01-01 01:31:03 2015-01-01 01:37:45 iap     gold7  
-#>  4 ECPANOIXLZHF~ ECPANO~ 2015-01-01 01:31:03 2015-01-01 01:42:33 ad      ad_20s~
-#>  5 ECPANOIXLZHF~ ECPANO~ 2015-01-01 11:50:02 2015-01-01 11:55:20 ad      ad_5sec
-#>  6 ECPANOIXLZHF~ ECPANO~ 2015-01-01 11:50:02 2015-01-01 12:08:56 ad      ad_10s~
-#>  7 ECPANOIXLZHF~ ECPANO~ 2015-01-01 11:50:02 2015-01-01 12:14:08 ad      ad_10s~
-#>  8 ECPANOIXLZHF~ ECPANO~ 2015-01-01 11:50:02 2015-01-01 12:21:44 ad      ad_30s~
-#>  9 ECPANOIXLZHF~ ECPANO~ 2015-01-01 11:50:02 2015-01-01 12:24:20 ad      ad_10s~
-#> 10 FXWUORGYNJAE~ FXWUOR~ 2015-01-01 15:17:18 2015-01-01 15:19:36 ad      ad_5sec
-#> # ... with 1,198 more rows, 5 more variables: item_revenue <dbl>,
-#> #   session_duration <dbl>, start_day <date>, acquisition <chr>, country <chr>,
-#> #   and abbreviated variable names 1: session_id, 2: item_type, 3: item_name
+#>    player_id       session_id  session_start       time                item_type
+#>    <chr>           <chr>       <dttm>              <dttm>              <chr>    
+#>  1 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 01:31:03 2015-01-01 01:31:27 iap      
+#>  2 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 01:31:03 2015-01-01 01:36:57 iap      
+#>  3 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 01:31:03 2015-01-01 01:37:45 iap      
+#>  4 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 01:31:03 2015-01-01 01:42:33 ad       
+#>  5 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 11:50:02 2015-01-01 11:55:20 ad       
+#>  6 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 11:50:02 2015-01-01 12:08:56 ad       
+#>  7 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 11:50:02 2015-01-01 12:14:08 ad       
+#>  8 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 11:50:02 2015-01-01 12:21:44 ad       
+#>  9 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 11:50:02 2015-01-01 12:24:20 ad       
+#> 10 FXWUORGYNJAE271 FXWUORGYNJ~ 2015-01-01 15:17:18 2015-01-01 15:19:36 ad       
+#> # i 1,198 more rows
+#> # i 6 more variables: item_name <chr>, item_revenue <dbl>,
+#> #   session_duration <dbl>, start_day <date>, acquisition <chr>, country <chr>
 }\if{html}{\out{</div>}}
 
 Omit the first 25\% of records from \code{small_table}, also included in the

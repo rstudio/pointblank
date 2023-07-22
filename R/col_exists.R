@@ -20,6 +20,7 @@
 #' Do one or more columns actually exist?
 #'
 #' @description
+#' 
 #' The `col_exists()` validation function, the `expect_col_exists()` expectation
 #' function, and the `test_col_exists()` test function all check whether one or
 #' more columns exist in the target table. The only requirement is specification
@@ -29,7 +30,20 @@
 #' table. Each validation step or expectation will operate over a single test
 #' unit, which is whether the column exists or not.
 #' 
+#' @inheritParams col_vals_gt
+#' @param columns One or more columns from the table in focus. This can be
+#'   provided as a vector of column names using `c()` or bare column names
+#'   enclosed in [vars()].
+#'   
+#' @return For the validation function, the return value is either a
+#'   `ptblank_agent` object or a table object (depending on whether an agent
+#'   object or a table was passed to `x`). The expectation function invisibly
+#'   returns its input but, in the context of testing data, the function is
+#'   called primarily for its potential side-effects (e.g., signaling failure).
+#'   The test function returns a logical value.
+#' 
 #' @section Supported Input Tables:
+#' 
 #' The types of data tables that are officially supported are:
 #' 
 #'  - data frames (`data.frame`) and tibbles (`tbl_df`)
@@ -47,6 +61,7 @@
 #' **pointblank**).
 #'
 #' @section Column Names:
+#' 
 #' If providing multiple column names, the result will be an expansion of
 #' validation steps to that number of column names (e.g., `vars(col_a, col_b)`
 #' will result in the entry of two validation steps). Aside from column names in
@@ -55,6 +70,7 @@
 #' `matches()`, and `everything()`.
 #'
 #' @section Actions:
+#' 
 #' Often, we will want to specify `actions` for the validation. This argument,
 #' present in every validation function, takes a specially-crafted list object
 #' that is best produced by the [action_levels()] function. Read that function's
@@ -67,6 +83,7 @@
 #' `stop()`s).
 #'
 #' @section Briefs:
+#' 
 #' Want to describe this validation step in some detail? Keep in mind that this
 #' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
 #' with some text that fits. Don't worry if you don't want to do it. The
@@ -74,6 +91,7 @@
 #' then be automatically generated.
 #' 
 #' @section YAML:
+#' 
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
 #' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
 #' or interrogate the target table (via [yaml_agent_interrogate()]). When
@@ -114,18 +132,6 @@
 #' their default when generating the YAML by other means). It is also possible
 #' to preview the transformation of an agent to YAML without any writing to disk
 #' by using the [yaml_agent_string()] function.
-#'
-#' @inheritParams col_vals_gt
-#' @param columns One or more columns from the table in focus. This can be
-#'   provided as a vector of column names using `c()` or bare column names
-#'   enclosed in [vars()].
-#'   
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
 #'   
 #' @section Examples:
 #' 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/validate_rmd.R
 \name{stop_if_not}
 \alias{stop_if_not}
-\title{The next generation of \code{stopifnot()}-type functions: \code{stop_if_not()}}
+\title{A specialized version of \code{stopifnot()} for \strong{pointblank}: \code{stop_if_not()}}
 \usage{
 stop_if_not(...)
 }
@@ -14,12 +14,12 @@ all) \code{TRUE}.}
 \code{NULL} if all statements in \code{...} are \code{TRUE}.
 }
 \description{
-This is \code{stopifnot()} but with a twist: it works well as a standalone,
-replacement for \code{stopifnot()} but is also customized for use in validation
-checks in R Markdown documents where \strong{pointblank} is loaded. Using
-\code{stop_if_not()} in a code chunk where the \code{validate = TRUE} option is set
-will yield the correct reporting of successes and failures whereas
-\code{stopifnot()} \emph{does not}.
+This variation of \code{stopifnot()} works well as a standalone replacement for
+\code{stopifnot()} but is also customized for use in validation checks in R
+Markdown documents where \strong{pointblank} is loaded and \code{\link[=validate_rmd]{validate_rmd()}} is
+invoked. Using \code{stop_if_not()} in a code chunk where the \code{validate = TRUE}
+option is set will yield the correct reporting of successes and failures
+whereas \code{stopifnot()} does not.
 }
 \section{Function ID}{
 

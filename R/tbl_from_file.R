@@ -21,7 +21,8 @@
 
 #' Get a table from a local or remote file
 #' 
-#' @description 
+#' @description
+#' 
 #' If your target table is in a file, stored either locally or remotely, the
 #' `file_tbl()` function can make it possible to access it in a single function
 #' call. Compatible file types for this function are: CSV (`.csv`), TSV
@@ -402,6 +403,8 @@ file_tbl <- function(
 }
 
 #' Specify a file for download from GitHub
+#' 
+#' @description
 #' 
 #' The `from_github()` function is helpful for generating a valid URL that
 #' points to a data file in a public GitHub repository. This function can be

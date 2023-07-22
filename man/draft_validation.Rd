@@ -73,6 +73,7 @@ case better than starting with an empty code editor view.
 }
 \section{Supported Input Tables}{
 
+
 The types of data tables that are officially supported are:
 \itemize{
 \item data frames (\code{data.frame}) and tibbles (\code{tbl_df})
@@ -100,21 +101,21 @@ Let's draft a validation plan for the \code{dplyr::storms} dataset.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::storms
 #> # A tibble: 19,066 x 13
-#>    name   year month   day  hour   lat  long status        categ~1  wind press~2
-#>    <chr> <dbl> <dbl> <int> <dbl> <dbl> <dbl> <fct>           <dbl> <int>   <int>
-#>  1 Amy    1975     6    27     0  27.5 -79   tropical dep~      NA    25    1013
-#>  2 Amy    1975     6    27     6  28.5 -79   tropical dep~      NA    25    1013
-#>  3 Amy    1975     6    27    12  29.5 -79   tropical dep~      NA    25    1013
-#>  4 Amy    1975     6    27    18  30.5 -79   tropical dep~      NA    25    1013
-#>  5 Amy    1975     6    28     0  31.5 -78.8 tropical dep~      NA    25    1012
-#>  6 Amy    1975     6    28     6  32.4 -78.7 tropical dep~      NA    25    1012
-#>  7 Amy    1975     6    28    12  33.3 -78   tropical dep~      NA    25    1011
-#>  8 Amy    1975     6    28    18  34   -77   tropical dep~      NA    30    1006
-#>  9 Amy    1975     6    29     0  34.4 -75.8 tropical sto~      NA    35    1004
-#> 10 Amy    1975     6    29     6  34   -74.8 tropical sto~      NA    40    1002
-#> # ... with 19,056 more rows, 2 more variables:
-#> #   tropicalstorm_force_diameter <int>, hurricane_force_diameter <int>, and
-#> #   abbreviated variable names 1: category, 2: pressure
+#>    name   year month   day  hour   lat  long status      category  wind pressure
+#>    <chr> <dbl> <dbl> <int> <dbl> <dbl> <dbl> <fct>          <dbl> <int>    <int>
+#>  1 Amy    1975     6    27     0  27.5 -79   tropical d~       NA    25     1013
+#>  2 Amy    1975     6    27     6  28.5 -79   tropical d~       NA    25     1013
+#>  3 Amy    1975     6    27    12  29.5 -79   tropical d~       NA    25     1013
+#>  4 Amy    1975     6    27    18  30.5 -79   tropical d~       NA    25     1013
+#>  5 Amy    1975     6    28     0  31.5 -78.8 tropical d~       NA    25     1012
+#>  6 Amy    1975     6    28     6  32.4 -78.7 tropical d~       NA    25     1012
+#>  7 Amy    1975     6    28    12  33.3 -78   tropical d~       NA    25     1011
+#>  8 Amy    1975     6    28    18  34   -77   tropical d~       NA    30     1006
+#>  9 Amy    1975     6    29     0  34.4 -75.8 tropical s~       NA    35     1004
+#> 10 Amy    1975     6    29     6  34   -74.8 tropical s~       NA    40     1002
+#> # i 19,056 more rows
+#> # i 2 more variables: tropicalstorm_force_diameter <int>,
+#> #   hurricane_force_diameter <int>
 }\if{html}{\out{</div>}}
 
 The \code{draft_validation()} function creates an .R file by default. Using just

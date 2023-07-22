@@ -20,6 +20,7 @@
 #' Define a store of tables with table-prep formulas: a table store
 #' 
 #' @description
+#' 
 #' It can be useful to set up all the data sources you need and just draw from
 #' them when necessary. This upfront configuration with `tbl_store()` lets us
 #' define the methods for obtaining tabular data from mixed sources (e.g.,
@@ -39,7 +40,22 @@
 #' [tbl_source()] (e.g.,
 #' `create_agent(tbl = ~ tbl_source("<name>", <tbl_store>))`).
 #' 
+#' @param ... Expressions that contain table-prep formulas and table names for
+#'   data retrieval. Two-sided formulas (e.g, `<LHS> ~ <RHS>`) are to be used,
+#'   where the left-hand side is an identifier and the right-hand contains a
+#'   statement that obtains a table (i.e., the table-prep formula). If the LHS
+#'   is omitted then an identifier will be generated for you.
+#' @param .list Allows for the use of a list as an input alternative to `...`.
+#' @param .init We can optionally provide an initialization statement (in a
+#'   one-sided formula) that should be executed whenever *any* of tables in the
+#'   table store are obtained. This is useful, for instance, for including a
+#'   `library()` call that can be executed before any table-prep formulas in
+#'   `...`.
+#' 
+#' @return A `tbl_store` object that contains table-prep formulas.
+#' 
 #' @section YAML:
+#' 
 #' A **pointblank** table store can be written to YAML with [yaml_write()] and
 #' the resulting YAML can be used in several ways. The ideal scenario is to have
 #' pointblank agents and informants also in YAML form. This way the agent and
@@ -108,20 +124,6 @@
 #' Now, whenever the `sml_table_high` table needs to be validated, it can be
 #' done with [yaml_agent_interrogate()] (e.g., 
 #' `yaml_agent_interrogate("agent-sml_table_high.yml")`).
-#' 
-#' @param ... Expressions that contain table-prep formulas and table names for
-#'   data retrieval. Two-sided formulas (e.g, `<LHS> ~ <RHS>`) are to be used,
-#'   where the left-hand side is an identifier and the right-hand contains a
-#'   statement that obtains a table (i.e., the table-prep formula). If the LHS
-#'   is omitted then an identifier will be generated for you.
-#' @param .list Allows for the use of a list as an input alternative to `...`.
-#' @param .init We can optionally provide an initialization statement (in a
-#'   one-sided formula) that should be executed whenever *any* of tables in the
-#'   table store are obtained. This is useful, for instance, for including a
-#'   `library()` call that can be executed before any table-prep formulas in
-#'   `...`.
-#' 
-#' @return A `tbl_store` object that contains table-prep formulas.
 #' 
 #' @section Examples:
 #' 
@@ -566,6 +568,7 @@ add_to_name_list <- function(
 #' Obtain a table-prep formula from a table store
 #' 
 #' @description
+#' 
 #' The `tbl_source()` function provides a convenient means to access a
 #' table-prep formula from either a `tbl_store` object or a table store YAML
 #' file (which can be created with the [yaml_write()] function). A call to
@@ -745,7 +748,8 @@ has_substitutions <- function(x) {
 
 #' Obtain a materialized table via a table store
 #' 
-#' @description 
+#' @description
+#' 
 #' The `tbl_get()` function gives us the means to materialize a table that has
 #' an entry in a table store (i.e., has a table-prep formula with a unique
 #' name). The table store that is used for this can be in the form of a

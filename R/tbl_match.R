@@ -20,6 +20,7 @@
 #' Does the target table match a comparison table?
 #'
 #' @description
+#' 
 #' The `tbl_match()` validation function, the `expect_tbl_match()` expectation
 #' function, and the `test_tbl_match()` test function all check whether the
 #' target table's composition matches that of a comparison table. The validation
@@ -32,6 +33,7 @@
 #' same (after any `preconditions` have been applied).
 #' 
 #' @section Preconditions:
+#' 
 #' Providing expressions as `preconditions` means **pointblank** will preprocess
 #' the target table during interrogation as a preparatory step. It might happen
 #' that this particular validation requires some operation on the target table
@@ -48,6 +50,7 @@
 #' could instead be supplied.
 #' 
 #' @section Segments:
+#' 
 #' By using the `segments` argument, it's possible to define a particular
 #' validation with segments (or row slices) of the target table. An optional
 #' expression or set of expressions that serve to segment the target table by
@@ -75,6 +78,7 @@
 #' generate a separate version of the target table.
 #' 
 #' @section Actions:
+#' 
 #' Often, we will want to specify `actions` for the validation. This argument,
 #' present in every validation function, takes a specially-crafted list object
 #' that is best produced by the [action_levels()] function. Read that function's
@@ -87,6 +91,7 @@
 #' `stop()`s).
 #' 
 #' @section Briefs:
+#' 
 #' Want to describe this validation step in some detail? Keep in mind that this
 #' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
 #' with some text that fits. Don't worry if you don't want to do it. The
@@ -94,6 +99,7 @@
 #' then be automatically generated.
 #' 
 #' @section YAML:
+#' 
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
 #' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
 #' or interrogate the target table (via [yaml_agent_interrogate()]). When

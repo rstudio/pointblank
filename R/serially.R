@@ -18,7 +18,8 @@
 
 #' Run several tests and a final validation in a serial manner
 #'
-#' @description 
+#' @description
+#' 
 #' The `serially()` validation function allows for a series of tests to run in
 #' sequence before either culminating in a final validation step or simply
 #' exiting the series. This construction allows for pre-testing that may make
@@ -65,7 +66,27 @@
 #' decimal value between `0` and `1` (serving as a fractional threshold of
 #' failing test units).
 #' 
+#' @inheritParams col_vals_gt
+#' @param ... A collection one-sided formulas that consist of `test_*()`
+#'   function calls (e.g., [test_col_vals_between()], etc.) arranged in sequence
+#'   of intended interrogation order. Typically, validations up until the final
+#'   one would have some `threshold` value set (default is `1`) for short
+#'   circuiting within the series. A finishing validation function call (e.g.,
+#'   [col_vals_increasing()], etc.) can optionally be inserted at the end of the
+#'   series, serving as a validation step that only undergoes interrogation if
+#'   the prior tests adequately pass. An example of this is
+#'   `~ test_column_exists(., vars(a)), ~ col_vals_not_null(., vars(a))`).
+#' @param .list Allows for the use of a list as an input alternative to `...`.
+#' 
+#' @return For the validation function, the return value is either a
+#'   `ptblank_agent` object or a table object (depending on whether an agent
+#'   object or a table was passed to `x`). The expectation function invisibly
+#'   returns its input but, in the context of testing data, the function is
+#'   called primarily for its potential side-effects (e.g., signaling failure).
+#'   The test function returns a logical value.
+#' 
 #' @section Supported Input Tables:
+#' 
 #' The types of data tables that are officially supported are:
 #' 
 #'  - data frames (`data.frame`) and tibbles (`tbl_df`)
@@ -83,6 +104,7 @@
 #' **pointblank**).
 #'
 #' @section Column Names:
+#' 
 #' If providing multiple column names in any of the supplied validation steps,
 #' the result will be an expansion of sub-validation steps to that number of
 #' column names. Aside from column names in quotes and in `vars()`,
@@ -91,6 +113,7 @@
 #' `everything()`.
 #' 
 #' @section Preconditions:
+#' 
 #' Providing expressions as `preconditions` means **pointblank** will preprocess
 #' the target table during interrogation as a preparatory step. It might happen
 #' that a particular validation requires a calculated column, some filtering of
@@ -109,6 +132,7 @@
 #' be supplied (e.g., `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
 #' 
 #' @section Actions:
+#' 
 #' Often, we will want to specify `actions` for the validation. This argument,
 #' present in every validation function, takes a specially-crafted list
 #' object that is best produced by the [action_levels()] function. Read that
@@ -124,6 +148,7 @@
 #' threshold level).
 #' 
 #' @section Briefs:
+#' 
 #' Want to describe this validation step in some detail? Keep in mind that this
 #' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
 #' with some text that fits. Don't worry if you don't want to do it. The
@@ -131,6 +156,7 @@
 #' then be automatically generated.
 #' 
 #' @section YAML:
+#' 
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
 #' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
 #' or interrogate the target table (via [yaml_agent_interrogate()]). When
@@ -178,25 +204,6 @@
 #' them with their default when generating the YAML by other means). It is also
 #' possible to preview the transformation of an agent to YAML without any
 #' writing to disk by using the [yaml_agent_string()] function.
-#'
-#' @inheritParams col_vals_gt
-#' @param ... A collection one-sided formulas that consist of `test_*()`
-#'   function calls (e.g., [test_col_vals_between()], etc.) arranged in sequence
-#'   of intended interrogation order. Typically, validations up until the final
-#'   one would have some `threshold` value set (default is `1`) for short
-#'   circuiting within the series. A finishing validation function call (e.g.,
-#'   [col_vals_increasing()], etc.) can optionally be inserted at the end of the
-#'   series, serving as a validation step that only undergoes interrogation if
-#'   the prior tests adequately pass. An example of this is
-#'   `~ test_column_exists(., vars(a)), ~ col_vals_not_null(., vars(a))`).
-#' @param .list Allows for the use of a list as an input alternative to `...`.
-#' 
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
 #'
 #' @section Examples:
 #' 

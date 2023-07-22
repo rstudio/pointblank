@@ -22,6 +22,9 @@ evaluated, yielding a validation function per column? By default, this is
 \code{FALSE} so expressions as written will be retained in the YAML
 representation.}
 }
+\value{
+Nothing is returned. Instead, text is printed to the console.
+}
 \description{
 With \strong{pointblank} YAML, we can serialize an agent's validation plan (with
 \code{\link[=yaml_write]{yaml_write()}}), read it back later with a new agent (with

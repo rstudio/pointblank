@@ -19,7 +19,8 @@
 
 #' Add information that focuses on aspects of the data table as a whole
 #' 
-#' @description 
+#' @description
+#' 
 #' When an *informant* object is created with the [create_informant()] function,
 #' it has two starter sections: (1) 'table' and (2) 'columns'. The 'table'
 #' section should contain a few properties upon creation, such as the supplied
@@ -29,7 +30,16 @@
 #' text*."`), we can add more information that makes sense for describing the
 #' table as a whole.
 #' 
+#' @param x An informant object of class `ptblank_informant`.
+#' @param ... Information entries as a series of named arguments. The names
+#'   refer to subsection titles within the `TABLE` section and the values are
+#'   the *info text* (informational text that can be written as Markdown and
+#'   further styled with *Text Tricks*).
+#' 
+#' @return A `ptblank_informant` object.
+#' 
 #' @section Info Text:
+#' 
 #' The *info text* that's used for any of the `info_*()` functions readily
 #' accepts Markdown formatting, and, there are a few *Text Tricks* that can be
 #' used to spice up the presentation. Markdown links written as `< link url >`
@@ -73,6 +83,7 @@
 #' common being in the form of hexadecimal color values or as CSS color names.
 #' 
 #' @section YAML:
+#' 
 #' A **pointblank** informant can be written to YAML with [yaml_write()] and the
 #' resulting YAML can be used to regenerate an informant (with
 #' [yaml_read_informant()]) or perform the 'incorporate' action using the target
@@ -114,14 +125,6 @@
 #' *informant*) and the processing of snippets (generation and insertion) is
 #' done when using the [incorporate()] function. Thus, the source text is always
 #' maintained in the YAML representation and is never written in processed form.
-#' 
-#' @param x An informant object of class `ptblank_informant`.
-#' @param ... Information entries as a series of named arguments. The names
-#'   refer to subsection titles within the `TABLE` section and the values are
-#'   the *info text* (informational text that can be written as Markdown and
-#'   further styled with *Text Tricks*).
-#' 
-#' @return A `ptblank_informant` object.
 #' 
 #' @section Examples:
 #'  
@@ -212,6 +215,7 @@ info_tabular <- function(
 #' Add information that focuses on aspects of a data table's columns
 #' 
 #' @description
+#' 
 #' Upon creation of an *informant* object (with the [create_informant()]
 #' function), there are two sections containing properties: (1) 'table' and (2)
 #' 'columns'. The 'columns' section is initialized with the table's column names
@@ -221,7 +225,22 @@ info_tabular <- function(
 #' series of named arguments (in the form `entry_name = "The *info text*."`)
 #' serves as additional information for the column or columns.
 #' 
+#' @param x An informant object of class `ptblank_informant`.
+#' @param columns The column or set of columns to focus on. Can be defined as a
+#'   column name in quotes (e.g., `"<column_name>"`), one or more column names
+#'   in `vars()` (e.g., `vars(<column_name>)`), or with a select helper (e.g.,
+#'   `starts_with("date")`).
+#' @param ... Information entries as a series of named arguments. The names
+#'   refer to subsection titles within `COLUMN` -> `<COLUMN_NAME>` and the RHS
+#'   contains the *info text* (informational text that can be written as
+#'   Markdown and further styled with *Text Tricks*).
+#' @param .add Should new text be added to existing text? This is `TRUE` by
+#'   default; setting to `FALSE` replaces any existing text for a property.
+#' 
+#' @return A `ptblank_informant` object.
+#' 
 #' @section Info Text:
+#' 
 #' The *info text* that's used for any of the `info_*()` functions readily
 #' accepts Markdown formatting, and, there are a few *Text Tricks* that can be
 #' used to spice up the presentation. Markdown links written as `< link url >`
@@ -265,6 +284,7 @@ info_tabular <- function(
 #' common being in the form of hexadecimal color values or as CSS color names.
 #' 
 #' @section YAML:
+#' 
 #' A **pointblank** informant can be written to YAML with [yaml_write()] and the
 #' resulting YAML can be used to regenerate an informant (with
 #' [yaml_read_informant()]) or perform the 'incorporate' action using the target
@@ -323,20 +343,6 @@ info_tabular <- function(
 #' *informant*) and the processing of snippets (generation and insertion) is
 #' done when using the [incorporate()] function. Thus, the source text is always
 #' maintained in the YAML representation and is never written in processed form.
-#' 
-#' @param x An informant object of class `ptblank_informant`.
-#' @param columns The column or set of columns to focus on. Can be defined as a
-#'   column name in quotes (e.g., `"<column_name>"`), one or more column names
-#'   in `vars()` (e.g., `vars(<column_name>)`), or with a select helper (e.g.,
-#'   `starts_with("date")`).
-#' @param ... Information entries as a series of named arguments. The names
-#'   refer to subsection titles within `COLUMN` -> `<COLUMN_NAME>` and the RHS
-#'   contains the *info text* (informational text that can be written as
-#'   Markdown and further styled with *Text Tricks*).
-#' @param .add Should new text be added to existing text? This is `TRUE` by
-#'   default; setting to `FALSE` replaces any existing text for a property.
-#' 
-#' @return A `ptblank_informant` object.
 #' 
 #' @section Examples:
 #'  
@@ -470,6 +476,7 @@ info_columns <- function(
 #' Add column information from another data table
 #' 
 #' @description
+#' 
 #' The `info_columns_from_tbl()` function is a wrapper around the
 #' [info_columns()] function and is useful if you wish to apply *info text* to
 #' columns where that information already exists in a data frame (or in some
@@ -648,7 +655,8 @@ check_info_columns_tbl <- function(tbl) {
 
 #' Add information that focuses on some key aspect of the data table
 #' 
-#' @description 
+#' @description
+#' 
 #' While the [info_tabular()] and [info_columns()] functions allow us to
 #' add/modify info text for specific sections, the `info_section()` makes it
 #' possible to add sections of our own choosing and the information that make
@@ -656,7 +664,18 @@ check_info_columns_tbl <- function(tbl) {
 #' named arguments (in the form `entry_name = "The *info text*."`) to build the
 #' informational content for that section.
 #' 
+#' @param x An informant object of class `ptblank_informant`.
+#' @param section_name The name of the section for which this information
+#'   pertains.
+#' @param ... Information entries as a series of named arguments. The names
+#'   refer to subsection titles within the section defined as `section_name` and
+#'   the RHS is the *info text* (informational text that can be written as
+#'   Markdown and further styled with *Text Tricks*).
+#' 
+#' @return A `ptblank_informant` object.
+#' 
 #' @section Info Text:
+#' 
 #' The *info text* that's used for any of the `info_*()` functions readily
 #' accepts Markdown formatting, and, there are a few *Text Tricks* that can be
 #' used to spice up the presentation. Markdown links written as `< link url >`
@@ -752,16 +771,6 @@ check_info_columns_tbl <- function(tbl) {
 #' done when using the [incorporate()] function. Thus, the source text is always
 #' maintained in the YAML representation and is never written in processed form.
 #' 
-#' @param x An informant object of class `ptblank_informant`.
-#' @param section_name The name of the section for which this information
-#'   pertains.
-#' @param ... Information entries as a series of named arguments. The names
-#'   refer to subsection titles within the section defined as `section_name` and
-#'   the RHS is the *info text* (informational text that can be written as
-#'   Markdown and further styled with *Text Tricks*).
-#' 
-#' @return A `ptblank_informant` object.
-#' 
 #' @section Examples:
 #' 
 #' Create a pointblank `informant` object with [create_informant()]. We can
@@ -806,7 +815,6 @@ check_info_columns_tbl <- function(tbl) {
 #' `r pb_get_image_tag(file = "man_info_section_1.png")`
 #' }
 #' }
-#'
 #'
 #' @family Information Functions
 #' @section Function ID:
@@ -869,7 +877,8 @@ info_section <- function(
 
 #' Generate a useful text 'snippet' from the target table
 #' 
-#' @description 
+#' @description
+#' 
 #' Getting little snippets of information from a table goes hand-in-hand with
 #' mixing those bits of info with your table info. Call `info_snippet()` to
 #' define a snippet and how you'll get that from the target table. The snippet
@@ -882,7 +891,23 @@ info_section <- function(
 #' with just the `snippet_name` inside (e.g., `"This column has {n_cat}
 #' categories."`).
 #' 
+#' @param x An informant object of class `ptblank_informant`.
+#' @param snippet_name The name for snippet, which is used for interpolating the
+#'   result of the snippet formula into *info text* defined by an `info_*()`
+#'   function.
+#' @param fn A formula that obtains a snippet of data from the target table.
+#'   It's best to use a leading dot (`.`) that stands for the table itself and
+#'   use pipes to construct a series of operations to be performed on the table
+#'   (e.g., `~ . %>% dplyr::pull(column_2) %>% max(na.rm = TRUE)`). So long as
+#'   the result is a length-1 vector, it'll likely be valid for insertion into
+#'   some info text. Alternatively, a `snip_*()` function can be used here
+#'   (these functions always return a formula that's suitable for all types of
+#'   data sources).
+#' 
+#' @return A `ptblank_informant` object.
+#' 
 #' @section Snip functions provided in **pointblank**:
+#' 
 #' For convenience, there are several `snip_*()` functions provided in the
 #' package that work on column data from the *informant*'s target table. These
 #' are:
@@ -896,6 +921,7 @@ info_section <- function(
 #' these functions is necessary for obtaining the resultant text.
 #' 
 #' @section YAML:
+#' 
 #' A **pointblank** informant can be written to YAML with [yaml_write()] and the
 #' resulting YAML can be used to regenerate an informant (with
 #' [yaml_read_informant()]) or perform the 'incorporate' action using the target
@@ -930,21 +956,6 @@ info_section <- function(
 #'   item_count:
 #'     _type: integer
 #' ```
-#' 
-#' @param x An informant object of class `ptblank_informant`.
-#' @param snippet_name The name for snippet, which is used for interpolating the
-#'   result of the snippet formula into *info text* defined by an `info_*()`
-#'   function.
-#' @param fn A formula that obtains a snippet of data from the target table.
-#'   It's best to use a leading dot (`.`) that stands for the table itself and
-#'   use pipes to construct a series of operations to be performed on the table
-#'   (e.g., `~ . %>% dplyr::pull(column_2) %>% max(na.rm = TRUE)`). So long as
-#'   the result is a length-1 vector, it'll likely be valid for insertion into
-#'   some info text. Alternatively, a `snip_*()` function can be used here
-#'   (these functions always return a formula that's suitable for all types of
-#'   data sources).
-#' 
-#' @return A `ptblank_informant` object.
 #' 
 #' @section Examples:
 #' 
@@ -1063,6 +1074,8 @@ info_snippet <- function(
 }
 
 #' A `fn` for `info_snippet()`: get a list of column categories
+#' 
+#' @description
 #' 
 #' The `snip_list()` function can be used as an [info_snippet()] function (i.e.,
 #' provided to `fn`) to get a catalog list from a table column. You can limit
@@ -1311,6 +1324,7 @@ snip_list <- function(
 #' A `fn` for `info_snippet()`: get an inline statistical summary
 #'
 #' @description
+#' 
 #' The `snip_stats()` function can be used as an [info_snippet()] function
 #' (i.e., provided to `fn`) to produce a five- or seven-number statistical
 #' summary. This inline summary works well within a paragraph of text and can
@@ -1396,6 +1410,8 @@ snip_stats <- function(
 
 #' A `fn` for `info_snippet()`: get the lowest value from a column
 #' 
+#' @description
+#' 
 #' The `snip_lowest()` function can be used as an [info_snippet()] function
 #' (i.e., provided to `fn`) to get the lowest numerical, time value, or
 #' alphabetical value from a column in the target table.
@@ -1463,6 +1479,8 @@ snip_lowest <- function(column) {
 }
 
 #' A `fn` for `info_snippet()`: get the highest value from a column
+#' 
+#' @description
 #' 
 #' The `snip_highest()` function can be used as an [info_snippet()] function
 #' (i.e., provided to `fn`) to get the highest numerical, time value, or

@@ -19,7 +19,8 @@
 
 #' Get the agent's **x-list**
 #'
-#' @description 
+#' @description
+#' 
 #' The agent's **x-list** is a record of information that the agent possesses at
 #' any given time. The **x-list** will contain the most complete information
 #' after an interrogation has taken place (before then, the data largely

@@ -46,6 +46,7 @@ notation (e.g, \verb{create_agent(tbl = <tbl_store>$<name>)}) or with
 }
 \section{YAML}{
 
+
 A \strong{pointblank} table store can be written to YAML with \code{\link[=yaml_write]{yaml_write()}} and
 the resulting YAML can be used in several ways. The ideal scenario is to have
 pointblank agents and informants also in YAML form. This way the agent and

@@ -20,6 +20,7 @@
 #' Execute all agent and informant YAML tasks
 #' 
 #' @description
+#' 
 #' The `yaml_exec()` function takes all relevant **pointblank** YAML files in a
 #' directory and executes them. Execution involves interrogation of agents for
 #' YAML agents and incorporation of informants for YAML informants. Under the

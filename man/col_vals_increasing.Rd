@@ -155,6 +155,7 @@ table (after any \code{preconditions} have been applied).
 }
 \section{Supported Input Tables}{
 
+
 The types of data tables that are officially supported are:
 \itemize{
 \item data frames (\code{data.frame}) and tibbles (\code{tbl_df})
@@ -177,6 +178,7 @@ formally tested (so be mindful of this when using unsupported backends with
 
 \section{Column Names}{
 
+
 If providing multiple column names to \code{columns}, the result will be an
 expansion of validation steps to that number of column names (e.g.,
 \code{vars(col_a, col_b)} will result in the entry of two validation steps). Aside
@@ -187,12 +189,14 @@ are available for specifying columns. They are: \code{starts_with()},
 
 \section{Missing Values}{
 
+
 This validation function supports special handling of \code{NA} values. The
 \code{na_pass} argument will determine whether an \code{NA} value appearing in a test
 unit should be counted as a \emph{pass} or a \emph{fail}. The default of \code{na_pass = FALSE} means that any \code{NA}s encountered will accumulate failing test units.
 }
 
 \section{Preconditions}{
+
 
 Providing expressions as \code{preconditions} means \strong{pointblank} will preprocess
 the target table during interrogation as a preparatory step. It might happen
@@ -212,6 +216,7 @@ be supplied (e.g., \code{function(x) dplyr::mutate(x, col_b = col_a + 10)}).
 }
 
 \section{Segments}{
+
 
 By using the \code{segments} argument, it's possible to define a particular
 validation with segments (or row slices) of the target table. An optional
@@ -245,6 +250,7 @@ generate a separate version of the target table.
 
 \section{Actions}{
 
+
 Often, we will want to specify \code{actions} for the validation. This argument,
 present in every validation function, takes a specially-crafted list
 object that is best produced by the \code{\link[=action_levels]{action_levels()}} function. Read that
@@ -262,6 +268,7 @@ threshold level).
 
 \section{Briefs}{
 
+
 Want to describe this validation step in some detail? Keep in mind that this
 is only useful if \code{x} is an \emph{agent}. If that's the case, \code{brief} the agent
 with some text that fits. Don't worry if you don't want to do it. The
@@ -270,6 +277,7 @@ then be automatically generated.
 }
 
 \section{YAML}{
+
 
 A \strong{pointblank} agent can be written to YAML with \code{\link[=yaml_write]{yaml_write()}} and the
 resulting YAML can be used to regenerate an agent (with \code{\link[=yaml_read_agent]{yaml_read_agent()}})
@@ -330,21 +338,21 @@ that are increasing from top to bottom.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{game_revenue
 #> # A tibble: 2,000 x 11
-#>    player_id     sessi~1 session_start       time                item_~2 item_~3
-#>    <chr>         <chr>   <dttm>              <dttm>              <chr>   <chr>  
-#>  1 ECPANOIXLZHF~ ECPANO~ 2015-01-01 01:31:03 2015-01-01 01:31:27 iap     offer2 
-#>  2 ECPANOIXLZHF~ ECPANO~ 2015-01-01 01:31:03 2015-01-01 01:36:57 iap     gems3  
-#>  3 ECPANOIXLZHF~ ECPANO~ 2015-01-01 01:31:03 2015-01-01 01:37:45 iap     gold7  
-#>  4 ECPANOIXLZHF~ ECPANO~ 2015-01-01 01:31:03 2015-01-01 01:42:33 ad      ad_20s~
-#>  5 ECPANOIXLZHF~ ECPANO~ 2015-01-01 11:50:02 2015-01-01 11:55:20 ad      ad_5sec
-#>  6 ECPANOIXLZHF~ ECPANO~ 2015-01-01 11:50:02 2015-01-01 12:08:56 ad      ad_10s~
-#>  7 ECPANOIXLZHF~ ECPANO~ 2015-01-01 11:50:02 2015-01-01 12:14:08 ad      ad_10s~
-#>  8 ECPANOIXLZHF~ ECPANO~ 2015-01-01 11:50:02 2015-01-01 12:21:44 ad      ad_30s~
-#>  9 ECPANOIXLZHF~ ECPANO~ 2015-01-01 11:50:02 2015-01-01 12:24:20 ad      ad_10s~
-#> 10 FXWUORGYNJAE~ FXWUOR~ 2015-01-01 15:17:18 2015-01-01 15:19:36 ad      ad_5sec
-#> # ... with 1,990 more rows, 5 more variables: item_revenue <dbl>,
-#> #   session_duration <dbl>, start_day <date>, acquisition <chr>, country <chr>,
-#> #   and abbreviated variable names 1: session_id, 2: item_type, 3: item_name
+#>    player_id       session_id  session_start       time                item_type
+#>    <chr>           <chr>       <dttm>              <dttm>              <chr>    
+#>  1 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 01:31:03 2015-01-01 01:31:27 iap      
+#>  2 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 01:31:03 2015-01-01 01:36:57 iap      
+#>  3 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 01:31:03 2015-01-01 01:37:45 iap      
+#>  4 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 01:31:03 2015-01-01 01:42:33 ad       
+#>  5 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 11:50:02 2015-01-01 11:55:20 ad       
+#>  6 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 11:50:02 2015-01-01 12:08:56 ad       
+#>  7 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 11:50:02 2015-01-01 12:14:08 ad       
+#>  8 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 11:50:02 2015-01-01 12:21:44 ad       
+#>  9 ECPANOIXLZHF896 ECPANOIXLZ~ 2015-01-01 11:50:02 2015-01-01 12:24:20 ad       
+#> 10 FXWUORGYNJAE271 FXWUORGYNJ~ 2015-01-01 15:17:18 2015-01-01 15:19:36 ad       
+#> # i 1,990 more rows
+#> # i 6 more variables: item_name <chr>, item_revenue <dbl>,
+#> #   session_duration <dbl>, start_day <date>, acquisition <chr>, country <chr>
 }\if{html}{\out{</div>}}
 \subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 

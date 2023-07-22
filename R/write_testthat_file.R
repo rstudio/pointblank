@@ -20,6 +20,7 @@
 #' Transform a **pointblank** agent to a **testthat** test file
 #' 
 #' @description
+#' 
 #' With a **pointblank** *agent*, we can write a **testthat** test file and opt
 #' to place it in the `testthat/tests` if it is available in the project path
 #' (we can specify an alternate path as well). This works by transforming the
@@ -48,7 +49,8 @@
 #' perform an interrogation on the target data before generating the
 #' **testthat** test file.
 #' 
-#' @details 
+#' @details
+#' 
 #' Tests for inactive validation steps will be skipped with a clear message
 #' indicating that the reason for skipping was due to the test not being active.
 #' Any inactive validation steps can be forced into an active state by using the

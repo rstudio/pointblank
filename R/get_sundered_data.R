@@ -20,6 +20,7 @@
 #' Sunder the data, splitting it into 'pass' and 'fail' pieces
 #'
 #' @description
+#' 
 #' Validation of the data is one thing but, sometimes, you want to use the best
 #' part of the input dataset for something else. The `get_sundered_data()`
 #' function works with an agent object that has intel (i.e., post
@@ -32,6 +33,7 @@
 #' but their values can be easily customized.
 #' 
 #' @details
+#' 
 #' There are some caveats to sundering. The validation steps considered for this
 #' splitting has to be of the row-based variety (e.g., the `col_vals_*()`
 #' functions or [conjointly()], but not `rows_distinct()`). Furthermore,

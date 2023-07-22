@@ -39,6 +39,7 @@ with just the \code{snippet_name} inside (e.g., \code{"This column has {n_cat} c
 }
 \section{Snip functions provided in \strong{pointblank}}{
 
+
 For convenience, there are several \verb{snip_*()} functions provided in the
 package that work on column data from the \emph{informant}'s target table. These
 are:
@@ -54,6 +55,7 @@ these functions is necessary for obtaining the resultant text.
 }
 
 \section{YAML}{
+
 
 A \strong{pointblank} informant can be written to YAML with \code{\link[=yaml_write]{yaml_write()}} and the
 resulting YAML can be used to regenerate an informant (with

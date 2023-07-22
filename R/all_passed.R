@@ -20,12 +20,14 @@
 #' Did all of the validations fully *pass*?
 #'
 #' @description
+#' 
 #' Given an agent's validation plan that had undergone interrogation via
 #' [interrogate()], did every single validation step result in zero *failing*
 #' test units? Using the `all_passed()` function will let us know whether that's
 #' `TRUE` or not.
 #' 
 #' @details
+#' 
 #' The `all_passed()` function provides a single logical value based on an
 #' interrogation performed in the *agent*-based workflow. For very large-scale
 #' validation (where data quality is a known issue, and is perhaps something to

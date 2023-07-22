@@ -30,8 +30,8 @@ By default, this is \code{FALSE}.}
 \item{skips}{This is an optional vector of test-skipping keywords modeled
 after the \strong{testthat} \verb{skip_on_*()} functions. The following keywords can
 be used to include \verb{skip_on_*()} statements: \code{"cran"}
-(\code{\link[testthat:skip]{testthat::skip_on_cran()}}), \code{"travis"} (\code{\link[testthat:skip]{testthat::skip_on_travis()}}),
-\code{"appveyor"} (\code{\link[testthat:skip]{testthat::skip_on_appveyor()}}), \code{"ci"}
+(\code{\link[testthat:skip]{testthat::skip_on_cran()}}), \code{"travis"} (\code{\link[testthat:skip_on_travis]{testthat::skip_on_travis()}}),
+\code{"appveyor"} (\code{\link[testthat:skip_on_travis]{testthat::skip_on_appveyor()}}), \code{"ci"}
 (\code{\link[testthat:skip]{testthat::skip_on_ci()}}), \code{"covr"} (\code{\link[testthat:skip]{testthat::skip_on_covr()}}), \code{"bioc"}
 (\code{\link[testthat:skip]{testthat::skip_on_bioc()}}). There are keywords for skipping tests on
 certain operating systems and all of them will insert a specific

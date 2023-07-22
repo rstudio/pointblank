@@ -20,6 +20,7 @@
 #' Are row data complete?
 #'
 #' @description
+#' 
 #' The `rows_complete()` validation function, the `expect_rows_complete()`
 #' expectation function, and the `test_rows_complete()` test function all check
 #' whether rows contain any `NA`/`NULL` values (optionally constrained to a
@@ -34,7 +35,17 @@
 #' the following **tidyselect** helper functions: `starts_with()`,
 #' `ends_with()`, `contains()`, `matches()`, and `everything()`.
 #' 
+#' @inheritParams col_vals_gt
+#'   
+#' @return For the validation function, the return value is either a
+#'   `ptblank_agent` object or a table object (depending on whether an agent
+#'   object or a table was passed to `x`). The expectation function invisibly
+#'   returns its input but, in the context of testing data, the function is
+#'   called primarily for its potential side-effects (e.g., signaling failure).
+#'   The test function returns a logical value.
+#' 
 #' @section Supported Input Tables:
+#' 
 #' The types of data tables that are officially supported are:
 #' 
 #'  - data frames (`data.frame`) and tibbles (`tbl_df`)
@@ -52,6 +63,7 @@
 #' **pointblank**).
 #' 
 #' @section Preconditions:
+#' 
 #' Providing expressions as `preconditions` means **pointblank** will preprocess
 #' the target table during interrogation as a preparatory step. It might happen
 #' that a particular validation requires a calculated column, some filtering of
@@ -70,6 +82,7 @@
 #' be supplied (e.g., `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
 #' 
 #' @section Segments:
+#' 
 #' By using the `segments` argument, it's possible to define a particular
 #' validation with segments (or row slices) of the target table. An optional
 #' expression or set of expressions that serve to segment the target table by
@@ -97,6 +110,7 @@
 #' generate a separate version of the target table.
 #' 
 #' @section Actions:
+#' 
 #' Often, we will want to specify `actions` for the validation. This argument,
 #' present in every validation function, takes a specially-crafted list object
 #' that is best produced by the [action_levels()] function. Read that function's
@@ -111,6 +125,7 @@
 #' the same threshold level).
 #' 
 #' @section Briefs:
+#' 
 #' Want to describe this validation step in some detail? Keep in mind that this
 #' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
 #' with some text that fits. Don't worry if you don't want to do it. The
@@ -118,6 +133,7 @@
 #' then be automatically generated.
 #' 
 #' @section YAML:
+#' 
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
 #' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
 #' or interrogate the target table (via [yaml_agent_interrogate()]). When
@@ -163,15 +179,6 @@
 #' when generating the YAML by other means). It is also possible to preview the
 #' transformation of an agent to YAML without any writing to disk by using the
 #' [yaml_agent_string()] function.
-#'
-#' @inheritParams col_vals_gt
-#'   
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
 #'   
 #' @section Examples:
 #' 

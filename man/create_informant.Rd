@@ -88,6 +88,7 @@ options.
 }
 \section{Supported Input Tables}{
 
+
 The types of data tables that are officially supported are:
 \itemize{
 \item data frames (\code{data.frame}) and tibbles (\code{tbl_df})
@@ -109,6 +110,7 @@ formally tested (so be mindful of this when using unsupported backends with
 }
 
 \section{YAML}{
+
 
 A \strong{pointblank} informant can be written to YAML with \code{\link[=yaml_write]{yaml_write()}} and the
 resulting YAML can be used to regenerate an informant (with
@@ -174,6 +176,7 @@ as reserved keys).
 }
 
 \section{Writing an Informant to Disk}{
+
 
 An \emph{informant} object can be written to disk with the \code{\link[=x_write_disk]{x_write_disk()}}
 function. Informants are stored in the serialized RDS format and can be

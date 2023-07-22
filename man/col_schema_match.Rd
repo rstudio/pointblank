@@ -159,6 +159,7 @@ type.
 }
 \section{Supported Input Tables}{
 
+
 The types of data tables that are officially supported are:
 \itemize{
 \item data frames (\code{data.frame}) and tibbles (\code{tbl_df})
@@ -181,6 +182,7 @@ formally tested (so be mindful of this when using unsupported backends with
 
 \section{Actions}{
 
+
 Often, we will want to specify \code{actions} for the validation. This argument,
 present in every validation function, takes a specially-crafted list object
 that is best produced by the \code{\link[=action_levels]{action_levels()}} function. Read that function's
@@ -195,6 +197,7 @@ depending on the situation (the first produces a warning, the other
 
 \section{Briefs}{
 
+
 Want to describe this validation step in some detail? Keep in mind that this
 is only useful if \code{x} is an \emph{agent}. If that's the case, \code{brief} the agent
 with some text that fits. Don't worry if you don't want to do it. The
@@ -203,6 +206,7 @@ then be automatically generated.
 }
 
 \section{YAML}{
+
 
 A \strong{pointblank} agent can be written to YAML with \code{\link[=yaml_write]{yaml_write()}} and the
 resulting YAML can be used to regenerate an agent (with \code{\link[=yaml_read_agent]{yaml_read_agent()}})

@@ -228,7 +228,7 @@ validation statements and any associated error messages.
 </p>
 
 The above R Markdown document is available as a template in the RStudio
-IDE (it’s called `Pointblank Validation`). Try it out\!
+IDE; it’s called `Pointblank Validation`.
 
 <hr>
 

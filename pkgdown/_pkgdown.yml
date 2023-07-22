@@ -1,0 +1,294 @@
+url: https://rich-iannone.github.io/pointblank
+
+destination: docs
+
+home:
+  strip_header: true
+
+template:
+  bootstrap: 5
+
+development:
+  mode: release
+
+reference:
+  - title: Planning and Prep
+    desc: >
+      Should you need to understand your data a bit more, use the `scan_data()`
+      function. It provides a comprehensive report on the data you might be
+      planning on validating. If going down the road of preparing a data quality
+      analysis, call on an *agent* to carry out that eventual plan with
+      `create_agent()`. The agent here is to be told which table is the target,
+      and, we devise a stepwise validation plan with validation functions. If
+      collecting and publishing table information is your goal, then begin with
+      the `create_informant()` function.
+    contents:
+    - scan_data
+    - create_agent
+    - create_informant
+    - validate_rmd
+    - action_levels
+    - db_tbl
+    - file_tbl
+    - tbl_store
+    - tbl_source
+    - tbl_get
+    - draft_validation
+
+  - title: Validation, Expectation, and Test Functions
+    desc: >
+      Validation functions are either used with an *agent* object or, more
+      simply, just with the table of interest. When used with an *agent*, each
+      validation works to build up a validation plan (which is executed
+      with the `interrogate()` function). If one or more validation functions
+      are used directly on data (that is, no agent is involved whatsoever),
+      then the data is checked and passed through if there are no problems.
+      We can fine tune the `warn_*` and/or `stop_*` thresholds and so that if
+      the level of failed validation units exceeds those set levels, then
+      we'll get either a warning or an error. Each validation function is
+      associated with an expectation function (of the form `expect_*()`). These
+      expectation functions are equivalent in usage and behavior to those in
+      the **testthat** package. Finally, each validation function has an
+      associated test function (of the form `test_*()`) that always returns a
+      logical value.
+    contents:
+    - col_vals_lt
+    - col_vals_lte
+    - col_vals_equal
+    - col_vals_not_equal
+    - col_vals_gte
+    - col_vals_gt
+    - col_vals_between
+    - col_vals_not_between
+    - col_vals_in_set
+    - col_vals_not_in_set
+    - col_vals_make_set
+    - col_vals_make_subset
+    - col_vals_increasing
+    - col_vals_decreasing
+    - col_vals_null
+    - col_vals_not_null
+    - col_vals_regex
+    - col_vals_within_spec
+    - col_vals_expr
+    - rows_distinct
+    - rows_complete
+    - col_is_character
+    - col_is_numeric
+    - col_is_integer
+    - col_is_logical
+    - col_is_date
+    - col_is_posix
+    - col_is_factor
+    - col_exists
+    - col_schema_match
+    - row_count_match
+    - col_count_match
+    - tbl_match
+    - conjointly
+    - serially
+    - specially
+    
+  - title: Information Functions
+    desc: >
+      We can progressively add information to an *informant* object by using the
+      collection of `info_*()` functions. We can add more table-based properties
+      with the `info_tabular()` function, details about the nature of each
+      column with the `info_columns()` function, and add sections of our own
+      choosing (and the info that make sense for those sections) with the
+      `info_section()` function. Snippets of information can be gleaned from the
+      target table by using the `info_snippet()` function. These bits of
+      information can be incorporated in text defined by the other `info_*()`
+      functions via `{ }`. Some great `snip_*()` functions are included to make
+      info-snipping as easy (and useful!) as can be.
+    contents:
+    - info_tabular
+    - info_columns
+    - info_columns_from_tbl
+    - info_section
+    - info_snippet
+    - snip_list
+    - snip_stats
+    - snip_lowest
+    - snip_highest
+    
+  - title: Emailing
+    desc: >
+      Sometimes we want to email a report of a validation because of the
+      importance of the information contained therein. The `email_blast()`
+      function can be used within the `end_fns` argument of `create_agent()`,
+      giving us options to send a customizable message only if specified
+      conditions are met.
+    contents:
+    - email_blast
+    - email_create
+    - stock_msg_body
+    - stock_msg_footer
+    
+  - title: Logging
+    desc: >
+      Logging validation failure conditions makes for a good practice during
+      data quality analysis. The `log4r_step()` function allows for simple
+      generation of log entries and specification of logging destinations.
+    contents:
+    - log4r_step
+
+  - title: "Agent: Interrogate and Report"
+    desc: >
+      If we have an *agent* object that has a plan (i.e., validation steps),
+      the `interrogate()` function instructs the *agent* to interrogate the
+      target table. The agent will go to work and also perform specified
+      side-effect functions at the step level and upon completion (if those are
+      functions are defined). After interrogation, we can get a report through
+      printing, however, we can take advantage of more options by using the
+      `get_agent_report()` function.
+    contents:
+    - interrogate
+    - get_agent_report
+    
+  - title: "Informant: Incorporate and Report"
+    desc: >
+      If we have an *informant* object that has been loaded with information
+      from using the `info_*()` functions, the `incorporate()` function works
+      to regenerate snippets and integrate those into the info text. After
+      refreshing the table information, we can get an information report through
+      printing, or, by using `get_informant_report()` function.
+    contents:
+    - incorporate
+    - get_informant_report
+    
+  - title: Post-interrogation
+    desc: >
+      The agent always has a special list called an x-list. Access that by
+      invoking the `get_agent_x_list()` and you'll then have a smorgasbord of
+      information about how the validation went down. Table extracts are
+      collected by default for failed rows (up to a limit) and we can access
+      those with `get_data_extracts()`. Table rows can be sundered into 'pass'
+      and 'fail' pieces. Access those table fragments with the
+      `get_sundered_data()` function. Want to know if all validation steps have
+      passed with flying colors? Sometimes that could happen; use the
+      `all_passed()` function to find out.
+    contents:
+    - get_agent_x_list
+    - get_data_extracts
+    - get_sundered_data
+    - all_passed
+    - write_testthat_file
+    
+  - title: Object Ops
+    desc: >
+      We have options for writing an agent or informant to disk with the 
+      `x_write_disk()` function. The on-disk object can be retrieved with the
+      `x_read_disk()` function. You can export a report as an HTML file with
+      `export_report()`. A set of functions are also available for
+      setting a data table to an existing object, and, for editing an agent's
+      validation steps.
+    contents:
+    - x_write_disk
+    - x_read_disk
+    - export_report
+    - set_tbl
+    - activate_steps
+    - deactivate_steps
+    - remove_steps
+    
+  - title: The Multiagent
+    desc: >
+      The *multiagent* is a group of agents, all bundled together into a single
+      object. With this grouping, we can generate unified reporting across the
+      component agents with the `get_multiagent_report()` function. One style
+      of reporting (`"long"`) provides a serial listing of agent reports. The
+      other option (`"wide"`) is useful for tracking the evolution of data
+      quality checks over time since common steps across all interrogations
+      will form individual rows (and each interrogation will form a column).
+    contents:
+    - create_multiagent
+    - read_disk_multiagent
+    - get_multiagent_report
+  
+  - title: pointblank YAML
+    desc: >
+      YAML files can be used in **pointblank** for two distinct purposes: (1)
+      to define agents and their validation plans, and (2) to define information
+      for tables. The `yaml_write()` function allows us write agent or
+      informant YAML from the namesake objects. We can read them back from disk
+      by using the `yaml_read_agent()` and `yaml_read_informant()` functions. As
+      a nice shortcut, we read *agent* YAML and interrogate immediately with
+      `yaml_agent_interrogate()`; in a similar manner, we can read *informant*
+      YAML and incorporate table information with
+      `yaml_informant_incorporate()`.
+    contents:
+    - yaml_write
+    - yaml_read_agent
+    - yaml_read_informant
+    - yaml_agent_interrogate
+    - yaml_agent_string
+    - yaml_agent_show_exprs
+    - yaml_informant_incorporate
+    - yaml_exec
+    
+  - title: Table Transformers
+    desc: >
+      **Table Transformer** functions can radically transform a data table and
+      either provide a wholly different table (like a summary table or table
+      properties table) or do some useful filtering in a single step. This can
+      be useful for preparing the target table for validation, creating a
+      temporary table for a few validation steps, or even as something used
+      outside of the **pointblank** workflows. As a nice bonus these
+      transformer functions will work equally well with data frames, database
+      tables, and Spark tables.
+    contents:
+    - tt_summary_stats
+    - tt_string_info
+    - tt_tbl_dims
+    - tt_tbl_colnames
+    - tt_time_shift
+    - tt_time_slice
+    - get_tt_param
+    
+  - title: Utility and Helper Functions
+    contents:
+    - col_schema
+    - has_columns
+    - affix_date
+    - affix_datetime
+    - stop_if_not
+    - from_github
+    
+  - title: Datasets
+    contents:
+    - small_table
+    - small_table_sqlite
+    - specifications
+    - game_revenue
+    - game_revenue_info
+    
+navbar:
+  type: default
+  left:
+  - text: Articles
+    menu:
+    - text: Validation Workflows
+    - text: 'Overview'
+      href: articles/validation_workflows.html
+    - text: 'VALID-I: Data Quality Reporting'
+      href: articles/VALID-I.html
+    - text: 'VALID-II: Pipeline Data Validation'
+      href: articles/VALID-II.html
+    - text: 'VALID-III: Expectations in Unit Tests'
+      href: articles/VALID-III.html
+    - text: 'VALID-IV: Data Tests for Conditionals'
+      href: articles/VALID-IV.html
+    - text: 'VALID-V: Table Scan'
+      href: articles/VALID-V.html
+    - text: 'VALID-VI: R Markdown Document Validation'
+      href: articles/VALID-VI.html
+    - text: Information Management
+    - text: 'Intro to Information Management'
+      href: 'articles/INFO-1.html'
+    - text: 'Advanced Information Management'
+      href: 'articles/INFO-2.html'
+  - text: Reference
+    href: reference/index.html
+  - text: News
+    href: news/index.html

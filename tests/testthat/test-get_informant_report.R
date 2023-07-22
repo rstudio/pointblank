@@ -1,5 +1,3 @@
-skip_on_cran()
-
 test_that("Getting an information report is possible", {
   
   # Generate an informant object, add two snippets with `info_snippet()`,
@@ -49,8 +47,6 @@ test_that("Getting an information report is possible", {
 })
 
 test_that("Getting a more advanced information report is possible", {
-  
-  skip_on_cran()
   
   # Generate an informant object, add several snippets with `info_snippet()`,
   # add information with some other `info_*()` functions and then

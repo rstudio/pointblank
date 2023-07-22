@@ -1,5 +1,3 @@
-skip_on_cran()
-
 sys_path_agent <- system.file("yaml/agent-small_table.yml", package = "pointblank")
 sys_path_informant <- system.file("yaml/informant-small_table.yml", package = "pointblank")
 sys_path_tbl_store <- system.file("yaml/tbl_store.yml", package = "pointblank")

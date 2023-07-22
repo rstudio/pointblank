@@ -1,5 +1,3 @@
-skip_on_cran()
-
 tbl <- 
   dplyr::tibble(
     a = 1:5,

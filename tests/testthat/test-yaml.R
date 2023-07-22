@@ -1,5 +1,3 @@
-skip_on_cran()
-
 work_path <- "./generated_testthat_files"
 
 if (fs::dir_exists(path = work_path)) {

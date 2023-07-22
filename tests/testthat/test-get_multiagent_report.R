@@ -1,5 +1,3 @@
-skip_on_cran()
-
 test_that("Getting a multiagent report is possible", {
   
   al <- action_levels(0.05, 0.10, 0.20)

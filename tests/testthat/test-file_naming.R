@@ -3,8 +3,6 @@ file_name_ext <- "the_file.txt"
 
 test_that("affixing a date to a filename works well", {
   
-  skip_on_cran()
-  
   expect_match(
     affix_date(
       filename = file_name_ext, position = "end", format = "%Y-%m-%d",
@@ -155,8 +153,6 @@ test_that("affixing a date to a filename works well", {
 })
 
 test_that("affixing a datetime to a filename works well", {
-  
-  skip_on_cran()
 
   expect_match(
     affix_datetime(

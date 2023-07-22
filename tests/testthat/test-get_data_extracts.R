@@ -1,5 +1,3 @@
-skip_on_cran()
-
 test_that("Getting data extracts is possible", {
   
   # Use two validation step functions to create

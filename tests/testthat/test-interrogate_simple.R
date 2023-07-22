@@ -1,5 +1,3 @@
-skip_on_cran()
-
 tbl <- 
   small_table %>%
   dplyr::mutate(g = as.factor(f))

@@ -1,7 +1,6 @@
+skip_on_ci()
+
 test_that("pointblank agent works with dittodb-mocked Postgres database connection", {
-  
-  skip_on_cran()
-  skip_on_ci()
   
   # Create a connection to the `trade_statistics`
   # database hosted publicly at "tradestatistics.io"

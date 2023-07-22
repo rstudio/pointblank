@@ -1,5 +1,3 @@
-skip_on_cran()
-
 test_that("column roles can be satisfactorily determined", {
 
   expect_equal(

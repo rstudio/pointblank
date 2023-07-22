@@ -1,5 +1,3 @@
-skip_on_cran()
-
 library(lubridate)
 
 increasing_tbl <-

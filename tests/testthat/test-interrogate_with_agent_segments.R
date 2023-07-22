@@ -1,5 +1,3 @@
-skip_on_cran()
-
 test_that("Agent interrogations with segments yields the correct results", {
   
   #

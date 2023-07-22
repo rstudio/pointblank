@@ -1,5 +1,3 @@
-skip_on_cran()
-
 # Create a pointblank agent for testing
 agent <-
   create_agent(

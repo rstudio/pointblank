@@ -20,6 +20,7 @@
 #' Write **pointblank** objects to YAML files
 #' 
 #' @description
+#' 
 #' With `yaml_write()` we can take different **pointblank** objects (these are
 #' the `ptblank_agent`, `ptblank_informant`, and `tbl_store`) and write them to
 #' YAML. With an *agent*, for example, `yaml_write()` will write that everything
@@ -60,7 +61,7 @@
 #' @param quiet Should the function *not* inform when the file is written? By
 #'   default this is `FALSE`.
 #'   
-#' @return Invisibly returns `TRUE` if the YAML file has been written. 
+#' @return Invisibly returns `TRUE` if the YAML file has been written.
 #'   
 #' @section Examples:
 #' 
@@ -523,7 +524,8 @@ yaml_write <- function(
 
 #' Display **pointblank** YAML using an agent or a YAML file
 #' 
-#' @description 
+#' @description
+#' 
 #' With **pointblank** YAML, we can serialize an agent's validation plan (with
 #' [yaml_write()]), read it back later with a new agent (with
 #' [yaml_read_agent()]), or perform an interrogation on the target data table
@@ -545,6 +547,8 @@ yaml_write <- function(
 #'   evaluated, yielding a validation function per column? By default, this is
 #'   `FALSE` so expressions as written will be retained in the YAML
 #'   representation.
+#' 
+#' @return Nothing is returned. Instead, text is printed to the console.
 #'   
 #' @section Examples:
 #'

@@ -43,6 +43,10 @@ using the \code{\link[=get_agent_x_list]{get_agent_x_list()}} function. The defa
 the \code{x$notify} logical vector (i.e., any validation step that results in a
 'notify' state).}
 }
+\value{
+Nothing is returned. The end result is the side-effect of
+email-sending if certain conditions are met.
+}
 \description{
 The \code{email_blast()} function is useful for sending an email message that
 explains the result of a \strong{pointblank} validation. It is powered by the
@@ -56,6 +60,7 @@ To better get a handle on emailing with \code{email_blast()}, the analogous
 \code{\link[=email_create]{email_create()}} function can be used with a \strong{pointblank} agent object.
 }
 \section{YAML}{
+
 
 A \strong{pointblank} agent can be written to YAML with \code{\link[=yaml_write]{yaml_write()}} and the
 resulting YAML can be used to regenerate an agent (with \code{\link[=yaml_read_agent]{yaml_read_agent()}})

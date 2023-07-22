@@ -20,6 +20,7 @@
 #' Given an *informant* object, update and incorporate table snippets
 #' 
 #' @description 
+#' 
 #' When the *informant* object has a number of snippets available (by using
 #' [info_snippet()]) and the strings to use them (by using the `info_*()`
 #' functions and `{<snippet_name>}` in the text elements), the process of

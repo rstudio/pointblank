@@ -20,6 +20,7 @@
 #' Do columns in the table (and their types) match a predefined schema?
 #'
 #' @description
+#' 
 #' The `col_schema_match()` validation function, the `expect_col_schema_match()`
 #' expectation function, and the `test_col_schema_match()` test function all
 #' work in conjunction with a `col_schema` object (generated through the
@@ -48,7 +49,37 @@
 #' particular column. It can even be `NULL`, skipping the check of the column
 #' type.
 #' 
+#' @inheritParams col_vals_gt
+#' @param schema A table schema of type `col_schema` which can be generated
+#'   using the [col_schema()] function.
+#' @param complete A requirement to account for all table columns in the
+#'   provided `schema`. By default, this is `TRUE` and so that all column names
+#'   in the target table must be present in the schema object. This restriction
+#'   can be relaxed by using `FALSE`, where we can provide a subset of table
+#'   columns in the schema.
+#' @param in_order A stringent requirement for enforcing the order of columns in
+#'   the provided `schema`. By default, this is `TRUE` and the order of columns
+#'   in both the schema and the target table must match. By setting to `FALSE`,
+#'   this strict order requirement is removed.
+#' @param is_exact Determines whether the check for column types should be exact
+#'   or even performed at all. For example, columns in R data frames may have
+#'   multiple classes (e.g., a date-time column can have both the `"POSIXct"`
+#'   and the `"POSIXt"` classes). If using `is_exact == FALSE`, the column type
+#'   in the user-defined schema for a date-time value can be set as either
+#'   `"POSIXct"` *or* `"POSIXt"` and pass validation (with this column, at
+#'   least). This can be taken a step further and using `NULL` for a column type
+#'   in the user-defined schema will skip the validation check of a column type.
+#'   By default, `is_exact` is set to `TRUE`.
+#' 
+#' @return For the validation function, the return value is either a
+#'   `ptblank_agent` object or a table object (depending on whether an agent
+#'   object or a table was passed to `x`). The expectation function invisibly
+#'   returns its input but, in the context of testing data, the function is
+#'   called primarily for its potential side-effects (e.g., signaling failure).
+#'   The test function returns a logical value.
+#' 
 #' @section Supported Input Tables:
+#' 
 #' The types of data tables that are officially supported are:
 #' 
 #'  - data frames (`data.frame`) and tibbles (`tbl_df`)
@@ -66,6 +97,7 @@
 #' **pointblank**).
 #'
 #' @section Actions:
+#' 
 #' Often, we will want to specify `actions` for the validation. This argument,
 #' present in every validation function, takes a specially-crafted list object
 #' that is best produced by the [action_levels()] function. Read that function's
@@ -78,6 +110,7 @@
 #' `stop()`s).
 #'
 #' @section Briefs:
+#' 
 #' Want to describe this validation step in some detail? Keep in mind that this
 #' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
 #' with some text that fits. Don't worry if you don't want to do it. The
@@ -85,6 +118,7 @@
 #' then be automatically generated.
 #' 
 #' @section YAML:
+#' 
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
 #' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
 #' or interrogate the target table (via [yaml_agent_interrogate()]). When
@@ -135,35 +169,6 @@
 #' their default when generating the YAML by other means). It is also possible
 #' to preview the transformation of an agent to YAML without any writing to disk
 #' by using the [yaml_agent_string()] function.
-#' 
-#' @inheritParams col_vals_gt
-#' @param schema A table schema of type `col_schema` which can be generated
-#'   using the [col_schema()] function.
-#' @param complete A requirement to account for all table columns in the
-#'   provided `schema`. By default, this is `TRUE` and so that all column names
-#'   in the target table must be present in the schema object. This restriction
-#'   can be relaxed by using `FALSE`, where we can provide a subset of table
-#'   columns in the schema.
-#' @param in_order A stringent requirement for enforcing the order of columns in
-#'   the provided `schema`. By default, this is `TRUE` and the order of columns
-#'   in both the schema and the target table must match. By setting to `FALSE`,
-#'   this strict order requirement is removed.
-#' @param is_exact Determines whether the check for column types should be exact
-#'   or even performed at all. For example, columns in R data frames may have
-#'   multiple classes (e.g., a date-time column can have both the `"POSIXct"`
-#'   and the `"POSIXt"` classes). If using `is_exact == FALSE`, the column type
-#'   in the user-defined schema for a date-time value can be set as either
-#'   `"POSIXct"` *or* `"POSIXt"` and pass validation (with this column, at
-#'   least). This can be taken a step further and using `NULL` for a column type
-#'   in the user-defined schema will skip the validation check of a column type.
-#'   By default, `is_exact` is set to `TRUE`.
-#' 
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
 #' 
 #' @section Examples:
 #' 
@@ -449,6 +454,8 @@ test_col_schema_match <- function(
 }
 
 #' Generate a table column schema manually or with a reference table
+#' 
+#' @description
 #' 
 #' A table column schema object, as can be created by `col_schema()`, is
 #' necessary when using the [col_schema_match()] validation function (which

@@ -20,6 +20,7 @@
 #' Are column data greater than a fixed value or data in another column?
 #'
 #' @description
+#' 
 #' The `col_vals_gt()` validation function, the `expect_col_vals_gt()`
 #' expectation function, and the `test_col_vals_gt()` test function all check
 #' whether column values in a table are *greater than* a specified `value` (the
@@ -32,157 +33,6 @@
 #' that is equal to the number of rows in the table (after any `preconditions`
 #' have been applied).
 #' 
-#' @section Supported Input Tables:
-#' The types of data tables that are officially supported are:
-#' 
-#'  - data frames (`data.frame`) and tibbles (`tbl_df`)
-#'  - Spark DataFrames (`tbl_spark`)
-#'  - the following database tables (`tbl_dbi`):
-#'    - *PostgreSQL* tables (using the `RPostgres::Postgres()` as driver)
-#'    - *MySQL* tables (with `RMySQL::MySQL()`)
-#'    - *Microsoft SQL Server* tables (via **odbc**)
-#'    - *BigQuery* tables (using `bigrquery::bigquery()`)
-#'    - *DuckDB* tables (through `duckdb::duckdb()`)
-#'    - *SQLite* (with `RSQLite::SQLite()`)
-#'    
-#' Other database tables may work to varying degrees but they haven't been
-#' formally tested (so be mindful of this when using unsupported backends with
-#' **pointblank**).
-#'
-#' @section Column Names:
-#' If providing multiple column names to `columns`, the result will be an
-#' expansion of validation steps to that number of column names (e.g.,
-#' `vars(col_a, col_b)` will result in the entry of two validation steps). Aside
-#' from column names in quotes and in `vars()`, **tidyselect** helper functions
-#' are available for specifying columns. They are: `starts_with()`,
-#' `ends_with()`, `contains()`, `matches()`, and `everything()`.
-#'
-#' @section Missing Values:
-#' This validation function supports special handling of `NA` values. The
-#' `na_pass` argument will determine whether an `NA` value appearing in a test
-#' unit should be counted as a *pass* or a *fail*. The default of `na_pass =
-#' FALSE` means that any `NA`s encountered will accumulate failing test units.
-#' 
-#' @section Preconditions:
-#' Providing expressions as `preconditions` means **pointblank** will preprocess
-#' the target table during interrogation as a preparatory step. It might happen
-#' that a particular validation requires a calculated column, some filtering of
-#' rows, or the addition of columns via a join, etc. Especially for an
-#' *agent*-based report this can be advantageous since we can develop a large
-#' validation plan with a single target table and make minor adjustments to it,
-#' as needed, along the way.
-#'
-#' The table mutation is totally isolated in scope to the validation step(s)
-#' where `preconditions` is used. Using **dplyr** code is suggested here since
-#' the statements can be translated to SQL if necessary (i.e., if the target
-#' table resides in a database). The code is most easily supplied as a one-sided
-#' **R** formula (using a leading `~`). In the formula representation, the `.`
-#' serves as the input data table to be transformed (e.g., `~ . %>%
-#' dplyr::mutate(col_b = col_a + 10)`). Alternatively, a function could instead
-#' be supplied (e.g., `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
-#' 
-#' @section Segments:
-#' By using the `segments` argument, it's possible to define a particular
-#' validation with segments (or row slices) of the target table. An optional
-#' expression or set of expressions that serve to segment the target table by
-#' column values. Each expression can be given in one of two ways: (1) as column
-#' names, or (2) as a two-sided formula where the LHS holds a column name and
-#' the RHS contains the column values to segment on.
-#' 
-#' As an example of the first type of expression that can be used,
-#' `vars(a_column)` will segment the target table in however many unique values
-#' are present in the column called `a_column`. This is great if every unique
-#' value in a particular column (like different locations, or different dates)
-#' requires it's own repeating validation.
-#'
-#' With a formula, we can be more selective with which column values should be
-#' used for segmentation. Using `a_column ~ c("group_1", "group_2")` will
-#' attempt to obtain two segments where one is a slice of data where the value
-#' `"group_1"` exists in the column named `"a_column"`, and, the other is a
-#' slice where `"group_2"` exists in the same column. Each group of rows
-#' resolved from the formula will result in a separate validation step.
-#'
-#' If there are multiple `columns` specified then the potential number of
-#' validation steps will be `m` columns multiplied by `n` segments resolved.
-#'
-#' Segmentation will always occur after `preconditions` (i.e., statements that
-#' mutate the target table), if any, are applied. With this type of one-two
-#' combo, it's possible to generate labels for segmentation using an expression
-#' for `preconditions` and refer to those labels in `segments` without having to
-#' generate a separate version of the target table.
-#' 
-#' @section Actions:
-#' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list
-#' object that is best produced by the [action_levels()] function. Read that
-#' function's documentation for the lowdown on how to create reactions to
-#' above-threshold failure levels in validation. The basic gist is that you'll
-#' want at least a single threshold level (specified as either the fraction of
-#' test units failed, or, an absolute value), often using the `warn_at`
-#' argument. This is especially true when `x` is a table object because,
-#' otherwise, nothing happens. For the `col_vals_*()`-type functions, using 
-#' `action_levels(warn_at = 0.25)` or `action_levels(stop_at = 0.25)` are good
-#' choices depending on the situation (the first produces a warning when a
-#' quarter of the total test units fails, the other `stop()`s at the same
-#' threshold level).
-#' 
-#' @section Briefs:
-#' Want to describe this validation step in some detail? Keep in mind that this
-#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
-#' with some text that fits. Don't worry if you don't want to do it. The
-#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
-#' then be automatically generated.
-#' 
-#' @section YAML:
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `col_vals_gt()` is represented in YAML (under the top-level `steps` key as a
-#' list member), the syntax closely follows the signature of the validation
-#' function. Here is an example of how a complex call of `col_vals_gt()` as a
-#' validation step is expressed in R code and in the corresponding YAML
-#' representation.
-#' 
-#' R statement:
-#' 
-#' ```r
-#' agent %>% 
-#'   col_vals_gt(
-#'     columns = vars(a),
-#'     value = 1,
-#'     na_pass = TRUE,
-#'     preconditions = ~ . %>% dplyr::filter(a < 10),
-#'     segments = b ~ c("group_1", "group_2"),
-#'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-#'     label = "The `col_vals_gt()` step.",
-#'     active = FALSE
-#'   )
-#' ```
-#' 
-#' YAML representation:
-#' 
-#' ```yaml
-#' steps:
-#' - col_vals_gt:
-#'     columns: vars(a)
-#'     value: 1.0
-#'     na_pass: true
-#'     preconditions: ~. %>% dplyr::filter(a < 10)
-#'     segments: b ~ c("group_1", "group_2")
-#'     actions:
-#'       warn_fraction: 0.1
-#'       stop_fraction: 0.2
-#'     label: The `col_vals_gt()` step.
-#'     active: false
-#' ```
-#' 
-#' In practice, both of these will often be shorter as only the `columns` and
-#' `value` arguments require values. Arguments with default values won't be
-#' written to YAML when using [yaml_write()] (though it is acceptable to include
-#' them with their default when generating the YAML by other means). It is also
-#' possible to preview the transformation of an agent to YAML without any
-#' writing to disk by using the [yaml_agent_string()] function.
-#'
 #' @param x A data frame, tibble (`tbl_df` or `tbl_dbi`), Spark DataFrame
 #'   (`tbl_spark`), or, an *agent* object of class `ptblank_agent` that is
 #'   created with [create_agent()].
@@ -258,6 +108,165 @@
 #'   returns its input but, in the context of testing data, the function is
 #'   called primarily for its potential side-effects (e.g., signaling failure).
 #'   The test function returns a logical value.
+#' 
+#' @section Supported Input Tables:
+#' 
+#' The types of data tables that are officially supported are:
+#' 
+#'  - data frames (`data.frame`) and tibbles (`tbl_df`)
+#'  - Spark DataFrames (`tbl_spark`)
+#'  - the following database tables (`tbl_dbi`):
+#'    - *PostgreSQL* tables (using the `RPostgres::Postgres()` as driver)
+#'    - *MySQL* tables (with `RMySQL::MySQL()`)
+#'    - *Microsoft SQL Server* tables (via **odbc**)
+#'    - *BigQuery* tables (using `bigrquery::bigquery()`)
+#'    - *DuckDB* tables (through `duckdb::duckdb()`)
+#'    - *SQLite* (with `RSQLite::SQLite()`)
+#'    
+#' Other database tables may work to varying degrees but they haven't been
+#' formally tested (so be mindful of this when using unsupported backends with
+#' **pointblank**).
+#'
+#' @section Column Names:
+#' 
+#' If providing multiple column names to `columns`, the result will be an
+#' expansion of validation steps to that number of column names (e.g.,
+#' `vars(col_a, col_b)` will result in the entry of two validation steps). Aside
+#' from column names in quotes and in `vars()`, **tidyselect** helper functions
+#' are available for specifying columns. They are: `starts_with()`,
+#' `ends_with()`, `contains()`, `matches()`, and `everything()`.
+#'
+#' @section Missing Values:
+#' 
+#' This validation function supports special handling of `NA` values. The
+#' `na_pass` argument will determine whether an `NA` value appearing in a test
+#' unit should be counted as a *pass* or a *fail*. The default of `na_pass =
+#' FALSE` means that any `NA`s encountered will accumulate failing test units.
+#' 
+#' @section Preconditions:
+#' 
+#' Providing expressions as `preconditions` means **pointblank** will preprocess
+#' the target table during interrogation as a preparatory step. It might happen
+#' that a particular validation requires a calculated column, some filtering of
+#' rows, or the addition of columns via a join, etc. Especially for an
+#' *agent*-based report this can be advantageous since we can develop a large
+#' validation plan with a single target table and make minor adjustments to it,
+#' as needed, along the way.
+#'
+#' The table mutation is totally isolated in scope to the validation step(s)
+#' where `preconditions` is used. Using **dplyr** code is suggested here since
+#' the statements can be translated to SQL if necessary (i.e., if the target
+#' table resides in a database). The code is most easily supplied as a one-sided
+#' **R** formula (using a leading `~`). In the formula representation, the `.`
+#' serves as the input data table to be transformed (e.g., `~ . %>%
+#' dplyr::mutate(col_b = col_a + 10)`). Alternatively, a function could instead
+#' be supplied (e.g., `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
+#' 
+#' @section Segments:
+#' 
+#' By using the `segments` argument, it's possible to define a particular
+#' validation with segments (or row slices) of the target table. An optional
+#' expression or set of expressions that serve to segment the target table by
+#' column values. Each expression can be given in one of two ways: (1) as column
+#' names, or (2) as a two-sided formula where the LHS holds a column name and
+#' the RHS contains the column values to segment on.
+#' 
+#' As an example of the first type of expression that can be used,
+#' `vars(a_column)` will segment the target table in however many unique values
+#' are present in the column called `a_column`. This is great if every unique
+#' value in a particular column (like different locations, or different dates)
+#' requires it's own repeating validation.
+#'
+#' With a formula, we can be more selective with which column values should be
+#' used for segmentation. Using `a_column ~ c("group_1", "group_2")` will
+#' attempt to obtain two segments where one is a slice of data where the value
+#' `"group_1"` exists in the column named `"a_column"`, and, the other is a
+#' slice where `"group_2"` exists in the same column. Each group of rows
+#' resolved from the formula will result in a separate validation step.
+#'
+#' If there are multiple `columns` specified then the potential number of
+#' validation steps will be `m` columns multiplied by `n` segments resolved.
+#'
+#' Segmentation will always occur after `preconditions` (i.e., statements that
+#' mutate the target table), if any, are applied. With this type of one-two
+#' combo, it's possible to generate labels for segmentation using an expression
+#' for `preconditions` and refer to those labels in `segments` without having to
+#' generate a separate version of the target table.
+#' 
+#' @section Actions:
+#' 
+#' Often, we will want to specify `actions` for the validation. This argument,
+#' present in every validation function, takes a specially-crafted list
+#' object that is best produced by the [action_levels()] function. Read that
+#' function's documentation for the lowdown on how to create reactions to
+#' above-threshold failure levels in validation. The basic gist is that you'll
+#' want at least a single threshold level (specified as either the fraction of
+#' test units failed, or, an absolute value), often using the `warn_at`
+#' argument. This is especially true when `x` is a table object because,
+#' otherwise, nothing happens. For the `col_vals_*()`-type functions, using 
+#' `action_levels(warn_at = 0.25)` or `action_levels(stop_at = 0.25)` are good
+#' choices depending on the situation (the first produces a warning when a
+#' quarter of the total test units fails, the other `stop()`s at the same
+#' threshold level).
+#' 
+#' @section Briefs:
+#' 
+#' Want to describe this validation step in some detail? Keep in mind that this
+#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
+#' with some text that fits. Don't worry if you don't want to do it. The
+#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
+#' then be automatically generated.
+#' 
+#' @section YAML:
+#' 
+#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
+#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
+#' or interrogate the target table (via [yaml_agent_interrogate()]). When
+#' `col_vals_gt()` is represented in YAML (under the top-level `steps` key as a
+#' list member), the syntax closely follows the signature of the validation
+#' function. Here is an example of how a complex call of `col_vals_gt()` as a
+#' validation step is expressed in R code and in the corresponding YAML
+#' representation.
+#' 
+#' R statement:
+#' 
+#' ```r
+#' agent %>% 
+#'   col_vals_gt(
+#'     columns = vars(a),
+#'     value = 1,
+#'     na_pass = TRUE,
+#'     preconditions = ~ . %>% dplyr::filter(a < 10),
+#'     segments = b ~ c("group_1", "group_2"),
+#'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
+#'     label = "The `col_vals_gt()` step.",
+#'     active = FALSE
+#'   )
+#' ```
+#' 
+#' YAML representation:
+#' 
+#' ```yaml
+#' steps:
+#' - col_vals_gt:
+#'     columns: vars(a)
+#'     value: 1.0
+#'     na_pass: true
+#'     preconditions: ~. %>% dplyr::filter(a < 10)
+#'     segments: b ~ c("group_1", "group_2")
+#'     actions:
+#'       warn_fraction: 0.1
+#'       stop_fraction: 0.2
+#'     label: The `col_vals_gt()` step.
+#'     active: false
+#' ```
+#' 
+#' In practice, both of these will often be shorter as only the `columns` and
+#' `value` arguments require values. Arguments with default values won't be
+#' written to YAML when using [yaml_write()] (though it is acceptable to include
+#' them with their default when generating the YAML by other means). It is also
+#' possible to preview the transformation of an agent to YAML without any
+#' writing to disk by using the [yaml_agent_string()] function.
 #'   
 #' @section Examples:
 #' 

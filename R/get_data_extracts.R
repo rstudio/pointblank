@@ -20,6 +20,7 @@
 #' Collect data extracts from a validation step
 #'
 #' @description
+#' 
 #' In an agent-based workflow (i.e., initiating with [create_agent()]), after
 #' interrogation with [interrogate()], we can extract the row data that didn't
 #' pass row-based validation steps with the `get_data_extracts()` function.

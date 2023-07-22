@@ -1,12 +1,15 @@
+url: https://rich-iannone.github.io/pointblank
+
 destination: docs
 
 home:
   strip_header: true
 
-url: https://rich-iannone.github.io/pointblank
-
 template:
   bootstrap: 5
+
+development:
+  mode: release
 
 reference:
   - title: Planning and Prep
@@ -289,6 +292,3 @@ navbar:
     href: reference/index.html
   - text: News
     href: news/index.html
-
-development:
-  version_tooltip: "Development version"

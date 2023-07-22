@@ -20,6 +20,7 @@
 #' Set action levels: failure thresholds and functions to invoke
 #' 
 #' @description
+#' 
 #' The `action_levels()` function works with the `actions` argument that is
 #' present in the [create_agent()] function and in every validation step
 #' function (which also has an `actions` argument). With it, we can provide
@@ -43,8 +44,9 @@
 #' to `1`), and, they do so with informative warning or error messages. The
 #' `stop_on_fail()` helper is applied by default when using validation functions
 #' directly on data (more information on this is provided in *Details*).
-#'
+#' 
 #' @details
+#' 
 #' The output of the `action_levels()` call in `actions` will be interpreted
 #' slightly differently if using an *agent* or using validation functions
 #' directly on a data table. For convenience, when working directly on data, any
@@ -83,6 +85,8 @@
 #'   corresponding to the failure states are provided as formulas (e.g.,
 #'   `list(warn = ~ warning("Too many failures."))`. A series of expressions for
 #'   each named state can be used by enclosing the set of statements with `{ }`.
+#' 
+#' @return An `action_levels` object.
 #' 
 #' @section Examples:
 #' 

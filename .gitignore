@@ -39,7 +39,6 @@ inst/doc
 
 # The docs and pkgdown dirs
 docs
-pkgdown
 
 # RDS files in certain directories
 tests/manual_tests/*.rds

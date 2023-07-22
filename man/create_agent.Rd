@@ -96,6 +96,7 @@ table. This reporting of the interrogation can also be accessed with the
 }
 \section{Supported Input Tables}{
 
+
 The types of data tables that are officially supported are:
 \itemize{
 \item data frames (\code{data.frame}) and tibbles (\code{tbl_df})

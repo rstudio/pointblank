@@ -19,7 +19,8 @@
 
 #' Get a summary report from an agent
 #' 
-#' @description 
+#' @description
+#' 
 #' We can get an informative summary table from an agent by using the
 #' `get_agent_report()` function. The table can be provided in two substantially
 #' different forms: as a **gt** based display table (the default), or, as a

@@ -22,6 +22,7 @@
 #' Thoroughly scan a table to better understand it
 #'
 #' @description
+#' 
 #' Generate an HTML report that scours the input table data. Before calling up
 #' an *agent* to validate the data, it's a good idea to understand the data with
 #' some level of precision. Make this the initial step of a well-balanced 

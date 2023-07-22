@@ -30,6 +30,7 @@ informational content for that section.
 }
 \section{Info Text}{
 
+
 The \emph{info text} that's used for any of the \verb{info_*()} functions readily
 accepts Markdown formatting, and, there are a few \emph{Text Tricks} that can be
 used to spice up the presentation. Markdown links written as \verb{< link url >}

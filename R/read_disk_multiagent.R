@@ -19,7 +19,8 @@
 
 #' Read **pointblank** *agents* stored on disk as a *multiagent* 
 #'
-#' @description 
+#' @description
+#' 
 #' An *agent* or *informant* can be written to disk with the [x_write_disk()]
 #' function. While useful for later retrieving the stored agent with
 #' [x_read_disk()] it's also possible to read a series of on-disk agents with

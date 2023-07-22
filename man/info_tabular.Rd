@@ -28,6 +28,7 @@ table as a whole.
 }
 \section{Info Text}{
 
+
 The \emph{info text} that's used for any of the \verb{info_*()} functions readily
 accepts Markdown formatting, and, there are a few \emph{Text Tricks} that can be
 used to spice up the presentation. Markdown links written as \verb{< link url >}
@@ -72,6 +73,7 @@ common being in the form of hexadecimal color values or as CSS color names.
 }
 
 \section{YAML}{
+
 
 A \strong{pointblank} informant can be written to YAML with \code{\link[=yaml_write]{yaml_write()}} and the
 resulting YAML can be used to regenerate an informant (with

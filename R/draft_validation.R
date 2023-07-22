@@ -20,6 +20,7 @@
 #' Draft a starter **pointblank** validation .R/.Rmd file with a data table
 #' 
 #' @description
+#' 
 #' Generate a draft validation plan in a new .R or .Rmd file using an input data
 #' table. Using this workflow, the data table will be scanned to learn about its
 #' column data and a set of starter validation steps (constituting a validation
@@ -32,23 +33,6 @@
 #' values without domain expertise. However, using `draft_validation()` could
 #' get you started on floor 10 of tackling data quality issues and is in any
 #' case better than starting with an empty code editor view.
-#' 
-#' @section Supported Input Tables:
-#' The types of data tables that are officially supported are:
-#' 
-#'  - data frames (`data.frame`) and tibbles (`tbl_df`)
-#'  - Spark DataFrames (`tbl_spark`)
-#'  - the following database tables (`tbl_dbi`):
-#'    - *PostgreSQL* tables (using the `RPostgres::Postgres()` as driver)
-#'    - *MySQL* tables (with `RMySQL::MySQL()`)
-#'    - *Microsoft SQL Server* tables (via **odbc**)
-#'    - *BigQuery* tables (using `bigrquery::bigquery()`)
-#'    - *DuckDB* tables (through `duckdb::duckdb()`)
-#'    - *SQLite* (with `RSQLite::SQLite()`)
-#'    
-#' Other database tables may work to varying degrees but they haven't been
-#' formally tested (so be mindful of this when using unsupported backends with
-#' **pointblank**).
 #' 
 #' @param tbl The input table. This can be a data frame, tibble, a `tbl_dbi`
 #'   object, or a `tbl_spark` object.
@@ -79,7 +63,25 @@
 #' @param quiet Should the function *not* inform when the file is written? By
 #'   default this is `FALSE`.
 #'   
-#' @return Invisibly returns `TRUE` if the file has been written. 
+#' @return Invisibly returns `TRUE` if the file has been written.
+#' 
+#' @section Supported Input Tables:
+#' 
+#' The types of data tables that are officially supported are:
+#' 
+#'  - data frames (`data.frame`) and tibbles (`tbl_df`)
+#'  - Spark DataFrames (`tbl_spark`)
+#'  - the following database tables (`tbl_dbi`):
+#'    - *PostgreSQL* tables (using the `RPostgres::Postgres()` as driver)
+#'    - *MySQL* tables (with `RMySQL::MySQL()`)
+#'    - *Microsoft SQL Server* tables (via **odbc**)
+#'    - *BigQuery* tables (using `bigrquery::bigquery()`)
+#'    - *DuckDB* tables (through `duckdb::duckdb()`)
+#'    - *SQLite* (with `RSQLite::SQLite()`)
+#'    
+#' Other database tables may work to varying degrees but they haven't been
+#' formally tested (so be mindful of this when using unsupported backends with
+#' **pointblank**).
 #' 
 #' @section Examples:
 #' 

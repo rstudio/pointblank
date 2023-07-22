@@ -19,43 +19,13 @@
 
 #' Get a summary report using multiple agents
 #' 
-#' @description 
+#' @description
+#' 
 #' We can get an informative summary table from a collective of agents by using
 #' the `get_multiagent_report()` function. Information from multiple agent can
 #' be provided in three very forms: (1) the *Long Display* (stacked reports),
 #' (2) the *Wide Display* (a comparison report), (3) as a tibble with packed
 #' columns.
-#' 
-#' @section The Long Display:
-#' When displayed as `"long"` the multiagent report will stack individual agent
-#' reports in a single document in the order of the agents in the multiagent
-#' object.
-#' 
-#' Each validation plan (possibly with interrogation info) will be provided and
-#' the output for each is equivalent to calling [get_agent_report()] on each
-#' of the agents within the multiagent object.
-#' 
-#' @section The Wide Display:
-#' When displayed as `"wide"` the multiagent report will show data from
-#' individual agents as columns, with rows standing as validation steps common
-#' across the agents.
-#'
-#' Each validation step is represented with an icon (standing in for the name of
-#' the validation function) and the associated SHA1 hash. This is a highly
-#' trustworthy way for ascertaining which validation steps are effectively
-#' identical across interrogations. This way of organizing the report is
-#' beneficial because different agents may have used different steps and we want
-#' to track the validation results where the validation step doesn't change but
-#' the target table does (i.e., new rows are added, existing rows are updated,
-#' etc.).
-#' 
-#' The single table from this display mode will have the following columns:
-#' 
-#' - STEP: the SHA1 hash for the validation step, possibly shared among
-#' several interrogations.
-#' - *subsequent columns*: each column beyond `STEP` represents a separate
-#' interrogation from an *agent* object. The time stamp for the completion of
-#' each interrogation is shown as the column label.
 #' 
 #' @param multiagent A multiagent object of class `ptblank_multiagent`.
 #' @param display_table Should a display table be generated? If `TRUE` (the
@@ -92,6 +62,39 @@
 #' 
 #' @return A **gt** table object if `display_table = TRUE` or a tibble if
 #'   `display_table = FALSE`.
+#' 
+#' @section The Long Display:
+#' 
+#' When displayed as `"long"` the multiagent report will stack individual agent
+#' reports in a single document in the order of the agents in the multiagent
+#' object.
+#' 
+#' Each validation plan (possibly with interrogation info) will be provided and
+#' the output for each is equivalent to calling [get_agent_report()] on each
+#' of the agents within the multiagent object.
+#' 
+#' @section The Wide Display:
+#' 
+#' When displayed as `"wide"` the multiagent report will show data from
+#' individual agents as columns, with rows standing as validation steps common
+#' across the agents.
+#'
+#' Each validation step is represented with an icon (standing in for the name of
+#' the validation function) and the associated SHA1 hash. This is a highly
+#' trustworthy way for ascertaining which validation steps are effectively
+#' identical across interrogations. This way of organizing the report is
+#' beneficial because different agents may have used different steps and we want
+#' to track the validation results where the validation step doesn't change but
+#' the target table does (i.e., new rows are added, existing rows are updated,
+#' etc.).
+#' 
+#' The single table from this display mode will have the following columns:
+#' 
+#' - STEP: the SHA1 hash for the validation step, possibly shared among
+#' several interrogations.
+#' - *subsequent columns*: each column beyond `STEP` represents a separate
+#' interrogation from an *agent* object. The time stamp for the completion of
+#' each interrogation is shown as the column label.
 #' 
 #' @section Examples:
 #' 

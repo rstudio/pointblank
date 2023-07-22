@@ -19,7 +19,8 @@
 
 #' Write an *agent*, *informant*, *multiagent*, or table scan to disk
 #' 
-#' @description 
+#' @description
+#' 
 #' Writing an *agent*, *informant*, *multiagent*, or even a table scan to disk
 #' with `x_write_disk()` can be useful for keeping data validation intel or
 #' table information close at hand for later retrieval (with [x_read_disk()]).
@@ -30,6 +31,7 @@
 #' is not of the `tbl_dbi` or the `tbl_spark` class.
 #'
 #' @details
+#' 
 #' It is recommended to set up a table-prep formula so that the *agent* and
 #' *informant* can access refreshed data after being read from disk through
 #' [x_read_disk()]. This can be done initially with the `tbl` argument of
@@ -358,7 +360,8 @@ x_write_disk <- function(
 
 #' Read an *agent*, *informant*, *multiagent*, or table scan from disk
 #' 
-#' @description 
+#' @description
+#' 
 #' An *agent*, *informant*, *multiagent*, or table scan that has been written to
 #' disk (with [x_write_disk()]) can be read back into memory with the
 #' `x_read_disk()` function. For an *agent* or an *informant* object that has
@@ -372,6 +375,7 @@ x_write_disk <- function(
 #' still be present (along with results from the last interrogation).
 #' 
 #' @details
+#' 
 #' Should a written-to-disk *agent* or *informant* possess a table-prep formula
 #' or a specific in-memory tablewe could use the [interrogate()] or
 #' [incorporate()] function again. For a *data quality reporting* workflow, it
@@ -483,6 +487,7 @@ x_read_disk <- function(
 #' Export an *agent*, *informant*, *multiagent*, or table scan to HTML
 #' 
 #' @description 
+#' 
 #' The *agent*, *informant*, *multiagent*, and the table scan object can be
 #' easily written as HTML with `export_report()`. Furthermore, any report
 #' objects from the *agent*, *informant*, and *multiagent* (generated using
@@ -765,7 +770,8 @@ export_report <- function(
 
 #' Set a data table to an *agent* or an *informant*
 #' 
-#' @description 
+#' @description
+#' 
 #' Setting a data table to an *agent* or an *informant* with `set_tbl()`
 #' replaces any associated table (a data frame, a tibble, objects of class
 #' `tbl_dbi` or `tbl_spark`).

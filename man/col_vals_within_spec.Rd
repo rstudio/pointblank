@@ -141,6 +141,7 @@ table (after any \code{preconditions} have been applied).
 }
 \section{Supported Input Tables}{
 
+
 The types of data tables that are officially supported are:
 \itemize{
 \item data frames (\code{data.frame}) and tibbles (\code{tbl_df})
@@ -162,6 +163,7 @@ formally tested (so be mindful of this when using unsupported backends with
 }
 
 \section{Specifications}{
+
 
 A specification type must be used with the \code{spec} argument. This is a
 character-based keyword that corresponds to the type of data in the specified
@@ -213,6 +215,7 @@ Only a single \code{spec} value should be provided per function call.
 
 \section{Column Names}{
 
+
 If providing multiple column names, the result will be an expansion of
 validation steps to that number of column names (e.g., \code{vars(col_a, col_b)}
 will result in the entry of two validation steps). Aside from column names in
@@ -223,12 +226,14 @@ specifying columns. They are: \code{starts_with()}, \code{ends_with()}, \code{co
 
 \section{Missing Values}{
 
+
 This validation function supports special handling of \code{NA} values. The
 \code{na_pass} argument will determine whether an \code{NA} value appearing in a test
 unit should be counted as a \emph{pass} or a \emph{fail}. The default of \code{na_pass = FALSE} means that any \code{NA}s encountered will accumulate failing test units.
 }
 
 \section{Preconditions}{
+
 
 Providing expressions as \code{preconditions} means \strong{pointblank} will preprocess
 the target table during interrogation as a preparatory step. It might happen
@@ -248,6 +253,7 @@ be supplied (e.g., \code{function(x) dplyr::mutate(x, col_b = col_a + 10)}).
 }
 
 \section{Segments}{
+
 
 By using the \code{segments} argument, it's possible to define a particular
 validation with segments (or row slices) of the target table. An optional
@@ -281,6 +287,7 @@ generate a separate version of the target table.
 
 \section{Actions}{
 
+
 Often, we will want to specify \code{actions} for the validation. This argument,
 present in every validation function, takes a specially-crafted list
 object that is best produced by the \code{\link[=action_levels]{action_levels()}} function. Read that
@@ -298,6 +305,7 @@ threshold level).
 
 \section{Briefs}{
 
+
 Want to describe this validation step in some detail? Keep in mind that this
 is only useful if \code{x} is an \emph{agent}. If that's the case, \code{brief} the agent
 with some text that fits. Don't worry if you don't want to do it. The
@@ -306,6 +314,7 @@ then be automatically generated.
 }
 
 \section{YAML}{
+
 
 A \strong{pointblank} agent can be written to YAML with \code{\link[=yaml_write]{yaml_write()}} and the
 resulting YAML can be used to regenerate an agent (with \code{\link[=yaml_read_agent]{yaml_read_agent()}})
@@ -368,17 +377,16 @@ rows).
 
 spec_slice
 #> # A tibble: 5 x 12
-#>   isbn_n~1 vin_n~2 zip_c~3 credi~4 iban_~5 swift~6 phone~7 email~8 urls  ipv4_~9
-#>   <chr>    <chr>   <chr>   <chr>   <chr>   <chr>   <chr>   <chr>   <chr> <chr>  
-#> 1 978 1 8~ 4UZAAN~ 99553   340000~ AT5827~ RBOSGG~ +5-555~ test@t~ http~ 93.184~
-#> 2 978-1-8~ JM1BL1~ 36264   378734~ AT2203~ RZTIAT~ +5 555~ mail+m~ http~ 161.14~
-#> 3 978 1 8~ 1GCEK1~ 71660   670344~ AT3286~ BCEELU~ +5.555~ mail.e~ http~ 161.14~
-#> 4 978 1 8~ 2B7JB2~ 85225   670300~ AT1933~ MARKDE~ 5-555-~ abcdef~ http~ 73.194~
-#> 5 978 1 8~ 4UZAAN~ 90309   403550~ AT5357~ GENODE~ 5.555.~ 012345~ http~ 60.92.~
-#> # ... with 2 more variables: ipv6_addresses <chr>, mac_addresses <chr>, and
-#> #   abbreviated variable names 1: isbn_numbers, 2: vin_numbers, 3: zip_codes,
-#> #   4: credit_card_numbers, 5: iban_austria, 6: swift_numbers,
-#> #   7: phone_numbers, 8: email_addresses, 9: ipv4_addresses
+#>   isbn_numbers      vin_numbers       zip_codes credit_card_numbers iban_austria
+#>   <chr>             <chr>             <chr>     <chr>               <chr>       
+#> 1 978 1 85715 201 2 4UZAANDH85CV12329 99553     340000000000009     AT582774098~
+#> 2 978-1-84159-362-3 JM1BL1S59A1134659 36264     378734493671000     AT220332087~
+#> 3 978 1 84159 329 6 1GCEK14R3WZ274764 71660     6703444444444449    AT328650112~
+#> 4 978 1 85715 202 9 2B7JB21Y0XK524370 85225     6703000000000000003 AT193357281~
+#> 5 978 1 85715 198 5 4UZAANDH85CV12329 90309     4035501000000008    AT535755326~
+#> # i 7 more variables: swift_numbers <chr>, phone_numbers <chr>,
+#> #   email_addresses <chr>, urls <chr>, ipv4_addresses <chr>,
+#> #   ipv6_addresses <chr>, mac_addresses <chr>
 }\if{html}{\out{</div>}}
 \subsection{A: Using an \code{agent} with validation functions and then \code{interrogate()}}{
 

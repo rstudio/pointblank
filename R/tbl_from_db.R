@@ -21,7 +21,8 @@
 
 #' Get a table from a database
 #' 
-#' @description 
+#' @description
+#' 
 #' If your target table is in a database, the `db_tbl()` function is a handy way
 #' of accessing it. This function simplifies the process of getting a `tbl_dbi`
 #' object, which usually involves a combination of building a connection to a

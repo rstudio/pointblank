@@ -19,6 +19,7 @@
 #' Put the current date into a file name
 #' 
 #' @description
+#' 
 #' This function helps to affix the current date to a filename. This is useful
 #' when writing *agent* and/or *informant* objects to disk as part of a
 #' continuous process. The date can be in terms of UTC time or the local system
@@ -161,6 +162,7 @@ affix_date <- function(
 #' Put the current datetime into a file name
 #' 
 #' @description
+#' 
 #' This function helps to affix the current datetime to a filename. This is
 #' useful when writing *agent* and/or *informant* objects to disk as part of a
 #' continuous process. The datetime string can be based on the current UTC time

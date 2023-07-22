@@ -20,6 +20,7 @@
 #' Conditionally send email during interrogation
 #' 
 #' @description
+#' 
 #' The `email_blast()` function is useful for sending an email message that
 #' explains the result of a **pointblank** validation. It is powered by the
 #' **blastula** and **glue** packages. This function should be invoked as part
@@ -31,7 +32,33 @@
 #' To better get a handle on emailing with `email_blast()`, the analogous
 #' [email_create()] function can be used with a **pointblank** agent object.
 #' 
-#' @section YAML: 
+#' @param x A reference to the x-list object prepared internally by the agent.
+#'   This version of the x-list is the same as that generated via
+#'   `get_agent_x_list(<agent>)` except this version is internally generated and
+#'   hence only available in an internal evaluation context.
+#' @param to,from The email addresses for the recipients and of the sender.
+#' @param credentials A credentials list object that is produced by either of
+#'   the [blastula::creds()], [blastula::creds_anonymous()],
+#'   [blastula::creds_key()], or [blastula::creds_file()] functions. Please
+#'   refer to the **blastula** documentation for information on how to use these
+#'   functions.
+#' @param msg_subject The subject line of the email message.
+#' @param msg_header,msg_body,msg_footer Content for the header, body, and
+#'   footer components of the HTML email message.
+#' @param send_condition An expression that should evaluate to a logical vector
+#'   of length 1. If evaluated as `TRUE` then the email will be sent, if `FALSE`
+#'   then that won't happen. The expression can use x-list variables (e.g.,
+#'   `x$notify`, `x$type`, etc.) and all of those variables can be explored
+#'   using the [get_agent_x_list()] function. The default expression is `~ TRUE
+#'   %in% x$notify`, which results in `TRUE` if there are any `TRUE` values in
+#'   the `x$notify` logical vector (i.e., any validation step that results in a
+#'   'notify' state).
+#'   
+#' @return Nothing is returned. The end result is the side-effect of
+#'   email-sending if certain conditions are met.
+#' 
+#' @section YAML:
+#' 
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
 #' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
 #' or interrogate the target table (via [yaml_agent_interrogate()]). Here is an
@@ -88,28 +115,6 @@
 #'     columns: vars(a)
 #'     value: 7.0
 #' ```
-#' 
-#' @param x A reference to the x-list object prepared internally by the agent.
-#'   This version of the x-list is the same as that generated via
-#'   `get_agent_x_list(<agent>)` except this version is internally generated and
-#'   hence only available in an internal evaluation context.
-#' @param to,from The email addresses for the recipients and of the sender.
-#' @param credentials A credentials list object that is produced by either of
-#'   the [blastula::creds()], [blastula::creds_anonymous()],
-#'   [blastula::creds_key()], or [blastula::creds_file()] functions. Please
-#'   refer to the **blastula** documentation for information on how to use these
-#'   functions.
-#' @param msg_subject The subject line of the email message.
-#' @param msg_header,msg_body,msg_footer Content for the header, body, and
-#'   footer components of the HTML email message.
-#' @param send_condition An expression that should evaluate to a logical vector
-#'   of length 1. If evaluated as `TRUE` then the email will be sent, if `FALSE`
-#'   then that won't happen. The expression can use x-list variables (e.g.,
-#'   `x$notify`, `x$type`, etc.) and all of those variables can be explored
-#'   using the [get_agent_x_list()] function. The default expression is `~ TRUE
-#'   %in% x$notify`, which results in `TRUE` if there are any `TRUE` values in
-#'   the `x$notify` logical vector (i.e., any validation step that results in a
-#'   'notify' state).
 #'   
 #' @section Examples:
 #' 
@@ -232,6 +237,7 @@ email_blast <- function(
 #' Create an email object from a **pointblank** *agent*
 #' 
 #' @description
+#' 
 #' The `email_create()` function produces an email message object that could be
 #' sent using the **blastula** package. By supplying a **pointblank** agent, a
 #' **blastula** `email_message` message object will be created and printing it

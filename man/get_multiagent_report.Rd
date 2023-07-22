@@ -65,6 +65,7 @@ columns.
 }
 \section{The Long Display}{
 
+
 When displayed as \code{"long"} the multiagent report will stack individual agent
 reports in a single document in the order of the agents in the multiagent
 object.
@@ -75,6 +76,7 @@ of the agents within the multiagent object.
 }
 
 \section{The Wide Display}{
+
 
 When displayed as \code{"wide"} the multiagent report will show data from
 individual agents as columns, with rows standing as validation steps common

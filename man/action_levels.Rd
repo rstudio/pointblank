@@ -30,6 +30,9 @@ corresponding to the failure states are provided as formulas (e.g.,
 \code{list(warn = ~ warning("Too many failures."))}. A series of expressions for
 each named state can be used by enclosing the set of statements with \code{{ }}.}
 }
+\value{
+An \code{action_levels} object.
+}
 \description{
 The \code{action_levels()} function works with the \code{actions} argument that is
 present in the \code{\link[=create_agent]{create_agent()}} function and in every validation step

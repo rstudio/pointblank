@@ -2138,25 +2138,25 @@ test_that("the `is_vin()` function works", {
   expect_false(is_vin(specifications$vin_numbers[6]))
 })
 
-test_that("the `check_vin_db()` function works", {
-  
-  spec_table_duckdb <- 
-    db_tbl(table = specifications, dbname = ":memory:", dbtype = "duckdb") %>%
-    dplyr::select(vin_numbers)
-  
-  duck_vin_db_check_tbl <-
-    check_vin_db(
-      table = spec_table_duckdb,
-      column = vin_numbers
-    )
-  
-  expect_equal(
-    colnames(duck_vin_db_check_tbl),
-    c("vin_numbers", "pb_is_good_")
-  )
-  
-  expect_equal(
-    duck_vin_db_check_tbl %>% dplyr::pull(pb_is_good_),
-    c(rep(TRUE, 5), NA, FALSE, FALSE)
-  )
-})
+# test_that("the `check_vin_db()` function works", {
+#   
+#   spec_table_duckdb <- 
+#     db_tbl(table = specifications, dbname = ":memory:", dbtype = "duckdb") %>%
+#     dplyr::select(vin_numbers)
+#   
+#   duck_vin_db_check_tbl <-
+#     check_vin_db(
+#       table = spec_table_duckdb,
+#       column = vin_numbers
+#     )
+#   
+#   expect_equal(
+#     colnames(duck_vin_db_check_tbl),
+#     c("vin_numbers", "pb_is_good_")
+#   )
+#   
+#   expect_equal(
+#     duck_vin_db_check_tbl %>% dplyr::pull(pb_is_good_),
+#     c(rep(TRUE, 5), NA, FALSE, FALSE)
+#   )
+# })

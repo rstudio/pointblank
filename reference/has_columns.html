@@ -94,12 +94,17 @@ are both present.</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
-<dd><p>The table object.</p></dd>
+<dd><p><em>A data table</em></p>
+<p><code>obj:&lt;tbl_*&gt;</code> // <strong>required</strong></p>
+<p>The input table. This can be a data frame, tibble, a <code>tbl_dbi</code> object, or a
+<code>tbl_spark</code> object.</p></dd>
 
 
 <dt>columns</dt>
-<dd><p>One or more column names that are to be checked for existence
-in the table <code>x</code>.</p></dd>
+<dd><p><em>The target columns</em></p>
+<p>`vector<character>|vars(<columns>)`` // <strong>required</strong></columns></character></p>
+<p>One or more column names that are to be checked for existence in the table
+<code>x</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">

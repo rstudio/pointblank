@@ -107,20 +107,23 @@ use of the <code><a href="create_informant.html">create_informant()</a></code> f
 
 
 <dt>snippet_name</dt>
-<dd><p>The name for snippet, which is used for interpolating the
-result of the snippet formula into <em>info text</em> defined by an <code>info_*()</code>
-function.</p></dd>
+<dd><p><em>The snippet name</em></p>
+<p>`scalar<character>`` // <strong>required</strong></character></p>
+<p>The name for snippet, which is used for interpolating the result of the
+snippet formula into <em>info text</em> defined by an <code>info_*()</code> function.</p></dd>
 
 
 <dt>fn</dt>
-<dd><p>A formula that obtains a snippet of data from the target table.
-It's best to use a leading dot (<code>.</code>) that stands for the table itself and
-use pipes to construct a series of operations to be performed on the table
-(e.g., <code>~ . %&gt;% dplyr::pull(column_2) %&gt;% max(na.rm = TRUE)</code>). So long as
-the result is a length-1 vector, it'll likely be valid for insertion into
-some info text. Alternatively, a <code>snip_*()</code> function can be used here
-(these functions always return a formula that's suitable for all types of
-data sources).</p></dd>
+<dd><p><em>Function for snippet text generation</em></p>
+<p><code>&lt;function&gt;</code> // <strong>required</strong></p>
+<p>A formula that obtains a snippet of data from the target table. It's best
+to use a leading dot (<code>.</code>) that stands for the table itself and use pipes
+to construct a series of operations to be performed on the table (e.g.,
+<code>~ . %&gt;% dplyr::pull(column_2) %&gt;% max(na.rm = TRUE)</code>). So long as the
+result is a length-1 vector, it'll likely be valid for insertion into some
+info text. Alternatively, a <code>snip_*()</code> function can be used here (these
+functions always return a formula that's suitable for all types of data
+sources).</p></dd>
 
 </dl></div>
     <div class="section level2">

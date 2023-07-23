@@ -101,22 +101,28 @@ use of the <code><a href="create_informant.html">create_informant()</a></code> f
 
 
 <dt>columns</dt>
-<dd><p>The column or set of columns to focus on. Can be defined as a
-column name in quotes (e.g., <code>"&lt;column_name&gt;"</code>), one or more column names
-in <code><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars()</a></code> (e.g., <code>vars(&lt;column_name&gt;)</code>), or with a select helper (e.g.,
+<dd><p><em>The target columns</em></p>
+<p>`vector<character>|vars(<columns>)`` // <strong>required</strong></columns></character></p>
+<p>The column or set of columns to focus on. Can be defined as a column name
+in quotes (e.g., <code>"&lt;column_name&gt;"</code>), one or more column names in <code><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars()</a></code>
+(e.g., <code>vars(&lt;column_name&gt;)</code>), or with a select helper (e.g.,
 <code>starts_with("date")</code>).</p></dd>
 
 
 <dt>...</dt>
-<dd><p>Information entries as a series of named arguments. The names
-refer to subsection titles within <code>COLUMN</code> -&gt; <code>&lt;COLUMN_NAME&gt;</code> and the RHS
-contains the <em>info text</em> (informational text that can be written as
-Markdown and further styled with <em>Text Tricks</em>).</p></dd>
+<dd><p><em>Information entries</em></p>
+<p><code>&lt;info-text expressions&gt;</code> // <strong>required</strong></p>
+<p>Information entries as a series of named arguments. The names refer to
+subsection titles within <code>COLUMN</code> -&gt; <code>&lt;COLUMN_NAME&gt;</code> and the RHS contains
+the <em>info text</em> (informational text that can be written as Markdown and
+further styled with <em>Text Tricks</em>).</p></dd>
 
 
 <dt>.add</dt>
-<dd><p>Should new text be added to existing text? This is <code>TRUE</code> by
-default; setting to <code>FALSE</code> replaces any existing text for a property.</p></dd>
+<dd><p><em>Add to existing info text</em></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
+<p>Should new text be added to existing text? This is <code>TRUE</code> by default;
+setting to <code>FALSE</code> replaces any existing text for a property.</p></dd>
 
 </dl></div>
     <div class="section level2">

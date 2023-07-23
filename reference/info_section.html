@@ -95,15 +95,18 @@ use of the <code><a href="create_informant.html">create_informant()</a></code> f
 
 
 <dt>section_name</dt>
-<dd><p>The name of the section for which this information
-pertains.</p></dd>
+<dd><p><em>The section name</em></p>
+<p>`scalar<character>`` // <strong>required</strong></character></p>
+<p>The name of the section for which this information pertains.</p></dd>
 
 
 <dt>...</dt>
-<dd><p>Information entries as a series of named arguments. The names
-refer to subsection titles within the section defined as <code>section_name</code> and
-the RHS is the <em>info text</em> (informational text that can be written as
-Markdown and further styled with <em>Text Tricks</em>).</p></dd>
+<dd><p><em>Information entries</em></p>
+<p><code>&lt;info-text expressions&gt;</code> // <strong>required</strong></p>
+<p>Information entries as a series of named arguments. The names refer to
+subsection titles within the section defined as <code>section_name</code> and the RHS
+is the <em>info text</em> (informational text that can be written as Markdown and
+further styled with <em>Text Tricks</em>).</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -153,6 +156,7 @@ common being in the form of hexadecimal color values or as CSS color names.</p>
     <div class="section level2">
     <h2 id="yaml">YAML<a class="anchor" aria-label="anchor" href="#yaml"></a></h2>
     
+
 
 <p>A <strong>pointblank</strong> informant can be written to YAML with <code><a href="yaml_write.html">yaml_write()</a></code> and the
 resulting YAML can be used to regenerate an informant (with

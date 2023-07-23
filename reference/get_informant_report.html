@@ -94,21 +94,28 @@ to <strong>pointblank</strong> YAML with <code>yaml_write(informant = &lt;inform
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>informant</dt>
-<dd><p>An informant object of class <code>ptblank_informant</code>.</p></dd>
+<dd><p><em>The pointblank informant object</em></p>
+<p><code>obj:&lt;ptblank_informant&gt;</code> // <strong>required</strong></p>
+<p>A <strong>pointblank</strong> <em>informant</em> object that is commonly created through the
+use of the <code><a href="create_informant.html">create_informant()</a></code> function.</p></dd>
 
 
 <dt>size</dt>
-<dd><p>The size of the display table, which can be either <code>"standard"</code>
-(the default, with a width of 875px), <code>"small"</code> (width of 575px), or, a
-pixel- or percent-based width of your choosing (supply an integer value for
-the width in pixels, or values with <code>"px"</code> or <code>"%"</code> appended, like <code>"75%"</code>,
+<dd><p><em>Size option for display-table report</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>"standard"</code></p>
+<p>The size of the display table, which can be either <code>"standard"</code> (the
+default, with a width of 875px), <code>"small"</code> (width of 575px), or, a pixel-
+or percent-based width of your choosing (supply an integer value for the
+width in pixels, or values with <code>"px"</code> or <code>"%"</code> appended, like <code>"75%"</code>,
 <code>"500px"</code>, etc.).</p></dd>
 
 
 <dt>title</dt>
-<dd><p>Options for customizing the title of the report. The default is
-the keyword <code>":default:"</code> which produces generic title text that refers to
-the <strong>pointblank</strong> package in the language governed by the <code>lang</code> option.
+<dd><p><em>Title customization options</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>":default:"</code></p>
+<p>Options for customizing the title of the report. The default is the keyword
+<code>":default:"</code> which produces generic title text that refers to the
+<strong>pointblank</strong> package in the language governed by the <code>lang</code> option.
 Another keyword option is <code>":tbl_name:"</code>, and that presents the name of the
 table as the title for the report. If no title is wanted, then the
 <code>":none:"</code> keyword option can be used. Aside from keyword options, text can

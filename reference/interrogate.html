@@ -99,37 +99,46 @@ the <code><a href="create_agent.html">create_agent()</a></code> function.</p></d
 
 
 <dt>extract_failed</dt>
-<dd><p>An option to collect rows that didn't pass a particular
-validation step. The default is <code>TRUE</code> and further options allow for fine
-control of how these rows are collected.</p></dd>
+<dd><p><em>Collect failed rows as data extracts</em></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
+<p>An option to collect rows that didn't pass a particular validation step.
+The default is <code>TRUE</code> and further options allow for fine control of how
+these rows are collected.</p></dd>
 
 
 <dt>get_first_n</dt>
-<dd><p>If the option to collect non-passing rows is chosen, there
-is the option here to collect the first <code>n</code> rows here. Supply the number of
-rows to extract from the top of the non-passing rows table (the ordering of
-data from the original table is retained).</p></dd>
+<dd><p><em>Get the first n values</em></p>
+<p><code>scalar&lt;integer&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>If the option to collect non-passing rows is chosen, there is the option
+here to collect the first <code>n</code> rows here. Supply the number of rows to
+extract from the top of the non-passing rows table (the ordering of data
+from the original table is retained).</p></dd>
 
 
 <dt>sample_n</dt>
-<dd><p>If the option to collect non-passing rows is chosen, this
-option allows for the sampling of <code>n</code> rows. Supply the number of rows to
-sample from the non-passing rows table. If <code>n</code> is greater than the number
-of non-passing rows, then all the rows will be returned.</p></dd>
+<dd><p><em>Sample n values</em></p>
+<p><code>scalar&lt;integer&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>If the option to collect non-passing rows is chosen, this option allows for
+the sampling of <code>n</code> rows. Supply the number of rows to sample from the
+non-passing rows table. If <code>n</code> is greater than the number of non-passing
+rows, then all the rows will be returned.</p></dd>
 
 
 <dt>sample_frac</dt>
-<dd><p>If the option to collect non-passing rows is chosen, this
-option allows for the sampling of a fraction of those rows. Provide a
-number in the range of <code>0</code> and <code>1</code>. The number of rows to return may be
-extremely large (and this is especially when querying remote databases),
-however, the <code>sample_limit</code> option will apply a hard limit to the returned
-rows.</p></dd>
+<dd><p><em>Sample a fraction of values</em></p>
+<p><code>scalar&lt;numeric&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>If the option to collect non-passing rows is chosen, this option allows for
+the sampling of a fraction of those rows. Provide a number in the range of
+<code>0</code> and <code>1</code>. The number of rows to return may be extremely large (and this
+is especially when querying remote databases), however, the <code>sample_limit</code>
+option will apply a hard limit to the returned rows.</p></dd>
 
 
 <dt>sample_limit</dt>
-<dd><p>A value that limits the possible number of rows returned
-when sampling non-passing rows using the <code>sample_frac</code> option.</p></dd>
+<dd><p><em>Row limit for sampling</em></p>
+<p><code>scalar&lt;integer&gt;</code> // <em>default:</em> <code>5000</code></p>
+<p>A value that limits the possible number of rows returned when sampling
+non-passing rows using the <code>sample_frac</code> option.</p></dd>
 
 </dl></div>
     <div class="section level2">

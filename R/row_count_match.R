@@ -33,16 +33,23 @@
 #' 
 #' @inheritParams col_vals_gt
 #' 
-#' @param count Either a literal value for the number of rows, or, a table to
-#'   compare against the target table in terms of row count values. If supplying
-#'   a comparison table, it can either be a table object such as a data frame, a
+#' @param count *The count comparison*
+#' 
+#'   `scalar<numeric|integer>|obj:<tbl_*>` // **required**
+#' 
+#'   Either a literal value for the number of rows, or, a table to compare
+#'   against the target table in terms of row count values. If supplying a
+#'   comparison table, it can either be a table object such as a data frame, a
 #'   tibble, a `tbl_dbi` object, or a `tbl_spark` object. Alternatively, a
-#'   table-prep formula (`~ <table reading code>`) or a function
-#'   (`function() <table reading code>`) can be used to lazily read in the
-#'   comparison table at interrogation time.
+#'   table-prep formula (`~ <table reading code>`) or a function (`function()
+#'   <table reading code>`) can be used to lazily read in the comparison table
+#'   at interrogation time.
 #'   
-#' @param tbl_compare The `tbl_compare` argument is deprecated. Instead, use
-#'   `count`.
+#' @param tbl_compare *[Deprecated] Comparison table*
+#' 
+#'   `obj:<tbl_*>` // *default:* `NULL` (`optional`)
+#' 
+#'   The `tbl_compare` argument is deprecated. Instead, use `count`.
 #'   
 #' @return For the validation function, the return value is either a
 #'   `ptblank_agent` object or a table object (depending on whether an agent

@@ -14,36 +14,59 @@ scan_data(
 )
 }
 \arguments{
-\item{tbl}{The input table. This can be a data frame, tibble, a \code{tbl_dbi}
-object, or a \code{tbl_spark} object.}
+\item{tbl}{\emph{A data table}
 
-\item{sections}{The sections to include in the finalized \verb{Table Scan} report.
-A string with key characters representing section names is required here.
-The default string is \code{"OVICMS"} wherein each letter stands for the
-following sections in their default order: \code{"O"}: \code{"overview"}; \code{"V"}:
-\code{"variables"}; \code{"I"}: \code{"interactions"}; \code{"C"}: \code{"correlations"}; \code{"M"}:
-\code{"missing"}; and \code{"S"}: \code{"sample"}. This string can be comprised of less
-characters and the order can be changed to suit the desired layout of the
-report. For \code{tbl_dbi} and \code{tbl_spark} objects supplied to \code{tbl}, the
-\code{"interactions"} and \code{"correlations"} sections are currently excluded.}
+\verb{obj:<tbl_*>} // \strong{required}
 
-\item{navbar}{Should there be a navigation bar anchored to the top of the
-report page? By default this is \code{TRUE}.}
+The input table. This can be a data frame, tibble, a \code{tbl_dbi} object, or a
+\code{tbl_spark} object.}
 
-\item{width}{An optional fixed width (in pixels) for the HTML report. By
-default, no fixed width is applied.}
+\item{sections}{\emph{Sections to include}
 
-\item{lang}{The language to use for label text in the report. By default,
-\code{NULL} will create English (\code{"en"}) text. Other options include French
-(\code{"fr"}), German (\code{"de"}), Italian (\code{"it"}), Spanish (\code{"es"}), Portuguese
-(\code{"pt"}), Turkish (\code{"tr"}), Chinese (\code{"zh"}),  Russian (\code{"ru"}), Polish
-(\code{"pl"}), Danish (\code{"da"}), Swedish (\code{"sv"}), and Dutch (\code{"nl"}).}
+\verb{scalar<character>} // \emph{default:} \code{"OVICMS"}
 
-\item{locale}{An optional locale ID to use for formatting values in the
-report according the locale's rules. Examples include \code{"en_US"} for English
-(United States) and \code{"fr_FR"} for French (France); more simply, this can be
-a language identifier without a country designation, like \code{"es"} for
-Spanish (Spain, same as \code{"es_ES"}).}
+The sections to include in the finalized \verb{Table Scan} report. A string with
+key characters representing section names is required here. The default
+string is \code{"OVICMS"} wherein each letter stands for the following sections
+in their default order: \code{"O"}: \code{"overview"}; \code{"V"}: \code{"variables"}; \code{"I"}:
+\code{"interactions"}; \code{"C"}: \code{"correlations"}; \code{"M"}: \code{"missing"}; and \code{"S"}:
+\code{"sample"}. This string can be comprised of less characters and the order
+can be changed to suit the desired layout of the report. For \code{tbl_dbi} and
+\code{tbl_spark} objects supplied to \code{tbl}, the \code{"interactions"} and
+\code{"correlations"} sections are currently excluded.}
+
+\item{navbar}{\emph{Include navigation in HTML report}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+Should there be a navigation bar anchored to the top of the report page?}
+
+\item{width}{\emph{Width option for HTML report}
+
+\verb{scalar<integer>} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional fixed width (in pixels) for the HTML report. By default, no
+fixed width is applied.}
+
+\item{lang}{\emph{Reporting language}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+The language to use for label text in the report. By default, \code{NULL} will
+create English (\code{"en"}) text. Other options include French (\code{"fr"}), German
+(\code{"de"}), Italian (\code{"it"}), Spanish (\code{"es"}), Portuguese (\code{"pt"}), Turkish
+(\code{"tr"}), Chinese (\code{"zh"}),  Russian (\code{"ru"}), Polish (\code{"pl"}), Danish
+(\code{"da"}), Swedish (\code{"sv"}), and Dutch (\code{"nl"}).}
+
+\item{locale}{\emph{Locale for value formatting within reports}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional locale ID to use for formatting values in the report according
+the locale's rules. Examples include \code{"en_US"} for English (United States)
+and \code{"fr_FR"} for French (France); more simply, this can be a language
+identifier without a country designation, like \code{"es"} for Spanish (Spain,
+same as \code{"es_ES"}).}
 }
 \value{
 A \code{ptblank_tbl_scan} object.

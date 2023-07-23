@@ -47,36 +47,59 @@
 #' Markdown HTML output or in Shiny applications. If you need the output HTML,
 #' it's to export that to a file with the [export_report()] function.
 #' 
-#' @param tbl The input table. This can be a data frame, tibble, a `tbl_dbi`
-#'   object, or a `tbl_spark` object.
+#' @param tbl *A data table*
+#' 
+#'   `obj:<tbl_*>` // **required**
+#' 
+#'   The input table. This can be a data frame, tibble, a `tbl_dbi` object, or a
+#'   `tbl_spark` object.
 #'   
-#' @param sections The sections to include in the finalized `Table Scan` report.
-#'   A string with key characters representing section names is required here.
-#'   The default string is `"OVICMS"` wherein each letter stands for the
-#'   following sections in their default order: `"O"`: `"overview"`; `"V"`:
-#'   `"variables"`; `"I"`: `"interactions"`; `"C"`: `"correlations"`; `"M"`:
-#'   `"missing"`; and `"S"`: `"sample"`. This string can be comprised of less
-#'   characters and the order can be changed to suit the desired layout of the
-#'   report. For `tbl_dbi` and `tbl_spark` objects supplied to `tbl`, the
-#'   `"interactions"` and `"correlations"` sections are currently excluded.
+#' @param sections *Sections to include*
+#' 
+#'   `scalar<character>` // *default:* `"OVICMS"`
+#' 
+#'   The sections to include in the finalized `Table Scan` report. A string with
+#'   key characters representing section names is required here. The default
+#'   string is `"OVICMS"` wherein each letter stands for the following sections
+#'   in their default order: `"O"`: `"overview"`; `"V"`: `"variables"`; `"I"`:
+#'   `"interactions"`; `"C"`: `"correlations"`; `"M"`: `"missing"`; and `"S"`:
+#'   `"sample"`. This string can be comprised of less characters and the order
+#'   can be changed to suit the desired layout of the report. For `tbl_dbi` and
+#'   `tbl_spark` objects supplied to `tbl`, the `"interactions"` and
+#'   `"correlations"` sections are currently excluded.
 #'   
-#' @param navbar Should there be a navigation bar anchored to the top of the
-#'   report page? By default this is `TRUE`.
+#' @param navbar *Include navigation in HTML report*
+#' 
+#'   `scalar<logical>` // *default:* `TRUE`
+#' 
+#'   Should there be a navigation bar anchored to the top of the report page?
 #'   
-#' @param width An optional fixed width (in pixels) for the HTML report. By
-#'   default, no fixed width is applied.
+#' @param width *Width option for HTML report*
+#' 
+#'   `scalar<integer>` // *default:* `NULL` (`optional`)
+#' 
+#'   An optional fixed width (in pixels) for the HTML report. By default, no
+#'   fixed width is applied.
 #'   
-#' @param lang The language to use for label text in the report. By default,
-#'   `NULL` will create English (`"en"`) text. Other options include French
-#'   (`"fr"`), German (`"de"`), Italian (`"it"`), Spanish (`"es"`), Portuguese
-#'   (`"pt"`), Turkish (`"tr"`), Chinese (`"zh"`),  Russian (`"ru"`), Polish
-#'   (`"pl"`), Danish (`"da"`), Swedish (`"sv"`), and Dutch (`"nl"`).
+#' @param lang *Reporting language*
+#' 
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#' 
+#'   The language to use for label text in the report. By default, `NULL` will
+#'   create English (`"en"`) text. Other options include French (`"fr"`), German
+#'   (`"de"`), Italian (`"it"`), Spanish (`"es"`), Portuguese (`"pt"`), Turkish
+#'   (`"tr"`), Chinese (`"zh"`),  Russian (`"ru"`), Polish (`"pl"`), Danish
+#'   (`"da"`), Swedish (`"sv"`), and Dutch (`"nl"`).
 #'   
-#' @param locale An optional locale ID to use for formatting values in the
-#'   report according the locale's rules. Examples include `"en_US"` for English
-#'   (United States) and `"fr_FR"` for French (France); more simply, this can be
-#'   a language identifier without a country designation, like `"es"` for
-#'   Spanish (Spain, same as `"es_ES"`).
+#' @param locale *Locale for value formatting within reports*
+#' 
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#' 
+#'   An optional locale ID to use for formatting values in the report according
+#'   the locale's rules. Examples include `"en_US"` for English (United States)
+#'   and `"fr_FR"` for French (France); more simply, this can be a language
+#'   identifier without a country designation, like `"es"` for Spanish (Spain,
+#'   same as `"es_ES"`).
 #' 
 #' @return A `ptblank_tbl_scan` object.
 #' 

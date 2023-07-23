@@ -44,13 +44,18 @@ A data frame, tibble (\code{tbl_df} or \code{tbl_dbi}), Spark DataFrame
 (\code{tbl_spark}), or, an \emph{agent} object of class \code{ptblank_agent} that is
 commonly created with \code{\link[=create_agent]{create_agent()}}.}
 
-\item{count}{Either a literal value for the number of rows, or, a table to
-compare against the target table in terms of row count values. If supplying
-a comparison table, it can either be a table object such as a data frame, a
+\item{count}{\emph{The count comparison}
+
+\verb{scalar<numeric|integer>|obj:<tbl_*>} // \strong{required}
+
+Either a literal value for the number of rows, or, a table to compare
+against the target table in terms of row count values. If supplying a
+comparison table, it can either be a table object such as a data frame, a
 tibble, a \code{tbl_dbi} object, or a \code{tbl_spark} object. Alternatively, a
-table-prep formula (\verb{~ <table reading code>}) or a function
-(\verb{function() <table reading code>}) can be used to lazily read in the
-comparison table at interrogation time.}
+table-prep formula (\verb{~ <table reading code>}) or a function (`function()\if{html}{\out{
+  <table reading code>`) can be used to lazily read in the comparison table
+  at interrogation time.
+}}}
 
 \item{preconditions}{\emph{Input table modification prior to validation}
 
@@ -130,8 +135,11 @@ logical value. With this approach, the \strong{pointblank} function
 active on the basis of one or more columns existing in the table
 (e.g., \code{~ . \%>\% has_columns(vars(d, e))}).}
 
-\item{tbl_compare}{The \code{tbl_compare} argument is deprecated. Instead, use
-\code{count}.}
+\item{tbl_compare}{\emph{\link{Deprecated} Comparison table}
+
+\verb{obj:<tbl_*>} // \emph{default:} \code{NULL} (\code{optional})
+
+The \code{tbl_compare} argument is deprecated. Instead, use \code{count}.}
 
 \item{object}{\emph{A data table for expectations or tests}
 

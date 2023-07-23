@@ -7,8 +7,12 @@
 tt_string_info(tbl)
 }
 \arguments{
-\item{tbl}{A table object to be used as input for the transformation. This
-can be a data frame, a tibble, a \code{tbl_dbi} object, or a \code{tbl_spark} object.}
+\item{tbl}{\emph{A data table}
+
+\verb{obj:<tbl_*>} // \strong{required}
+
+A table object to be used as input for the transformation. This can be a
+data frame, a tibble, a \code{tbl_dbi} object, or a \code{tbl_spark} object.}
 }
 \value{
 A \code{tibble} object.

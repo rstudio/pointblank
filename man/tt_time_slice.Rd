@@ -13,25 +13,41 @@ tt_time_slice(
 )
 }
 \arguments{
-\item{tbl}{A table object to be used as input for the transformation. This
-can be a data frame, a tibble, a \code{tbl_dbi} object, or a \code{tbl_spark} object.}
+\item{tbl}{\emph{A data table}
 
-\item{time_column}{The time-based column that will be used as a basis for the
-slicing. If no time column is provided then the first one found will be
-used.}
+\verb{obj:<tbl_*>} // \strong{required}
 
-\item{slice_point}{The location on the \code{time_column} where the slicing will
-occur. This can either be a decimal value from \code{0} to \code{1}, an ISO 8601
-formatted time string (as a date or a date-time), a \code{POSIXct} time, or a
-\code{Date} object.}
+A table object to be used as input for the transformation. This can be a
+data frame, a tibble, a \code{tbl_dbi} object, or a \code{tbl_spark} object.}
 
-\item{keep}{Which slice should be kept? The \code{"left"} side (the default)
-contains data rows that are earlier than the \code{slice_point} and the
-\code{"right"} side will have rows that are later.}
+\item{time_column}{\emph{Column with time data}
 
-\item{arrange}{Should the slice be arranged by the \code{time_column}? This may be
-useful if the input \code{tbl} isn't ordered by the \code{time_column}. By default,
-this is \code{FALSE} and the original ordering is retained.}
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+The time-based column that will be used as a basis for the slicing. If no
+time column is provided then the first one found will be used.}
+
+\item{slice_point}{\verb{scalar<numeric|character|POSIXct|Date>} // \emph{default:} \code{0}
+
+The location on the \code{time_column} where the slicing will occur. This can
+either be a decimal value from \code{0} to \code{1}, an ISO 8601 formatted time
+string (as a date or a date-time), a \code{POSIXct} time, or a \code{Date} object.}
+
+\item{keep}{\emph{Data slice to keep}
+
+\verb{singl-kw:[left|right]} // \emph{default:} \code{"left"}
+
+Which slice should be kept? The \code{"left"} side (the default) contains data
+rows that are earlier than the \code{slice_point} and the \code{"right"} side will
+have rows that are later.}
+
+\item{arrange}{\emph{Arrange data slice by the time data?}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+Should the slice be arranged by the \code{time_column}? This may be useful if
+the input \code{tbl} isn't ordered by the \code{time_column}. By default, this is
+\code{FALSE} and the original ordering is retained.}
 }
 \value{
 A data frame, a tibble, a \code{tbl_dbi} object, or a \code{tbl_spark} object

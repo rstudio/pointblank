@@ -7,16 +7,24 @@
 tt_time_shift(tbl, time_shift = "0y 0m 0d 0H 0M 0S")
 }
 \arguments{
-\item{tbl}{A table object to be used as input for the transformation. This
-can be a data frame, a tibble, a \code{tbl_dbi} object, or a \code{tbl_spark} object.}
+\item{tbl}{\emph{A data table}
 
-\item{time_shift}{Either a character-based representation that specifies the
-time difference by which all time values in time-based columns will be
-shifted, or, a \code{difftime} object. The character string is constructed in
-the format \code{"0y 0m 0d 0H 0M 0S"} and individual time components can be
-omitted (i.e., \code{"1y 5d"} is a valid specification of shifting time values
-ahead one year and five days). Adding a \code{"-"} at the beginning of the
-string (e.g., \code{"-2y"}) will shift time values back.}
+\verb{obj:<tbl_*>} // \strong{required}
+
+A table object to be used as input for the transformation. This can be a
+data frame, a tibble, a \code{tbl_dbi} object, or a \code{tbl_spark} object.}
+
+\item{time_shift}{\emph{Time-shift specification}
+
+\verb{scalar<character>} // \emph{default:} \code{"0y 0m 0d 0H 0M 0S"}
+
+Either a character-based representation that specifies the time difference
+by which all time values in time-based columns will be shifted, or, a
+\code{difftime} object. The character string is constructed in the format
+\code{"0y 0m 0d 0H 0M 0S"} and individual time components can be omitted (i.e.,
+\code{"1y 5d"} is a valid specification of shifting time values ahead one year
+and five days). Adding a \code{"-"} at the beginning of the string (e.g.,
+\code{"-2y"}) will shift time values back.}
 }
 \value{
 A data frame, a tibble, a \code{tbl_dbi} object, or a \code{tbl_spark} object

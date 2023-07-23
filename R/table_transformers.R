@@ -40,8 +40,12 @@
 #' table. Column names from the input will be used in the output, preserving
 #' order as well.
 #' 
-#' @param tbl A table object to be used as input for the transformation. This
-#'   can be a data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
+#' @param tbl *A data table*
+#' 
+#'   `obj:<tbl_*>` // **required**
+#' 
+#'   A table object to be used as input for the transformation. This can be a
+#'   data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
 #' 
 #' @return A `tibble` object.
 #' 
@@ -208,8 +212,12 @@ tt_summary_stats <- function(tbl) {
 #' table. Column names from the input will be used in the output, preserving
 #' order as well.
 #' 
-#' @param tbl A table object to be used as input for the transformation. This
-#'   can be a data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
+#' @param tbl *A data table*
+#' 
+#'   `obj:<tbl_*>` // **required**
+#' 
+#'   A table object to be used as input for the transformation. This can be a
+#'   data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
 #' 
 #' @return A `tibble` object.
 #' 
@@ -308,8 +316,12 @@ tt_string_info <- function(tbl) {
 #' first is the `".param."` column with the labels `"rows"` and `"columns"`; the
 #' second column, `"value"`, contains the row and column counts.
 #' 
-#' @param tbl A table object to be used as input for the transformation. This
-#'   can be a data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
+#' @param tbl *A data table*
+#' 
+#'   `obj:<tbl_*>` // **required**
+#' 
+#'   A table object to be used as input for the transformation. This can be a
+#'   data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
 #' 
 #' @return A `tibble` object.
 #' 
@@ -381,8 +393,12 @@ tt_tbl_dims <- function(tbl) {
 #' columns from the input table. The second column, `"value"`, contains the
 #' column names from the input table.
 #' 
-#' @param tbl A table object to be used as input for the transformation. This
-#'   can be a data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
+#' @param tbl *A data table*
+#' 
+#'   `obj:<tbl_*>` // **required**
+#' 
+#'   A table object to be used as input for the transformation. This can be a
+#'   data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
 #' 
 #' @return A `tibble` object.
 #' 
@@ -471,16 +487,24 @@ tt_tbl_colnames <- function(tbl) {
 #' altered in the same circumstances, however, the object will resolved to an
 #' exact number of days through rounding.
 #' 
-#' @param tbl A table object to be used as input for the transformation. This
-#'   can be a data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
+#' @param tbl *A data table*
+#' 
+#'   `obj:<tbl_*>` // **required**
+#' 
+#'   A table object to be used as input for the transformation. This can be a
+#'   data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
 #'   
-#' @param time_shift Either a character-based representation that specifies the
-#'   time difference by which all time values in time-based columns will be
-#'   shifted, or, a `difftime` object. The character string is constructed in
-#'   the format `"0y 0m 0d 0H 0M 0S"` and individual time components can be
-#'   omitted (i.e., `"1y 5d"` is a valid specification of shifting time values
-#'   ahead one year and five days). Adding a `"-"` at the beginning of the
-#'   string (e.g., `"-2y"`) will shift time values back.
+#' @param time_shift *Time-shift specification*
+#' 
+#'   `scalar<character>` // *default:* `"0y 0m 0d 0H 0M 0S"`
+#' 
+#'   Either a character-based representation that specifies the time difference
+#'   by which all time values in time-based columns will be shifted, or, a
+#'   `difftime` object. The character string is constructed in the format 
+#'   `"0y 0m 0d 0H 0M 0S"` and individual time components can be omitted (i.e.,
+#'   `"1y 5d"` is a valid specification of shifting time values ahead one year
+#'   and five days). Adding a `"-"` at the beginning of the string (e.g.,
+#'   `"-2y"`) will shift time values back.
 #' 
 #' @return A data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object
 #'   depending on what was provided as `tbl`.
@@ -651,25 +675,43 @@ tt_time_shift <- function(
 #' `NA`/`NULL` values in the `time_column` will result in the corresponding rows
 #' can being removed (no matter which slice is retained).
 #'  
-#' @param tbl A table object to be used as input for the transformation. This
-#'   can be a data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
+#' @param tbl *A data table*
+#' 
+#'   `obj:<tbl_*>` // **required**
+#' 
+#'   A table object to be used as input for the transformation. This can be a
+#'   data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
 #'   
-#' @param time_column The time-based column that will be used as a basis for the
-#'   slicing. If no time column is provided then the first one found will be
-#'   used.
+#' @param time_column *Column with time data*
+#' 
+#'    `scalar<character>` // *default:* `NULL` (`optional`)
+#' 
+#'   The time-based column that will be used as a basis for the slicing. If no
+#'   time column is provided then the first one found will be used.
 #'   
-#' @param slice_point The location on the `time_column` where the slicing will
-#'   occur. This can either be a decimal value from `0` to `1`, an ISO 8601
-#'   formatted time string (as a date or a date-time), a `POSIXct` time, or a
-#'   `Date` object.
+#' @param slice_point
+#' 
+#'    `scalar<numeric|character|POSIXct|Date>` // *default:* `0`
+#' 
+#'   The location on the `time_column` where the slicing will occur. This can
+#'   either be a decimal value from `0` to `1`, an ISO 8601 formatted time
+#'   string (as a date or a date-time), a `POSIXct` time, or a `Date` object.
 #'   
-#' @param keep Which slice should be kept? The `"left"` side (the default)
-#'   contains data rows that are earlier than the `slice_point` and the
-#'   `"right"` side will have rows that are later.
+#' @param keep *Data slice to keep*
+#' 
+#'   `singl-kw:[left|right]` // *default:* `"left"`
+#' 
+#'   Which slice should be kept? The `"left"` side (the default) contains data
+#'   rows that are earlier than the `slice_point` and the `"right"` side will
+#'   have rows that are later.
 #'   
-#' @param arrange Should the slice be arranged by the `time_column`? This may be
-#'   useful if the input `tbl` isn't ordered by the `time_column`. By default,
-#'   this is `FALSE` and the original ordering is retained.
+#' @param arrange *Arrange data slice by the time data?*
+#' 
+#'   `scalar<logical>` // *default:* `FALSE`
+#' 
+#'   Should the slice be arranged by the `time_column`? This may be useful if
+#'   the input `tbl` isn't ordered by the `time_column`. By default, this is
+#'   `FALSE` and the original ordering is retained.
 #' 
 #' @return A data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object
 #'   depending on what was provided as `tbl`.
@@ -853,16 +895,28 @@ tt_time_slice <- function(
 #' in their input tables, respectively. For that reason, a column name must be
 #' supplied to the `column` argument in `get_tt_param()`.
 #' 
-#' @param tbl A summary table generated by either of the [tt_summary_stats()],
+#' @param tbl *Summary table generated by specific transformer functions*
+#' 
+#'   `obj:<tbl_*>` // **required**
+#' 
+#'   A summary table generated by either of the [tt_summary_stats()],
 #'   [tt_string_info()], [tt_tbl_dims()], or [tt_tbl_colnames()] functions.
 #'   
-#' @param param The parameter name associated to the value that is to be gotten.
-#'   These parameter names are always available in the first column (`.param.`)
-#'   of a summary table obtained by [tt_summary_stats()], [tt_string_info()],
+#' @param param *Parameter name*
+#' 
+#'   `scalar<character>` // **required**
+#' 
+#'   The parameter name associated to the value that is to be gotten. These
+#'   parameter names are always available in the first column (`.param.`) of a
+#'   summary table obtained by [tt_summary_stats()], [tt_string_info()],
 #'   [tt_tbl_dims()], or [tt_tbl_colnames()].
 #'   
-#' @param column The column in the summary table for which the data value should
-#'   be obtained. This must be supplied for summary tables generated by
+#' @param column *The target column*
+#'   
+#'   `scalar<character>` // **required** (in select cases)
+#' 
+#'   The column in the summary table for which the data value should be
+#'   obtained. This must be supplied for summary tables generated by
 #'   [tt_summary_stats()] and [tt_string_info()] (the [tt_tbl_dims()] and
 #'   [tt_tbl_colnames()] functions will always generate a two-column summary
 #'   table).

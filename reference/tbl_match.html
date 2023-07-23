@@ -122,10 +122,12 @@ commonly created with <code><a href="create_agent.html">create_agent()</a></code
 
 
 <dt>tbl_compare</dt>
-<dd><p>A table to compare against the target table. This can
-either be a table object, a table-prep formula. This can be a table object
-such as a data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spark</code>
-object. Alternatively, a table-prep formula (<code>~ &lt;table reading code&gt;</code>) or a
+<dd><p><em>A data table for comparison</em></p>
+<p><code>obj:&lt;tbl_*&gt;</code> // <strong>required</strong></p>
+<p>A table to compare against the target table. This can either be a table
+object, a table-prep formula. This can be a table object such as a data
+frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spark</code> object.
+Alternatively, a table-prep formula (<code>~ &lt;table reading code&gt;</code>) or a
 function (<code>function() &lt;table reading code&gt;</code>) can be used to lazily read in
 the table at interrogation time.</p></dd>
 

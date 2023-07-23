@@ -106,17 +106,19 @@ statements and their error messages (if any).</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>summary</dt>
-<dd><p>If <code>TRUE</code> (the default), then there will be a leading summary
-of all validations in the rendered R Markdown document. With <code>FALSE</code>, this
-element is not shown.</p></dd>
+<dd><p><em>Include a validation summary</em></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
+<p>If <code>TRUE</code> then there will be a leading summary of all validations in the
+rendered R Markdown document. With <code>FALSE</code>, this element is not shown.</p></dd>
 
 
 <dt>log_to_file</dt>
-<dd><p>An option to log errors to a text file. By default, no
-logging is done but <code>TRUE</code> will write log entries to
-<code>"validation_errors.log"</code> in the working directory. To both enable logging
-and to specify a file name, include a path to a log file of the desired
-name.</p></dd>
+<dd><p><em>Log validation results to a file</em></p>
+<p><code>scalar&lt;logical|character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>An option to log errors to a text file. By default, no logging is done but
+<code>TRUE</code> will write log entries to <code>"validation_errors.log"</code> in the working
+directory. To both enable logging and to specify a file name, include a
+path to a log file of the desired name.</p></dd>
 
 </dl></div>
     <div class="section level2">

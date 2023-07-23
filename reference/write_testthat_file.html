@@ -156,29 +156,36 @@ the <code><a href="create_agent.html">create_agent()</a></code> function.</p></d
 
 
 <dt>name</dt>
-<dd><p>An optional name for for the <strong>testhat</strong> test file. This should
-be a name without extension and without the leading <code>"test-"</code> text. If
-nothing is supplied, the name will be derived from the <code>tbl_name</code> in the
-agent. If that's not present, a generic name will be used.</p></dd>
+<dd><p><em>Name for generated testthat file</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>An optional name for for the <strong>testhat</strong> test file. This should be a name
+without extension and without the leading <code>"test-"</code> text. If nothing is
+supplied, the name will be derived from the <code>tbl_name</code> in the agent. If
+that's not present, a generic name will be used.</p></dd>
 
 
 <dt>path</dt>
-<dd><p>A path can be specified here if there shouldn't be an attempt to
-place the file in <code>testthat/tests</code>.</p></dd>
+<dd><p><em>File path</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>A path can be specified here if there shouldn't be an attempt to place the
+file in <code>testthat/tests</code>.</p></dd>
 
 
 <dt>overwrite</dt>
-<dd><p>Should a <strong>testthat</strong> file of the same name be overwritten?
-By default, this is <code>FALSE</code>.</p></dd>
+<dd><p><em>Overwrite a previous file of the same name</em></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
+<p>Should a <strong>testthat</strong> file of the same name be overwritten?</p></dd>
 
 
 <dt>skips</dt>
-<dd><p>This is an optional vector of test-skipping keywords modeled
-after the <strong>testthat</strong> <code>skip_on_*()</code> functions. The following keywords can
-be used to include <code>skip_on_*()</code> statements: <code>"cran"</code>
-(<code><a href="https://testthat.r-lib.org/reference/skip.html" class="external-link">testthat::skip_on_cran()</a></code>), <code>"travis"</code> (<code><a href="https://testthat.r-lib.org/reference/skip_on_travis.html" class="external-link">testthat::skip_on_travis()</a></code>),
-<code>"appveyor"</code> (<code><a href="https://testthat.r-lib.org/reference/skip_on_travis.html" class="external-link">testthat::skip_on_appveyor()</a></code>), <code>"ci"</code>
-(<code><a href="https://testthat.r-lib.org/reference/skip.html" class="external-link">testthat::skip_on_ci()</a></code>), <code>"covr"</code> (<code><a href="https://testthat.r-lib.org/reference/skip.html" class="external-link">testthat::skip_on_covr()</a></code>), <code>"bioc"</code>
+<dd><p><em>Test skipping</em></p>
+<p><code>vector&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>This is an optional vector of test-skipping keywords modeled after the
+<strong>testthat</strong> <code>skip_on_*()</code> functions. The following keywords can be used to
+include <code>skip_on_*()</code> statements: <code>"cran"</code> (<code><a href="https://testthat.r-lib.org/reference/skip.html" class="external-link">testthat::skip_on_cran()</a></code>),
+<code>"travis"</code> (<code><a href="https://testthat.r-lib.org/reference/skip_on_travis.html" class="external-link">testthat::skip_on_travis()</a></code>), <code>"appveyor"</code>
+(<code><a href="https://testthat.r-lib.org/reference/skip_on_travis.html" class="external-link">testthat::skip_on_appveyor()</a></code>), <code>"ci"</code> (<code><a href="https://testthat.r-lib.org/reference/skip.html" class="external-link">testthat::skip_on_ci()</a></code>),
+<code>"covr"</code> (<code><a href="https://testthat.r-lib.org/reference/skip.html" class="external-link">testthat::skip_on_covr()</a></code>), <code>"bioc"</code>
 (<code><a href="https://testthat.r-lib.org/reference/skip.html" class="external-link">testthat::skip_on_bioc()</a></code>). There are keywords for skipping tests on
 certain operating systems and all of them will insert a specific
 <code><a href="https://testthat.r-lib.org/reference/skip.html" class="external-link">testthat::skip_on_os()</a></code> call. These are <code>"windows"</code>
@@ -188,8 +195,9 @@ calls will be placed at the top of the generated <strong>testthat</strong> test 
 
 
 <dt>quiet</dt>
-<dd><p>Should the function <em>not</em> inform when the file is written? By
-default this is <code>FALSE</code>.</p></dd>
+<dd><p><em>Inform (or not) upon file writing</em></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
+<p>Should the function <em>not</em> inform when the file is written?</p></dd>
 
 </dl></div>
     <div class="section level2">

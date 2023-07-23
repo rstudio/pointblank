@@ -314,34 +314,43 @@ the <code><a href="create_agent.html">create_agent()</a></code> function.</p></d
 
 
 <dt>arrange_by</dt>
-<dd><p>A choice to arrange the report table rows by the validation
-step number (<code>"i"</code>, the default), or, to arrange in descending order by
-severity of the failure state (with <code>"severity"</code>).</p></dd>
+<dd><p><em>Method of arranging the report's table rows</em></p>
+<p><code>singl-kw:[i|severity]</code> // <em>default:</em> <code>"i"</code></p>
+<p>A choice to arrange the report table rows by the validation step number
+(<code>"i"</code>, the default), or, to arrange in descending order by severity of the
+failure state (with <code>"severity"</code>).</p></dd>
 
 
 <dt>keep</dt>
-<dd><p>An option to keep <code>"all"</code> of the report's table rows (the
+<dd><p><em>Which table rows should be kept?</em></p>
+<p><code>singl-kw:[all|fail_states]</code> // <em>default:</em> <code>"all"</code></p>
+<p>An option to keep <code>"all"</code> of the report's table rows (the
 default), or, keep only those rows that reflect one or more
 <code>"fail_states"</code>.</p></dd>
 
 
 <dt>display_table</dt>
-<dd><p>Should a display table be generated? If <code>TRUE</code> (the
-default), and if the <strong>gt</strong> package is installed, a display table for the
-report will be shown in the Viewer. If <code>FALSE</code>, or if <strong>gt</strong> is not
-available, then a tibble will be returned.</p></dd>
+<dd><p><em>Return a display-table report via gt</em></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
+<p>Should a display table be generated? If <code>TRUE</code>, and if the <strong>gt</strong> package
+is installed, a display table for the report will be shown in the Viewer.
+If <code>FALSE</code>, or if <strong>gt</strong> is not available, then a tibble will be returned.</p></dd>
 
 
 <dt>size</dt>
-<dd><p>The size of the display table, which can be either <code>"standard"</code>
-(the default) or <code>"small"</code>. This only applies to a display table (where
+<dd><p><em>Size option for display-table report</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>"standard"</code></p>
+<p>The size of the display table, which can be either <code>"standard"</code> (the
+default) or <code>"small"</code>. This only applies to a display table (where
 <code>display_table = TRUE</code>).</p></dd>
 
 
 <dt>title</dt>
-<dd><p>Options for customizing the title of the report. The default is
-the keyword <code>":default:"</code> which produces generic title text that refers to
-the <strong>pointblank</strong> package in the language governed by the <code>lang</code> option.
+<dd><p><em>Title customization options</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>":default:"</code></p>
+<p>Options for customizing the title of the report. The default is the keyword
+<code>":default:"</code> which produces generic title text that refers to the
+<strong>pointblank</strong> package in the language governed by the <code>lang</code> option.
 Another keyword option is <code>":tbl_name:"</code>, and that presents the name of the
 table as the title for the report. If no title is wanted, then the
 <code>":none:"</code> keyword option can be used. Aside from keyword options, text can

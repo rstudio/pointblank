@@ -7,15 +7,21 @@
 validate_rmd(summary = TRUE, log_to_file = NULL)
 }
 \arguments{
-\item{summary}{If \code{TRUE} (the default), then there will be a leading summary
-of all validations in the rendered R Markdown document. With \code{FALSE}, this
-element is not shown.}
+\item{summary}{\emph{Include a validation summary}
 
-\item{log_to_file}{An option to log errors to a text file. By default, no
-logging is done but \code{TRUE} will write log entries to
-\code{"validation_errors.log"} in the working directory. To both enable logging
-and to specify a file name, include a path to a log file of the desired
-name.}
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+If \code{TRUE} then there will be a leading summary of all validations in the
+rendered R Markdown document. With \code{FALSE}, this element is not shown.}
+
+\item{log_to_file}{\emph{Log validation results to a file}
+
+\verb{scalar<logical|character>} // \emph{default:} \code{NULL} (\code{optional})
+
+An option to log errors to a text file. By default, no logging is done but
+\code{TRUE} will write log entries to \code{"validation_errors.log"} in the working
+directory. To both enable logging and to specify a file name, include a
+path to a log file of the desired name.}
 }
 \description{
 The \code{validate_rmd()} function sets up a framework for validation testing

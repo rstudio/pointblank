@@ -39,32 +39,55 @@
 #' This option can be set when using [create_agent()]/[create_informant()] or
 #' with [set_tbl()] (useful with an existing agent or informant object).
 #' 
-#' @param ... Any mix of **pointblank** objects such as the *agent*
+#' @param ... *Pointblank agents, informants, table stores*
+#' 
+#'   `<series of obj:<ptblank_agent|ptblank_informant|tbl_store>>`
+#'   // **required**
+#' 
+#'   Any mix of **pointblank** objects such as the *agent*
 #'   (`ptblank_agent`), the *informant* (`ptblank_informant`), or the table
 #'   store (`tbl_store`). The agent and informant can be combined into a single
 #'   YAML file (so long as both objects refer to the same table). A table store
 #'   cannot be combined with either an agent or an informant so it must undergo
 #'   conversion alone.
 #'   
-#' @param .list Allows for the use of a list as an input alternative to `...`.
+#' @param .list *Alternative to `...`*
 #' 
-#' @param filename The name of the YAML file to create on disk. It is
-#'   recommended that either the `.yaml` or `.yml` extension be used for this
-#'   file. If not provided then default names will be used (`"tbl_store.yml"`)
-#'   for a table store and the other objects will get default naming to the
-#'   effect of `"<object>-<tbl_name>.yml"`.
+#'   `<list of multiple expressions>` // **required** (or, use `...`)
 #' 
-#' @param path An optional path to which the YAML file should be saved (combined
-#'   with `filename`).
+#'   Allows for the use of a list as an input alternative to `...`.
 #' 
-#' @param expanded Should the written validation expressions for an *agent* be
-#'   expanded such that **tidyselect** and [vars()] expressions for columns are
-#'   evaluated, yielding a validation function per column? By default, this is
-#'   `FALSE` so expressions as written will be retained in the YAML
-#'   representation.
+#' @param filename *File name*
 #' 
-#' @param quiet Should the function *not* inform when the file is written? By
-#'   default this is `FALSE`.
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#' 
+#'   The name of the YAML file to create on disk. It is recommended that either
+#'   the `.yaml` or `.yml` extension be used for this file. If not provided then
+#'   default names will be used (`"tbl_store.yml"`) for a table store and the
+#'   other objects will get default naming to the effect of
+#'   `"<object>-<tbl_name>.yml"`.
+#' 
+#' @param path *File path*
+#' 
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#' 
+#'   An optional path to which the YAML file should be saved (combined with
+#'   `filename`).
+#' 
+#' @param expanded *Expand validation when repeating across multiple columns*
+#' 
+#'   `scalar<logical>` // *default:* `FALSE`
+#' 
+#'   Should the written validation expressions for an *agent* be expanded such
+#'   that **tidyselect** and [vars()] expressions for columns are evaluated,
+#'   yielding a validation function per column? By default, this is `FALSE` so
+#'   expressions as written will be retained in the YAML representation.
+#' 
+#' @param quiet *Inform (or not) upon file writing*
+#' 
+#'   `scalar<logical>` // *default:* `FALSE`
+#' 
+#'.  Should the function *not* inform when the file is written?
 #'   
 #' @return Invisibly returns `TRUE` if the YAML file has been written.
 #'   

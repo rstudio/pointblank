@@ -7,10 +7,17 @@
 yaml_read_informant(filename, path = NULL)
 }
 \arguments{
-\item{filename}{The name of the YAML file that contains fields related to an
-\emph{informant}.}
+\item{filename}{\emph{File name}
 
-\item{path}{An optional path to the YAML file (combined with \code{filename}).}
+\verb{scalar<character>} // \strong{required}
+
+The name of the YAML file that contains fields related to an \emph{informant}.}
+
+\item{path}{\emph{File path}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional path to the YAML file (combined with \code{filename}).}
 }
 \value{
 A \code{ptblank_informant} object.

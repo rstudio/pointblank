@@ -14,32 +14,55 @@ yaml_write(
 )
 }
 \arguments{
-\item{...}{Any mix of \strong{pointblank} objects such as the \emph{agent}
+\item{...}{\emph{Pointblank agents, informants, table stores}
+
+\verb{<series of obj:<ptblank_agent|ptblank_informant|tbl_store>>}
+// \strong{required}
+
+Any mix of \strong{pointblank} objects such as the \emph{agent}
 (\code{ptblank_agent}), the \emph{informant} (\code{ptblank_informant}), or the table
 store (\code{tbl_store}). The agent and informant can be combined into a single
 YAML file (so long as both objects refer to the same table). A table store
 cannot be combined with either an agent or an informant so it must undergo
 conversion alone.}
 
-\item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
+\item{.list}{\emph{Alternative to \code{...}}
 
-\item{filename}{The name of the YAML file to create on disk. It is
-recommended that either the \code{.yaml} or \code{.yml} extension be used for this
-file. If not provided then default names will be used (\code{"tbl_store.yml"})
-for a table store and the other objects will get default naming to the
-effect of \code{"<object>-<tbl_name>.yml"}.}
+\verb{<list of multiple expressions>} // \strong{required} (or, use \code{...})
 
-\item{path}{An optional path to which the YAML file should be saved (combined
-with \code{filename}).}
+Allows for the use of a list as an input alternative to \code{...}.}
 
-\item{expanded}{Should the written validation expressions for an \emph{agent} be
-expanded such that \strong{tidyselect} and \code{\link[=vars]{vars()}} expressions for columns are
-evaluated, yielding a validation function per column? By default, this is
-\code{FALSE} so expressions as written will be retained in the YAML
-representation.}
+\item{filename}{\emph{File name}
 
-\item{quiet}{Should the function \emph{not} inform when the file is written? By
-default this is \code{FALSE}.}
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+The name of the YAML file to create on disk. It is recommended that either
+the \code{.yaml} or \code{.yml} extension be used for this file. If not provided then
+default names will be used (\code{"tbl_store.yml"}) for a table store and the
+other objects will get default naming to the effect of
+\code{"<object>-<tbl_name>.yml"}.}
+
+\item{path}{\emph{File path}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional path to which the YAML file should be saved (combined with
+\code{filename}).}
+
+\item{expanded}{\emph{Expand validation when repeating across multiple columns}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+Should the written validation expressions for an \emph{agent} be expanded such
+that \strong{tidyselect} and \code{\link[=vars]{vars()}} expressions for columns are evaluated,
+yielding a validation function per column? By default, this is \code{FALSE} so
+expressions as written will be retained in the YAML representation.}
+
+\item{quiet}{\emph{Inform (or not) upon file writing}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+.  Should the function \emph{not} inform when the file is written?}
 }
 \value{
 Invisibly returns \code{TRUE} if the YAML file has been written.

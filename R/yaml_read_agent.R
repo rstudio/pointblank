@@ -36,10 +36,17 @@
 #' [yaml_agent_show_exprs()] function. That function shows us (in the console)
 #' the **pointblank** expressions for generating the described validation plan.
 #'   
-#' @param filename The name of the YAML file that contains fields related to an
-#'   *agent*.
+#' @param filename *File name*
+#' 
+#'   `scalar<character>` // **required**
+#' 
+#'   The name of the YAML file that contains fields related to an *agent*.
 #'   
-#' @param path An optional path to the YAML file (combined with `filename`).
+#' @param path *File path*
+#' 
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#' 
+#'   An optional path to the YAML file (combined with `filename`).
 #'   
 #' @return A `ptblank_agent` object.
 #'   
@@ -156,10 +163,17 @@ yaml_read_agent <- function(
 #' that function. As with [yaml_read_agent()] the agent is returned except, this
 #' time, it has intel from the interrogation.
 #' 
-#' @param filename The name of the YAML file that contains fields related to an
-#'   *agent*.
+#' @param filename *File name*
+#' 
+#'   `scalar<character>` // **required**
+#' 
+#'   The name of the YAML file that contains fields related to an *agent*.
 #'   
-#' @param path An optional path to the YAML file (combined with `filename`).
+#' @param path #' @param path *File path*
+#' 
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'    
+#'   An optional path to the YAML file (combined with `filename`).
 #' 
 #' @return A `ptblank_agent` object.
 #'
@@ -258,10 +272,17 @@ yaml_agent_interrogate <- function(
 #' [yaml_write()] function with a pre-existing *agent*, or, it can be carefully
 #' written by hand.
 #'
-#' @param filename The name of the YAML file that contains fields related to an
-#'   *agent*.
+#' @param filename *File name*
+#' 
+#'   `scalar<character>` // **required**
+#' 
+#'   The name of the YAML file that contains fields related to an *agent*.
 #'   
-#' @param path An optional path to the YAML file (combined with `filename`).
+#' @param path #' @param path *File path*
+#' 
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'    
+#'   An optional path to the YAML file (combined with `filename`).
 #' 
 #' @section Examples:
 #' 

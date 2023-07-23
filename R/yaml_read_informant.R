@@ -27,10 +27,17 @@
 #' intact. The *informant* object can be given more information through use of
 #' the `info_*()` functions.
 #'   
-#' @param filename The name of the YAML file that contains fields related to an
-#'   *informant*.
+#' @param filename *File name*
+#' 
+#'   `scalar<character>` // **required**
+#' 
+#'   The name of the YAML file that contains fields related to an *informant*.
 #'   
-#' @param path An optional path to the YAML file (combined with `filename`).
+#' @param path *File path*
+#' 
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#' 
+#'   An optional path to the YAML file (combined with `filename`).
 #' 
 #' @return A `ptblank_informant` object.
 #' 
@@ -126,10 +133,17 @@ yaml_read_informant <- function(
 #' informant is returned except, this time, it has been updated with the latest
 #' information from the target table.
 #'
-#' @param filename The name of the YAML file that contains fields related to an
-#'   *informant*.
+#' @param filename *File name*
+#' 
+#'   `scalar<character>` // **required**
+#' 
+#'   The name of the YAML file that contains fields related to an *informant*.
 #'   
-#' @param path An optional path to the YAML file (combined with `filename`).
+#' @param path *File path*
+#' 
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#' 
+#'   An optional path to the YAML file (combined with `filename`).
 #' 
 #' @return A `ptblank_informant` object.
 #'
@@ -197,8 +211,7 @@ yaml_informant_incorporate <- function(
   informant
 }
 
-expr_from_informant_yaml <- function(path,
-                                     incorporate = FALSE) {
+expr_from_informant_yaml <- function(path, incorporate = FALSE) {
   
   # Read the YAML file with `yaml::read_yaml()`
   y <- yaml::read_yaml(file = path)

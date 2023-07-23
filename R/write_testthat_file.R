@@ -121,23 +121,38 @@
 #'   A **pointblank** *agent* object that is commonly created through the use of
 #'   the [create_agent()] function.
 #' 
-#' @param name An optional name for for the **testhat** test file. This should
-#'   be a name without extension and without the leading `"test-"` text. If
-#'   nothing is supplied, the name will be derived from the `tbl_name` in the
-#'   agent. If that's not present, a generic name will be used.
+#' @param name *Name for generated testthat file*
+#' 
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#' 
+#'   An optional name for for the **testhat** test file. This should be a name
+#'   without extension and without the leading `"test-"` text. If nothing is
+#'   supplied, the name will be derived from the `tbl_name` in the agent. If
+#'   that's not present, a generic name will be used.
 #'   
-#' @param path A path can be specified here if there shouldn't be an attempt to
-#'   place the file in `testthat/tests`.
+#' @param path *File path*
+#' 
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#' 
+#'   A path can be specified here if there shouldn't be an attempt to place the
+#'   file in `testthat/tests`.
 #'   
-#' @param overwrite Should a **testthat** file of the same name be overwritten?
-#'   By default, this is `FALSE`.
+#' @param overwrite *Overwrite a previous file of the same name*
+#' 
+#'   `scalar<logical>` // *default:* `FALSE`
 #'   
-#' @param skips This is an optional vector of test-skipping keywords modeled
-#'   after the **testthat** `skip_on_*()` functions. The following keywords can
-#'   be used to include `skip_on_*()` statements: `"cran"`
-#'   ([testthat::skip_on_cran()]), `"travis"` ([testthat::skip_on_travis()]),
-#'   `"appveyor"` ([testthat::skip_on_appveyor()]), `"ci"`
-#'   ([testthat::skip_on_ci()]), `"covr"` ([testthat::skip_on_covr()]), `"bioc"`
+#'   Should a **testthat** file of the same name be overwritten?
+#'   
+#' @param skips *Test skipping*
+#' 
+#'   `vector<character>` // *default:* `NULL` (`optional`)
+#' 
+#'   This is an optional vector of test-skipping keywords modeled after the
+#'   **testthat** `skip_on_*()` functions. The following keywords can be used to
+#'   include `skip_on_*()` statements: `"cran"` ([testthat::skip_on_cran()]),
+#'   `"travis"` ([testthat::skip_on_travis()]), `"appveyor"`
+#'   ([testthat::skip_on_appveyor()]), `"ci"` ([testthat::skip_on_ci()]),
+#'   `"covr"` ([testthat::skip_on_covr()]), `"bioc"`
 #'   ([testthat::skip_on_bioc()]). There are keywords for skipping tests on
 #'   certain operating systems and all of them will insert a specific
 #'   [testthat::skip_on_os()] call. These are `"windows"`
@@ -145,8 +160,11 @@
 #'   (`skip_on_os("linux")`), and `"solaris"` (`skip_on_os("solaris")`). These
 #'   calls will be placed at the top of the generated **testthat** test file.
 #'   
-#' @param quiet Should the function *not* inform when the file is written? By
-#'   default this is `FALSE`.
+#' @param quiet *Inform (or not) upon file writing*
+#' 
+#'   `scalar<logical>` // *default:* `FALSE`
+#' 
+#'   Should the function *not* inform when the file is written?
 #'   
 #' @return Invisibly returns `TRUE` if the **testthat** file has been written. 
 #' 

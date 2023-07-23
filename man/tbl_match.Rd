@@ -31,10 +31,14 @@ A data frame, tibble (\code{tbl_df} or \code{tbl_dbi}), Spark DataFrame
 (\code{tbl_spark}), or, an \emph{agent} object of class \code{ptblank_agent} that is
 commonly created with \code{\link[=create_agent]{create_agent()}}.}
 
-\item{tbl_compare}{A table to compare against the target table. This can
-either be a table object, a table-prep formula. This can be a table object
-such as a data frame, a tibble, a \code{tbl_dbi} object, or a \code{tbl_spark}
-object. Alternatively, a table-prep formula (\verb{~ <table reading code>}) or a
+\item{tbl_compare}{\emph{A data table for comparison}
+
+\verb{obj:<tbl_*>} // \strong{required}
+
+A table to compare against the target table. This can either be a table
+object, a table-prep formula. This can be a table object such as a data
+frame, a tibble, a \code{tbl_dbi} object, or a \code{tbl_spark} object.
+Alternatively, a table-prep formula (\verb{~ <table reading code>}) or a
 function (\verb{function() <table reading code>}) can be used to lazily read in
 the table at interrogation time.}
 

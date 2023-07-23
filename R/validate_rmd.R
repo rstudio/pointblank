@@ -38,15 +38,21 @@ test_options <- new.env(parent = emptyenv())
 #' failures. Clicking the button reveals the otherwise hidden validation
 #' statements and their error messages (if any).
 #'
-#' @param summary If `TRUE` (the default), then there will be a leading summary
-#'   of all validations in the rendered R Markdown document. With `FALSE`, this
-#'   element is not shown.
+#' @param summary *Include a validation summary*
+#' 
+#'   `scalar<logical>` // *default:* `TRUE`
+#' 
+#'   If `TRUE` then there will be a leading summary of all validations in the
+#'   rendered R Markdown document. With `FALSE`, this element is not shown.
 #'   
-#' @param log_to_file An option to log errors to a text file. By default, no
-#'   logging is done but `TRUE` will write log entries to
-#'   `"validation_errors.log"` in the working directory. To both enable logging
-#'   and to specify a file name, include a path to a log file of the desired
-#'   name.
+#' @param log_to_file *Log validation results to a file*
+#' 
+#'   `scalar<logical|character>` // *default:* `NULL` (`optional`)
+#' 
+#'   An option to log errors to a text file. By default, no logging is done but
+#'   `TRUE` will write log entries to `"validation_errors.log"` in the working
+#'   directory. To both enable logging and to specify a file name, include a
+#'   path to a log file of the desired name.
 #'
 #' @family Planning and Prep
 #' @section Function ID:

@@ -34,10 +34,14 @@
 #' 
 #' @inheritParams col_vals_gt
 #' 
-#' @param tbl_compare A table to compare against the target table. This can
-#'   either be a table object, a table-prep formula. This can be a table object
-#'   such as a data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark`
-#'   object. Alternatively, a table-prep formula (`~ <table reading code>`) or a
+#' @param tbl_compare *A data table for comparison*
+#' 
+#'   `obj:<tbl_*>` // **required**
+#' 
+#'   A table to compare against the target table. This can either be a table
+#'   object, a table-prep formula. This can be a table object such as a data
+#'   frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
+#'   Alternatively, a table-prep formula (`~ <table reading code>`) or a
 #'   function (`function() <table reading code>`) can be used to lazily read in
 #'   the table at interrogation time.
 #'   

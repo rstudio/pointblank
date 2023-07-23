@@ -7,10 +7,17 @@
 yaml_agent_interrogate(filename, path = NULL)
 }
 \arguments{
-\item{filename}{The name of the YAML file that contains fields related to an
-\emph{agent}.}
+\item{filename}{\emph{File name}
 
-\item{path}{An optional path to the YAML file (combined with \code{filename}).}
+\verb{scalar<character>} // \strong{required}
+
+The name of the YAML file that contains fields related to an \emph{agent}.}
+
+\item{path}{#' @param path \emph{File path}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional path to the YAML file (combined with \code{filename}).}
 }
 \value{
 A \code{ptblank_agent} object.

@@ -21,23 +21,38 @@ write_testthat_file(
 A \strong{pointblank} \emph{agent} object that is commonly created through the use of
 the \code{\link[=create_agent]{create_agent()}} function.}
 
-\item{name}{An optional name for for the \strong{testhat} test file. This should
-be a name without extension and without the leading \code{"test-"} text. If
-nothing is supplied, the name will be derived from the \code{tbl_name} in the
-agent. If that's not present, a generic name will be used.}
+\item{name}{\emph{Name for generated testthat file}
 
-\item{path}{A path can be specified here if there shouldn't be an attempt to
-place the file in \code{testthat/tests}.}
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
-\item{overwrite}{Should a \strong{testthat} file of the same name be overwritten?
-By default, this is \code{FALSE}.}
+An optional name for for the \strong{testhat} test file. This should be a name
+without extension and without the leading \code{"test-"} text. If nothing is
+supplied, the name will be derived from the \code{tbl_name} in the agent. If
+that's not present, a generic name will be used.}
 
-\item{skips}{This is an optional vector of test-skipping keywords modeled
-after the \strong{testthat} \verb{skip_on_*()} functions. The following keywords can
-be used to include \verb{skip_on_*()} statements: \code{"cran"}
-(\code{\link[testthat:skip]{testthat::skip_on_cran()}}), \code{"travis"} (\code{\link[testthat:skip_on_travis]{testthat::skip_on_travis()}}),
-\code{"appveyor"} (\code{\link[testthat:skip_on_travis]{testthat::skip_on_appveyor()}}), \code{"ci"}
-(\code{\link[testthat:skip]{testthat::skip_on_ci()}}), \code{"covr"} (\code{\link[testthat:skip]{testthat::skip_on_covr()}}), \code{"bioc"}
+\item{path}{\emph{File path}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+A path can be specified here if there shouldn't be an attempt to place the
+file in \code{testthat/tests}.}
+
+\item{overwrite}{\emph{Overwrite a previous file of the same name}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+Should a \strong{testthat} file of the same name be overwritten?}
+
+\item{skips}{\emph{Test skipping}
+
+\verb{vector<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+This is an optional vector of test-skipping keywords modeled after the
+\strong{testthat} \verb{skip_on_*()} functions. The following keywords can be used to
+include \verb{skip_on_*()} statements: \code{"cran"} (\code{\link[testthat:skip]{testthat::skip_on_cran()}}),
+\code{"travis"} (\code{\link[testthat:skip_on_travis]{testthat::skip_on_travis()}}), \code{"appveyor"}
+(\code{\link[testthat:skip_on_travis]{testthat::skip_on_appveyor()}}), \code{"ci"} (\code{\link[testthat:skip]{testthat::skip_on_ci()}}),
+\code{"covr"} (\code{\link[testthat:skip]{testthat::skip_on_covr()}}), \code{"bioc"}
 (\code{\link[testthat:skip]{testthat::skip_on_bioc()}}). There are keywords for skipping tests on
 certain operating systems and all of them will insert a specific
 \code{\link[testthat:skip]{testthat::skip_on_os()}} call. These are \code{"windows"}
@@ -45,8 +60,11 @@ certain operating systems and all of them will insert a specific
 (\code{skip_on_os("linux")}), and \code{"solaris"} (\code{skip_on_os("solaris")}). These
 calls will be placed at the top of the generated \strong{testthat} test file.}
 
-\item{quiet}{Should the function \emph{not} inform when the file is written? By
-default this is \code{FALSE}.}
+\item{quiet}{\emph{Inform (or not) upon file writing}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+Should the function \emph{not} inform when the file is written?}
 }
 \value{
 Invisibly returns \code{TRUE} if the \strong{testthat} file has been written.

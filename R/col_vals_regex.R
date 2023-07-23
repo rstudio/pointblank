@@ -32,9 +32,13 @@
 #' have been applied).
 #' 
 #' @inheritParams col_vals_gt
-#' @param regex A regular expression pattern to test for a match to the target
-#'   column. Any regex matches to values in the target `columns` will pass
-#'   validation.
+#' 
+#' @param regex *Regex pattern*
+#' 
+#'   `scalar<character>` // **required**
+#' 
+#'   A regular expression pattern to test for a match to the target column. Any
+#'   regex matches to values in the target `columns` will pass validation.
 #' 
 #' @return For the validation function, the return value is either a
 #'   `ptblank_agent` object or a table object (depending on whether an agent

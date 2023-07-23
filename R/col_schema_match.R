@@ -50,26 +50,46 @@
 #' type.
 #' 
 #' @inheritParams col_vals_gt
-#' @param schema A table schema of type `col_schema` which can be generated
-#'   using the [col_schema()] function.
-#' @param complete A requirement to account for all table columns in the
-#'   provided `schema`. By default, this is `TRUE` and so that all column names
-#'   in the target table must be present in the schema object. This restriction
-#'   can be relaxed by using `FALSE`, where we can provide a subset of table
-#'   columns in the schema.
-#' @param in_order A stringent requirement for enforcing the order of columns in
-#'   the provided `schema`. By default, this is `TRUE` and the order of columns
-#'   in both the schema and the target table must match. By setting to `FALSE`,
-#'   this strict order requirement is removed.
-#' @param is_exact Determines whether the check for column types should be exact
-#'   or even performed at all. For example, columns in R data frames may have
-#'   multiple classes (e.g., a date-time column can have both the `"POSIXct"`
-#'   and the `"POSIXt"` classes). If using `is_exact == FALSE`, the column type
-#'   in the user-defined schema for a date-time value can be set as either
-#'   `"POSIXct"` *or* `"POSIXt"` and pass validation (with this column, at
-#'   least). This can be taken a step further and using `NULL` for a column type
-#'   in the user-defined schema will skip the validation check of a column type.
-#'   By default, `is_exact` is set to `TRUE`.
+#' 
+#' @param schema *The table schema*
+#' 
+#'   `obj:<col_schema>` // **required**
+#' 
+#'   A table schema of type `col_schema` which can be generated using the
+#'   [col_schema()] function.
+#'   
+#' @param complete *Requirement for columns specified to exist*
+#' 
+#'   `scalar<logical>` // *default:* `TRUE`
+#' 
+#'   A requirement to account for all table columns in the provided `schema`. By
+#'   default, this is `TRUE` and so that all column names in the target table
+#'   must be present in the schema object. This restriction can be relaxed by
+#'   using `FALSE`, where we can provide a subset of table columns in the
+#'   schema.
+#'   
+#' @param in_order *Requirement for columns in a specific order*
+#' 
+#'   `scalar<logical>` // *default:* `TRUE`
+#'   
+#'   A stringent requirement for enforcing the order of columns in the provided
+#'   `schema`. By default, this is `TRUE` and the order of columns in both the
+#'   schema and the target table must match. By setting to `FALSE`, this strict
+#'   order requirement is removed.
+#'   
+#' @param is_exact *Requirement for column types to be exactly specified*
+#' 
+#'   `scalar<logical>` // *default:* `TRUE`
+#'   
+#'   Determines whether the check for column types should be exact or even
+#'   performed at all. For example, columns in R data frames may have multiple
+#'   classes (e.g., a date-time column can have both the `"POSIXct"` and the
+#'   `"POSIXt"` classes). If using `is_exact == FALSE`, the column type in the
+#'   user-defined schema for a date-time value can be set as either `"POSIXct"`
+#'   *or* `"POSIXt"` and pass validation (with this column, at least). This can
+#'   be taken a step further and using `NULL` for a column type in the
+#'   user-defined schema will skip the validation check of a column type. By
+#'   default, `is_exact` is set to `TRUE`.
 #' 
 #' @return For the validation function, the return value is either a
 #'   `ptblank_agent` object or a table object (depending on whether an agent
@@ -471,17 +491,31 @@ test_col_schema_match <- function(
 #' validate table column schemas both on the server side and when tabular data
 #' is collected and loaded into R.
 #' 
-#' @param ... A set of named arguments where the names refer to column names and
+#' @param ... *Column-by-column schema definition*
+#' 
+#'   `<multiple expressions>` // **required** (or, use `.tbl`)
+#' 
+#'   A set of named arguments where the names refer to column names and
 #'   the values are one or more column types.
-#' @param .tbl An option to use a table object to define the schema. If this is
-#'   provided then any values provided to `...` will be ignored. This can either
-#'   be a table object, a table-prep formula.This can be a table object such as
-#'   a data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
+#'   
+#' @param .tbl *A data table for defining a schema*
+#' 
+#'   `obj:<tbl_*>` // **optional**
+#' 
+#'   An option to use a table object to define the schema. If this is provided
+#'   then any values provided to `...` will be ignored. This can either be a
+#'   table object, a table-prep formula.This can be a table object such as a
+#'   data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
 #'   Alternatively, a table-prep formula (`~ <table reading code>`) or a
 #'   function (`function() <table reading code>`) can be used to lazily read in
 #'   the table at interrogation time.
-#' @param .db_col_types Determines whether the column types refer to R column
-#'   types (`"r"`) or SQL column types (`"sql"`).
+#'   
+#' @param .db_col_types *Use R column types or database column types?*
+#' 
+#'   `singl-kw:[r|sql]` // *default:* `"r"`
+#' 
+#'   Determines whether the column types refer to R column types (`"r"`) or SQL
+#'   column types (`"sql"`).
 #'   
 #' @section Examples:
 #' 

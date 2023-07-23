@@ -45,19 +45,24 @@
 #'   YAML file (so long as both objects refer to the same table). A table store
 #'   cannot be combined with either an agent or an informant so it must undergo
 #'   conversion alone.
+#'   
 #' @param .list Allows for the use of a list as an input alternative to `...`.
+#' 
 #' @param filename The name of the YAML file to create on disk. It is
 #'   recommended that either the `.yaml` or `.yml` extension be used for this
 #'   file. If not provided then default names will be used (`"tbl_store.yml"`)
 #'   for a table store and the other objects will get default naming to the
 #'   effect of `"<object>-<tbl_name>.yml"`.
+#' 
 #' @param path An optional path to which the YAML file should be saved (combined
 #'   with `filename`).
+#' 
 #' @param expanded Should the written validation expressions for an *agent* be
 #'   expanded such that **tidyselect** and [vars()] expressions for columns are
 #'   evaluated, yielding a validation function per column? By default, this is
 #'   `FALSE` so expressions as written will be retained in the YAML
 #'   representation.
+#' 
 #' @param quiet Should the function *not* inform when the file is written? By
 #'   default this is `FALSE`.
 #'   
@@ -538,10 +543,13 @@ yaml_write <- function(
 #'
 #' @param agent An *agent* object of class `ptblank_agent`. If an object is
 #'   provided here, then `filename` must not be provided.
+#' 
 #' @param filename The name of the YAML file that contains fields related to an
 #'   *agent*. If a file name is provided here, then *agent* object must not be
 #'   provided in `agent`.
+#' 
 #' @param path An optional path to the YAML file (combined with `filename`).
+#' 
 #' @param expanded Should the written validation expressions for an *agent* be
 #'   expanded such that **tidyselect** and [vars()] expressions for columns are
 #'   evaluated, yielding a validation function per column? By default, this is

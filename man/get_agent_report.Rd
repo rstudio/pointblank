@@ -16,7 +16,12 @@ get_agent_report(
 )
 }
 \arguments{
-\item{agent}{An agent object of class \code{ptblank_agent}.}
+\item{agent}{\emph{The pointblank agent object}
+
+\verb{obj:<ptblank_agent>} // \strong{required}
+
+A \strong{pointblank} \emph{agent} object that is commonly created through the use of
+the \code{\link[=create_agent]{create_agent()}} function.}
 
 \item{arrange_by}{A choice to arrange the report table rows by the validation
 step number (\code{"i"}, the default), or, to arrange in descending order by
@@ -47,17 +52,25 @@ and transformed internally to HTML. To circumvent such a transformation,
 use text in \code{\link[=I]{I()}} to explicitly state that the supplied text should not be
 transformed.}
 
-\item{lang}{The language to use for automatic creation of briefs (short
-descriptions for each validation step) and for the \emph{agent report} (a
-summary table that provides the validation plan and the results from the
-interrogation. By default, \code{NULL} will create English (\code{"en"}) text. Other
-options include French (\code{"fr"}), German (\code{"de"}), Italian (\code{"it"}), Spanish
-(\code{"es"}), Portuguese (\code{"pt"}), Turkish (\code{"tr"}), Chinese (\code{"zh"}), Russian
-(\code{"ru"}), Polish (\code{"pl"}), Danish (\code{"da"}), Swedish (\code{"sv"}), and Dutch
-(\code{"nl"}). This \code{lang} option will override any previously set language
-setting (e.g., by the \code{\link[=create_agent]{create_agent()}} call).}
+\item{lang}{\emph{Reporting language}
 
-\item{locale}{An optional locale ID to use for formatting values in the
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+The language to use for automatic creation of briefs (short descriptions
+for each validation step) and for the \emph{agent report} (a summary table that
+provides the validation plan and the results from the interrogation. By
+default, \code{NULL} will create English (\code{"en"}) text. Other options include
+French (\code{"fr"}), German (\code{"de"}), Italian (\code{"it"}), Spanish (\code{"es"}),
+Portuguese (\code{"pt"}), Turkish (\code{"tr"}), Chinese (\code{"zh"}), Russian (\code{"ru"}),
+Polish (\code{"pl"}), Danish (\code{"da"}), Swedish (\code{"sv"}), and Dutch (\code{"nl"}).
+This \code{lang} option will override any previously set language setting (e.g.,
+by the \code{\link[=create_agent]{create_agent()}} call).}
+
+\item{locale}{\emph{Locale for value formatting}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional locale ID to use for formatting values in the
 \emph{agent report} summary table according the locale's rules. Examples include
 \code{"en_US"} for English (United States) and \code{"fr_FR"} for French (France);
 more simply, this can be a language identifier without a country

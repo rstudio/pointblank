@@ -7,19 +7,31 @@
 col_schema(..., .tbl = NULL, .db_col_types = c("r", "sql"))
 }
 \arguments{
-\item{...}{A set of named arguments where the names refer to column names and
+\item{...}{\emph{Column-by-column schema definition}
+
+\verb{<multiple expressions>} // \strong{required} (or, use \code{.tbl})
+
+A set of named arguments where the names refer to column names and
 the values are one or more column types.}
 
-\item{.tbl}{An option to use a table object to define the schema. If this is
-provided then any values provided to \code{...} will be ignored. This can either
-be a table object, a table-prep formula.This can be a table object such as
-a data frame, a tibble, a \code{tbl_dbi} object, or a \code{tbl_spark} object.
+\item{.tbl}{\emph{A data table for defining a schema}
+
+\verb{obj:<tbl_*>} // \strong{optional}
+
+An option to use a table object to define the schema. If this is provided
+then any values provided to \code{...} will be ignored. This can either be a
+table object, a table-prep formula.This can be a table object such as a
+data frame, a tibble, a \code{tbl_dbi} object, or a \code{tbl_spark} object.
 Alternatively, a table-prep formula (\verb{~ <table reading code>}) or a
 function (\verb{function() <table reading code>}) can be used to lazily read in
 the table at interrogation time.}
 
-\item{.db_col_types}{Determines whether the column types refer to R column
-types (\code{"r"}) or SQL column types (\code{"sql"}).}
+\item{.db_col_types}{\emph{Use R column types or database column types?}
+
+\verb{singl-kw:[r|sql]} // \emph{default:} \code{"r"}
+
+Determines whether the column types refer to R column types (\code{"r"}) or SQL
+column types (\code{"sql"}).}
 }
 \description{
 A table column schema object, as can be created by \code{col_schema()}, is

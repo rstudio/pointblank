@@ -31,6 +31,7 @@
 #' table as a whole.
 #' 
 #' @param x An informant object of class `ptblank_informant`.
+#' 
 #' @param ... Information entries as a series of named arguments. The names
 #'   refer to subsection titles within the `TABLE` section and the values are
 #'   the *info text* (informational text that can be written as Markdown and
@@ -226,14 +227,17 @@ info_tabular <- function(
 #' serves as additional information for the column or columns.
 #' 
 #' @param x An informant object of class `ptblank_informant`.
+#' 
 #' @param columns The column or set of columns to focus on. Can be defined as a
 #'   column name in quotes (e.g., `"<column_name>"`), one or more column names
 #'   in `vars()` (e.g., `vars(<column_name>)`), or with a select helper (e.g.,
 #'   `starts_with("date")`).
+#'   
 #' @param ... Information entries as a series of named arguments. The names
 #'   refer to subsection titles within `COLUMN` -> `<COLUMN_NAME>` and the RHS
 #'   contains the *info text* (informational text that can be written as
 #'   Markdown and further styled with *Text Tricks*).
+#'   
 #' @param .add Should new text be added to existing text? This is `TRUE` by
 #'   default; setting to `FALSE` replaces any existing text for a property.
 #' 

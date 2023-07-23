@@ -36,15 +36,19 @@
 #' timestamps should approximate the time components affixed to the filenames.
 #' 
 #' @param filename The filename to modify.
+#' 
 #' @param position Where to place the formatted date. This could either be at
 #'   the `"end"` of the filename (the default) or at the `"start"`.
+#'   
 #' @param format A [base::strptime()] format string for formatting the date. By
 #'   default, this is `"%Y-%m-%d"` which expresses the date according to the ISO
 #'   8601 standard (as `YYYY-MM-DD`). Refer to the documentation on
 #'   [base::strptime()] for conversion specifications if planning to use a
 #'   different format string.
+#'   
 #' @param delimiter The delimiter characters to use for separating the date
 #'   string from the original file name.
+#'   
 #' @param utc_time An option for whether to use the current UTC time to
 #'   establish the date (the default, with `TRUE`), or, use the system's local
 #'   time (`FALSE`).
@@ -181,19 +185,24 @@ affix_date <- function(
 #' components affixed to the filenames.
 #' 
 #' @inheritParams affix_date
+#' 
 #' @param position Where to place the formatted datetime. This could either be
 #'   at the `"end"` of the filename (the default) or at the `"start"`.
+#'   
 #' @param format A [base::strptime()] format string for formatting the
 #'   datetime. By default, this is `"%Y-%m-%dT%H:%M:%S"` which expresses the
 #'   date according to the ISO 8601 standard. For example, if the current
 #'   datetime is `2020-12-04 13:11:23`, the formatted string would become
 #'   `"2020-12-04T13:11:23"`. Refer to the documentation on [base::strptime()]
 #'   for conversion specifications if planning to use a different format string.
+#'   
 #' @param delimiter The delimiter characters to use for separating the datetime
 #'   string from the original file name.
+#'   
 #' @param utc_time An option for whether to use the current UTC time to
 #'   establish the datetime (the default, with `TRUE`), or, use the system's
 #'   local time (`FALSE`).
+#'   
 #' @param add_tz Should the time zone (as an offset from UTC) be provided? If
 #'   `TRUE` then the UTC offset will be either provided as `<time>Z` (if
 #'   `utc_time = TRUE`) or `<time>(+/-)hhmm`. By default, this is `FALSE`.

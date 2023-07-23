@@ -45,7 +45,9 @@
 #'   where the left-hand side is an identifier and the right-hand contains a
 #'   statement that obtains a table (i.e., the table-prep formula). If the LHS
 #'   is omitted then an identifier will be generated for you.
+#'   
 #' @param .list Allows for the use of a list as an input alternative to `...`.
+#' 
 #' @param .init We can optionally provide an initialization statement (in a
 #'   one-sided formula) that should be executed whenever *any* of tables in the
 #'   table store are obtained. This is useful, for instance, for including a
@@ -583,6 +585,7 @@ add_to_name_list <- function(
 #'   `tbl = "large_table"`) or by supplying a reference using a subset (with
 #'   `$`) of the `tbl_store` object (e.g., `tbl = store$large_table`). If using
 #'   the latter method then nothing needs to be supplied to `store`.
+#'   
 #' @param store Either a table store object created by the [tbl_store()]
 #'   function or a path to a table store YAML file created by [yaml_write()].
 #' 
@@ -766,6 +769,7 @@ has_substitutions <- function(x) {
 #'   reference using a subset (with `$`) of the `tbl_store` object (e.g., `tbl =
 #'   store$large_table`). If using the latter method then nothing needs to be
 #'   supplied to `store`.
+#'   
 #' @param store Either a table store object created by the [tbl_store()]
 #'   function or a path to a table store YAML file created by [yaml_write()].
 #' 

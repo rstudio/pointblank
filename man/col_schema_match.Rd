@@ -38,42 +38,70 @@ test_col_schema_match(
 )
 }
 \arguments{
-\item{x}{A data frame, tibble (\code{tbl_df} or \code{tbl_dbi}), Spark DataFrame
+\item{x}{\emph{A pointblank agent or a data table}
+
+\verb{obj:<ptblank_agent>|obj:<tbl_*>} // \strong{required}
+
+A data frame, tibble (\code{tbl_df} or \code{tbl_dbi}), Spark DataFrame
 (\code{tbl_spark}), or, an \emph{agent} object of class \code{ptblank_agent} that is
-created with \code{\link[=create_agent]{create_agent()}}.}
+commonly created with \code{\link[=create_agent]{create_agent()}}.}
 
-\item{schema}{A table schema of type \code{col_schema} which can be generated
-using the \code{\link[=col_schema]{col_schema()}} function.}
+\item{schema}{\emph{The table schema}
 
-\item{complete}{A requirement to account for all table columns in the
-provided \code{schema}. By default, this is \code{TRUE} and so that all column names
-in the target table must be present in the schema object. This restriction
-can be relaxed by using \code{FALSE}, where we can provide a subset of table
-columns in the schema.}
+\verb{obj:<col_schema>} // \strong{required}
 
-\item{in_order}{A stringent requirement for enforcing the order of columns in
-the provided \code{schema}. By default, this is \code{TRUE} and the order of columns
-in both the schema and the target table must match. By setting to \code{FALSE},
-this strict order requirement is removed.}
+A table schema of type \code{col_schema} which can be generated using the
+\code{\link[=col_schema]{col_schema()}} function.}
 
-\item{is_exact}{Determines whether the check for column types should be exact
-or even performed at all. For example, columns in R data frames may have
-multiple classes (e.g., a date-time column can have both the \code{"POSIXct"}
-and the \code{"POSIXt"} classes). If using \code{is_exact == FALSE}, the column type
-in the user-defined schema for a date-time value can be set as either
-\code{"POSIXct"} \emph{or} \code{"POSIXt"} and pass validation (with this column, at
-least). This can be taken a step further and using \code{NULL} for a column type
-in the user-defined schema will skip the validation check of a column type.
-By default, \code{is_exact} is set to \code{TRUE}.}
+\item{complete}{\emph{Requirement for columns specified to exist}
 
-\item{actions}{A list containing threshold levels so that the validation step
-can react accordingly when exceeding the set levels. This is to be created
-with the \code{\link[=action_levels]{action_levels()}} helper function.}
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
-\item{step_id}{One or more optional identifiers for the single or multiple
-validation steps generated from calling a validation function. The use of
-step IDs serves to distinguish validation steps from each other and provide
-an opportunity for supplying a more meaningful label compared to the step
+A requirement to account for all table columns in the provided \code{schema}. By
+default, this is \code{TRUE} and so that all column names in the target table
+must be present in the schema object. This restriction can be relaxed by
+using \code{FALSE}, where we can provide a subset of table columns in the
+schema.}
+
+\item{in_order}{\emph{Requirement for columns in a specific order}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+A stringent requirement for enforcing the order of columns in the provided
+\code{schema}. By default, this is \code{TRUE} and the order of columns in both the
+schema and the target table must match. By setting to \code{FALSE}, this strict
+order requirement is removed.}
+
+\item{is_exact}{\emph{Requirement for column types to be exactly specified}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+Determines whether the check for column types should be exact or even
+performed at all. For example, columns in R data frames may have multiple
+classes (e.g., a date-time column can have both the \code{"POSIXct"} and the
+\code{"POSIXt"} classes). If using \code{is_exact == FALSE}, the column type in the
+user-defined schema for a date-time value can be set as either \code{"POSIXct"}
+\emph{or} \code{"POSIXt"} and pass validation (with this column, at least). This can
+be taken a step further and using \code{NULL} for a column type in the
+user-defined schema will skip the validation check of a column type. By
+default, \code{is_exact} is set to \code{TRUE}.}
+
+\item{actions}{\emph{Thresholds and actions for different states}
+
+\verb{obj:<action_levels>} // \emph{default:} \code{NULL} (\code{optional})
+
+A list containing threshold levels so that the validation step can react
+accordingly when exceeding the set levels for different states. This is to
+be created with the \code{\link[=action_levels]{action_levels()}} helper function.}
+
+\item{step_id}{\emph{Manual setting of the step ID value}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+One or more optional identifiers for the single or multiple validation
+steps generated from calling a validation function. The use of step IDs
+serves to distinguish validation steps from each other and provide an
+opportunity for supplying a more meaningful label compared to the step
 index. By default this is \code{NULL}, and \strong{pointblank} will automatically
 generate the step ID value (based on the step index) in this case. One or
 more values can be provided, and the exact number of ID values should (1)
@@ -82,43 +110,61 @@ produce (influenced by the number of \code{columns} provided), (2) be an ID
 string not used in any previous validation step, and (3) be a vector with
 unique values.}
 
-\item{label}{An optional label for the validation step. This label appears in
-the \emph{agent} report and for the best appearance it should be kept short.}
+\item{label}{\emph{An optional label for the validation step}
 
-\item{brief}{An optional, text-based description for the validation step. If
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional label for the validation step. This label appears in the
+\emph{agent} report and, for the best appearance, it should be kept quite short.}
+
+\item{brief}{\emph{Brief description for the validation step}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+A \emph{brief} is a short, text-based description for the validation step. If
 nothing is provided here then an \emph{autobrief} is generated by the \emph{agent},
 using the language provided in \code{\link[=create_agent]{create_agent()}}'s \code{lang} argument (which
 defaults to \code{"en"} or English). The \emph{autobrief} incorporates details of the
 validation step so it's often the preferred option in most cases (where a
 \code{label} might be better suited to succinctly describe the validation).}
 
-\item{active}{A logical value indicating whether the validation step should
-be active. If the validation function is working with an \emph{agent}, \code{FALSE}
-will make the validation step inactive (still reporting its presence and
-keeping indexes for the steps unchanged). If the validation function will
-be operating directly on data (no \emph{agent} involvement), then any step with
-\code{active = FALSE} will simply pass the data through with no validation
-whatsoever. Aside from a logical vector, a one-sided R formula using a
-leading \code{~} can be used with \code{.} (serving as the input data table) to
-evaluate to a single logical value. With this approach, the \strong{pointblank}
-function \code{\link[=has_columns]{has_columns()}} can be used to determine whether to make a
-validation step active on the basis of one or more columns existing in the
-table (e.g., \code{~ . \%>\% has_columns(vars(d, e))}). The default for \code{active}
-is \code{TRUE}.}
+\item{active}{\emph{Is the validation step active?}
 
-\item{object}{A data frame, tibble (\code{tbl_df} or \code{tbl_dbi}), or Spark
-DataFrame (\code{tbl_spark}) that serves as the target table for the expectation
-function or the test function.}
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
-\item{threshold}{A simple failure threshold value for use with the
-expectation (\code{expect_}) and the test (\code{test_}) function variants. By
-default, this is set to \code{1} meaning that any single unit of failure in data
-validation results in an overall test failure. Whole numbers beyond \code{1}
-indicate that any failing units up to that absolute threshold value will
-result in a succeeding \strong{testthat} test or evaluate to \code{TRUE}. Likewise,
-fractional values (between \code{0} and \code{1}) act as a proportional failure
-threshold, where \code{0.15} means that 15 percent of failing test units results
-in an overall test failure.}
+A logical value indicating whether the validation step should be active. If
+the validation function is working with an \emph{agent}, \code{FALSE} will make the
+validation step inactive (still reporting its presence and keeping indexes
+for the steps unchanged). If the validation function will be operating
+directly on data (no \emph{agent} involvement), then any step with \code{active = FALSE} will simply pass the data through with no validation whatsoever.
+Aside from a logical vector, a one-sided R formula using a leading \code{~} can
+be used with \code{.} (serving as the input data table) to evaluate to a single
+logical value. With this approach, the \strong{pointblank} function
+\code{\link[=has_columns]{has_columns()}} can be used to determine whether to make a validation step
+active on the basis of one or more columns existing in the table
+(e.g., \code{~ . \%>\% has_columns(vars(d, e))}).}
+
+\item{object}{\emph{A data table for expectations or tests}
+
+\verb{obj:<tbl_*>} // \strong{required}
+
+A data frame, tibble (\code{tbl_df} or \code{tbl_dbi}), or Spark DataFrame
+(\code{tbl_spark}) that serves as the target table for the expectation function
+or the test function.}
+
+\item{threshold}{\emph{The failure threshold}
+
+\code{scalar<integer|numeric>(val>=0)} // \emph{default:} \code{1}
+
+A simple failure threshold value for use with the expectation (\code{expect_})
+and the test (\code{test_}) function variants. By default, this is set to \code{1}
+meaning that any single unit of failure in data validation results in an
+overall test failure. Whole numbers beyond \code{1} indicate that any failing
+units up to that absolute threshold value will result in a succeeding
+\strong{testthat} test or evaluate to \code{TRUE}. Likewise, fractional values
+(between \code{0} and \code{1}) act as a proportional failure threshold, where \code{0.15}
+means that 15 percent of failing test units results in an overall test
+failure.}
 }
 \value{
 For the validation function, the return value is either a

@@ -32,6 +32,7 @@
 #' `preconditions` have been applied).
 #' 
 #' @inheritParams col_vals_gt
+#' 
 #' @param count Either a literal value for the number of rows, or, a table to
 #'   compare against the target table in terms of row count values. If supplying
 #'   a comparison table, it can either be a table object such as a data frame, a
@@ -39,6 +40,7 @@
 #'   table-prep formula (`~ <table reading code>`) or a function
 #'   (`function() <table reading code>`) can be used to lazily read in the
 #'   comparison table at interrogation time.
+#'   
 #' @param tbl_compare The `tbl_compare` argument is deprecated. Instead, use
 #'   `count`.
 #'   

@@ -32,6 +32,36 @@
 #' there is a single test unit that hinges on whether the two tables are the
 #' same (after any `preconditions` have been applied).
 #' 
+#' @inheritParams col_vals_gt
+#' 
+#' @param tbl_compare A table to compare against the target table. This can
+#'   either be a table object, a table-prep formula. This can be a table object
+#'   such as a data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark`
+#'   object. Alternatively, a table-prep formula (`~ <table reading code>`) or a
+#'   function (`function() <table reading code>`) can be used to lazily read in
+#'   the table at interrogation time.
+#'   
+#' @return For the validation function, the return value is either a
+#'   `ptblank_agent` object or a table object (depending on whether an agent
+#'   object or a table was passed to `x`). The expectation function invisibly
+#'   returns its input but, in the context of testing data, the function is
+#'   called primarily for its potential side-effects (e.g., signaling failure).
+#'   The test function returns a logical value.
+#'   
+#' @section Supported Input Tables:
+#' 
+#' The types of data tables that are officially supported are:
+#' 
+#'  - data frames (`data.frame`) and tibbles (`tbl_df`)
+#'  - Spark DataFrames (`tbl_spark`)
+#'  - the following database tables (`tbl_dbi`):
+#'    - *PostgreSQL* tables (using the `RPostgres::Postgres()` as driver)
+#'    - *MySQL* tables (with `RMySQL::MySQL()`)
+#'    - *Microsoft SQL Server* tables (via **odbc**)
+#'    - *BigQuery* tables (using `bigrquery::bigquery()`)
+#'    - *DuckDB* tables (through `duckdb::duckdb()`)
+#'    - *SQLite* (with `RSQLite::SQLite()`)
+#' 
 #' @section Preconditions:
 #' 
 #' Providing expressions as `preconditions` means **pointblank** will preprocess
@@ -156,21 +186,6 @@
 #' other means). It is also possible to preview the transformation of an agent
 #' to YAML without any writing to disk by using the [yaml_agent_string()]
 #' function.
-#'
-#' @inheritParams col_vals_gt
-#' @param tbl_compare A table to compare against the target table. This can
-#'   either be a table object, a table-prep formula. This can be a table object
-#'   such as a data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark`
-#'   object. Alternatively, a table-prep formula (`~ <table reading code>`) or a
-#'   function (`function() <table reading code>`) can be used to lazily read in
-#'   the table at interrogation time.
-#'   
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
 #'   
 #' @section Examples:
 #' 

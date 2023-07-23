@@ -38,6 +38,7 @@
 #'   
 #' @param filename The name of the YAML file that contains fields related to an
 #'   *agent*.
+#'   
 #' @param path An optional path to the YAML file (combined with `filename`).
 #'   
 #' @return A `ptblank_agent` object.
@@ -157,6 +158,7 @@ yaml_read_agent <- function(
 #' 
 #' @param filename The name of the YAML file that contains fields related to an
 #'   *agent*.
+#'   
 #' @param path An optional path to the YAML file (combined with `filename`).
 #' 
 #' @return A `ptblank_agent` object.
@@ -258,6 +260,7 @@ yaml_agent_interrogate <- function(
 #'
 #' @param filename The name of the YAML file that contains fields related to an
 #'   *agent*.
+#'   
 #' @param path An optional path to the YAML file (combined with `filename`).
 #' 
 #' @section Examples:

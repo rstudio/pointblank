@@ -32,8 +32,13 @@
 #' `set`.
 #' 
 #' @inheritParams col_vals_gt
-#' @param set A vector of elements that is expected to be a subset of the unique
-#'   values in the target column.
+#' 
+#' @param set *Set of values*
+#' 
+#'   `vector<integer|numeric|character>` // **required**
+#' 
+#'   A vector of elements that is expected to be a subset of the unique values
+#'   in the target column.
 #'   
 #' @return For the validation function, the return value is either a
 #'   `ptblank_agent` object or a table object (depending on whether an agent

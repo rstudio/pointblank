@@ -7,11 +7,20 @@
 remove_steps(agent, i = NULL)
 }
 \arguments{
-\item{agent}{An agent object of class \code{ptblank_agent}.}
+\item{agent}{\emph{The pointblank agent object}
 
-\item{i}{The validation step number, which is assigned to each validation
-step in the order of definition. If \code{NULL} (the default) then step removal
-won't occur by index.}
+\verb{obj:<ptblank_agent>} // \strong{required}
+
+A \strong{pointblank} \emph{agent} object that is commonly created through the use of
+the \code{\link[=create_agent]{create_agent()}} function.}
+
+\item{i}{\emph{A validation step number}
+
+\verb{scalar<integer>} // \emph{default:} \code{NULL} (\code{optional})
+
+The validation step number, which is assigned to each validation step in
+the order of definition. If \code{NULL} (the default) then step removal won't
+occur by index.}
 }
 \value{
 A \code{ptblank_agent} object.

@@ -42,18 +42,22 @@
 #'   in the user system or at a `http://`, `https://`, `ftp://`, or `ftps://`
 #'   URL. For a file hosted in a GitHub repository, a call to the
 #'   [from_github()] function can be used here.
+#'   
 #' @param type The file type. This is normally inferred by file extension and is
 #'   by default `NULL` to indicate that the extension will dictate the type of
 #'   file reading that is performed internally. However, if there is no
 #'   extension (and valid extensions are `.csv`, `.tsv`, `.rda`, and `.rds`), we
 #'   can provide the type as either of `csv`, `tsv`, `rda`, or `rds`.
+#'   
 #' @param ... Options passed to **readr**'s `read_csv()` or `read_tsv()`
 #'   function. Both functions have the same arguments and one or the other will
 #'   be used internally based on the file extension or an explicit value given
 #'   to `type`.
+#'   
 #' @param keep In the case of a downloaded file, should it be stored in the
 #'   working directory (`keep = TRUE`) or should it be downloaded to a temporary
 #'   directory? By default, this is `FALSE`.
+#'   
 #' @param verify If `TRUE` (the default) then a verification of the data object
 #'   having the `data.frame` class will be carried out.
 #'   
@@ -414,10 +418,13 @@ file_tbl <- function(
 #' @param file The name of the file to target in a GitHub repository. This can
 #'   be a path leading to and including the file. This is combined with any path
 #'   given in `subdir`.
+#'   
 #' @param repo The GitHub repository address in the format
 #'   `username/repo[/subdir][@ref|#pull|@*release]`.
+#'   
 #' @param subdir A path string representing a subdirectory in the GitHub
 #'   repository. This is combined with any path components included in `file`.
+#'   
 #' @param default_branch The name of the default branch for the repo. This is
 #'   usually `"main"` (the default used here).
 #'   

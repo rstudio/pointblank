@@ -61,16 +61,20 @@
 #' "pointblank")`.
 #' 
 #' @param path The path that contains the YAML files for agents and informants.
+#' 
 #' @param files A vector of YAML files to use in the execution workflow. By
 #'   default, `yaml_exec()` will attempt to process every valid YAML file in
 #'   `path` but supplying a vector here limits the scope to the specified files.
+#' 
 #' @param write_to_disk Should the execution workflow include a step that writes
 #'   output files to disk? This internally calls [x_write_disk()] to write RDS
 #'   files and uses the base filename of the agent/informant YAML file as part
 #'   of the output filename, appending the date-time to the basename.
+#' 
 #' @param output_path The output path for any generated output files. By
 #'   default, this will be a subdirectory of the provided `path` called
 #'   `"output"`.
+#' 
 #' @param keep_tbl,keep_extracts For agents, the table may be kept if it is a
 #'   data frame object (databases tables will never be pulled for storage) and
 #'   *extracts*, collections of table rows that failed a validation step, may

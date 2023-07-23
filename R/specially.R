@@ -30,8 +30,13 @@
 #' checks to ensure that the data is a table object.
 #' 
 #' @inheritParams col_vals_gt
-#' @param fn A function that performs the specialized validation on the data. It
-#'   must either return a logical vector or a table where the last column is a
+#' 
+#' @param fn *Specialized validation function*
+#' 
+#'   `<function>` // **required**
+#' 
+#'   A function that performs the specialized validation on the data. It must
+#'   either return a logical vector or a table where the last column is a
 #'   logical column.
 #' 
 #' @return For the validation function, the return value is either a

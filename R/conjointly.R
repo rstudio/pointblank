@@ -44,12 +44,21 @@
 #' functions can only be used with a data table.
 #' 
 #' @inheritParams col_vals_gt
-#' @param ... A collection one-sided formulas that consist of validation
-#'   functions that validate row units (the `col_vals_*()` series), column
-#'   existence ([col_exists()]), or column type (the `col_is_*()` series). An
-#'   example of this is `~ col_vals_gte(., vars(a), 5.5), ~ col_vals_not_null(.,
-#'   vars(b)`).
-#' @param .list Allows for the use of a list as an input alternative to `...`.
+#' 
+#' @param ... *Validation expressions*
+#' 
+#'   `<validation expressions>` // **required** (or, use `.list`)
+#' 
+#'   A collection one-sided formulas that consist of validation functions that
+#'   validate row units (the `col_vals_*()` series), column existence
+#'   ([col_exists()]), or column type (the `col_is_*()` series). An example of
+#'   this is `~ col_vals_gte(., vars(a), 5.5), ~ col_vals_not_null(., vars(b)`).
+#' 
+#' @param .list *Alternative to `...`*
+#' 
+#'   `<list of multiple expressions>` // **required** (or, use `...`)
+#' 
+#'   Allows for the use of a list as an input alternative to `...`.
 #'
 #' @return For the validation function, the return value is either a
 #'   `ptblank_agent` object or a table object (depending on whether an agent

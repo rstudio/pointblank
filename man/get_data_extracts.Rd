@@ -7,14 +7,22 @@
 get_data_extracts(agent, i = NULL)
 }
 \arguments{
-\item{agent}{An agent object of class \code{ptblank_agent}. It should have had
-\code{\link[=interrogate]{interrogate()}} called on it, such that the validation steps were carried
-out and any sample rows from non-passing validations could potentially be
-available in the object.}
+\item{agent}{\emph{The pointblank agent object}
 
-\item{i}{The validation step number, which is assigned to each validation
-step by \strong{pointblank} in the order of definition. If \code{NULL} (the default),
-all data extract tables will be provided in a list object.}
+\verb{obj:<ptblank_agent>} // \strong{required}
+
+A \strong{pointblank} \emph{agent} object that is commonly created through the use of
+the \code{\link[=create_agent]{create_agent()}} function. It should have had \code{\link[=interrogate]{interrogate()}} called on
+it, such that the validation steps were carried out and any sample rows
+from non-passing validations could potentially be available in the object.}
+
+\item{i}{\emph{A validation step number}
+
+\verb{scalar<integer>} // \emph{default:} \code{NULL} (\code{optional})
+
+The validation step number, which is assigned to each validation step by
+\strong{pointblank} in the order of definition. If \code{NULL} (the default), all
+data extract tables will be provided in a list object.}
 }
 \value{
 A list of tables if \code{i} is not provided, or, a standalone table if

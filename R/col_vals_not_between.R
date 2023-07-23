@@ -41,14 +41,31 @@
 #' `preconditions` have been applied).
 #' 
 #' @inheritParams col_vals_gt
-#' @param left,right The lower (or left) and upper (or right) boundary values
-#'   for the range. These can be expressed as single values, compatible columns
-#'   given in `vars()`, or a combination of both. By default, any column values
-#'   greater than or equal to `left` *and* less than or equal to `right` will
-#'   fail validation. The inclusivity of the bounds can be modified by the
-#'   `inclusive` option.
+#' 
+#' @param left *Definition of left bound*
+#' 
+#'   `<value expression>` // **required**
+#' 
+#'   The lower bound for the range. The validation includes this bound
+#'   value (if the first element in `inclusive` is `TRUE`) in addition to values
+#'   greater than `left`. This can be a single value or a compatible column
+#'   given in `vars()`.
 #'   
-#' @inheritParams col_vals_between
+#' @param right *Definition of right bound*
+#' 
+#'   `<value expression>` // **required**
+#' 
+#'   The upper bound for the range. The validation includes this
+#'   bound value (if the second element in `inclusive` is `TRUE`) in addition to
+#'   values lower than `right`. This can be a single value or a compatible
+#'   column given in `vars()`.
+#'   
+#' @param inclusive *Inclusiveness of bounds*
+#' 
+#'   `vector<logical>` // *default:* `c(TRUE, TRUE)`
+#' 
+#'   A two-element logical value that indicates whether the `left` and `right`
+#'   bounds should be inclusive. By default, both bounds are inclusive.
 #' 
 #' @return For the validation function, the return value is either a
 #'   `ptblank_agent` object or a table object (depending on whether an agent

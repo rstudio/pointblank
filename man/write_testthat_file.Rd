@@ -14,7 +14,12 @@ write_testthat_file(
 )
 }
 \arguments{
-\item{agent}{An agent object of class \code{ptblank_agent}.}
+\item{agent}{\emph{The pointblank agent object}
+
+\verb{obj:<ptblank_agent>} // \strong{required}
+
+A \strong{pointblank} \emph{agent} object that is commonly created through the use of
+the \code{\link[=create_agent]{create_agent()}} function.}
 
 \item{name}{An optional name for for the \strong{testhat} test file. This should
 be a name without extension and without the leading \code{"test-"} text. If

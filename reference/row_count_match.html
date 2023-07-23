@@ -132,13 +132,15 @@ commonly created with <code><a href="create_agent.html">create_agent()</a></code
 
 
 <dt>count</dt>
-<dd><p>Either a literal value for the number of rows, or, a table to
-compare against the target table in terms of row count values. If supplying
-a comparison table, it can either be a table object such as a data frame, a
+<dd><p><em>The count comparison</em></p>
+<p><code>scalar&lt;numeric|integer&gt;|obj:&lt;tbl_*&gt;</code> // <strong>required</strong></p>
+<p>Either a literal value for the number of rows, or, a table to compare
+against the target table in terms of row count values. If supplying a
+comparison table, it can either be a table object such as a data frame, a
 tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spark</code> object. Alternatively, a
-table-prep formula (<code>~ &lt;table reading code&gt;</code>) or a function
-(<code>function() &lt;table reading code&gt;</code>) can be used to lazily read in the
-comparison table at interrogation time.</p></dd>
+table-prep formula (<code>~ &lt;table reading code&gt;</code>) or a function (`function()
+  </p><table reading code class="table">`) can be used to lazily read in the comparison table
+  at interrogation time.
 
 
 <dt>preconditions</dt>
@@ -220,8 +222,9 @@ active on the basis of one or more columns existing in the table
 
 
 <dt>tbl_compare</dt>
-<dd><p>The <code>tbl_compare</code> argument is deprecated. Instead, use
-<code>count</code>.</p></dd>
+<dd><p><em><a href="https://rdrr.io/r/base/Deprecated.html" class="external-link">Deprecated</a> Comparison table</em></p>
+<p><code>obj:&lt;tbl_*&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>The <code>tbl_compare</code> argument is deprecated. Instead, use <code>count</code>.</p></dd>
 
 
 <dt>object</dt>
@@ -245,7 +248,8 @@ units up to that absolute threshold value will result in a succeeding
 means that 15 percent of failing test units results in an overall test
 failure.</p></dd>
 
-</dl></div>
+
+    
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
@@ -538,11 +542,9 @@ us.</p>
 <code><a href="tbl_match.html">tbl_match</a>()</code></p></div>
     </div>
 
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
-    </nav></aside></div>
-
-
-    <footer><div class="pkgdown-footer-left">
+  
+  <aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside><footer><div class="pkgdown-footer-left">
   <p></p><p>Developed by Richard Iannone, Mauricio Vargas.</p>
 </div>
 
@@ -550,11 +552,5 @@ us.</p>
   <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
-    </footer></div>
-
-  
-
-  
-
-  </body></html>
+    </footer></table></dd></dl></div></main></div></div></body></html>
 

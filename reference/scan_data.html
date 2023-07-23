@@ -179,46 +179,57 @@ it's to export that to a file with the <code><a href="export_report.html">export
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>tbl</dt>
-<dd><p>The input table. This can be a data frame, tibble, a <code>tbl_dbi</code>
-object, or a <code>tbl_spark</code> object.</p></dd>
+<dd><p><em>A data table</em></p>
+<p><code>obj:&lt;tbl_*&gt;</code> // <strong>required</strong></p>
+<p>The input table. This can be a data frame, tibble, a <code>tbl_dbi</code> object, or a
+<code>tbl_spark</code> object.</p></dd>
 
 
 <dt>sections</dt>
-<dd><p>The sections to include in the finalized <code>Table Scan</code> report.
-A string with key characters representing section names is required here.
-The default string is <code>"OVICMS"</code> wherein each letter stands for the
-following sections in their default order: <code>"O"</code>: <code>"overview"</code>; <code>"V"</code>:
-<code>"variables"</code>; <code>"I"</code>: <code>"interactions"</code>; <code>"C"</code>: <code>"correlations"</code>; <code>"M"</code>:
-<code>"missing"</code>; and <code>"S"</code>: <code>"sample"</code>. This string can be comprised of less
-characters and the order can be changed to suit the desired layout of the
-report. For <code>tbl_dbi</code> and <code>tbl_spark</code> objects supplied to <code>tbl</code>, the
-<code>"interactions"</code> and <code>"correlations"</code> sections are currently excluded.</p></dd>
+<dd><p><em>Sections to include</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>"OVICMS"</code></p>
+<p>The sections to include in the finalized <code>Table Scan</code> report. A string with
+key characters representing section names is required here. The default
+string is <code>"OVICMS"</code> wherein each letter stands for the following sections
+in their default order: <code>"O"</code>: <code>"overview"</code>; <code>"V"</code>: <code>"variables"</code>; <code>"I"</code>:
+<code>"interactions"</code>; <code>"C"</code>: <code>"correlations"</code>; <code>"M"</code>: <code>"missing"</code>; and <code>"S"</code>:
+<code>"sample"</code>. This string can be comprised of less characters and the order
+can be changed to suit the desired layout of the report. For <code>tbl_dbi</code> and
+<code>tbl_spark</code> objects supplied to <code>tbl</code>, the <code>"interactions"</code> and
+<code>"correlations"</code> sections are currently excluded.</p></dd>
 
 
 <dt>navbar</dt>
-<dd><p>Should there be a navigation bar anchored to the top of the
-report page? By default this is <code>TRUE</code>.</p></dd>
+<dd><p><em>Include navigation in HTML report</em></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
+<p>Should there be a navigation bar anchored to the top of the report page?</p></dd>
 
 
 <dt>width</dt>
-<dd><p>An optional fixed width (in pixels) for the HTML report. By
-default, no fixed width is applied.</p></dd>
+<dd><p><em>Width option for HTML report</em></p>
+<p><code>scalar&lt;integer&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>An optional fixed width (in pixels) for the HTML report. By default, no
+fixed width is applied.</p></dd>
 
 
 <dt>lang</dt>
-<dd><p>The language to use for label text in the report. By default,
-<code>NULL</code> will create English (<code>"en"</code>) text. Other options include French
-(<code>"fr"</code>), German (<code>"de"</code>), Italian (<code>"it"</code>), Spanish (<code>"es"</code>), Portuguese
-(<code>"pt"</code>), Turkish (<code>"tr"</code>), Chinese (<code>"zh"</code>),  Russian (<code>"ru"</code>), Polish
-(<code>"pl"</code>), Danish (<code>"da"</code>), Swedish (<code>"sv"</code>), and Dutch (<code>"nl"</code>).</p></dd>
+<dd><p><em>Reporting language</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>The language to use for label text in the report. By default, <code>NULL</code> will
+create English (<code>"en"</code>) text. Other options include French (<code>"fr"</code>), German
+(<code>"de"</code>), Italian (<code>"it"</code>), Spanish (<code>"es"</code>), Portuguese (<code>"pt"</code>), Turkish
+(<code>"tr"</code>), Chinese (<code>"zh"</code>),  Russian (<code>"ru"</code>), Polish (<code>"pl"</code>), Danish
+(<code>"da"</code>), Swedish (<code>"sv"</code>), and Dutch (<code>"nl"</code>).</p></dd>
 
 
 <dt>locale</dt>
-<dd><p>An optional locale ID to use for formatting values in the
-report according the locale's rules. Examples include <code>"en_US"</code> for English
-(United States) and <code>"fr_FR"</code> for French (France); more simply, this can be
-a language identifier without a country designation, like <code>"es"</code> for
-Spanish (Spain, same as <code>"es_ES"</code>).</p></dd>
+<dd><p><em>Locale for value formatting within reports</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>An optional locale ID to use for formatting values in the report according
+the locale's rules. Examples include <code>"en_US"</code> for English (United States)
+and <code>"fr_FR"</code> for French (France); more simply, this can be a language
+identifier without a country designation, like <code>"es"</code> for Spanish (Spain,
+same as <code>"es_ES"</code>).</p></dd>
 
 </dl></div>
     <div class="section level2">

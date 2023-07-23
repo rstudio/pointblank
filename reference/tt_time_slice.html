@@ -106,33 +106,40 @@ accepted: (1) an ISO 8601 formatted time string (as a date or a date-time),
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>tbl</dt>
-<dd><p>A table object to be used as input for the transformation. This
-can be a data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spark</code> object.</p></dd>
+<dd><p><em>A data table</em></p>
+<p><code>obj:&lt;tbl_*&gt;</code> // <strong>required</strong></p>
+<p>A table object to be used as input for the transformation. This can be a
+data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spark</code> object.</p></dd>
 
 
 <dt>time_column</dt>
-<dd><p>The time-based column that will be used as a basis for the
-slicing. If no time column is provided then the first one found will be
-used.</p></dd>
+<dd><p><em>Column with time data</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>The time-based column that will be used as a basis for the slicing. If no
+time column is provided then the first one found will be used.</p></dd>
 
 
 <dt>slice_point</dt>
-<dd><p>The location on the <code>time_column</code> where the slicing will
-occur. This can either be a decimal value from <code>0</code> to <code>1</code>, an ISO 8601
-formatted time string (as a date or a date-time), a <code>POSIXct</code> time, or a
-<code>Date</code> object.</p></dd>
+<dd><p><code>scalar&lt;numeric|character|POSIXct|Date&gt;</code> // <em>default:</em> <code>0</code></p>
+<p>The location on the <code>time_column</code> where the slicing will occur. This can
+either be a decimal value from <code>0</code> to <code>1</code>, an ISO 8601 formatted time
+string (as a date or a date-time), a <code>POSIXct</code> time, or a <code>Date</code> object.</p></dd>
 
 
 <dt>keep</dt>
-<dd><p>Which slice should be kept? The <code>"left"</code> side (the default)
-contains data rows that are earlier than the <code>slice_point</code> and the
-<code>"right"</code> side will have rows that are later.</p></dd>
+<dd><p><em>Data slice to keep</em></p>
+<p><code>singl-kw:[left|right]</code> // <em>default:</em> <code>"left"</code></p>
+<p>Which slice should be kept? The <code>"left"</code> side (the default) contains data
+rows that are earlier than the <code>slice_point</code> and the <code>"right"</code> side will
+have rows that are later.</p></dd>
 
 
 <dt>arrange</dt>
-<dd><p>Should the slice be arranged by the <code>time_column</code>? This may be
-useful if the input <code>tbl</code> isn't ordered by the <code>time_column</code>. By default,
-this is <code>FALSE</code> and the original ordering is retained.</p></dd>
+<dd><p><em>Arrange data slice by the time data?</em></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
+<p>Should the slice be arranged by the <code>time_column</code>? This may be useful if
+the input <code>tbl</code> isn't ordered by the <code>time_column</code>. By default, this is
+<code>FALSE</code> and the original ordering is retained.</p></dd>
 
 </dl></div>
     <div class="section level2">

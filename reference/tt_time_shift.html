@@ -88,18 +88,22 @@ function).</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>tbl</dt>
-<dd><p>A table object to be used as input for the transformation. This
-can be a data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spark</code> object.</p></dd>
+<dd><p><em>A data table</em></p>
+<p><code>obj:&lt;tbl_*&gt;</code> // <strong>required</strong></p>
+<p>A table object to be used as input for the transformation. This can be a
+data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spark</code> object.</p></dd>
 
 
 <dt>time_shift</dt>
-<dd><p>Either a character-based representation that specifies the
-time difference by which all time values in time-based columns will be
-shifted, or, a <code>difftime</code> object. The character string is constructed in
-the format <code>"0y 0m 0d 0H 0M 0S"</code> and individual time components can be
-omitted (i.e., <code>"1y 5d"</code> is a valid specification of shifting time values
-ahead one year and five days). Adding a <code>"-"</code> at the beginning of the
-string (e.g., <code>"-2y"</code>) will shift time values back.</p></dd>
+<dd><p><em>Time-shift specification</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>"0y 0m 0d 0H 0M 0S"</code></p>
+<p>Either a character-based representation that specifies the time difference
+by which all time values in time-based columns will be shifted, or, a
+<code>difftime</code> object. The character string is constructed in the format
+<code>"0y 0m 0d 0H 0M 0S"</code> and individual time components can be omitted (i.e.,
+<code>"1y 5d"</code> is a valid specification of shifting time values ahead one year
+and five days). Adding a <code>"-"</code> at the beginning of the string (e.g.,
+<code>"-2y"</code>) will shift time values back.</p></dd>
 
 </dl></div>
     <div class="section level2">

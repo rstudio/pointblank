@@ -110,26 +110,45 @@
 #'   A **pointblank** *agent* object that is commonly created through the use of
 #'   the [create_agent()] function.
 #' 
-#' @param arrange_by A choice to arrange the report table rows by the validation
-#'   step number (`"i"`, the default), or, to arrange in descending order by
-#'   severity of the failure state (with `"severity"`).
+#' @param arrange_by *Method of arranging the report's table rows*
+#' 
+#'   `singl-kw:[i|severity]` // *default:* `"i"`
+#' 
+#'   A choice to arrange the report table rows by the validation step number
+#'   (`"i"`, the default), or, to arrange in descending order by severity of the
+#'   failure state (with `"severity"`).
 #'   
-#' @param keep An option to keep `"all"` of the report's table rows (the
+#' @param keep *Which table rows should be kept?*
+#' 
+#'   `singl-kw:[all|fail_states]` // *default:* `"all"`
+#' 
+#'   An option to keep `"all"` of the report's table rows (the
 #'   default), or, keep only those rows that reflect one or more
 #'   `"fail_states"`.
 #'   
-#' @param display_table Should a display table be generated? If `TRUE` (the
-#'   default), and if the **gt** package is installed, a display table for the
-#'   report will be shown in the Viewer. If `FALSE`, or if **gt** is not
-#'   available, then a tibble will be returned.
+#' @param display_table *Return a display-table report via gt*
+#' 
+#'   `scalar<logical>` // *default:* `TRUE`
+#' 
+#'   Should a display table be generated? If `TRUE`, and if the **gt** package
+#'   is installed, a display table for the report will be shown in the Viewer.
+#'   If `FALSE`, or if **gt** is not available, then a tibble will be returned.
 #'   
-#' @param size The size of the display table, which can be either `"standard"`
-#'   (the default) or `"small"`. This only applies to a display table (where
+#' @param size *Size option for display-table report*
+#' 
+#'   `scalar<character>` // *default:* `"standard"`
+#' 
+#'   The size of the display table, which can be either `"standard"` (the
+#'   default) or `"small"`. This only applies to a display table (where
 #'   `display_table = TRUE`).
 #'   
-#' @param title Options for customizing the title of the report. The default is
-#'   the keyword `":default:"` which produces generic title text that refers to
-#'   the **pointblank** package in the language governed by the `lang` option.
+#' @param title *Title customization options*
+#' 
+#'   `scalar<character>` // *default:* `":default:"`
+#' 
+#'   Options for customizing the title of the report. The default is the keyword
+#'   `":default:"` which produces generic title text that refers to the
+#'   **pointblank** package in the language governed by the `lang` option.
 #'   Another keyword option is `":tbl_name:"`, and that presents the name of the
 #'   table as the title for the report. If no title is wanted, then the
 #'   `":none:"` keyword option can be used. Aside from keyword options, text can

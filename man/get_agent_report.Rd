@@ -23,26 +23,45 @@ get_agent_report(
 A \strong{pointblank} \emph{agent} object that is commonly created through the use of
 the \code{\link[=create_agent]{create_agent()}} function.}
 
-\item{arrange_by}{A choice to arrange the report table rows by the validation
-step number (\code{"i"}, the default), or, to arrange in descending order by
-severity of the failure state (with \code{"severity"}).}
+\item{arrange_by}{\emph{Method of arranging the report's table rows}
 
-\item{keep}{An option to keep \code{"all"} of the report's table rows (the
+\verb{singl-kw:[i|severity]} // \emph{default:} \code{"i"}
+
+A choice to arrange the report table rows by the validation step number
+(\code{"i"}, the default), or, to arrange in descending order by severity of the
+failure state (with \code{"severity"}).}
+
+\item{keep}{\emph{Which table rows should be kept?}
+
+\verb{singl-kw:[all|fail_states]} // \emph{default:} \code{"all"}
+
+An option to keep \code{"all"} of the report's table rows (the
 default), or, keep only those rows that reflect one or more
 \code{"fail_states"}.}
 
-\item{display_table}{Should a display table be generated? If \code{TRUE} (the
-default), and if the \strong{gt} package is installed, a display table for the
-report will be shown in the Viewer. If \code{FALSE}, or if \strong{gt} is not
-available, then a tibble will be returned.}
+\item{display_table}{\emph{Return a display-table report via gt}
 
-\item{size}{The size of the display table, which can be either \code{"standard"}
-(the default) or \code{"small"}. This only applies to a display table (where
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+Should a display table be generated? If \code{TRUE}, and if the \strong{gt} package
+is installed, a display table for the report will be shown in the Viewer.
+If \code{FALSE}, or if \strong{gt} is not available, then a tibble will be returned.}
+
+\item{size}{\emph{Size option for display-table report}
+
+\verb{scalar<character>} // \emph{default:} \code{"standard"}
+
+The size of the display table, which can be either \code{"standard"} (the
+default) or \code{"small"}. This only applies to a display table (where
 \code{display_table = TRUE}).}
 
-\item{title}{Options for customizing the title of the report. The default is
-the keyword \code{":default:"} which produces generic title text that refers to
-the \strong{pointblank} package in the language governed by the \code{lang} option.
+\item{title}{\emph{Title customization options}
+
+\verb{scalar<character>} // \emph{default:} \code{":default:"}
+
+Options for customizing the title of the report. The default is the keyword
+\code{":default:"} which produces generic title text that refers to the
+\strong{pointblank} package in the language governed by the \code{lang} option.
 Another keyword option is \code{":tbl_name:"}, and that presents the name of the
 table as the title for the report. If no title is wanted, then the
 \code{":none:"} keyword option can be used. Aside from keyword options, text can

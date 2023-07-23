@@ -36,37 +36,64 @@ test_col_vals_not_in_set(
 )
 }
 \arguments{
-\item{x}{A data frame, tibble (\code{tbl_df} or \code{tbl_dbi}), Spark DataFrame
+\item{x}{\emph{A pointblank agent or a data table}
+
+\verb{obj:<ptblank_agent>|obj:<tbl_*>} // \strong{required}
+
+A data frame, tibble (\code{tbl_df} or \code{tbl_dbi}), Spark DataFrame
 (\code{tbl_spark}), or, an \emph{agent} object of class \code{ptblank_agent} that is
-created with \code{\link[=create_agent]{create_agent()}}.}
+commonly created with \code{\link[=create_agent]{create_agent()}}.}
 
-\item{columns}{The column (or a set of columns, provided as a character
-vector) to which this validation should be applied.}
+\item{columns}{\emph{The target columns}
 
-\item{set}{A vector of numeric or string-based elements, where column values
-found within this \code{set} will be considered as failing.}
+\verb{<column-targeting expression>} // \strong{required}
 
-\item{preconditions}{An optional expression for mutating the input table
-before proceeding with the validation. This can either be provided as a
-one-sided R formula using a leading \code{~} (e.g.,
-\code{~ . \%>\% dplyr::mutate(col = col + 10)} or as a function (e.g.,
-\code{function(x) dplyr::mutate(x, col = col + 10)}. See the \emph{Preconditions}
-section for more information.}
+The column (or a set of columns, provided as a character vector) to which
+this validation should be applied.}
 
-\item{segments}{An optional expression or set of expressions (held in a list)
-that serve to segment the target table by column values. Each expression
-can be given in one of two ways: (1) as column names, or (2) as a two-sided
-formula where the LHS holds a column name and the RHS contains the column
-values to segment on. See the \emph{Segments} section for more details on this.}
+\item{set}{\emph{Set of values}
 
-\item{actions}{A list containing threshold levels so that the validation step
-can react accordingly when exceeding the set levels. This is to be created
-with the \code{\link[=action_levels]{action_levels()}} helper function.}
+\verb{vector<integer|numeric|character>} // \strong{required}
 
-\item{step_id}{One or more optional identifiers for the single or multiple
-validation steps generated from calling a validation function. The use of
-step IDs serves to distinguish validation steps from each other and provide
-an opportunity for supplying a more meaningful label compared to the step
+A vector of numeric or string-based elements, where column values found
+within this \code{set} will be considered as failing.}
+
+\item{preconditions}{\emph{Input table modification prior to validation}
+
+\verb{<table mutation expression>} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional expression for mutating the input table before proceeding with
+the validation. This can either be provided as a one-sided R formula using
+a leading \code{~} (e.g., \code{~ . \%>\% dplyr::mutate(col = col + 10)} or as a
+function (e.g., \code{function(x) dplyr::mutate(x, col = col + 10)}. See the
+\emph{Preconditions} section for more information.}
+
+\item{segments}{\emph{Expressions for segmenting the target table}
+
+\verb{<segmentation expressions>} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional expression or set of expressions (held in a list) that serve to
+segment the target table by column values. Each expression can be given in
+one of two ways: (1) as column names, or (2) as a two-sided formula where
+the LHS holds a column name and the RHS contains the column values to
+segment on. See the \emph{Segments} section for more details on this.}
+
+\item{actions}{\emph{Thresholds and actions for different states}
+
+\verb{obj:<action_levels>} // \emph{default:} \code{NULL} (\code{optional})
+
+A list containing threshold levels so that the validation step can react
+accordingly when exceeding the set levels for different states. This is to
+be created with the \code{\link[=action_levels]{action_levels()}} helper function.}
+
+\item{step_id}{\emph{Manual setting of the step ID value}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+One or more optional identifiers for the single or multiple validation
+steps generated from calling a validation function. The use of step IDs
+serves to distinguish validation steps from each other and provide an
+opportunity for supplying a more meaningful label compared to the step
 index. By default this is \code{NULL}, and \strong{pointblank} will automatically
 generate the step ID value (based on the step index) in this case. One or
 more values can be provided, and the exact number of ID values should (1)
@@ -75,43 +102,61 @@ produce (influenced by the number of \code{columns} provided), (2) be an ID
 string not used in any previous validation step, and (3) be a vector with
 unique values.}
 
-\item{label}{An optional label for the validation step. This label appears in
-the \emph{agent} report and for the best appearance it should be kept short.}
+\item{label}{\emph{An optional label for the validation step}
 
-\item{brief}{An optional, text-based description for the validation step. If
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional label for the validation step. This label appears in the
+\emph{agent} report and, for the best appearance, it should be kept quite short.}
+
+\item{brief}{\emph{Brief description for the validation step}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+A \emph{brief} is a short, text-based description for the validation step. If
 nothing is provided here then an \emph{autobrief} is generated by the \emph{agent},
 using the language provided in \code{\link[=create_agent]{create_agent()}}'s \code{lang} argument (which
 defaults to \code{"en"} or English). The \emph{autobrief} incorporates details of the
 validation step so it's often the preferred option in most cases (where a
 \code{label} might be better suited to succinctly describe the validation).}
 
-\item{active}{A logical value indicating whether the validation step should
-be active. If the validation function is working with an \emph{agent}, \code{FALSE}
-will make the validation step inactive (still reporting its presence and
-keeping indexes for the steps unchanged). If the validation function will
-be operating directly on data (no \emph{agent} involvement), then any step with
-\code{active = FALSE} will simply pass the data through with no validation
-whatsoever. Aside from a logical vector, a one-sided R formula using a
-leading \code{~} can be used with \code{.} (serving as the input data table) to
-evaluate to a single logical value. With this approach, the \strong{pointblank}
-function \code{\link[=has_columns]{has_columns()}} can be used to determine whether to make a
-validation step active on the basis of one or more columns existing in the
-table (e.g., \code{~ . \%>\% has_columns(vars(d, e))}). The default for \code{active}
-is \code{TRUE}.}
+\item{active}{\emph{Is the validation step active?}
 
-\item{object}{A data frame, tibble (\code{tbl_df} or \code{tbl_dbi}), or Spark
-DataFrame (\code{tbl_spark}) that serves as the target table for the expectation
-function or the test function.}
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
-\item{threshold}{A simple failure threshold value for use with the
-expectation (\code{expect_}) and the test (\code{test_}) function variants. By
-default, this is set to \code{1} meaning that any single unit of failure in data
-validation results in an overall test failure. Whole numbers beyond \code{1}
-indicate that any failing units up to that absolute threshold value will
-result in a succeeding \strong{testthat} test or evaluate to \code{TRUE}. Likewise,
-fractional values (between \code{0} and \code{1}) act as a proportional failure
-threshold, where \code{0.15} means that 15 percent of failing test units results
-in an overall test failure.}
+A logical value indicating whether the validation step should be active. If
+the validation function is working with an \emph{agent}, \code{FALSE} will make the
+validation step inactive (still reporting its presence and keeping indexes
+for the steps unchanged). If the validation function will be operating
+directly on data (no \emph{agent} involvement), then any step with \code{active = FALSE} will simply pass the data through with no validation whatsoever.
+Aside from a logical vector, a one-sided R formula using a leading \code{~} can
+be used with \code{.} (serving as the input data table) to evaluate to a single
+logical value. With this approach, the \strong{pointblank} function
+\code{\link[=has_columns]{has_columns()}} can be used to determine whether to make a validation step
+active on the basis of one or more columns existing in the table
+(e.g., \code{~ . \%>\% has_columns(vars(d, e))}).}
+
+\item{object}{\emph{A data table for expectations or tests}
+
+\verb{obj:<tbl_*>} // \strong{required}
+
+A data frame, tibble (\code{tbl_df} or \code{tbl_dbi}), or Spark DataFrame
+(\code{tbl_spark}) that serves as the target table for the expectation function
+or the test function.}
+
+\item{threshold}{\emph{The failure threshold}
+
+\code{scalar<integer|numeric>(val>=0)} // \emph{default:} \code{1}
+
+A simple failure threshold value for use with the expectation (\code{expect_})
+and the test (\code{test_}) function variants. By default, this is set to \code{1}
+meaning that any single unit of failure in data validation results in an
+overall test failure. Whole numbers beyond \code{1} indicate that any failing
+units up to that absolute threshold value will result in a succeeding
+\strong{testthat} test or evaluate to \code{TRUE}. Likewise, fractional values
+(between \code{0} and \code{1}) act as a proportional failure threshold, where \code{0.15}
+means that 15 percent of failing test units results in an overall test
+failure.}
 }
 \value{
 For the validation function, the return value is either a

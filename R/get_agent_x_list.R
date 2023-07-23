@@ -93,14 +93,24 @@
 #' HTML has inlined styles, making it more suitable for email message bodies
 #' }
 #'
-#' @param agent An agent object of class `ptblank_agent`.
-#' @param i The validation step number, which is assigned to each validation
-#'   step in the order of invocation. If `NULL` (the default), the **x-list**
-#'   will provide information for all validation steps. If a valid step number
-#'   is provided then **x-list** will have information pertaining only to that
+#' @param agent *The pointblank agent object*
+#' 
+#'   `obj:<ptblank_agent>` // **required**
+#' 
+#'   A **pointblank** *agent* object that is commonly created through the use of
+#'   the [create_agent()] function.
+#' 
+#' @param i *A validation step number*
+#'   
+#'   `scalar<integer>` // *default:* `NULL` (`optional`)
+#' 
+#'   The validation step number, which is assigned to each validation step in
+#'   the order of invocation. If `NULL` (the default), the **x-list** will
+#'   provide information for all validation steps. If a valid step number is
+#'   provided then **x-list** will have information pertaining only to that
 #'   step.
 #' 
-#' @return A `list` object.
+#' @return An `x_list` object.
 #' 
 #' @section Examples:
 #' 

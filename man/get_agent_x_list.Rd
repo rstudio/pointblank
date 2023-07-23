@@ -7,16 +7,25 @@
 get_agent_x_list(agent, i = NULL)
 }
 \arguments{
-\item{agent}{An agent object of class \code{ptblank_agent}.}
+\item{agent}{\emph{The pointblank agent object}
 
-\item{i}{The validation step number, which is assigned to each validation
-step in the order of invocation. If \code{NULL} (the default), the \strong{x-list}
-will provide information for all validation steps. If a valid step number
-is provided then \strong{x-list} will have information pertaining only to that
+\verb{obj:<ptblank_agent>} // \strong{required}
+
+A \strong{pointblank} \emph{agent} object that is commonly created through the use of
+the \code{\link[=create_agent]{create_agent()}} function.}
+
+\item{i}{\emph{A validation step number}
+
+\verb{scalar<integer>} // \emph{default:} \code{NULL} (\code{optional})
+
+The validation step number, which is assigned to each validation step in
+the order of invocation. If \code{NULL} (the default), the \strong{x-list} will
+provide information for all validation steps. If a valid step number is
+provided then \strong{x-list} will have information pertaining only to that
 step.}
 }
 \value{
-A \code{list} object.
+An \code{x_list} object.
 }
 \description{
 The agent's \strong{x-list} is a record of information that the agent possesses at

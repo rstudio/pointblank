@@ -33,6 +33,7 @@
 #' are both present.
 #' 
 #' @param x The table object.
+#' 
 #' @param columns One or more column names that are to be checked for existence
 #' in the table `x`.
 #'   

@@ -51,36 +51,69 @@
 #' the [get_informant_report()] function, where there are more reporting
 #' options.
 #' 
-#' @param tbl The input table. This can be a data frame, a tibble, a `tbl_dbi`
-#'   object, or a `tbl_spark` object. Alternatively, an expression can be
-#'   supplied to serve as instructions on how to retrieve the target table at
-#'   incorporation-time. There are two ways to specify an association to a
-#'   target table: (1) as a table-prep formula, which is a right-hand side (RHS)
-#'   formula expression (e.g., `~ { <table reading code>}`), or (2) as a
-#'   function (e.g., `function() { <table reading code>}`).
-#' @param agent A pointblank *agent* object. The table from this object can be
-#'   extracted and used in the new informant instead of supplying a table in
-#'   `tbl`.
-#' @param tbl_name A optional name to assign to the input table object. If no
-#'   value is provided, a name will be generated based on whatever information
-#'   is available.
-#' @param label An optional label for the information report. If no value is
-#'   provided, a label will be generated based on the current system time.
-#'   Markdown can be used here to make the label more visually appealing (it
-#'   will appear in the header area of the information report).
-#' @param lang The language to use for the information report (a summary table
-#'   that provides all of the available information for the table. By default,
-#'   `NULL` will create English (`"en"`) text. Other options include French
-#'   (`"fr"`), German (`"de"`), Italian (`"it"`), Spanish (`"es"`), Portuguese
-#'   (`"pt"`), Turkish (`"tr"`), Chinese (`"zh"`), Russian (`"ru"`), Polish
-#'   (`"pl"`), Danish (`"da"`), Swedish (`"sv"`), and Dutch (`"nl"`).
-#' @param locale An optional locale ID to use for formatting values in the
-#'   information report according the locale's rules. Examples include `"en_US"`
-#'   for English (United States) and `"fr_FR"` for French (France); more simply,
-#'   this can be a language identifier without a country designation, like "es"
-#'   for Spanish (Spain, same as `"es_ES"`).
-#' @param read_fn The `read_fn` argument is deprecated. Instead, supply a
-#'   table-prep formula or function to `tbl`.
+#' @param tbl *Table or expression for reading in one*
+#' 
+#'   `obj:<tbl_*>|<table reading expression>` // **required**
+#' 
+#'   The input table. This can be a data frame, a tibble, a `tbl_dbi` object, or
+#'   a `tbl_spark` object. Alternatively, an expression can be supplied to serve
+#'   as instructions on how to retrieve the target table at incorporation-time.
+#'   There are two ways to specify an association to a target table: (1) as a
+#'   table-prep formula, which is a right-hand side (RHS) formula expression
+#'   (e.g., `~ { <table reading code>}`), or (2) as a function (e.g.,
+#'   `function() { <table reading code>}`).
+#'   
+#' @param agent *The pointblank agent object*
+#' 
+#'   `obj:<ptblank_agent>` // *default:* `NULL` (`optional`)
+#' 
+#'   A pointblank *agent* object. The table from this object can be extracted
+#'   and used in the new informant instead of supplying a table in `tbl`.
+#'   
+#' @param tbl_name *A table name*
+#' 
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#' 
+#'   A optional name to assign to the input table object. If no value is
+#'   provided, a name will be generated based on whatever information is
+#'   available.
+#'   
+#' @param label *An optional label for the information report*
+#' 
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#' 
+#'   An optional label for the information report. If no value is provided, a
+#'   label will be generated based on the current system time. Markdown can be
+#'   used here to make the label more visually appealing (it will appear in the
+#'   header area of the information report).
+#'   
+#' @param lang *Reporting language*
+#' 
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#' 
+#'   The language to use for the information report (a summary table that
+#'   provides all of the available information for the table. By default, `NULL`
+#'   will create English (`"en"`) text. Other options include French (`"fr"`),
+#'   German (`"de"`), Italian (`"it"`), Spanish (`"es"`), Portuguese (`"pt"`),
+#'   Turkish (`"tr"`), Chinese (`"zh"`), Russian (`"ru"`), Polish (`"pl"`),
+#'   Danish (`"da"`), Swedish (`"sv"`), and Dutch (`"nl"`).
+#'   
+#' @param locale *Locale for value formatting within reports*
+#' 
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#' 
+#'   An optional locale ID to use for formatting values in the information
+#'   report according the locale's rules. Examples include `"en_US"` for English
+#'   (United States) and `"fr_FR"` for French (France); more simply, this can be
+#'   a language identifier without a country designation, like "es" for Spanish
+#'   (Spain, same as `"es_ES"`).
+#'   
+#' @param read_fn *[Deprecated] Table reading function*
+#' 
+#'   `function` // *default:* `NULL` (`optional`)
+#' 
+#'   The `read_fn` argument is deprecated. Instead, supply a table-prep formula
+#'   or function to `tbl`.
 #'   
 #' @return A `ptblank_informant` object.
 #' 

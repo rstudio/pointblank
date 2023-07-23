@@ -28,9 +28,20 @@
 #' function that may have been defined for the `active` argument during creation
 #' of the targeted validation steps.
 #'
-#' @param agent An agent object of class `ptblank_agent`.
-#' @param i The validation step number, which is assigned to each validation
-#'   step in the order of definition.
+#' @param agent *The pointblank agent object*
+#' 
+#'   `obj:<ptblank_agent>` // **required**
+#' 
+#'   A **pointblank** *agent* object that is commonly created through the use of
+#'   the [create_agent()] function.
+#' 
+#' @param i *A validation step number*
+#'   
+#'   `scalar<integer>` // *default:* `NULL` (`optional`)
+#' 
+#'   The validation step number, which is assigned to each validation step in
+#'   the order of definition. If `NULL` (the default) then step activation won't
+#'   occur by index.
 #'
 #' @return A `ptblank_agent` object.
 #' 
@@ -104,9 +115,20 @@ activate_steps <- function(
 #' validation step, wiping out any function that may have been defined for
 #' whether the step should be active or not.
 #'
-#' @param agent An agent object of class `ptblank_agent`.
-#' @param i The validation step number, which is assigned to each validation
-#'   step in the order of definition.
+#' @param agent *The pointblank agent object*
+#' 
+#'   `obj:<ptblank_agent>` // **required**
+#' 
+#'   A **pointblank** *agent* object that is commonly created through the use of
+#'   the [create_agent()] function.
+#' 
+#' @param i *A validation step number*
+#'   
+#'   `scalar<integer>` // *default:* `NULL` (`optional`)
+#' 
+#'   The validation step number, which is assigned to each validation step in
+#'   the order of definition. If `NULL` (the default) then step deactivation
+#'   won't occur by index.
 #'
 #' @return A `ptblank_agent` object.
 #' 
@@ -174,10 +196,20 @@ deactivate_steps <- function(
 #' steps from the *agent*'s validation plan. Please note that when removing
 #' validation steps all stored data extracts will be removed from the *agent*.
 #'
-#' @param agent An agent object of class `ptblank_agent`.
-#' @param i The validation step number, which is assigned to each validation
-#'   step in the order of definition. If `NULL` (the default) then step removal
-#'   won't occur by index.
+#' @param agent *The pointblank agent object*
+#' 
+#'   `obj:<ptblank_agent>` // **required**
+#' 
+#'   A **pointblank** *agent* object that is commonly created through the use of
+#'   the [create_agent()] function.
+#' 
+#' @param i *A validation step number*
+#'   
+#'   `scalar<integer>` // *default:* `NULL` (`optional`)
+#' 
+#'   The validation step number, which is assigned to each validation step in
+#'   the order of definition. If `NULL` (the default) then step removal won't
+#'   occur by index.
 #'   
 #' @return A `ptblank_agent` object.
 #' 

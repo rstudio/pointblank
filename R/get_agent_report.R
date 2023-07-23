@@ -103,20 +103,30 @@
 #' in a data extract. Will be `NA` if no extract is available.
 #' }
 #' 
-#' @param agent An agent object of class `ptblank_agent`.
+#' @param agent *The pointblank agent object*
+#' 
+#'   `obj:<ptblank_agent>` // **required**
+#' 
+#'   A **pointblank** *agent* object that is commonly created through the use of
+#'   the [create_agent()] function.
+#' 
 #' @param arrange_by A choice to arrange the report table rows by the validation
 #'   step number (`"i"`, the default), or, to arrange in descending order by
 #'   severity of the failure state (with `"severity"`).
+#'   
 #' @param keep An option to keep `"all"` of the report's table rows (the
 #'   default), or, keep only those rows that reflect one or more
 #'   `"fail_states"`.
+#'   
 #' @param display_table Should a display table be generated? If `TRUE` (the
 #'   default), and if the **gt** package is installed, a display table for the
 #'   report will be shown in the Viewer. If `FALSE`, or if **gt** is not
 #'   available, then a tibble will be returned.
+#'   
 #' @param size The size of the display table, which can be either `"standard"`
 #'   (the default) or `"small"`. This only applies to a display table (where
 #'   `display_table = TRUE`).
+#'   
 #' @param title Options for customizing the title of the report. The default is
 #'   the keyword `":default:"` which produces generic title text that refers to
 #'   the **pointblank** package in the language governed by the `lang` option.
@@ -128,16 +138,26 @@
 #'   and transformed internally to HTML. To circumvent such a transformation,
 #'   use text in [I()] to explicitly state that the supplied text should not be
 #'   transformed.
-#' @param lang The language to use for automatic creation of briefs (short
-#'   descriptions for each validation step) and for the *agent report* (a
-#'   summary table that provides the validation plan and the results from the
-#'   interrogation. By default, `NULL` will create English (`"en"`) text. Other
-#'   options include French (`"fr"`), German (`"de"`), Italian (`"it"`), Spanish
-#'   (`"es"`), Portuguese (`"pt"`), Turkish (`"tr"`), Chinese (`"zh"`), Russian
-#'   (`"ru"`), Polish (`"pl"`), Danish (`"da"`), Swedish (`"sv"`), and Dutch
-#'   (`"nl"`). This `lang` option will override any previously set language
-#'   setting (e.g., by the [create_agent()] call).
-#' @param locale An optional locale ID to use for formatting values in the
+#'   
+#' @param lang *Reporting language*
+#' 
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#' 
+#'   The language to use for automatic creation of briefs (short descriptions
+#'   for each validation step) and for the *agent report* (a summary table that
+#'   provides the validation plan and the results from the interrogation. By
+#'   default, `NULL` will create English (`"en"`) text. Other options include
+#'   French (`"fr"`), German (`"de"`), Italian (`"it"`), Spanish (`"es"`),
+#'   Portuguese (`"pt"`), Turkish (`"tr"`), Chinese (`"zh"`), Russian (`"ru"`),
+#'   Polish (`"pl"`), Danish (`"da"`), Swedish (`"sv"`), and Dutch (`"nl"`).
+#'   This `lang` option will override any previously set language setting (e.g.,
+#'   by the [create_agent()] call).
+#'   
+#' @param locale *Locale for value formatting*
+#' 
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#' 
+#'   An optional locale ID to use for formatting values in the
 #'   *agent report* summary table according the locale's rules. Examples include
 #'   `"en_US"` for English (United States) and `"fr_FR"` for French (France);
 #'   more simply, this can be a language identifier without a country

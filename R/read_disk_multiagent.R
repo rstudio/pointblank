@@ -31,8 +31,10 @@
 #'
 #' @param filenames The names of files (holding *agent* objects) that were
 #'   previously written by [x_write_disk()].
+#'   
 #' @param pattern A regex pattern for accessing saved-to-disk *agent* files
 #'   located in a directory (specified in the `path` argument).
+#'   
 #' @param path A path to a collection of files. This is either optional in the
 #'   case that files are specified in `filenames` (the `path` combined with all
 #'   `filenames`), or, required when providing a `pattern` for file names.

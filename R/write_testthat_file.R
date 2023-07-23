@@ -114,15 +114,24 @@
 #' )
 #' ```
 #' 
-#' @param agent An agent object of class `ptblank_agent`.
+#' @param agent *The pointblank agent object*
+#' 
+#'   `obj:<ptblank_agent>` // **required**
+#' 
+#'   A **pointblank** *agent* object that is commonly created through the use of
+#'   the [create_agent()] function.
+#' 
 #' @param name An optional name for for the **testhat** test file. This should
 #'   be a name without extension and without the leading `"test-"` text. If
 #'   nothing is supplied, the name will be derived from the `tbl_name` in the
 #'   agent. If that's not present, a generic name will be used.
+#'   
 #' @param path A path can be specified here if there shouldn't be an attempt to
 #'   place the file in `testthat/tests`.
+#'   
 #' @param overwrite Should a **testthat** file of the same name be overwritten?
 #'   By default, this is `FALSE`.
+#'   
 #' @param skips This is an optional vector of test-skipping keywords modeled
 #'   after the **testthat** `skip_on_*()` functions. The following keywords can
 #'   be used to include `skip_on_*()` statements: `"cran"`
@@ -135,6 +144,7 @@
 #'   (`skip_on_os("windows")`), `"mac"` (`skip_on_os("mac")`), `"linux"`
 #'   (`skip_on_os("linux")`), and `"solaris"` (`skip_on_os("solaris")`). These
 #'   calls will be placed at the top of the generated **testthat** test file.
+#'   
 #' @param quiet Should the function *not* inform when the file is written? By
 #'   default this is `FALSE`.
 #'   

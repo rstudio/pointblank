@@ -32,19 +32,33 @@
 #' the interrogation time and it automatically recognizes which validation steps
 #' are equivalent across interrogations.
 #'
-#' @param ... One or more **pointblank** agent objects.
-#' @param lang The language to use for any reporting that will be generated from
-#'   the *multiagent*. (e.g., individual *agent reports*, *multiagent reports*,
+#' @param ... *Pointblank agents*
+#' 
+#'   `<series of obj:<ptblank_agent>>` // **required**
+#' 
+#'   One or more **pointblank** agent objects.
+#' 
+#' @param lang *Reporting language*
+#' 
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#' 
+#'   The language to use for any reporting that will be generated from the
+#'   *multiagent*. (e.g., individual *agent reports*, *multiagent reports*,
 #'   etc.). By default, `NULL` will create English (`"en"`) text. Other options
 #'   include French (`"fr"`), German (`"de"`), Italian (`"it"`), Spanish
 #'   (`"es"`), Portuguese (`"pt"`), Turkish (`"tr"`), Chinese (`"zh"`), Russian
 #'   (`"ru"`), Polish (`"pl"`), Danish (`"da"`), Swedish (`"sv"`), and Dutch
 #'   (`"nl"`).
-#' @param locale An optional locale ID to use for formatting values in the
-#'   reporting outputs according the locale's rules. Examples include `"en_US"`
-#'   for English (United States) and `"fr_FR"` for French (France); more simply,
-#'   this can be a language identifier without a country designation, like "es"
-#'   for Spanish (Spain, same as `"es_ES"`).
+#'   
+#' @param locale *Locale for value formatting within reports*
+#' 
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#' 
+#'   An optional locale ID to use for formatting values in the reporting outputs
+#'   according the locale's rules. Examples include `"en_US"` for English
+#'   (United States) and `"fr_FR"` for French (France); more simply, this can be
+#'   a language identifier without a country designation, like "es" for Spanish
+#'   (Spain, same as `"es_ES"`).
 #'   
 #' @return A `ptblank_multiagent` object.
 #' 

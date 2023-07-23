@@ -48,9 +48,14 @@
 #' collection of in-consideration validation steps that use different forms of
 #' the input table.
 #'
-#' @param agent An agent object of class `ptblank_agent`. It should have had
-#'   [interrogate()] called on it, such that the validation steps were actually
-#'   carried out.
+#' @param agent *The pointblank agent object*
+#' 
+#'   `obj:<ptblank_agent>` // **required**
+#' 
+#'   A **pointblank** *agent* object that is commonly created through the use of
+#'   the [create_agent()] function. It should have had [interrogate()] called on
+#'   it, such that the validation steps were actually carried out.
+#'   
 #' @param type The desired piece of data resulting from the splitting. Options
 #'   for returning a single table are `"pass"` (the default) and `"fail"`. Each
 #'   of these options return a single table with, in the `"pass"` case, only the
@@ -61,13 +66,16 @@
 #'   option `"combined"` applies a categorical (pass/fail) label (settable in
 #'   the `pass_fail` argument) in a new `.pb_combined` flag column. For this
 #'   case the ordering of rows is fully retained from the input table.
+#'   
 #' @param pass_fail A vector for encoding the flag column with 'pass' and 'fail'
 #'   values when `type = "combined"`. The default is `c("pass", "fail")` but
 #'   other options could be `c(TRUE, FALSE)`, `c(1, 0)`, or `c(1L, 0L)`.
+#'   
 #' @param id_cols An optional specification of one or more identifying columns.
 #'   When taken together, we can count on this single column or grouping of
 #'   columns to distinguish rows. If the table undergoing validation is not a
 #'   data frame or tibble, then columns need to be specified for `id_cols`.
+#'   
 #' @return A list of table objects if `type` is `NULL`, or, a single table if a
 #'   `type` is given.
 #' 

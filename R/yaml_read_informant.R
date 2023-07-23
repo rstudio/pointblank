@@ -29,6 +29,7 @@
 #'   
 #' @param filename The name of the YAML file that contains fields related to an
 #'   *informant*.
+#'   
 #' @param path An optional path to the YAML file (combined with `filename`).
 #' 
 #' @return A `ptblank_informant` object.
@@ -127,6 +128,7 @@ yaml_read_informant <- function(
 #'
 #' @param filename The name of the YAML file that contains fields related to an
 #'   *informant*.
+#'   
 #' @param path An optional path to the YAML file (combined with `filename`).
 #' 
 #' @return A `ptblank_informant` object.

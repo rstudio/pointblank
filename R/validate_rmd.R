@@ -41,6 +41,7 @@ test_options <- new.env(parent = emptyenv())
 #' @param summary If `TRUE` (the default), then there will be a leading summary
 #'   of all validations in the rendered R Markdown document. With `FALSE`, this
 #'   element is not shown.
+#'   
 #' @param log_to_file An option to log errors to a text file. By default, no
 #'   logging is done but `TRUE` will write log entries to
 #'   `"validation_errors.log"` in the working directory. To both enable logging

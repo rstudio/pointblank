@@ -36,15 +36,20 @@
 #'   This version of the x-list is the same as that generated via
 #'   `get_agent_x_list(<agent>)` except this version is internally generated and
 #'   hence only available in an internal evaluation context.
+#'   
 #' @param to,from The email addresses for the recipients and of the sender.
+#' 
 #' @param credentials A credentials list object that is produced by either of
 #'   the [blastula::creds()], [blastula::creds_anonymous()],
 #'   [blastula::creds_key()], or [blastula::creds_file()] functions. Please
 #'   refer to the **blastula** documentation for information on how to use these
 #'   functions.
+#'   
 #' @param msg_subject The subject line of the email message.
+#' 
 #' @param msg_header,msg_body,msg_footer Content for the header, body, and
 #'   footer components of the HTML email message.
+#'   
 #' @param send_condition An expression that should evaluate to a logical vector
 #'   of length 1. If evaluated as `TRUE` then the email will be sent, if `FALSE`
 #'   then that won't happen. The expression can use x-list variables (e.g.,
@@ -244,6 +249,7 @@ email_blast <- function(
 #' will make the HTML email message appear in the Viewer.
 #'
 #' @param x A **pointblank** *agent*.
+#' 
 #' @param msg_header,msg_body,msg_footer Content for the header, body, and
 #'   footer components of the HTML email message.
 #'   

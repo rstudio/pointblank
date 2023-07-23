@@ -35,17 +35,26 @@
 #' table (after any `preconditions` have been applied).
 #' 
 #' @inheritParams col_vals_gt
-#' @param allow_stationary An option to allow pauses in decreasing values. For
-#'   example if the values for the test units are `[85, 82, 82, 80, 77]` then
-#'   the third unit (`82`, appearing a second time) would be marked with *fail*
-#'   when `allow_stationary` is `FALSE` (the default). Using `allow_stationary =
-#'   TRUE` will result in all the test units in `[85, 82, 82, 80, 77]` to be
-#'   marked with *pass*.
-#' @param increasing_tol An optional threshold value that allows for movement of
-#'   numerical values in the positive direction. By default this is `NULL` but
-#'   using a numerical value with set the absolute threshold of positive travel
-#'   allowed across numerical test units. Note that setting a value here also
-#'   has the effect of setting `allow_stationary` to `TRUE`.
+#' 
+#' @param allow_stationary *Allowance for stationary pauses in values*
+#' 
+#'   `scalar<logical>` // *default:* `FALSE`
+#' 
+#'   An option to allow pauses in decreasing values. For example if the values
+#'   for the test units are `[85, 82, 82, 80, 77]` then the third unit (`82`,
+#'   appearing a second time) would be marked with *fail* when
+#'   `allow_stationary` is `FALSE`. Using `allow_stationary = TRUE` will result
+#'   in all the test units in `[85, 82, 82, 80, 77]` to be marked with *pass*.
+#'   
+#' @param increasing_tol *Optional tolerance threshold for backtracking*
+#' 
+#'   `scalar<numeric>(val>=0)` // *default:* `NULL` (`optional`)
+#' 
+#'   An optional threshold value that allows for movement of numerical values in
+#'   the positive direction. By default this is `NULL` but using a numerical
+#'   value with set the absolute threshold of positive travel allowed across
+#'   numerical test units. Note that setting a value here also has the effect of
+#'   setting `allow_stationary` to `TRUE`.
 #' 
 #' @return For the validation function, the return value is either a
 #'   `ptblank_agent` object or a table object (depending on whether an agent

@@ -43,13 +43,22 @@
 #' Only functions from that combined set of validation functions can yield data
 #' extracts.
 #'
-#' @param agent An agent object of class `ptblank_agent`. It should have had
-#'   [interrogate()] called on it, such that the validation steps were carried
-#'   out and any sample rows from non-passing validations could potentially be
-#'   available in the object.
-#' @param i The validation step number, which is assigned to each validation
-#'   step by **pointblank** in the order of definition. If `NULL` (the default),
-#'   all data extract tables will be provided in a list object.
+#' @param agent *The pointblank agent object*
+#' 
+#'   `obj:<ptblank_agent>` // **required**
+#' 
+#'   A **pointblank** *agent* object that is commonly created through the use of
+#'   the [create_agent()] function. It should have had [interrogate()] called on
+#'   it, such that the validation steps were carried out and any sample rows
+#'   from non-passing validations could potentially be available in the object.
+#'   
+#' @param i *A validation step number*
+#'   
+#'   `scalar<integer>` // *default:* `NULL` (`optional`)
+#' 
+#'   The validation step number, which is assigned to each validation step by
+#'   **pointblank** in the order of definition. If `NULL` (the default), all
+#'   data extract tables will be provided in a list object.
 #' 
 #' @return A list of tables if `i` is not provided, or, a standalone table if
 #'   `i` is given.

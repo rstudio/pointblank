@@ -7,12 +7,21 @@
 all_passed(agent, i = NULL)
 }
 \arguments{
-\item{agent}{An agent object of class \code{ptblank_agent}.}
+\item{agent}{\emph{The pointblank agent object}
 
-\item{i}{A vector of validation step numbers. These values are assigned to
-each validation step by \strong{pointblank} in the order of definition. If
-\code{NULL} (the default), all validation steps will be used for the evaluation
-of complete \emph{passing}.}
+\verb{obj:<ptblank_agent>} // \strong{required}
+
+A \strong{pointblank} \emph{agent} object that is commonly created through the use of
+the \code{\link[=create_agent]{create_agent()}} function.}
+
+\item{i}{\emph{Validation step numbers}
+
+\verb{vector<integer>} // \emph{default:} \code{NULL} (\code{optional})
+
+A vector of validation step numbers. These values are assigned to each
+validation step by \strong{pointblank} in the order of definition. If \code{NULL}
+(the default), all validation steps will be used for the evaluation of
+complete \emph{passing}.}
 }
 \value{
 A logical value.

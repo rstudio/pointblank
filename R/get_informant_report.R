@@ -29,11 +29,13 @@
 #' to **pointblank** YAML with `yaml_write(informant = <informant>, ...)`).
 #' 
 #' @param informant An informant object of class `ptblank_informant`.
+#' 
 #' @param size The size of the display table, which can be either `"standard"`
 #'   (the default, with a width of 875px), `"small"` (width of 575px), or, a
 #'   pixel- or percent-based width of your choosing (supply an integer value for
 #'   the width in pixels, or values with `"px"` or `"%"` appended, like `"75%"`,
 #'   `"500px"`, etc.).
+#'   
 #' @param title Options for customizing the title of the report. The default is
 #'   the keyword `":default:"` which produces generic title text that refers to
 #'   the **pointblank** package in the language governed by the `lang` option.
@@ -45,14 +47,24 @@
 #'   and transformed internally to HTML. To circumvent such a transformation,
 #'   use text in [I()] to explicitly state that the supplied text should not be
 #'   transformed.
-#' @param lang The language to use for the *information report*.
-#'   By default, `NULL` will create English (`"en"`) text. Other options include
-#'   French (`"fr"`), German (`"de"`), Italian (`"it"`), Spanish (`"es"`),
-#'   Portuguese (`"pt"`), Turkish (`"tr"`), Chinese (`"zh"`), Russian (`"ru"`),
-#'   Polish (`"pl"`), Danish (`"da"`), Swedish (`"sv"`), and Dutch (`"nl"`).
-#'   This `lang` option will override any previously set language setting (e.g.,
-#'   by the [create_informant()] call).
-#' @param locale An optional locale ID to use for formatting values in the
+#'   
+#' @param lang *Reporting language*
+#' 
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#' 
+#'   The language to use for the *information report*. By default, `NULL` will
+#'   create English (`"en"`) text. Other options include French (`"fr"`), German
+#'   (`"de"`), Italian (`"it"`), Spanish (`"es"`), Portuguese (`"pt"`), Turkish
+#'   (`"tr"`), Chinese (`"zh"`), Russian (`"ru"`), Polish (`"pl"`), Danish
+#'   (`"da"`), Swedish (`"sv"`), and Dutch (`"nl"`). This `lang` option will
+#'   override any previously set language setting (e.g., by the
+#'   [create_informant()] call).
+#'   
+#' @param locale *Locale for value formatting*
+#' 
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#' 
+#'   An optional locale ID to use for formatting values in the
 #'   *information report* summary table according the locale's rules. Examples
 #'   include `"en_US"` for English (United States) and `"fr_FR"` for French
 #'   (France); more simply, this can be a language identifier without a country

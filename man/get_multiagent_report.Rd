@@ -37,20 +37,28 @@ Markdown text and transformed internally to HTML. To circumvent such a
 transformation, use text in \code{\link[=I]{I()}} to explicitly state that the supplied
 text should not be transformed.}
 
-\item{lang}{The language to use for the long or wide report forms. By
-default, \code{NULL} will preserve any language set in the component reports.
-The following options will force the same language across all component
-reports: English (\code{"en"}), French (\code{"fr"}), German (\code{"de"}), Italian
-(\code{"it"}), Spanish (\code{"es"}), Portuguese (\code{"pt"}), Turkish (\code{"tr"}), Chinese
-(\code{"zh"}), Russian (\code{"ru"}), Polish (\code{"pl"}), Danish (\code{"da"}), Swedish
-(\code{"sv"}), and Dutch (\code{"nl"}).}
+\item{lang}{\emph{Reporting language}
 
-\item{locale}{An optional locale ID to use for formatting values in the long
-or wide report forms (according the locale's rules). Examples include
-\code{"en_US"} for English (United States) and \code{"fr_FR"} for French (France);
-more simply, this can be a language identifier without a country
-designation, like \code{"es"} for Spanish (Spain, same as \code{"es_ES"}). This
-\code{locale} option will override any previously set locale values.}
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+The language to use for the long or wide report forms. By default, \code{NULL}
+will preserve any language set in the component reports. The following
+options will force the same language across all component reports: English
+(\code{"en"}), French (\code{"fr"}), German (\code{"de"}), Italian (\code{"it"}), Spanish
+(\code{"es"}), Portuguese (\code{"pt"}), Turkish (\code{"tr"}), Chinese (\code{"zh"}), Russian
+(\code{"ru"}), Polish (\code{"pl"}), Danish (\code{"da"}), Swedish (\code{"sv"}), and Dutch
+(\code{"nl"}).}
+
+\item{locale}{\emph{Locale for value formatting}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional locale ID to use for formatting values in the long or wide
+report forms (according the locale's rules). Examples include \code{"en_US"} for
+English (United States) and \code{"fr_FR"} for French (France); more simply,
+this can be a language identifier without a country designation, like
+\code{"es"} for Spanish (Spain, same as \code{"es_ES"}). This \code{locale} option will
+override any previously set locale values.}
 }
 \value{
 A \strong{gt} table object if \code{display_table = TRUE} or a tibble if

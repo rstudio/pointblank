@@ -32,13 +32,18 @@
 #' (after any `preconditions` have been applied).
 #' 
 #' @inheritParams col_vals_gt
-#' @param count Either a literal value for the number of columns, or, a table to
-#'   compare against the target table in terms of column count values. If
-#'   supplying a comparison table, it can either be a table object such as a
-#'   data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
-#'   Alternatively, a table-prep formula (`~ <table reading code>`) or a
-#'   function (`function() <table reading code>`) can be used to lazily read in
-#'   the comparison table at interrogation time.
+#' 
+#' @param count *The count comparison*
+#' 
+#'   `scalar<numeric|integer>|obj:<tbl_*>` // **required**
+#' 
+#'   Either a literal value for the number of columns, or, a table to compare
+#'   against the target table in terms of column count values. If supplying a
+#'   comparison table, it can either be a table object such as a data frame, a
+#'   tibble, a `tbl_dbi` object, or a `tbl_spark` object. Alternatively, a
+#'   table-prep formula (`~ <table reading code>`) or a function (`function()
+#'   <table reading code>`) can be used to lazily read in the comparison table
+#'   at interrogation time.
 #'   
 #' @return For the validation function, the return value is either a
 #'   `ptblank_agent` object or a table object (depending on whether an agent

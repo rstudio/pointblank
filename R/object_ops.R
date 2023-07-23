@@ -42,10 +42,13 @@
 #' 
 #' @param x An *agent* object of class `ptblank_agent`, an *informant* of class
 #'   `ptblank_informant`, or an table scan of class `ptblank_tbl_scan`.
+#'   
 #' @param filename The filename to create on disk for the `agent`, `informant`,
 #'   or table scan.
+#'   
 #' @param path An optional path to which the file should be saved (this is
 #'   automatically combined with `filename`).
+#'   
 #' @param keep_tbl An option to keep a data table that is associated with the
 #'   *agent* or *informant* (which is the case when the *agent*, for example, is
 #'   created using `create_agent(tbl = <data table, ...)`). The default is
@@ -53,9 +56,11 @@
 #'   database tables of the class `tbl_dbi` and for Spark DataFrames
 #'   (`tbl_spark`) the table is always removed (even if `keep_tbl` is set to
 #'   `TRUE`).
+#'   
 #' @param keep_extracts An option to keep any collected extract data for failing
 #'   rows. Only applies to *agent* objects. By default, this is `FALSE` (i.e.,
 #'   extract data is removed).
+#'   
 #' @param quiet Should the function *not* inform when the file is written? By
 #'   default this is `FALSE`.
 #'   
@@ -387,7 +392,9 @@ x_write_disk <- function(
 #' 
 #' @param filename The name of a file that was previously written by
 #'   [x_write_disk()].
+#'   
 #' @param path An optional path to the file (combined with `filename`).
+#' 
 #' @param quiet Should the function *not* inform when the file is read? By
 #'   default this is `FALSE`.
 #' 
@@ -501,10 +508,13 @@ x_read_disk <- function(
 #'   scan of class `ptblank_tbl_scan`, or, customized reporting objects
 #'   (`ptblank_agent_report`, `ptblank_informant_report`,
 #'   `ptblank_multiagent_report.wide`, `ptblank_multiagent_report.long`).
+#'   
 #' @param filename The filename to create on disk for the HTML export of the
 #'   object provided. It's recommended that the extension `".html"` is included.
+#'   
 #' @param path An optional path to which the file should be saved (this is
 #'   automatically combined with `filename`).
+#'   
 #' @param quiet Should the function *not* inform when the file is written? By
 #'   default this is `FALSE`.
 #'   
@@ -778,6 +788,7 @@ export_report <- function(
 #'
 #' @param x An *agent* object of class `ptblank_agent`, or, an *informant* of
 #'   class `ptblank_informant`.
+#'   
 #' @param tbl The input table for the *agent* or the *informant*. This can be a
 #'   data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
 #'   Alternatively, an expression can be supplied to serve as instructions on
@@ -786,9 +797,11 @@ export_report <- function(
 #'   table-prep formula, which is a right-hand side (RHS) formula expression
 #'   (e.g., `~ { <table reading code>}`), or (2) as a function (e.g.,
 #'   `function() { <table reading code>}`).
+#'   
 #' @param tbl_name A optional name to assign to the new input table object. If
 #'   no value is provided, a name will be generated based on whatever
 #'   information is available.
+#'   
 #' @param label An optional label for the validation plan. If no value is
 #'   provided then any existing label will be retained.
 #' 

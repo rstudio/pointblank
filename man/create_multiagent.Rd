@@ -7,21 +7,33 @@
 create_multiagent(..., lang = NULL, locale = NULL)
 }
 \arguments{
-\item{...}{One or more \strong{pointblank} agent objects.}
+\item{...}{\emph{Pointblank agents}
 
-\item{lang}{The language to use for any reporting that will be generated from
-the \emph{multiagent}. (e.g., individual \emph{agent reports}, \emph{multiagent reports},
+\verb{<series of obj:<ptblank_agent>>} // \strong{required}
+
+One or more \strong{pointblank} agent objects.}
+
+\item{lang}{\emph{Reporting language}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+The language to use for any reporting that will be generated from the
+\emph{multiagent}. (e.g., individual \emph{agent reports}, \emph{multiagent reports},
 etc.). By default, \code{NULL} will create English (\code{"en"}) text. Other options
 include French (\code{"fr"}), German (\code{"de"}), Italian (\code{"it"}), Spanish
 (\code{"es"}), Portuguese (\code{"pt"}), Turkish (\code{"tr"}), Chinese (\code{"zh"}), Russian
 (\code{"ru"}), Polish (\code{"pl"}), Danish (\code{"da"}), Swedish (\code{"sv"}), and Dutch
 (\code{"nl"}).}
 
-\item{locale}{An optional locale ID to use for formatting values in the
-reporting outputs according the locale's rules. Examples include \code{"en_US"}
-for English (United States) and \code{"fr_FR"} for French (France); more simply,
-this can be a language identifier without a country designation, like "es"
-for Spanish (Spain, same as \code{"es_ES"}).}
+\item{locale}{\emph{Locale for value formatting within reports}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional locale ID to use for formatting values in the reporting outputs
+according the locale's rules. Examples include \code{"en_US"} for English
+(United States) and \code{"fr_FR"} for French (France); more simply, this can be
+a language identifier without a country designation, like "es" for Spanish
+(Spain, same as \code{"es_ES"}).}
 }
 \value{
 A \code{ptblank_multiagent} object.

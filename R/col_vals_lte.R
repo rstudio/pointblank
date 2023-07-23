@@ -35,8 +35,13 @@
 #' `preconditions` have been applied).
 #' 
 #' @inheritParams col_vals_gt
-#' @param value A value used for this comparison. This can be a single value or
-#'   a compatible column given in `vars()`. Any column values less than or equal
+#' 
+#' @param value *Value for comparison*
+#' 
+#'   `<value expression>` // **required**
+#' 
+#'   A value used for this comparison. This can be a single value or a
+#'   compatible column given in `vars()`. Any column values less than or equal
 #'   to what is specified here will pass validation.
 #'   
 #' @return For the validation function, the return value is either a

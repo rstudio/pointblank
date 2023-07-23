@@ -33,6 +33,7 @@
 #'   version of the x-list is the same as that generated via
 #'   `get_agent_x_list(<agent>, i = <step>)` except this version is internally
 #'   generated and hence only available in an internal evaluation context.
+#'   
 #' @param message The message to use for the log entry. When not provided, a
 #'   default glue string is used for the messaging. This is dynamic since the
 #'   internal `glue::glue()` call occurs in the same environment as `x`, the
@@ -41,6 +42,7 @@
 #'   failure threshold (f_failed = {x$f_failed}) ['{x$type}']"`. As can be seen,
 #'   a custom message can be crafted that uses other elements of the x-list with
 #'   the `{x$<component>}` construction.
+#'   
 #' @param append_to The file to which log entries at the warn level are
 #'   appended. This can alternatively be one or more **log4r** appenders.
 #' 

@@ -12,9 +12,13 @@ get_sundered_data(
 )
 }
 \arguments{
-\item{agent}{An agent object of class \code{ptblank_agent}. It should have had
-\code{\link[=interrogate]{interrogate()}} called on it, such that the validation steps were actually
-carried out.}
+\item{agent}{\emph{The pointblank agent object}
+
+\verb{obj:<ptblank_agent>} // \strong{required}
+
+A \strong{pointblank} \emph{agent} object that is commonly created through the use of
+the \code{\link[=create_agent]{create_agent()}} function. It should have had \code{\link[=interrogate]{interrogate()}} called on
+it, such that the validation steps were actually carried out.}
 
 \item{type}{The desired piece of data resulting from the splitting. Options
 for returning a single table are \code{"pass"} (the default) and \code{"fail"}. Each

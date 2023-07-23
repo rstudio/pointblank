@@ -67,16 +67,26 @@
 #' failing test units).
 #' 
 #' @inheritParams col_vals_gt
-#' @param ... A collection one-sided formulas that consist of `test_*()`
-#'   function calls (e.g., [test_col_vals_between()], etc.) arranged in sequence
-#'   of intended interrogation order. Typically, validations up until the final
-#'   one would have some `threshold` value set (default is `1`) for short
-#'   circuiting within the series. A finishing validation function call (e.g.,
+#' 
+#' @param ... *Test/validation expressions*
+#' 
+#'   `<test/validation expressions>` // **required** (or, use `.list`)
+#' 
+#'   A collection one-sided formulas that consist of `test_*()` function calls
+#'   (e.g., [test_col_vals_between()], etc.) arranged in sequence of intended
+#'   interrogation order. Typically, validations up until the final one would
+#'   have some `threshold` value set (default is `1`) for short circuiting
+#'   within the series. A finishing validation function call (e.g.,
 #'   [col_vals_increasing()], etc.) can optionally be inserted at the end of the
 #'   series, serving as a validation step that only undergoes interrogation if
 #'   the prior tests adequately pass. An example of this is
 #'   `~ test_column_exists(., vars(a)), ~ col_vals_not_null(., vars(a))`).
-#' @param .list Allows for the use of a list as an input alternative to `...`.
+#'   
+#' @param .list *Alternative to `...`*
+#' 
+#'   `<list of multiple expressions>` // **required** (or, use `...`)
+#' 
+#'   Allows for the use of a list as an input alternative to `...`.
 #' 
 #' @return For the validation function, the return value is either a
 #'   `ptblank_agent` object or a table object (depending on whether an agent

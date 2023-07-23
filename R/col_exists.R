@@ -31,7 +31,12 @@
 #' unit, which is whether the column exists or not.
 #' 
 #' @inheritParams col_vals_gt
-#' @param columns One or more columns from the table in focus. This can be
+#' 
+#' @param columns *The target columns*
+#'   
+#'   `vector<character>|vars(<columns>)`` // **required**
+#' 
+#'   One or more columns from the table in focus. This can be
 #'   provided as a vector of column names using `c()` or bare column names
 #'   enclosed in [vars()].
 #'   

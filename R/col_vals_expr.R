@@ -32,7 +32,12 @@
 #' have been applied).
 #' 
 #' @inheritParams col_vals_gt
-#' @param expr An expression to use for this validation. This can either be in
+#' 
+#' @param expr *Predicate expression*
+#' 
+#'   `<predicate expression>` // **required**
+#' 
+#'   A predicate expression to use for this validation. This can either be in
 #'   the form of a call made with the `expr()` function or as a one-sided **R**
 #'   formula (using a leading `~`).
 #'   

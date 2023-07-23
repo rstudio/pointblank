@@ -32,8 +32,13 @@
 #' number of rows in the table (after any `preconditions` have been applied).
 #' 
 #' @inheritParams col_vals_gt
-#' @param set A vector of numeric or string-based elements, where column values
-#'   found within this `set` will be considered as failing.
+#' 
+#' @param set *Set of values*
+#' 
+#'   `vector<integer|numeric|character>` // **required**
+#' 
+#'   A vector of numeric or string-based elements, where column values found
+#'   within this `set` will be considered as failing.
 #'   
 #' @return For the validation function, the return value is either a
 #'   `ptblank_agent` object or a table object (depending on whether an agent

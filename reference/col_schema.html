@@ -109,23 +109,29 @@ is collected and loaded into R.</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>...</dt>
-<dd><p>A set of named arguments where the names refer to column names and
+<dd><p><em>Column-by-column schema definition</em></p>
+<p><code>&lt;multiple expressions&gt;</code> // <strong>required</strong> (or, use <code>.tbl</code>)</p>
+<p>A set of named arguments where the names refer to column names and
 the values are one or more column types.</p></dd>
 
 
 <dt>.tbl</dt>
-<dd><p>An option to use a table object to define the schema. If this is
-provided then any values provided to <code>...</code> will be ignored. This can either
-be a table object, a table-prep formula.This can be a table object such as
-a data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spark</code> object.
+<dd><p><em>A data table for defining a schema</em></p>
+<p><code>obj:&lt;tbl_*&gt;</code> // <strong>optional</strong></p>
+<p>An option to use a table object to define the schema. If this is provided
+then any values provided to <code>...</code> will be ignored. This can either be a
+table object, a table-prep formula.This can be a table object such as a
+data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spark</code> object.
 Alternatively, a table-prep formula (<code>~ &lt;table reading code&gt;</code>) or a
 function (<code>function() &lt;table reading code&gt;</code>) can be used to lazily read in
 the table at interrogation time.</p></dd>
 
 
 <dt>.db_col_types</dt>
-<dd><p>Determines whether the column types refer to R column
-types (<code>"r"</code>) or SQL column types (<code>"sql"</code>).</p></dd>
+<dd><p><em>Use R column types or database column types?</em></p>
+<p><code>singl-kw:[r|sql]</code> // <em>default:</em> <code>"r"</code></p>
+<p>Determines whether the column types refer to R column types (<code>"r"</code>) or SQL
+column types (<code>"sql"</code>).</p></dd>
 
 </dl></div>
     <div class="section level2">

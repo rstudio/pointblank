@@ -133,55 +133,70 @@ have been applied).</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
-<dd><p>A data frame, tibble (<code>tbl_df</code> or <code>tbl_dbi</code>), Spark DataFrame
+<dd><p><em>A pointblank agent or a data table</em></p>
+<p><code>obj:&lt;ptblank_agent&gt;|obj:&lt;tbl_*&gt;</code> // <strong>required</strong></p>
+<p>A data frame, tibble (<code>tbl_df</code> or <code>tbl_dbi</code>), Spark DataFrame
 (<code>tbl_spark</code>), or, an <em>agent</em> object of class <code>ptblank_agent</code> that is
-created with <code><a href="create_agent.html">create_agent()</a></code>.</p></dd>
+commonly created with <code><a href="create_agent.html">create_agent()</a></code>.</p></dd>
 
 
 <dt>columns</dt>
-<dd><p>The column (or a set of columns, provided as a character
-vector) to which this validation should be applied.</p></dd>
+<dd><p><em>The target columns</em></p>
+<p><code>&lt;column-targeting expression&gt;</code> // <strong>required</strong></p>
+<p>The column (or a set of columns, provided as a character vector) to which
+this validation should be applied.</p></dd>
 
 
 <dt>value</dt>
-<dd><p>A value used for this comparison. This can be a single value or
-a compatible column given in <code><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars()</a></code>. Any column values less than what is
+<dd><p><em>Value for comparison</em></p>
+<p><code>&lt;value expression&gt;</code> // <strong>required</strong></p>
+<p>A value used for this comparison. This can be a single value or a
+compatible column given in <code><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars()</a></code>. Any column values less than what is
 specified here will pass validation.</p></dd>
 
 
 <dt>na_pass</dt>
-<dd><p>Should any encountered <code>NA</code> values be considered as passing
-test units? This is by default <code>FALSE</code>. Set to <code>TRUE</code> to give <code>NA</code>s a pass.</p></dd>
+<dd><p><em>Allow missing values to pass validation</em></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
+<p>Should any encountered <code>NA</code> values be considered as passing test units? By
+default, this is <code>FALSE</code>. Set to <code>TRUE</code> to give <code>NA</code>s a pass.</p></dd>
 
 
 <dt>preconditions</dt>
-<dd><p>An optional expression for mutating the input table
-before proceeding with the validation. This can either be provided as a
-one-sided R formula using a leading <code>~</code> (e.g.,
-<code>~ . %&gt;% dplyr::mutate(col = col + 10)</code> or as a function (e.g.,
-<code>function(x) dplyr::mutate(x, col = col + 10)</code>. See the <em>Preconditions</em>
-section for more information.</p></dd>
+<dd><p><em>Input table modification prior to validation</em></p>
+<p><code>&lt;table mutation expression&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>An optional expression for mutating the input table before proceeding with
+the validation. This can either be provided as a one-sided R formula using
+a leading <code>~</code> (e.g., <code>~ . %&gt;% dplyr::mutate(col = col + 10)</code> or as a
+function (e.g., <code>function(x) dplyr::mutate(x, col = col + 10)</code>. See the
+<em>Preconditions</em> section for more information.</p></dd>
 
 
 <dt>segments</dt>
-<dd><p>An optional expression or set of expressions (held in a list)
-that serve to segment the target table by column values. Each expression
-can be given in one of two ways: (1) as column names, or (2) as a two-sided
-formula where the LHS holds a column name and the RHS contains the column
-values to segment on. See the <em>Segments</em> section for more details on this.</p></dd>
+<dd><p><em>Expressions for segmenting the target table</em></p>
+<p><code>&lt;segmentation expressions&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>An optional expression or set of expressions (held in a list) that serve to
+segment the target table by column values. Each expression can be given in
+one of two ways: (1) as column names, or (2) as a two-sided formula where
+the LHS holds a column name and the RHS contains the column values to
+segment on. See the <em>Segments</em> section for more details on this.</p></dd>
 
 
 <dt>actions</dt>
-<dd><p>A list containing threshold levels so that the validation step
-can react accordingly when exceeding the set levels. This is to be created
-with the <code><a href="action_levels.html">action_levels()</a></code> helper function.</p></dd>
+<dd><p><em>Thresholds and actions for different states</em></p>
+<p><code>obj:&lt;action_levels&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>A list containing threshold levels so that the validation step can react
+accordingly when exceeding the set levels for different states. This is to
+be created with the <code><a href="action_levels.html">action_levels()</a></code> helper function.</p></dd>
 
 
 <dt>step_id</dt>
-<dd><p>One or more optional identifiers for the single or multiple
-validation steps generated from calling a validation function. The use of
-step IDs serves to distinguish validation steps from each other and provide
-an opportunity for supplying a more meaningful label compared to the step
+<dd><p><em>Manual setting of the step ID value</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>One or more optional identifiers for the single or multiple validation
+steps generated from calling a validation function. The use of step IDs
+serves to distinguish validation steps from each other and provide an
+opportunity for supplying a more meaningful label compared to the step
 index. By default this is <code>NULL</code>, and <strong>pointblank</strong> will automatically
 generate the step ID value (based on the step index) in this case. One or
 more values can be provided, and the exact number of ID values should (1)
@@ -192,12 +207,16 @@ unique values.</p></dd>
 
 
 <dt>label</dt>
-<dd><p>An optional label for the validation step. This label appears in
-the <em>agent</em> report and for the best appearance it should be kept short.</p></dd>
+<dd><p><em>An optional label for the validation step</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>An optional label for the validation step. This label appears in the
+<em>agent</em> report and, for the best appearance, it should be kept quite short.</p></dd>
 
 
 <dt>brief</dt>
-<dd><p>An optional, text-based description for the validation step. If
+<dd><p><em>Brief description for the validation step</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>A <em>brief</em> is a short, text-based description for the validation step. If
 nothing is provided here then an <em>autobrief</em> is generated by the <em>agent</em>,
 using the language provided in <code><a href="create_agent.html">create_agent()</a></code>'s <code>lang</code> argument (which
 defaults to <code>"en"</code> or English). The <em>autobrief</em> incorporates details of the
@@ -206,37 +225,41 @@ validation step so it's often the preferred option in most cases (where a
 
 
 <dt>active</dt>
-<dd><p>A logical value indicating whether the validation step should
-be active. If the validation function is working with an <em>agent</em>, <code>FALSE</code>
-will make the validation step inactive (still reporting its presence and
-keeping indexes for the steps unchanged). If the validation function will
-be operating directly on data (no <em>agent</em> involvement), then any step with
-<code>active = FALSE</code> will simply pass the data through with no validation
-whatsoever. Aside from a logical vector, a one-sided R formula using a
-leading <code>~</code> can be used with <code>.</code> (serving as the input data table) to
-evaluate to a single logical value. With this approach, the <strong>pointblank</strong>
-function <code><a href="has_columns.html">has_columns()</a></code> can be used to determine whether to make a
-validation step active on the basis of one or more columns existing in the
-table (e.g., <code>~ . %&gt;% has_columns(vars(d, e))</code>). The default for <code>active</code>
-is <code>TRUE</code>.</p></dd>
+<dd><p><em>Is the validation step active?</em></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
+<p>A logical value indicating whether the validation step should be active. If
+the validation function is working with an <em>agent</em>, <code>FALSE</code> will make the
+validation step inactive (still reporting its presence and keeping indexes
+for the steps unchanged). If the validation function will be operating
+directly on data (no <em>agent</em> involvement), then any step with <code>active = FALSE</code> will simply pass the data through with no validation whatsoever.
+Aside from a logical vector, a one-sided R formula using a leading <code>~</code> can
+be used with <code>.</code> (serving as the input data table) to evaluate to a single
+logical value. With this approach, the <strong>pointblank</strong> function
+<code><a href="has_columns.html">has_columns()</a></code> can be used to determine whether to make a validation step
+active on the basis of one or more columns existing in the table
+(e.g., <code>~ . %&gt;% has_columns(vars(d, e))</code>).</p></dd>
 
 
 <dt>object</dt>
-<dd><p>A data frame, tibble (<code>tbl_df</code> or <code>tbl_dbi</code>), or Spark
-DataFrame (<code>tbl_spark</code>) that serves as the target table for the expectation
-function or the test function.</p></dd>
+<dd><p><em>A data table for expectations or tests</em></p>
+<p><code>obj:&lt;tbl_*&gt;</code> // <strong>required</strong></p>
+<p>A data frame, tibble (<code>tbl_df</code> or <code>tbl_dbi</code>), or Spark DataFrame
+(<code>tbl_spark</code>) that serves as the target table for the expectation function
+or the test function.</p></dd>
 
 
 <dt>threshold</dt>
-<dd><p>A simple failure threshold value for use with the
-expectation (<code>expect_</code>) and the test (<code>test_</code>) function variants. By
-default, this is set to <code>1</code> meaning that any single unit of failure in data
-validation results in an overall test failure. Whole numbers beyond <code>1</code>
-indicate that any failing units up to that absolute threshold value will
-result in a succeeding <strong>testthat</strong> test or evaluate to <code>TRUE</code>. Likewise,
-fractional values (between <code>0</code> and <code>1</code>) act as a proportional failure
-threshold, where <code>0.15</code> means that 15 percent of failing test units results
-in an overall test failure.</p></dd>
+<dd><p><em>The failure threshold</em></p>
+<p><code>scalar&lt;integer|numeric&gt;(val&gt;=0)</code> // <em>default:</em> <code>1</code></p>
+<p>A simple failure threshold value for use with the expectation (<code>expect_</code>)
+and the test (<code>test_</code>) function variants. By default, this is set to <code>1</code>
+meaning that any single unit of failure in data validation results in an
+overall test failure. Whole numbers beyond <code>1</code> indicate that any failing
+units up to that absolute threshold value will result in a succeeding
+<strong>testthat</strong> test or evaluate to <code>TRUE</code>. Likewise, fractional values
+(between <code>0</code> and <code>1</code>) act as a proportional failure threshold, where <code>0.15</code>
+means that 15 percent of failing test units results in an overall test
+failure.</p></dd>
 
 </dl></div>
     <div class="section level2">

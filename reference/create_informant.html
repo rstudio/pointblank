@@ -159,54 +159,67 @@ options.</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>tbl</dt>
-<dd><p>The input table. This can be a data frame, a tibble, a <code>tbl_dbi</code>
-object, or a <code>tbl_spark</code> object. Alternatively, an expression can be
-supplied to serve as instructions on how to retrieve the target table at
-incorporation-time. There are two ways to specify an association to a
-target table: (1) as a table-prep formula, which is a right-hand side (RHS)
-formula expression (e.g., <code>~ { &lt;table reading code&gt;}</code>), or (2) as a
-function (e.g., <code>function() { &lt;table reading code&gt;}</code>).</p></dd>
+<dd><p><em>Table or expression for reading in one</em></p>
+<p><code>obj:&lt;tbl_*&gt;|&lt;table reading expression&gt;</code> // <strong>required</strong></p>
+<p>The input table. This can be a data frame, a tibble, a <code>tbl_dbi</code> object, or
+a <code>tbl_spark</code> object. Alternatively, an expression can be supplied to serve
+as instructions on how to retrieve the target table at incorporation-time.
+There are two ways to specify an association to a target table: (1) as a
+table-prep formula, which is a right-hand side (RHS) formula expression
+(e.g., <code>~ { &lt;table reading code&gt;}</code>), or (2) as a function (e.g.,
+<code>function() { &lt;table reading code&gt;}</code>).</p></dd>
 
 
 <dt>tbl_name</dt>
-<dd><p>A optional name to assign to the input table object. If no
-value is provided, a name will be generated based on whatever information
-is available.</p></dd>
+<dd><p><em>A table name</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>A optional name to assign to the input table object. If no value is
+provided, a name will be generated based on whatever information is
+available.</p></dd>
 
 
 <dt>label</dt>
-<dd><p>An optional label for the information report. If no value is
-provided, a label will be generated based on the current system time.
-Markdown can be used here to make the label more visually appealing (it
-will appear in the header area of the information report).</p></dd>
+<dd><p><em>An optional label for the information report</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>An optional label for the information report. If no value is provided, a
+label will be generated based on the current system time. Markdown can be
+used here to make the label more visually appealing (it will appear in the
+header area of the information report).</p></dd>
 
 
 <dt>agent</dt>
-<dd><p>A pointblank <em>agent</em> object. The table from this object can be
-extracted and used in the new informant instead of supplying a table in
-<code>tbl</code>.</p></dd>
+<dd><p><em>The pointblank agent object</em></p>
+<p><code>obj:&lt;ptblank_agent&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>A pointblank <em>agent</em> object. The table from this object can be extracted
+and used in the new informant instead of supplying a table in <code>tbl</code>.</p></dd>
 
 
 <dt>lang</dt>
-<dd><p>The language to use for the information report (a summary table
-that provides all of the available information for the table. By default,
-<code>NULL</code> will create English (<code>"en"</code>) text. Other options include French
-(<code>"fr"</code>), German (<code>"de"</code>), Italian (<code>"it"</code>), Spanish (<code>"es"</code>), Portuguese
-(<code>"pt"</code>), Turkish (<code>"tr"</code>), Chinese (<code>"zh"</code>), Russian (<code>"ru"</code>), Polish
-(<code>"pl"</code>), Danish (<code>"da"</code>), Swedish (<code>"sv"</code>), and Dutch (<code>"nl"</code>).</p></dd>
+<dd><p><em>Reporting language</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>The language to use for the information report (a summary table that
+provides all of the available information for the table. By default, <code>NULL</code>
+will create English (<code>"en"</code>) text. Other options include French (<code>"fr"</code>),
+German (<code>"de"</code>), Italian (<code>"it"</code>), Spanish (<code>"es"</code>), Portuguese (<code>"pt"</code>),
+Turkish (<code>"tr"</code>), Chinese (<code>"zh"</code>), Russian (<code>"ru"</code>), Polish (<code>"pl"</code>),
+Danish (<code>"da"</code>), Swedish (<code>"sv"</code>), and Dutch (<code>"nl"</code>).</p></dd>
 
 
 <dt>locale</dt>
-<dd><p>An optional locale ID to use for formatting values in the
-information report according the locale's rules. Examples include <code>"en_US"</code>
-for English (United States) and <code>"fr_FR"</code> for French (France); more simply,
-this can be a language identifier without a country designation, like "es"
-for Spanish (Spain, same as <code>"es_ES"</code>).</p></dd>
+<dd><p><em>Locale for value formatting within reports</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>An optional locale ID to use for formatting values in the information
+report according the locale's rules. Examples include <code>"en_US"</code> for English
+(United States) and <code>"fr_FR"</code> for French (France); more simply, this can be
+a language identifier without a country designation, like "es" for Spanish
+(Spain, same as <code>"es_ES"</code>).</p></dd>
 
 
 <dt>read_fn</dt>
-<dd><p>The <code>read_fn</code> argument is deprecated. Instead, supply a
-table-prep formula or function to <code>tbl</code>.</p></dd>
+<dd><p><em><a href="https://rdrr.io/r/base/Deprecated.html" class="external-link">Deprecated</a> Table reading function</em></p>
+<p><code>function</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>The <code>read_fn</code> argument is deprecated. Instead, supply a table-prep formula
+or function to <code>tbl</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">

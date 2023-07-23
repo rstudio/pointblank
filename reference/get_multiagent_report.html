@@ -123,22 +123,26 @@ text should not be transformed.</p></dd>
 
 
 <dt>lang</dt>
-<dd><p>The language to use for the long or wide report forms. By
-default, <code>NULL</code> will preserve any language set in the component reports.
-The following options will force the same language across all component
-reports: English (<code>"en"</code>), French (<code>"fr"</code>), German (<code>"de"</code>), Italian
-(<code>"it"</code>), Spanish (<code>"es"</code>), Portuguese (<code>"pt"</code>), Turkish (<code>"tr"</code>), Chinese
-(<code>"zh"</code>), Russian (<code>"ru"</code>), Polish (<code>"pl"</code>), Danish (<code>"da"</code>), Swedish
-(<code>"sv"</code>), and Dutch (<code>"nl"</code>).</p></dd>
+<dd><p><em>Reporting language</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>The language to use for the long or wide report forms. By default, <code>NULL</code>
+will preserve any language set in the component reports. The following
+options will force the same language across all component reports: English
+(<code>"en"</code>), French (<code>"fr"</code>), German (<code>"de"</code>), Italian (<code>"it"</code>), Spanish
+(<code>"es"</code>), Portuguese (<code>"pt"</code>), Turkish (<code>"tr"</code>), Chinese (<code>"zh"</code>), Russian
+(<code>"ru"</code>), Polish (<code>"pl"</code>), Danish (<code>"da"</code>), Swedish (<code>"sv"</code>), and Dutch
+(<code>"nl"</code>).</p></dd>
 
 
 <dt>locale</dt>
-<dd><p>An optional locale ID to use for formatting values in the long
-or wide report forms (according the locale's rules). Examples include
-<code>"en_US"</code> for English (United States) and <code>"fr_FR"</code> for French (France);
-more simply, this can be a language identifier without a country
-designation, like <code>"es"</code> for Spanish (Spain, same as <code>"es_ES"</code>). This
-<code>locale</code> option will override any previously set locale values.</p></dd>
+<dd><p><em>Locale for value formatting</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>An optional locale ID to use for formatting values in the long or wide
+report forms (according the locale's rules). Examples include <code>"en_US"</code> for
+English (United States) and <code>"fr_FR"</code> for French (France); more simply,
+this can be a language identifier without a country designation, like
+<code>"es"</code> for Spanish (Spain, same as <code>"es_ES"</code>). This <code>locale</code> option will
+override any previously set locale values.</p></dd>
 
 </dl></div>
     <div class="section level2">

@@ -101,22 +101,29 @@ is not of the <code>tbl_dbi</code> or the <code>tbl_spark</code> class.</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
-<dd><p>An <em>agent</em> object of class <code>ptblank_agent</code>, an <em>informant</em> of class
+<dd><p><em>One of several types of objects</em></p>
+<p><code>&lt;object&gt;</code> // <strong>required</strong></p>
+<p>An <em>agent</em> object of class <code>ptblank_agent</code>, an <em>informant</em> of class
 <code>ptblank_informant</code>, or an table scan of class <code>ptblank_tbl_scan</code>.</p></dd>
 
 
 <dt>filename</dt>
-<dd><p>The filename to create on disk for the <code>agent</code>, <code>informant</code>,
-or table scan.</p></dd>
+<dd><p><em>File name</em></p>
+<p><code>scalar&lt;character&gt;</code> // <strong>required</strong></p>
+<p>The filename to create on disk for the <code>agent</code>, <code>informant</code>, or table scan.</p></dd>
 
 
 <dt>path</dt>
-<dd><p>An optional path to which the file should be saved (this is
-automatically combined with <code>filename</code>).</p></dd>
+<dd><p><em>File path</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>An optional path to which the file should be saved (this is automatically
+combined with <code>filename</code>).</p></dd>
 
 
 <dt>keep_tbl</dt>
-<dd><p>An option to keep a data table that is associated with the
+<dd><p><em>Keep data table inside object</em></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
+<p>An option to keep a data table that is associated with the
 <em>agent</em> or <em>informant</em> (which is the case when the <em>agent</em>, for example, is
 created using <code>create_agent(tbl = &lt;data table, ...)</code>). The default is
 <code>FALSE</code> where the data table is removed before writing to disk. For
@@ -126,14 +133,17 @@ database tables of the class <code>tbl_dbi</code> and for Spark DataFrames
 
 
 <dt>keep_extracts</dt>
-<dd><p>An option to keep any collected extract data for failing
-rows. Only applies to <em>agent</em> objects. By default, this is <code>FALSE</code> (i.e.,
-extract data is removed).</p></dd>
+<dd><p><em>Keep data extracts inside object</em></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
+<p>An option to keep any collected extract data for failing rows. Only applies
+to <em>agent</em> objects. By default, this is <code>FALSE</code> (i.e., extract data is
+removed).</p></dd>
 
 
 <dt>quiet</dt>
-<dd><p>Should the function <em>not</em> inform when the file is written? By
-default this is <code>FALSE</code>.</p></dd>
+<dd><p><em>Inform (or not) upon file writing</em></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
+<p>Should the function <em>not</em> inform when the file is written?</p></dd>
 
 </dl></div>
     <div class="section level2">

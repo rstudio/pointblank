@@ -91,7 +91,9 @@ browser.</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
-<dd><p>An <em>agent</em> object of class <code>ptblank_agent</code>, an <em>informant</em> of class
+<dd><p><em>One of several types of objects</em></p>
+<p><code>&lt;object&gt;</code> // <strong>required</strong></p>
+<p>An <em>agent</em> object of class <code>ptblank_agent</code>, an <em>informant</em> of class
 <code>ptblank_informant</code>, a <em>multiagent</em> of class <code>ptblank_multiagent</code>, a table
 scan of class <code>ptblank_tbl_scan</code>, or, customized reporting objects
 (<code>ptblank_agent_report</code>, <code>ptblank_informant_report</code>,
@@ -99,18 +101,23 @@ scan of class <code>ptblank_tbl_scan</code>, or, customized reporting objects
 
 
 <dt>filename</dt>
-<dd><p>The filename to create on disk for the HTML export of the
-object provided. It's recommended that the extension <code>".html"</code> is included.</p></dd>
+<dd><p><em>File name</em></p>
+<p><code>scalar&lt;character&gt;</code> // <strong>required</strong></p>
+<p>The filename to create on disk for the HTML export of the object provided.
+It's recommended that the extension <code>".html"</code> is included.</p></dd>
 
 
 <dt>path</dt>
-<dd><p>An optional path to which the file should be saved (this is
-automatically combined with <code>filename</code>).</p></dd>
+<dd><p><em>File path</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>An optional path to which the file should be saved (this is automatically
+combined with <code>filename</code>).</p></dd>
 
 
 <dt>quiet</dt>
-<dd><p>Should the function <em>not</em> inform when the file is written? By
-default this is <code>FALSE</code>.</p></dd>
+<dd><p><em>Inform (or not) upon file writing</em></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
+<p>Should the function <em>not</em> inform when the file is written?</p></dd>
 
 </dl></div>
     <div class="section level2">

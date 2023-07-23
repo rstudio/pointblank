@@ -79,13 +79,17 @@ replaces any associated table (a data frame, a tibble, objects of class
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
-<dd><p>An <em>agent</em> object of class <code>ptblank_agent</code>, or, an <em>informant</em> of
-class <code>ptblank_informant</code>.</p></dd>
+<dd><p><em>A pointblank agent or informant object</em></p>
+<p><code>obj:&lt;ptblank_agent|ptblank_informant&gt;</code> // <strong>required</strong></p>
+<p>An <em>agent</em> object of class <code>ptblank_agent</code>, or, an <em>informant</em> of class
+<code>ptblank_informant</code>.</p></dd>
 
 
 <dt>tbl</dt>
-<dd><p>The input table for the <em>agent</em> or the <em>informant</em>. This can be a
-data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spark</code> object.
+<dd><p><em>Table or expression for reading in one</em></p>
+<p><code>obj:&lt;tbl_*&gt;|&lt;table reading expression&gt;</code> // <strong>required</strong></p>
+<p>The input table for the <em>agent</em> or the <em>informant</em>. This can be a data
+frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spark</code> object.
 Alternatively, an expression can be supplied to serve as instructions on
 how to retrieve the target table at interrogation- or incorporation-time.
 There are two ways to specify an association to a target table: (1) as a
@@ -95,14 +99,18 @@ table-prep formula, which is a right-hand side (RHS) formula expression
 
 
 <dt>tbl_name</dt>
-<dd><p>A optional name to assign to the new input table object. If
-no value is provided, a name will be generated based on whatever
-information is available.</p></dd>
+<dd><p><em>A table name</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>A optional name to assign to the new input table object. If no value is
+provided, a name will be generated based on whatever information is
+available.</p></dd>
 
 
 <dt>label</dt>
-<dd><p>An optional label for the validation plan. If no value is
-provided then any existing label will be retained.</p></dd>
+<dd><p><em>An optional label for reporting</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>An optional label for the validation plan or information report. If no
+value is provided then any existing label will be retained.</p></dd>
 
 </dl></div>
     <div class="section level2">

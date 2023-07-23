@@ -7,7 +7,12 @@
 info_snippet(x, snippet_name, fn)
 }
 \arguments{
-\item{x}{An informant object of class \code{ptblank_informant}.}
+\item{x}{\emph{The pointblank informant object}
+
+\verb{obj:<ptblank_informant>} // \strong{required}
+
+A \strong{pointblank} \emph{informant} object that is commonly created through the
+use of the \code{\link[=create_informant]{create_informant()}} function.}
 
 \item{snippet_name}{The name for snippet, which is used for interpolating the
 result of the snippet formula into \emph{info text} defined by an \verb{info_*()}

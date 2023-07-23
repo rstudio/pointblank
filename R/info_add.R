@@ -30,7 +30,12 @@
 #' text*."`), we can add more information that makes sense for describing the
 #' table as a whole.
 #' 
-#' @param x An informant object of class `ptblank_informant`.
+#' @param x *The pointblank informant object*
+#' 
+#'   `obj:<ptblank_informant>` // **required**
+#' 
+#'   A **pointblank** *informant* object that is commonly created through the
+#'   use of the [create_informant()] function.
 #' 
 #' @param ... Information entries as a series of named arguments. The names
 #'   refer to subsection titles within the `TABLE` section and the values are
@@ -226,7 +231,12 @@ info_tabular <- function(
 #' series of named arguments (in the form `entry_name = "The *info text*."`)
 #' serves as additional information for the column or columns.
 #' 
-#' @param x An informant object of class `ptblank_informant`.
+#' @param x *The pointblank informant object*
+#' 
+#'   `obj:<ptblank_informant>` // **required**
+#' 
+#'   A **pointblank** *informant* object that is commonly created through the
+#'   use of the [create_informant()] function.
 #' 
 #' @param columns The column or set of columns to focus on. Can be defined as a
 #'   column name in quotes (e.g., `"<column_name>"`), one or more column names
@@ -496,9 +506,16 @@ info_columns <- function(
 #' of the informant) will have a new entry for the `"info"` property. Empty or
 #' missing info text will be pruned from `tbl`.
 #' 
-#' @param x An informant object of class `ptblank_informant`.
+#' @param x *The pointblank informant object*
+#' 
+#'   `obj:<ptblank_informant>` // **required**
+#' 
+#'   A **pointblank** *informant* object that is commonly created through the
+#'   use of the [create_informant()] function.
+#'   
 #' @param tbl The two-column data frame which contains metadata about the target
-#'   table in the informant object. 
+#'   table in the informant object.
+#'   
 #' @param .add Should new text be added to existing text? This is `TRUE` by
 #'   default; setting to `FALSE` replaces any existing text for the `"info"`
 #'   property.
@@ -668,9 +685,16 @@ check_info_columns_tbl <- function(tbl) {
 #' named arguments (in the form `entry_name = "The *info text*."`) to build the
 #' informational content for that section.
 #' 
-#' @param x An informant object of class `ptblank_informant`.
+#' @param x *The pointblank informant object*
+#' 
+#'   `obj:<ptblank_informant>` // **required**
+#' 
+#'   A **pointblank** *informant* object that is commonly created through the
+#'   use of the [create_informant()] function.
+#'   
 #' @param section_name The name of the section for which this information
 #'   pertains.
+#'   
 #' @param ... Information entries as a series of named arguments. The names
 #'   refer to subsection titles within the section defined as `section_name` and
 #'   the RHS is the *info text* (informational text that can be written as
@@ -895,10 +919,17 @@ info_section <- function(
 #' with just the `snippet_name` inside (e.g., `"This column has {n_cat}
 #' categories."`).
 #' 
-#' @param x An informant object of class `ptblank_informant`.
+#' @param x *The pointblank informant object*
+#' 
+#'   `obj:<ptblank_informant>` // **required**
+#' 
+#'   A **pointblank** *informant* object that is commonly created through the
+#'   use of the [create_informant()] function.
+#'   
 #' @param snippet_name The name for snippet, which is used for interpolating the
 #'   result of the snippet formula into *info text* defined by an `info_*()`
 #'   function.
+#'   
 #' @param fn A formula that obtains a snippet of data from the target table.
 #'   It's best to use a leading dot (`.`) that stands for the table itself and
 #'   use pipes to construct a series of operations to be performed on the table

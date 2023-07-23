@@ -34,29 +34,48 @@
 #'   A **pointblank** *agent* object that is commonly created through the use of
 #'   the [create_agent()] function.
 #' 
-#' @param extract_failed An option to collect rows that didn't pass a particular
-#'   validation step. The default is `TRUE` and further options allow for fine
-#'   control of how these rows are collected.
+#' @param extract_failed *Collect failed rows as data extracts*
+#' 
+#'   `scalar<logical>` // *default:* `TRUE`
+#' 
+#'   An option to collect rows that didn't pass a particular validation step.
+#'   The default is `TRUE` and further options allow for fine control of how
+#'   these rows are collected.
 #'   
-#' @param get_first_n If the option to collect non-passing rows is chosen, there
-#'   is the option here to collect the first `n` rows here. Supply the number of
-#'   rows to extract from the top of the non-passing rows table (the ordering of
-#'   data from the original table is retained).
+#' @param get_first_n *Get the first n values*
+#' 
+#'   `scalar<integer>` // *default:* `NULL` (`optional`)
+#' 
+#'   If the option to collect non-passing rows is chosen, there is the option
+#'   here to collect the first `n` rows here. Supply the number of rows to
+#'   extract from the top of the non-passing rows table (the ordering of data
+#'   from the original table is retained).
 #'   
-#' @param sample_n If the option to collect non-passing rows is chosen, this
-#'   option allows for the sampling of `n` rows. Supply the number of rows to
-#'   sample from the non-passing rows table. If `n` is greater than the number
-#'   of non-passing rows, then all the rows will be returned.
+#' @param sample_n *Sample n values*
+#' 
+#'   `scalar<integer>` // *default:* `NULL` (`optional`)
+#' 
+#'   If the option to collect non-passing rows is chosen, this option allows for
+#'   the sampling of `n` rows. Supply the number of rows to sample from the
+#'   non-passing rows table. If `n` is greater than the number of non-passing
+#'   rows, then all the rows will be returned.
 #'   
-#' @param sample_frac If the option to collect non-passing rows is chosen, this
-#'   option allows for the sampling of a fraction of those rows. Provide a
-#'   number in the range of `0` and `1`. The number of rows to return may be
-#'   extremely large (and this is especially when querying remote databases),
-#'   however, the `sample_limit` option will apply a hard limit to the returned
-#'   rows.
+#' @param sample_frac *Sample a fraction of values*
+#' 
+#'   `scalar<numeric>` // *default:* `NULL` (`optional`)
+#' 
+#'   If the option to collect non-passing rows is chosen, this option allows for
+#'   the sampling of a fraction of those rows. Provide a number in the range of
+#'   `0` and `1`. The number of rows to return may be extremely large (and this
+#'   is especially when querying remote databases), however, the `sample_limit`
+#'   option will apply a hard limit to the returned rows.
 #'   
-#' @param sample_limit A value that limits the possible number of rows returned
-#'   when sampling non-passing rows using the `sample_frac` option.
+#' @param sample_limit *Row limit for sampling*
+#' 
+#'   `scalar<integer>` // *default:* `5000`
+#' 
+#'   A value that limits the possible number of rows returned when sampling
+#'   non-passing rows using the `sample_frac` option.
 #'   
 #' @return A `ptblank_agent` object.
 #'   

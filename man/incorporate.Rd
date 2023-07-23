@@ -7,7 +7,12 @@
 incorporate(informant)
 }
 \arguments{
-\item{informant}{An informant object of class \code{ptblank_informant}.}
+\item{informant}{\emph{The pointblank informant object}
+
+\verb{obj:<ptblank_informant>} // \strong{required}
+
+A \strong{pointblank} \emph{informant} object that is commonly created through the
+use of the \code{\link[=create_informant]{create_informant()}} function.}
 }
 \value{
 A \code{ptblank_informant} object.

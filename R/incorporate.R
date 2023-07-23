@@ -30,7 +30,12 @@
 #' info text, etc.) and we can print the *informant* object or use the
 #' [get_informant_report()] function to see the information report.
 #' 
-#' @param informant An informant object of class `ptblank_informant`.
+#' @param informant *The pointblank informant object*
+#' 
+#'   `obj:<ptblank_informant>` // **required**
+#' 
+#'   A **pointblank** *informant* object that is commonly created through the
+#'   use of the [create_informant()] function.
 #' 
 #' @return A `ptblank_informant` object.
 #' 

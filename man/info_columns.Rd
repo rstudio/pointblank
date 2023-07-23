@@ -7,7 +7,12 @@
 info_columns(x, columns, ..., .add = TRUE)
 }
 \arguments{
-\item{x}{An informant object of class \code{ptblank_informant}.}
+\item{x}{\emph{The pointblank informant object}
+
+\verb{obj:<ptblank_informant>} // \strong{required}
+
+A \strong{pointblank} \emph{informant} object that is commonly created through the
+use of the \code{\link[=create_informant]{create_informant()}} function.}
 
 \item{columns}{The column or set of columns to focus on. Can be defined as a
 column name in quotes (e.g., \code{"<column_name>"}), one or more column names

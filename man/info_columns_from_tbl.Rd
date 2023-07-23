@@ -14,12 +14,19 @@ info_columns_from_tbl(x, tbl, .add = TRUE)
 A \strong{pointblank} \emph{informant} object that is commonly created through the
 use of the \code{\link[=create_informant]{create_informant()}} function.}
 
-\item{tbl}{The two-column data frame which contains metadata about the target
-table in the informant object.}
+\item{tbl}{\emph{Metadata table with column information}
 
-\item{.add}{Should new text be added to existing text? This is \code{TRUE} by
-default; setting to \code{FALSE} replaces any existing text for the \code{"info"}
-property.}
+\verb{obj:<tbl_*>} // \strong{required}
+
+The two-column data frame which contains metadata about the target table in
+the informant object.}
+
+\item{.add}{\emph{Add to existing info text}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+Should new text be added to existing text? This is \code{TRUE} by default;
+setting to \code{FALSE} replaces any existing text for the \code{"info"} property.}
 }
 \value{
 A \code{ptblank_informant} object.

@@ -14,18 +14,25 @@ info_snippet(x, snippet_name, fn)
 A \strong{pointblank} \emph{informant} object that is commonly created through the
 use of the \code{\link[=create_informant]{create_informant()}} function.}
 
-\item{snippet_name}{The name for snippet, which is used for interpolating the
-result of the snippet formula into \emph{info text} defined by an \verb{info_*()}
-function.}
+\item{snippet_name}{\emph{The snippet name}
 
-\item{fn}{A formula that obtains a snippet of data from the target table.
-It's best to use a leading dot (\code{.}) that stands for the table itself and
-use pipes to construct a series of operations to be performed on the table
-(e.g., \code{~ . \%>\% dplyr::pull(column_2) \%>\% max(na.rm = TRUE)}). So long as
-the result is a length-1 vector, it'll likely be valid for insertion into
-some info text. Alternatively, a \verb{snip_*()} function can be used here
-(these functions always return a formula that's suitable for all types of
-data sources).}
+`scalar\if{html}{\out{<character>}}`` // \strong{required}
+
+The name for snippet, which is used for interpolating the result of the
+snippet formula into \emph{info text} defined by an \verb{info_*()} function.}
+
+\item{fn}{\emph{Function for snippet text generation}
+
+\verb{<function>} // \strong{required}
+
+A formula that obtains a snippet of data from the target table. It's best
+to use a leading dot (\code{.}) that stands for the table itself and use pipes
+to construct a series of operations to be performed on the table (e.g.,
+\code{~ . \%>\% dplyr::pull(column_2) \%>\% max(na.rm = TRUE)}). So long as the
+result is a length-1 vector, it'll likely be valid for insertion into some
+info text. Alternatively, a \verb{snip_*()} function can be used here (these
+functions always return a formula that's suitable for all types of data
+sources).}
 }
 \value{
 A \code{ptblank_informant} object.

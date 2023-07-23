@@ -37,10 +37,14 @@
 #'   A **pointblank** *informant* object that is commonly created through the
 #'   use of the [create_informant()] function.
 #' 
-#' @param ... Information entries as a series of named arguments. The names
-#'   refer to subsection titles within the `TABLE` section and the values are
-#'   the *info text* (informational text that can be written as Markdown and
-#'   further styled with *Text Tricks*).
+#' @param ... *Information entries*
+#' 
+#'   `<info-text expressions>` // **required**
+#' 
+#'   Information entries as a series of named arguments. The names refer to
+#'   subsection titles within the `TABLE` section and the values are the *info
+#'   text* (informational text that can be written as Markdown and further
+#'   styled with *Text Tricks*).
 #' 
 #' @return A `ptblank_informant` object.
 #' 
@@ -238,18 +242,30 @@ info_tabular <- function(
 #'   A **pointblank** *informant* object that is commonly created through the
 #'   use of the [create_informant()] function.
 #' 
-#' @param columns The column or set of columns to focus on. Can be defined as a
-#'   column name in quotes (e.g., `"<column_name>"`), one or more column names
-#'   in `vars()` (e.g., `vars(<column_name>)`), or with a select helper (e.g.,
+#' @param columns *The target columns*
+#'   
+#'   `vector<character>|vars(<columns>)`` // **required**
+#' 
+#'   The column or set of columns to focus on. Can be defined as a column name
+#'   in quotes (e.g., `"<column_name>"`), one or more column names in `vars()`
+#'   (e.g., `vars(<column_name>)`), or with a select helper (e.g.,
 #'   `starts_with("date")`).
 #'   
-#' @param ... Information entries as a series of named arguments. The names
-#'   refer to subsection titles within `COLUMN` -> `<COLUMN_NAME>` and the RHS
-#'   contains the *info text* (informational text that can be written as
-#'   Markdown and further styled with *Text Tricks*).
+#' @param ... *Information entries*
+#' 
+#'   `<info-text expressions>` // **required**
 #'   
-#' @param .add Should new text be added to existing text? This is `TRUE` by
-#'   default; setting to `FALSE` replaces any existing text for a property.
+#'   Information entries as a series of named arguments. The names refer to
+#'   subsection titles within `COLUMN` -> `<COLUMN_NAME>` and the RHS contains
+#'   the *info text* (informational text that can be written as Markdown and
+#'   further styled with *Text Tricks*).
+#'   
+#' @param .add *Add to existing info text*
+#' 
+#'   `scalar<logical>` // *default:* `TRUE`
+#' 
+#'   Should new text be added to existing text? This is `TRUE` by default;
+#'   setting to `FALSE` replaces any existing text for a property.
 #' 
 #' @return A `ptblank_informant` object.
 #' 
@@ -513,12 +529,19 @@ info_columns <- function(
 #'   A **pointblank** *informant* object that is commonly created through the
 #'   use of the [create_informant()] function.
 #'   
-#' @param tbl The two-column data frame which contains metadata about the target
-#'   table in the informant object.
+#' @param tbl *Metadata table with column information*
+#' 
+#'   `obj:<tbl_*>` // **required**
+#' 
+#'   The two-column data frame which contains metadata about the target table in
+#'   the informant object.
 #'   
-#' @param .add Should new text be added to existing text? This is `TRUE` by
-#'   default; setting to `FALSE` replaces any existing text for the `"info"`
-#'   property.
+#' @param .add *Add to existing info text*
+#' 
+#'   `scalar<logical>` // *default:* `TRUE`
+#' 
+#'   Should new text be added to existing text? This is `TRUE` by default;
+#'   setting to `FALSE` replaces any existing text for the `"info"` property.
 #' 
 #' @return A `ptblank_informant` object.
 #' 
@@ -692,13 +715,20 @@ check_info_columns_tbl <- function(tbl) {
 #'   A **pointblank** *informant* object that is commonly created through the
 #'   use of the [create_informant()] function.
 #'   
-#' @param section_name The name of the section for which this information
-#'   pertains.
+#' @param section_name *The section name*
+#' 
+#'   `scalar<character>`` // **required**
+#' 
+#'   The name of the section for which this information pertains.
 #'   
-#' @param ... Information entries as a series of named arguments. The names
-#'   refer to subsection titles within the section defined as `section_name` and
-#'   the RHS is the *info text* (informational text that can be written as
-#'   Markdown and further styled with *Text Tricks*).
+#' @param ... *Information entries*
+#' 
+#'   `<info-text expressions>` // **required**
+#' 
+#'   Information entries as a series of named arguments. The names refer to
+#'   subsection titles within the section defined as `section_name` and the RHS
+#'   is the *info text* (informational text that can be written as Markdown and
+#'   further styled with *Text Tricks*).
 #' 
 #' @return A `ptblank_informant` object.
 #' 
@@ -747,6 +777,7 @@ check_info_columns_tbl <- function(tbl) {
 #' common being in the form of hexadecimal color values or as CSS color names.
 #' 
 #' @section YAML:
+#' 
 #' A **pointblank** informant can be written to YAML with [yaml_write()] and the
 #' resulting YAML can be used to regenerate an informant (with
 #' [yaml_read_informant()]) or perform the 'incorporate' action using the target
@@ -925,19 +956,26 @@ info_section <- function(
 #' 
 #'   A **pointblank** *informant* object that is commonly created through the
 #'   use of the [create_informant()] function.
+#' 
+#' @param snippet_name *The snippet name*
+#' 
+#'   `scalar<character>`` // **required**
+#' 
+#'   The name for snippet, which is used for interpolating the result of the
+#'   snippet formula into *info text* defined by an `info_*()` function.
 #'   
-#' @param snippet_name The name for snippet, which is used for interpolating the
-#'   result of the snippet formula into *info text* defined by an `info_*()`
-#'   function.
-#'   
-#' @param fn A formula that obtains a snippet of data from the target table.
-#'   It's best to use a leading dot (`.`) that stands for the table itself and
-#'   use pipes to construct a series of operations to be performed on the table
-#'   (e.g., `~ . %>% dplyr::pull(column_2) %>% max(na.rm = TRUE)`). So long as
-#'   the result is a length-1 vector, it'll likely be valid for insertion into
-#'   some info text. Alternatively, a `snip_*()` function can be used here
-#'   (these functions always return a formula that's suitable for all types of
-#'   data sources).
+#' @param fn *Function for snippet text generation*
+#' 
+#'   `<function>` // **required**
+#' 
+#'   A formula that obtains a snippet of data from the target table. It's best
+#'   to use a leading dot (`.`) that stands for the table itself and use pipes
+#'   to construct a series of operations to be performed on the table (e.g.,
+#'   `~ . %>% dplyr::pull(column_2) %>% max(na.rm = TRUE)`). So long as the
+#'   result is a length-1 vector, it'll likely be valid for insertion into some
+#'   info text. Alternatively, a `snip_*()` function can be used here (these
+#'   functions always return a formula that's suitable for all types of data
+#'   sources).
 #' 
 #' @return A `ptblank_informant` object.
 #' 
@@ -1116,39 +1154,85 @@ info_snippet <- function(
 #' provided to `fn`) to get a catalog list from a table column. You can limit
 #' the of items in that list with the `limit` value.
 #' 
-#' @param column The name of the column that contains the target values.
-#' @param limit A limit of items put into the generated list. The returned text
-#'   will state the remaining number of items beyond the `limit`. By default,
-#'   the limit is `5`.
-#' @param sorting A keyword used to designate the type of sorting to use for the
-#'   list. The three options are `"inorder"` (the default), `"infreq"`, and
-#'   `"inseq"`. With `"inorder"`, distinct items are listed in the order in
-#'   which they first appear. Using `"infreq"` orders the items by the
-#'   decreasing frequency of each item. The `"inseq"` option applies an
-#'   alphanumeric sorting to the distinct list items.
-#' @param reverse An option to reverse the ordering of list items. By default,
-#'   this is `FALSE` but using `TRUE` will reverse the items before applying the
+#' @param column *The target column*
+#'   
+#'   `scalar<character>`` // **required**
+#' 
+#'   The name of the column that contains the target values.
+#' 
+#' @param limit *Limit for list length*
+#' 
+#'   `scalar<integer>` // *default:* `5`
+#' 
+#'   A limit of items put into the generated list. The returned text will state
+#'   the remaining number of items beyond the `limit`.
+#' 
+#' @param sorting *Type of sorting within list*
+#' 
+#'   `singl-kw:[inorder|infreq|inseq]` // *default:* `"inorder"`
+#' 
+#'   A keyword used to designate the type of sorting to use for the list. The
+#'   three options are `"inorder"` (the default), `"infreq"`, and `"inseq"`.
+#'   With `"inorder"`, distinct items are listed in the order in which they
+#'   first appear. Using `"infreq"` orders the items by the decreasing frequency
+#'   of each item. The `"inseq"` option applies an alphanumeric sorting to the
+#'   distinct list items.
+#' 
+#' @param reverse *Reversal of list order*
+#' 
+#'   `scalar<logical>` // *default:* `FALSE`
+#' 
+#'   An option to reverse the ordering of list items. By default, this is
+#'   `FALSE` but using `TRUE` will reverse the items before applying the
 #'   `limit`.
-#' @param sep The separator to use between list items. By default, this is a
-#'   comma.
-#' @param and_or The type of conjunction to use between the final and
-#'   penultimate list items (should the item length be below the `limit` value).
-#'   If `NULL` (the default) is used, then the 'and' conjunction will be used.
-#'   Alternatively, the following keywords can be used: `"and"`, `"or"`, or
-#'   an empty string (for no conjunction at all).
-#' @param oxford Whether to use an Oxford comma under certain conditions. By
-#'   default, this is `TRUE`.
-#' @param as_code Should each list item appear in a 'code font' (i.e., as
-#'   monospaced text)? By default this is `TRUE`. Using `FALSE` keeps all list
-#'   items in the same font as the rest of the information report.
-#' @param quot_str An option for whether list items should be set in double
-#'   quotes. If `NULL` (the default), the quotation marks are mainly associated
-#'   with list items derived from `character` or `factor` values; numbers,
-#'   dates, and logical values won't have quotation marks. We can explicitly use
-#'   quotations (or not) with either `TRUE` or `FALSE` here.
-#' @param lang The language to use for any joining words (from the `and_or`
-#'   option) or additional words in the generated list string. By default,
-#'   `NULL` will use whichever `lang` setting is available in the parent
+#' 
+#' @param sep *Separator text for list*
+#' 
+#'   `scalar<character>` // *default:* `","`
+#' 
+#'   The separator to use between list items. By default, this is a comma.
+#' 
+#' @param and_or *Use of 'and' or 'or' within list*
+#' 
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#' 
+#'   The type of conjunction to use between the final and penultimate list items
+#'   (should the item length be below the `limit` value). If `NULL` (the
+#'   default) is used, then the 'and' conjunction will be used. Alternatively,
+#'   the following keywords can be used: `"and"`, `"or"`, or an empty string
+#'   (for no conjunction at all).
+#' 
+#' @param oxford *Usage of oxford comma*
+#' 
+#'   `scalar<logical>` // *default:* `TRUE`
+#' 
+#'   Whether to use an Oxford comma under certain conditions.
+#' 
+#' @param as_code *Treat items as code*
+#' 
+#'   `scalar<logical>` // *default:* `TRUE`
+#' 
+#'   Should each list item appear in a 'code font' (i.e., as monospaced text)?
+#'   By default this is `TRUE`. Using `FALSE` keeps all list items in the same
+#'   font as the rest of the information report.
+#' 
+#' @param quot_str *Set items in double quotes*
+#' 
+#'   `scalar<logical>` // *default:* `NULL` (`optional`)
+#' 
+#'   An option for whether list items should be set in double quotes. If `NULL`
+#'   (the default), the quotation marks are mainly associated with list items
+#'   derived from `character` or `factor` values; numbers, dates, and logical
+#'   values won't have quotation marks. We can explicitly use quotations (or
+#'   not) with either `TRUE` or `FALSE` here.
+#' 
+#' @param lang *Reporting language*
+#' 
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#' 
+#'   The language to use for any joining words (from the `and_or` option) or
+#'   additional words in the generated list string. By default, `NULL` will use
+#'   whichever `lang` setting is available in the parent
 #'   *informant* object (this is settable in the [create_informant()] `lang`
 #'   argument). If specified here as an override, the language options are
 #'   English (`"en"`), French (`"fr"`), German (`"de"`), Italian (`"it"`),
@@ -1373,10 +1457,19 @@ snip_list <- function(
 #' 3. Bowley's seven-figure summary (`"bowley"`): minimum, P10, Q1, median, Q3,
 #' P90, maximum
 #'
-#' @param column The name of the column that contains the target values.
-#' @param type The type of summary. By default, the `"5num"` keyword is used to
-#'   generate a five-number summary. Two other options provide seven-number
-#'   summaries: `"7num"` and `"bowley"`.
+#' @param column *The target column*
+#'   
+#'   `scalar<character>`` // **required**
+#' 
+#'   The name of the column that contains the target values.
+#' 
+#' @param type *Type of statistical summary*
+#' 
+#'   `singl-kw:[5num|7num|bowley]` // *default:* `"5num"`
+#' 
+#'   The type of summary. By default, the `"5num"` keyword is used to generate a
+#'   five-number summary. Two other options provide seven-number summaries:
+#'   `"7num"` and `"bowley"`.
 #'   
 #' @return A formula needed for [info_snippet()]'s `fn` argument.
 #' 
@@ -1451,7 +1544,11 @@ snip_stats <- function(
 #' (i.e., provided to `fn`) to get the lowest numerical, time value, or
 #' alphabetical value from a column in the target table.
 #' 
-#' @param column The name of the column that contains the target values.
+#' @param column *The target column*
+#'   
+#'   `scalar<character>`` // **required**
+#' 
+#'   The name of the column that contains the target values.
 #'   
 #' @return A formula needed for [info_snippet()]'s `fn` argument.
 #' 
@@ -1521,7 +1618,11 @@ snip_lowest <- function(column) {
 #' (i.e., provided to `fn`) to get the highest numerical, time value, or
 #' alphabetical value from a column in the target table.
 #' 
-#' @param column The name of the column that contains the target values.
+#' @param column *The target column*
+#'   
+#'   `scalar<character>`` // **required**
+#' 
+#'   The name of the column that contains the target values.
 #'   
 #' @return A formula needed for [info_snippet()]'s `fn` argument.
 #' 

@@ -32,10 +32,19 @@
 #' inactive at [interrogate()] time unless the columns `column_1` and `column_2`
 #' are both present.
 #' 
-#' @param x The table object.
+#' @param x *A data table*
 #' 
-#' @param columns One or more column names that are to be checked for existence
-#' in the table `x`.
+#'   `obj:<tbl_*>` // **required**
+#' 
+#'   The input table. This can be a data frame, tibble, a `tbl_dbi` object, or a
+#'   `tbl_spark` object.
+#' 
+#' @param columns *The target columns*
+#'   
+#'   `vector<character>|vars(<columns>)`` // **required**
+#' 
+#'   One or more column names that are to be checked for existence in the table
+#'   `x`.
 #'   
 #' @return A length-1 logical vector.
 #' 

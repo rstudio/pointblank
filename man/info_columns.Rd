@@ -14,18 +14,30 @@ info_columns(x, columns, ..., .add = TRUE)
 A \strong{pointblank} \emph{informant} object that is commonly created through the
 use of the \code{\link[=create_informant]{create_informant()}} function.}
 
-\item{columns}{The column or set of columns to focus on. Can be defined as a
-column name in quotes (e.g., \code{"<column_name>"}), one or more column names
-in \code{vars()} (e.g., \verb{vars(<column_name>)}), or with a select helper (e.g.,
+\item{columns}{\emph{The target columns}
+
+`vector\if{html}{\out{<character>}}|vars(\if{html}{\out{<columns>}})`` // \strong{required}
+
+The column or set of columns to focus on. Can be defined as a column name
+in quotes (e.g., \code{"<column_name>"}), one or more column names in \code{vars()}
+(e.g., \verb{vars(<column_name>)}), or with a select helper (e.g.,
 \code{starts_with("date")}).}
 
-\item{...}{Information entries as a series of named arguments. The names
-refer to subsection titles within \code{COLUMN} -> \verb{<COLUMN_NAME>} and the RHS
-contains the \emph{info text} (informational text that can be written as
-Markdown and further styled with \emph{Text Tricks}).}
+\item{...}{\emph{Information entries}
 
-\item{.add}{Should new text be added to existing text? This is \code{TRUE} by
-default; setting to \code{FALSE} replaces any existing text for a property.}
+\verb{<info-text expressions>} // \strong{required}
+
+Information entries as a series of named arguments. The names refer to
+subsection titles within \code{COLUMN} -> \verb{<COLUMN_NAME>} and the RHS contains
+the \emph{info text} (informational text that can be written as Markdown and
+further styled with \emph{Text Tricks}).}
+
+\item{.add}{\emph{Add to existing info text}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+Should new text be added to existing text? This is \code{TRUE} by default;
+setting to \code{FALSE} replaces any existing text for a property.}
 }
 \value{
 A \code{ptblank_informant} object.

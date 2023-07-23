@@ -7,7 +7,11 @@
 snip_highest(column)
 }
 \arguments{
-\item{column}{The name of the column that contains the target values.}
+\item{column}{\emph{The target column}
+
+`scalar\if{html}{\out{<character>}}`` // \strong{required}
+
+The name of the column that contains the target values.}
 }
 \value{
 A formula needed for \code{\link[=info_snippet]{info_snippet()}}'s \code{fn} argument.

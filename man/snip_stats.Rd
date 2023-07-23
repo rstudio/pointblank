@@ -7,11 +7,19 @@
 snip_stats(column, type = c("5num", "7num", "bowley"))
 }
 \arguments{
-\item{column}{The name of the column that contains the target values.}
+\item{column}{\emph{The target column}
 
-\item{type}{The type of summary. By default, the \code{"5num"} keyword is used to
-generate a five-number summary. Two other options provide seven-number
-summaries: \code{"7num"} and \code{"bowley"}.}
+`scalar\if{html}{\out{<character>}}`` // \strong{required}
+
+The name of the column that contains the target values.}
+
+\item{type}{\emph{Type of statistical summary}
+
+\verb{singl-kw:[5num|7num|bowley]} // \emph{default:} \code{"5num"}
+
+The type of summary. By default, the \code{"5num"} keyword is used to generate a
+five-number summary. Two other options provide seven-number summaries:
+\code{"7num"} and \code{"bowley"}.}
 }
 \value{
 A formula needed for \code{\link[=info_snippet]{info_snippet()}}'s \code{fn} argument.

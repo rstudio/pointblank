@@ -14,13 +14,20 @@ info_section(x, section_name, ...)
 A \strong{pointblank} \emph{informant} object that is commonly created through the
 use of the \code{\link[=create_informant]{create_informant()}} function.}
 
-\item{section_name}{The name of the section for which this information
-pertains.}
+\item{section_name}{\emph{The section name}
 
-\item{...}{Information entries as a series of named arguments. The names
-refer to subsection titles within the section defined as \code{section_name} and
-the RHS is the \emph{info text} (informational text that can be written as
-Markdown and further styled with \emph{Text Tricks}).}
+`scalar\if{html}{\out{<character>}}`` // \strong{required}
+
+The name of the section for which this information pertains.}
+
+\item{...}{\emph{Information entries}
+
+\verb{<info-text expressions>} // \strong{required}
+
+Information entries as a series of named arguments. The names refer to
+subsection titles within the section defined as \code{section_name} and the RHS
+is the \emph{info text} (informational text that can be written as Markdown and
+further styled with \emph{Text Tricks}).}
 }
 \value{
 A \code{ptblank_informant} object.
@@ -80,6 +87,7 @@ common being in the form of hexadecimal color values or as CSS color names.
 }
 
 \section{YAML}{
+
 
 A \strong{pointblank} informant can be written to YAML with \code{\link[=yaml_write]{yaml_write()}} and the
 resulting YAML can be used to regenerate an informant (with

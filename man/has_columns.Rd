@@ -7,10 +7,19 @@
 has_columns(x, columns)
 }
 \arguments{
-\item{x}{The table object.}
+\item{x}{\emph{A data table}
 
-\item{columns}{One or more column names that are to be checked for existence
-in the table \code{x}.}
+\verb{obj:<tbl_*>} // \strong{required}
+
+The input table. This can be a data frame, tibble, a \code{tbl_dbi} object, or a
+\code{tbl_spark} object.}
+
+\item{columns}{\emph{The target columns}
+
+`vector\if{html}{\out{<character>}}|vars(\if{html}{\out{<columns>}})`` // \strong{required}
+
+One or more column names that are to be checked for existence in the table
+\code{x}.}
 }
 \value{
 A length-1 logical vector.

@@ -18,48 +18,85 @@ snip_list(
 )
 }
 \arguments{
-\item{column}{The name of the column that contains the target values.}
+\item{column}{\emph{The target column}
 
-\item{limit}{A limit of items put into the generated list. The returned text
-will state the remaining number of items beyond the \code{limit}. By default,
-the limit is \code{5}.}
+`scalar\if{html}{\out{<character>}}`` // \strong{required}
 
-\item{sorting}{A keyword used to designate the type of sorting to use for the
-list. The three options are \code{"inorder"} (the default), \code{"infreq"}, and
-\code{"inseq"}. With \code{"inorder"}, distinct items are listed in the order in
-which they first appear. Using \code{"infreq"} orders the items by the
-decreasing frequency of each item. The \code{"inseq"} option applies an
-alphanumeric sorting to the distinct list items.}
+The name of the column that contains the target values.}
 
-\item{reverse}{An option to reverse the ordering of list items. By default,
-this is \code{FALSE} but using \code{TRUE} will reverse the items before applying the
+\item{limit}{\emph{Limit for list length}
+
+\verb{scalar<integer>} // \emph{default:} \code{5}
+
+A limit of items put into the generated list. The returned text will state
+the remaining number of items beyond the \code{limit}.}
+
+\item{sorting}{\emph{Type of sorting within list}
+
+\verb{singl-kw:[inorder|infreq|inseq]} // \emph{default:} \code{"inorder"}
+
+A keyword used to designate the type of sorting to use for the list. The
+three options are \code{"inorder"} (the default), \code{"infreq"}, and \code{"inseq"}.
+With \code{"inorder"}, distinct items are listed in the order in which they
+first appear. Using \code{"infreq"} orders the items by the decreasing frequency
+of each item. The \code{"inseq"} option applies an alphanumeric sorting to the
+distinct list items.}
+
+\item{reverse}{\emph{Reversal of list order}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+An option to reverse the ordering of list items. By default, this is
+\code{FALSE} but using \code{TRUE} will reverse the items before applying the
 \code{limit}.}
 
-\item{sep}{The separator to use between list items. By default, this is a
-comma.}
+\item{sep}{\emph{Separator text for list}
 
-\item{and_or}{The type of conjunction to use between the final and
-penultimate list items (should the item length be below the \code{limit} value).
-If \code{NULL} (the default) is used, then the 'and' conjunction will be used.
-Alternatively, the following keywords can be used: \code{"and"}, \code{"or"}, or
-an empty string (for no conjunction at all).}
+\verb{scalar<character>} // \emph{default:} \code{","}
 
-\item{oxford}{Whether to use an Oxford comma under certain conditions. By
-default, this is \code{TRUE}.}
+The separator to use between list items. By default, this is a comma.}
 
-\item{as_code}{Should each list item appear in a 'code font' (i.e., as
-monospaced text)? By default this is \code{TRUE}. Using \code{FALSE} keeps all list
-items in the same font as the rest of the information report.}
+\item{and_or}{\emph{Use of 'and' or 'or' within list}
 
-\item{quot_str}{An option for whether list items should be set in double
-quotes. If \code{NULL} (the default), the quotation marks are mainly associated
-with list items derived from \code{character} or \code{factor} values; numbers,
-dates, and logical values won't have quotation marks. We can explicitly use
-quotations (or not) with either \code{TRUE} or \code{FALSE} here.}
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
-\item{lang}{The language to use for any joining words (from the \code{and_or}
-option) or additional words in the generated list string. By default,
-\code{NULL} will use whichever \code{lang} setting is available in the parent
+The type of conjunction to use between the final and penultimate list items
+(should the item length be below the \code{limit} value). If \code{NULL} (the
+default) is used, then the 'and' conjunction will be used. Alternatively,
+the following keywords can be used: \code{"and"}, \code{"or"}, or an empty string
+(for no conjunction at all).}
+
+\item{oxford}{\emph{Usage of oxford comma}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+Whether to use an Oxford comma under certain conditions.}
+
+\item{as_code}{\emph{Treat items as code}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+Should each list item appear in a 'code font' (i.e., as monospaced text)?
+By default this is \code{TRUE}. Using \code{FALSE} keeps all list items in the same
+font as the rest of the information report.}
+
+\item{quot_str}{\emph{Set items in double quotes}
+
+\verb{scalar<logical>} // \emph{default:} \code{NULL} (\code{optional})
+
+An option for whether list items should be set in double quotes. If \code{NULL}
+(the default), the quotation marks are mainly associated with list items
+derived from \code{character} or \code{factor} values; numbers, dates, and logical
+values won't have quotation marks. We can explicitly use quotations (or
+not) with either \code{TRUE} or \code{FALSE} here.}
+
+\item{lang}{\emph{Reporting language}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+The language to use for any joining words (from the \code{and_or} option) or
+additional words in the generated list string. By default, \code{NULL} will use
+whichever \code{lang} setting is available in the parent
 \emph{informant} object (this is settable in the \code{\link[=create_informant]{create_informant()}} \code{lang}
 argument). If specified here as an override, the language options are
 English (\code{"en"}), French (\code{"fr"}), German (\code{"de"}), Italian (\code{"it"}),

@@ -14,10 +14,14 @@ info_tabular(x, ...)
 A \strong{pointblank} \emph{informant} object that is commonly created through the
 use of the \code{\link[=create_informant]{create_informant()}} function.}
 
-\item{...}{Information entries as a series of named arguments. The names
-refer to subsection titles within the \code{TABLE} section and the values are
-the \emph{info text} (informational text that can be written as Markdown and
-further styled with \emph{Text Tricks}).}
+\item{...}{\emph{Information entries}
+
+\verb{<info-text expressions>} // \strong{required}
+
+Information entries as a series of named arguments. The names refer to
+subsection titles within the \code{TABLE} section and the values are the \emph{info
+text} (informational text that can be written as Markdown and further
+styled with \emph{Text Tricks}).}
 }
 \value{
 A \code{ptblank_informant} object.

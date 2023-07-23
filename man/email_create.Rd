@@ -12,15 +12,15 @@ email_create(
 )
 }
 \arguments{
-\item{msg_header, msg_body, msg_footer}{Content for the header, body, and
-footer components of the HTML email message.}
-
-\item{agent}{\emph{The pointblank agent object}
+\item{x}{\emph{The pointblank agent object}
 
 \verb{obj:<ptblank_agent>} // \strong{required}
 
 A \strong{pointblank} \emph{agent} object that is commonly created through the use of
 the \code{\link[=create_agent]{create_agent()}} function.}
+
+\item{msg_header, msg_body, msg_footer}{Content for the header, body, and
+footer components of the HTML email message.}
 }
 \value{
 A \strong{blastula} \code{email_message} object.

@@ -248,7 +248,7 @@ email_blast <- function(
 #' **blastula** `email_message` message object will be created and printing it
 #' will make the HTML email message appear in the Viewer.
 #'
-#' @param agent *The pointblank agent object*
+#' @param x *The pointblank agent object*
 #' 
 #'   `obj:<ptblank_agent>` // **required**
 #' 

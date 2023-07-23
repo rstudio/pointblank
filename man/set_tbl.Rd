@@ -7,11 +7,19 @@
 set_tbl(x, tbl, tbl_name = NULL, label = NULL)
 }
 \arguments{
-\item{x}{An \emph{agent} object of class \code{ptblank_agent}, or, an \emph{informant} of
-class \code{ptblank_informant}.}
+\item{x}{\emph{A pointblank agent or informant object}
 
-\item{tbl}{The input table for the \emph{agent} or the \emph{informant}. This can be a
-data frame, a tibble, a \code{tbl_dbi} object, or a \code{tbl_spark} object.
+\verb{obj:<ptblank_agent|ptblank_informant>} // \strong{required}
+
+An \emph{agent} object of class \code{ptblank_agent}, or, an \emph{informant} of class
+\code{ptblank_informant}.}
+
+\item{tbl}{\emph{Table or expression for reading in one}
+
+\verb{obj:<tbl_*>|<table reading expression>} // \strong{required}
+
+The input table for the \emph{agent} or the \emph{informant}. This can be a data
+frame, a tibble, a \code{tbl_dbi} object, or a \code{tbl_spark} object.
 Alternatively, an expression can be supplied to serve as instructions on
 how to retrieve the target table at interrogation- or incorporation-time.
 There are two ways to specify an association to a target table: (1) as a
@@ -19,12 +27,20 @@ table-prep formula, which is a right-hand side (RHS) formula expression
 (e.g., \verb{~ \{ <table reading code>\}}), or (2) as a function (e.g.,
 \verb{function() \{ <table reading code>\}}).}
 
-\item{tbl_name}{A optional name to assign to the new input table object. If
-no value is provided, a name will be generated based on whatever
-information is available.}
+\item{tbl_name}{\emph{A table name}
 
-\item{label}{An optional label for the validation plan. If no value is
-provided then any existing label will be retained.}
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+A optional name to assign to the new input table object. If no value is
+provided, a name will be generated based on whatever information is
+available.}
+
+\item{label}{\emph{An optional label for reporting}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional label for the validation plan or information report. If no
+value is provided then any existing label will be retained.}
 }
 \description{
 Setting a data table to an \emph{agent} or an \emph{informant} with \code{set_tbl()}

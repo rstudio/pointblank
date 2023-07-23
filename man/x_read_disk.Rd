@@ -7,13 +7,23 @@
 x_read_disk(filename, path = NULL, quiet = FALSE)
 }
 \arguments{
-\item{filename}{The name of a file that was previously written by
-\code{\link[=x_write_disk]{x_write_disk()}}.}
+\item{filename}{\emph{File name}
 
-\item{path}{An optional path to the file (combined with \code{filename}).}
+\verb{scalar<character>} // \strong{required}
 
-\item{quiet}{Should the function \emph{not} inform when the file is read? By
-default this is \code{FALSE}.}
+The name of a file that was previously written by \code{\link[=x_write_disk]{x_write_disk()}}.}
+
+\item{path}{\emph{File path}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional path to the file (combined with \code{filename}).}
+
+\item{quiet}{\emph{Inform (or not) upon file writing}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+Should the function \emph{not} inform when the file is written?}
 }
 \value{
 Either a \code{ptblank_agent}, \code{ptblank_informant}, or a

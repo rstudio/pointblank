@@ -40,16 +40,31 @@
 #' use the [set_tbl()] with a similarly crafted `tbl` expression to ensure that
 #' an *agent* or *informant* can retrieve a table at a later time.
 #' 
-#' @param x An *agent* object of class `ptblank_agent`, an *informant* of class
+#' @param x *One of several types of objects*
+#' 
+#'   `<object>` // **required**
+#' 
+#'   An *agent* object of class `ptblank_agent`, an *informant* of class
 #'   `ptblank_informant`, or an table scan of class `ptblank_tbl_scan`.
 #'   
-#' @param filename The filename to create on disk for the `agent`, `informant`,
-#'   or table scan.
+#' @param filename *File name*
+#' 
+#'   `scalar<character>` // **required**
+#' 
+#'   The filename to create on disk for the `agent`, `informant`, or table scan.
 #'   
-#' @param path An optional path to which the file should be saved (this is
-#'   automatically combined with `filename`).
+#' @param path *File path*
+#' 
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#' 
+#'   An optional path to which the file should be saved (this is automatically
+#'   combined with `filename`).
 #'   
-#' @param keep_tbl An option to keep a data table that is associated with the
+#' @param keep_tbl *Keep data table inside object*
+#' 
+#'   `scalar<logical>` // *default:* `FALSE`
+#' 
+#'   An option to keep a data table that is associated with the
 #'   *agent* or *informant* (which is the case when the *agent*, for example, is
 #'   created using `create_agent(tbl = <data table, ...)`). The default is
 #'   `FALSE` where the data table is removed before writing to disk. For
@@ -57,12 +72,19 @@
 #'   (`tbl_spark`) the table is always removed (even if `keep_tbl` is set to
 #'   `TRUE`).
 #'   
-#' @param keep_extracts An option to keep any collected extract data for failing
-#'   rows. Only applies to *agent* objects. By default, this is `FALSE` (i.e.,
-#'   extract data is removed).
+#' @param keep_extracts *Keep data extracts inside object*
+#' 
+#'   `scalar<logical>` // *default:* `FALSE`
+#' 
+#'   An option to keep any collected extract data for failing rows. Only applies
+#'   to *agent* objects. By default, this is `FALSE` (i.e., extract data is
+#'   removed).
 #'   
-#' @param quiet Should the function *not* inform when the file is written? By
-#'   default this is `FALSE`.
+#' @param quiet *Inform (or not) upon file writing*
+#' 
+#'   `scalar<logical>` // *default:* `FALSE`
+#' 
+#'   Should the function *not* inform when the file is written?
 #'   
 #' @return Invisibly returns `TRUE` if the file has been written.
 #' 
@@ -390,13 +412,23 @@ x_write_disk <- function(
 #' object, using [incorporate()] will update aspects of the reporting such as
 #' table dimensions, and info snippets/text will be regenerated.
 #' 
-#' @param filename The name of a file that was previously written by
-#'   [x_write_disk()].
-#'   
-#' @param path An optional path to the file (combined with `filename`).
+#' @param filename *File name*
 #' 
-#' @param quiet Should the function *not* inform when the file is read? By
-#'   default this is `FALSE`.
+#'   `scalar<character>` // **required**
+#' 
+#'   The name of a file that was previously written by [x_write_disk()].
+#'   
+#' @param path *File path*
+#' 
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#' 
+#'   An optional path to the file (combined with `filename`).
+#' 
+#' @param quiet *Inform (or not) upon file writing*
+#' 
+#'   `scalar<logical>` // *default:* `FALSE`
+#' 
+#'   Should the function *not* inform when the file is written?
 #' 
 #' @return Either a `ptblank_agent`, `ptblank_informant`, or a
 #'   `ptblank_tbl_scan` object.
@@ -503,20 +535,35 @@ x_read_disk <- function(
 #' document written to disk is self-contained and easily viewable in a web
 #' browser.
 #'
-#' @param x An *agent* object of class `ptblank_agent`, an *informant* of class
+#' @param x *One of several types of objects*
+#' 
+#'   `<object>` // **required**
+#' 
+#'   An *agent* object of class `ptblank_agent`, an *informant* of class
 #'   `ptblank_informant`, a *multiagent* of class `ptblank_multiagent`, a table
 #'   scan of class `ptblank_tbl_scan`, or, customized reporting objects
 #'   (`ptblank_agent_report`, `ptblank_informant_report`,
 #'   `ptblank_multiagent_report.wide`, `ptblank_multiagent_report.long`).
 #'   
-#' @param filename The filename to create on disk for the HTML export of the
-#'   object provided. It's recommended that the extension `".html"` is included.
+#' @param filename *File name*
+#' 
+#'   `scalar<character>` // **required**
+#' 
+#'   The filename to create on disk for the HTML export of the object provided.
+#'   It's recommended that the extension `".html"` is included.
 #'   
-#' @param path An optional path to which the file should be saved (this is
-#'   automatically combined with `filename`).
+#' @param path *File path*
+#' 
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#' 
+#'   An optional path to which the file should be saved (this is automatically
+#'   combined with `filename`).
 #'   
-#' @param quiet Should the function *not* inform when the file is written? By
-#'   default this is `FALSE`.
+#' @param quiet *Inform (or not) upon file writing*
+#' 
+#'   `scalar<logical>` // *default:* `FALSE`
+#' 
+#'   Should the function *not* inform when the file is written?
 #'   
 #' @return Invisibly returns `TRUE` if the file has been written.
 #' 
@@ -786,11 +833,19 @@ export_report <- function(
 #' replaces any associated table (a data frame, a tibble, objects of class
 #' `tbl_dbi` or `tbl_spark`).
 #'
-#' @param x An *agent* object of class `ptblank_agent`, or, an *informant* of
-#'   class `ptblank_informant`.
+#' @param x *A pointblank agent or informant object*
+#' 
+#'   `obj:<ptblank_agent|ptblank_informant>` // **required**
+#' 
+#'   An *agent* object of class `ptblank_agent`, or, an *informant* of class
+#'   `ptblank_informant`.
 #'   
-#' @param tbl The input table for the *agent* or the *informant*. This can be a
-#'   data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
+#' @param tbl *Table or expression for reading in one*
+#' 
+#'   `obj:<tbl_*>|<table reading expression>` // **required**
+#' 
+#'   The input table for the *agent* or the *informant*. This can be a data
+#'   frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
 #'   Alternatively, an expression can be supplied to serve as instructions on
 #'   how to retrieve the target table at interrogation- or incorporation-time.
 #'   There are two ways to specify an association to a target table: (1) as a
@@ -798,12 +853,20 @@ export_report <- function(
 #'   (e.g., `~ { <table reading code>}`), or (2) as a function (e.g.,
 #'   `function() { <table reading code>}`).
 #'   
-#' @param tbl_name A optional name to assign to the new input table object. If
-#'   no value is provided, a name will be generated based on whatever
-#'   information is available.
+#' @param tbl_name *A table name*
+#' 
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#' 
+#'   A optional name to assign to the new input table object. If no value is
+#'   provided, a name will be generated based on whatever information is
+#'   available.
 #'   
-#' @param label An optional label for the validation plan. If no value is
-#'   provided then any existing label will be retained.
+#' @param label *An optional label for reporting*
+#' 
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#' 
+#'   An optional label for the validation plan or information report. If no
+#'   value is provided then any existing label will be retained.
 #' 
 #' @section Examples:
 #' 

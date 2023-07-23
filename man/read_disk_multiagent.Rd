@@ -7,14 +7,26 @@
 read_disk_multiagent(filenames = NULL, pattern = NULL, path = NULL)
 }
 \arguments{
-\item{filenames}{The names of files (holding \emph{agent} objects) that were
-previously written by \code{\link[=x_write_disk]{x_write_disk()}}.}
+\item{filenames}{\emph{File names}
 
-\item{pattern}{A regex pattern for accessing saved-to-disk \emph{agent} files
-located in a directory (specified in the \code{path} argument).}
+\verb{vector<character>} // \emph{default:} \code{NULL} (\code{optional})
 
-\item{path}{A path to a collection of files. This is either optional in the
-case that files are specified in \code{filenames} (the \code{path} combined with all
+The names of files (holding \emph{agent} objects) that were previously written
+by \code{\link[=x_write_disk]{x_write_disk()}}.}
+
+\item{pattern}{\emph{Regex pattern}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+A regex pattern for accessing saved-to-disk \emph{agent} files located in a
+directory (specified in the \code{path} argument).}
+
+\item{path}{\emph{File path}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+A path to a collection of files. This is either optional in the case that
+files are specified in \code{filenames} (the \code{path} combined with all
 \code{filenames}), or, required when providing a \code{pattern} for file names.}
 }
 \value{
@@ -27,7 +39,7 @@ function. While useful for later retrieving the stored agent with
 the \code{read_disk_multiagent()} function, which creates a \code{ptblank_multiagent}
 object. A \emph{multiagent} object can also be generated via the
 \code{\link[=create_multiagent]{create_multiagent()}} function but is less convenient to use if one is just
-using agents that have been previous written to disk.
+using agents that have been previously written to disk.
 }
 \section{Function ID}{
 

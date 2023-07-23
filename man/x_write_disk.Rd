@@ -14,16 +14,31 @@ x_write_disk(
 )
 }
 \arguments{
-\item{x}{An \emph{agent} object of class \code{ptblank_agent}, an \emph{informant} of class
+\item{x}{\emph{One of several types of objects}
+
+\verb{<object>} // \strong{required}
+
+An \emph{agent} object of class \code{ptblank_agent}, an \emph{informant} of class
 \code{ptblank_informant}, or an table scan of class \code{ptblank_tbl_scan}.}
 
-\item{filename}{The filename to create on disk for the \code{agent}, \code{informant},
-or table scan.}
+\item{filename}{\emph{File name}
 
-\item{path}{An optional path to which the file should be saved (this is
-automatically combined with \code{filename}).}
+\verb{scalar<character>} // \strong{required}
 
-\item{keep_tbl}{An option to keep a data table that is associated with the
+The filename to create on disk for the \code{agent}, \code{informant}, or table scan.}
+
+\item{path}{\emph{File path}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional path to which the file should be saved (this is automatically
+combined with \code{filename}).}
+
+\item{keep_tbl}{\emph{Keep data table inside object}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+An option to keep a data table that is associated with the
 \emph{agent} or \emph{informant} (which is the case when the \emph{agent}, for example, is
 created using \verb{create_agent(tbl = <data table, ...)}). The default is
 \code{FALSE} where the data table is removed before writing to disk. For
@@ -31,12 +46,19 @@ database tables of the class \code{tbl_dbi} and for Spark DataFrames
 (\code{tbl_spark}) the table is always removed (even if \code{keep_tbl} is set to
 \code{TRUE}).}
 
-\item{keep_extracts}{An option to keep any collected extract data for failing
-rows. Only applies to \emph{agent} objects. By default, this is \code{FALSE} (i.e.,
-extract data is removed).}
+\item{keep_extracts}{\emph{Keep data extracts inside object}
 
-\item{quiet}{Should the function \emph{not} inform when the file is written? By
-default this is \code{FALSE}.}
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+An option to keep any collected extract data for failing rows. Only applies
+to \emph{agent} objects. By default, this is \code{FALSE} (i.e., extract data is
+removed).}
+
+\item{quiet}{\emph{Inform (or not) upon file writing}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+Should the function \emph{not} inform when the file is written?}
 }
 \value{
 Invisibly returns \code{TRUE} if the file has been written.

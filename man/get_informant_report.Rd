@@ -13,17 +13,30 @@ get_informant_report(
 )
 }
 \arguments{
-\item{informant}{An informant object of class \code{ptblank_informant}.}
+\item{informant}{\emph{The pointblank informant object}
 
-\item{size}{The size of the display table, which can be either \code{"standard"}
-(the default, with a width of 875px), \code{"small"} (width of 575px), or, a
-pixel- or percent-based width of your choosing (supply an integer value for
-the width in pixels, or values with \code{"px"} or \code{"\%"} appended, like \code{"75\%"},
+\verb{obj:<ptblank_informant>} // \strong{required}
+
+A \strong{pointblank} \emph{informant} object that is commonly created through the
+use of the \code{\link[=create_informant]{create_informant()}} function.}
+
+\item{size}{\emph{Size option for display-table report}
+
+\verb{scalar<character>} // \emph{default:} \code{"standard"}
+
+The size of the display table, which can be either \code{"standard"} (the
+default, with a width of 875px), \code{"small"} (width of 575px), or, a pixel-
+or percent-based width of your choosing (supply an integer value for the
+width in pixels, or values with \code{"px"} or \code{"\%"} appended, like \code{"75\%"},
 \code{"500px"}, etc.).}
 
-\item{title}{Options for customizing the title of the report. The default is
-the keyword \code{":default:"} which produces generic title text that refers to
-the \strong{pointblank} package in the language governed by the \code{lang} option.
+\item{title}{\emph{Title customization options}
+
+\verb{scalar<character>} // \emph{default:} \code{":default:"}
+
+Options for customizing the title of the report. The default is the keyword
+\code{":default:"} which produces generic title text that refers to the
+\strong{pointblank} package in the language governed by the \code{lang} option.
 Another keyword option is \code{":tbl_name:"}, and that presents the name of the
 table as the title for the report. If no title is wanted, then the
 \code{":none:"} keyword option can be used. Aside from keyword options, text can

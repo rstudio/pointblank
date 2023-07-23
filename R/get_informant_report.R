@@ -28,17 +28,30 @@
 #' direct editing of a **pointblank** YAML file (an informant can be written
 #' to **pointblank** YAML with `yaml_write(informant = <informant>, ...)`).
 #' 
-#' @param informant An informant object of class `ptblank_informant`.
+#' @param informant *The pointblank informant object*
 #' 
-#' @param size The size of the display table, which can be either `"standard"`
-#'   (the default, with a width of 875px), `"small"` (width of 575px), or, a
-#'   pixel- or percent-based width of your choosing (supply an integer value for
-#'   the width in pixels, or values with `"px"` or `"%"` appended, like `"75%"`,
+#'   `obj:<ptblank_informant>` // **required**
+#' 
+#'   A **pointblank** *informant* object that is commonly created through the
+#'   use of the [create_informant()] function.
+#' 
+#' @param size *Size option for display-table report*
+#' 
+#'   `scalar<character>` // *default:* `"standard"`
+#' 
+#'   The size of the display table, which can be either `"standard"` (the
+#'   default, with a width of 875px), `"small"` (width of 575px), or, a pixel-
+#'   or percent-based width of your choosing (supply an integer value for the
+#'   width in pixels, or values with `"px"` or `"%"` appended, like `"75%"`,
 #'   `"500px"`, etc.).
 #'   
-#' @param title Options for customizing the title of the report. The default is
-#'   the keyword `":default:"` which produces generic title text that refers to
-#'   the **pointblank** package in the language governed by the `lang` option.
+#' @param title *Title customization options*
+#' 
+#'   `scalar<character>` // *default:* `":default:"`
+#' 
+#'   Options for customizing the title of the report. The default is the keyword
+#'   `":default:"` which produces generic title text that refers to the
+#'   **pointblank** package in the language governed by the `lang` option.
 #'   Another keyword option is `":tbl_name:"`, and that presents the name of the
 #'   table as the title for the report. If no title is wanted, then the
 #'   `":none:"` keyword option can be used. Aside from keyword options, text can

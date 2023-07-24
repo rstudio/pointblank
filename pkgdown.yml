@@ -11,8 +11,8 @@ articles:
   VALID-V: VALID-V.html
   VALID-VI: VALID-VI.html
   validation_workflows: validation_workflows.html
-last_built: 2023-07-24T14:27Z
+last_built: 2023-07-24T15:07Z
 urls:
-  reference: https://rich-iannone.github.io/pointblank/reference
-  article: https://rich-iannone.github.io/pointblank/articles
+  reference: https://rstudio.github.io/pointblank/reference
+  article: https://rstudio.github.io/pointblank/articles
 

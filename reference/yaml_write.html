@@ -29,7 +29,7 @@ One requirement for writing an agent or an informant to YAML is that we
 need to have a table-prep formula specified (it's an R formula that is used
 to read the target table when interrogate() or incorporate() is called).
 This option can be set when using create_agent()/create_informant() or
-with set_tbl() (useful with an existing agent or informant object)."><meta property="og:image" content="https://rich-iannone.github.io/pointblank/logo.svg"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
+with set_tbl() (useful with an existing agent or informant object)."><meta property="og:image" content="https://rstudio.github.io/pointblank/logo.svg"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body>
@@ -294,7 +294,7 @@ using the <code><a href="yaml_read_agent.html">yaml_read_agent()</a></code> func
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/yaml_read_agent.html">yaml_read_agent</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">yml_file_path</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">agent</span></span></code></pre><p></p></div>
-<p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_yaml_write_1.png" alt="This image was generated from the first code example in the `yaml_write()` help file." style="width:100%;"></p>
+<p><img src="https://raw.githubusercontent.com/rstudio/pointblank/main/images/man_yaml_write_1.png" alt="This image was generated from the first code example in the `yaml_write()` help file." style="width:100%;"></p>
 <p>This particular agent is using <code>~ tbl_source("small_table", "tbl_store.yml")</code>
 to source the table-prep from a YAML file that holds a table store (can be
 seen using <code>yaml_agent_string(agent = agent)</code>). Let's put that file in the
@@ -316,7 +316,7 @@ intel, or, we can interrogate directly from the YAML file with
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/yaml_agent_interrogate.html">yaml_agent_interrogate</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">yml_file_path</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">agent</span></span></code></pre><p></p></div>
-<p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_yaml_write_2.png" alt="This image was generated from the second code example in the `yaml_write()` help file." style="width:100%;"></p>
+<p><img src="https://raw.githubusercontent.com/rstudio/pointblank/main/images/man_yaml_write_2.png" alt="This image was generated from the second code example in the `yaml_write()` help file." style="width:100%;"></p>
 </div>
 
 <div class="section">
@@ -405,7 +405,7 @@ called <code>"informant-small_table.yml"</code>. The path for it can be accessed
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">informant</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/yaml_read_informant.html">yaml_read_informant</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">yml_file_path</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">informant</span></span></code></pre><p></p></div>
-<p><img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_yaml_write_3.png" alt="This image was generated from the third code example in the `yaml_write()` help file." style="width:100%;"></p>
+<p><img src="https://raw.githubusercontent.com/rstudio/pointblank/main/images/man_yaml_write_3.png" alt="This image was generated from the third code example in the `yaml_write()` help file." style="width:100%;"></p>
 <p>As can be seen from the information report, the available table metadata was
 restored and reported. If you expect metadata to change with time, it might
 be beneficial to use <code><a href="incorporate.html">incorporate()</a></code> to query the target table. Or, we can

@@ -1,14 +1,14 @@
 <div align="center">
 <br />
 
-<a href='https://rich-iannone.github.io/pointblank/'><img src="man/figures/logo.svg" width="350px"/></a>
+<a href='https://rstudio.github.io/pointblank/'><img src="man/figures/logo.svg" width="350px"/></a>
 
 <!-- badges: start -->
 <a href="https://cran.r-project.org/package=pointblank"><img src="https://www.r-pkg.org/badges/version/pointblank" alt="CRAN status" /></a>
 <a href="https://opensource.org/license/mit/"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" /></a>
-<a href="https://github.com/rich-iannone/pointblank/actions"><img src="https://github.com/rich-iannone/pointblank/workflows/R-CMD-check/badge.svg" alt="R build status" /></a>
-<a href="https://github.com/rich-iannone/pointblank/actions"><img src="https://github.com/rich-iannone/pointblank/workflows/lint/badge.svg" alt="Linting" /></a>
-<a href="https://app.codecov.io/gh/rich-iannone/pointblank?branch=main"><img src="https://codecov.io/gh/rich-iannone/pointblank/branch/main/graph/badge.svg" alt="Coverage status" /></a>
+<a href="https://github.com/rstudio/pointblank/actions"><img src="https://github.com/rstudio/pointblank/workflows/R-CMD-check/badge.svg" alt="R build status" /></a>
+<a href="https://github.com/rstudio/pointblank/actions"><img src="https://github.com/rstudio/pointblank/workflows/lint/badge.svg" alt="Linting" /></a>
+<a href="https://app.codecov.io/gh/rstudio/pointblank?branch=main"><img src="https://codecov.io/gh/rstudio/pointblank/branch/main/graph/badge.svg" alt="Coverage status" /></a>
 
 <a href="https://bestpractices.coreinfrastructure.org/projects/4310"><img src="https://bestpractices.coreinfrastructure.org/projects/4310/badge" alt="Best Practices"></a>
 <a href="https://www.repostatus.org/#active"><img src="https://www.repostatus.org/badges/latest/active.svg" alt="The project has reached a stable, usable state and is being actively developed." /></a>
@@ -292,7 +292,7 @@ informant <-
     section_name = "further information", 
     `examples and documentation` = "Examples for how to use the
     `info_*()` functions (and many more) are available at the
-    [**pointblank** site](https://rich-iannone.github.io/pointblank/)."
+    [**pointblank** site](https://rstudio.github.io/pointblank/)."
   ) %>%
   incorporate()
 ```
@@ -331,7 +331,7 @@ assembly](https://img.shields.io/static/v1?label=Table%20Scan&message=Ensembl:%2
 There are many functions available in **pointblank** for understanding data
 quality and doing data documentation. Here is an overview of all of them,
 grouped by family. For much more information on these, visit the
-[documentation website](https://rich-iannone.github.io/pointblank/) or take
+[documentation website](https://rstudio.github.io/pointblank/) or take
 a *Test Drive* in the [Posit Cloud project](https://rstudio.cloud/project/3411822).
 
 <p align="center">
@@ -345,7 +345,8 @@ a *Test Drive* in the [Posit Cloud project](https://rstudio.cloud/project/341182
 ## DISCUSSIONS
 
 Let's talk about data validation and data documentation in
-[**pointblank** Discussions](https://github.com/rich-iannone/pointblank/discussions)! It's a great place to ask questions about how to use the package, discuss
+[**pointblank** Discussions](https://github.com/rstudio/pointblank/discussions)!
+It's a great place to ask questions about how to use the package, discuss
 some ideas, engage with others, and much more!
 
 ## INSTALLATION
@@ -359,12 +360,12 @@ install.packages("pointblank")
 You can also install the development version of **pointblank** from **GitHub**:
 
 ``` r
-devtools::install_github("rich-iannone/pointblank")
+devtools::install_github("rstudio/pointblank")
 ```
 
 If you encounter a bug, have usage questions, or want to share ideas to
 make this package better, feel free to file an
-[issue](https://github.com/rich-iannone/pointblank/issues).
+[issue](https://github.com/rstudio/pointblank/issues).
 
 <hr>
 

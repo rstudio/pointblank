@@ -4,7 +4,7 @@ There are many ways to contribute to the ongoing development of the **pointblank
 
 ## Filing Issues
 
-If you believe you found a bug, create a minimal [reprex](https://reprex.tidyverse.org) for your posting to the [**pointblank** issue tracker](https://github.com/rich-iannone/pointblank/issues). Try not to include anything unnecessary, just the minimal amount of code that constitutes the reproducible bug. We will try to verify the bug by running the code in the reprex provided. The quality of the reprex will reduce the amount of back-and-forth communication in trying to understand how to execute the code on our systems.
+If you believe you found a bug, create a minimal [reprex](https://reprex.tidyverse.org) for your posting to the [**pointblank** issue tracker](https://github.com/rstudio/pointblank/issues). Try not to include anything unnecessary, just the minimal amount of code that constitutes the reproducible bug. We will try to verify the bug by running the code in the reprex provided. The quality of the reprex will reduce the amount of back-and-forth communication in trying to understand how to execute the code on our systems.
 
 ## Answering questions
 
@@ -19,8 +19,7 @@ Should you consider making a pull request (PR), please file an issue first and e
 Once there is consensus that a PR based on the issue would be helpful, adhering to the following process will make things proceed more quickly: 
 
 *  Create a separate Git branch for each PR.
-*  Look at the GitHub Actions build status badges before and after making changes; these badges are available in the package [README](https://github.com/rich-iannone/pointblank).  
+*  Look at the GitHub Actions build status badges before and after making changes; these badges are available in the package [README](https://github.com/rstudio/pointblank).  
 *  The **pointblank** package follows the tidyverse [style guide](http://style.tidyverse.org) so please adopt those style guidelines in your submitted code as best as possible.
 *  The internal documentation uses [roxygen2](https://cran.r-project.org/web/packages/roxygen2/vignettes/roxygen2.html); if your contribution requires new or revised documentation ensure that the roxygen comments are added/modified (do not modify any `.Rd` files in the `man` folder).
 *  We use [testthat](https://cran.r-project.org/web/packages/testthat/) for code coverage; those contributions with test cases included are helpful easier to accept.
-*  Add a bullet to the top of `NEWS.md` below the current development version header describing any user-facing changes made; include your GitHub username, and links to relevant issue(s)/PR(s).

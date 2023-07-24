@@ -8,8 +8,8 @@ assignees: rich-iannone
 
 ## Prework
 
-- [ ] Read and abide by **pointblank**'s [code of conduct](https://www.contributor-covenant.org/version/2/0/code_of_conduct/) and [contributing guidelines](https://github.com/rich-iannone/pointblank/blob/main/.github/CONTRIBUTING.md).
-- [ ] Search for duplicates among the [existing issues](https://github.com/rich-iannone/pointblank/issues) (both open and closed).
+- [ ] Read and abide by **pointblank**'s [code of conduct](https://www.contributor-covenant.org/version/2/0/code_of_conduct/) and [contributing guidelines](https://github.com/rstudio/pointblank/blob/main/.github/CONTRIBUTING.md).
+- [ ] Search for duplicates among the [existing issues](https://github.com/rstudio/pointblank/issues) (both open and closed).
 
 ## Proposal
 

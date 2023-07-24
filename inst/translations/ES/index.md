@@ -2,15 +2,15 @@
 
 <!-- badges: start -->
 <a href="https://cran.r-project.org/package=pointblank"><img src="https://www.r-pkg.org/badges/version/pointblank" alt="CRAN status" /></a>
-<a href="https://github.com/rich-iannone/pointblank/actions"><img src="https://github.com/rich-iannone/pointblank/workflows/R-CMD-check/badge.svg" alt="R build status" /></a>
-<a href="https://github.com/rich-iannone/pointblank/actions"><img src="https://github.com/rich-iannone/pointblank/workflows/pkgdown/badge.svg" alt="Package Site" /></a>
-<a href="https://github.com/rich-iannone/pointblank/actions"><img src="https://github.com/rich-iannone/pointblank/workflows/lint/badge.svg" alt="Linting" /></a>
-<a href="https://codecov.io/gh/rich-iannone/pointblank?branch=master"><img src="https://codecov.io/gh/rich-iannone/pointblank/branch/master/graph/badge.svg" alt="Coverage status" /></a>
+<a href="https://github.com/rstudio/pointblank/actions"><img src="https://github.com/rstudio/pointblank/workflows/R-CMD-check/badge.svg" alt="R build status" /></a>
+<a href="https://github.com/rstudio/pointblank/actions"><img src="https://github.com/rstudio/pointblank/workflows/pkgdown/badge.svg" alt="Package Site" /></a>
+<a href="https://github.com/rstudio/pointblank/actions"><img src="https://github.com/rstudio/pointblank/workflows/lint/badge.svg" alt="Linting" /></a>
+<a href="https://codecov.io/gh/rstudio/pointblank?branch=master"><img src="https://codecov.io/gh/rstudio/pointblank/branch/master/graph/badge.svg" alt="Coverage status" /></a>
 <a href="https://bestpractices.coreinfrastructure.org/projects/4310"><img src="https://bestpractices.coreinfrastructure.org/projects/4310/badge" alt="Best Practices"></a>
 <a href="https://www.repostatus.org/#active"><img src="https://www.repostatus.org/badges/latest/active.svg" alt="The project has reached a stable, usable state and is being actively developed." /></a>
 <a href="https://CRAN.R-project.org/package=pointblank"><img src="https://cranlogs.r-pkg.org/badges/pointblank" alt="Monthly Downloads"></a>
 <a href="https://CRAN.R-project.org/package=pointblank"><img src="https://cranlogs.r-pkg.org/badges/grand-total/pointblank" alt="Total Downloads"></a>
-<a href="https://www.contributor-covenant.org/version/2/0/code_of_conduct/"><img src="https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg" alt="Contributor Covenant" /></a>
+<a href="https://www.contributor-covenant.org/version/2/1/code_of_conduct.html"><img src="https://img.shields.io/badge/Contributor%20Covenant-v2.1%20adopted-ff69b4.svg" alt="Contributor Covenant" /></a>
 <!-- badges: end -->
 
 
@@ -43,25 +43,27 @@ install.packages("pointblank")
 También puedes instalar la versión de desarrollo de **pointblank** desde **GitHub**:
 
 ``` r
-devtools::install_github("rich-iannone/pointblank")
+devtools::install_github("rstudio/pointblank")
 ```
 
-Si encuentra un error, tiene preguntas de uso, o quiere compartir ideas para mejorar este paquete, no dudes en presentar un [issue](https://github.com/rich-iannone/pointblank/issues).
+Si encuentra un error, tiene preguntas de uso, o quiere compartir ideas para mejorar este paquete, no dudes en presentar un [issue](https://github.com/rstudio/pointblank/issues).
 
 ## ¡Discutamos!
 
 Hablemos de la validación de datos y de la documentación de datos en
-[**pointblank** Discussions](https://github.com/rich-iannone/pointblank/discussions). Es un gran lugar para hacer preguntas sobre cómo usar el paquete, discutir algunas ideas, participar con otros y mucho más.
+[**pointblank** Discussions](https://github.com/rstudio/pointblank/discussions). Es un gran lugar para hacer preguntas sobre cómo usar el paquete, discutir algunas ideas, participar con otros y mucho más.
 
 ## Código de conducta
 
-Tenga en cuenta que el proyecto pointblank se publica con un [código de conducta para los colaboradores](https://www.contributor-covenant.org/version/2/0/code_of_conduct/). Al participar en este proyecto, usted se compromete a respetar sus condiciones.
+Tenga en cuenta que el proyecto pointblank se publica con un [código de conducta para los colaboradores](https://www.contributor-covenant.org/version/2/1/code_of_conduct.html). Al participar en este proyecto, usted se compromete a respetar sus condiciones.
 
 ## 📄 Licencia
 
 **pointblank** está licenciado bajo la licencia MIT.
 Consulte el archivo [`LICENSE.md`](LICENSE.md) para obtener más detalles.
 
+© Posit Software, PBC.
+
 ## 🏛️ Gobernanza
 
- Este proyecto es mantenido principalmente por [Rich Iannone](https://www.twitter.com/riannone). Otros autores pueden ayudar ocasionalmente en algunas de estas tareas.
+Este proyecto es mantenido principalmente por [Rich Iannone](https://www.twitter.com/riannone). Otros autores pueden ayudar ocasionalmente en algunas de estas tareas.

@@ -329,7 +329,7 @@ assembly](https://img.shields.io/static/v1?label=Table%20Scan&message=Ensembl:%2
 ## OVERVIEW OF PACKAGE FUNCTIONS
 
 There are many functions available in **pointblank** for understanding data
-quality and doing data documentation. Here is an overview of all of them,
+quality and creating data documentation. Here is an overview of all of them,
 grouped by family. For much more information on these, visit the
 [documentation website](https://rstudio.github.io/pointblank/) or take
 a *Test Drive* in the [Posit Cloud project](https://rstudio.cloud/project/3411822).
@@ -367,56 +367,20 @@ If you encounter a bug, have usage questions, or want to share ideas to
 make this package better, feel free to file an
 [issue](https://github.com/rstudio/pointblank/issues).
 
-<hr>
-
-## How **pointblank** Fits in with Other Packages that Validate Tabular Data
-
-The **pointblank** package isn’t the only one of its kind available for
-**R**. The reason for introducing yet another has to do with
-**pointblank**’s goals:
-
-  - making it possible to work with local tables, database tables, and Spark
-    DataFrames (via **sparklyr**) with the same API
-  - providing great flexibility in data validation workflows, allowing for:
-    (1) report-based validations, (2) inline validations, (3) validation of
-    data tables in unit tests (with the set of `expect_*()` functions),
-    and (4) validation of data tables to support conditional expressions
-    (with the set of `test_*()` functions)
-  - enabling a workflow for collecting and reporting on useful
-    information about your data tables (i.e., making data dictionaries)
-  - giving you a tool for understanding new datasets: `scan_data()`
-  - having the option to translate reporting outputs to multiple
-    spoken languages
-  - developing an API that closely follows tidyverse conventions by
-    adhering to the [tidyverse style guide](https://style.tidyverse.org)
-  - ensuring that the package is very well-tested so that you can
-    trust the validations (there are over 6,000 unit tests so far)
-  - putting lots of attention on making the package documentation and examples
-    the best they can be
-
-While **pointblank** is trying to do something a little different, it may not
-suit your specific needs. That's totally fine, here's a listing of some other
-great **R** packages for data validation:
-
-**assertr** ([GITHUB](https://github.com/ropensci/assertr/), [WEBSITE](https://docs.ropensci.org/assertr/))
-
-**validate** ([GITHUB](https://github.com/data-cleaning/validate))
-
-**dataReporter** ([GITHUB](https://github.com/ekstroem/dataReporter))
-
-<hr>
+-----
 
 ## Code of Conduct
 
-Please note that the pointblank project is released with a [contributor
-code of
-conduct](https://www.contributor-covenant.org/version/2/0/code_of_conduct/).<br>By
+Please note that the gt project is released with a [contributor code of
+conduct](https://www.contributor-covenant.org/version/2/1/code_of_conduct.html).<br>By
 participating in this project you agree to abide by its terms.
 
 ## 📄 License
 
 **pointblank** is licensed under the MIT license.
 See the [`LICENSE.md`](LICENSE.md) file for more details.
+
+© Posit Software, PBC.
 
 ## 🏛️ Governance
 

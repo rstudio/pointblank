@@ -135,7 +135,7 @@ gets the same CSV file from the GitHub repository for the pointblank package.
     tbl = ~ file_tbl(
       file = from_github(
         file = "inst/data_files/small_table.csv",
-        repo = "rich-iannone/pointblank"
+        repo = "rstudio/pointblank"
       ),
       col_types = "TDdcddlc"
     ),
@@ -152,7 +152,7 @@ gets the same CSV file from the GitHub repository for the pointblank package.
 \if{html}{
 
 \out{
-<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_file_tbl_1.png" alt="This image was generated from the first code example in the `file_tbl()` help file." style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/pointblank/main/images/man_file_tbl_1.png" alt="This image was generated from the first code example in the `file_tbl()` help file." style="width:100\%;">
 }
 }
 

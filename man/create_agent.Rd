@@ -437,7 +437,7 @@ Viewer.
 \if{html}{
 
 \out{
-<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_create_agent_1.png" alt="This image was generated from the first code example in the `create_agent()` help file." style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/pointblank/main/images/man_create_agent_1.png" alt="This image was generated from the first code example in the `create_agent()` help file." style="width:100\%;">
 }
 }
 
@@ -457,7 +457,7 @@ report
 \if{html}{
 
 \out{
-<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_create_agent_2.png" alt="This image was generated from the second code example in the `create_agent()` help file." style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/pointblank/main/images/man_create_agent_2.png" alt="This image was generated from the second code example in the `create_agent()` help file." style="width:100\%;">
 }
 }
 }

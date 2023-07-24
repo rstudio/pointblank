@@ -78,7 +78,7 @@ informant <-
     section_name = "further information", 
     `examples and documentation` = "Examples for how to use the `info_*()` functions
     (and many more) are available at the 
-    [**pointblank** site](https://rich-iannone.github.io/pointblank/)."
+    [**pointblank** site](https://rstudio.github.io/pointblank/)."
   )
 
 informant

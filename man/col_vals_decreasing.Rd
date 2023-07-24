@@ -442,7 +442,7 @@ that corresponds to the validation step demonstrated here.
 
 \if{html}{
 \out{
-<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_col_vals_decreasing_1.png" alt="This image was generated from the first code example in the `col_vals_decreasing()` help file." style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/pointblank/main/images/man_col_vals_decreasing_1.png" alt="This image was generated from the first code example in the `col_vals_decreasing()` help file." style="width:100\%;">
 }
 }
 }

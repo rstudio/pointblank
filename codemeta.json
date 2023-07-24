@@ -7,8 +7,8 @@
   "identifier": "pointblank",
   "description": "Validate data in data frames, 'tibble' objects, and in database\n    tables (e.g., 'PostgreSQL' and 'MySQL'). Validation pipelines can be made\n    using easily-readable, consecutive validation steps. Upon execution of the\n    validation plan, several reporting options are available. User-defined\n    thresholds for failure rates allow for the determination of appropriate\n    reporting actions.",
   "name": "pointblank: Validation of Local and Remote Data Tables",
-  "codeRepository": "https://github.com/rich-iannone/pointblank",
-  "issueTracker": "https://github.com/rich-iannone/pointblank/issues",
+  "codeRepository": "https://github.com/rstudio/pointblank",
+  "issueTracker": "https://github.com/rstudio/pointblank/issues",
   "license": "https://spdx.org/licenses/MIT",
   "version": "0.3.1.9000",
   "programmingLanguage": {
@@ -29,7 +29,7 @@
       "@type": "Person",
       "givenName": "Richard",
       "familyName": "Iannone",
-      "email": "riannone@me.com",
+      "email": "rich@posit.co",
       "@id": "https://orcid.org/0000-0003-3925-190X"
     }
   ],
@@ -372,10 +372,10 @@
       "sameAs": "https://CRAN.R-project.org/package=tidyselect"
     }
   ],
-  "releaseNotes": "https://github.com/pachamaltese/pointblank/blob/master/NEWS.md",
-  "readme": "https://github.com/pachamaltese/pointblank/blob/master/README.md",
+  "releaseNotes": "https://github.com/rstudio/pointblank/blob/main/NEWS.md",
+  "readme": "https://github.com/rstudio/pointblank/blob/main/README.md",
   "fileSize": "6906.977KB",
-  "contIntegration": "https://codecov.io/gh/rich-iannone/pointblank?branch=master",
+  "contIntegration": "https://codecov.io/gh/rstudio/pointblank?branch=main",
   "keywords": [
     "r",
     "data-validation",

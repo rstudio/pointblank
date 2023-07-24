@@ -74,7 +74,7 @@ agent
 
 \if{html}{
 \out{
-<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_yaml_agent_show_exprs_1.png" alt="This image was generated from the first code example in the `yaml_agent_show_exprs()` help file." style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/pointblank/main/images/man_yaml_agent_show_exprs_1.png" alt="This image was generated from the first code example in the `yaml_agent_show_exprs()` help file." style="width:100\%;">
 }
 }
 

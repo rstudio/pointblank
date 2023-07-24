@@ -150,7 +150,7 @@ the \code{small_table} dataset.
     `Row Definition` = "A row has randomized values.",
     Source = c(
       "- From the **pointblank** package.",
-      "- [https://rich-iannone.github.io/pointblank/]()"
+      "- [https://rstudio.github.io/pointblank/]()"
      )
    )
 }\if{html}{\out{</div>}}
@@ -163,7 +163,7 @@ Upon printing the \code{informant} object, we see the additions made to the
 
 \if{html}{
 \out{
-<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_info_tabular_1.png" alt="This image was generated from the first code example in the `info_tabular()` help file." style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/pointblank/main/images/man_info_tabular_1.png" alt="This image was generated from the first code example in the `info_tabular()` help file." style="width:100\%;">
 }
 }
 }

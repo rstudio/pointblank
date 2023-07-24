@@ -1,20 +1,22 @@
-#
-#                _         _    _      _                _    
-#               (_)       | |  | |    | |              | |   
-#  _ __    ___   _  _ __  | |_ | |__  | |  __ _  _ __  | | __
-# | '_ \  / _ \ | || '_ \ | __|| '_ \ | | / _` || '_ \ | |/ /
-# | |_) || (_) || || | | || |_ | |_) || || (_| || | | ||   < 
-# | .__/  \___/ |_||_| |_| \__||_.__/ |_| \__,_||_| |_||_|\_\
-# | |                                                        
-# |_|                                                        
+#------------------------------------------------------------------------------#
 # 
-# This file is part of the 'rich-iannone/pointblank' package.
+#                 _         _    _      _                _    
+#                (_)       | |  | |    | |              | |   
+#   _ __    ___   _  _ __  | |_ | |__  | |  __ _  _ __  | | __
+#  | '_ \  / _ \ | || '_ \ | __|| '_ \ | | / _` || '_ \ | |/ /
+#  | |_) || (_) || || | | || |_ | |_) || || (_| || | | ||   < 
+#  | .__/  \___/ |_||_| |_| \__||_.__/ |_| \__,_||_| |_||_|\_\
+#  | |                                                        
+#  |_|                                                        
+#  
+#  This file is part of the 'rstudio/pointblank' project.
+#  
+#  Copyright (c) 2017-2023 pointblank authors
+#  
+#  For full copyright and license information, please look at
+#  https://rstudio.github.io/pointblank/LICENSE.html
 # 
-# (c) Richard Iannone <riannone@me.com>
-# 
-# For full copyright and license information, please look at
-# https://rich-iannone.github.io/pointblank/LICENSE.html
-#
+#------------------------------------------------------------------------------#
 
 
 # nocov start
@@ -153,7 +155,7 @@
 #'     tbl = ~ file_tbl(
 #'       file = from_github(
 #'         file = "inst/data_files/small_table.csv",
-#'         repo = "rich-iannone/pointblank"
+#'         repo = "rstudio/pointblank"
 #'       ),
 #'       col_types = "TDdcddlc"
 #'     ),
@@ -435,14 +437,14 @@ file_tbl <- function(
 #' # obtained from the HEAD of the default branch
 #' # from_github(
 #' #   file = "inst/data_files/small_table.csv",
-#' #   repo = "rich-iannone/pointblank"
+#' #   repo = "rstudio/pointblank"
 #' # )
 #' 
 #' # The path to the file location can be supplied
 #' # fully or partially to `subdir`
 #' # from_github(
 #' #   file = "small_table.csv",
-#' #   repo = "rich-iannone/pointblank",
+#' #   repo = "rstudio/pointblank",
 #' #   subdir = "inst/data_files"
 #' # )
 #' 
@@ -456,7 +458,7 @@ file_tbl <- function(
 #' #     tbl = ~ file_tbl(
 #' #       file = from_github(
 #' #         file = "inst/data_files/small_table.csv",
-#' #         repo = "rich-iannone/pointblank"
+#' #         repo = "rstudio/pointblank"
 #' #       ),
 #' #       col_types = "TDdcddlc"
 #' #     )
@@ -472,7 +474,7 @@ file_tbl <- function(
 #' # a commit at release time
 #' # from_github(
 #' #   file = "inst/extdata/small_table.csv",
-#' #   repo = "rich-iannone/pointblank@v0.2.1"
+#' #   repo = "rstudio/pointblank@v0.2.1"
 #' # )
 #' 
 #' # A file may also be obtained from a repo at the
@@ -480,14 +482,14 @@ file_tbl <- function(
 #' # full SHA-1 hash for the commit can be used)
 #' # from_github(
 #' #   file = "data-raw/small_table.csv",
-#' #   repo = "rich-iannone/pointblank@e04a71"
+#' #   repo = "rstudio/pointblank@e04a71"
 #' # )
 #' 
 #' # A file may also be obtained from an
 #' # *open* pull request
 #' # from_github(
 #' #   file = "data-raw/small_table.csv",
-#' #   repo = "rich-iannone/pointblank#248"
+#' #   repo = "rstudio/pointblank#248"
 #' # )
 #' 
 #' @family Utility and Helper Functions

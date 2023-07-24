@@ -145,7 +145,7 @@ We can print the \code{informant} object to see the information report.
 
 \if{html}{
 \out{
-<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_snip_list_1.png" alt="This image was generated from the first code example in the `snip_list()` help file." style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/pointblank/main/images/man_snip_list_1.png" alt="This image was generated from the first code example in the `snip_list()` help file." style="width:100\%;">
 }
 }
 }

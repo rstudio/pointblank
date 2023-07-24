@@ -138,7 +138,7 @@ multiagent
 
 \if{html}{
 \out{
-<img src="https://raw.githubusercontent.com/rich-iannone/pointblank/main/images/man_create_multiagent_1.png" alt="This image was generated from the first code example in the `create_multiagent()` help file." style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/pointblank/main/images/man_create_multiagent_1.png" alt="This image was generated from the first code example in the `create_multiagent()` help file." style="width:100\%;">
 }
 }
 

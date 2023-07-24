@@ -3,7 +3,7 @@ library(gt)
 library(tidyverse)
 library(png)
 
-myrepo <- create_repo_ref("rich-iannone", "pointblank")
+myrepo <- create_repo_ref("rstudio", "pointblank")
 issues <- get_issues(myrepo, state = "open")
 issues_df <- dplyr::as_tibble(parse_issues(issues))
 

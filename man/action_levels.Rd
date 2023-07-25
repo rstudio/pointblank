@@ -13,20 +13,35 @@ warn_on_fail(warn_at = 1)
 stop_on_fail(stop_at = 1)
 }
 \arguments{
-\item{warn_at, stop_at, notify_at}{The threshold number or fraction of
-test units that can provide a \emph{fail} result before entering the
-\code{warn}, \code{stop}, or \code{notify} failure states. If this a decimal value between
-\code{0} and \code{1} then it's a proportional failure threshold (e.g., \code{0.15}
-indicates that if 15\% percent of the test units are found to \emph{fail},
-then the designated failure state is entered). Absolute values starting
-from \code{1} can be used instead, and this constitutes an absolute failure
-threshold (e.g., \code{10} means that if 10 of the test units are found to
-\emph{fail}, the failure state is entered).}
+\item{warn_at}{\emph{Threshold value for the 'warn' failure state}
 
-\item{fns}{A named list of functions that is to be paired with the
-appropriate failure states. The syntax for this list involves using failure
-state names from the set of \code{warn}, \code{stop}, and \code{notify}. The functions
-corresponding to the failure states are provided as formulas (e.g.,
+\code{scalar<integer|numeric>(val>=0)} // \emph{default:} \code{NULL} (\code{optional})
+
+Either the threshold number or the threshold fraction of \emph{failing} test
+units that result in entering the \code{warn} failure state.}
+
+\item{stop_at}{\emph{Threshold value for the 'stop' failure state}
+
+\code{scalar<integer|numeric>(val>=0)} // \emph{default:} \code{NULL} (\code{optional})
+
+Either the threshold number or the threshold fraction of \emph{failing} test
+units that result in entering the \code{stop} failure state.}
+
+\item{notify_at}{\emph{Threshold value for the 'notify' failure state}
+
+\code{scalar<integer|numeric>(val>=0)} // \emph{default:} \code{NULL} (\code{optional})
+
+Either the threshold number or the threshold fraction of \emph{failing} test
+units that result in entering the \code{notify} failure state.}
+
+\item{fns}{\emph{Functions to execute when entering failure states}
+
+\code{list} // \emph{default:} \code{NULL} (\code{optional})
+
+A named list of functions that is to be paired with the appropriate failure
+states. The syntax for this list involves using failure state names from
+the set of \code{warn}, \code{stop}, and \code{notify}. The functions corresponding to the
+failure states are provided as formulas (e.g.,
 \code{list(warn = ~ warning("Too many failures."))}. A series of expressions for
 each named state can be used by enclosing the set of statements with \code{{ }}.}
 }
@@ -37,10 +52,10 @@ An \code{action_levels} object.
 The \code{action_levels()} function works with the \code{actions} argument that is
 present in the \code{\link[=create_agent]{create_agent()}} function and in every validation step
 function (which also has an \code{actions} argument). With it, we can provide
-threshold \emph{fail} levels for any combination of \code{warn}, \code{stop}, or \code{notify}
-states.
+threshold \emph{failure} values for any combination of \code{warn}, \code{stop}, or \code{notify}
+failure states.
 
-We can react to any entrance of a state by supplying corresponding functions
+We can react to any entering of a state by supplying corresponding functions
 to the \code{fns} argument. They will undergo evaluation at the time when the
 matching state is entered. If provided to \code{\link[=create_agent]{create_agent()}} then the policies
 will be applied to every validation step, acting as a default for the
@@ -69,7 +84,7 @@ by default, indicating the reason for the failure. If you were to supply the
 \code{fns} for \code{stop} or \code{warn} manually then the stock functions would be
 overridden. Furthermore, if \code{actions} is NULL in this workflow (the default),
 \strong{pointblank} will use a \code{stop_at} value of \code{1} (providing a detailed,
-context-specific error message if there are any \emph{fail} units). We can
+context-specific error message if there are any \emph{failing} units). We can
 absolutely suppress this automatic stopping behavior by at each validation
 step by setting \code{active = FALSE}. In this interactive data case, there is no
 stock function given for \code{notify_at}. The \code{notify} failure state is less
@@ -82,6 +97,24 @@ When using an \emph{agent}, we often opt to not use any functions in \code{fns} 
 on the entire interrogation, allowing for finer control on side effects and
 reducing potential for duplicating any side effects.
 }
+\section{Defining threshold values}{
+
+
+Any threshold values supplied for the \code{warn_at}, \code{stop_at}, or \code{notify_at}
+arguments correspond to the \code{warn}, \code{stop}, and \code{notify} failure states,
+respectively. A threshold value can either relates to an absolute number of
+test units or a fraction-of-total test units that are \emph{failing}. Exceeding
+the threshold means entering one or more of the \code{warn}, \code{stop}, or \code{notify}
+failure states.
+
+If a threshold value is a decimal value between \code{0} and \code{1} then it's a
+proportional failure threshold (e.g., \code{0.15} indicates that if 15 percent of
+the test units are found to be \emph{failing}, then the designated failure state
+is entered). Absolute values starting from \code{1} can be used instead, and this
+constitutes an absolute failure threshold (e.g., \code{10} means that if 10 of the
+test units are found to be \emph{failing}, the failure state is entered).
+}
+
 \section{Examples}{
 
 

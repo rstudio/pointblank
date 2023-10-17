@@ -321,7 +321,7 @@ col_vals_not_in_set <- function(
     secret_agent <-
       create_agent(x, label = "::QUIET::") %>%
       col_vals_not_in_set(
-        columns = columns,
+        columns = tidyselect::all_of(columns),
         set = set,
         preconditions = preconditions,
         segments = segments,
@@ -373,7 +373,7 @@ col_vals_not_in_set <- function(
           assertion_type = "col_vals_not_in_set",
           i_o = i_o,
           columns_expr = columns_expr,
-          column = columns[i],
+          column = tidyselect::all_of(columns[i]),
           values = set,
           preconditions = preconditions,
           seg_expr = segments,

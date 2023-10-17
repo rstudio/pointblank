@@ -393,7 +393,7 @@ col_vals_between <- function(
     secret_agent <-
       create_agent(x, label = "::QUIET::") %>%
       col_vals_between(
-        columns = columns,
+        columns = tidyselect::all_of(columns),
         left = left,
         right = right,
         inclusive = inclusive,
@@ -448,7 +448,7 @@ col_vals_between <- function(
           assertion_type = "col_vals_between",
           i_o = i_o,
           columns_expr = columns_expr,
-          column = columns[i],
+          column = tidyselect::all_of(columns[i]),
           values = c(left, right),
           na_pass = na_pass,
           preconditions = preconditions,

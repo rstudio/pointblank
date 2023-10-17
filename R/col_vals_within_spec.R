@@ -390,7 +390,7 @@ col_vals_within_spec <- function(
     secret_agent <-
       create_agent(x, label = "::QUIET::") %>%
       col_vals_within_spec(
-        columns = columns,
+        columns = tidyselect::all_of(columns),
         spec = spec,
         na_pass = na_pass,
         preconditions = preconditions,
@@ -443,7 +443,7 @@ col_vals_within_spec <- function(
           assertion_type = "col_vals_within_spec",
           i_o = i_o,
           columns_expr = columns_expr,
-          column = columns[i],
+          column = tidyselect::all_of(columns[i]),
           values = spec,
           na_pass = na_pass,
           preconditions = preconditions,

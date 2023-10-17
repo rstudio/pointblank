@@ -367,7 +367,7 @@ col_vals_increasing <- function(
     secret_agent <-
       create_agent(x, label = "::QUIET::") %>%
       col_vals_increasing(
-        columns = columns,
+        columns = tidyselect::all_of(columns),
         allow_stationary = allow_stationary,
         decreasing_tol = decreasing_tol,
         na_pass = na_pass,
@@ -421,7 +421,7 @@ col_vals_increasing <- function(
           assertion_type = "col_vals_increasing",
           i_o = i_o,
           columns_expr = columns_expr,
-          column = columns[i],
+          column = tidyselect::all_of(columns[i]),
           values = stat_tol,
           na_pass = na_pass,
           preconditions = preconditions,

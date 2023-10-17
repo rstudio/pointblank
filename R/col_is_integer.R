@@ -238,7 +238,7 @@ col_is_integer <- function(
     secret_agent <- 
       create_agent(x, label = "::QUIET::") %>%
       col_is_integer(
-        columns = columns,
+        columns = tidyselect::all_of(columns),
         label = label,
         brief = brief,
         actions = prime_actions(actions),
@@ -278,7 +278,7 @@ col_is_integer <- function(
         assertion_type = "col_is_integer",
         i_o = i_o,
         columns_expr = columns_expr,
-        column = columns[i],
+        column = tidyselect::all_of(columns[i]),
         preconditions = NULL,
         actions = covert_actions(actions, agent),
         step_id = step_id[i],

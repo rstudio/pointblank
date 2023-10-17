@@ -235,7 +235,7 @@ col_is_logical <- function(
     secret_agent <-
       create_agent(x, label = "::QUIET::") %>%
       col_is_logical(
-        columns = columns,
+        columns = tidyselect::all_of(columns),
         label = label,
         brief = brief,
         actions = prime_actions(actions),
@@ -275,7 +275,7 @@ col_is_logical <- function(
         assertion_type = "col_is_logical",
         i_o = i_o,
         columns_expr = columns_expr,
-        column = columns[i],
+        column = tidyselect::all_of(columns[i]),
         preconditions = NULL,
         actions = covert_actions(actions, agent),
         step_id = step_id[i],

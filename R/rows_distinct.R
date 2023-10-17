@@ -296,7 +296,7 @@ rows_distinct <- function(
     secret_agent <- 
       create_agent(x, label = "::QUIET::") %>%
       rows_distinct(
-        columns = columns,
+        columns = tidyselect::all_of(columns),
         preconditions = preconditions,
         segments = segments,
         label = label,

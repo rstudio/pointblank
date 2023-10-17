@@ -1,6 +1,6 @@
 test_that("Full range of tidyselect features available in column selection", {
   
-  tbl <- data.frame(x = 1:2, y = 1:2, yy = 1:2, nonunique = 1)
+  tbl <- data.frame(x = 1:2, y = 1:2, yy = 1:2, nonunique = "A")
   
   # Single symbol
   expect_success(expect_rows_distinct(tbl, x))
@@ -30,6 +30,11 @@ test_that("Full range of tidyselect features available in column selection", {
   expect_success(expect_rows_distinct(tbl, -(2:4)))
   expect_success(expect_rows_distinct(tbl, -(2:3)))
   expect_failure(expect_rows_distinct(tbl, -(1:3)))
+  
+  # NEW: {tidyselect} `where()` predicate:
+  expect_success(expect_rows_distinct(tbl, !tidyselect::where(is.character)))
+  expect_success(expect_rows_distinct(tbl, tidyselect::where(is.numeric)))
+  expect_failure(expect_rows_distinct(tbl, tidyselect::where(is.character)))
   
   # NEW: {tidyselect} functions in complex expressions
   exist_col <- "y"

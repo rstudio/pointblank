@@ -238,9 +238,9 @@ resolve_columns <- function(x, var_expr, preconditions, ..., call = rlang::calle
   
   # Revised column selection logic
   ## Special case `vars()`-style enquo-ing and implement backwards compatibility
-  if (rlang::is_call(rlang::quo_get_expr(var_expr), "vars")) {
+  if (rlang::quo_is_call(var_expr, "vars")) {
     cols <- rlang::call_args(var_expr)
-    # Deparse into character vector
+    # Ensure elements are symbols
     col_syms <- rlang::syms(cols)
     if (rlang::is_empty(tbl)) {
       # Special-case `serially()` - just deparse elements and don't test for existence

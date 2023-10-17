@@ -233,13 +233,13 @@ resolve_columns <- function(x, var_expr, preconditions, ..., call = rlang::calle
   
   # Revised column selection logic
   ## Special case `vars()`-style enquo-ing and implement backwards compatibility
-  if (rlang::is_call(col_expr, "vars")) {
-    cols <- rlang::call_args(col_expr)
+  if (rlang::is_call(rlang::quo_get_expr(var_expr), "vars")) {
+    cols <- rlang::call_args(var_expr)
     # Deparse into character vector
     column <- vapply(cols, rlang::as_name, character(1), USE.NAMES = FALSE)
   } else {
     ## Else, proceed with the assumption that user supplied a {tidyselect} expression
-    column <- tidyselect::eval_select(col_expr, tbl, error_call = call)
+    column <- tidyselect::eval_select(var_expr, tbl, error_call = call)
     column <- names(column)
   }
   

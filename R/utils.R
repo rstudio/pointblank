@@ -218,68 +218,34 @@ materialize_table <- function(tbl, check = TRUE) {
   tbl
 }
 
-resolve_expr_to_cols <- function(tbl, var_expr) {
-  
-  var_expr <- enquo(var_expr)
-  
-  if ((var_expr %>% rlang::get_expr() %>% as.character())[1] == "vars") {
-    
-    cols <- (var_expr %>% rlang::get_expr() %>% as.character())[-1]
-    return(cols)
-  }
-  
-  tidyselect::vars_select(.vars = colnames(tbl), {{ var_expr }}) %>% unname()
-}
-
-resolve_columns <- function(x, var_expr, preconditions) {
-  
-  # If getting a character vector as `var_expr`, simply return the vector
-  # since this should already be a vector of column names and it's not necessary
-  # to resolve this against the target table
-  if (is.character(var_expr)) {
-    return(var_expr)
-  }
-  
-  # nocov start
+resolve_columns <- function(x, var_expr, preconditions, ..., call = rlang::caller_env()) {
   
   # Return an empty character vector if the expr is NULL
-  if (inherits(var_expr, "quosure") &&
-      var_expr %>% rlang::as_label() == "NULL") {
-    
+  if (is.null(var_expr)) {
     return(character(NA_character_))
   }
   
-  # nocov end
+  # Extract tbl and apply preconditions
+  tbl <- if (is_ptblank_agent(x)) get_tbl_object(x) else x
+  if (!is.null(preconditions)) {
+    tbl <- apply_preconditions(tbl = x, preconditions = preconditions)
+  }
   
-  # Get the column names from a non-NULL, non-character expression
-  if (is.null(preconditions)) {
-    
-    if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
-      
-      column <- resolve_expr_to_cols(tbl = x, var_expr = !!var_expr)
-      
-    } else if (inherits(x, ("ptblank_agent"))) {
-      
-      tbl <- get_tbl_object(agent = x)
-      column <- resolve_expr_to_cols(tbl = tbl, var_expr = !!var_expr)
-    }
-    
+  # For simplicity, get the expression out of the quosure
+  col_expr <- rlang::quo_get_expr(var_expr)
+  
+  # Revised column selection logic
+  ## Special case `vars()`-style enquo-ing and implement backwards compatibility
+  if (rlang::is_call(col_expr, "vars")) {
+    col_syms <- rlang::call_args(col_expr)
+    # Turn it into `c(...)` expression and forward to tidyselect
+    col_c_expr <- rlang::call2("c", !!!col_syms)
+    column <- tidyselect::eval_select(col_c_expr, tbl, error_call = call)
+    column <- names(column)
   } else {
-    
-    if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
-      
-      tbl <- apply_preconditions(tbl = x, preconditions = preconditions)
-      
-      column <- resolve_expr_to_cols(tbl = tbl, var_expr = !!var_expr)
-      
-    } else if (inherits(x, ("ptblank_agent"))) {
-      
-      tbl <- get_tbl_object(agent = x)
-      
-      tbl <- apply_preconditions(tbl = tbl, preconditions = preconditions)
-      
-      column <- resolve_expr_to_cols(tbl = tbl, var_expr = !!var_expr)
-    }
+    ## Else, proceed with the assumption that user supplied a {tidyselect} expression
+    column <- tidyselect::eval_select(col_expr, tbl, error_call = call)
+    column <- names(column)
   }
   
   if (length(column) < 1) {

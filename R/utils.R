@@ -237,11 +237,9 @@ resolve_columns <- function(x, var_expr, preconditions, ..., call = rlang::calle
   # Revised column selection logic
   ## Special case `vars()`-style enquo-ing and implement backwards compatibility
   if (rlang::is_call(col_expr, "vars")) {
-    col_syms <- rlang::call_args(col_expr)
-    # Turn it into `c(...)` expression and forward to tidyselect
-    col_c_expr <- rlang::call2("c", !!!col_syms)
-    column <- tidyselect::eval_select(col_c_expr, tbl, error_call = call)
-    column <- names(column)
+    cols <- rlang::call_args(col_expr)
+    # Deparse into character vector
+    column <- vapply(cols, rlang::as_name, character(1), USE.NAMES = FALSE)
   } else {
     ## Else, proceed with the assumption that user supplied a {tidyselect} expression
     column <- tidyselect::eval_select(col_expr, tbl, error_call = call)

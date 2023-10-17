@@ -225,10 +225,15 @@ resolve_columns <- function(x, var_expr, preconditions, ..., call = rlang::calle
     return(character(NA_character_))
   }
   
-  # Extract tbl and apply preconditions
-  tbl <- if (is_ptblank_agent(x)) get_tbl_object(x) else x
+  # Extract tbl
+  tbl <- if (is_ptblank_agent(x)) {
+    get_tbl_object(x)
+  } else if (is_a_table_object(x)) {
+    x
+  }
+  # Apply preconditions
   if (!is.null(preconditions)) {
-    tbl <- apply_preconditions(tbl = x, preconditions = preconditions)
+    tbl <- apply_preconditions(tbl = tbl, preconditions = preconditions)
   }
   
   # Revised column selection logic

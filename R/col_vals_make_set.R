@@ -379,7 +379,7 @@ col_vals_make_set <- function(
           assertion_type = "col_vals_make_set",
           i_o = i_o,
           columns_expr = columns_expr,
-          column = tidyselect::all_of(columns[i]),
+          column = columns[i],
           values = set,
           preconditions = preconditions,
           seg_expr = segments,

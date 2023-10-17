@@ -448,7 +448,7 @@ col_vals_between <- function(
           assertion_type = "col_vals_between",
           i_o = i_o,
           columns_expr = columns_expr,
-          column = tidyselect::all_of(columns[i]),
+          column = columns[i],
           values = c(left, right),
           na_pass = na_pass,
           preconditions = preconditions,

@@ -362,7 +362,7 @@ col_vals_null <- function(
           assertion_type = "col_vals_null",
           i_o = i_o,
           columns_expr = columns_expr,
-          column = tidyselect::all_of(columns[i]),
+          column = columns[i],
           preconditions = preconditions,
           seg_expr = segments,
           seg_col = seg_col,

@@ -377,7 +377,7 @@ col_vals_in_set <- function(
           assertion_type = "col_vals_in_set",
           i_o = i_o,
           columns_expr = columns_expr,
-          column = tidyselect::all_of(columns[i]),
+          column = columns[i],
           values = set,
           preconditions = preconditions,
           seg_expr = segments,

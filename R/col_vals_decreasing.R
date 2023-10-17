@@ -433,7 +433,7 @@ col_vals_decreasing <- function(
           assertion_type = "col_vals_decreasing",
           i_o = i_o,
           columns_expr = columns_expr,
-          column = tidyselect::all_of(columns[i]),
+          column = columns[i],
           values = stat_tol,
           na_pass = na_pass,
           preconditions = preconditions,

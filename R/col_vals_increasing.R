@@ -421,7 +421,7 @@ col_vals_increasing <- function(
           assertion_type = "col_vals_increasing",
           i_o = i_o,
           columns_expr = columns_expr,
-          column = tidyselect::all_of(columns[i]),
+          column = columns[i],
           values = stat_tol,
           na_pass = na_pass,
           preconditions = preconditions,

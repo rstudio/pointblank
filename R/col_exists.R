@@ -289,7 +289,7 @@ col_exists <- function(
         assertion_type = "col_exists",
         i_o = i_o,
         columns_expr = columns_expr,
-        column = tidyselect::all_of(columns[i]),
+        column = columns[i],
         preconditions = NULL,
         actions = covert_actions(actions, agent),
         step_id = step_id[i],

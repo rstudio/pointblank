@@ -45,4 +45,9 @@ test_that("Full range of tidyselect features available in column selection", {
     "Using an external vector in selections was deprecated in tidyselect 1.1.0."
   ))
   
+  # For `rows_distinct()` specifically, NULL = "select everything" behavior implemented in tidyselect:
+  expect_success(expect_rows_distinct(tbl, ))
+  tbl_only_nonunique <- tbl[,"nonunique", drop = FALSE]
+  expect_failure(expect_rows_distinct(tbl_only_nonunique, ))
+  
 })

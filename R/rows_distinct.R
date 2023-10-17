@@ -279,6 +279,9 @@ rows_distinct <- function(
   
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
+  if (is.null(rlang::quo_get_expr(columns))) {
+    columns <- rlang::new_quosure(rlang::expr(tidyselect::everything()))
+  }
   
   # Resolve the columns based on the expression
   columns <- resolve_columns(x = x, var_expr = columns, preconditions = NULL)

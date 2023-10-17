@@ -221,7 +221,7 @@ materialize_table <- function(tbl, check = TRUE) {
 resolve_columns <- function(x, var_expr, preconditions, ..., call = rlang::caller_env()) {
   
   # Return an empty character vector if the expr is NULL
-  if (is.null(var_expr)) {
+  if (is.null(rlang::quo_get_expr(var_expr))) {
     return(character(NA_character_))
   }
   
@@ -251,13 +251,11 @@ resolve_columns <- function(x, var_expr, preconditions, ..., call = rlang::calle
       column <- tidyselect::eval_select(col_c_expr, tbl, error_call = call)
       column <- names(column)
     }
-    # column <- vapply(cols, rlang::as_name, character(1), USE.NAMES = FALSE)
   } else {
     ## Else, proceed with the assumption that user supplied a {tidyselect} expression
     column <- tidyselect::eval_select(var_expr, tbl, error_call = call)
     column <- names(column)
   }
-  # Just the names of the tidy-selected columns
   
   if (length(column) < 1) {
     column <- NA_character_

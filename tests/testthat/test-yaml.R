@@ -800,7 +800,7 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   
   expect_equal(
     get_oneline_expr_str(agent %>% rows_distinct()),
-    "rows_distinct()"
+    "rows_distinct(columns = vars(date_time, date, a, b, c, d, e, f))"
   )
   expect_equal(
     get_oneline_expr_str(agent %>% rows_distinct(columns = vars(a, b))),

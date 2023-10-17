@@ -231,9 +231,6 @@ resolve_columns <- function(x, var_expr, preconditions, ..., call = rlang::calle
     tbl <- apply_preconditions(tbl = x, preconditions = preconditions)
   }
   
-  # For simplicity, get the expression out of the quosure
-  col_expr <- rlang::quo_get_expr(var_expr)
-  
   # Revised column selection logic
   ## Special case `vars()`-style enquo-ing and implement backwards compatibility
   if (rlang::is_call(col_expr, "vars")) {

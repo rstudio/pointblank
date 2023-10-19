@@ -1041,7 +1041,7 @@ probe_columns_numeric <- function(
     locale
 ) {
   
-  data_column <- dplyr::select(data, {{ column }})
+  data_column <- dplyr::select(data, tidyselect::any_of(column))
   
   column_description_gt <- 
     get_column_description_gt(
@@ -1133,7 +1133,7 @@ probe_columns_character <- function(
     locale
 ) {
   
-  data_column <- data %>% dplyr::select({{ column }})
+  data_column <- data %>% dplyr::select(tidyselect::any_of(column))
   
   column_description_gt <- 
     get_column_description_gt(
@@ -1184,7 +1184,7 @@ probe_columns_logical <- function(
     locale
 ) {
   
-  data_column <- data %>% dplyr::select({{ column }})
+  data_column <- data %>% dplyr::select(tidyselect::any_of(column))
   
   column_description_gt <- 
     get_column_description_gt(
@@ -1211,7 +1211,7 @@ probe_columns_factor <- function(
     locale
 ) {
   
-  data_column <- data %>% dplyr::select({{ column }})
+  data_column <- data %>% dplyr::select(tidyselect::any_of(column))
   
   column_description_gt <- 
     get_column_description_gt(
@@ -1238,7 +1238,7 @@ probe_columns_date <- function(
     locale
 ) {
   
-  data_column <- data %>% dplyr::select({{ column }})
+  data_column <- data %>% dplyr::select(tidyselect::any_of(column))
   
   column_description_gt <- 
     get_column_description_gt(
@@ -1265,7 +1265,7 @@ probe_columns_posix <- function(
     locale
 ) {
   
-  data_column <- data %>% dplyr::select({{ column }})
+  data_column <- data %>% dplyr::select(tidyselect::any_of(column))
   
   column_description_gt <- 
     get_column_description_gt(
@@ -1290,7 +1290,7 @@ probe_columns_other <- function(
     n_rows
 ) {
   
-  data_column <- data %>% dplyr::select({{ column }})
+  data_column <- data %>% dplyr::select(tidyselect::any_of(column))
   
   column_classes <- paste(class(data_column), collapse = ", ")
   

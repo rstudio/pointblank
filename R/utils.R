@@ -246,9 +246,9 @@ resolve_columns <- function(x, var_expr, preconditions) {
 
 resolve_columns_internal <- function(x, var_expr, preconditions) {
   
-  # Return an empty character vector if the expr is NULL
+  # Return NA if the expr is NULL
   if (rlang::quo_is_null(var_expr)) {
-    return(character(NA_character_))
+    return(NA_character_)
   }
   
   # Extract tbl

@@ -218,8 +218,32 @@ materialize_table <- function(tbl, check = TRUE) {
   tbl
 }
 
-resolve_columns <- function(x, var_expr, preconditions, ...,
-                            call = rlang::caller_env()) {
+is_secret_agent <- function(x) {
+  is_ptblank_agent(x) && (x$label == "::QUIET::")
+}
+
+resolve_columns <- function(x, var_expr, preconditions) {
+  
+  out <- tryCatch(
+    expr = resolve_columns_internal(x, var_expr, preconditions),
+    error = function(cnd) cnd
+  )
+  
+  if (rlang::is_error(out)) {
+    # If not in validation-planning context (assert/expect/test)
+    if (is_a_table_object(x) || is_secret_agent(x)) {
+      rlang::cnd_signal(out)
+    } else {
+      # Else (if building up validations): return columns attempted to subset
+      out$i
+    }
+  } else {
+    out
+  }
+  
+}
+
+resolve_columns_internal <- function(x, var_expr, preconditions) {
   
   # Return an empty character vector if the expr is NULL
   if (rlang::quo_is_null(var_expr)) {
@@ -241,21 +265,19 @@ resolve_columns <- function(x, var_expr, preconditions, ...,
   ## Special case `vars()`-expression for backwards compatibility
   if (rlang::quo_is_call(var_expr, "vars")) {
     cols <- rlang::call_args(var_expr)
-    # Ensure elements are symbols
-    col_syms <- rlang::syms(cols)
     if (rlang::is_empty(tbl)) {
       # Special-case `serially()` - just deparse elements and bypass tidyselect
-      column <- vapply(col_syms, rlang::as_name, character(1),
+      column <- vapply(cols, rlang::as_name, character(1),
                        USE.NAMES = FALSE)
     } else {
       # Convert to the idiomatic `c()`-expr
-      col_c_expr <- rlang::call2("c", !!!col_syms)
-      column <- tidyselect::eval_select(col_c_expr, tbl, error_call = call)
+      col_c_expr <- rlang::call2("c", !!!cols)
+      column <- tidyselect::eval_select(col_c_expr, tbl)
       column <- names(column)
     }
   } else {
     ## Else, assume that the user supplied a valid tidyselect expression
-    column <- tidyselect::eval_select(var_expr, tbl, error_call = call)
+    column <- tidyselect::eval_select(var_expr, tbl)
     column <- names(column)
   }
   

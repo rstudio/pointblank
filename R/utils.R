@@ -235,7 +235,8 @@ resolve_columns <- function(x, var_expr, preconditions) {
       rlang::cnd_signal(out)
     } else {
       # Else (if building up validations): return columns attempted to subset
-      out$i
+      # or NA if none
+      out$i %||% NA_character_
     }
   } else {
     out

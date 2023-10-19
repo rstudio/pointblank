@@ -218,7 +218,8 @@ materialize_table <- function(tbl, check = TRUE) {
   tbl
 }
 
-resolve_columns <- function(x, var_expr, preconditions, ..., call = rlang::caller_env()) {
+resolve_columns <- function(x, var_expr, preconditions, ...,
+                            call = rlang::caller_env()) {
   
   # Return an empty character vector if the expr is NULL
   if (rlang::quo_is_null(var_expr)) {
@@ -237,14 +238,15 @@ resolve_columns <- function(x, var_expr, preconditions, ..., call = rlang::calle
   }
   
   # Revised column selection logic
-  ## Special case `vars()`-style enquo-ing and implement backwards compatibility
+  ## Special case `vars()`-expression for backwards compatibility
   if (rlang::quo_is_call(var_expr, "vars")) {
     cols <- rlang::call_args(var_expr)
     # Ensure elements are symbols
     col_syms <- rlang::syms(cols)
     if (rlang::is_empty(tbl)) {
-      # Special-case `serially()` - just deparse elements and don't test for existence
-      column <- vapply(col_syms, rlang::as_name, character(1), USE.NAMES = FALSE)
+      # Special-case `serially()` - just deparse elements and bypass tidyselect
+      column <- vapply(col_syms, rlang::as_name, character(1),
+                       USE.NAMES = FALSE)
     } else {
       # Convert to the idiomatic `c()`-expr
       col_c_expr <- rlang::call2("c", !!!col_syms)
@@ -252,7 +254,7 @@ resolve_columns <- function(x, var_expr, preconditions, ..., call = rlang::calle
       column <- names(column)
     }
   } else {
-    ## Else, proceed with the assumption that user supplied a {tidyselect} expression
+    ## Else, assume that the user supplied a valid tidyselect expression
     column <- tidyselect::eval_select(var_expr, tbl, error_call = call)
     column <- names(column)
   }

@@ -902,7 +902,7 @@ get_tbl_information_dbi <- function(tbl) {
           DBI::dbDataType(
             tbl_connection,
             tbl %>%
-              dplyr::select(x) %>%
+              dplyr::select(tidyselect::all_of(x)) %>%
               utils::head(1) %>%
               dplyr::collect() %>%
               dplyr::pull(x)

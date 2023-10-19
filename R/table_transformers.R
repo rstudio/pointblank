@@ -161,7 +161,7 @@ tt_summary_stats <- function(tbl) {
     
     if (r_col_types[i] %in% c("integer", "numeric")) {
       
-      data_col <- dplyr::select(tbl, col_names[i])
+      data_col <- dplyr::select(tbl, tidyselect::all_of(col_names[i]))
       
       # nocov start
       
@@ -286,7 +286,7 @@ tt_string_info <- function(tbl) {
     
     if (r_col_types[i] == "character") {
       
-      data_col <- dplyr::select(tbl, col_names[i])
+      data_col <- dplyr::select(tbl, tidyselect::all_of(col_names[i]))
       
       suppressWarnings({
         info_list <- get_table_column_nchar_stats(data_column = data_col)
@@ -585,7 +585,7 @@ tt_time_shift <- function(
         tbl %>%
         dplyr::mutate(
           dplyr::across(
-            .cols = time_columns,
+            .cols = tidyselect::all_of(time_columns),
             .fns = ~ lubridate::days(n_days) + .
           )
         )
@@ -596,7 +596,7 @@ tt_time_shift <- function(
         tbl %>%
         dplyr::mutate(
           dplyr::across(
-            .cols = time_columns,
+            .cols = tidyselect::all_of(time_columns),
             .fns = ~ time_shift + .
           )
         )
@@ -645,7 +645,7 @@ tt_time_shift <- function(
           tbl %>%
           dplyr::mutate(
             dplyr::across(
-              .cols = time_columns,
+              .cols = tidyselect::all_of(time_columns),
               .fns = ~ fn_time(time_value * direction_val) + .)
           )
       }

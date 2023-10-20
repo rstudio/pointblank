@@ -10,10 +10,10 @@ test_that("tidyselect errors signaled at report, not during development of valid
   expect_s3_class(a4 <- agent %>% col_vals_not_null(all_of(nonexistent_col)), "ptblank_agent")
   
   # Failure signaled via report
-  expect_message(expect_no_error(a1 %>% interrogate()), "ERROR")
-  expect_message(expect_no_error(a2 %>% interrogate()), "ERROR")
-  expect_message(expect_no_error(a3 %>% interrogate()), "ERROR")
-  expect_message(expect_no_error(a4 %>% interrogate()), "ERROR")
+  expect_false(a1 %>% interrogate() %>% all_passed())
+  expect_false(a2 %>% interrogate() %>% all_passed())
+  expect_false(a3 %>% interrogate() %>% all_passed())
+  expect_false(a4 %>% interrogate() %>% all_passed())
   
   # Stress testing
   expect_no_error(agent %>% col_vals_not_null(stop()))
@@ -52,23 +52,25 @@ test_that("fail state correctly registered in the report for tidyselect errors",
 
 test_that("(tidy-)selecting 0 columns = skip the validation step at interrogation", {
   
+  eval_inactive <- function(x) !x$validation_set$eval_active
+  
   # Old behavior for vars()/NULL/<missing> preserved:
   ## 1) No immediate error for zero columns selected
   expect_s3_class(a5 <- agent %>% col_vals_not_null(vars()), "ptblank_agent")
   expect_s3_class(a6 <- agent %>% col_vals_not_null(NULL), "ptblank_agent")
   expect_s3_class(a7 <- agent %>% col_vals_not_null(), "ptblank_agent")
   ## 2) # Treated as inactive in the report
-  expect_message(expect_no_error(a5 %>% interrogate()), "Skipping")
-  expect_message(expect_no_error(a6 %>% interrogate()), "Skipping")
-  expect_message(expect_no_error(a7 %>% interrogate()), "Skipping")
+  expect_true(a5 %>% interrogate() %>% eval_inactive())
+  expect_true(a6 %>% interrogate() %>% eval_inactive())
+  expect_true(a7 %>% interrogate() %>% eval_inactive())
   
   # Same behavior of 0-column selection replicated in tidyselect patterns
   expect_length(small_table %>% dplyr::select(any_of("z")), 0)
   expect_length(small_table %>% dplyr::select(c()), 0)
   expect_s3_class(a8 <- agent %>% col_vals_not_null(any_of("z")), "ptblank_agent")
   expect_s3_class(a9 <- agent %>% col_vals_not_null(c()), "ptblank_agent")
-  expect_message(expect_no_error(a8 %>% interrogate()), "Skipping")
-  expect_message(expect_no_error(a9 %>% interrogate()), "Skipping")
+  expect_true(a8 %>% interrogate() %>% eval_inactive())
+  expect_true(a9 %>% interrogate() %>% eval_inactive())
   
 })
 

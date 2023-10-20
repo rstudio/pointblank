@@ -1058,9 +1058,9 @@ get_tt_param <- function(
     # Obtain the value from the `tbl` through a `select()`, `filter()`, `pull()`
     param_value <-
       tbl %>%
-      dplyr::select(.param., .env$column) %>%
+      dplyr::select(.param., tidyselect::all_of(column)) %>%
       dplyr::filter(.param. == .env$param) %>%
-      dplyr::pull(.env$column)
+      dplyr::pull(tidyselect::all_of(column))
     
   } else if (tt_type == "tbl_dims") {
     

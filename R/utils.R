@@ -345,7 +345,7 @@ resolve_segments <- function(x, seg_expr, preconditions) {
         
         col_seg_vals <- 
           tbl %>%
-          dplyr::select(.env$column_name) %>%
+          dplyr::select(tidyselect::all_of(column_name)) %>%
           dplyr::distinct() %>%
           dplyr::pull()
         

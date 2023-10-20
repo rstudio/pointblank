@@ -1,0 +1,118 @@
+agent <- create_agent(small_table)
+nonexistent_col <- "z"
+
+test_that("tidyselect errors signaled at report, not during development of validation plan", {
+  
+  # No immediate error for all patterns
+  expect_s3_class(a1 <- agent %>% col_vals_not_null(z), "ptblank_agent")
+  expect_s3_class(a2 <- agent %>% col_vals_not_null("z"), "ptblank_agent")
+  expect_s3_class(a3 <- agent %>% col_vals_not_null(all_of("z")), "ptblank_agent")
+  expect_s3_class(a4 <- agent %>% col_vals_not_null(all_of(nonexistent_col)), "ptblank_agent")
+  
+  # Failure signaled via report
+  expect_message(expect_no_error(a1 %>% interrogate()), "ERROR")
+  expect_message(expect_no_error(a2 %>% interrogate()), "ERROR")
+  expect_message(expect_no_error(a3 %>% interrogate()), "ERROR")
+  expect_message(expect_no_error(a4 %>% interrogate()), "ERROR")
+  
+  # Stress testing
+  expect_no_error(agent %>% col_vals_not_null(stop()))
+  expect_no_error(agent %>% col_vals_not_null(c(stop())))
+  expect_no_error(agent %>% col_vals_not_null(all_of(stop())))
+  
+})
+
+test_that("fail state correctly registered in the report for tidyselect errors", {
+  
+  # Adopted from test-get_agent_report.R -------------------------
+  
+  # The following agent will perform an interrogation that results
+  # in all test units passing in the second validation step, but
+  # the first experiences an evaluation error (since column
+  # `z` doesn't exist in `small_table`)
+  agent <-
+    create_agent(tbl = small_table) %>%
+    col_vals_not_null(all_of("z")) %>% # swapped for `vars("z")`
+    col_vals_gt(vars(c), 1, na_pass = TRUE) %>%
+    interrogate()
+  
+  # Expect that the interrogation *does not* have
+  # a completely 'all passed' state (returning FALSE)
+  agent %>% all_passed() %>% expect_false()
+  
+  # If narrowing the `all_passed()` evaluation to only
+  # the second validation step, then we should expect TRUE
+  agent %>% all_passed(i = 2) %>% expect_true()
+  
+  # If narrowing the `all_passed()` evaluation to only
+  # the first validation step, then we should expect FALSE
+  agent %>% all_passed(i = 1) %>% expect_false()
+  
+})
+
+test_that("(tidy-)selecting 0 columns = skip the validation step at interrogation", {
+  
+  # Old behavior for vars()/NULL/<missing> preserved:
+  ## 1) No immediate error for zero columns selected
+  expect_s3_class(a5 <- agent %>% col_vals_not_null(vars()), "ptblank_agent")
+  expect_s3_class(a6 <- agent %>% col_vals_not_null(NULL), "ptblank_agent")
+  expect_s3_class(a7 <- agent %>% col_vals_not_null(), "ptblank_agent")
+  ## 2) # Treated as inactive in the report
+  expect_message(expect_no_error(a5 %>% interrogate()), "Skipping")
+  expect_message(expect_no_error(a6 %>% interrogate()), "Skipping")
+  expect_message(expect_no_error(a7 %>% interrogate()), "Skipping")
+  
+  # Same behavior of 0-column selection replicated in tidyselect patterns
+  expect_length(small_table %>% dplyr::select(any_of("z")), 0)
+  expect_length(small_table %>% dplyr::select(c()), 0)
+  expect_s3_class(a8 <- agent %>% col_vals_not_null(any_of("z")), "ptblank_agent")
+  expect_s3_class(a9 <- agent %>% col_vals_not_null(c()), "ptblank_agent")
+  expect_message(expect_no_error(a8 %>% interrogate()), "Skipping")
+  expect_message(expect_no_error(a9 %>% interrogate()), "Skipping")
+  
+})
+
+test_that("tidyselect errors *are* immediate for assertion/expectation/test", {
+  
+  mismatch_msg <- "Can't subset columns that don't exist."
+  
+  # For validation steps are used on table
+  expect_error(small_table %>% col_vals_not_null(z), mismatch_msg)
+  expect_error(small_table %>% col_vals_not_null("z"), mismatch_msg)
+  expect_error(small_table %>% col_vals_not_null(all_of("z")), mismatch_msg)
+  expect_error(small_table %>% col_vals_not_null(all_of(nonexistent_col)), mismatch_msg)
+  
+  # For expectations
+  expect_error(small_table %>% expect_col_vals_not_null(z), mismatch_msg)
+  expect_error(small_table %>% expect_col_vals_not_null("z"), mismatch_msg)
+  expect_error(small_table %>% expect_col_vals_not_null(all_of("z")), mismatch_msg)
+  expect_error(small_table %>% expect_col_vals_not_null(all_of(nonexistent_col)), mismatch_msg)
+  
+  # For tests
+  expect_error(small_table %>% test_col_vals_not_null(z), mismatch_msg)
+  expect_error(small_table %>% test_col_vals_not_null("z"), mismatch_msg)
+  expect_error(small_table %>% test_col_vals_not_null(all_of("z")), mismatch_msg)
+  expect_error(small_table %>% test_col_vals_not_null(all_of(nonexistent_col)), mismatch_msg)
+  
+})
+
+test_that("tidyselect errors cannot be downgraded in assertion/expectation on table", {
+  
+  # This replicates old behavior
+  expect_error({
+    small_table %>% 
+      col_vals_not_null(a) %>% 
+      col_vals_not_null(z, actions = warn_on_fail()) %>% 
+      col_vals_not_null(b)
+  }, "Can't subset columns that don't exist.")
+  
+})
+
+# test_that("Other things that may need to get ironed out", {
+#   # Empty `vars()` in rows_* functions resolve to `list(NA)` instead of `NA`
+#   agent %>% rows_distinct(vars())
+#   agent %>% rows_complete(vars())
+#   # Attempting to select using a non-existent variable silently fails
+#   agent %>% col_vals_not_null(all_of(nonexistent_var)) %>% interrogate()
+#   # Current heuristic for re-throwing the error relies on whether agent is "::QUIET::" ...
+# })

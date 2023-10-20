@@ -224,6 +224,8 @@ is_secret_agent <- function(x) {
 
 resolve_columns <- function(x, var_expr, preconditions) {
   
+  force(x) # To avoid `restarting interrupted promise evaluation` warnings
+  
   out <- tryCatch(
     expr = resolve_columns_internal(x, var_expr, preconditions),
     error = function(cnd) cnd
@@ -234,8 +236,7 @@ resolve_columns <- function(x, var_expr, preconditions) {
     if (is_a_table_object(x) || is_secret_agent(x)) {
       rlang::cnd_signal(out)
     } else {
-      # Else (if building up validations): return columns attempted to subset
-      # or NA if none
+      # Else (mid-planning): return columns attempted to subset or NA if empty
       out$i %||% NA_character_
     }
   } else {

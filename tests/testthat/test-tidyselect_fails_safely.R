@@ -74,6 +74,23 @@ test_that("(tidy-)selecting 0 columns = skip the validation step at interrogatio
   
 })
 
+test_that("tidyselecting 0 columns for rows_* functions = error at interrogation", {
+  
+  expect_no_error(a_rows_distinct <- agent %>% rows_distinct(starts_with("z")) %>% interrogate())
+  expect_no_error(a_rows_complete <- agent %>% rows_distinct(starts_with("z")) %>% interrogate())
+  expect_true(a_rows_distinct$validation_set$eval_error)
+  expect_true(a_rows_complete$validation_set$eval_error)
+  
+  # TODO: 0-column selection from tidyselect helpers *not* caught by `uses_tidyselect()`
+  #       will still have same behavior but show different eval error message
+  #       (errors from `select()` and not from `column_validity_has_columns()` as above)
+  expect_no_error(a_rows_distinct2 <- agent %>% rows_distinct(any_of("z")) %>% interrogate())
+  expect_no_error(a_rows_complete2 <- agent %>% rows_distinct(any_of("z")) %>% interrogate())
+  expect_true(a_rows_distinct2$validation_set$eval_error)
+  expect_true(a_rows_complete2$validation_set$eval_error)
+  
+})
+
 test_that("tidyselect errors *are* immediate for assertion/expectation/test", {
   
   mismatch_msg <- "Can't subset columns that don't exist."

@@ -298,7 +298,7 @@ rows_complete <- function(
     secret_agent <- 
       create_agent(x, label = "::QUIET::") %>%
       rows_complete(
-        columns = columns,
+        columns = tidyselect::all_of(columns),
         preconditions = preconditions,
         segments = segments,
         label = label,

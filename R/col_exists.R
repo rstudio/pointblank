@@ -241,7 +241,11 @@ col_exists <- function(
   }
   
   # Resolve the columns based on the expression
-  columns <- resolve_columns(x = x, var_expr = columns, preconditions = NULL)
+  ## Only for `col_exists()`: error gracefully if column not found
+  columns <- tryCatch(
+    expr = resolve_columns(x = x, var_expr = columns, preconditions = NULL),
+    error = function(cnd) cnd$i %||% NA_character_
+  )
 
   if (is_a_table_object(x)) {
     

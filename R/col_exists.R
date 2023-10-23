@@ -234,17 +234,14 @@ col_exists <- function(
     rlang::as_label(rlang::quo(!!enquo(columns))) %>%
     gsub("^\"|\"$", "", .)
   
-  # Normalize the `columns` expression
-  if (inherits(columns, "quosures")) {
-    
-    columns <- 
-      vapply(
-        columns,
-        FUN.VALUE = character(1),
-        USE.NAMES = FALSE,
-        FUN = function(x) as.character(rlang::get_expr(x))
-      )
+  # Capture the `columns` expression
+  columns <- rlang::enquo(columns)
+  if (rlang::quo_is_null(columns)) {
+    columns <- rlang::quo(tidyselect::everything())
   }
+  
+  # Resolve the columns based on the expression
+  columns <- resolve_columns(x = x, var_expr = columns, preconditions = NULL)
 
   if (is_a_table_object(x)) {
     

@@ -1,15 +1,41 @@
-test_that("Full range of tidyselect features available in column selection", {
+tbl <- data.frame(x = 1:2, y = 1:2, nonunique = "A")
+exist_col <- "y"
+nonunique_col <- "nonunique"
+nonexist_col <- "z"
+
+test_that("Backwards compatibility with `vars()`", {
   
-  tbl <- data.frame(x = 1:2, y = 1:2, nonunique = "A")
+  # Bare symbol selects column(s)
+  expect_success(expect_rows_distinct(tbl, vars(x)))
+  expect_success(expect_rows_distinct(tbl, vars(x, nonunique)))
+  expect_failure(expect_rows_distinct(tbl, vars(nonunique)))
+  
+  # Bare character selects column(s)
+  expect_success(expect_rows_distinct(tbl, vars("x")))
+  expect_success(expect_rows_distinct(tbl, vars("x", "nonunique")))
+  expect_failure(expect_rows_distinct(tbl, vars("nonunique")))
+  
+  # Bang-bang in-lines value
+  expect_success(expect_rows_distinct(tbl, vars(!!exist_col)))
+  expect_failure(expect_rows_distinct(tbl, vars(!!nonunique_col)))
+  
+  # `vars()` wrapping tidyselect expressions is redundant but continues to work
+  expect_success(expect_rows_distinct(tbl, vars(all_of("x"))))
+  
+  # `vars()` selection of 0-columns errors *only* in non-validation-planning contexts
+  expect_error(rows_distinct(tbl, vars("z")))
+  expect_error(expect_rows_distinct(tbl, vars("z")))
+  expect_error(test_rows_distinct(tbl, vars("z")))
+  expect_no_error(tbl %>% create_agent() %>% rows_distinct(vars("z")))
+  expect_no_error(tbl %>% create_agent() %>% rows_distinct(vars("z")) %>% interrogate())
+  
+})
+
+test_that("Full range of tidyselect features available in column selection", {
   
   # Single symbol
   expect_success(expect_rows_distinct(tbl, x))
   expect_failure(expect_rows_distinct(tbl, nonunique))
-  
-  # Backward-compatibility with `vars()` syntax
-  expect_success(expect_rows_distinct(tbl, vars(x)))
-  expect_success(expect_rows_distinct(tbl, vars(x, nonunique)))
-  expect_failure(expect_rows_distinct(tbl, vars(nonunique)))
   
   # Preferred {tidyselect}-style `c()` syntax
   expect_success(expect_rows_distinct(tbl, c(x)))
@@ -37,9 +63,7 @@ test_that("Full range of tidyselect features available in column selection", {
   expect_failure(expect_rows_distinct(tbl, tidyselect::where(is.character)))
   
   # NEW: {tidyselect} functions in complex expressions
-  exist_col <- "y"
   expect_success(expect_rows_distinct(tbl, c(x, tidyselect::all_of(exist_col))))
-  nonexist_col <- "z"
   expect_error(expect_rows_distinct(tbl, c(x, tidyselect::all_of(nonexist_col))))
   expect_success(expect_rows_distinct(tbl, c(x, tidyselect::any_of(nonexist_col))))
   

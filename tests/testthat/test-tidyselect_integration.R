@@ -52,7 +52,6 @@ test_that("Full range of tidyselect features available in column selection", {
   
 })
 
-
 test_that("'NULL = select everything' behavior in rows_*() validation functions", {
 
   # For `rows_*()` functions specifically, empty/NULL = "select everything" behavior:
@@ -89,4 +88,37 @@ test_that("'NULL = select everything' behavior in rows_*() validation functions"
       unique()
   }, toString(colnames(small_table)))
     
+})
+
+# tidyselect coverage for `col_exists()`
+test_that("'NULL = select everything' behavior in rows_*() validation functions", {
+  
+  # Reprex from (#433)
+  df <- tibble::tibble(
+    id.x = 1:3,
+    id.y = 1:3,
+    stuff = 1:3
+  )
+  expect_success({
+    df %>% 
+      expect_col_exists(
+        columns = vars(ends_with(".x"))
+      )
+  })
+  expect_equal({
+    df %>% 
+      col_exists(
+        columns = vars(ends_with(".x"))
+      )
+  }, df)
+  
+  # Multiple column selection produces multiple steps
+  expect_no_error({
+    df_interrogated <- df %>% 
+      create_agent() %>% 
+      col_exists(starts_with("id")) %>% 
+      interrogate()
+  })
+  expect_equal(nrow(df_interrogated$validation_set), 2L)
+  
 })

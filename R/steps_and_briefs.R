@@ -35,7 +35,8 @@ create_validation_step <- function(
     step_id = NULL,
     label = NULL,
     brief = NULL,
-    active = NULL
+    active = NULL,
+    .call = rlang::caller_env(n = 2L)
 ) {
   
   # Get the next step number (i)
@@ -105,6 +106,11 @@ create_validation_step <- function(
       f_passed = NA_real_,
       f_failed = NA_real_
     )
+  
+  # glue-powered labels
+  glue_mask <- list(.step = assertion_type, .col = column, .segment = seg_val)
+  label <- glue::glue_data(glue_mask, validation_step_df$label, .envir = .call)
+  validation_step_df$label <- label
   
   # Append `validation_step` to `validation_set`
   agent$validation_set <- 

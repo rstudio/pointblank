@@ -109,8 +109,11 @@ create_validation_step <- function(
   
   # glue-powered labels
   if (!is.na(validation_step_df$label)) {
-    glue_mask <- list(.step = assertion_type, .col = column, .segment = seg_val)
-    label <- glue::glue_data(glue_mask, validation_step_df$label, .envir = .call)
+    glue_mask <- rlang::new_environment(
+      data = list(.step = assertion_type, .col = column, .segment = seg_val),
+      parent = .call
+    )
+    label <- glue::glue_data(glue_mask, validation_step_df$label, .envir = NULL)
     validation_step_df$label <- as.character(label)
   }
   

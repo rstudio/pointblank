@@ -274,7 +274,8 @@ col_is_character <- function(
   
   # Add one or more validation steps based on the
   # length of the `columns` variable
-  for (i in seq(columns)) {
+  label <- resolve_label(label, columns)
+  for (i in seq_along(columns)) {
     
     agent <-
       create_validation_step(
@@ -286,7 +287,7 @@ col_is_character <- function(
         preconditions = NULL,
         actions = covert_actions(actions, agent),
         step_id = step_id[i],
-        label = label,
+        label = label[i],
         brief = brief[i],
         active = active
       )

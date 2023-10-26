@@ -1038,6 +1038,14 @@ as_agent_yaml_list <- function(agent, expanded) {
       dplyr::filter(dplyr::row_number() == 1) %>%
       dplyr::ungroup() %>%
       dplyr::rename(i = i_o)
+    
+    # Temporary conversion of `$label` to list-column
+    step_labels <- split(agent$validation_set$label, agent$validation_set$i_o)
+    step_labels_collapsed <- lapply(step_labels, function(label) {
+      # Collapse `label` when possible
+      if (!anyNA(label) && all(label == label[1])) label[1] else label
+    })
+    agent_validation_set$label <- unname(step_labels_collapsed)
   
   } else {
     
@@ -1526,6 +1534,9 @@ as_agent_yaml_list <- function(agent, expanded) {
 
     # Remove list elements that are representative of defaults
     lst_step <- prune_lst_step(lst_step)
+    
+    # Unlist labels as character vector/scalar
+    lst_step$validation_fn$label <- lst_step$validation_fn$label[[1]]
 
     # Set the top level list-element name to that of
     # the validation function

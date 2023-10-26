@@ -114,3 +114,19 @@ test_that("materialized multi-length glue labels make the yaml roundtrip", {
   
 })
 
+
+test_that("multi-length label collapses when possible in yaml representation", {
+  
+  agent_pre <- create_agent(~ small_table) |> 
+    col_vals_lt(
+      c, 8,
+      segments = vars(f),
+      label = "{nchar(.segment) * 0}"
+    )
+  
+  expect_identical(
+    as_agent_yaml_list(agent_pre, expanded = FALSE)$steps[[1]]$col_vals_lt$label,
+    c("0")
+  )
+  
+})

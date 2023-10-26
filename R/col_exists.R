@@ -281,7 +281,7 @@ col_exists <- function(
   
   # Add one or more validation steps based on the
   # length of the `columns` variable
-  label <- resolve_label(label, columns, segments_list)
+  label <- resolve_label(label, columns)
   for (i in seq_along(columns)) {
     
     agent <-

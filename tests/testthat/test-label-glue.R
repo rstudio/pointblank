@@ -85,3 +85,32 @@ test_that("glue env searches from the caller env of the validation function", {
   )
   
 })
+
+test_that("materialized multi-length glue labels make the yaml roundtrip", {
+  
+  agent_pre <- create_agent(~ small_table) |> 
+    col_vals_lt(
+      c, 8,
+      segments = vars(f),
+      label = "The `col_vals_lt()` step for group '{.segment}'"
+    )
+  
+  yaml_agent_string(agent_pre, expanded = FALSE)
+  
+  agent_yaml <- tempfile()
+  yaml_write(agent_pre, expanded = FALSE, filename = agent_yaml)
+  
+  agent_post <- yaml_read_agent(agent_yaml)
+  yaml_agent_string(agent_post, expanded = FALSE)
+  
+  expect_identical(
+    as_agent_yaml_list(agent_pre, expanded = FALSE),
+    as_agent_yaml_list(agent_post, expanded = FALSE)
+  )
+  expect_identical(
+    agent_pre %>% interrogate() %>% get_agent_report(display_table = FALSE),
+    agent_post %>% interrogate() %>% get_agent_report(display_table = FALSE)
+  )
+  
+})
+

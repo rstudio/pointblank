@@ -279,7 +279,7 @@ col_is_date <- function(
         preconditions = NULL,
         actions = covert_actions(actions, agent),
         step_id = step_id[i],
-        label = label[i],
+        label = label[[i]],
         brief = brief[i],
         active = active
       )

@@ -665,7 +665,7 @@ serially <- function(
         seg_val = seg_val,
         actions = covert_actions(actions, agent),
         step_id = step_id,
-        label = label[i],
+        label = label[[i]],
         brief = brief,
         active = active
       )

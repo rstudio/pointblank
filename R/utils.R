@@ -293,7 +293,11 @@ resolve_label <- function(label, columns = "", segments = "") {
   n_columns <- length(columns)
   n_segments <- length(segments)
   n_combinations <- n_columns * n_segments
-  # If scalar character, match length of col-x-seg combination
+  # If label is NULL, protect with list()
+  if (is.null(label)) {
+    label <- list(NULL)
+  }
+  # If length-1, match length of col-x-seg combination
   if (length(label) == 1) {
     label <- rep_len(label, n_combinations)
   }

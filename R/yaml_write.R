@@ -1043,7 +1043,7 @@ as_agent_yaml_list <- function(agent, expanded) {
     step_labels <- split(agent$validation_set$label, agent$validation_set$i_o)
     step_labels_collapsed <- lapply(step_labels, function(label) {
       # Collapse `label` when possible
-      if (!anyNA(label) && all(label == label[1])) label[1] else label
+      if (all(is.na(label)) || all(label == label[1])) label[1] else label
     })
     agent_validation_set$label <- unname(step_labels_collapsed)
   

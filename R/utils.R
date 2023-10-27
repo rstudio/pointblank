@@ -301,12 +301,14 @@ resolve_label <- function(label, columns = "", segments = "") {
   if (length(label) == 1) {
     label <- rep_len(label, n_combinations)
   }
-  # Check for length match and then construct a col-x-seg matrix
+  # Check for length match
   if (length(label) != n_combinations) {
     rlang::abort(paste0("`label` must be length 1 or ", n_combinations,
                         ", not ", length(label)))
   }
-  out <- matrix(label, nrow = n_columns, ncol = n_segments)
+  # Create a columns * segments matrix of the (recycled) label vector
+  # - Fill by row to preserve order (for loops iterate the j before the i)
+  out <- matrix(label, nrow = n_columns, ncol = n_segments, byrow = TRUE)
   # If missing columns and/or segments, collapse to vector/scalar
   if (missing(columns) || missing(segments)) {
     out <- as.vector(out)

@@ -1,12 +1,12 @@
-test_that("label supports glue syntax for {.segment} {.step} {.col}", {
+test_that("label supports glue syntax for {.seg_col} {.step} {.col}", {
   
-  # Reprex from (#451) for {.segment}
+  # Reprex from (#451) for {.seg_col}
   agent1 <- small_table %>% 
     create_agent() %>% 
     col_vals_lt(
       c, 8,
       segments = vars(f),
-      label = "The `col_vals_lt()` step for group '{.segment}'"
+      label = "The `col_vals_lt()` step for group '{.seg_col}'"
     ) %>% 
     interrogate()
   expect_identical(
@@ -42,7 +42,7 @@ test_that("label supports glue syntax for {.segment} {.step} {.col}", {
       c, 8,
       label = "{toString(sort(ls(all.names = TRUE)))}"
     )
-  expect_identical(agent4$validation_set$label, c(".col, .segment, .step"))
+  expect_identical(agent4$validation_set$label, c(".col, .seg_col, .step"))
   
 })
 
@@ -92,7 +92,7 @@ test_that("materialized multi-length glue labels make the yaml roundtrip", {
     col_vals_lt(
       c, 8,
       segments = vars(f),
-      label = "The `col_vals_lt()` step for group '{.segment}'"
+      label = "The `col_vals_lt()` step for group '{.seg_col}'"
     )
   
   yaml_agent_string(agent_pre, expanded = FALSE)
@@ -121,7 +121,7 @@ test_that("multi-length label collapses when possible in yaml representation", {
     col_vals_lt(
       c, 8,
       segments = vars(f),
-      label = "{nchar(.segment) * 0}"
+      label = "{nchar(.seg_col) * 0}"
     )
   
   expect_identical(
@@ -138,7 +138,7 @@ test_that("glue syntax works for many segments, many columns", {
       columns = vars(a, c),
       value = 8,
       segments = f ~ c("high", "low"),
-      label = "{.col},{.segment}"
+      label = "{.col},{.seg_col}"
     )
   expect_identical(
     strsplit(agent$validation_set$label, ","),
@@ -161,7 +161,7 @@ test_that("glue syntax works for custom vector of labels", {
       columns = vars(a, c),
       value = 8,
       segments = vars(f),
-      label = paste(many_labels, "({.col}, {.segment})")
+      label = paste(many_labels, "({.col}, {.seg_col})")
     )
   many_labels_out <- agent_many_labels$validation_set$label
   # Loose test on set equality
@@ -173,6 +173,16 @@ test_that("glue syntax works for custom vector of labels", {
     pointblank:::resolve_label(many_labels, c("a", "c"), unique(small_table$f)),
     matrix(many_labels, nrow = 2, ncol = 3, byrow = TRUE)
   )
+  
+  # Labels show up in the order supplied, for multi-column * multi-segment step
+  agent_many_many_labels <- create_agent(~ small_table) %>% 
+    col_vals_lt(
+      columns = vars(a, c),
+      value = 8,
+      segments = vars(f, e),
+      label = 1:10
+    )
+  expect_identical(agent_many_many_labels$validation_set$label, as.character(1:10))
 
   # Errors on length mismatch
   expect_error({
@@ -193,7 +203,7 @@ test_that("glue syntax works for custom vector of labels", {
   }, "must be length 1 or 3, not 4")
   
   # NA elements in `label` passed down
-  some_empty <- c("{.segment} is 1 of 3", "{.segment} is 2 of 3", NA)
+  some_empty <- c("{.seg_col} is 1 of 3", "{.seg_col} is 2 of 3", NA)
   agent_some_empty <- create_agent(~ small_table) %>% 
     col_vals_lt(
       c, 8,

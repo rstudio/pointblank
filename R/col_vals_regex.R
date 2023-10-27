@@ -388,7 +388,7 @@ col_vals_regex <- function(
           seg_val = seg_val,
           actions = covert_actions(actions, agent),
           step_id = step_id[i],
-          label = label[[i,j]],
+          label = label[[i, j]],
           brief = brief[i],
           active = active
         )

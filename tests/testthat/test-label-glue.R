@@ -41,7 +41,7 @@ test_that("label supports glue syntax for {.seg_val} {.seg_col} {.step} {.col}",
       label = "{.step}"
     ) %>% 
     interrogate()
-  expect_true(all(agent2$validation_set$label == "col_vals_lt"))
+  expect_true(all(agent3$validation_set$label == "col_vals_lt"))
   
   # {.col}
   agent4 <- small_table %>% 
@@ -52,7 +52,7 @@ test_that("label supports glue syntax for {.seg_val} {.seg_col} {.step} {.col}",
       label = "{.col}"
     ) %>% 
     interrogate()
-  expect_identical(agent3$validation_set$label, c("a", "c", "d"))
+  expect_identical(agent4$validation_set$label, c("a", "c", "d"))
   
   # Only those internal values are available inside the glue mask
   agent_all <- create_agent(small_table) %>%
@@ -112,14 +112,13 @@ test_that("materialized multi-length glue labels make the yaml roundtrip", {
       segments = vars(f),
       label = "The `col_vals_lt()` step for group '{.seg_val}'"
     )
-  
-  yaml_agent_string(agent_pre, expanded = FALSE)
+  # yaml_agent_string(agent_pre, expanded = FALSE)
   
   agent_yaml <- tempfile()
   yaml_write(agent_pre, expanded = FALSE, filename = agent_yaml)
   
   agent_post <- yaml_read_agent(agent_yaml)
-  yaml_agent_string(agent_post, expanded = FALSE)
+  # yaml_agent_string(agent_post, expanded = FALSE)
   
   expect_identical(
     as_agent_yaml_list(agent_pre, expanded = FALSE),
@@ -186,7 +185,7 @@ test_that("glue syntax works for custom vector of labels", {
   expect_setequal(gsub(" \\(.*\\)", "", many_labels_out), many_labels)
   # Stricter test on order
   expect_identical(gsub(" \\(.*\\)", "", many_labels_out), many_labels)
-  # resolve_label fills matrix by row, and validation functions iterate by row
+  # `resolve_label()` fills matrix by row bc validation functions iterate by row
   expect_identical(
     pointblank:::resolve_label(many_labels, c("a", "c"), unique(small_table$f)),
     matrix(many_labels, nrow = 2, ncol = 3, byrow = TRUE)
@@ -201,6 +200,14 @@ test_that("glue syntax works for custom vector of labels", {
       label = 1:10
     )
   expect_identical(agent_many_many_labels$validation_set$label, as.character(1:10))
+  # Order preserved in the yaml round trip
+  agent_yaml <- tempfile()
+  yaml_write(agent_many_many_labels, expanded = FALSE, filename = agent_yaml)
+  agent_many_many_labels2 <- yaml_read_agent(agent_yaml)
+  expect_identical(
+    as_agent_yaml_list(agent_many_many_labels2, expanded = FALSE),
+    as_agent_yaml_list(agent_many_many_labels2, expanded = FALSE)
+  )
 
   # Errors on length mismatch
   expect_error({

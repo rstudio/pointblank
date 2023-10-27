@@ -130,3 +130,79 @@ test_that("multi-length label collapses when possible in yaml representation", {
   )
   
 })
+
+test_that("glue syntax works for many segments, many columns", {
+  
+  agent <- create_agent(~ small_table) %>% 
+    col_vals_lt(
+      columns = vars(a, c),
+      value = 8,
+      segments = f ~ c("high", "low"),
+      label = "{.col},{.segment}"
+    )
+  expect_identical(
+    strsplit(agent$validation_set$label, ","),
+    list(
+      c("a", "high"),
+      c("a", "low"),
+      c("c", "high"),
+      c("c", "low")
+    )
+  )
+  
+})
+
+test_that("glue syntax works for custom vector of labels", {
+  
+  # Custom labels show up in order
+  many_labels <- strsplit("it's a feature not a bug", " ")[[1]]
+  agent_many_labels <- create_agent(~ small_table) %>% 
+    col_vals_lt(
+      columns = vars(a, c),
+      value = 8,
+      segments = vars(f),
+      label = paste(many_labels, "({.col}, {.segment})")
+    )
+  many_labels_out <- agent_many_labels$validation_set$label
+  # Loose test on set equality
+  expect_setequal(gsub(" \\(.*\\)", "", many_labels_out), many_labels)
+  # Stricter test on order
+  expect_identical(gsub(" \\(.*\\)", "", many_labels_out), many_labels)
+  # resolve_label fills matrix by row, and validation functions iterate by row
+  expect_identical(
+    pointblank:::resolve_label(many_labels, c("a", "c"), unique(small_table$f)),
+    matrix(many_labels, nrow = 2, ncol = 3, byrow = TRUE)
+  )
+
+  # Errors on length mismatch
+  expect_error({
+    create_agent(~ small_table) %>% 
+      col_vals_lt(
+        c, 8,
+        segments = vars(f),
+        label = c("label 1/3", "label 2/3")
+      )
+  }, "must be length 1 or 3, not 2")
+  expect_error({
+    create_agent(~ small_table) %>% 
+      col_vals_lt(
+        c, 8,
+        segments = vars(f),
+        label = c("label 1/3", "label 2/3", "label 3/3", "label 4/3")
+      )
+  }, "must be length 1 or 3, not 4")
+  
+  # NA elements in `label` passed down
+  some_empty <- c("{.segment} is 1 of 3", "{.segment} is 2 of 3", NA)
+  agent_some_empty <- create_agent(~ small_table) %>% 
+    col_vals_lt(
+      c, 8,
+      segments = vars(f),
+      label = some_empty
+    )
+  expect_identical(
+    agent_some_empty$validation_set$label,
+    c("high is 1 of 3", "low is 2 of 3", NA_character_)
+  )
+  
+})

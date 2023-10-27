@@ -1,13 +1,13 @@
 test_that("label supports glue syntax for {.segment} {.step} {.col}", {
   
   # Reprex from (#451) for {.segment}
-  agent1 <- small_table |> 
-    create_agent() |> 
+  agent1 <- small_table %>% 
+    create_agent() %>% 
     col_vals_lt(
       c, 8,
       segments = vars(f),
       label = "The `col_vals_lt()` step for group '{.segment}'"
-    ) |> 
+    ) %>% 
     interrogate()
   expect_identical(
     gsub(".*(high|low|mid).*", "\\1", agent1$validation_set$label),
@@ -15,24 +15,24 @@ test_that("label supports glue syntax for {.segment} {.step} {.col}", {
   )
   
   # {.step}
-  agent2 <- small_table |> 
-    create_agent() |> 
+  agent2 <- small_table %>% 
+    create_agent() %>% 
     col_vals_lt(
       c, 8,
       segments = vars(f),
       label = "{.step}"
-    ) |> 
+    ) %>% 
     interrogate()
   expect_true(all(agent2$validation_set$label == "col_vals_lt"))
   
   # {.col}
-  agent3 <- small_table |> 
-    create_agent() |> 
+  agent3 <- small_table %>% 
+    create_agent() %>% 
     col_vals_lt(
       columns = matches("^[acd]$"),
       value = 8,
       label = "{.col}"
-    ) |> 
+    ) %>% 
     interrogate()
   expect_identical(agent3$validation_set$label, c("a", "c", "d"))
   
@@ -88,7 +88,7 @@ test_that("glue env searches from the caller env of the validation function", {
 
 test_that("materialized multi-length glue labels make the yaml roundtrip", {
   
-  agent_pre <- create_agent(~ small_table) |> 
+  agent_pre <- create_agent(~ small_table) %>% 
     col_vals_lt(
       c, 8,
       segments = vars(f),
@@ -117,7 +117,7 @@ test_that("materialized multi-length glue labels make the yaml roundtrip", {
 
 test_that("multi-length label collapses when possible in yaml representation", {
   
-  agent_pre <- create_agent(~ small_table) |> 
+  agent_pre <- create_agent(~ small_table) %>% 
     col_vals_lt(
       c, 8,
       segments = vars(f),

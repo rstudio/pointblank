@@ -293,9 +293,9 @@ resolve_label <- function(label, columns = "", segments = "") {
   n_columns <- length(columns)
   n_segments <- length(segments)
   n_combinations <- n_columns * n_segments
-  # If label is NULL, protect with list()
+  # If label is NULL, turn into NA for vector storage
   if (is.null(label)) {
-    label <- list(NULL)
+    label <- NA_character_
   }
   # If length-1, match length of col-x-seg combination
   if (length(label) == 1) {

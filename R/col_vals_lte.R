@@ -334,7 +334,7 @@ col_vals_lte <- function(
     secret_agent <-
       create_agent(x, label = "::QUIET::") %>%
       col_vals_lte(
-        columns = columns,
+        columns = tidyselect::all_of(columns),
         value = value,
         na_pass = na_pass,
         preconditions = preconditions,

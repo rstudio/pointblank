@@ -218,68 +218,69 @@ materialize_table <- function(tbl, check = TRUE) {
   tbl
 }
 
-resolve_expr_to_cols <- function(tbl, var_expr) {
-  
-  var_expr <- enquo(var_expr)
-  
-  if ((var_expr %>% rlang::get_expr() %>% as.character())[1] == "vars") {
-    
-    cols <- (var_expr %>% rlang::get_expr() %>% as.character())[-1]
-    return(cols)
-  }
-  
-  tidyselect::vars_select(.vars = colnames(tbl), {{ var_expr }}) %>% unname()
+is_secret_agent <- function(x) {
+  is_ptblank_agent(x) && (x$label == "::QUIET::")
 }
 
 resolve_columns <- function(x, var_expr, preconditions) {
   
-  # If getting a character vector as `var_expr`, simply return the vector
-  # since this should already be a vector of column names and it's not necessary
-  # to resolve this against the target table
-  if (is.character(var_expr)) {
-    return(var_expr)
-  }
+  force(x) # To avoid `restarting interrupted promise evaluation` warnings
   
-  # nocov start
+  out <- tryCatch(
+    expr = resolve_columns_internal(x, var_expr, preconditions),
+    error = function(cnd) cnd
+  )
   
-  # Return an empty character vector if the expr is NULL
-  if (inherits(var_expr, "quosure") &&
-      var_expr %>% rlang::as_label() == "NULL") {
-    
-    return(character(NA_character_))
-  }
-  
-  # nocov end
-  
-  # Get the column names from a non-NULL, non-character expression
-  if (is.null(preconditions)) {
-    
-    if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
-      
-      column <- resolve_expr_to_cols(tbl = x, var_expr = !!var_expr)
-      
-    } else if (inherits(x, ("ptblank_agent"))) {
-      
-      tbl <- get_tbl_object(agent = x)
-      column <- resolve_expr_to_cols(tbl = tbl, var_expr = !!var_expr)
+  if (rlang::is_error(out)) {
+    # If not in validation-planning context (assert/expect/test)
+    if (is_a_table_object(x) || is_secret_agent(x)) {
+      rlang::cnd_signal(out)
+    } else {
+      # Else (mid-planning): return columns attempted to subset or NA if empty
+      out$i %||% NA_character_
     }
-    
   } else {
-    
-    if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
-      
-      tbl <- apply_preconditions(tbl = x, preconditions = preconditions)
-      
-      column <- resolve_expr_to_cols(tbl = tbl, var_expr = !!var_expr)
-      
-    } else if (inherits(x, ("ptblank_agent"))) {
-      
-      tbl <- get_tbl_object(agent = x)
-      
-      tbl <- apply_preconditions(tbl = tbl, preconditions = preconditions)
-      
-      column <- resolve_expr_to_cols(tbl = tbl, var_expr = !!var_expr)
+    out
+  }
+  
+}
+
+resolve_columns_internal <- function(x, var_expr, preconditions) {
+  
+  # Return NA if the expr is NULL
+  if (rlang::quo_is_null(var_expr)) {
+    return(NA_character_)
+  }
+  
+  # Extract tbl
+  tbl <- if (is_ptblank_agent(x)) {
+    get_tbl_object(x)
+  } else if (is_a_table_object(x)) {
+    x
+  }
+  # Apply preconditions
+  if (!is.null(preconditions)) {
+    tbl <- apply_preconditions(tbl = tbl, preconditions = preconditions)
+  }
+  
+  # Revised column selection logic
+  ## Special case `vars()`-expression for backwards compatibility
+  if (rlang::quo_is_call(var_expr, "vars")) {
+    cols <- rlang::call_args(var_expr)
+    if (rlang::is_empty(tbl)) {
+      # Special-case `serially()` - just deparse elements and bypass tidyselect
+      column <- vapply(cols, rlang::as_name, character(1),
+                       USE.NAMES = FALSE)
+    } else {
+      # Convert to the idiomatic `c()`-expr
+      col_c_expr <- rlang::call2("c", !!!cols)
+      column <- tidyselect::eval_select(col_c_expr, tbl)
+      column <- names(column)
     }
+  } else {
+    ## Else, assume that the user supplied a valid tidyselect expression
+    column <- tidyselect::eval_select(var_expr, tbl)
+    column <- names(column)
   }
   
   if (length(column) < 1) {
@@ -372,7 +373,7 @@ resolve_segments <- function(x, seg_expr, preconditions) {
         
         col_seg_vals <- 
           tbl %>%
-          dplyr::select(.env$column_name) %>%
+          dplyr::select(tidyselect::all_of(column_name)) %>%
           dplyr::distinct() %>%
           dplyr::pull()
         
@@ -955,7 +956,7 @@ get_tbl_information_dbi <- function(tbl) {
           DBI::dbDataType(
             tbl_connection,
             tbl %>%
-              dplyr::select(x) %>%
+              dplyr::select(tidyselect::all_of(x)) %>%
               utils::head(1) %>%
               dplyr::collect() %>%
               dplyr::pull(x)

@@ -234,24 +234,25 @@ col_exists <- function(
     rlang::as_label(rlang::quo(!!enquo(columns))) %>%
     gsub("^\"|\"$", "", .)
   
-  # Normalize the `columns` expression
-  if (inherits(columns, "quosures")) {
-    
-    columns <- 
-      vapply(
-        columns,
-        FUN.VALUE = character(1),
-        USE.NAMES = FALSE,
-        FUN = function(x) as.character(rlang::get_expr(x))
-      )
+  # Capture the `columns` expression
+  columns <- rlang::enquo(columns)
+  if (rlang::quo_is_null(columns)) {
+    columns <- rlang::quo(tidyselect::everything())
   }
+  
+  # Resolve the columns based on the expression
+  ## Only for `col_exists()`: error gracefully if column not found
+  columns <- tryCatch(
+    expr = resolve_columns(x = x, var_expr = columns, preconditions = NULL),
+    error = function(cnd) cnd$i %||% NA_character_
+  )
 
   if (is_a_table_object(x)) {
     
     secret_agent <- 
       create_agent(x, label = "::QUIET::") %>%
       col_exists(
-        columns = columns,
+        columns = tidyselect::all_of(columns),
         actions = prime_actions(actions),
         label = label,
         brief = brief,

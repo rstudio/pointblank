@@ -311,7 +311,7 @@ col_vals_null <- function(
     secret_agent <-
       create_agent(x, label = "::QUIET::") %>%
       col_vals_null(
-        columns = columns,
+        columns = tidyselect::all_of(columns),
         preconditions = preconditions,
         segments = segments,
         label = label,

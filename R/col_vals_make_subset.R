@@ -324,7 +324,7 @@ col_vals_make_subset <- function(
     secret_agent <-
       create_agent(x, label = "::QUIET::") %>%
       col_vals_make_subset(
-        columns = columns,
+        columns = tidyselect::all_of(columns),
         set = set,
         preconditions = preconditions,
         segments = segments,

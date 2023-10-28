@@ -784,7 +784,7 @@ test_that("Interrogating for valid row values", {
   # Expect certain values in `validation$validation_set`
   expect_equivalent(validation$tbl_name, "small_table")
   expect_equivalent(validation$validation_set$assertion_type, "rows_distinct")
-  expect_true(is.na(validation$validation_set$column %>% unlist()))
+  expect_equivalent(validation$validation_set$column %>% unlist(), "date_time, date, a, b, c, d, e, f")
   expect_true(is.null(validation$validation_set[["values"]][[1]]))
   expect_false(validation$validation_set$all_passed)
   expect_equivalent(validation$validation_set$n, 13)
@@ -807,7 +807,7 @@ test_that("Interrogating for valid row values", {
   # Expect certain values in `validation$validation_set`
   expect_equivalent(validation$tbl_name, "small_table")
   expect_equivalent(validation$validation_set$assertion_type, "rows_distinct")
-  expect_true(is.na(validation$validation_set$column %>% unlist()))
+  expect_equivalent(validation$validation_set$column %>% unlist(), "date_time, date, a, b, c, d, e, f")
   expect_true(is.null(validation$validation_set[["values"]][[1]]))
   expect_true(validation$validation_set$all_passed)
   expect_equivalent(validation$validation_set$n, 11)
@@ -873,7 +873,7 @@ test_that("Interrogating for valid row values", {
   # Expect certain values in `validation$validation_set`
   expect_equivalent(validation$tbl_name, "small_table")
   expect_equivalent(validation$validation_set$assertion_type, "rows_complete")
-  expect_true(is.na(validation$validation_set$column %>% unlist()))
+  expect_equivalent(validation$validation_set$column %>% unlist(), "date_time, date, a, b, c, d, e, f")
   expect_true(is.null(validation$validation_set[["values"]][[1]]))
   expect_false(validation$validation_set$all_passed)
   expect_equivalent(validation$validation_set$n, 13)
@@ -896,7 +896,7 @@ test_that("Interrogating for valid row values", {
   # Expect certain values in `validation$validation_set`
   expect_equivalent(validation$tbl_name, "small_table")
   expect_equivalent(validation$validation_set$assertion_type, "rows_complete")
-  expect_true(is.na(validation$validation_set$column %>% unlist()))
+  expect_equivalent(validation$validation_set$column %>% unlist(), "date_time, date, a, b, c, d, e, f")
   expect_true(is.null(validation$validation_set[["values"]][[1]]))
   expect_true(validation$validation_set$all_passed)
   expect_equivalent(validation$validation_set$n, 3)

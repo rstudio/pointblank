@@ -325,7 +325,7 @@ col_vals_regex <- function(
     secret_agent <-
       create_agent(x, label = "::QUIET::") %>%
       col_vals_regex(
-        columns = columns,
+        columns = tidyselect::all_of(columns),
         regex = regex,
         na_pass = na_pass,
         preconditions = preconditions,

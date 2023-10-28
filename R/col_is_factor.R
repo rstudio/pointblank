@@ -240,7 +240,7 @@ col_is_factor <- function(
     secret_agent <- 
       create_agent(x, label = "::QUIET::") %>%
       col_is_factor(
-        columns = columns,
+        columns = tidyselect::all_of(columns),
         label = label,
         brief = brief,
         actions = prime_actions(actions),

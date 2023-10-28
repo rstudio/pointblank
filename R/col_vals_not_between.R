@@ -396,7 +396,7 @@ col_vals_not_between <- function(
     secret_agent <-
       create_agent(x, label = "::QUIET::") %>%
       col_vals_not_between(
-        columns = columns,
+        columns = tidyselect::all_of(columns),
         left = left,
         right = right,
         inclusive = inclusive,

@@ -379,7 +379,7 @@ col_vals_decreasing <- function(
     secret_agent <-
       create_agent(x, label = "::QUIET::") %>%
       col_vals_decreasing(
-        columns = columns,
+        columns = tidyselect::all_of(columns),
         allow_stationary = allow_stationary,
         increasing_tol = increasing_tol,
         na_pass = na_pass,

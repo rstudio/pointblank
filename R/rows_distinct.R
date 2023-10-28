@@ -279,21 +279,12 @@ rows_distinct <- function(
   
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
-  
-  if (uses_tidyselect(expr_text = columns_expr)) {
-    
-    # Resolve the columns based on the expression
-    columns <- resolve_columns(x = x, var_expr = columns, preconditions = NULL)
-    
-  } else {
-    
-    # Resolve the columns based on the expression
-    if (!is.null(rlang::eval_tidy(columns)) && !is.null(columns)) {
-      columns <- resolve_columns(x = x, var_expr = columns, preconditions)
-    } else {
-      columns <- NULL
-    }
+  if (rlang::quo_is_null(columns)) {
+    columns <- rlang::quo(tidyselect::everything())
   }
+  
+  # Resolve the columns based on the expression
+  columns <- resolve_columns(x = x, var_expr = columns, preconditions = NULL)
   
   # Resolve segments into list
   segments_list <-
@@ -308,7 +299,7 @@ rows_distinct <- function(
     secret_agent <- 
       create_agent(x, label = "::QUIET::") %>%
       rows_distinct(
-        columns = columns,
+        columns = tidyselect::all_of(columns),
         preconditions = preconditions,
         segments = segments,
         label = label,

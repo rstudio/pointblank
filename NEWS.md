@@ -1,5 +1,16 @@
 # pointblank (development version)
 
+## New features
+
+* The `label` argument of validation functions now exposes the following string variables via `{glue}` syntax:
+
+  - `"{.step}"`: The validation step name
+  - `"{.col}"`: The current column name
+  - `"{.seg_col}"`: The current segment's column name
+  - `"{.seg_val}"`: The current segment's value/group
+  
+  These dynamic values may be useful for validations that get expanded into multiple steps.
+
 # pointblank 0.11.4
 
 * Fixes issue with gt `0.9.0` compatibility.

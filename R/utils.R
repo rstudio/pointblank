@@ -289,6 +289,34 @@ resolve_columns <- function(x, var_expr, preconditions) {
   column
 }
 
+resolve_label <- function(label, columns = "", segments = "") {
+  n_columns <- length(columns)
+  n_segments <- length(segments)
+  n_combinations <- n_columns * n_segments
+  # If label is NULL, turn into NA for vector storage
+  if (is.null(label)) {
+    label <- NA_character_
+  }
+  # If length-1, match length of col-x-seg combination
+  if (length(label) == 1) {
+    label <- rep_len(label, n_combinations)
+  }
+  # Check for length match
+  if (length(label) != n_combinations) {
+    rlang::abort(paste0("`label` must be length 1 or ", n_combinations,
+                        ", not ", length(label)))
+  }
+  # Create a columns * segments matrix of the (recycled) label vector
+  # - Fill by row to preserve order (for loops iterate the j before the i)
+  out <- matrix(label, nrow = n_columns, ncol = n_segments, byrow = TRUE)
+  # If missing columns and/or segments, collapse to vector/scalar
+  if (missing(columns) || missing(segments)) {
+    out <- as.vector(out)
+  }
+  # A matrix/vector subsettable via `out[col]`, `out[seg]`, or `out[col,seg]`
+  out
+}
+
 #' The `resolve_segments()` function works with input from the `segments`
 #' argument, present is a variety of row-based validation functions.
 #' 
@@ -322,7 +350,7 @@ resolve_segments <- function(x, seg_expr, preconditions) {
   }
   
   segments_list <- list()
-
+  
   # Process each `seg_expr` element
   for (i in seq_along(seg_expr)) {
     

@@ -644,6 +644,7 @@ serially <- function(
   
   # Add one or more validation steps based on the
   # length of `segments_list`
+  label <- resolve_label(label, segments = segments_list)
   for (i in seq_along(segments_list)) {
     
     seg_col <- names(segments_list[i])
@@ -664,7 +665,7 @@ serially <- function(
         seg_val = seg_val,
         actions = covert_actions(actions, agent),
         step_id = step_id,
-        label = label,
+        label = label[[i]],
         brief = brief,
         active = active
       )

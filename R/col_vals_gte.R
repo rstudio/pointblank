@@ -372,6 +372,7 @@ col_vals_gte <- function(
   
   # Add one or more validation steps based on the
   # length of the `columns` variable
+  label <- resolve_label(label, columns, segments_list)
   for (i in seq_along(columns)) {
     for (j in seq_along(segments_list)) {
       
@@ -393,7 +394,7 @@ col_vals_gte <- function(
           seg_val = seg_val,
           actions = covert_actions(actions, agent),
           step_id = step_id[i],
-          label = label,
+          label = label[[i, j]],
           brief = brief[i],
           active = active
         )

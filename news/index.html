@@ -62,6 +62,21 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="pointblank-development-version">pointblank (development version)<a class="anchor" aria-label="anchor" href="#pointblank-development-version"></a></h2>
+<div class="section level3">
+<h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
+<ul><li>
+<p>The <code>label</code> argument of validation functions now exposes the following string variables via <a href="https://github.com/tidyverse/glue" class="external-link">glue</a> syntax:</p>
+<ul><li>
+<code>"{.step}"</code>: The validation step name</li>
+<li>
+<code>"{.col}"</code>: The current column name</li>
+<li>
+<code>"{.seg_col}"</code>: The current segment’s column name</li>
+<li>
+<code>"{.seg_val}"</code>: The current segment’s value/group</li>
+</ul><p>These dynamic values may be useful for validations that get expanded into multiple steps.</p>
+</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.11.4" id="pointblank-0114">pointblank 0.11.4<a class="anchor" aria-label="anchor" href="#pointblank-0114"></a></h2><p class="text-muted">CRAN release: 2023-04-25</p>

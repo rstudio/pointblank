@@ -249,9 +249,9 @@ col_exists <- function(
   )
   if (rlang::is_error(columns)) {
     cnd <- columns
-    # tidyselect 0-column selection should be rethrown
+    # tidyselect 0-column selection should contextualize attempted column
     if (is.null(cnd$parent)) {
-      rlang::cnd_signal(cnd)
+      columns <- columns_expr
     } else {
       # Evaluation errors should be chained and rethrown
       rlang::abort("Evaluation error in `columns`", parent = cnd$parent)

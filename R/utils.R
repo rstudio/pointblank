@@ -222,12 +222,14 @@ is_secret_agent <- function(x) {
   is_ptblank_agent(x) && (x$label == "::QUIET::")
 }
 
-resolve_columns <- function(x, var_expr, preconditions, ...) {
+resolve_columns <- function(x, var_expr, preconditions, ...,
+                            call = rlang::caller_env()) {
   
   force(x) # To avoid `restarting interrupted promise evaluation` warnings
   
   out <- tryCatch(
-    expr = resolve_columns_internal(x, var_expr, preconditions, ...),
+    expr = resolve_columns_internal(x, var_expr, preconditions, ...,
+                                    call = call),
     error = function(cnd) cnd
   )
   
@@ -245,7 +247,7 @@ resolve_columns <- function(x, var_expr, preconditions, ...) {
   
 }
 
-resolve_columns_internal <- function(x, var_expr, preconditions, ...) {
+resolve_columns_internal <- function(x, var_expr, preconditions, ..., call) {
   
   # Return NA if the expr is NULL
   if (rlang::quo_is_null(var_expr)) {
@@ -282,7 +284,7 @@ resolve_columns_internal <- function(x, var_expr, preconditions, ...) {
   }
   
   # Proceed with tidyselect
-  column <- tidyselect::eval_select(var_expr, tbl, ...)
+  column <- tidyselect::eval_select(var_expr, tbl, error_call = call, ...)
   column <- names(column)
   
   if (length(column) < 1) {

@@ -184,8 +184,8 @@
 #' ```r
 #' agent %>% 
 #'   serially(
-#'     ~ col_vals_lt(., columns = a, value = 8),
-#'     ~ col_vals_gt(., columns = c, value = vars(a)),
+#'     ~ test_col_vals_lt(., columns = a, value = 8),
+#'     ~ test_col_vals_gt(., columns = c, value = vars(a)),
 #'     ~ col_vals_not_null(., columns = b),
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2), 
@@ -200,9 +200,9 @@
 #' steps:
 #' - serially:
 #'     fns:
-#'     - ~col_vals_lt(., columns = a, value = 8)
-#'     - ~col_vals_gt(., columns = c, value = vars(a))
-#'     - ~col_vals_not_null(., b)
+#'     - ~test_col_vals_lt(., columns = a, value = 8)
+#'     - ~test_col_vals_gt(., columns = c, value = vars(a))
+#'     - ~col_vals_not_null(., columns = b)
 #'     preconditions: ~. %>% dplyr::filter(a < 10)
 #'     actions:
 #'       warn_fraction: 0.1

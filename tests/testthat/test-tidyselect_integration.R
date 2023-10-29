@@ -114,8 +114,7 @@ test_that("'NULL = select everything' behavior in rows_*() validation functions"
     
 })
 
-# tidyselect coverage for `col_exists()`
-test_that("'NULL = select everything' behavior in rows_*() validation functions", {
+test_that("tidyselect coverage for `col_exists()`", {
   
   # Reprex from (#433)
   df <- tibble::tibble(
@@ -144,6 +143,68 @@ test_that("'NULL = select everything' behavior in rows_*() validation functions"
       interrogate()
   })
   expect_equal(nrow(df_interrogated$validation_set), 2L)
+  
+})
+
+test_that("error/failure patterns for `col_exists`", {
+  
+  # Selecting non-existent columns signals failure
+  expect_error(expect_failure({
+    small_table %>% 
+      col_exists("z")
+  }))
+  expect_failure({
+    small_table %>% 
+      expect_col_exists("z")
+  })
+  
+  # 0-column *tidyselect selection* should error
+  expect_error({
+    small_table %>% 
+      col_exists(starts_with("z"))
+  })
+  expect_error({
+    small_table %>% 
+      expect_col_exists("z")
+  })
+  
+  # Unrelated evaluation errors should be chained and rethrown
+  expect_error({
+    small_table %>% 
+      col_exists(stop("Error!"))
+  }, "Error!")
+  expect_error({
+    small_table %>% 
+      expect_col_exists(stop("Error!"))
+  }, "Error!")
+  expect_error({
+    small_table %>% 
+      test_col_exists(stop("Error!"))
+  }, "Error!")
+  
+  # Test should return FALSE for 0-column and non-existent column
+  expect_false({
+    small_table %>% 
+      test_col_exists("z")
+  })
+  expect_false({
+    small_table %>% 
+      test_col_exists("z")
+  })
+  
+  # No failure/error during validation
+  expect_no_error({
+    agent_nonexist_col <- create_agent(small_table) %>% 
+      col_exists("z") %>% 
+      interrogate()
+  })
+  expect_false(all_passed(agent_nonexist_col))
+  expect_no_error({
+    agent_tidyselect_0col <- create_agent(small_table) %>% 
+      col_exists(starts_with("z")) %>% 
+      interrogate()
+  })
+  expect_false(all_passed(agent_nonexist_col))
   
 })
 

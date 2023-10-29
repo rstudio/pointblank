@@ -211,7 +211,7 @@ R statement:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
   col_is_logical(
-    columns = vars(a),
+    columns = a,
     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
     label = "The `col_is_logical()` step.",
     active = FALSE
@@ -269,7 +269,7 @@ Validate that the column \code{e} has the \code{logical} class.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = small_table) \%>\%
-  col_is_logical(columns = vars(e)) \%>\%
+  col_is_logical(columns = e) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
 
@@ -291,7 +291,7 @@ through but should \code{stop()} if there is a single test unit failing. The
 behavior of side effects can be customized with the \code{actions} option.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
-  col_is_logical(columns = vars(e)) \%>\%
+  col_is_logical(columns = e) \%>\%
   dplyr::slice(1:5)
 #> # A tibble: 5 x 8
 #>   date_time           date           a b             c      d e     f    
@@ -309,7 +309,7 @@ behavior of side effects can be customized with the \code{actions} option.
 With the \verb{expect_*()} form, we would typically perform one validation at a
 time. This is primarily used in \strong{testthat} tests.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_is_logical(small_table, columns = vars(e))
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_is_logical(small_table, columns = e)
 }\if{html}{\out{</div>}}
 }
 
@@ -318,7 +318,7 @@ time. This is primarily used in \strong{testthat} tests.
 With the \verb{test_*()} form, we should get a single logical value returned to
 us.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% test_col_is_logical(columns = vars(e))
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% test_col_is_logical(columns = e)
 #> [1] TRUE
 }\if{html}{\out{</div>}}
 }

@@ -281,7 +281,7 @@ R statement:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
   rows_complete(
-    columns = vars(a, b),
+    columns = a, b,
     preconditions = ~ . \%>\% dplyr::filter(a < 10),
     segments = b ~ c("group_1", "group_2"),
     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
@@ -343,7 +343,7 @@ only complete rows (i.e., all rows have no \code{NA} values).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = tbl) \%>\%
-  rows_complete(columns = vars(a, b)) \%>\%
+  rows_complete(columns = c(a, b)) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
 
@@ -365,7 +365,7 @@ through but should \code{stop()} if there is a single test unit failing. The
 behavior of side effects can be customized with the \code{actions} option.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
-  rows_complete(columns = vars(a, b)) \%>\%
+  rows_complete(columns = c(a, b)) \%>\%
   dplyr::pull(a)
 #> [1] 5 7 6 5 8 7
 }\if{html}{\out{</div>}}
@@ -376,7 +376,7 @@ behavior of side effects can be customized with the \code{actions} option.
 With the \verb{expect_*()} form, we would typically perform one validation at a
 time. This is primarily used in \strong{testthat} tests.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_rows_complete(tbl, columns = vars(a, b))
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_rows_complete(tbl, columns = c(a, b))
 }\if{html}{\out{</div>}}
 }
 
@@ -385,7 +385,7 @@ time. This is primarily used in \strong{testthat} tests.
 With the \verb{test_*()} form, we should get a single logical value returned to
 us.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{test_rows_complete(tbl, columns = vars(a, b))
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{test_rows_complete(tbl, columns = c(a, b))
 #> [1] TRUE
 }\if{html}{\out{</div>}}
 }

@@ -358,7 +358,7 @@ R statement:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
   col_vals_between(
-    columns = vars(a),
+    columns = a,
     left = 1,
     right = 2,
     inclusive = c(TRUE, FALSE),
@@ -433,7 +433,7 @@ are \code{NA} values, we'll choose to let those pass validation by setting
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = small_table) \%>\%
   col_vals_between(
-    columns = vars(c),
+    columns = c,
     left = 1, right = 9,
     na_pass = TRUE
   ) \%>\%
@@ -459,7 +459,7 @@ behavior of side effects can be customized with the \code{actions} option.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   col_vals_between(
-    columns = vars(c),
+    columns = c,
     left = 1, right = 9,
     na_pass = TRUE
   ) \%>\%
@@ -474,7 +474,7 @@ With the \verb{expect_*()} form, we would typically perform one validation at a
 time. This is primarily used in \strong{testthat} tests.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_between(
-  small_table, columns = vars(c),
+  small_table, columns = c,
   left = 1, right = 9,
   na_pass = TRUE
 )
@@ -488,7 +488,7 @@ us.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   test_col_vals_between(
-    columns = vars(c),
+    columns = c,
     left = 1, right = 9,
     na_pass = TRUE
   )
@@ -505,7 +505,7 @@ values are \code{9} and they now fall outside of the upper (or right) bound.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   test_col_vals_between(
-    columns = vars(c), left = 1, right = 9,
+    columns = c, left = 1, right = 9,
     inclusive = c(TRUE, FALSE),
     na_pass = TRUE
   )

@@ -94,7 +94,7 @@ the first quarter of the year, we can supply a value from \code{stats_tbl} to
     keep = "right"
   ) \%>\%
   test_col_vals_lte(
-    columns = vars(session_duration), 
+    columns = session_duration, 
     value = get_tt_param(
       tbl = stats_tbl,
       param = "max",

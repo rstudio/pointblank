@@ -329,7 +329,7 @@ R statement:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
   col_vals_gt(
-    columns = vars(a),
+    columns = a,
     value = 1,
     na_pass = TRUE,
     preconditions = ~ . \%>\% dplyr::filter(a < 10),
@@ -399,7 +399,7 @@ test units, one for each row).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = tbl) \%>\%
-  col_vals_gt(columns = vars(a), value = 4) \%>\%
+  col_vals_gt(columns = a, value = 4) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
 
@@ -420,7 +420,7 @@ This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
 behavior of side effects can be customized with the \code{actions} option.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% col_vals_gt(columns = vars(a), value = 4)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% col_vals_gt(columns = a, value = 4)
 #> # A tibble: 6 x 6
 #>       a     b     c d     e     f    
 #>   <dbl> <dbl> <dbl> <chr> <chr> <chr>
@@ -438,7 +438,7 @@ behavior of side effects can be customized with the \code{actions} option.
 With the \verb{expect_*()} form, we would typically perform one validation at a
 time. This is primarily used in \strong{testthat} tests.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_gt(tbl, columns = vars(a), value = 4)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_gt(tbl, columns = a, value = 4)
 }\if{html}{\out{</div>}}
 }
 
@@ -447,7 +447,7 @@ time. This is primarily used in \strong{testthat} tests.
 With the \verb{test_*()} form, we should get a single logical value returned to
 us.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{test_col_vals_gt(tbl, columns = vars(a), value = 4)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{test_col_vals_gt(tbl, columns = a, value = 4)
 #> [1] TRUE
 }\if{html}{\out{</div>}}
 }

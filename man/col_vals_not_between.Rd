@@ -358,7 +358,7 @@ R statement:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
   col_vals_not_between(
-    columns = vars(a),
+    columns = a,
     left = 1,
     right = 2,
     inclusive = c(TRUE, FALSE),
@@ -434,7 +434,7 @@ units (there are 13 test units, one for each row).
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = small_table) \%>\%
   col_vals_not_between(
-    columns = vars(c),
+    columns = c,
     left = 10, right = 20,
     na_pass = TRUE
   ) \%>\%
@@ -460,7 +460,7 @@ behavior of side effects can be customized with the \code{actions} option.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   col_vals_not_between(
-    columns = vars(c),
+    columns = c,
     left = 10, right = 20,
     na_pass = TRUE
   ) \%>\%
@@ -475,7 +475,7 @@ With the \verb{expect_*()} form, we would typically perform one validation at a
 time. This is primarily used in \strong{testthat} tests.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_not_between(
-  small_table, columns = vars(c),
+  small_table, columns = c,
   left = 10, right = 20,
   na_pass = TRUE
 )
@@ -489,7 +489,7 @@ us.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   test_col_vals_not_between(
-    columns = vars(c),
+    columns = c,
     left = 10, right = 20,
     na_pass = TRUE
   )
@@ -506,7 +506,7 @@ In changing the lower bound to be \code{9} and making it non-inclusive, we get
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   test_col_vals_not_between(
-    columns = vars(c),
+    columns = c,
     left = 9, right = 20,
     inclusive = c(FALSE, TRUE),
     na_pass = TRUE

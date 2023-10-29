@@ -329,7 +329,7 @@ R statement:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
   col_vals_lt(
-    columns = vars(a),
+    columns = a,
     value = 1,
     na_pass = TRUE,
     preconditions = ~ . \%>\% dplyr::filter(a < 10),
@@ -399,7 +399,7 @@ units, one for each row).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = tbl) \%>\%
-  col_vals_lt(columns = vars(c), value = 5) \%>\%
+  col_vals_lt(columns = c, value = 5) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
 
@@ -421,7 +421,7 @@ through but should \code{stop()} if there is a single test unit failing. The
 behavior of side effects can be customized with the \code{actions} option.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% 
-  col_vals_lt(columns = vars(c), value = 5) \%>\%
+  col_vals_lt(columns = c, value = 5) \%>\%
   dplyr::pull(c)
 #> [1] 1 1 1 2 3 4
 }\if{html}{\out{</div>}}
@@ -432,7 +432,7 @@ behavior of side effects can be customized with the \code{actions} option.
 With the \verb{expect_*()} form, we would typically perform one validation at a
 time. This is primarily used in \strong{testthat} tests.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_lt(tbl, columns = vars(c), value = 5)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_lt(tbl, columns = c, value = 5)
 }\if{html}{\out{</div>}}
 }
 
@@ -441,7 +441,7 @@ time. This is primarily used in \strong{testthat} tests.
 With the \verb{test_*()} form, we should get a single logical value returned to
 us.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{test_col_vals_lt(tbl, columns = vars(c), value = 5)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{test_col_vals_lt(tbl, columns = c, value = 5)
 #> [1] TRUE
 }\if{html}{\out{</div>}}
 }

@@ -345,7 +345,7 @@ R statement:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
   col_vals_decreasing(
-    columns = vars(a),
+    columns = a,
     allow_stationary = TRUE,
     increasing_tol = 0.5,
     na_pass = TRUE,
@@ -430,7 +430,7 @@ to \code{TRUE}).
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = game_revenue_2) \%>\%
   col_vals_decreasing(
-    columns = vars(time_left),
+    columns = time_left,
     allow_stationary = TRUE
   ) \%>\%
   interrogate()
@@ -455,7 +455,7 @@ behavior of side effects can be customized with the \code{actions} option.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{game_revenue_2 \%>\%
   col_vals_decreasing(
-    columns = vars(time_left),
+    columns = time_left,
     allow_stationary = TRUE
   ) \%>\%
   dplyr::select(time_left) \%>\%
@@ -475,7 +475,7 @@ time. This is primarily used in \strong{testthat} tests.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_decreasing(
   game_revenue_2,
-  columns = vars(time_left),
+  columns = time_left,
   allow_stationary = TRUE
 )
 }\if{html}{\out{</div>}}
@@ -488,7 +488,7 @@ us.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{game_revenue_2 \%>\%
   test_col_vals_decreasing(
-    columns = vars(time_left),
+    columns = time_left,
     allow_stationary = TRUE
   )
 #> [1] TRUE

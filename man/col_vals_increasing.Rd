@@ -345,7 +345,7 @@ R statement:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
   col_vals_increasing(
-    columns = vars(a),
+    columns = a,
     allow_stationary = TRUE,
     decreasing_tol = 0.5,
     na_pass = TRUE,
@@ -417,7 +417,7 @@ to \code{TRUE}). We'll determine if this validation has any failing test units
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = game_revenue) \%>\%
   col_vals_increasing(
-    columns = vars(session_start),
+    columns = session_start,
     allow_stationary = TRUE
   ) \%>\%
   interrogate()
@@ -442,7 +442,7 @@ behavior of side effects can be customized with the \code{actions} option.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{game_revenue \%>\%
   col_vals_increasing(
-    columns = vars(session_start),
+    columns = session_start,
     allow_stationary = TRUE
   ) \%>\%
   dplyr::select(session_start) \%>\%
@@ -462,7 +462,7 @@ time. This is primarily used in \strong{testthat} tests.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_increasing(
   game_revenue,
-  columns = vars(session_start),
+  columns = session_start,
   allow_stationary = TRUE
 )
 }\if{html}{\out{</div>}}
@@ -475,7 +475,7 @@ us.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{game_revenue \%>\%
   test_col_vals_increasing(
-    columns = vars(session_start),
+    columns = session_start,
     allow_stationary = TRUE
   )
 #> [1] TRUE

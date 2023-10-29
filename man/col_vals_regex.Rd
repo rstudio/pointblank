@@ -326,7 +326,7 @@ R statement:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{agent \%>\% 
   col_vals_regex(
-    columns = vars(a),
+    columns = a,
     regex = "[0-9]-[a-z]\{3\}-[0-9]\{3\}",
     na_pass = TRUE,
     preconditions = ~ . \%>\% dplyr::filter(a < 10),
@@ -399,7 +399,7 @@ units, one for each row).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = small_table) \%>\%
-  col_vals_regex(columns = vars(b), regex = pattern) \%>\%
+  col_vals_regex(columns = b, regex = pattern) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
 
@@ -421,7 +421,7 @@ through but should \code{stop()} if there is a single test unit failing. The
 behavior of side effects can be customized with the \code{actions} option.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
-  col_vals_regex(columns = vars(b), regex = pattern) \%>\%
+  col_vals_regex(columns = b, regex = pattern) \%>\%
   dplyr::slice(1:5)
 #> # A tibble: 5 x 8
 #>   date_time           date           a b             c      d e     f    
@@ -439,7 +439,7 @@ behavior of side effects can be customized with the \code{actions} option.
 With the \verb{expect_*()} form, we would typically perform one validation at a
 time. This is primarily used in \strong{testthat} tests.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_regex(small_table, columns = vars(b), regex = pattern)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_regex(small_table, columns = b, regex = pattern)
 }\if{html}{\out{</div>}}
 }
 
@@ -448,7 +448,7 @@ time. This is primarily used in \strong{testthat} tests.
 With the \verb{test_*()} form, we should get a single logical value returned to
 us.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% test_col_vals_regex(columns = vars(b), regex = pattern)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% test_col_vals_regex(columns = b, regex = pattern)
 #> [1] TRUE
 }\if{html}{\out{</div>}}
 }

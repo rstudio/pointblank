@@ -55,7 +55,7 @@ within the series. A finishing validation function call (e.g.,
 \code{\link[=col_vals_increasing]{col_vals_increasing()}}, etc.) can optionally be inserted at the end of the
 series, serving as a validation step that only undergoes interrogation if
 the prior tests adequately pass. An example of this is
-\verb{~ test_column_exists(., vars(a)), ~ col_vals_not_null(., vars(a))}).}
+\verb{~ test_column_exists(., a), ~ col_vals_not_null(., a)}).}
 
 \item{.list}{\emph{Alternative to \code{...}}
 
@@ -191,9 +191,9 @@ or any \code{segments})
 
 Here's an example of how to arrange expressions:
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{~ test_col_exists(., columns = vars(count)),
-~ test_col_is_numeric(., columns = vars(count)),
-~ col_vals_gt(., columns = vars(count), value = 2)
+\if{html}{\out{<div class="sourceCode">}}\preformatted{~ test_col_exists(., columns = count),
+~ test_col_is_numeric(., columns = count),
+~ col_vals_gt(., columns = count, value = 2)
 }\if{html}{\out{</div>}}
 
 This series concentrates on the column called \code{count} and first checks
@@ -306,9 +306,9 @@ R statement:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
   serially(
-    ~ col_vals_lt(., columns = vars(a), value = 8),
-    ~ col_vals_gt(., columns = vars(c), value = vars(a)),
-    ~ col_vals_not_null(., columns = vars(b)),
+    ~ col_vals_lt(., columns = a, value = 8),
+    ~ col_vals_gt(., columns = c, value = vars(a)),
+    ~ col_vals_not_null(., columns = b),
     preconditions = ~ . \%>\% dplyr::filter(a < 10),
     actions = action_levels(warn_at = 0.1, stop_at = 0.2), 
     label = "The `serially()` step.",
@@ -321,9 +321,9 @@ YAML representation:
 \if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
 - serially:
     fns:
-    - ~col_vals_lt(., columns = vars(a), value = 8)
-    - ~col_vals_gt(., columns = vars(c), value = vars(a))
-    - ~col_vals_not_null(., vars(b))
+    - ~col_vals_lt(., columns = a, value = 8)
+    - ~col_vals_gt(., columns = c, value = vars(a))
+    - ~col_vals_not_null(., b)
     preconditions: ~. \%>\% dplyr::filter(a < 10)
     actions:
       warn_fraction: 0.1
@@ -375,9 +375,9 @@ validation).
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_1 <-
   create_agent(tbl = tbl) \%>\%
   serially(
-    ~ test_col_is_numeric(., columns = vars(a, b)),
-    ~ test_col_vals_not_null(., columns = vars(a, b)),
-    ~ col_vals_gt(., columns = vars(b), value = vars(a))
+    ~ test_col_is_numeric(., columns = c(a, b)),
+    ~ test_col_vals_not_null(., columns = c(a, b)),
+    ~ col_vals_gt(., columns = b, value = vars(a))
     ) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
@@ -401,8 +401,8 @@ serial tests are performed.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_2 <-
   create_agent(tbl = tbl) \%>\%
   serially(
-    ~ test_col_is_numeric(., columns = vars(a, b)),
-    ~ test_col_vals_not_null(., columns = vars(a, b))
+    ~ test_col_is_numeric(., columns = c(a, b)),
+    ~ test_col_vals_not_null(., columns = c(a, b))
   ) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
@@ -424,9 +424,9 @@ behavior of side effects can be customized with the \code{actions} option.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   serially(
-    ~ test_col_is_numeric(., columns = vars(a, b)),
-    ~ test_col_vals_not_null(., columns = vars(a, b)),
-    ~ col_vals_gt(., columns = vars(b), value = vars(a))
+    ~ test_col_is_numeric(., columns = c(a, b)),
+    ~ test_col_vals_not_null(., columns = c(a, b)),
+    ~ col_vals_gt(., columns = b, value = vars(a))
   )
 #> # A tibble: 3 x 3
 #>       a     b     c
@@ -444,9 +444,9 @@ time. This is primarily used in \strong{testthat} tests.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_serially(
   tbl,
-  ~ test_col_is_numeric(., columns = vars(a, b)),
-  ~ test_col_vals_not_null(., columns = vars(a, b)),
-  ~ col_vals_gt(., columns = vars(b), value = vars(a))
+  ~ test_col_is_numeric(., columns = c(a, b)),
+  ~ test_col_vals_not_null(., columns = c(a, b)),
+  ~ col_vals_gt(., columns = b, value = vars(a))
 )
 }\if{html}{\out{</div>}}
 }
@@ -458,9 +458,9 @@ us.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   test_serially(
-    ~ test_col_is_numeric(., columns = vars(a, b)),
-    ~ test_col_vals_not_null(., columns = vars(a, b)),
-    ~ col_vals_gt(., columns = vars(b), value = vars(a))
+    ~ test_col_is_numeric(., columns = c(a, b)),
+    ~ test_col_vals_not_null(., columns = c(a, b)),
+    ~ col_vals_gt(., columns = b, value = vars(a))
   )
 #> [1] TRUE
 }\if{html}{\out{</div>}}

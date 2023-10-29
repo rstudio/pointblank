@@ -210,7 +210,7 @@ R statement:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
   col_exists(
-    columns = vars(a),
+    columns = a,
     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
     label = "The `col_exists()` step.",
     active = FALSE
@@ -268,7 +268,7 @@ Validate that column \code{a} exists in the \code{tbl} table with \code{col_exis
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = tbl) \%>\%
-  col_exists(columns = vars(a)) \%>\%
+  col_exists(columns = a) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
 
@@ -289,7 +289,7 @@ This way of using validation functions acts as a data filter. Data is
 passed through but should \code{stop()} if there is a single test unit failing.
 The behavior of side effects can be customized with the \code{actions} option.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% col_exists(columns = vars(a))
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% col_exists(columns = a)
 #> # A tibble: 6 x 2
 #>       a     b
 #>   <dbl> <dbl>
@@ -307,7 +307,7 @@ The behavior of side effects can be customized with the \code{actions} option.
 With the \verb{expect_*()} form, we would typically perform one validation at a
 time. This is primarily used in \strong{testthat} tests.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_exists(tbl, columns = vars(a))
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_exists(tbl, columns = a)
 }\if{html}{\out{</div>}}
 }
 
@@ -316,7 +316,7 @@ time. This is primarily used in \strong{testthat} tests.
 With the \verb{test_*()} form, we should get a single logical value returned to
 us.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% test_col_exists(columns = vars(a))
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% test_col_exists(columns = a)
 #> [1] TRUE
 }\if{html}{\out{</div>}}
 }

@@ -211,7 +211,7 @@ R statement:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
   col_is_factor(
-    columns = vars(a),
+    columns = a,
     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
     label = "The `col_is_factor()` step.",
     active = FALSE
@@ -274,7 +274,7 @@ Validate that the column \code{f} in the \code{tbl} object is of the \code{facto
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = tbl) \%>\%
-  col_is_factor(columns = vars(f)) \%>\%
+  col_is_factor(columns = f) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
 
@@ -296,7 +296,7 @@ through but should \code{stop()} if there is a single test unit failing. The
 behavior of side effects can be customized with the \code{actions} option.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
-  col_is_factor(columns = vars(f)) \%>\%
+  col_is_factor(columns = f) \%>\%
   dplyr::slice(1:5)
 #> # A tibble: 5 x 8
 #>   date_time           date           a b             c      d e     f    
@@ -314,7 +314,7 @@ behavior of side effects can be customized with the \code{actions} option.
 With the \verb{expect_*()} form, we would typically perform one validation at a
 time. This is primarily used in \strong{testthat} tests.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_is_factor(tbl, vars(f))
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_is_factor(tbl, f)
 }\if{html}{\out{</div>}}
 }
 
@@ -323,7 +323,7 @@ time. This is primarily used in \strong{testthat} tests.
 With the \verb{test_*()} form, we should get a single logical value returned to
 us.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% test_col_is_factor(columns = vars(f))
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% test_col_is_factor(columns = f)
 #> [1] TRUE
 }\if{html}{\out{</div>}}
 }

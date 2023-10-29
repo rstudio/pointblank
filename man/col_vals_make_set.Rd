@@ -312,7 +312,7 @@ R statement:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
   col_vals_make_set(
-    columns = vars(a),
+    columns = a,
     set = c(1, 2, 3, 4),
     preconditions = ~ . \%>\% dplyr::filter(a < 10),
     segments = b ~ c("group_1", "group_2"),
@@ -382,7 +382,7 @@ failing test units (there are 4 test units).
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = small_table) \%>\%
   col_vals_make_set(
-    columns = vars(f), set = c("low", "mid", "high")
+    columns = f, set = c("low", "mid", "high")
   ) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
@@ -406,7 +406,7 @@ behavior of side effects can be customized with the \code{actions} option.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   col_vals_make_set(
-    columns = vars(f), set = c("low", "mid", "high")
+    columns = f, set = c("low", "mid", "high")
   ) \%>\%
   dplyr::pull(f) \%>\%
   unique()
@@ -421,7 +421,7 @@ time. This is primarily used in \strong{testthat} tests.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_make_set(
   small_table,
-  columns = vars(f), set = c("low", "mid", "high")
+  columns = f, set = c("low", "mid", "high")
 )
 }\if{html}{\out{</div>}}
 }
@@ -433,7 +433,7 @@ us.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   test_col_vals_make_set(
-    columns = vars(f), set = c("low", "mid", "high")
+    columns = f, set = c("low", "mid", "high")
   )
 #> [1] TRUE
 }\if{html}{\out{</div>}}

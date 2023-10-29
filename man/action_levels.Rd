@@ -161,10 +161,10 @@ validation steps and interrogate the \code{small_table}.
     actions = al
   ) \%>\%
   col_vals_gt(
-    columns = vars(a), value = 2
+    columns = a, value = 2
   ) \%>\%
   col_vals_lt(
-    columns = vars(d), value = 20000
+    columns = d, value = 20000
   ) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
@@ -192,11 +192,11 @@ another such object to the validation step instead (this time using the
     actions = al
   ) \%>\%
   col_vals_gt(
-    columns = vars(a), value = 2,
+    columns = a, value = 2,
     actions = warn_on_fail(warn_at = 0.5)
   ) \%>\%
   col_vals_lt(
-    columns = vars(d), value = 20000
+    columns = d, value = 20000
   ) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
@@ -221,7 +221,7 @@ data).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   col_vals_gt(
-    columns = vars(a), value = 2,
+    columns = a, value = 2,
     actions = warn_on_fail(warn_at = 2)
   )
 }\if{html}{\out{</div>}}
@@ -256,7 +256,7 @@ With the same pipeline, not supplying anything for \code{actions} (it's \code{NU
 default) will have the same effect as using \code{stop_on_fail(stop_at = 1)}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
-  col_vals_gt(columns = vars(a), value = 2)
+  col_vals_gt(columns = a, value = 2)
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{## Error: Exceedance of failed test units where values in `a` should have
@@ -270,7 +270,7 @@ Here's the equivalent set of statements:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   col_vals_gt(
-    columns = vars(a), value = 2,
+    columns = a, value = 2,
     actions = stop_on_fail(stop_at = 1)
   )
 }\if{html}{\out{</div>}}

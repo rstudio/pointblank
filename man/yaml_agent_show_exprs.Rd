@@ -46,14 +46,14 @@ retrieval of the target table.
       notify_at = 0.35
     )
   ) \%>\%
-  col_exists(columns = vars(date, date_time)) \%>\%
+  col_exists(columns = c(date, date_time)) \%>\%
   col_vals_regex(
-    columns = vars(b),
+    columns = b,
     regex = "[0-9]-[a-z]\{3\}-[0-9]\{3\}"
   ) \%>\%
   rows_distinct() \%>\%
-  col_vals_gt(columns = vars(d), value = 100) \%>\%
-  col_vals_lte(columns = vars(c), value = 5)
+  col_vals_gt(columns = d, value = 100) \%>\%
+  col_vals_lte(columns = c, value = 5)
 }\if{html}{\out{</div>}}
 
 The agent can be written to a \strong{pointblank} YAML file with \code{\link[=yaml_write]{yaml_write()}}.
@@ -95,19 +95,19 @@ we can use \code{yaml_agent_show_exprs()}.
   label = "A simple example with the `small_table`."
 ) \%>\%
   col_exists(
-    columns = vars(date, date_time)
+    columns = c(date, date_time)
   ) \%>\%
   col_vals_regex(
-    columns = vars(b),
+    columns = b,
     regex = "[0-9]-[a-z]\{3\}-[0-9]\{3\}"
   ) \%>\%
   rows_distinct() \%>\%
   col_vals_gt(
-    columns = vars(d),
+    columns = d,
     value = 100
   ) \%>\%
   col_vals_lte(
-    columns = vars(c),
+    columns = c,
     value = 5
   ) 
 }\if{html}{\out{</div>}}

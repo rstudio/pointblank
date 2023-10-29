@@ -115,7 +115,7 @@ A different strategy is to provide the data-reading function call directly to
       col_types = "TDdcddlc"
     )
   ) \%>\%
-  col_vals_gt(columns = vars(a), value = 0)
+  col_vals_gt(columns = a, value = 0)
 }\if{html}{\out{</div>}}
 
 All of the file-reading instructions are encapsulated in the \code{tbl} expression
@@ -142,7 +142,7 @@ gets the same CSV file from the GitHub repository for the pointblank package.
     tbl_name = "small_table",
     label = "`file_tbl()` example.",
   ) \%>\%
-  col_vals_gt(columns = vars(a), value = 0) \%>\%
+  col_vals_gt(columns = a, value = 0) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
 

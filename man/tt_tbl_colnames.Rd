@@ -55,7 +55,7 @@ table. Here, we check that \code{game_revenue} table, included in the
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_tbl_colnames(tbl = game_revenue) \%>\%
   test_col_vals_make_subset(
-    columns = vars(value),
+    columns = value,
     set = c("acquisition", "country")
   )
 #> [1] TRUE
@@ -70,7 +70,7 @@ combination of \code{tt_tbl_colnames()}, then \code{\link[=tt_string_info]{tt_st
   tt_tbl_colnames() \%>\%
   tt_string_info() \%>\%
   test_col_vals_lt(
-    columns = vars(value),
+    columns = value,
     value = 15
   )
 #> [1] FALSE

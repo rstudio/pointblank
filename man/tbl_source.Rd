@@ -55,7 +55,7 @@ some validation steps, and interrogate the table shortly thereafter.
     label = "`tbl_source()` example",
     actions = action_levels(warn_at = 0.10)
   ) \%>\% 
-  col_exists(columns = vars(date, date_time)) \%>\%
+  col_exists(columns = c(date, date_time)) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
 

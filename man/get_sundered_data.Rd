@@ -84,9 +84,9 @@ validation plan into action.
       dplyr::select(a:f),
     label = "`get_sundered_data()`"
   ) \%>\%
-  col_vals_gt(columns = vars(d), value = 1000) \%>\%
+  col_vals_gt(columns = d, value = 1000) \%>\%
   col_vals_between(
-    columns = vars(c),
+    columns = c,
     left = vars(a), right = vars(d),
     na_pass = TRUE
   ) \%>\%

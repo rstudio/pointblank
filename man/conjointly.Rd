@@ -51,7 +51,7 @@ commonly created with \code{\link[=create_agent]{create_agent()}}.}
 A collection one-sided formulas that consist of validation functions that
 validate row units (the \verb{col_vals_*()} series), column existence
 (\code{\link[=col_exists]{col_exists()}}), or column type (the \verb{col_is_*()} series). An example of
-this is \verb{~ col_vals_gte(., vars(a), 5.5), ~ col_vals_not_null(., vars(b)}).}
+this is \verb{~ col_vals_gte(., a, 5.5), ~ col_vals_not_null(., b}).}
 
 \item{.list}{\emph{Alternative to \code{...}}
 
@@ -321,9 +321,9 @@ R statement:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
   conjointly(
-    ~ col_vals_lt(., columns = vars(a), value = 8),
-    ~ col_vals_gt(., columns = vars(c), value = vars(a)),
-    ~ col_vals_not_null(., columns = vars(b)),
+    ~ col_vals_lt(., columns = a, value = 8),
+    ~ col_vals_gt(., columns = c, value = vars(a)),
+    ~ col_vals_not_null(., columns = b),
     preconditions = ~ . \%>\% dplyr::filter(a < 10),
     segments = b ~ c("group_1", "group_2"),
     actions = action_levels(warn_at = 0.1, stop_at = 0.2), 
@@ -337,9 +337,9 @@ YAML representation:
 \if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
 - conjointly:
     fns:
-    - ~col_vals_lt(., columns = vars(a), value = 8)
-    - ~col_vals_gt(., columns = vars(c), value = vars(a))
-    - ~col_vals_not_null(., columns = vars(b))
+    - ~col_vals_lt(., columns = a, value = 8)
+    - ~col_vals_gt(., columns = c, value = vars(a))
+    - ~col_vals_not_null(., columns = b)
     preconditions: ~. \%>\% dplyr::filter(a < 10)
     segments: b ~ c("group_1", "group_2")
     actions:
@@ -391,9 +391,9 @@ each row).
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = tbl) \%>\%
   conjointly(
-    ~ col_vals_lt(., columns = vars(a), value = 8),
-    ~ col_vals_gt(., columns = vars(c), value = vars(a)),
-    ~ col_vals_not_null(., columns = vars(b))
+    ~ col_vals_lt(., columns = a, value = 8),
+    ~ col_vals_gt(., columns = c, value = vars(a)),
+    ~ col_vals_not_null(., columns = b)
     ) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
@@ -422,9 +422,9 @@ behavior of side effects can be customized with the \code{actions} option.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   conjointly(
-    ~ col_vals_lt(., columns = vars(a), value = 8),
-    ~ col_vals_gt(., columns = vars(c), value = vars(a)),
-    ~ col_vals_not_null(., columns = vars(b))
+    ~ col_vals_lt(., columns = a, value = 8),
+    ~ col_vals_gt(., columns = c, value = vars(a)),
+    ~ col_vals_not_null(., columns = b)
   )
 #> # A tibble: 3 x 3
 #>       a     b     c
@@ -442,9 +442,9 @@ time. This is primarily used in \strong{testthat} tests.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_conjointly(
   tbl,
-  ~ col_vals_lt(., columns = vars(a), value = 8),
-  ~ col_vals_gt(., columns = vars(c), value = vars(a)),
-  ~ col_vals_not_null(., columns = vars(b))
+  ~ col_vals_lt(., columns = a, value = 8),
+  ~ col_vals_gt(., columns = c, value = vars(a)),
+  ~ col_vals_not_null(., columns = b)
 )
 }\if{html}{\out{</div>}}
 }
@@ -456,9 +456,9 @@ us.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   test_conjointly(
-    ~ col_vals_lt(., columns = vars(a), value = 8),
-    ~ col_vals_gt(., columns = vars(c), value = vars(a)),
-    ~ col_vals_not_null(., columns = vars(b))
+    ~ col_vals_lt(., columns = a, value = 8),
+    ~ col_vals_gt(., columns = c, value = vars(a)),
+    ~ col_vals_not_null(., columns = b)
   )
 #> [1] TRUE
 }\if{html}{\out{</div>}}

@@ -354,6 +354,7 @@ tt_string_info <- function(tbl) {
 #' ```{r}
 #' tt_tbl_dims(tbl = small_table) %>%
 #'   dplyr::filter(.param. == "columns") %>%
+#'   test_col_vals_lt(
 #'     columns = value,
 #'     value = 10
 #'   )

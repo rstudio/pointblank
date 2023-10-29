@@ -146,3 +146,37 @@ test_that("'NULL = select everything' behavior in rows_*() validation functions"
   expect_equal(nrow(df_interrogated$validation_set), 2L)
   
 })
+
+test_that("c()-expr works for serially", {
+  
+  # Example from `serially()` docs
+  tbl <-
+    dplyr::tibble(
+      a = c(5, 2, 6),
+      b = c(6, 4, 9),
+      c = c(1, 2, 3)
+    )
+  agent_1 <-
+    create_agent(tbl = tbl) %>%
+    serially(
+      ~ test_col_is_numeric(., columns = vars(a, b)),
+      ~ test_col_vals_not_null(., columns = vars(a, b)),
+      ~ col_vals_gt(., columns = vars(b), value = vars(a))
+    ) %>%
+    interrogate()
+  expect_no_error({
+    agent_1_c <-
+      create_agent(tbl = tbl) %>%
+      serially(
+        ~ test_col_is_numeric(., columns = c(a, b)),
+        ~ test_col_vals_not_null(., columns = c(a, b)),
+        ~ col_vals_gt(., columns = b, value = vars(a))
+      ) %>%
+      interrogate()
+  })
+  expect_identical(
+    get_agent_report(agent_1, display_table = FALSE)$n_pass,
+    get_agent_report(agent_1_c, display_table = FALSE)$n_pass
+  )
+  
+})

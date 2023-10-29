@@ -240,7 +240,6 @@ col_exists <- function(
   if (rlang::quo_is_missing(columns)) {
     stop('argument "columns" is missing, with no default')
   }
-  # `NULL` = `everything()`
   if (rlang::quo_is_null(columns)) {
     columns <- rlang::quo(tidyselect::everything())
   }

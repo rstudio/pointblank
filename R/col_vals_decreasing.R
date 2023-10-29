@@ -189,7 +189,7 @@
 #' ```r
 #' agent %>% 
 #'   col_vals_decreasing(
-#'     columns = vars(a),
+#'     columns = a,
 #'     allow_stationary = TRUE,
 #'     increasing_tol = 0.5,
 #'     na_pass = TRUE,
@@ -259,7 +259,7 @@
 #' agent <-
 #'   create_agent(tbl = game_revenue_2) %>%
 #'   col_vals_decreasing(
-#'     columns = vars(time_left),
+#'     columns = time_left,
 #'     allow_stationary = TRUE
 #'   ) %>%
 #'   interrogate()
@@ -284,7 +284,7 @@
 #' ```{r}
 #' game_revenue_2 %>%
 #'   col_vals_decreasing(
-#'     columns = vars(time_left),
+#'     columns = time_left,
 #'     allow_stationary = TRUE
 #'   ) %>%
 #'   dplyr::select(time_left) %>%
@@ -300,7 +300,7 @@
 #' ```r
 #' expect_col_vals_decreasing(
 #'   game_revenue_2,
-#'   columns = vars(time_left),
+#'   columns = time_left,
 #'   allow_stationary = TRUE
 #' )
 #' ```
@@ -313,7 +313,7 @@
 #' ```{r}
 #' game_revenue_2 %>%
 #'   test_col_vals_decreasing(
-#'     columns = vars(time_left),
+#'     columns = time_left,
 #'     allow_stationary = TRUE
 #'   )
 #' ```

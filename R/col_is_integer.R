@@ -108,7 +108,7 @@
 #' ```r
 #' agent %>% 
 #'   col_is_integer(
-#'     columns = vars(a),
+#'     columns = a,
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
 #'     label = "The `col_is_integer()` step.",
 #'     active = FALSE
@@ -157,7 +157,7 @@
 #' ```r
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
-#'   col_is_integer(columns = vars(b)) %>%
+#'   col_is_integer(columns = b) %>%
 #'   interrogate()
 #' ```
 #' 
@@ -178,7 +178,7 @@
 #' behavior of side effects can be customized with the `actions` option.
 #' 
 #' ```{r}
-#' tbl %>% col_is_integer(columns = vars(b))
+#' tbl %>% col_is_integer(columns = b)
 #' ```
 #' 
 #' ## C: Using the expectation function
@@ -187,7 +187,7 @@
 #' time. This is primarily used in **testthat** tests.
 #' 
 #' ```r
-#' expect_col_is_integer(tbl, columns = vars(b))
+#' expect_col_is_integer(tbl, columns = b)
 #' ```
 #' 
 #' ## D: Using the test function
@@ -196,7 +196,7 @@
 #' us.
 #' 
 #' ```{r}
-#' tbl %>% test_col_is_integer(columns = vars(b))
+#' tbl %>% test_col_is_integer(columns = b)
 #' ```
 #' 
 #' @family validation functions

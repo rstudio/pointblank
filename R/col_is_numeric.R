@@ -108,7 +108,7 @@
 #' ```r
 #' agent %>% 
 #'   col_is_numeric(
-#'     columns = vars(a),
+#'     columns = a,
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
 #'     label = "The `col_is_numeric()` step.",
 #'     active = FALSE
@@ -152,7 +152,7 @@
 #' ```r
 #' agent <-
 #'   create_agent(tbl = small_table) %>%
-#'   col_is_numeric(columns = vars(d)) %>%
+#'   col_is_numeric(columns = d) %>%
 #'   interrogate()
 #' ```
 #' 
@@ -174,7 +174,7 @@
 #' 
 #' ```{r}
 #' small_table %>%
-#'   col_is_numeric(columns = vars(d)) %>%
+#'   col_is_numeric(columns = d) %>%
 #'   dplyr::slice(1:5)
 #' ```
 #' 
@@ -184,7 +184,7 @@
 #' time. This is primarily used in **testthat** tests.
 #' 
 #' ```r
-#' expect_col_is_numeric(small_table, columns = vars(d))
+#' expect_col_is_numeric(small_table, columns = d)
 #' ```
 #' 
 #' ## D: Using the test function
@@ -193,7 +193,7 @@
 #' us.
 #' 
 #' ```{r}
-#' small_table %>% test_col_is_numeric(columns = vars(d))
+#' small_table %>% test_col_is_numeric(columns = d)
 #' ```
 #' 
 #' @family validation functions

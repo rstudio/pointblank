@@ -52,9 +52,9 @@
 #' Here's an example of how to arrange expressions:
 #' 
 #' ```
-#' ~ test_col_exists(., columns = vars(count)),
-#' ~ test_col_is_numeric(., columns = vars(count)),
-#' ~ col_vals_gt(., columns = vars(count), value = 2)
+#' ~ test_col_exists(., columns = count),
+#' ~ test_col_is_numeric(., columns = count),
+#' ~ col_vals_gt(., columns = count, value = 2)
 #' ```
 #' 
 #' This series concentrates on the column called `count` and first checks
@@ -83,7 +83,7 @@
 #'   [col_vals_increasing()], etc.) can optionally be inserted at the end of the
 #'   series, serving as a validation step that only undergoes interrogation if
 #'   the prior tests adequately pass. An example of this is
-#'   `~ test_column_exists(., vars(a)), ~ col_vals_not_null(., vars(a))`).
+#'   `~ test_column_exists(., a), ~ col_vals_not_null(., a)`).
 #'   
 #' @param .list *Alternative to `...`*
 #' 
@@ -184,9 +184,9 @@
 #' ```r
 #' agent %>% 
 #'   serially(
-#'     ~ col_vals_lt(., columns = vars(a), value = 8),
-#'     ~ col_vals_gt(., columns = vars(c), value = vars(a)),
-#'     ~ col_vals_not_null(., columns = vars(b)),
+#'     ~ col_vals_lt(., columns = a, value = 8),
+#'     ~ col_vals_gt(., columns = c, value = vars(a)),
+#'     ~ col_vals_not_null(., columns = b),
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2), 
 #'     label = "The `serially()` step.",
@@ -200,9 +200,9 @@
 #' steps:
 #' - serially:
 #'     fns:
-#'     - ~col_vals_lt(., columns = vars(a), value = 8)
-#'     - ~col_vals_gt(., columns = vars(c), value = vars(a))
-#'     - ~col_vals_not_null(., vars(b))
+#'     - ~col_vals_lt(., columns = a, value = 8)
+#'     - ~col_vals_gt(., columns = c, value = vars(a))
+#'     - ~col_vals_not_null(., b)
 #'     preconditions: ~. %>% dplyr::filter(a < 10)
 #'     actions:
 #'       warn_fraction: 0.1
@@ -249,9 +249,9 @@
 #' agent_1 <-
 #'   create_agent(tbl = tbl) %>%
 #'   serially(
-#'     ~ test_col_is_numeric(., columns = vars(a, b)),
-#'     ~ test_col_vals_not_null(., columns = vars(a, b)),
-#'     ~ col_vals_gt(., columns = vars(b), value = vars(a))
+#'     ~ test_col_is_numeric(., columns = c(a, b)),
+#'     ~ test_col_vals_not_null(., columns = c(a, b)),
+#'     ~ col_vals_gt(., columns = b, value = vars(a))
 #'     ) %>%
 #'   interrogate()
 #' ```
@@ -276,8 +276,8 @@
 #' agent_2 <-
 #'   create_agent(tbl = tbl) %>%
 #'   serially(
-#'     ~ test_col_is_numeric(., columns = vars(a, b)),
-#'     ~ test_col_vals_not_null(., columns = vars(a, b))
+#'     ~ test_col_is_numeric(., columns = c(a, b)),
+#'     ~ test_col_vals_not_null(., columns = c(a, b))
 #'   ) %>%
 #'   interrogate()
 #' ```
@@ -299,9 +299,9 @@
 #' ```{r}
 #' tbl %>%
 #'   serially(
-#'     ~ test_col_is_numeric(., columns = vars(a, b)),
-#'     ~ test_col_vals_not_null(., columns = vars(a, b)),
-#'     ~ col_vals_gt(., columns = vars(b), value = vars(a))
+#'     ~ test_col_is_numeric(., columns = c(a, b)),
+#'     ~ test_col_vals_not_null(., columns = c(a, b)),
+#'     ~ col_vals_gt(., columns = b, value = vars(a))
 #'   )
 #' ```
 #'
@@ -313,9 +313,9 @@
 #' ```r
 #' expect_serially(
 #'   tbl,
-#'   ~ test_col_is_numeric(., columns = vars(a, b)),
-#'   ~ test_col_vals_not_null(., columns = vars(a, b)),
-#'   ~ col_vals_gt(., columns = vars(b), value = vars(a))
+#'   ~ test_col_is_numeric(., columns = c(a, b)),
+#'   ~ test_col_vals_not_null(., columns = c(a, b)),
+#'   ~ col_vals_gt(., columns = b, value = vars(a))
 #' )
 #' ```
 #' 
@@ -327,9 +327,9 @@
 #' ```{r}
 #' tbl %>%
 #'   test_serially(
-#'     ~ test_col_is_numeric(., columns = vars(a, b)),
-#'     ~ test_col_vals_not_null(., columns = vars(a, b)),
-#'     ~ col_vals_gt(., columns = vars(b), value = vars(a))
+#'     ~ test_col_is_numeric(., columns = c(a, b)),
+#'     ~ test_col_vals_not_null(., columns = c(a, b)),
+#'     ~ col_vals_gt(., columns = b, value = vars(a))
 #'   )
 #' ```
 #'

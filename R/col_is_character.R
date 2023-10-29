@@ -108,7 +108,7 @@
 #' ```r
 #' agent %>% 
 #'   col_is_character(
-#'     columns = vars(a),
+#'     columns = a,
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
 #'     label = "The `col_is_character()` step.",
 #'     active = FALSE
@@ -159,7 +159,7 @@
 #' ```r
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
-#'   col_is_character(columns = vars(b)) %>%
+#'   col_is_character(columns = b) %>%
 #'   interrogate()
 #' ```
 #' 
@@ -181,7 +181,7 @@
 #' 
 #' ```{r}
 #' tbl %>% 
-#'   col_is_character(columns = vars(b)) %>%
+#'   col_is_character(columns = b) %>%
 #'   dplyr::slice(1:5)
 #' ```
 #' 
@@ -191,7 +191,7 @@
 #' time. This is primarily used in **testthat** tests.
 #' 
 #' ```r
-#' expect_col_is_character(tbl, columns = vars(b))
+#' expect_col_is_character(tbl, columns = b)
 #' ```
 #' 
 #' ## D: Using the test function
@@ -200,7 +200,7 @@
 #' us.
 #' 
 #' ```{r}
-#' tbl %>% test_col_is_character(columns = vars(b))
+#' tbl %>% test_col_is_character(columns = b)
 #' ```
 #' 
 #' @family validation functions

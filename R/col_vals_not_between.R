@@ -200,7 +200,7 @@
 #' ```r
 #' agent %>% 
 #'   col_vals_not_between(
-#'     columns = vars(a),
+#'     columns = a,
 #'     left = 1,
 #'     right = 2,
 #'     inclusive = c(TRUE, FALSE),
@@ -262,7 +262,7 @@
 #' agent <-
 #'   create_agent(tbl = small_table) %>%
 #'   col_vals_not_between(
-#'     columns = vars(c),
+#'     columns = c,
 #'     left = 10, right = 20,
 #'     na_pass = TRUE
 #'   ) %>%
@@ -288,7 +288,7 @@
 #' ```{r}
 #' small_table %>%
 #'   col_vals_not_between(
-#'     columns = vars(c),
+#'     columns = c,
 #'     left = 10, right = 20,
 #'     na_pass = TRUE
 #'   ) %>%
@@ -302,7 +302,7 @@
 #' 
 #' ```r
 #' expect_col_vals_not_between(
-#'   small_table, columns = vars(c),
+#'   small_table, columns = c,
 #'   left = 10, right = 20,
 #'   na_pass = TRUE
 #' )
@@ -316,7 +316,7 @@
 #' ```{r}
 #' small_table %>%
 #'   test_col_vals_not_between(
-#'     columns = vars(c),
+#'     columns = c,
 #'     left = 10, right = 20,
 #'     na_pass = TRUE
 #'   )
@@ -333,7 +333,7 @@
 #' ```{r}
 #' small_table %>%
 #'   test_col_vals_not_between(
-#'     columns = vars(c),
+#'     columns = c,
 #'     left = 9, right = 20,
 #'     inclusive = c(FALSE, TRUE),
 #'     na_pass = TRUE

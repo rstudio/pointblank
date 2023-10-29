@@ -108,7 +108,7 @@
 #' ```r
 #' agent %>% 
 #'   col_is_factor(
-#'     columns = vars(a),
+#'     columns = a,
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
 #'     label = "The `col_is_factor()` step.",
 #'     active = FALSE
@@ -157,7 +157,7 @@
 #' ```r
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
-#'   col_is_factor(columns = vars(f)) %>%
+#'   col_is_factor(columns = f) %>%
 #'   interrogate()
 #' ```
 #' 
@@ -179,7 +179,7 @@
 #' 
 #' ```{r}
 #' tbl %>%
-#'   col_is_factor(columns = vars(f)) %>%
+#'   col_is_factor(columns = f) %>%
 #'   dplyr::slice(1:5)
 #' ```
 #' 
@@ -189,7 +189,7 @@
 #' time. This is primarily used in **testthat** tests.
 #' 
 #' ```r
-#' expect_col_is_factor(tbl, vars(f))
+#' expect_col_is_factor(tbl, f)
 #' ```
 #' 
 #' ## D: Using the test function
@@ -198,7 +198,7 @@
 #' us.
 #' 
 #' ```{r}
-#' tbl %>% test_col_is_factor(columns = vars(f))
+#' tbl %>% test_col_is_factor(columns = f)
 #' ```
 #' 
 #' @family validation functions

@@ -135,7 +135,7 @@
 #'       col_types = "TDdcddlc"
 #'     )
 #'   ) %>%
-#'   col_vals_gt(columns = vars(a), value = 0)
+#'   col_vals_gt(columns = a, value = 0)
 #' ```
 #'
 #' All of the file-reading instructions are encapsulated in the `tbl` expression
@@ -162,7 +162,7 @@
 #'     tbl_name = "small_table",
 #'     label = "`file_tbl()` example.",
 #'   ) %>%
-#'   col_vals_gt(columns = vars(a), value = 0) %>%
+#'   col_vals_gt(columns = a, value = 0) %>%
 #'   interrogate()
 #' ```
 #' 

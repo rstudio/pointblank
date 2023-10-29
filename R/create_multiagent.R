@@ -107,7 +107,7 @@
 #'     tbl_name = "tbl_1",
 #'     label = "Example table 1."
 #'   ) %>%
-#'   col_vals_gt(columns = vars(a), value = 4) %>%
+#'   col_vals_gt(columns = a, value = 4) %>%
 #'   interrogate()
 #' ```
 #' 
@@ -120,7 +120,7 @@
 #'     tbl_name = "tbl_2",
 #'     label = "Example table 2."
 #'   ) %>%
-#'   col_is_character(columns = vars(b)) %>%
+#'   col_is_character(columns = b) %>%
 #'   interrogate()
 #' ```
 #' 

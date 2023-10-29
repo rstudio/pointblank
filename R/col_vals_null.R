@@ -159,7 +159,7 @@
 #' ```r
 #' agent %>% 
 #'   col_vals_null(
-#'     columns = vars(a),
+#'     columns = a,
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
@@ -217,7 +217,7 @@
 #' ```r
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
-#'   col_vals_null(columns = vars(c)) %>%
+#'   col_vals_null(columns = c) %>%
 #'   interrogate()
 #' ```
 #' 
@@ -239,7 +239,7 @@
 #' 
 #' ```{r}
 #' tbl %>%
-#'   col_vals_null(columns = vars(c)) %>%
+#'   col_vals_null(columns = c) %>%
 #'   dplyr::pull(c)
 #' ```
 #'
@@ -249,7 +249,7 @@
 #' time. This is primarily used in **testthat** tests.
 #' 
 #' ```r
-#' expect_col_vals_null(tbl, columns = vars(c))
+#' expect_col_vals_null(tbl, columns = c)
 #' ```
 #' 
 #' ## D: Using the test function
@@ -258,7 +258,7 @@
 #' us.
 #' 
 #' ```{r}
-#' tbl %>% test_col_vals_null(columns = vars(c))
+#' tbl %>% test_col_vals_null(columns = c)
 #' ```
 #' 
 #' @family validation functions

@@ -166,7 +166,7 @@
 #' ```r
 #' agent %>% 
 #'   col_vals_not_in_set(
-#'     columns = vars(a),
+#'     columns = a,
 #'     set = c(1, 2, 3, 4),
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
@@ -218,7 +218,7 @@
 #' agent <-
 #'   create_agent(tbl = small_table) %>%
 #'   col_vals_not_in_set(
-#'     columns = vars(f), set = c("lows", "mids", "highs")
+#'     columns = f, set = c("lows", "mids", "highs")
 #'   ) %>%
 #'   interrogate()
 #' ```
@@ -242,7 +242,7 @@
 #' ```
 #' small_table %>%
 #'   col_vals_not_in_set(
-#'     columns = vars(f), set = c("lows", "mids", "highs")
+#'     columns = f, set = c("lows", "mids", "highs")
 #'   ) %>%
 #'   dplyr::pull(f) %>%
 #'   unique()
@@ -256,7 +256,7 @@
 #' ```r
 #' expect_col_vals_not_in_set(
 #'   small_table,
-#'   columns = vars(f), set = c("lows", "mids", "highs")
+#'   columns = f, set = c("lows", "mids", "highs")
 #' )
 #' ```
 #' 
@@ -268,7 +268,7 @@
 #' ```{r}
 #' small_table %>%
 #'   test_col_vals_not_in_set(
-#'     columns = vars(f), set = c("lows", "mids", "highs")
+#'     columns = f, set = c("lows", "mids", "highs")
 #'   )
 #' ```
 #' 

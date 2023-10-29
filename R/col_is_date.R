@@ -108,7 +108,7 @@
 #' ```r
 #' agent %>% 
 #'   col_is_date(
-#'     columns = vars(a),
+#'     columns = a,
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
 #'     label = "The `col_is_date()` step.",
 #'     active = FALSE
@@ -151,7 +151,7 @@
 #' ```r
 #' agent <-
 #'   create_agent(tbl = small_table) %>%
-#'   col_is_date(columns = vars(date)) %>%
+#'   col_is_date(columns = date) %>%
 #'   interrogate()
 #' ```
 #'   
@@ -173,7 +173,7 @@
 #' 
 #' ```{r}
 #' small_table %>%
-#'   col_is_date(columns = vars(date)) %>%
+#'   col_is_date(columns = date) %>%
 #'   dplyr::slice(1:5)
 #' ```
 #'
@@ -183,7 +183,7 @@
 #' time. This is primarily used in **testthat** tests.
 #' 
 #' ```r
-#' expect_col_is_date(small_table, columns = vars(date))
+#' expect_col_is_date(small_table, columns = date)
 #' ```
 #' 
 #' ## D: Using the test function
@@ -192,7 +192,7 @@
 #' us.
 #' 
 #' ```{r}
-#' small_table %>% test_col_is_date(columns = vars(date))
+#' small_table %>% test_col_is_date(columns = date)
 #' ```
 #' 
 #' @family validation functions

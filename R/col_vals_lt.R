@@ -176,7 +176,7 @@
 #' ```r
 #' agent %>% 
 #'   col_vals_lt(
-#'     columns = vars(a),
+#'     columns = a,
 #'     value = 1,
 #'     na_pass = TRUE,
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
@@ -239,7 +239,7 @@
 #' ```r
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
-#'   col_vals_lt(columns = vars(c), value = 5) %>%
+#'   col_vals_lt(columns = c, value = 5) %>%
 #'   interrogate()
 #' ```
 #' 
@@ -261,7 +261,7 @@
 #' 
 #' ```{r}
 #' tbl %>% 
-#'   col_vals_lt(columns = vars(c), value = 5) %>%
+#'   col_vals_lt(columns = c, value = 5) %>%
 #'   dplyr::pull(c)
 #' ```
 #'   
@@ -271,7 +271,7 @@
 #' time. This is primarily used in **testthat** tests.
 #' 
 #' ```r
-#' expect_col_vals_lt(tbl, columns = vars(c), value = 5)
+#' expect_col_vals_lt(tbl, columns = c, value = 5)
 #' ```
 #' 
 #' ## D: Using the test function
@@ -280,7 +280,7 @@
 #' us.
 #' 
 #' ```{r}
-#' test_col_vals_lt(tbl, columns = vars(c), value = 5)
+#' test_col_vals_lt(tbl, columns = c, value = 5)
 #' ```
 #' 
 #' @family validation functions

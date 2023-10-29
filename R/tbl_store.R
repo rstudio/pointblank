@@ -620,7 +620,7 @@ add_to_name_list <- function(
 #'     label = "`tbl_source()` example",
 #'     actions = action_levels(warn_at = 0.10)
 #'   ) %>% 
-#'   col_exists(columns = vars(date, date_time)) %>%
+#'   col_exists(columns = c(date, date_time)) %>%
 #'   interrogate()
 #' ```
 #' 

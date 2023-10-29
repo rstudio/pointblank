@@ -151,7 +151,7 @@
 #' ```r
 #' agent %>% 
 #'   rows_distinct(
-#'     columns = vars(a, b),
+#'     columns = c(a, b),
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
@@ -206,7 +206,7 @@
 #' ```r
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
-#'   rows_distinct(columns = vars(a, b)) %>%
+#'   rows_distinct(columns = c(a, b)) %>%
 #'   interrogate()
 #' ```
 #' 
@@ -228,7 +228,7 @@
 #' 
 #' ```{r}
 #' tbl %>%
-#'   rows_distinct(columns = vars(a, b)) %>%
+#'   rows_distinct(columns = c(a, b)) %>%
 #'   dplyr::pull(a)
 #' ```
 #' 
@@ -238,7 +238,7 @@
 #' time. This is primarily used in **testthat** tests.
 #' 
 #' ```r
-#' expect_rows_distinct(tbl, columns = vars(a, b))
+#' expect_rows_distinct(tbl, columns = c(a, b))
 #' ```
 #' 
 #' ## D: Using the test function
@@ -247,7 +247,7 @@
 #' us.
 #' 
 #' ```{r}
-#' test_rows_distinct(tbl, columns = vars(a, b))
+#' test_rows_distinct(tbl, columns = c(a, b))
 #' ```
 #' 
 #' @family validation functions

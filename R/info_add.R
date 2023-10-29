@@ -343,7 +343,7 @@ info_tabular <- function(
 #'     info = "*info text* 3. Statistics: {snippet_1}."
 #'   ) %>%
 #'   info_columns(
-#'     columns = vars(date, date_time),
+#'     columns = c(date, date_time),
 #'     info = "UTC time."
 #'   )
 #' 
@@ -401,7 +401,7 @@ info_tabular <- function(
 #' informant <-
 #'   informant %>%
 #'   info_columns(
-#'     columns = vars(a),
+#'     columns = a,
 #'     info = "In the range of 1 to 10. ((SIMPLE))"
 #'   ) %>%
 #'   info_columns(
@@ -1064,7 +1064,7 @@ info_section <- function(
 #'     fn = snip_highest(column = "a")
 #'   ) %>%
 #'   info_columns(
-#'     columns = vars(a),
+#'     columns = a,
 #'     info = "In the range of 1 to {max_a}. ((SIMPLE))"
 #'   ) %>%
 #'   info_columns(

@@ -54,7 +54,7 @@
 #'   A collection one-sided formulas that consist of validation functions that
 #'   validate row units (the `col_vals_*()` series), column existence
 #'   ([col_exists()]), or column type (the `col_is_*()` series). An example of
-#'   this is `~ col_vals_gte(., vars(a), 5.5), ~ col_vals_not_null(., vars(b)`).
+#'   this is `~ col_vals_gte(., a, 5.5), ~ col_vals_not_null(., b`).
 #' 
 #' @param .list *Alternative to `...`*
 #' 
@@ -186,9 +186,9 @@
 #' ```r
 #' agent %>% 
 #'   conjointly(
-#'     ~ col_vals_lt(., columns = vars(a), value = 8),
-#'     ~ col_vals_gt(., columns = vars(c), value = vars(a)),
-#'     ~ col_vals_not_null(., columns = vars(b)),
+#'     ~ col_vals_lt(., columns = a, value = 8),
+#'     ~ col_vals_gt(., columns = c, value = vars(a)),
+#'     ~ col_vals_not_null(., columns = b),
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2), 
@@ -203,9 +203,9 @@
 #' steps:
 #' - conjointly:
 #'     fns:
-#'     - ~col_vals_lt(., columns = vars(a), value = 8)
-#'     - ~col_vals_gt(., columns = vars(c), value = vars(a))
-#'     - ~col_vals_not_null(., columns = vars(b))
+#'     - ~col_vals_lt(., columns = a, value = 8)
+#'     - ~col_vals_gt(., columns = c, value = vars(a))
+#'     - ~col_vals_not_null(., columns = b)
 #'     preconditions: ~. %>% dplyr::filter(a < 10)
 #'     segments: b ~ c("group_1", "group_2")
 #'     actions:
@@ -252,9 +252,9 @@
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
 #'   conjointly(
-#'     ~ col_vals_lt(., columns = vars(a), value = 8),
-#'     ~ col_vals_gt(., columns = vars(c), value = vars(a)),
-#'     ~ col_vals_not_null(., columns = vars(b))
+#'     ~ col_vals_lt(., columns = a, value = 8),
+#'     ~ col_vals_gt(., columns = c, value = vars(a)),
+#'     ~ col_vals_not_null(., columns = b)
 #'     ) %>%
 #'   interrogate()
 #' ```
@@ -283,9 +283,9 @@
 #' ```{r}
 #' tbl %>%
 #'   conjointly(
-#'     ~ col_vals_lt(., columns = vars(a), value = 8),
-#'     ~ col_vals_gt(., columns = vars(c), value = vars(a)),
-#'     ~ col_vals_not_null(., columns = vars(b))
+#'     ~ col_vals_lt(., columns = a, value = 8),
+#'     ~ col_vals_gt(., columns = c, value = vars(a)),
+#'     ~ col_vals_not_null(., columns = b)
 #'   )
 #' ```
 #'
@@ -297,9 +297,9 @@
 #' ```r
 #' expect_conjointly(
 #'   tbl,
-#'   ~ col_vals_lt(., columns = vars(a), value = 8),
-#'   ~ col_vals_gt(., columns = vars(c), value = vars(a)),
-#'   ~ col_vals_not_null(., columns = vars(b))
+#'   ~ col_vals_lt(., columns = a, value = 8),
+#'   ~ col_vals_gt(., columns = c, value = vars(a)),
+#'   ~ col_vals_not_null(., columns = b)
 #' )
 #' ```
 #' 
@@ -311,9 +311,9 @@
 #' ```{r}
 #' tbl %>%
 #'   test_conjointly(
-#'     ~ col_vals_lt(., columns = vars(a), value = 8),
-#'     ~ col_vals_gt(., columns = vars(c), value = vars(a)),
-#'     ~ col_vals_not_null(., columns = vars(b))
+#'     ~ col_vals_lt(., columns = a, value = 8),
+#'     ~ col_vals_gt(., columns = c, value = vars(a)),
+#'     ~ col_vals_not_null(., columns = b)
 #'   )
 #' ```
 #' 

@@ -243,9 +243,20 @@ col_exists <- function(
   # Resolve the columns based on the expression
   ## Only for `col_exists()`: error gracefully if column not found
   columns <- tryCatch(
-    expr = resolve_columns(x = x, var_expr = columns, preconditions = NULL),
-    error = function(cnd) cnd$i %||% NA_character_
+    expr = resolve_columns(x = x, var_expr = columns, preconditions = NULL,
+                           allow_empty = FALSE),
+    error = function(cnd) cnd$i %||% cnd
   )
+  if (rlang::is_error(columns)) {
+    cnd <- columns
+    # tidyselect 0-column selection should be rethrown
+    if (is.null(cnd$parent)) {
+      rlang::cnd_signal(cnd)
+    } else {
+      # Evaluation errors should be chained and rethrown
+      rlang::abort("Evaluation error in `columns`", parent = cnd$parent)
+    }
+  }
 
   if (is_a_table_object(x)) {
     

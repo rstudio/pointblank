@@ -649,52 +649,42 @@ yaml_agent_string <- function(
     expanded = FALSE
 ) {
   
-  if (is.null(agent) && is.null(filename)) {
-    stop(
-      "An `agent` object or a `filename` for a YAML file must be specified.",
-      call. = FALSE
-    )
-  }
-  
-  if (!is.null(agent) && !is.null(filename)) {
-    stop(
-      "Only `agent` or `filename` should be specified (not both).",
-      call. = FALSE
-    )
-  }
-  
-  if (!is.null(agent)) {
-    
-    # Display the agent's YAML as a nicely formatted string by
-    # generating the YAML (`as_agent_yaml_list() %>% as.yaml()`) and
-    # then emitting it to the console via `message()`
-    message(
-      as_agent_yaml_list(
-        agent = agent,
-        expanded = expanded
-      ) %>%
-        yaml::as.yaml(
-          handlers = list(
-            logical = function(x) {
-              result <- ifelse(x, "true", "false")
-              class(result) <- "verbatim"
-              result
-            }
+  switch(
+    rlang::check_exclusive(agent, filename),
+    agent = {
+      # Display the agent's YAML as a nicely formatted string by
+      # generating the YAML (`as_agent_yaml_list() %>% as.yaml()`) and
+      # then emitting it to the console via `message()`
+      message(
+        as_agent_yaml_list(
+          agent = agent,
+          expanded = expanded
+        ) %>%
+          yaml::as.yaml(
+            handlers = list(
+              logical = function(x) {
+                result <- ifelse(x, "true", "false")
+                class(result) <- "verbatim"
+                result
+              }
+            )
           )
-        )
-    )
-    
-  } else {
-    
-    if (!is.null(path)) {
-      filename <- file.path(path, filename)
+      )
+    },
+    filename = {
+      # Display the agent's YAML as a nicely formatted string by
+      # reading the YAML file specified by `file` (and perhaps `path`)
+      # and then emitting it to the console via `message()`
+      if (!is.null(path)) {
+        filename <- file.path(path, filename)
+      }
+      message(
+        readLines(filename) %>%
+          paste(collapse = "\n")
+      )
     }
-    
-    # Display the agent's YAML as a nicely formatted string by
-    # reading the YAML file specified by `file` (and perhaps `path`)
-    # and then emitting it to the console via `message()`
-    message(readLines(filename) %>% paste(collapse = "\n"))
-  }
+  )
+  
 }
 
 as_vars_fn <- function(columns) {

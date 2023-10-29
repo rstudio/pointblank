@@ -158,12 +158,12 @@ test_that("error/failure patterns for `col_exists`", {
       expect_col_exists("z")
   })
   
-  # 0-column *tidyselect selection* should error
-  expect_error({
+  # 0-column tidyselect selection signals failure
+  expect_error(expect_failure({
     small_table %>% 
       col_exists(starts_with("z"))
-  })
-  expect_error({
+  }))
+  expect_failure({
     small_table %>% 
       expect_col_exists("z")
   })
@@ -204,7 +204,7 @@ test_that("error/failure patterns for `col_exists`", {
       col_exists(starts_with("z")) %>% 
       interrogate()
   })
-  expect_false(all_passed(agent_nonexist_col))
+  expect_false(all_passed(agent_tidyselect_0col))
   
 })
 

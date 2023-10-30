@@ -687,8 +687,8 @@ yaml_agent_string <- function(
   
 }
 
-as_vars_fn <- function(columns) {
-  paste0("vars(", columns, ")")
+as_c_fn <- function(columns) {
+  paste0("c(", columns, ")")
 }
 
 as_list_preconditions <- function(preconditions) {
@@ -1330,7 +1330,7 @@ as_agent_yaml_list <- function(agent, expanded) {
       if (is.na(step_list$column[[1]][[1]])) {
         vars_cols <- NULL
       } else {
-        vars_cols <- as_vars_fn(step_list$column[[1]])
+        vars_cols <- as_c_fn(step_list$column[[1]])
       }
       
       lst_step <- 
@@ -1555,7 +1555,7 @@ get_column_text <- function(step_list, expanded) {
     if (!is.na(step_list$column[[1]]) &&
         step_list$column[[1]] == step_list$columns_expr) {
       
-      column_text <- as_vars_fn(step_list$column[[1]])
+      column_text <- as_c_fn(step_list$column[[1]])
       
     } else {
       column_text <- step_list$columns_expr
@@ -1563,7 +1563,7 @@ get_column_text <- function(step_list, expanded) {
     
   } else {
     
-    column_text <- as_vars_fn(columns = step_list$column[[1]])
+    column_text <- as_c_fn(columns = step_list$column[[1]])
   }
   
   column_text

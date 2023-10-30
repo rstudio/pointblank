@@ -54,9 +54,9 @@ An optional path to which the YAML file should be saved (combined with
 \verb{scalar<logical>} // \emph{default:} \code{FALSE}
 
 Should the written validation expressions for an \emph{agent} be expanded such
-that \strong{tidyselect} and \code{\link[=vars]{vars()}} expressions for columns are evaluated,
-yielding a validation function per column? By default, this is \code{FALSE} so
-expressions as written will be retained in the YAML representation.}
+that \strong{tidyselect} expressions for columns are evaluated, yielding a
+validation function per column? By default, this is \code{FALSE} so expressions
+as written will be retained in the YAML representation.}
 
 \item{quiet}{\emph{Inform (or not) upon file writing}
 
@@ -182,7 +182,7 @@ steps:
 - col_exists:
     columns: c(date, date_time)
 - col_vals_regex:
-    columns: vars(b)
+    columns: c(b)
     regex: '[0-9]-[a-z]\{3\}-[0-9]\{3\}'
 - rows_distinct:
     columns: ~

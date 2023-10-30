@@ -81,9 +81,9 @@
 #'   `scalar<logical>` // *default:* `FALSE`
 #' 
 #'   Should the written validation expressions for an *agent* be expanded such
-#'   that **tidyselect** and [vars()] expressions for columns are evaluated,
-#'   yielding a validation function per column? By default, this is `FALSE` so
-#'   expressions as written will be retained in the YAML representation.
+#'   that **tidyselect** expressions for columns are evaluated, yielding a
+#'   validation function per column? By default, this is `FALSE` so expressions
+#'   as written will be retained in the YAML representation.
 #' 
 #' @param quiet *Inform (or not) upon file writing*
 #' 
@@ -180,7 +180,7 @@
 #' - col_exists:
 #'     columns: c(date, date_time)
 #' - col_vals_regex:
-#'     columns: vars(b)
+#'     columns: c(b)
 #'     regex: '[0-9]-[a-z]{3}-[0-9]{3}'
 #' - rows_distinct:
 #'     columns: ~
@@ -576,10 +576,9 @@ yaml_write <- function(
 #' @param path An optional path to the YAML file (combined with `filename`).
 #' 
 #' @param expanded Should the written validation expressions for an *agent* be
-#'   expanded such that **tidyselect** and [vars()] expressions for columns are
-#'   evaluated, yielding a validation function per column? By default, this is
-#'   `FALSE` so expressions as written will be retained in the YAML
-#'   representation.
+#'   expanded such that **tidyselect** expressions for columns are evaluated, 
+#'   yielding a validation function per column? By default, this is `FALSE`
+#'   so expressions as written will be retained in the YAML representation.
 #' 
 #' @return Nothing is returned. Instead, text is printed to the console.
 #'   

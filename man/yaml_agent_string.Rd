@@ -17,10 +17,9 @@ provided in \code{agent}.}
 \item{path}{An optional path to the YAML file (combined with \code{filename}).}
 
 \item{expanded}{Should the written validation expressions for an \emph{agent} be
-expanded such that \strong{tidyselect} and \code{\link[=vars]{vars()}} expressions for columns are
-evaluated, yielding a validation function per column? By default, this is
-\code{FALSE} so expressions as written will be retained in the YAML
-representation.}
+expanded such that \strong{tidyselect} expressions for columns are evaluated,
+yielding a validation function per column? By default, this is \code{FALSE}
+so expressions as written will be retained in the YAML representation.}
 }
 \value{
 Nothing is returned. Instead, text is printed to the console.

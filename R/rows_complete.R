@@ -273,10 +273,9 @@ rows_complete <- function(
   
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
-  # `rows_*()` functions default to `everything()`
-  if (rlang::quo_is_missing(columns) || rlang::quo_is_null(columns)) {
-    # `everything()` isn't namespaced to `{tidyselect}` for leaner yaml writing
-    columns <- rlang::new_quosure(call("everything"), rlang::caller_env())
+  # `rows_*()` functions treat `NULL` as `everything()`
+  if (rlang::quo_is_null(columns)) {
+    columns <- rlang::quo(tidyselect::everything())
   }
   # Get `columns` as a label
   columns_expr <- as_columns_expr(columns)

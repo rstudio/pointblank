@@ -53,10 +53,11 @@
 #'   
 #' @param columns *The target columns*
 #' 
-#'   `<column-targeting expression>` // **required**
+#'   `<tidy-select>` // **required**
 #' 
-#'   The column (or a set of columns, provided as a character vector) to which
-#'   this validation should be applied.
+#'   A column-selecting expression, as one would use inside `dplyr::select()`.
+#'   Specifies the column (or a set of columns) to which this validation should
+#'   be applied. See the *Column Names* section for more information.
 #'   
 #' @param value *Value for comparison*
 #' 

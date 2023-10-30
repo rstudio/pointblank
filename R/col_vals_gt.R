@@ -200,8 +200,8 @@
 #' are also supported, such as `contains("date")` and `where(is.double)`. If
 #' passing an *external vector* of columns, it should be wrapped in `all_of()`.
 #' 
-#' If providing multiple column names to `columns`, the result will be an
-#' expansion of validation steps to that number of column names (e.g.,
+#' When multiple columns are selected by `columns`, the result will be an
+#' expansion of validation steps to that number of columns (e.g.,
 #' `c(col_a, col_b)` will result in the entry of two validation steps).
 #' 
 #' Previously, columns could be specified in `vars()`. This continues to work, 

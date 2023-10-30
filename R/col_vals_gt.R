@@ -137,14 +137,8 @@
 #'   `vector<character>` // *default:* `NULL` (`optional`)
 #' 
 #'   Optional label for the validation step. This label appears in the *agent*
-#'   report and, for the best appearance, it should be kept quite short.
-#'   
-#'   Label may be a single string or a vector of labels that match the number
-#'   of expanded steps (typically, the number of column-segment combinations).
-#'   
-#'   For validations that get expanded into multiple steps internally, `label`
-#'   exposes information about the current step via `{glue}` syntax (e.g. 
-#'   "{.col}" for column name). See the *Label* section for more information.
+#'   report and, for the best appearance, it should be kept quite short. See
+#'   the *Labels* section for more information.
 #'   
 #' @param brief *Brief description for the validation step*
 #' 
@@ -285,6 +279,20 @@
 #' choices depending on the situation (the first produces a warning when a
 #' quarter of the total test units fails, the other `stop()`s at the same
 #' threshold level).
+#' 
+#' @section Labels:
+#' 
+#' `label` may be a single string or a character vector that matches the number
+#' of expanded steps. `label` also supports `{glue}` syntax and exposes the
+#' following dynamic variables contextualized to the current step:
+#'   
+#' - `"{.step}"`: The validation step name
+#' - `"{.col}"`: The current column name
+#' - `"{.seg_col}"`: The current segment's column name
+#' - `"{.seg_val}"`: The current segment's value/group
+#'     
+#' The glue context also supports ordinary expressions for further flexibility
+#' (ex: `"{toupper(.step)}"`) as long as they return a length-1 string.
 #' 
 #' @section Briefs:
 #' 

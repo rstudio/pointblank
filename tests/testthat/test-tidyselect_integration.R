@@ -267,4 +267,10 @@ test_that("explicit c()-expr make the yaml roundtrip", {
     agent_post %>% interrogate() %>% get_agent_report(display_table = FALSE)
   )
   
+  # Defaults writing to c()-expr
+  testthat::expect_message(
+    create_agent(~ small_table) %>% col_exists(a) %>% yaml_agent_string(),
+    "columns: c\\(a\\)"
+  )
+  
 })

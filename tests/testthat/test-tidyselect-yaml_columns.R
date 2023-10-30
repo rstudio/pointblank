@@ -30,3 +30,29 @@ test_that("explicit c()-expr make the yaml roundtrip", {
   )
   
 })
+
+test_that("everything() default in `rows_*()` makes yaml roundtrip", {
+  
+  agent_distinct <- create_agent(~ small_table) %>% 
+    rows_distinct()
+  agent_complete <- create_agent(~ small_table) %>% 
+    rows_complete()
+  
+  expect_message(yaml_agent_string(agent_distinct), "columns: everything\\(\\)")
+  expect_message(yaml_agent_string(agent_complete), "columns: everything\\(\\)")
+  
+  agent_yaml <- tempfile()
+  # everything() makes yaml round trip for `rows_distinct()`
+  yaml_write(agent_distinct, expanded = FALSE, filename = agent_yaml)
+  expect_identical(
+    as_agent_yaml_list(agent_distinct, expanded = FALSE),
+    as_agent_yaml_list(yaml_read_agent(agent_yaml), expanded = FALSE)
+  )
+  # everything() makes yaml round trip for `rows_complete()`
+  yaml_write(agent_complete, expanded = FALSE, filename = agent_yaml)
+  expect_identical(
+    as_agent_yaml_list(agent_complete, expanded = FALSE),
+    as_agent_yaml_list(yaml_read_agent(agent_yaml), expanded = FALSE)
+  )
+
+})

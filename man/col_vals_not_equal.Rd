@@ -308,6 +308,23 @@ quarter of the total test units fails, the other \code{stop()}s at the same
 threshold level).
 }
 
+\section{Labels}{
+
+
+\code{label} may be a single string or a character vector that matches the number
+of expanded steps. \code{label} also supports \code{{glue}} syntax and exposes the
+following dynamic variables contextualized to the current step:
+\itemize{
+\item \code{"{.step}"}: The validation step name
+\item \code{"{.col}"}: The current column name
+\item \code{"{.seg_col}"}: The current segment's column name
+\item \code{"{.seg_val}"}: The current segment's value/group
+}
+
+The glue context also supports ordinary expressions for further flexibility
+(e.g., \code{"{toupper(.step)}"}) as long as they return a length-1 string.
+}
+
 \section{Briefs}{
 
 

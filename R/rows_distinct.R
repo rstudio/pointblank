@@ -377,7 +377,7 @@ rows_distinct <- function(
 #' @export
 expect_rows_distinct <- function(
     object,
-    columns = NULL,
+    columns = tidyselect::everything(),
     preconditions = NULL,
     threshold = 1
 ) {
@@ -432,7 +432,7 @@ expect_rows_distinct <- function(
 #' @export
 test_rows_distinct <- function(
     object,
-    columns = NULL,
+    columns = tidyselect::everything(),
     preconditions = NULL,
     threshold = 1
 ) {

@@ -376,7 +376,7 @@ rows_complete <- function(
 #' @export
 expect_rows_complete <- function(
     object,
-    columns = NULL,
+    columns = tidyselect::everything(),
     preconditions = NULL,
     threshold = 1
 ) {
@@ -431,7 +431,7 @@ expect_rows_complete <- function(
 #' @export
 test_rows_complete <- function(
     object,
-    columns = NULL,
+    columns = tidyselect::everything(),
     preconditions = NULL,
     threshold = 1
 ) {

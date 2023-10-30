@@ -131,12 +131,19 @@
 #'   means that 15 percent of failing test units results in an overall test
 #'   failure.
 #'   
-#' @param label *An optional label for the validation step*
+#' @param label *Optional label for the validation step*
 #' 
-#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'   `vector<character>` // *default:* `NULL` (`optional`)
 #' 
-#'   An optional label for the validation step. This label appears in the
-#'   *agent* report and, for the best appearance, it should be kept quite short.
+#'   Optional label for the validation step. This label appears in the *agent*
+#'   report and, for the best appearance, it should be kept quite short.
+#'   
+#'   Label may be a single string or a vector of labels that match the number
+#'   of expanded steps (typically, the number of column-segment combinations).
+#'   
+#'   For validations that get expanded into multiple steps internally, `label`
+#'   exposes information about the current step via `{glue}` syntax (e.g. 
+#'   "{.col}" for column name).
 #'   
 #' @param brief *Brief description for the validation step*
 #' 

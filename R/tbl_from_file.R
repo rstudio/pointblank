@@ -463,7 +463,7 @@ file_tbl <- function(
 #' #       col_types = "TDdcddlc"
 #' #     )
 #' #   ) %>%
-#' #   col_vals_gt(vars(a), 0) %>%
+#' #   col_vals_gt(a, 0) %>%
 #' #   interrogate()
 #' 
 #' # The `from_github()` helper function is

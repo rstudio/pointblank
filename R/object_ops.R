@@ -241,7 +241,7 @@
 #'   ) %>%
 #'   col_vals_gt(
 #'     columns = b,
-#'     value = vars(g),
+#'     value = g,
 #'     na_pass = TRUE,
 #'     label = "b > g"
 #'   ) %>%

@@ -77,7 +77,7 @@
 #'       dplyr::select(a:f),
 #'     label = "`get_data_extracts()`"
 #'   ) %>%
-#'   col_vals_gt(vars(d), value = 1000) %>%
+#'   col_vals_gt(d, value = 1000) %>%
 #'   col_vals_between(
 #'     columns = c,
 #'     left = vars(a), right = vars(d),

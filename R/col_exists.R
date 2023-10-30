@@ -229,13 +229,10 @@ col_exists <- function(
   preconditions <- NULL
   values <- NULL
   
-  # Get `columns` as a label
-  columns_expr <- 
-    rlang::as_label(rlang::quo(!!enquo(columns))) %>%
-    gsub("^\"|\"$", "", .)
-  
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
+  # Get `columns` as a label
+  columns_expr <- as_columns_expr(columns)
   # Require columns to be specified
   if (rlang::quo_is_missing(columns)) {
     stop('argument "columns" is missing, with no default')

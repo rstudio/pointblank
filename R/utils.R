@@ -218,6 +218,10 @@ materialize_table <- function(tbl, check = TRUE) {
   tbl
 }
 
+as_columns_expr <- function(columns) {
+  gsub("^\"|\"$", "", rlang::as_label(columns))
+}
+
 is_secret_agent <- function(x) {
   is_ptblank_agent(x) && (x$label == "::QUIET::")
 }

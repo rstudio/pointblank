@@ -272,13 +272,12 @@ rows_distinct <- function(
     active = TRUE
 ) {
   
-  # Get `columns` as a label
-  columns_expr <- 
-    rlang::as_label(rlang::quo(!!enquo(columns))) %>%
-    gsub("^\"|\"$", "", .)
-  
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
+  # Get `columns` as a label
+  columns_expr <- as_columns_expr(columns)
+  
+  # Default to `everything()`
   if (rlang::quo_is_null(columns)) {
     columns <- rlang::quo(tidyselect::everything())
   }

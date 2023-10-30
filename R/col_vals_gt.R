@@ -143,7 +143,7 @@
 #'   
 #'   For validations that get expanded into multiple steps internally, `label`
 #'   exposes information about the current step via `{glue}` syntax (e.g. 
-#'   "{.col}" for column name).
+#'   "{.col}" for column name). See the *Label* section for more information.
 #'   
 #' @param brief *Brief description for the validation step*
 #' 

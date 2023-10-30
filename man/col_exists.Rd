@@ -31,11 +31,11 @@ commonly created with \code{\link[=create_agent]{create_agent()}}.}
 
 \item{columns}{\emph{The target columns}
 
-`vector\if{html}{\out{<character>}}|vars(\if{html}{\out{<columns>}})`` // \strong{required}
+\verb{<tidy-select>} // \strong{required}
 
-One or more columns from the table in focus. This can be
-provided as a vector of column names using \code{c()} or bare column names
-enclosed in \code{\link[=vars]{vars()}}.}
+A column-selecting expression, as one would use inside \code{dplyr::select()}.
+Specifies the column (or a set of columns) to which this validation should
+be applied. See the \emph{Column Names} section for more information.}
 
 \item{actions}{\emph{Thresholds and actions for different states}
 

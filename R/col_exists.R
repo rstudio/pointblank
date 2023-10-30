@@ -34,14 +34,6 @@
 #' 
 #' @inheritParams col_vals_gt
 #' 
-#' @param columns *The target columns*
-#'   
-#'   `vector<character>|vars(<columns>)`` // **required**
-#' 
-#'   One or more columns from the table in focus. This can be
-#'   provided as a vector of column names using `c()` or bare column names
-#'   enclosed in [vars()].
-#'   
 #' @return For the validation function, the return value is either a
 #'   `ptblank_agent` object or a table object (depending on whether an agent
 #'   object or a table was passed to `x`). The expectation function invisibly

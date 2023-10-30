@@ -37,6 +37,14 @@
 #' the following **tidyselect** helper functions: `starts_with()`,
 #' `ends_with()`, `contains()`, `matches()`, and `everything()`.
 #' 
+#' @param columns *The target columns*
+#' 
+#'   `<tidy-select>` // *default:* `everything()`
+#' 
+#'   A column-selecting expression, as one would use inside `dplyr::select()`.
+#'   Specifies the column (or a set of columns) to which this validation should
+#'   be applied. See the *Column Names* section for more information.
+#' 
 #' @inheritParams col_vals_gt
 #'   
 #' @return For the validation function, the return value is either a

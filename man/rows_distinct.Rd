@@ -43,7 +43,7 @@ commonly created with \code{\link[=create_agent]{create_agent()}}.}
 
 \item{columns}{\emph{The target columns}
 
-\verb{<tidy-select>} // \strong{required}
+\verb{<tidy-select>} // \emph{default:} \code{everything()}
 
 A column-selecting expression, as one would use inside \code{dplyr::select()}.
 Specifies the column (or a set of columns) to which this validation should

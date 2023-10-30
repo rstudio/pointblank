@@ -1327,16 +1327,16 @@ as_agent_yaml_list <- function(agent, expanded) {
       
     } else if (validation_fn %in% c("rows_distinct", "rows_complete")) {
 
-      if (is.na(step_list$column[[1]][[1]])) {
-        vars_cols <- NULL
-      } else {
-        vars_cols <- as_c_fn(step_list$column[[1]])
-      }
+      column_text <- 
+        get_column_text(
+          step_list = step_list,
+          expanded = expanded
+        )
       
       lst_step <- 
         list(
           validation_fn = list(
-            columns = vars_cols,
+            columns = column_text,
             preconditions = as_list_preconditions(step_list$preconditions),
             segments = as_list_segments(step_list$seg_expr),
             actions = as_action_levels(
@@ -1560,6 +1560,9 @@ get_column_text <- function(step_list, expanded) {
     } else {
       column_text <- step_list$columns_expr
     }
+    
+    # Strip tidyselect namespacing for leaner yaml writing
+    column_text <- gsub("\\btidyselect::", "", column_text)
     
   } else {
     

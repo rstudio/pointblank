@@ -205,12 +205,17 @@ formally tested (so be mindful of this when using unsupported backends with
 \section{Column Names}{
 
 
-If providing multiple column names, the result will be an expansion of
-validation steps to that number of column names (e.g., \code{vars(col_a, col_b)}
-will result in the entry of two validation steps). Aside from column names in
-quotes and in \code{vars()}, \strong{tidyselect} helper functions are available for
-specifying columns. They are: \code{starts_with()}, \code{ends_with()}, \code{contains()},
-\code{matches()}, and \code{everything()}.
+\code{columns} may be a single column (as symbol \code{a} or string \code{"a"}) or a vector
+of columns (\code{c(a, b, c)} or \code{c("a", "b", "c")}). \code{{tidyselect}} helpers
+are also supported, such as \code{contains("date")} and \code{where(is.double)}. If
+passing an \emph{external vector} of columns, it should be wrapped in \code{all_of()}.
+
+When multiple columns are selected by \code{columns}, the result will be an
+expansion of validation steps to that number of columns (e.g.,
+\code{c(col_a, col_b)} will result in the entry of two validation steps).
+
+Previously, columns could be specified in \code{vars()}. This continues to work,
+but \code{c()} offers the same capability and supersedes \code{vars()} in \code{columns}.
 }
 
 \section{Preconditions}{

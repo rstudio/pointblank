@@ -2,6 +2,10 @@
 
 ## New features
 
+* Full `{tidyselect}` support for the `columns` argument of all validation functions. You can now use the full range of familiar column-selection expressions that you could also use in `dplyr::select()`. This also begins a process of deprecation:
+  - `vars()` for selecting columns will continue to work, but `c()` now supersedes `vars()`.
+  - If passing an *external vector* of column names, it should be wrapped in `all_of()`.
+
 * The `label` argument of validation functions now exposes the following string variables via `{glue}` syntax:
 
   - `"{.step}"`: The validation step name

@@ -8,7 +8,7 @@
 \usage{
 rows_complete(
   x,
-  columns = NULL,
+  columns = tidyselect::everything(),
   preconditions = NULL,
   segments = NULL,
   actions = NULL,
@@ -20,12 +20,17 @@ rows_complete(
 
 expect_rows_complete(
   object,
-  columns = NULL,
+  columns = tidyselect::everything(),
   preconditions = NULL,
   threshold = 1
 )
 
-test_rows_complete(object, columns = NULL, preconditions = NULL, threshold = 1)
+test_rows_complete(
+  object,
+  columns = tidyselect::everything(),
+  preconditions = NULL,
+  threshold = 1
+)
 }
 \arguments{
 \item{x}{\emph{A pointblank agent or a data table}
@@ -38,10 +43,11 @@ commonly created with \code{\link[=create_agent]{create_agent()}}.}
 
 \item{columns}{\emph{The target columns}
 
-\verb{<column-targeting expression>} // \strong{required}
+\verb{<tidy-select>} // \strong{required}
 
-The column (or a set of columns, provided as a character vector) to which
-this validation should be applied.}
+A column-selecting expression, as one would use inside \code{dplyr::select()}.
+Specifies the column (or a set of columns) to which this validation should
+be applied. See the \emph{Column Names} section for more information.}
 
 \item{preconditions}{\emph{Input table modification prior to validation}
 
@@ -87,12 +93,13 @@ produce (influenced by the number of \code{columns} provided), (2) be an ID
 string not used in any previous validation step, and (3) be a vector with
 unique values.}
 
-\item{label}{\emph{An optional label for the validation step}
+\item{label}{\emph{Optional label for the validation step}
 
-\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+\verb{vector<character>} // \emph{default:} \code{NULL} (\code{optional})
 
-An optional label for the validation step. This label appears in the
-\emph{agent} report and, for the best appearance, it should be kept quite short.}
+Optional label for the validation step. This label appears in the \emph{agent}
+report and, for the best appearance, it should be kept quite short. See
+the \emph{Labels} section for more information.}
 
 \item{brief}{\emph{Brief description for the validation step}
 

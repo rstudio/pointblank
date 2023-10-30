@@ -292,7 +292,7 @@
 #' - `"{.seg_val}"`: The current segment's value/group
 #'     
 #' The glue context also supports ordinary expressions for further flexibility
-#' (ex: `"{toupper(.step)}"`) as long as they return a length-1 string.
+#' (e.g., `"{toupper(.step)}"`) as long as they return a length-1 string.
 #' 
 #' @section Briefs:
 #' 

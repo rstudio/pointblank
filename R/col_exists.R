@@ -69,12 +69,17 @@
 #'
 #' @section Column Names:
 #' 
-#' If providing multiple column names, the result will be an expansion of
-#' validation steps to that number of column names (e.g., `vars(col_a, col_b)`
-#' will result in the entry of two validation steps). Aside from column names in
-#' quotes and in `vars()`, **tidyselect** helper functions are available for
-#' specifying columns. They are: `starts_with()`, `ends_with()`, `contains()`,
-#' `matches()`, and `everything()`.
+#' `columns` may be a single column (as symbol `a` or string `"a"`) or a vector
+#' of columns (`c(a, b, c)` or `c("a", "b", "c")`). `{tidyselect}` helpers
+#' are also supported, such as `contains("date")` and `where(is.double)`. If
+#' passing an *external vector* of columns, it should be wrapped in `all_of()`.
+#' 
+#' When multiple columns are selected by `columns`, the result will be an
+#' expansion of validation steps to that number of columns (e.g.,
+#' `c(col_a, col_b)` will result in the entry of two validation steps).
+#' 
+#' Previously, columns could be specified in `vars()`. This continues to work, 
+#' but `c()` offers the same capability and supersedes `vars()` in `columns`.
 #'
 #' @section Actions:
 #' 

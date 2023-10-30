@@ -180,17 +180,17 @@ actions:
   notify_fraction: 0.35
 steps:
 - col_exists:
-    columns: vars(date, date_time)
+    columns: c(date, date_time)
 - col_vals_regex:
     columns: vars(b)
     regex: '[0-9]-[a-z]\{3\}-[0-9]\{3\}'
 - rows_distinct:
     columns: ~
 - col_vals_gt:
-    columns: vars(d)
+    columns: c(d)
     value: 100.0
 - col_vals_lte:
-    columns: vars(c)
+    columns: c(c)
     value: 5.0
 }\if{html}{\out{</div>}}
 

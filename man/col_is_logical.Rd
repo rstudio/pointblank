@@ -222,7 +222,7 @@ YAML representation:
 
 \if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
 - col_is_logical:
-    columns: vars(a)
+    columns: c(a)
     actions:
       warn_fraction: 0.1
       stop_fraction: 0.2

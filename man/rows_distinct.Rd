@@ -295,7 +295,7 @@ YAML representation:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{steps:
 - rows_distinct:
-    columns: vars(a, b)
+    columns: c(a, b)
     preconditions: ~. \%>\% dplyr::filter(a < 10)
     segments: b ~ c("group_1", "group_2")
     actions:

@@ -301,7 +301,7 @@ YAML representation:
 
 \if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
 - col_vals_null:
-    columns: vars(a)
+    columns: c(a)
     preconditions: ~. \%>\% dplyr::filter(a < 10)
     segments: b ~ c("group_1", "group_2")
     actions:

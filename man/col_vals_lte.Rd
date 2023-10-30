@@ -345,7 +345,7 @@ YAML representation:
 
 \if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
 - col_vals_lte:
-    columns: vars(a)
+    columns: c(a)
     value: 1.0
     na_pass: true
     preconditions: ~. \%>\% dplyr::filter(a < 10)

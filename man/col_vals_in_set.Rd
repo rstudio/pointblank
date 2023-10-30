@@ -316,7 +316,7 @@ YAML representation:
 
 \if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
 - col_vals_in_set:
-   columns: vars(a)
+   columns: c(a)
    set:
    - 1.0
    - 2.0

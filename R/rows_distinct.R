@@ -262,7 +262,7 @@ NULL
 #' @export
 rows_distinct <- function(
     x,
-    columns = NULL,
+    columns = tidyselect::everything(),
     preconditions = NULL,
     segments = NULL,
     actions = NULL,
@@ -274,13 +274,13 @@ rows_distinct <- function(
   
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
+  # `rows_*()` functions default to `everything()`
+  if (rlang::quo_is_missing(columns) || rlang::quo_is_null(columns)) {
+    # `everything()` isn't namespaced to `{tidyselect}` for leaner yaml writing
+    columns <- rlang::new_quosure(call("everything"), rlang::caller_env())
+  }
   # Get `columns` as a label
   columns_expr <- as_columns_expr(columns)
-  
-  # Default to `everything()`
-  if (rlang::quo_is_null(columns)) {
-    columns <- rlang::quo(tidyselect::everything())
-  }
   
   # Resolve the columns based on the expression
   columns <- resolve_columns(x = x, var_expr = columns, preconditions = NULL)

@@ -206,7 +206,7 @@
 #' ```yaml
 #' steps:
 #' - col_vals_decreasing:
-#'     columns: vars(a)
+#'     columns: c(a)
 #'     allow_stationary: true
 #'     increasing_tol: 0.5
 #'     na_pass: true

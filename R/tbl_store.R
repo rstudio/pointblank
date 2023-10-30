@@ -107,7 +107,7 @@
 #'   label = "An example that uses a table store.",
 #'   actions = action_levels(warn_at = 0.10)
 #' ) %>% 
-#'   col_exists(vars(date, date_time)) %>%
+#'   col_exists(c(date, date_time)) %>%
 #'   write_yaml()
 #' ```
 #'   
@@ -122,7 +122,7 @@
 #' locale: en
 #' steps:
 #'   - col_exists:
-#'     columns: vars(date, date_time)
+#'     columns: c(date, date_time)
 #' ```
 #' 
 #' Now, whenever the `sml_table_high` table needs to be validated, it can be

@@ -181,7 +181,7 @@
 #' ```yaml
 #' steps:
 #' - col_vals_make_subset:
-#'    columns: vars(a)
+#'    columns: c(a)
 #'    set:
 #'    - 1.0
 #'    - 2.0

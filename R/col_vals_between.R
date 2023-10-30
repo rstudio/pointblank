@@ -217,7 +217,7 @@
 #' ```yaml
 #' steps:
 #' - col_vals_between:
-#'     columns: vars(a)
+#'     columns: c(a)
 #'     left: 1.0
 #'     right: 2.0
 #'     inclusive:

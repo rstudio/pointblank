@@ -150,7 +150,7 @@
 #' ```r
 #' agent %>% 
 #'   rows_complete(
-#'     columns = a, b,
+#'     columns = c(a, b),
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
@@ -164,7 +164,7 @@
 #' ```yaml
 #' steps:
 #' - rows_complete:
-#'     columns: vars(a, b)
+#'     columns: c(a, b)
 #'     preconditions: ~. %>% dplyr::filter(a < 10)
 #'     segments: b ~ c("group_1", "group_2")
 #'     actions:

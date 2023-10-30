@@ -239,7 +239,7 @@
 #' ```yaml
 #' steps:
 #' - col_vals_within_spec:
-#'     columns: vars(a)
+#'     columns: c(a)
 #'     spec: email
 #'     na_pass: true
 #'     preconditions: ~. %>% dplyr::filter(b < 10)

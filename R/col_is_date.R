@@ -120,7 +120,7 @@
 #' ```yaml
 #' steps:
 #' - col_is_date:
-#'     columns: vars(a)
+#'     columns: c(a)
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2

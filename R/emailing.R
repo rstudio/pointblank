@@ -93,8 +93,8 @@
 #'     )
 #'   )
 #' ) %>%
-#'   col_vals_gt(vars(a), 1) %>%
-#'   col_vals_lt(vars(a), 7) 
+#'   col_vals_gt(a, 1) %>%
+#'   col_vals_lt(a, 7) 
 #' ```
 #' 
 #' YAML representation:
@@ -116,10 +116,10 @@
 #' embed_report: true
 #' steps:
 #' - col_vals_gt:
-#'     columns: vars(a)
+#'     columns: c(a)
 #'     value: 1.0
 #' - col_vals_lt:
-#'     columns: vars(a)
+#'     columns: c(a)
 #'     value: 7.0
 #' ```
 #'   

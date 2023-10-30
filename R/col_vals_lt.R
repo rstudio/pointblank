@@ -192,7 +192,7 @@
 #' ```yaml
 #' steps:
 #' - col_vals_lt:
-#'     columns: vars(a)
+#'     columns: c(a)
 #'     value: 1.0
 #'     na_pass: true
 #'     preconditions: ~. %>% dplyr::filter(a < 10)

@@ -189,7 +189,7 @@
 #' ```yaml
 #' steps:
 #' - col_vals_regex:
-#'     columns: vars(a)
+#'     columns: c(a)
 #'     regex: '[0-9]-[a-z]{3}-[0-9]{3}'
 #'     na_pass: true
 #'     preconditions: ~. %>% dplyr::filter(a < 10)

@@ -800,19 +800,19 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   
   expect_equal(
     get_oneline_expr_str(agent %>% rows_distinct()),
-    "rows_distinct(columns = c(date_time, date, a, b, c, d, e, f))"
+    "rows_distinct(columns = everything())"
   )
   expect_equal(
     get_oneline_expr_str(agent %>% rows_distinct(columns = vars(a, b))),
-    "rows_distinct(columns = c(a, b))"
+    "rows_distinct(columns = vars(a, b))"
   )
   expect_equal(
     get_oneline_expr_str(agent %>% rows_distinct(columns = vars(a, b), preconditions = ~ . %>% dplyr::filter(a > 0))),
-    "rows_distinct(columns = c(a, b),preconditions = ~. %>% dplyr::filter(a > 0))"
+    "rows_distinct(columns = vars(a, b),preconditions = ~. %>% dplyr::filter(a > 0))"
   )
   expect_equal(
     get_oneline_expr_str(agent %>% rows_distinct(columns = vars(a, b), label = "my_label")),
-    "rows_distinct(columns = c(a, b),label = \"my_label\")"
+    "rows_distinct(columns = vars(a, b),label = \"my_label\")"
   )
   
   #

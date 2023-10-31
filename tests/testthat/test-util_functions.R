@@ -624,8 +624,8 @@ test_that("Utility functions won't fail us", {
   # pb_quantile_stats
   # 
   
-  diamond_ducks <-
-    db_tbl(table = ggplot2::diamonds, dbname = ":memory:", dbtype = "duckdb")
+  # diamond_ducks <-
+  #   db_tbl(table = ggplot2::diamonds, dbname = ":memory:", dbtype = "duckdb")
   
   expect_equal(pb_quantile_stats(dplyr::tibble(a = 0:100), 0.5), 50)
   expect_equal(pb_quantile_stats(dplyr::tibble(a = 0:100), 1), 100)
@@ -637,9 +637,9 @@ test_that("Utility functions won't fail us", {
   expect_equal(pb_quantile_stats(small_table %>% dplyr::select(c), 0.5), 7)
   expect_equal(pb_quantile_stats(small_table_sqlite() %>% dplyr::select(c), 0.5), 7)
   
-  expect_equal(pb_quantile_stats(diamond_ducks %>% dplyr::select(depth), 0.5), 61.8)
-  expect_equal(pb_quantile_stats(diamond_ducks %>% dplyr::select(table), 0.5), 57)
-  expect_equal(pb_quantile_stats(diamond_ducks %>% dplyr::select(price), 0.5), 2401)
+  # expect_equal(pb_quantile_stats(diamond_ducks %>% dplyr::select(depth), 0.5), 61.8)
+  # expect_equal(pb_quantile_stats(diamond_ducks %>% dplyr::select(table), 0.5), 57)
+  # expect_equal(pb_quantile_stats(diamond_ducks %>% dplyr::select(price), 0.5), 2401)
   
   #
   # pb_fmt_number

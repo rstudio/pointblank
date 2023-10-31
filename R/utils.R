@@ -164,11 +164,11 @@ get_assertion_type_at_idx <- function(agent, idx) {
 }
 
 get_column_as_sym_at_idx <- function(agent, idx) {
-  rlang::sym(
-    agent$validation_set[[idx, "column"]] %>%
-      unlist() %>%
-      gsub("'", "", .)
-  )
+  column <- unlist(agent$validation_set[[idx, "column"]])
+  if (!is.na(column)) {
+    column <- rlang::sym(gsub("'", "", column))
+  }
+  column
 }
 
 get_values_at_idx <- function(agent, idx) {

@@ -226,14 +226,27 @@ is_secret_agent <- function(x) {
   is_ptblank_agent(x) && (x$label == "::QUIET::")
 }
 
+resolve_preconditions_for_column_select <- function(x, preconditions) {
+  # Extract tbl
+  tbl <- if (is_ptblank_agent(x)) {
+    get_tbl_object(x)
+  } else if (is_a_table_object(x)) {
+    x
+  }
+  # Apply preconditions
+  if (!is.null(preconditions)) {
+    tbl <- apply_preconditions(tbl = tbl, preconditions = preconditions)
+  }
+  tbl
+}
+
 resolve_columns <- function(x, var_expr, preconditions, ...,
                             call = rlang::caller_env()) {
   
-  force(x) # To avoid `restarting interrupted promise evaluation` warnings
+  tbl <- resolve_preconditions_for_column_select(x, preconditions)
   
   out <- tryCatch(
-    expr = resolve_columns_internal(x, var_expr, preconditions, ...,
-                                    call = call),
+    expr = resolve_columns_internal(tbl, var_expr, ..., call = call),
     error = function(cnd) cnd
   )
   
@@ -251,22 +264,11 @@ resolve_columns <- function(x, var_expr, preconditions, ...,
   
 }
 
-resolve_columns_internal <- function(x, var_expr, preconditions, ..., call) {
+resolve_columns_internal <- function(tbl, var_expr, ..., call) {
   
   # Return NA if the expr is NULL
   if (rlang::quo_is_null(var_expr)) {
     return(NA_character_)
-  }
-  
-  # Extract tbl
-  tbl <- if (is_ptblank_agent(x)) {
-    get_tbl_object(x)
-  } else if (is_a_table_object(x)) {
-    x
-  }
-  # Apply preconditions
-  if (!is.null(preconditions)) {
-    tbl <- apply_preconditions(tbl = tbl, preconditions = preconditions)
   }
   
   # Special case `serially()`: just deparse elements and bypass tidyselect

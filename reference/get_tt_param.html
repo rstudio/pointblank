@@ -183,7 +183,7 @@ the first quarter of the year, we can supply a value from <code>stats_tbl</code>
 <span>    keep <span class="op">=</span> <span class="st">"right"</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_lte.html">test_col_vals_lte</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">session_duration</span><span class="op">)</span>, </span>
+<span>    columns <span class="op">=</span> <span class="va">session_duration</span>, </span>
 <span>    value <span class="op">=</span> <span class="fu"><a href="../reference/get_tt_param.html">get_tt_param</a></span><span class="op">(</span></span>
 <span>      tbl <span class="op">=</span> <span class="va">stats_tbl</span>,</span>
 <span>      param <span class="op">=</span> <span class="st">"max"</span>,</span>

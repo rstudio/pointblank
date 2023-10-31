@@ -133,11 +133,11 @@ dataset that is included in the <strong>pointblank</strong> package.</p>
 numbers of characters (<code>15</code> and <code>24</code>, respectively) throughout the table.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/tt_string_info.html">tt_string_info</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">game_revenue</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_equal.html">col_vals_equal</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">player_id</span><span class="op">)</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">player_id</span>,</span>
 <span>    value <span class="op">=</span> <span class="fl">15</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_equal.html">col_vals_equal</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">session_id</span><span class="op">)</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">session_id</span>,</span>
 <span>    value <span class="op">=</span> <span class="fl">24</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 3 x 7</span></span>
@@ -152,7 +152,7 @@ numbers of characters (<code>15</code> and <code>24</code>, respectively) throug
 of the <code>small_table</code> dataset is no greater than <code>4</code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/tt_string_info.html">tt_string_info</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">small_table</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_lte.html">test_col_vals_lte</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">f</span>,</span>
 <span>    value <span class="op">=</span> <span class="fl">4</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="co">#&gt; [1] TRUE</span></span></code></pre><p></p></div>

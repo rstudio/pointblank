@@ -158,7 +158,7 @@ ensure that the maximum revenue for individual purchases in the
 <code>game_revenue</code> table is less than $150.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/tt_summary_stats.html">tt_summary_stats</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">game_revenue</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">item_revenue</span><span class="op">)</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">item_revenue</span>,</span>
 <span>    value <span class="op">=</span> <span class="fl">150</span>,</span>
 <span>    segments <span class="op">=</span> <span class="va">.param.</span> <span class="op">~</span> <span class="st">"max"</span></span>
 <span>  <span class="op">)</span></span>
@@ -181,7 +181,7 @@ that the median revenue is somewhere between $8 and $12.</p>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">item_type</span> <span class="op">==</span> <span class="st">"iap"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/tt_summary_stats.html">tt_summary_stats</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">item_revenue</span><span class="op">)</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">item_revenue</span>,</span>
 <span>    left <span class="op">=</span> <span class="fl">8</span>, right <span class="op">=</span> <span class="fl">12</span>,</span>
 <span>    segments <span class="op">=</span> <span class="va">.param.</span> <span class="op">~</span> <span class="st">"med"</span></span>
 <span>  <span class="op">)</span></span>
@@ -218,7 +218,7 @@ step that isolates the row of the median statistic.</p>
 <span>  <span class="fu"><a href="../reference/rows_complete.html">rows_complete</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/rows_distinct.html">rows_distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">item_revenue</span><span class="op">)</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">item_revenue</span>,</span>
 <span>    left <span class="op">=</span> <span class="fl">8</span>, right <span class="op">=</span> <span class="fl">12</span>,</span>
 <span>    preconditions <span class="op">=</span> <span class="op">~</span> <span class="va">.</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">item_type</span> <span class="op">==</span> <span class="st">"iap"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>

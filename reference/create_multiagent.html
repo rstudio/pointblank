@@ -186,7 +186,7 @@ table.</p>
 <span>    tbl_name <span class="op">=</span> <span class="st">"tbl_1"</span>,</span>
 <span>    label <span class="op">=</span> <span class="st">"Example table 1."</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">a</span>, value <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>Then, <code>agent_2</code>:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">agent_2</span> <span class="op">&lt;-</span></span>
@@ -195,7 +195,7 @@ table.</p>
 <span>    tbl_name <span class="op">=</span> <span class="st">"tbl_2"</span>,</span>
 <span>    label <span class="op">=</span> <span class="st">"Example table 2."</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/col_is_character.html">col_is_character</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_is_character.html">col_is_character</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">b</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>Now, we'll combine the two agents into a <em>multiagent</em> with the
 <code>create_multiagent()</code> function. Printing the <code>"ptblank_multiagent"</code> object

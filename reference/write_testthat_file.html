@@ -230,7 +230,7 @@ won't run on a CRAN system or if the system OS is Windows.</p>
 <span>  </span>
 <span>  <span class="fu"><a href="../reference/col_exists.html">expect_col_exists</a></span><span class="op">(</span></span>
 <span>    <span class="va">tbl</span>,</span>
-<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">date_time</span><span class="op">)</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">date_time</span>,</span>
 <span>    threshold <span class="op">=</span> <span class="fl">1</span></span>
 <span>  <span class="op">)</span> </span>
 <span><span class="op">}</span><span class="op">)</span></span>
@@ -239,7 +239,7 @@ won't run on a CRAN system or if the system OS is Windows.</p>
 <span>  </span>
 <span>  <span class="fu"><a href="../reference/col_vals_lte.html">expect_col_vals_lte</a></span><span class="op">(</span></span>
 <span>    <span class="va">tbl</span>,</span>
-<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">c</span>,</span>
 <span>    value <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>    threshold <span class="op">=</span> <span class="fl">0.25</span></span>
 <span>  <span class="op">)</span> </span>
@@ -253,8 +253,8 @@ won't run on a CRAN system or if the system OS is Windows.</p>
 <span>    tbl <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,</span>
 <span>    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span>stop_at <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/col_exists.html">col_exists</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">date_time</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/col_vals_lte.html">col_vals_lte</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="../reference/col_exists.html">col_exists</a></span><span class="op">(</span><span class="va">date_time</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_lte.html">col_vals_lte</a></span><span class="op">(</span><span class="va">c</span>, value <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
 <span>  </span>
 <span><span class="fu"><a href="../reference/write_testthat_file.html">write_testthat_file</a></span><span class="op">(</span></span>
 <span>  agent <span class="op">=</span> <span class="va">agent</span>,</span>
@@ -308,13 +308,13 @@ bit more useful after interrogation.</p>
 <span>    label <span class="op">=</span> <span class="st">"An example."</span>,</span>
 <span>    actions <span class="op">=</span> <span class="va">al</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/col_exists.html">col_exists</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">date_time</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_exists.html">col_exists</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">date_time</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>,</span>
+<span>    <span class="va">b</span>,</span>
 <span>    regex <span class="op">=</span> <span class="st">"[0-9]-[a-z]{3}-[0-9]{3}"</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/col_vals_lte.html">col_vals_lte</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="va">d</span>, value <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_lte.html">col_vals_lte</a></span><span class="op">(</span><span class="va">c</span>, value <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>This agent and all of the checks can be transformed into a testthat file with
 <code>write_testthat_file()</code>. The <code>stop</code> thresholds will be ported over to the
@@ -338,7 +338,7 @@ useful during package development).</p>
 <span>  </span>
 <span>  <span class="fu"><a href="../reference/col_exists.html">expect_col_exists</a></span><span class="op">(</span></span>
 <span>    <span class="va">tbl</span>,</span>
-<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">date</span>,</span>
 <span>    threshold <span class="op">=</span> <span class="fl">1</span></span>
 <span>  <span class="op">)</span> </span>
 <span><span class="op">}</span><span class="op">)</span></span>
@@ -347,7 +347,7 @@ useful during package development).</p>
 <span>  </span>
 <span>  <span class="fu"><a href="../reference/col_exists.html">expect_col_exists</a></span><span class="op">(</span></span>
 <span>    <span class="va">tbl</span>,</span>
-<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">date_time</span><span class="op">)</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">date_time</span>,</span>
 <span>    threshold <span class="op">=</span> <span class="fl">1</span></span>
 <span>  <span class="op">)</span> </span>
 <span><span class="op">}</span><span class="op">)</span></span>
@@ -357,7 +357,7 @@ useful during package development).</p>
 <span>  </span>
 <span>  <span class="fu"><a href="../reference/col_vals_regex.html">expect_col_vals_regex</a></span><span class="op">(</span></span>
 <span>    <span class="va">tbl</span>,</span>
-<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">b</span>,</span>
 <span>    regex <span class="op">=</span> <span class="st">"[0-9]-[a-z]{3}-[0-9]{3}"</span>,</span>
 <span>    threshold <span class="op">=</span> <span class="fl">0.25</span></span>
 <span>  <span class="op">)</span> </span>
@@ -367,7 +367,7 @@ useful during package development).</p>
 <span>  </span>
 <span>  <span class="fu"><a href="../reference/col_vals_gt.html">expect_col_vals_gt</a></span><span class="op">(</span></span>
 <span>    <span class="va">tbl</span>,</span>
-<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">d</span>,</span>
 <span>    value <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>    threshold <span class="op">=</span> <span class="fl">0.25</span></span>
 <span>  <span class="op">)</span> </span>
@@ -377,7 +377,7 @@ useful during package development).</p>
 <span>  </span>
 <span>  <span class="fu"><a href="../reference/col_vals_lte.html">expect_col_vals_lte</a></span><span class="op">(</span></span>
 <span>    <span class="va">tbl</span>,</span>
-<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">c</span>,</span>
 <span>    value <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>    threshold <span class="op">=</span> <span class="fl">0.25</span></span>
 <span>  <span class="op">)</span> </span>

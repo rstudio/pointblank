@@ -166,9 +166,10 @@ commonly created with <code><a href="create_agent.html">create_agent()</a></code
 
 <dt>columns</dt>
 <dd><p><em>The target columns</em></p>
-<p><code>&lt;column-targeting expression&gt;</code> // <strong>required</strong></p>
-<p>The column (or a set of columns, provided as a character vector) to which
-this validation should be applied.</p></dd>
+<p><code>&lt;tidy-select&gt;</code> // <strong>required</strong></p>
+<p>A column-selecting expression, as one would use inside <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a></code>.
+Specifies the column (or a set of columns) to which this validation should
+be applied. See the <em>Column Names</em> section for more information.</p></dd>
 
 
 <dt>left</dt>
@@ -248,10 +249,11 @@ unique values.</p></dd>
 
 
 <dt>label</dt>
-<dd><p><em>An optional label for the validation step</em></p>
-<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
-<p>An optional label for the validation step. This label appears in the
-<em>agent</em> report and, for the best appearance, it should be kept quite short.</p></dd>
+<dd><p><em>Optional label for the validation step</em></p>
+<p><code>vector&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>Optional label for the validation step. This label appears in the <em>agent</em>
+report and, for the best appearance, it should be kept quite short. See
+the <em>Labels</em> section for more information.</p></dd>
 
 
 <dt>brief</dt>
@@ -337,12 +339,15 @@ formally tested (so be mindful of this when using unsupported backends with
     
 
 
-<p>If providing multiple column names to <code>columns</code>, the result will be an
-expansion of validation steps to that number of column names (e.g.,
-<code>vars(col_a, col_b)</code> will result in the entry of two validation steps). Aside
-from column names in quotes and in <code><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars()</a></code>, <strong>tidyselect</strong> helper functions
-are available for specifying columns. They are: <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>,
-<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches()</a></code>, and <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>.</p>
+<p><code>columns</code> may be a single column (as symbol <code>a</code> or string <code>"a"</code>) or a vector
+of columns (<code>c(a, b, c)</code> or <code>c("a", "b", "c")</code>). <code>{tidyselect}</code> helpers
+are also supported, such as <code>contains("date")</code> and <code>where(is.double)</code>. If
+passing an <em>external vector</em> of columns, it should be wrapped in <code>all_of()</code>.</p>
+<p>When multiple columns are selected by <code>columns</code>, the result will be an
+expansion of validation steps to that number of columns (e.g.,
+<code>c(col_a, col_b)</code> will result in the entry of two validation steps).</p>
+<p>Previously, columns could be specified in <code><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars()</a></code>. This continues to work,
+but <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code> offers the same capability and supersedes <code><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars()</a></code> in <code>columns</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="missing-values">Missing Values<a class="anchor" aria-label="anchor" href="#missing-values"></a></h2>
@@ -423,6 +428,20 @@ quarter of the total test units fails, the other <code><a href="https://rdrr.io/
 threshold level).</p>
     </div>
     <div class="section level2">
+    <h2 id="labels">Labels<a class="anchor" aria-label="anchor" href="#labels"></a></h2>
+    
+
+
+<p><code>label</code> may be a single string or a character vector that matches the number
+of expanded steps. <code>label</code> also supports <code>{glue}</code> syntax and exposes the
+following dynamic variables contextualized to the current step:</p><ul><li><p><code>"{.step}"</code>: The validation step name</p></li>
+<li><p><code>"{.col}"</code>: The current column name</p></li>
+<li><p><code>"{.seg_col}"</code>: The current segment's column name</p></li>
+<li><p><code>"{.seg_val}"</code>: The current segment's value/group</p></li>
+</ul><p>The glue context also supports ordinary expressions for further flexibility
+(e.g., <code>"{toupper(.step)}"</code>) as long as they return a length-1 string.</p>
+    </div>
+    <div class="section level2">
     <h2 id="briefs">Briefs<a class="anchor" aria-label="anchor" href="#briefs"></a></h2>
     
 
@@ -449,7 +468,7 @@ the corresponding YAML representation.</p>
 <p>R statement:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/col_vals_not_between.html">col_vals_not_between</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">a</span>,</span>
 <span>    left <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>    right <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>    inclusive <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
@@ -463,7 +482,7 @@ the corresponding YAML representation.</p>
 <p>YAML representation:</p>
 <p></p><div class="sourceCode yaml"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">steps</span><span class="kw">:</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">col_vals_not_between</span><span class="kw">:</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">columns</span><span class="kw">:</span><span class="at"> vars(a)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">columns</span><span class="kw">:</span><span class="at"> c(a)</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">left</span><span class="kw">:</span><span class="at"> </span><span class="fl">1.0</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">right</span><span class="kw">:</span><span class="at"> </span><span class="fl">2.0</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">inclusive</span><span class="kw">:</span></span>
@@ -519,7 +538,7 @@ units (there are 13 test units, one for each row).</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">small_table</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_not_between.html">col_vals_not_between</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">c</span>,</span>
 <span>    left <span class="op">=</span> <span class="fl">10</span>, right <span class="op">=</span> <span class="fl">20</span>,</span>
 <span>    na_pass <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
@@ -539,7 +558,7 @@ through but should <code><a href="https://rdrr.io/r/base/stop.html" class="exter
 behavior of side effects can be customized with the <code>actions</code> option.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_not_between.html">col_vals_not_between</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">c</span>,</span>
 <span>    left <span class="op">=</span> <span class="fl">10</span>, right <span class="op">=</span> <span class="fl">20</span>,</span>
 <span>    na_pass <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
@@ -554,7 +573,7 @@ behavior of side effects can be customized with the <code>actions</code> option.
 <p>With the <code>expect_*()</code> form, we would typically perform one validation at a
 time. This is primarily used in <strong>testthat</strong> tests.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/col_vals_not_between.html">expect_col_vals_not_between</a></span><span class="op">(</span></span>
-<span>  <span class="va">small_table</span>, columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>,</span>
+<span>  <span class="va">small_table</span>, columns <span class="op">=</span> <span class="va">c</span>,</span>
 <span>  left <span class="op">=</span> <span class="fl">10</span>, right <span class="op">=</span> <span class="fl">20</span>,</span>
 <span>  na_pass <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre><p></p></div>
@@ -568,7 +587,7 @@ time. This is primarily used in <strong>testthat</strong> tests.</p>
 us.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_not_between.html">test_col_vals_not_between</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">c</span>,</span>
 <span>    left <span class="op">=</span> <span class="fl">10</span>, right <span class="op">=</span> <span class="fl">20</span>,</span>
 <span>    na_pass <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span>  <span class="op">)</span></span>
@@ -581,7 +600,7 @@ the <code>inclusive</code> option, which is a length-2 logical vector.</p>
 (or left) bound (and any values 'not between' count as passing test units).</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_not_between.html">test_col_vals_not_between</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">c</span>,</span>
 <span>    left <span class="op">=</span> <span class="fl">9</span>, right <span class="op">=</span> <span class="fl">20</span>,</span>
 <span>    inclusive <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>    na_pass <span class="op">=</span> <span class="cn">TRUE</span></span>

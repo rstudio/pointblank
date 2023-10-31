@@ -128,7 +128,7 @@ table. Here, we check that <code>game_revenue</code> table, included in the
 <code><a href="col_vals_make_subset.html">test_col_vals_make_subset()</a></code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/tt_tbl_colnames.html">tt_tbl_colnames</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">game_revenue</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_make_subset.html">test_col_vals_make_subset</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">value</span>,</span>
 <span>    set <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"acquisition"</span>, <span class="st">"country"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="co">#&gt; [1] TRUE</span></span></code></pre><p></p></div>
@@ -140,7 +140,7 @@ combination of <code>tt_tbl_colnames()</code>, then <code><a href="tt_string_inf
 <span>  <span class="fu"><a href="../reference/tt_tbl_colnames.html">tt_tbl_colnames</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/tt_string_info.html">tt_string_info</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_lt.html">test_col_vals_lt</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">value</span>,</span>
 <span>    value <span class="op">=</span> <span class="fl">15</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="co">#&gt; [1] FALSE</span></span></code></pre><p></p></div>

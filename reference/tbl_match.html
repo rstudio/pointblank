@@ -177,10 +177,11 @@ unique values.</p></dd>
 
 
 <dt>label</dt>
-<dd><p><em>An optional label for the validation step</em></p>
-<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
-<p>An optional label for the validation step. This label appears in the
-<em>agent</em> report and, for the best appearance, it should be kept quite short.</p></dd>
+<dd><p><em>Optional label for the validation step</em></p>
+<p><code>vector&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>Optional label for the validation step. This label appears in the <em>agent</em>
+report and, for the best appearance, it should be kept quite short. See
+the <em>Labels</em> section for more information.</p></dd>
 
 
 <dt>brief</dt>
@@ -320,6 +321,19 @@ failed, or, an absolute value), often using the <code>warn_at</code> argument. U
 <code>action_levels(warn_at = 1)</code> or <code>action_levels(stop_at = 1)</code> are good choices
 depending on the situation (the first produces a warning, the other
 <code><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop()</a></code>s).</p>
+    </div>
+    <div class="section level2">
+    <h2 id="labels">Labels<a class="anchor" aria-label="anchor" href="#labels"></a></h2>
+    
+
+
+<p><code>label</code> may be a single string or a character vector that matches the number
+of expanded steps. <code>label</code> also supports <code>{glue}</code> syntax and exposes the
+following dynamic variables contextualized to the current step:</p><ul><li><p><code>"{.step}"</code>: The validation step name</p></li>
+<li><p><code>"{.seg_col}"</code>: The current segment's column name</p></li>
+<li><p><code>"{.seg_val}"</code>: The current segment's value/group</p></li>
+</ul><p>The glue context also supports ordinary expressions for further flexibility
+(e.g., <code>"{toupper(.step)}"</code>) as long as they return a length-1 string.</p>
     </div>
     <div class="section level2">
     <h2 id="briefs">Briefs<a class="anchor" aria-label="anchor" href="#briefs"></a></h2>

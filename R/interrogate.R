@@ -1061,7 +1061,7 @@ interrogate_comparison <- function(
   # Obtain the target column as a label
   column <- 
     get_column_as_sym_at_idx(agent = agent, idx = idx) %>%
-    rlang::as_label()
+    as.character()
   
   # Determine whether NAs should be allowed
   na_pass <- get_column_na_pass_at_idx(agent = agent, idx = idx)
@@ -2836,7 +2836,7 @@ column_validity_checks_column_value <- function(
 # Validity check for presence of columns
 column_validity_has_columns <- function(columns) {
   
-  if (length(columns) < 1 || identical(columns, "NA_character_")) {
+  if (length(columns) < 1 || identical(columns, NA_character_)) {
     stop(
       "The column selection statement that was used yielded no columns.",
       call. = FALSE

@@ -67,7 +67,7 @@
 #' ```{r}
 #' tt_summary_stats(tbl = game_revenue) %>%
 #'   col_vals_lt(
-#'     columns = vars(item_revenue),
+#'     columns = item_revenue,
 #'     value = 150,
 #'     segments = .param. ~ "max"
 #'   )
@@ -83,7 +83,7 @@
 #'   dplyr::filter(item_type == "iap") %>%
 #'   tt_summary_stats() %>%
 #'   col_vals_between(
-#'     columns = vars(item_revenue),
+#'     columns = item_revenue,
 #'     left = 8, right = 12,
 #'     segments = .param. ~ "med"
 #'   )
@@ -112,7 +112,7 @@
 #'   rows_complete() %>%
 #'   rows_distinct() %>%
 #'   col_vals_between(
-#'     columns = vars(item_revenue),
+#'     columns = item_revenue,
 #'     left = 8, right = 12,
 #'     preconditions = ~ . %>%
 #'       dplyr::filter(item_type == "iap") %>%
@@ -238,11 +238,11 @@ tt_summary_stats <- function(tbl) {
 #' ```{r}
 #' tt_string_info(tbl = game_revenue) %>%
 #'   col_vals_equal(
-#'     columns = vars(player_id),
+#'     columns = player_id,
 #'     value = 15
 #'   ) %>%
 #'   col_vals_equal(
-#'     columns = vars(session_id),
+#'     columns = session_id,
 #'     value = 24
 #'   )
 #' ```
@@ -256,7 +256,7 @@ tt_summary_stats <- function(tbl) {
 #' ```{r}
 #' tt_string_info(tbl = small_table) %>%
 #'   test_col_vals_lte(
-#'     columns = vars(f),
+#'     columns = f,
 #'     value = 4
 #'   )
 #' ```
@@ -343,7 +343,7 @@ tt_string_info <- function(tbl) {
 #' tt_tbl_dims(tbl = game_revenue) %>%
 #'   dplyr::filter(.param. == "rows") %>%
 #'   test_col_vals_gt(
-#'     columns = vars(value),
+#'     columns = value,
 #'     value = 1500
 #'   )
 #' ```
@@ -355,7 +355,7 @@ tt_string_info <- function(tbl) {
 #' tt_tbl_dims(tbl = small_table) %>%
 #'   dplyr::filter(.param. == "columns") %>%
 #'   test_col_vals_lt(
-#'     columns = vars(value),
+#'     columns = value,
 #'     value = 10
 #'   )
 #' ```
@@ -421,7 +421,7 @@ tt_tbl_dims <- function(tbl) {
 #' ```{r}
 #' tt_tbl_colnames(tbl = game_revenue) %>%
 #'   test_col_vals_make_subset(
-#'     columns = vars(value),
+#'     columns = value,
 #'     set = c("acquisition", "country")
 #'   )
 #' ```
@@ -436,7 +436,7 @@ tt_tbl_dims <- function(tbl) {
 #'   tt_tbl_colnames() %>%
 #'   tt_string_info() %>%
 #'   test_col_vals_lt(
-#'     columns = vars(value),
+#'     columns = value,
 #'     value = 15
 #'   )
 #' ```
@@ -953,7 +953,7 @@ tt_time_slice <- function(
 #'     keep = "right"
 #'   ) %>%
 #'   test_col_vals_lte(
-#'     columns = vars(session_duration), 
+#'     columns = session_duration, 
 #'     value = get_tt_param(
 #'       tbl = stats_tbl,
 #'       param = "max",

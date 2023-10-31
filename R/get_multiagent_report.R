@@ -146,32 +146,32 @@
 #'     actions = al
 #'   ) %>%
 #'   col_vals_gt(
-#'     columns = vars(date_time),
+#'     columns = date_time,
 #'     value = vars(date),
 #'     na_pass = TRUE
 #'   ) %>%
 #'   col_vals_gt(
-#'     columns = vars(b), 
+#'     columns = b, 
 #'     value = vars(g),
 #'     na_pass = TRUE
 #'   ) %>%
 #'   rows_distinct() %>%
 #'   col_vals_equal(
-#'     columns = vars(d), 
+#'     columns = d, 
 #'     value = vars(d),
 #'     na_pass = TRUE
 #'   ) %>%
 #'   col_vals_between(
-#'     columns = vars(c), 
+#'     columns = c, 
 #'     left = vars(a), right = vars(d)
 #'   ) %>%
 #'   col_vals_not_between(
-#'     columns = vars(c),
+#'     columns = c,
 #'     left = 10, right = 20,
 #'     na_pass = TRUE
 #'   ) %>%
-#'   rows_distinct(columns = vars(d, e, f)) %>%
-#'   col_is_integer(columns = vars(a)) %>%
+#'   rows_distinct(columns = d, e, f) %>%
+#'   col_is_integer(columns = a) %>%
 #'   interrogate()
 #' ```
 #' 
@@ -181,9 +181,9 @@
 #' ```r
 #' agent_2 <- 
 #'   agent_1 %>%
-#'   col_exists(columns = vars(date, date_time)) %>%
+#'   col_exists(columns = date, date_time) %>%
 #'   col_vals_regex(
-#'     columns = vars(b), 
+#'     columns = b, 
 #'     regex = "[0-9]-[a-z]{3}-[0-9]{3}",
 #'     active = FALSE
 #'   ) %>%
@@ -197,7 +197,7 @@
 #' agent_3 <- 
 #'   agent_2 %>%
 #'   col_vals_in_set(
-#'     columns = vars(f),
+#'     columns = f,
 #'     set = c("low", "mid", "high")
 #'   ) %>%
 #'   remove_steps(i = 5) %>%

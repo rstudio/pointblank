@@ -110,12 +110,13 @@ produce (influenced by the number of \code{columns} provided), (2) be an ID
 string not used in any previous validation step, and (3) be a vector with
 unique values.}
 
-\item{label}{\emph{An optional label for the validation step}
+\item{label}{\emph{Optional label for the validation step}
 
-\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+\verb{vector<character>} // \emph{default:} \code{NULL} (\code{optional})
 
-An optional label for the validation step. This label appears in the
-\emph{agent} report and, for the best appearance, it should be kept quite short.}
+Optional label for the validation step. This label appears in the \emph{agent}
+report and, for the best appearance, it should be kept quite short. See
+the \emph{Labels} section for more information.}
 
 \item{brief}{\emph{Brief description for the validation step}
 
@@ -239,6 +240,20 @@ failed, or, an absolute value), often using the \code{warn_at} argument. Using
 \code{action_levels(warn_at = 1)} or \code{action_levels(stop_at = 1)} are good choices
 depending on the situation (the first produces a warning, the other
 \code{stop()}s).
+}
+
+\section{Labels}{
+
+
+\code{label} may be a single string or a character vector that matches the number
+of expanded steps. \code{label} also supports \code{{glue}} syntax and exposes the
+following dynamic variables contextualized to the current step:
+\itemize{
+\item \code{"{.step}"}: The validation step name
+}
+
+The glue context also supports ordinary expressions for further flexibility
+(e.g., \code{"{toupper(.step)}"}) as long as they return a length-1 string.
 }
 
 \section{Briefs}{

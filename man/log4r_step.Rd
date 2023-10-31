@@ -129,8 +129,8 @@ then \code{\link[=interrogate]{interrogate()}} the data.
     label = "An example.",
     actions = al
   ) \%>\%
-  col_vals_gt(columns = vars(d), 300) \%>\%
-  col_vals_in_set(columns = vars(f), c("low", "high")) \%>\%
+  col_vals_gt(columns = d, 300) \%>\%
+  col_vals_in_set(columns = f, c("low", "high")) \%>\%
   interrogate()
 
 agent

@@ -34,14 +34,6 @@
 #' 
 #' @inheritParams col_vals_gt
 #' 
-#' @param columns *The target columns*
-#'   
-#'   `vector<character>|vars(<columns>)`` // **required**
-#' 
-#'   One or more columns from the table in focus. This can be
-#'   provided as a vector of column names using `c()` or bare column names
-#'   enclosed in [vars()].
-#'   
 #' @return For the validation function, the return value is either a
 #'   `ptblank_agent` object or a table object (depending on whether an agent
 #'   object or a table was passed to `x`). The expectation function invisibly
@@ -69,12 +61,17 @@
 #'
 #' @section Column Names:
 #' 
-#' If providing multiple column names, the result will be an expansion of
-#' validation steps to that number of column names (e.g., `vars(col_a, col_b)`
-#' will result in the entry of two validation steps). Aside from column names in
-#' quotes and in `vars()`, **tidyselect** helper functions are available for
-#' specifying columns. They are: `starts_with()`, `ends_with()`, `contains()`,
-#' `matches()`, and `everything()`.
+#' `columns` may be a single column (as symbol `a` or string `"a"`) or a vector
+#' of columns (`c(a, b, c)` or `c("a", "b", "c")`). `{tidyselect}` helpers
+#' are also supported, such as `contains("date")` and `where(is.double)`. If
+#' passing an *external vector* of columns, it should be wrapped in `all_of()`.
+#' 
+#' When multiple columns are selected by `columns`, the result will be an
+#' expansion of validation steps to that number of columns (e.g.,
+#' `c(col_a, col_b)` will result in the entry of two validation steps).
+#' 
+#' Previously, columns could be specified in `vars()`. This continues to work, 
+#' but `c()` offers the same capability and supersedes `vars()` in `columns`.
 #'
 #' @section Actions:
 #' 
@@ -89,6 +86,18 @@
 #' depending on the situation (the first produces a warning, the other
 #' `stop()`s).
 #'
+#' @section Labels:
+#' 
+#' `label` may be a single string or a character vector that matches the number
+#' of expanded steps. `label` also supports `{glue}` syntax and exposes the
+#' following dynamic variables contextualized to the current step:
+#'   
+#' - `"{.step}"`: The validation step name
+#' - `"{.col}"`: The current column name
+#'     
+#' The glue context also supports ordinary expressions for further flexibility
+#' (e.g., `"{toupper(.step)}"`) as long as they return a length-1 string.
+#' 
 #' @section Briefs:
 #' 
 #' Want to describe this validation step in some detail? Keep in mind that this
@@ -113,7 +122,7 @@
 #' ```r
 #' agent %>% 
 #'   col_exists(
-#'     columns = vars(a),
+#'     columns = a,
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
 #'     label = "The `col_exists()` step.",
 #'     active = FALSE
@@ -125,7 +134,7 @@
 #' ```yaml
 #' steps:
 #' - col_exists:
-#'     columns: vars(a)
+#'     columns: c(a)
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2
@@ -164,7 +173,7 @@
 #' ```r
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
-#'   col_exists(columns = vars(a)) %>%
+#'   col_exists(columns = a) %>%
 #'   interrogate()
 #' ```
 #' 
@@ -185,7 +194,7 @@
 #' The behavior of side effects can be customized with the `actions` option.
 #' 
 #' ```{r}
-#' tbl %>% col_exists(columns = vars(a))
+#' tbl %>% col_exists(columns = a)
 #' ```
 #' 
 #' ## C: Using the expectation function
@@ -194,7 +203,7 @@
 #' time. This is primarily used in **testthat** tests.
 #' 
 #' ```r
-#' expect_col_exists(tbl, columns = vars(a))
+#' expect_col_exists(tbl, columns = a)
 #' ```
 #' 
 #' ## D: Using the test function
@@ -203,7 +212,7 @@
 #' us.
 #' 
 #' ```{r}
-#' tbl %>% test_col_exists(columns = vars(a))
+#' tbl %>% test_col_exists(columns = a)
 #' ```
 #' 
 #' @family validation functions
@@ -229,13 +238,14 @@ col_exists <- function(
   preconditions <- NULL
   values <- NULL
   
-  # Get `columns` as a label
-  columns_expr <- 
-    rlang::as_label(rlang::quo(!!enquo(columns))) %>%
-    gsub("^\"|\"$", "", .)
-  
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
+  # Get `columns` as a label
+  columns_expr <- as_columns_expr(columns)
+  # Require columns to be specified
+  if (rlang::quo_is_missing(columns)) {
+    stop('argument "columns" is missing, with no default')
+  }
   if (rlang::quo_is_null(columns)) {
     columns <- rlang::quo(tidyselect::everything())
   }
@@ -243,9 +253,20 @@ col_exists <- function(
   # Resolve the columns based on the expression
   ## Only for `col_exists()`: error gracefully if column not found
   columns <- tryCatch(
-    expr = resolve_columns(x = x, var_expr = columns, preconditions = NULL),
-    error = function(cnd) cnd$i %||% NA_character_
+    expr = resolve_columns(x = x, var_expr = columns, preconditions = NULL,
+                           allow_empty = FALSE),
+    error = function(cnd) cnd$i %||% cnd
   )
+  if (rlang::is_error(columns)) {
+    cnd <- columns
+    # tidyselect 0-column selection should contextualize attempted column
+    if (is.null(cnd$parent)) {
+      columns <- columns_expr
+    } else {
+      # Evaluation errors should be chained and rethrown
+      rlang::abort("Evaluation error in `columns`", parent = cnd$parent)
+    }
+  }
 
   if (is_a_table_object(x)) {
     

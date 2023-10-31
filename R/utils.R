@@ -218,16 +218,22 @@ materialize_table <- function(tbl, check = TRUE) {
   tbl
 }
 
+as_columns_expr <- function(columns) {
+  gsub("^\"|\"$", "", rlang::as_label(columns))
+}
+
 is_secret_agent <- function(x) {
   is_ptblank_agent(x) && (x$label == "::QUIET::")
 }
 
-resolve_columns <- function(x, var_expr, preconditions) {
+resolve_columns <- function(x, var_expr, preconditions, ...,
+                            call = rlang::caller_env()) {
   
   force(x) # To avoid `restarting interrupted promise evaluation` warnings
   
   out <- tryCatch(
-    expr = resolve_columns_internal(x, var_expr, preconditions),
+    expr = resolve_columns_internal(x, var_expr, preconditions, ...,
+                                    call = call),
     error = function(cnd) cnd
   )
   
@@ -245,7 +251,7 @@ resolve_columns <- function(x, var_expr, preconditions) {
   
 }
 
-resolve_columns_internal <- function(x, var_expr, preconditions) {
+resolve_columns_internal <- function(x, var_expr, preconditions, ..., call) {
   
   # Return NA if the expr is NULL
   if (rlang::quo_is_null(var_expr)) {
@@ -263,25 +269,27 @@ resolve_columns_internal <- function(x, var_expr, preconditions) {
     tbl <- apply_preconditions(tbl = tbl, preconditions = preconditions)
   }
   
-  # Revised column selection logic
-  ## Special case `vars()`-expression for backwards compatibility
-  if (rlang::quo_is_call(var_expr, "vars")) {
-    cols <- rlang::call_args(var_expr)
-    if (rlang::is_empty(tbl)) {
-      # Special-case `serially()` - just deparse elements and bypass tidyselect
-      column <- vapply(cols, rlang::as_name, character(1),
-                       USE.NAMES = FALSE)
+  # Special case `serially()`: just deparse elements and bypass tidyselect
+  if (rlang::is_empty(tbl)) {
+    var_expr <- rlang::quo_get_expr(var_expr)
+    if (rlang::is_symbol(var_expr) || rlang::is_scalar_character(var_expr)) {
+      column <- rlang::as_name(var_expr)
     } else {
-      # Convert to the idiomatic `c()`-expr
-      col_c_expr <- rlang::call2("c", !!!cols)
-      column <- tidyselect::eval_select(col_c_expr, tbl)
-      column <- names(column)
+      cols <- rlang::call_args(var_expr)
+      column <- vapply(cols, rlang::as_name, character(1), USE.NAMES = FALSE)
     }
-  } else {
-    ## Else, assume that the user supplied a valid tidyselect expression
-    column <- tidyselect::eval_select(var_expr, tbl)
-    column <- names(column)
+    return(column)
   }
+  # Special case `vars()`-expression for backwards compatibility
+  if (rlang::quo_is_call(var_expr, "vars")) {
+    # Convert to the idiomatic `c()`-expr
+    c_expr <- rlang::call2("c", !!!rlang::call_args(var_expr))
+    var_expr <- rlang::quo_set_expr(var_expr, c_expr)
+  }
+  
+  # Proceed with tidyselect
+  column <- tidyselect::eval_select(var_expr, tbl, error_call = call, ...)
+  column <- names(column)
   
   if (length(column) < 1) {
     column <- NA_character_

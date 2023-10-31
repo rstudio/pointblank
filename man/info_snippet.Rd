@@ -135,7 +135,7 @@ the highest value in that column).
     fn = snip_highest(column = "a")
   ) \%>\%
   info_columns(
-    columns = vars(a),
+    columns = a,
     info = "In the range of 1 to \{max_a\}. ((SIMPLE))"
   ) \%>\%
   info_columns(

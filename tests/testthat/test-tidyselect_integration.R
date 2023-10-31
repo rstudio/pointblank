@@ -114,8 +114,7 @@ test_that("'NULL = select everything' behavior in rows_*() validation functions"
     
 })
 
-# tidyselect coverage for `col_exists()`
-test_that("'NULL = select everything' behavior in rows_*() validation functions", {
+test_that("tidyselect coverage for `col_exists()`", {
   
   # Reprex from (#433)
   df <- tibble::tibble(
@@ -144,5 +143,101 @@ test_that("'NULL = select everything' behavior in rows_*() validation functions"
       interrogate()
   })
   expect_equal(nrow(df_interrogated$validation_set), 2L)
+  
+})
+
+test_that("error/failure patterns for `col_exists`", {
+  
+  # Selecting non-existent columns signals failure
+  expect_error(expect_failure({
+    small_table %>% 
+      col_exists("z")
+  }))
+  expect_failure({
+    small_table %>% 
+      expect_col_exists("z")
+  })
+  
+  # 0-column tidyselect selection signals failure
+  expect_error(expect_failure({
+    small_table %>% 
+      col_exists(starts_with("z"))
+  }))
+  expect_failure({
+    small_table %>% 
+      expect_col_exists("z")
+  })
+  
+  # Unrelated evaluation errors should be chained and rethrown
+  expect_error({
+    small_table %>% 
+      col_exists(stop("Error!"))
+  }, "Error!")
+  expect_error({
+    small_table %>% 
+      expect_col_exists(stop("Error!"))
+  }, "Error!")
+  expect_error({
+    small_table %>% 
+      test_col_exists(stop("Error!"))
+  }, "Error!")
+  
+  # Test should return FALSE for 0-column and non-existent column
+  expect_false({
+    small_table %>% 
+      test_col_exists("z")
+  })
+  expect_false({
+    small_table %>% 
+      test_col_exists("z")
+  })
+  
+  # No failure/error during validation
+  expect_no_error({
+    agent_nonexist_col <- create_agent(small_table) %>% 
+      col_exists("z") %>% 
+      interrogate()
+  })
+  expect_false(all_passed(agent_nonexist_col))
+  expect_no_error({
+    agent_tidyselect_0col <- create_agent(small_table) %>% 
+      col_exists(starts_with("z")) %>% 
+      interrogate()
+  })
+  expect_false(all_passed(agent_tidyselect_0col))
+  
+})
+
+test_that("c()-expr works for serially", {
+  
+  # Example from `serially()` docs
+  tbl <-
+    dplyr::tibble(
+      a = c(5, 2, 6),
+      b = c(6, 4, 9),
+      c = c(1, 2, 3)
+    )
+  agent_1 <-
+    create_agent(tbl = tbl) %>%
+    serially(
+      ~ test_col_is_numeric(., columns = vars(a, b)),
+      ~ test_col_vals_not_null(., columns = vars(a, b)),
+      ~ col_vals_gt(., columns = vars(b), value = vars(a))
+    ) %>%
+    interrogate()
+  expect_no_error({
+    agent_1_c <-
+      create_agent(tbl = tbl) %>%
+      serially(
+        ~ test_col_is_numeric(., columns = c(a, b)),
+        ~ test_col_vals_not_null(., columns = c(a, b)),
+        ~ col_vals_gt(., columns = b, value = vars(a))
+      ) %>%
+      interrogate()
+  })
+  expect_identical(
+    get_agent_report(agent_1, display_table = FALSE)$n_pass,
+    get_agent_report(agent_1_c, display_table = FALSE)$n_pass
+  )
   
 })

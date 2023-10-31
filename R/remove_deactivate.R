@@ -60,11 +60,11 @@
 #'     label = "An example."
 #'   ) %>%
 #'   col_exists(
-#'     columns = vars(date),
+#'     columns = date,
 #'     active = FALSE
 #'   ) %>%
 #'   col_vals_regex(
-#'     columns = vars(b),
+#'     columns = b,
 #'     regex = "[0-9]-[a-z]{3}-[0-9]{3}",
 #'     active = FALSE
 #'   ) %>%
@@ -146,9 +146,9 @@ activate_steps <- function(
 #'     tbl_name = "small_table",
 #'     label = "An example."
 #'   ) %>%
-#'   col_exists(columns = vars(date)) %>%
+#'   col_exists(columns = date) %>%
 #'   col_vals_regex(
-#'     columns = vars(b),
+#'     columns = b,
 #'     regex = "[0-9]-[a-z]{3}-[0-9]"
 #'   ) %>%
 #'   interrogate()
@@ -227,9 +227,9 @@ deactivate_steps <- function(
 #'     tbl_name = "small_table",
 #'     label = "An example."
 #'   ) %>%
-#'   col_exists(columns = vars(date)) %>%
+#'   col_exists(columns = date) %>%
 #'   col_vals_regex(
-#'     columns = vars(b),
+#'     columns = b,
 #'     regex = "[0-9]-[a-z]{3}-[0-9]"
 #'   ) %>%
 #'   interrogate()

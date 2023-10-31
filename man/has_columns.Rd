@@ -110,16 +110,16 @@ statement there we would get an evaluation failure in the agent report).
     tbl_name = "small_table"
   ) \%>\%
   col_vals_gt(
-    columns = vars(c), value = vars(a),
+    columns = c, value = vars(a),
     active = ~ . \%>\% has_columns(vars(a, c))
   ) \%>\%
   col_vals_lt(
-    columns = vars(h), value = vars(d),
+    columns = h, value = vars(d),
     preconditions = ~ . \%>\% dplyr::mutate(h = d - a),
     active = ~ . \%>\% has_columns(vars(a, d))
   ) \%>\%
   col_is_character(
-    columns = vars(j),
+    columns = j,
     active = ~ . \%>\% has_columns("j")
   ) \%>\%
   interrogate()

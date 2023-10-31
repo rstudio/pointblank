@@ -76,7 +76,7 @@ use \code{incorporate()} to work the snippets into the info text.
     fn = ~ . \%>\% ncol()
   ) \%>\%
   info_columns(
-    columns = vars(a),
+    columns = a,
     info = "In the range of 1 to 10. ((SIMPLE))"
   ) \%>\%
   info_columns(

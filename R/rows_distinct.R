@@ -38,6 +38,14 @@
 #' the following **tidyselect** helper functions: `starts_with()`,
 #' `ends_with()`, `contains()`, `matches()`, and `everything()`.
 #' 
+#' @param columns *The target columns*
+#' 
+#'   `<tidy-select>` // *default:* `everything()`
+#' 
+#'   A column-selecting expression, as one would use inside `dplyr::select()`.
+#'   Specifies the column (or a set of columns) to which this validation should
+#'   be applied. See the *Column Names* section for more information.
+#' 
 #' @inheritParams col_vals_gt
 #'   
 #' @return For the validation function, the return value is either a
@@ -127,6 +135,20 @@
 #' warning when a quarter of the total test units fails, the other `stop()`s at
 #' the same threshold level).
 #' 
+#' @section Labels:
+#' 
+#' `label` may be a single string or a character vector that matches the number
+#' of expanded steps. `label` also supports `{glue}` syntax and exposes the
+#' following dynamic variables contextualized to the current step:
+#'   
+#' - `"{.step}"`: The validation step name
+#' - `"{.col}"`: The current column name
+#' - `"{.seg_col}"`: The current segment's column name
+#' - `"{.seg_val}"`: The current segment's value/group
+#'     
+#' The glue context also supports ordinary expressions for further flexibility
+#' (e.g., `"{toupper(.step)}"`) as long as they return a length-1 string.
+#' 
 #' @section Briefs:
 #' 
 #' Want to describe this validation step in some detail? Keep in mind that this
@@ -151,7 +173,7 @@
 #' ```r
 #' agent %>% 
 #'   rows_distinct(
-#'     columns = vars(a, b),
+#'     columns = c(a, b),
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
@@ -165,7 +187,7 @@
 #' ```
 #' steps:
 #' - rows_distinct:
-#'     columns: vars(a, b)
+#'     columns: c(a, b)
 #'     preconditions: ~. %>% dplyr::filter(a < 10)
 #'     segments: b ~ c("group_1", "group_2")
 #'     actions:
@@ -206,7 +228,7 @@
 #' ```r
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
-#'   rows_distinct(columns = vars(a, b)) %>%
+#'   rows_distinct(columns = c(a, b)) %>%
 #'   interrogate()
 #' ```
 #' 
@@ -228,7 +250,7 @@
 #' 
 #' ```{r}
 #' tbl %>%
-#'   rows_distinct(columns = vars(a, b)) %>%
+#'   rows_distinct(columns = c(a, b)) %>%
 #'   dplyr::pull(a)
 #' ```
 #' 
@@ -238,7 +260,7 @@
 #' time. This is primarily used in **testthat** tests.
 #' 
 #' ```r
-#' expect_rows_distinct(tbl, columns = vars(a, b))
+#' expect_rows_distinct(tbl, columns = c(a, b))
 #' ```
 #' 
 #' ## D: Using the test function
@@ -247,7 +269,7 @@
 #' us.
 #' 
 #' ```{r}
-#' test_rows_distinct(tbl, columns = vars(a, b))
+#' test_rows_distinct(tbl, columns = c(a, b))
 #' ```
 #' 
 #' @family validation functions
@@ -262,7 +284,7 @@ NULL
 #' @export
 rows_distinct <- function(
     x,
-    columns = NULL,
+    columns = tidyselect::everything(),
     preconditions = NULL,
     segments = NULL,
     actions = NULL,
@@ -272,16 +294,14 @@ rows_distinct <- function(
     active = TRUE
 ) {
   
-  # Get `columns` as a label
-  columns_expr <- 
-    rlang::as_label(rlang::quo(!!enquo(columns))) %>%
-    gsub("^\"|\"$", "", .)
-  
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
+  # `rows_*()` functions treat `NULL` as `everything()`
   if (rlang::quo_is_null(columns)) {
     columns <- rlang::quo(tidyselect::everything())
   }
+  # Get `columns` as a label
+  columns_expr <- as_columns_expr(columns)
   
   # Resolve the columns based on the expression
   columns <- resolve_columns(x = x, var_expr = columns, preconditions = NULL)
@@ -378,7 +398,7 @@ rows_distinct <- function(
 #' @export
 expect_rows_distinct <- function(
     object,
-    columns = NULL,
+    columns = tidyselect::everything(),
     preconditions = NULL,
     threshold = 1
 ) {
@@ -433,7 +453,7 @@ expect_rows_distinct <- function(
 #' @export
 test_rows_distinct <- function(
     object,
-    columns = NULL,
+    columns = tidyselect::everything(),
     preconditions = NULL,
     threshold = 1
 ) {

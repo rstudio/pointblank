@@ -54,7 +54,7 @@
 #'   A collection one-sided formulas that consist of validation functions that
 #'   validate row units (the `col_vals_*()` series), column existence
 #'   ([col_exists()]), or column type (the `col_is_*()` series). An example of
-#'   this is `~ col_vals_gte(., vars(a), 5.5), ~ col_vals_not_null(., vars(b)`).
+#'   this is `~ col_vals_gte(., a, 5.5), ~ col_vals_not_null(., b`).
 #' 
 #' @param .list *Alternative to `...`*
 #' 
@@ -89,12 +89,17 @@
 #'
 #' @section Column Names:
 #' 
-#' If providing multiple column names in any of the supplied validation steps,
-#' the result will be an expansion of sub-validation steps to that number of
-#' column names. Aside from column names in quotes and in `vars()`,
-#' **tidyselect** helper functions are available for specifying columns. They
-#' are: `starts_with()`, `ends_with()`, `contains()`, `matches()`, and
-#' `everything()`.
+#' `columns` may be a single column (as symbol `a` or string `"a"`) or a vector
+#' of columns (`c(a, b, c)` or `c("a", "b", "c")`). `{tidyselect}` helpers
+#' are also supported, such as `contains("date")` and `where(is.double)`. If
+#' passing an *external vector* of columns, it should be wrapped in `all_of()`.
+#' 
+#' When multiple columns are selected by `columns`, the result will be an
+#' expansion of validation steps to that number of columns (e.g.,
+#' `c(col_a, col_b)` will result in the entry of two validation steps).
+#' 
+#' Previously, columns could be specified in `vars()`. This continues to work, 
+#' but `c()` offers the same capability and supersedes `vars()` in `columns`.
 #' 
 #' @section Preconditions:
 #' 
@@ -162,6 +167,19 @@
 #' quarter of the total test units fails, the other `stop()`s at the same
 #' threshold level).
 #' 
+#' @section Labels:
+#' 
+#' `label` may be a single string or a character vector that matches the number
+#' of expanded steps. `label` also supports `{glue}` syntax and exposes the
+#' following dynamic variables contextualized to the current step:
+#'   
+#' - `"{.step}"`: The validation step name
+#' - `"{.seg_col}"`: The current segment's column name
+#' - `"{.seg_val}"`: The current segment's value/group
+#'     
+#' The glue context also supports ordinary expressions for further flexibility
+#' (e.g., `"{toupper(.step)}"`) as long as they return a length-1 string.
+#' 
 #' @section Briefs:
 #' 
 #' Want to describe this validation step in some detail? Keep in mind that this
@@ -186,9 +204,9 @@
 #' ```r
 #' agent %>% 
 #'   conjointly(
-#'     ~ col_vals_lt(., columns = vars(a), value = 8),
-#'     ~ col_vals_gt(., columns = vars(c), value = vars(a)),
-#'     ~ col_vals_not_null(., columns = vars(b)),
+#'     ~ col_vals_lt(., columns = a, value = 8),
+#'     ~ col_vals_gt(., columns = c, value = vars(a)),
+#'     ~ col_vals_not_null(., columns = b),
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2), 
@@ -203,9 +221,9 @@
 #' steps:
 #' - conjointly:
 #'     fns:
-#'     - ~col_vals_lt(., columns = vars(a), value = 8)
-#'     - ~col_vals_gt(., columns = vars(c), value = vars(a))
-#'     - ~col_vals_not_null(., columns = vars(b))
+#'     - ~col_vals_lt(., columns = a, value = 8)
+#'     - ~col_vals_gt(., columns = c, value = vars(a))
+#'     - ~col_vals_not_null(., columns = b)
 #'     preconditions: ~. %>% dplyr::filter(a < 10)
 #'     segments: b ~ c("group_1", "group_2")
 #'     actions:
@@ -252,9 +270,9 @@
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
 #'   conjointly(
-#'     ~ col_vals_lt(., columns = vars(a), value = 8),
-#'     ~ col_vals_gt(., columns = vars(c), value = vars(a)),
-#'     ~ col_vals_not_null(., columns = vars(b))
+#'     ~ col_vals_lt(., columns = a, value = 8),
+#'     ~ col_vals_gt(., columns = c, value = vars(a)),
+#'     ~ col_vals_not_null(., columns = b)
 #'     ) %>%
 #'   interrogate()
 #' ```
@@ -283,9 +301,9 @@
 #' ```{r}
 #' tbl %>%
 #'   conjointly(
-#'     ~ col_vals_lt(., columns = vars(a), value = 8),
-#'     ~ col_vals_gt(., columns = vars(c), value = vars(a)),
-#'     ~ col_vals_not_null(., columns = vars(b))
+#'     ~ col_vals_lt(., columns = a, value = 8),
+#'     ~ col_vals_gt(., columns = c, value = vars(a)),
+#'     ~ col_vals_not_null(., columns = b)
 #'   )
 #' ```
 #'
@@ -297,9 +315,9 @@
 #' ```r
 #' expect_conjointly(
 #'   tbl,
-#'   ~ col_vals_lt(., columns = vars(a), value = 8),
-#'   ~ col_vals_gt(., columns = vars(c), value = vars(a)),
-#'   ~ col_vals_not_null(., columns = vars(b))
+#'   ~ col_vals_lt(., columns = a, value = 8),
+#'   ~ col_vals_gt(., columns = c, value = vars(a)),
+#'   ~ col_vals_not_null(., columns = b)
 #' )
 #' ```
 #' 
@@ -311,9 +329,9 @@
 #' ```{r}
 #' tbl %>%
 #'   test_conjointly(
-#'     ~ col_vals_lt(., columns = vars(a), value = 8),
-#'     ~ col_vals_gt(., columns = vars(c), value = vars(a)),
-#'     ~ col_vals_not_null(., columns = vars(b))
+#'     ~ col_vals_lt(., columns = a, value = 8),
+#'     ~ col_vals_gt(., columns = c, value = vars(a)),
+#'     ~ col_vals_not_null(., columns = b)
 #'   )
 #' ```
 #' 

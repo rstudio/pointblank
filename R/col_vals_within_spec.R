@@ -119,12 +119,17 @@
 #'
 #' @section Column Names:
 #' 
-#' If providing multiple column names, the result will be an expansion of
-#' validation steps to that number of column names (e.g., `vars(col_a, col_b)`
-#' will result in the entry of two validation steps). Aside from column names in
-#' quotes and in `vars()`, **tidyselect** helper functions are available for
-#' specifying columns. They are: `starts_with()`, `ends_with()`, `contains()`,
-#' `matches()`, and `everything()`.
+#' `columns` may be a single column (as symbol `a` or string `"a"`) or a vector
+#' of columns (`c(a, b, c)` or `c("a", "b", "c")`). `{tidyselect}` helpers
+#' are also supported, such as `contains("date")` and `where(is.double)`. If
+#' passing an *external vector* of columns, it should be wrapped in `all_of()`.
+#' 
+#' When multiple columns are selected by `columns`, the result will be an
+#' expansion of validation steps to that number of columns (e.g.,
+#' `c(col_a, col_b)` will result in the entry of two validation steps).
+#' 
+#' Previously, columns could be specified in `vars()`. This continues to work, 
+#' but `c()` offers the same capability and supersedes `vars()` in `columns`.
 #'
 #' @section Missing Values:
 #' 
@@ -199,6 +204,20 @@
 #' quarter of the total test units fails, the other `stop()`s at the same
 #' threshold level).
 #' 
+#' @section Labels:
+#' 
+#' `label` may be a single string or a character vector that matches the number
+#' of expanded steps. `label` also supports `{glue}` syntax and exposes the
+#' following dynamic variables contextualized to the current step:
+#'   
+#' - `"{.step}"`: The validation step name
+#' - `"{.col}"`: The current column name
+#' - `"{.seg_col}"`: The current segment's column name
+#' - `"{.seg_val}"`: The current segment's value/group
+#'     
+#' The glue context also supports ordinary expressions for further flexibility
+#' (e.g., `"{toupper(.step)}"`) as long as they return a length-1 string.
+#' 
 #' @section Briefs:
 #' 
 #' Want to describe this validation step in some detail? Keep in mind that this
@@ -223,7 +242,7 @@
 #' ```r
 #' agent %>% 
 #'   col_vals_within_spec(
-#'     columns = vars(a),
+#'     columns = a,
 #'     spec = "email",
 #'     na_pass = TRUE,
 #'     preconditions = ~ . %>% dplyr::filter(b < 10),
@@ -239,7 +258,7 @@
 #' ```yaml
 #' steps:
 #' - col_vals_within_spec:
-#'     columns: vars(a)
+#'     columns: c(a)
 #'     spec: email
 #'     na_pass: true
 #'     preconditions: ~. %>% dplyr::filter(b < 10)
@@ -282,7 +301,7 @@
 #' agent <-
 #'   create_agent(tbl = spec_slice) %>%
 #'   col_vals_within_spec(
-#'     columns = vars(email_addresses),
+#'     columns = email_addresses,
 #'     spec = "email"
 #'   ) %>%
 #'   interrogate()
@@ -307,7 +326,7 @@
 #' ```{r}
 #' spec_slice %>%
 #'   col_vals_within_spec(
-#'     columns = vars(email_addresses),
+#'     columns = email_addresses,
 #'     spec = "email"
 #'   ) %>%
 #'   dplyr::select(email_addresses)
@@ -321,7 +340,7 @@
 #' ```r
 #' expect_col_vals_within_spec(
 #'   spec_slice,
-#'   columns = vars(email_addresses),
+#'   columns = email_addresses,
 #'   spec = "email"
 #' )
 #' ```
@@ -334,7 +353,7 @@
 #' ```{r}
 #' spec_slice %>%
 #'   test_col_vals_within_spec(
-#'     columns = vars(email_addresses),
+#'     columns = email_addresses,
 #'     spec = "email"
 #'   )
 #' ```
@@ -363,13 +382,10 @@ col_vals_within_spec <- function(
     active = TRUE
 ) {
   
-  # Get `columns` as a label
-  columns_expr <- 
-    rlang::as_label(rlang::quo(!!enquo(columns))) %>%
-    gsub("^\"|\"$", "", .)
-  
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
+  # Get `columns` as a label
+  columns_expr <- as_columns_expr(columns)
   
   # Resolve the columns based on the expression
   columns <- resolve_columns(x = x, var_expr = columns, preconditions)

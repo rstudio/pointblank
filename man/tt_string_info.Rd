@@ -52,11 +52,11 @@ numbers of characters (\code{15} and \code{24}, respectively) throughout the tab
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_string_info(tbl = game_revenue) \%>\%
   col_vals_equal(
-    columns = vars(player_id),
+    columns = player_id,
     value = 15
   ) \%>\%
   col_vals_equal(
-    columns = vars(session_id),
+    columns = session_id,
     value = 24
   )
 #> # A tibble: 3 x 7
@@ -75,7 +75,7 @@ of the \code{small_table} dataset is no greater than \code{4}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_string_info(tbl = small_table) \%>\%
   test_col_vals_lte(
-    columns = vars(f),
+    columns = f,
     value = 4
   )
 #> [1] TRUE

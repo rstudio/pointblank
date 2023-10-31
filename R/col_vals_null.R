@@ -62,12 +62,17 @@
 #'
 #' @section Column Names:
 #' 
-#' If providing multiple column names, the result will be an expansion of
-#' validation steps to that number of column names (e.g., `vars(col_a, col_b)`
-#' will result in the entry of two validation steps). Aside from column names in
-#' quotes and in `vars()`, **tidyselect** helper functions are available for
-#' specifying columns. They are: `starts_with()`, `ends_with()`, `contains()`,
-#' `matches()`, and `everything()`.
+#' `columns` may be a single column (as symbol `a` or string `"a"`) or a vector
+#' of columns (`c(a, b, c)` or `c("a", "b", "c")`). `{tidyselect}` helpers
+#' are also supported, such as `contains("date")` and `where(is.double)`. If
+#' passing an *external vector* of columns, it should be wrapped in `all_of()`.
+#' 
+#' When multiple columns are selected by `columns`, the result will be an
+#' expansion of validation steps to that number of columns (e.g.,
+#' `c(col_a, col_b)` will result in the entry of two validation steps).
+#' 
+#' Previously, columns could be specified in `vars()`. This continues to work, 
+#' but `c()` offers the same capability and supersedes `vars()` in `columns`.
 #' 
 #' @section Preconditions:
 #' 
@@ -135,6 +140,20 @@
 #' quarter of the total test units fails, the other `stop()`s at the same
 #' threshold level).
 #' 
+#' @section Labels:
+#' 
+#' `label` may be a single string or a character vector that matches the number
+#' of expanded steps. `label` also supports `{glue}` syntax and exposes the
+#' following dynamic variables contextualized to the current step:
+#'   
+#' - `"{.step}"`: The validation step name
+#' - `"{.col}"`: The current column name
+#' - `"{.seg_col}"`: The current segment's column name
+#' - `"{.seg_val}"`: The current segment's value/group
+#'     
+#' The glue context also supports ordinary expressions for further flexibility
+#' (e.g., `"{toupper(.step)}"`) as long as they return a length-1 string.
+#' 
 #' @section Briefs:
 #' 
 #' Want to describe this validation step in some detail? Keep in mind that this
@@ -159,7 +178,7 @@
 #' ```r
 #' agent %>% 
 #'   col_vals_null(
-#'     columns = vars(a),
+#'     columns = a,
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
@@ -173,7 +192,7 @@
 #' ```yaml
 #' steps:
 #' - col_vals_null:
-#'     columns: vars(a)
+#'     columns: c(a)
 #'     preconditions: ~. %>% dplyr::filter(a < 10)
 #'     segments: b ~ c("group_1", "group_2")
 #'     actions:
@@ -217,7 +236,7 @@
 #' ```r
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
-#'   col_vals_null(columns = vars(c)) %>%
+#'   col_vals_null(columns = c) %>%
 #'   interrogate()
 #' ```
 #' 
@@ -239,7 +258,7 @@
 #' 
 #' ```{r}
 #' tbl %>%
-#'   col_vals_null(columns = vars(c)) %>%
+#'   col_vals_null(columns = c) %>%
 #'   dplyr::pull(c)
 #' ```
 #'
@@ -249,7 +268,7 @@
 #' time. This is primarily used in **testthat** tests.
 #' 
 #' ```r
-#' expect_col_vals_null(tbl, columns = vars(c))
+#' expect_col_vals_null(tbl, columns = c)
 #' ```
 #' 
 #' ## D: Using the test function
@@ -258,7 +277,7 @@
 #' us.
 #' 
 #' ```{r}
-#' tbl %>% test_col_vals_null(columns = vars(c))
+#' tbl %>% test_col_vals_null(columns = c)
 #' ```
 #' 
 #' @family validation functions
@@ -287,13 +306,10 @@ col_vals_null <- function(
   
   values <- NULL
   
-  # Get `columns` as a label
-  columns_expr <- 
-    rlang::as_label(rlang::quo(!!enquo(columns))) %>%
-    gsub("^\"|\"$", "", .)
-  
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
+  # Get `columns` as a label
+  columns_expr <- as_columns_expr(columns)
   
   # Resolve the columns based on the expression
   columns <- resolve_columns(x = x, var_expr = columns, preconditions)

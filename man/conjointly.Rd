@@ -51,7 +51,7 @@ commonly created with \code{\link[=create_agent]{create_agent()}}.}
 A collection one-sided formulas that consist of validation functions that
 validate row units (the \verb{col_vals_*()} series), column existence
 (\code{\link[=col_exists]{col_exists()}}), or column type (the \verb{col_is_*()} series). An example of
-this is \verb{~ col_vals_gte(., vars(a), 5.5), ~ col_vals_not_null(., vars(b)}).}
+this is \verb{~ col_vals_gte(., a, 5.5), ~ col_vals_not_null(., b}).}
 
 \item{.list}{\emph{Alternative to \code{...}}
 
@@ -103,12 +103,13 @@ produce (influenced by the number of \code{columns} provided), (2) be an ID
 string not used in any previous validation step, and (3) be a vector with
 unique values.}
 
-\item{label}{\emph{An optional label for the validation step}
+\item{label}{\emph{Optional label for the validation step}
 
-\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+\verb{vector<character>} // \emph{default:} \code{NULL} (\code{optional})
 
-An optional label for the validation step. This label appears in the
-\emph{agent} report and, for the best appearance, it should be kept quite short.}
+Optional label for the validation step. This label appears in the \emph{agent}
+report and, for the best appearance, it should be kept quite short. See
+the \emph{Labels} section for more information.}
 
 \item{brief}{\emph{Brief description for the validation step}
 
@@ -216,12 +217,17 @@ formally tested (so be mindful of this when using unsupported backends with
 \section{Column Names}{
 
 
-If providing multiple column names in any of the supplied validation steps,
-the result will be an expansion of sub-validation steps to that number of
-column names. Aside from column names in quotes and in \code{vars()},
-\strong{tidyselect} helper functions are available for specifying columns. They
-are: \code{starts_with()}, \code{ends_with()}, \code{contains()}, \code{matches()}, and
-\code{everything()}.
+\code{columns} may be a single column (as symbol \code{a} or string \code{"a"}) or a vector
+of columns (\code{c(a, b, c)} or \code{c("a", "b", "c")}). \code{{tidyselect}} helpers
+are also supported, such as \code{contains("date")} and \code{where(is.double)}. If
+passing an \emph{external vector} of columns, it should be wrapped in \code{all_of()}.
+
+When multiple columns are selected by \code{columns}, the result will be an
+expansion of validation steps to that number of columns (e.g.,
+\code{c(col_a, col_b)} will result in the entry of two validation steps).
+
+Previously, columns could be specified in \code{vars()}. This continues to work,
+but \code{c()} offers the same capability and supersedes \code{vars()} in \code{columns}.
 }
 
 \section{Preconditions}{
@@ -295,6 +301,22 @@ quarter of the total test units fails, the other \code{stop()}s at the same
 threshold level).
 }
 
+\section{Labels}{
+
+
+\code{label} may be a single string or a character vector that matches the number
+of expanded steps. \code{label} also supports \code{{glue}} syntax and exposes the
+following dynamic variables contextualized to the current step:
+\itemize{
+\item \code{"{.step}"}: The validation step name
+\item \code{"{.seg_col}"}: The current segment's column name
+\item \code{"{.seg_val}"}: The current segment's value/group
+}
+
+The glue context also supports ordinary expressions for further flexibility
+(e.g., \code{"{toupper(.step)}"}) as long as they return a length-1 string.
+}
+
 \section{Briefs}{
 
 
@@ -321,9 +343,9 @@ R statement:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
   conjointly(
-    ~ col_vals_lt(., columns = vars(a), value = 8),
-    ~ col_vals_gt(., columns = vars(c), value = vars(a)),
-    ~ col_vals_not_null(., columns = vars(b)),
+    ~ col_vals_lt(., columns = a, value = 8),
+    ~ col_vals_gt(., columns = c, value = vars(a)),
+    ~ col_vals_not_null(., columns = b),
     preconditions = ~ . \%>\% dplyr::filter(a < 10),
     segments = b ~ c("group_1", "group_2"),
     actions = action_levels(warn_at = 0.1, stop_at = 0.2), 
@@ -337,9 +359,9 @@ YAML representation:
 \if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
 - conjointly:
     fns:
-    - ~col_vals_lt(., columns = vars(a), value = 8)
-    - ~col_vals_gt(., columns = vars(c), value = vars(a))
-    - ~col_vals_not_null(., columns = vars(b))
+    - ~col_vals_lt(., columns = a, value = 8)
+    - ~col_vals_gt(., columns = c, value = vars(a))
+    - ~col_vals_not_null(., columns = b)
     preconditions: ~. \%>\% dplyr::filter(a < 10)
     segments: b ~ c("group_1", "group_2")
     actions:
@@ -391,9 +413,9 @@ each row).
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = tbl) \%>\%
   conjointly(
-    ~ col_vals_lt(., columns = vars(a), value = 8),
-    ~ col_vals_gt(., columns = vars(c), value = vars(a)),
-    ~ col_vals_not_null(., columns = vars(b))
+    ~ col_vals_lt(., columns = a, value = 8),
+    ~ col_vals_gt(., columns = c, value = vars(a)),
+    ~ col_vals_not_null(., columns = b)
     ) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
@@ -422,9 +444,9 @@ behavior of side effects can be customized with the \code{actions} option.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   conjointly(
-    ~ col_vals_lt(., columns = vars(a), value = 8),
-    ~ col_vals_gt(., columns = vars(c), value = vars(a)),
-    ~ col_vals_not_null(., columns = vars(b))
+    ~ col_vals_lt(., columns = a, value = 8),
+    ~ col_vals_gt(., columns = c, value = vars(a)),
+    ~ col_vals_not_null(., columns = b)
   )
 #> # A tibble: 3 x 3
 #>       a     b     c
@@ -442,9 +464,9 @@ time. This is primarily used in \strong{testthat} tests.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_conjointly(
   tbl,
-  ~ col_vals_lt(., columns = vars(a), value = 8),
-  ~ col_vals_gt(., columns = vars(c), value = vars(a)),
-  ~ col_vals_not_null(., columns = vars(b))
+  ~ col_vals_lt(., columns = a, value = 8),
+  ~ col_vals_gt(., columns = c, value = vars(a)),
+  ~ col_vals_not_null(., columns = b)
 )
 }\if{html}{\out{</div>}}
 }
@@ -456,9 +478,9 @@ us.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   test_conjointly(
-    ~ col_vals_lt(., columns = vars(a), value = 8),
-    ~ col_vals_gt(., columns = vars(c), value = vars(a)),
-    ~ col_vals_not_null(., columns = vars(b))
+    ~ col_vals_lt(., columns = a, value = 8),
+    ~ col_vals_gt(., columns = c, value = vars(a)),
+    ~ col_vals_not_null(., columns = b)
   )
 #> [1] TRUE
 }\if{html}{\out{</div>}}

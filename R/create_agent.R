@@ -394,16 +394,16 @@
 #' ```r
 #' agent <-
 #'   agent %>% 
-#'   col_exists(columns = vars(date, date_time)) %>%
+#'   col_exists(columns = date, date_time) %>%
 #'   col_vals_regex(
-#'     columns = vars(b),
+#'     columns = b,
 #'     regex = "[0-9]-[a-z]{3}-[0-9]{3}"
 #'   ) %>%
 #'   rows_distinct() %>%
-#'   col_vals_gt(columns = vars(d), value = 100) %>%
-#'   col_vals_lte(columns = vars(c), value = 5) %>%
+#'   col_vals_gt(columns = d, value = 100) %>%
+#'   col_vals_lte(columns = c, value = 5) %>%
 #'   col_vals_between(
-#'     columns = vars(c),
+#'     columns = c,
 #'     left = vars(a), right = vars(d),
 #'     na_pass = TRUE
 #'   ) %>%

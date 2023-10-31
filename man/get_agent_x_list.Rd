@@ -136,8 +136,8 @@ validation step functions, then interrogate.
     tbl = tbl,
     actions = al
   ) \%>\%
-  col_vals_gt(columns = vars(a), value = 7) \%>\%
-  col_is_numeric(columns = vars(a)) \%>\%
+  col_vals_gt(columns = a, value = 7) \%>\%
+  col_is_numeric(columns = a) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
 

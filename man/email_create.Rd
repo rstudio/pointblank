@@ -62,8 +62,8 @@ email just by printing \code{email_object}. It should appear in the Viewer.
     label = "An example.",
     actions = al
   ) \%>\%
-  col_vals_gt(vars(a), value = 1) \%>\%
-  col_vals_lt(vars(a), value = 7) \%>\%
+  col_vals_gt(a, value = 1) \%>\%
+  col_vals_lt(a, value = 7) \%>\%
   interrogate() \%>\%
   email_create()
   

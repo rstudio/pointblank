@@ -133,14 +133,14 @@
 #' ```r
 #' agent <-
 #'   agent %>% 
-#'   col_exists(columns = vars(date, date_time)) %>%
+#'   col_exists(columns = c(date, date_time)) %>%
 #'   col_vals_regex(
-#'     columns = vars(b),
+#'     columns = b,
 #'     regex = "[0-9]-[a-z]{3}-[0-9]{3}"
 #'   ) %>%
 #'   rows_distinct() %>%
-#'   col_vals_gt(columns = vars(d), value = 100) %>%
-#'   col_vals_lte(columns = vars(c), value = 5) %>%
+#'   col_vals_gt(columns = d, value = 100) %>%
+#'   col_vals_lte(columns = c, value = 5) %>%
 #'   interrogate()
 #' ```
 #'
@@ -197,7 +197,7 @@
 #'     fn = snip_lowest(column = "a")
 #'   ) %>%
 #'   info_columns(
-#'     columns = vars(a),
+#'     columns = a,
 #'     info = "From {low_a} to {high_a}."
 #'   ) %>%
 #'   info_columns(
@@ -240,13 +240,13 @@
 #'     actions = al
 #'   ) %>%
 #'   col_vals_gt(
-#'     columns = vars(b),
-#'     value = vars(g),
+#'     columns = b,
+#'     value = g,
 #'     na_pass = TRUE,
 #'     label = "b > g"
 #'   ) %>%
 #'   col_is_character(
-#'     columns = vars(b, f),
+#'     columns = c(b, f),
 #'     label = "Verifying character-type columns" 
 #'   ) %>%
 #'   interrogate()
@@ -611,14 +611,14 @@ x_read_disk <- function(
 #' ```r
 #' agent <-
 #'   agent %>% 
-#'   col_exists(columns = vars(date, date_time)) %>%
+#'   col_exists(columns = c(date, date_time)) %>%
 #'   col_vals_regex(
-#'     columns = vars(b),
+#'     columns = b,
 #'     regex = "[0-9]-[a-z]{3}-[0-9]{3}"
 #'   ) %>%
 #'   rows_distinct() %>%
-#'   col_vals_gt(columns = vars(d), value = 100) %>%
-#'   col_vals_lte(columns = vars(c), value = 5) %>%
+#'   col_vals_gt(columns = d, value = 100) %>%
+#'   col_vals_lte(columns = c, value = 5) %>%
 #'   interrogate()
 #' ```
 #'
@@ -672,7 +672,7 @@ x_read_disk <- function(
 #'     fn = snip_lowest(column = "a")
 #'   ) %>%
 #'   info_columns(
-#'     columns = vars(a),
+#'     columns = a,
 #'     info = "From {low_a} to {high_a}."
 #'   ) %>%
 #'   info_columns(
@@ -895,9 +895,9 @@ export_report <- function(
 #'     label = "An example.",
 #'     actions = al
 #'   ) %>%
-#'   col_exists(columns = vars(date, date_time)) %>%
+#'   col_exists(columns = c(date, date_time)) %>%
 #'   col_vals_regex(
-#'     columns = vars(b),
+#'     columns = b,
 #'     regex = "[0-9]-[a-z]{3}-[0-9]{3}"
 #'   ) %>%
 #'   rows_distinct() %>%

@@ -251,15 +251,6 @@ interrogate <- function(
       agent$validation_set[[i, "eval_active"]] <- FALSE
     }
     
-    # Set the validation step as `active = FALSE` if there is a
-    # no column available as a result of a select expression
-    if (!is.null(agent$validation_set$column[[i]]) &&
-        is.na(agent$validation_set$column[[i]]) &&
-        agent$validation_set$assertion_type[[i]] %in%
-        column_expansion_fns_vec()) {
-      agent$validation_set[[i, "eval_active"]] <- FALSE
-    }
-
     # Skip the validation step if `active = FALSE`
     if (!agent$validation_set[[i, "eval_active"]]) {
       

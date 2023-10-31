@@ -2814,15 +2814,9 @@ column_validity_checks_column_value <- function(
     value
 ) {
   
-  table_colnames <- colnames(table)
+  column_validity_checks_column(table, column)
   
-  if (!(as.character(column) %in% table_colnames)) {
-    
-    stop(
-      "The value for `column` doesn't correspond to a column name.",
-      call. = FALSE
-    )
-  }
+  table_colnames <- colnames(table)
   
   if (inherits(value, "name")) {
     
@@ -2842,7 +2836,7 @@ column_validity_checks_column_value <- function(
 # Validity check for presence of columns
 column_validity_has_columns <- function(columns) {
   
-  if (length(columns) < 1 || all(is.na(as.character(columns)))) {
+  if (length(columns) < 1 || identical(columns, "NA_character_")) {
     stop(
       "The column selection statement that was used yielded no columns.",
       call. = FALSE

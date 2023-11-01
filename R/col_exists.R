@@ -254,12 +254,14 @@ col_exists <- function(
                            allow_empty = FALSE),
     error = function(cnd) cnd$i %||% cnd
   )
+  ## Missing column selection
   if (rlang::is_error(columns)) {
     cnd <- columns
     if (inherits(cnd, "resolve_eval_err")) {
       # Evaluation errors should be rethrown
       rlang::cnd_signal(cnd)
     }
+    columns <- NA_character_
   }
 
   if (is_a_table_object(x)) {

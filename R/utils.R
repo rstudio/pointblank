@@ -263,12 +263,15 @@ resolve_columns <- function(x, var_expr, preconditions, ...,
   
 }
 
+# If selection gets short-circuited by error, re-run with `strict = FALSE`
+# to safely get the possible column selections
 resolve_columns_possible <- function(tbl, var_expr) {
   success <- tryCatch(
     names(tidyselect::eval_select(var_expr, tbl,
                                   strict = FALSE, allow_empty = FALSE)),
     error = function(cnd) NULL
   )
+  success
 }
 
 resolve_columns_internal <- function(tbl, var_expr, ..., call) {

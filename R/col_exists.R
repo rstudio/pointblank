@@ -227,7 +227,7 @@ NULL
 #' @export
 col_exists <- function(
     x,
-    columns,
+    columns = NULL,
     actions = NULL,
     step_id = NULL,
     label = NULL,
@@ -242,10 +242,6 @@ col_exists <- function(
   columns <- rlang::enquo(columns)
   # Get `columns` as a label
   columns_expr <- as_columns_expr(columns)
-  # Require columns to be specified
-  if (rlang::quo_is_missing(columns)) {
-    stop('argument "columns" is missing, with no default')
-  }
   
   # Resolve the columns based on the expression
   ## Only for `col_exists()`: error gracefully if column not found

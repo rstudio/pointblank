@@ -2395,31 +2395,22 @@ interrogate_complete <- function(
     table
 ) {
   
-  # Determine if grouping columns are provided in the test
-  # for distinct rows and parse the column names
-  if (!is.na(agent$validation_set$column[idx] %>% unlist())) {
-    
+  column_names <- 
+    get_column_as_sym_at_idx(agent = agent, idx = idx) %>%
+    as.character()
+  
+  if (grepl("(,|&)", column_names)) {
     column_names <- 
-      get_column_as_sym_at_idx(agent = agent, idx = idx) %>%
-      as.character()
-    
-    if (grepl("(,|&)", column_names)) {
-      column_names <- 
-        strsplit(split = "(, |,|&)", column_names) %>%
-        unlist()
-    }
-    
-    if (length(column_names) == 1 && column_names == "NA") {
-      if (uses_tidyselect(expr_text = agent$validation_set$columns_expr[idx])) {
-        column_names <- character(0)
-      }
-    }
-    
-  } else if (is.na(agent$validation_set$column[idx] %>% unlist())) {
-    column_names <- get_all_cols(agent = agent)
+      strsplit(split = "(, |,|&)", column_names) %>%
+      unlist()
   }
   
-  col_syms <- rlang::syms(column_names)
+  if (identical(column_names, NA_character_)) {
+    # If column is missing, let it get caught by `column_validity_has_columns`
+    col_syms <- NULL
+  } else {
+    col_syms <- rlang::syms(column_names)
+  }
   
   # Create function for validating the `rows_complete()` step function
   tbl_rows_complete <- function(

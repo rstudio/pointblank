@@ -81,15 +81,12 @@ test_that("tidyselecting 0 columns for rows_* functions = fail at interrogation"
   expect_true(a_rows_distinct$validation_set$eval_error)
   expect_true(a_rows_complete$validation_set$eval_error)
   
-  # TODO: 0-column selection from tidyselect helpers *not* caught by `uses_tidyselect()`
-  #       will still have same behavior but show different eval error message
-  #       (errors from `select()` and not from `column_validity_has_columns()` as above)
   expect_no_error(a_rows_distinct2 <- agent %>% rows_distinct(any_of("z")) %>% interrogate())
   expect_no_error(a_rows_complete2 <- agent %>% rows_complete(any_of("z")) %>% interrogate())
   expect_true(a_rows_distinct2$validation_set$eval_error)
   expect_identical(unlist(a_rows_distinct2$validation_set$column), NA_character_)
   expect_true(a_rows_complete2$validation_set$eval_error)
-  # expect_identical(unlist(a_rows_complete2$validation_set$column), NA_character_)
+  expect_identical(unlist(a_rows_complete2$validation_set$column), NA_character_)
   
 })
 

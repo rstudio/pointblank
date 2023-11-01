@@ -5,9 +5,9 @@ mixed_cols <- c("a", "z")
 select_exprs <- rlang::quos(
   empty            = ,
   null             = NULL,
-  exists           = "a",
-  nonexistent      = "z",
-  mixed            = c("a", "z"),
+  exists           = a,
+  nonexistent      = z,
+  mixed            = c(a, z),
   mixed_all        = all_of(mixed_cols),
   mixed_any        = any_of(mixed_cols),
   empty_tidyselect = starts_with("z")

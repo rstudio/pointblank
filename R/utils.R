@@ -244,7 +244,11 @@ resolve_columns <- function(x, var_expr, preconditions, ...,
   )
   
   if (rlang::is_error(out)) {
-    # If not in validation-planning context (assert/expect/test)
+    # If error is a genuine evaluation error, throw that error
+    if (!is.null(out$parent)) {
+      rlang::cnd_signal(rlang::error_cnd("resolve_eval_err", parent = out))
+    }
+    # If not in validation-planning context (assert/expect/test), rethrow
     if (is_a_table_object(x) || is_secret_agent(x)) {
       rlang::cnd_signal(out)
     } else {

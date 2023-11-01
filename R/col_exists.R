@@ -261,10 +261,10 @@ col_exists <- function(
       rlang::cnd_signal(cnd)
     }
   }
-  # 0-column selection should contextualize attempted column w/ original expr
-  if (is.null(cnd$parent)) {
-    columns <- columns_expr
-  }
+  # # 0-column selection should contextualize attempted column w/ original expr
+  # if (is.null(cnd$parent)) {
+  #   columns <- columns_expr
+  # }
 
   if (is_a_table_object(x)) {
     

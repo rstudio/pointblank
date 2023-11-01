@@ -334,12 +334,8 @@ rows_distinct <- function(
   
   agent <- x
   
-  if (length(columns) > 0) {
+  if (length(columns) > 1) {
     columns <- paste(columns, collapse = ", ")
-  } else if (length(columns) == 1) {
-    columns <- columns
-  } else {
-    columns <- NULL
   }
   
   if (is.null(brief)) {

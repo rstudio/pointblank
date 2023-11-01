@@ -226,7 +226,7 @@ is_secret_agent <- function(x) {
   is_ptblank_agent(x) && (x$label == "::QUIET::")
 }
 
-resolve_preconditions_for_column_select <- function(x, preconditions) {
+apply_preconditions_for_cols <- function(x, preconditions) {
   # Extract tbl
   tbl <- if (is_ptblank_agent(x)) {
     get_tbl_object(x)
@@ -243,7 +243,7 @@ resolve_preconditions_for_column_select <- function(x, preconditions) {
 resolve_columns <- function(x, var_expr, preconditions, ...,
                             call = rlang::caller_env()) {
   
-  tbl <- resolve_preconditions_for_column_select(x, preconditions)
+  tbl <- apply_preconditions_for_cols(x, preconditions)
   
   out <- tryCatch(
     expr = resolve_columns_internal(tbl, var_expr, ..., call = call),
@@ -255,13 +255,23 @@ resolve_columns <- function(x, var_expr, preconditions, ...,
     if (is_a_table_object(x) || is_secret_agent(x)) {
       rlang::cnd_signal(out)
     } else {
-      # Else (mid-planning): return columns attempted to subset or NA if empty
-      out$i %||% NA_character_
+      # Else (mid-planning): grab columns attempted to subset
+      fail <- out$i
+      success <- resolve_columns_possible(tbl, var_expr)
+      out <- c(success, fail) %||% NA_character_
     }
-  } else {
-    out
   }
   
+  out
+  
+}
+
+resolve_columns_possible <- function(tbl, var_expr) {
+  success <- tryCatch(
+    names(tidyselect::eval_select(var_expr, tbl,
+                                  strict = FALSE, allow_empty = FALSE)),
+    error = function(cnd) NULL
+  )
 }
 
 resolve_columns_internal <- function(tbl, var_expr, ..., call) {

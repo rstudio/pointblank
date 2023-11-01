@@ -212,7 +212,12 @@ materialize_table <- function(tbl, check = TRUE) {
 }
 
 as_columns_expr <- function(columns) {
-  gsub("^\"|\"$", "", rlang::as_label(columns))
+  columns_expr <- gsub("^\"|\"$", "", rlang::as_label(columns))
+  # Treat NULL and missing `columns` as the same
+  if (columns_expr == "<empty>") {
+    columns_expr <- "NULL"
+  }
+  columns_expr
 }
 
 is_secret_agent <- function(x) {

@@ -166,3 +166,24 @@ test_that("`col_exists()`s show expected column selection failure/success behavi
   }
   
 })
+
+test_that("Genuine evaluation errors are rethrown immediately (tested on a sample)", {
+  
+  errs <- rlang::quos(
+    "Oh no!" = stop("Oh no!"),
+    "not found" = all_of(I_dont_exist)
+  )
+  simple_err1 <- rlang::quo(stop("Oh no!"))
+  simple_err2 <- rlang::quo(all_of(I_dont_exist))
+  
+  for (err_regex in names(errs)) {
+    
+    err_expr <- errs[[err_regex]]
+  
+    expect_error(agent %>% col_vals_between({{ err_expr }}, 2, 5), err_regex)
+    expect_error(agent %>% rows_distinct({{ err_expr }}), err_regex)
+    expect_error(agent %>% col_exists({{ err_expr }}), err_regex)
+  
+  }
+  
+})

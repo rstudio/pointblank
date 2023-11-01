@@ -2229,7 +2229,7 @@ interrogate_col_exists <- function(
   ) {
     
     if (column_input_missing) {
-      stop("`column` argument must be supplied.", call. = FALSE)
+      stop("`columns` argument must be supplied.", call. = FALSE)
     }
     
     # Ensure that the input `table` is actually a table object

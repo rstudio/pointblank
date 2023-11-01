@@ -48,7 +48,6 @@ test_that("`col_*()`s show expected column selection failure/success behavior", 
   check_behaviors <- function(agent, expr_name) {
     x <- suppressMessages(interrogate(agent))
     behaviors <- get_behaviors(x$validation_set)
-    if (expr_name == "empty") { expr_name <- "null" } # NULL and <empty> should behave the same
     expect_identical(behaviors[["n_steps"]], expected_behaviors[["n_steps", expr_name]])
     expect_identical(behaviors[["column"]], expected_behaviors[["column", expr_name]])
     expect_identical(behaviors[["eval_error"]], expected_behaviors[["eval_error", expr_name]])
@@ -109,7 +108,6 @@ test_that("`rows_*()`s show expected column selection failure/success behavior",
   check_behaviors <- function(agent, expr_name) {
     x <- suppressMessages(interrogate(agent))
     behaviors <- get_behaviors(x$validation_set)
-    if (expr_name == "empty") { expr_name <- "null" } # NULL and <empty> should behave the same
     expect_identical(behaviors[["n_steps"]], expected_behaviors[["n_steps", expr_name]])
     expect_identical(behaviors[["column"]], expected_behaviors[["column", expr_name]])
     expect_identical(behaviors[["eval_error"]], expected_behaviors[["eval_error", expr_name]])
@@ -130,31 +128,25 @@ test_that("`col_exists()`s show expected column selection failure/success behavi
   
   expected_behaviors <- matrix(
     c(
-      list(NULL, 1L, 1L, 1L, 2L, 2L, 1L, 1L),
-      list(NULL, NA_character_, "a", "z", c("a", "z"), c("a", "z"), "a", NA_character_),
-      list(NULL, T, F, F, F, F, F, F)
+      list(1L, 1L, 1L, 1L, 2L, 2L, 1L, 1L),
+      list(NA_character_, NA_character_, "a", "z", c("a", "z"), c("a", "z"), "a", NA_character_),
+      list(T, T, F, F, F, F, F, F)
     ),
     ncol = length(select_exprs), byrow = TRUE, dimnames = behaviors_dimnames
   )
   expected_behaviors
-  # |           |empty |null |exists |nonexistent |mixed       |mixed_all   |mixed_any |empty_tidyselect |
-  # |:----------|:-----|:----|:------|:-----------|:-----------|:-----------|:---------|:----------------|
-  # |n_steps    |ERROR |1    |1      |1           |2           |2           |1         |1                |
-  # |column     |ERROR |NA   |a      |z           |c("a", "z") |c("a", "z") |a         |NA               |
-  # |eval_error |ERROR |TRUE |FALSE  |FALSE       |FALSE       |FALSE       |FALSE     |FALSE            |
+  # |           |empty/null |exists |nonexistent |mixed       |mixed_all   |mixed_any |empty_tidyselect |
+  # |:----------|:----------|:------|:-----------|:-----------|:-----------|:---------|:----------------|
+  # |n_steps    |1          |1      |1           |2           |2           |1         |1                |
+  # |column     |NA         |a      |z           |c("a", "z") |c("a", "z") |a         |NA               |
+  # |eval_error |TRUE       |FALSE  |FALSE       |FALSE       |FALSE       |FALSE     |FALSE            |
   
   check_behaviors <- function(agent, expr_name) {
-    if (expr_name == "empty") {
-      # Missing argument for `columns` errors immediately during validation
-      # planning (old behavior)
-      expect_error(agent)
-    } else {
-      x <- suppressMessages(interrogate(agent))
-      behaviors <- get_behaviors(x$validation_set)
-      expect_identical(behaviors[["n_steps"]], expected_behaviors[["n_steps", expr_name]])
-      expect_identical(behaviors[["column"]], expected_behaviors[["column", expr_name]])
-      expect_identical(behaviors[["eval_error"]], expected_behaviors[["eval_error", expr_name]])
-    }
+    x <- suppressMessages(interrogate(agent))
+    behaviors <- get_behaviors(x$validation_set)
+    expect_identical(behaviors[["n_steps"]], expected_behaviors[["n_steps", expr_name]])
+    expect_identical(behaviors[["column"]], expected_behaviors[["column", expr_name]])
+    expect_identical(behaviors[["eval_error"]], expected_behaviors[["eval_error", expr_name]])
   }
   
   for (expr_name in names(select_exprs)) {

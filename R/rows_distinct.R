@@ -297,7 +297,7 @@ rows_distinct <- function(
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
   # `rows_*()` functions treat `NULL` as `everything()`
-  if (rlang::quo_is_null(columns)) {
+  if (rlang::quo_is_null(columns) || rlang::quo_is_missing(columns)) {
     columns <- rlang::quo(tidyselect::everything())
   }
   # Get `columns` as a label

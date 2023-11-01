@@ -1,17 +1,19 @@
 agent <- create_agent(tbl = small_table[, c("a", "b", "c")])
-mixed_var <- c("a", "z")
+mixed_cols <- c("a", "z")
 
+# Column selection expressions to test
 select_exprs <- rlang::quos(
   empty            = ,
   null             = NULL,
   exists           = "a",
   nonexistent      = "z",
   mixed            = c("a", "z"),
-  mixed_var        = all_of(mixed_var),
-  mixed_safe       = any_of(c("a", "z")),
+  mixed_all        = all_of(mixed_cols),
+  mixed_any        = any_of(mixed_cols),
   empty_tidyselect = starts_with("z")
 )
 
+# Properties of `$validation_set` to test
 get_behaviors <- function(vs) {
   list(
     n_steps = nrow(vs),
@@ -19,6 +21,12 @@ get_behaviors <- function(vs) {
     eval_error = any(vs$eval_error)
   )
 }
+
+# Dimnames for `expected_behaviors` matrix
+behaviors_dimnames <- list(
+  property = c("n_steps", "column", "eval_error"),
+  col_select = names(select_exprs)
+)
 
 test_that("`col_*()`s show expected column selection failure/success behavior", {
 
@@ -28,16 +36,14 @@ test_that("`col_*()`s show expected column selection failure/success behavior", 
       list(NA_character_, NA_character_, "a", "z", c("a", "z"), c("a", "z"), "a", NA_character_),
       list(T, T, F, T, T, T, F, T)
     ),
-    ncol = length(select_exprs), byrow = TRUE
+    ncol = length(select_exprs), byrow = TRUE, dimnames = behaviors_dimnames
   )
-  colnames(expected_behaviors) <- names(select_exprs)
-  rownames(expected_behaviors) <- c("n_steps", "column", "eval_error")
   expected_behaviors
-  # |           |null/empty |exists |nonexistent |mixed |mixed_var |mixed_safe |empty_tidyselect |
-  # |:----------|:----------|:------|:-----------|:-----|:---------|:----------|:----------------|
-  # |n_steps    |1          |1      |1           |2     |2         |1          |1                |
-  # |column     |NA         |a      |z           |a, z  |a, z      |a          |NA               |
-  # |eval_error |TRUE       |FALSE  |TRUE        |TRUE  |TRUE      |FALSE      |TRUE             |
+  # |           |empty/null |exists |nonexistent |mixed       |mixed_all   |mixed_any |empty_tidyselect |
+  # |:----------|:----------|:------|:-----------|:-----------|:-----------|:---------|:----------------|
+  # |n_steps    |1          |1      |1           |2           |2           |1         |1                |
+  # |column     |NA         |a      |z           |c("a", "z") |c("a", "z") |a         |NA               |
+  # |eval_error |TRUE       |FALSE  |TRUE        |TRUE        |TRUE        |FALSE     |TRUE             |
   
   check_behaviors <- function(agent, expr_name) {
     x <- suppressMessages(interrogate(agent))
@@ -91,16 +97,14 @@ test_that("`rows_*()`s show expected column selection failure/success behavior",
       list(all_cols, all_cols, "a", "z", "a, z", "a, z", "a", NA_character_),
       list(F, F, F, T, T, T, F, T)
     ),
-    ncol = length(select_exprs), byrow = TRUE
+    ncol = length(select_exprs), byrow = TRUE, dimnames = behaviors_dimnames
   )
-  colnames(expected_behaviors) <- names(select_exprs)
-  rownames(expected_behaviors) <- c("n_steps", "column", "eval_error")
   expected_behaviors
-  # |           |null/empty |exists |nonexistent |mixed |mixed_var |mixed_safe |empty_tidyselect |
-  # |:----------|:----------|:------|:-----------|:-----|:---------|:----------|:----------------|
-  # |n_steps    |1          |1      |1           |1     |1         |1          |1                |
-  # |column     |a, b, c    |a      |z           |a, z  |a, z      |a          |NA               |
-  # |eval_error |FALSE      |FALSE  |TRUE        |TRUE  |TRUE      |FALSE      |TRUE             |
+  # |           |empty/null |exists |nonexistent |mixed |mixed_all |mixed_any |empty_tidyselect |
+  # |:----------|:----------|:------|:-----------|:-----|:---------|:---------|:----------------|
+  # |n_steps    |1          |1      |1           |1     |1         |1         |1                |
+  # |column     |a, b, c    |a      |z           |a, z  |a, z      |a         |NA               |
+  # |eval_error |FALSE      |FALSE  |TRUE        |TRUE  |TRUE      |FALSE     |TRUE             |
   
   check_behaviors <- function(agent, expr_name) {
     x <- suppressMessages(interrogate(agent))
@@ -126,20 +130,18 @@ test_that("`col_exists()`s show expected column selection failure/success behavi
   
   expected_behaviors <- matrix(
     c(
-      list(1L, 1L, 1L, 1L, 2L, 2L, 1L, 1L),
-      list(NA_character_, NA_character_, "a", "z", c("a", "z"), c("a", "z"), "a", NA_character_),
-      list(T, T, F, F, F, F, F, F)
+      list(NULL, 1L, 1L, 1L, 2L, 2L, 1L, 1L),
+      list(NULL, NA_character_, "a", "z", c("a", "z"), c("a", "z"), "a", NA_character_),
+      list(NULL, T, F, F, F, F, F, F)
     ),
-    ncol = length(select_exprs), byrow = TRUE
+    ncol = length(select_exprs), byrow = TRUE, dimnames = behaviors_dimnames
   )
-  colnames(expected_behaviors) <- names(select_exprs)
-  rownames(expected_behaviors) <- c("n_steps", "column", "eval_error")
   expected_behaviors
-  # |           |null/empty |exists |nonexistent |mixed |mixed_var |mixed_safe |empty_tidyselect |
-  # |:----------|:----------|:------|:-----------|:-----|:---------|:----------|:----------------|
-  # |n_steps    |1          |1      |1           |1     |1         |1          |1                |
-  # |column     |NA         |a      |z           |a, z  |a, z      |a          |NA               |
-  # |eval_error |TRUE/ERROR |FALSE  |FALSE       |FALSE |FALSE     |FALSE      |FALSE            |
+  # |           |empty |null |exists |nonexistent |mixed       |mixed_all   |mixed_any |empty_tidyselect |
+  # |:----------|:-----|:----|:------|:-----------|:-----------|:-----------|:---------|:----------------|
+  # |n_steps    |ERROR |1    |1      |1           |2           |2           |1         |1                |
+  # |column     |ERROR |NA   |a      |z           |c("a", "z") |c("a", "z") |a         |NA               |
+  # |eval_error |ERROR |TRUE |FALSE  |FALSE       |FALSE       |FALSE       |FALSE     |FALSE            |
   
   check_behaviors <- function(agent, expr_name) {
     if (expr_name == "empty") {

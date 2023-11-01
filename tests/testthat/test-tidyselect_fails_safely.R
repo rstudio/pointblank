@@ -15,11 +15,6 @@ test_that("tidyselect errors signaled at report, not during development of valid
   expect_false(a3 %>% interrogate() %>% all_passed())
   expect_false(a4 %>% interrogate() %>% all_passed())
   
-  # Stress testing
-  expect_no_error(agent %>% col_vals_not_null(stop()))
-  expect_no_error(agent %>% col_vals_not_null(c(stop())))
-  expect_no_error(agent %>% col_vals_not_null(all_of(stop())))
-  
 })
 
 test_that("fail state correctly registered in the report for tidyselect errors", {

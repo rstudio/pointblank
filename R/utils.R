@@ -152,13 +152,6 @@ exported_tidyselect_fns <- function() {
   c("starts_with", "ends_with", "contains", "matches", "everything")
 }
 
-uses_tidyselect <- function(expr_text) {
-  grepl(
-    "^starts_with\\(|^ends_with\\(|^contains\\(|^matches\\(|^everything\\(",
-    expr_text
-  )
-}
-
 get_assertion_type_at_idx <- function(agent, idx) {
   agent$validation_set[[idx, "assertion_type"]]
 }

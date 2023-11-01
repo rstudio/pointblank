@@ -2217,12 +2217,20 @@ interrogate_col_exists <- function(
   # Obtain the target column as a symbol
   column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
   
+  # Get `column_expr` to signal error if user didn't supply `columns`
+  column_input_missing <- agent$validation_set$columns_expr[idx] == "NULL"
+  
   # Create function for validating the `col_exists()` step function
   tbl_col_exists <- function(
     table,
     column,
-    column_names
+    column_names,
+    column_input_missing
   ) {
+    
+    if (column_input_missing) {
+      stop("`column` argument must be supplied.", call. = FALSE)
+    }
     
     # Ensure that the input `table` is actually a table object
     tbl_validity_check(table = table)
@@ -2235,7 +2243,8 @@ interrogate_col_exists <- function(
     tbl_col_exists(
       table = table,
       column = {{ column }},
-      column_names = column_names
+      column_names = column_names,
+      column_input_missing = column_input_missing
     )
   )
 }

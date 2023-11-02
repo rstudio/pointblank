@@ -751,23 +751,19 @@ get_agent_report <- function(
           }
         }
         
-        if (
-          is.null(column_i) |
-          (is.list(column_i) && is.na(unlist(column_i)))
-        ) {
-          
-          NA_character_
-          
-        } else if (is.na(column_i)) {
+        # If column missing
+        if (is.null(column_i) || identical(unlist(column_i), NA_character_)) {
           
           columns_expr <- validation_set$columns_expr[[x]]
+          not_interrogated <- is.na(validation_set$eval_error[[x]])
           eval_error <- isTRUE(validation_set$eval_error[[x]])
           
-          # If no column selected AND:
+          # If column selection attempted AND:
+          # - in validation planning, OR
           # - the evaluation errors, OR
           # - is a col_exists() step
           show_column_expr <- columns_expr != "NULL" &&
-            (eval_error || assertion_str == "col_exists")
+            (not_interrogated || eval_error || assertion_str == "col_exists")
           # Then display the original column selection expression for debugging
           if (show_column_expr) {
             as.character(

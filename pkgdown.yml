@@ -11,7 +11,7 @@ articles:
   VALID-V: VALID-V.html
   VALID-VI: VALID-VI.html
   validation_workflows: validation_workflows.html
-last_built: 2023-10-31T15:23Z
+last_built: 2023-11-02T14:08Z
 urls:
   reference: https://rstudio.github.io/pointblank/reference
   article: https://rstudio.github.io/pointblank/articles

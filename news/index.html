@@ -83,6 +83,10 @@
 </ul><p>These dynamic values may be useful for validations that get expanded into multiple steps.</p>
 </li>
 </ul></div>
+<div class="section level3">
+<h3 id="minor-improvements-and-bug-fixes-development-version">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-development-version"></a></h3>
+<ul><li>When no columns are returned from a <a href="https://tidyselect.r-lib.org" class="external-link">tidyselect</a> expression in <code>columns</code>, the agent’s report now displays the originally supplied <em>expression</em> instead of simply blank (e.g., in <code>create_agent(small_table) %&gt;% col_vals_null(matches("z"))</code>).</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.11.4" id="pointblank-0114">pointblank 0.11.4<a class="anchor" aria-label="anchor" href="#pointblank-0114"></a></h2><p class="text-muted">CRAN release: 2023-04-25</p>

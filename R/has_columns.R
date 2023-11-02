@@ -186,9 +186,11 @@ has_columns <- function(
     column_quos <- list(columns)
   }
   
+  .call = rlang::current_env()
   has_column <- function(col_expr) {
     columns <- tryCatch(
-      expr = resolve_columns(x = x, var_expr = col_expr, allow_empty = FALSE),
+      expr = resolve_columns(x = x, var_expr = col_expr,
+                             allow_empty = FALSE, call = .call),
       error = function(cnd) cnd
     )
     ## Check for error from {tidyselect}

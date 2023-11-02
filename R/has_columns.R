@@ -208,4 +208,3 @@ has_columns <- function(
   all(vapply(column_quos, has_column, logical(1), USE.NAMES = FALSE))
   
 }
-

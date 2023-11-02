@@ -25,4 +25,34 @@ test_that("the `has_columns()` function works with tidyselect", {
   expect_true(small_table %>% has_columns(everything()))
   expect_true(small_table %>% has_columns(matches(".*te")))
   
+  # Empty selection from helpers is FALSE
+  expect_false(small_table %>% has_columns(contains("z")))
+  expect_false(small_table %>% has_columns(starts_with("z")))
+  expect_false(small_table %>% has_columns(ends_with("z")))
+  expect_false(small_table %>% has_columns(last_col() + 1))
+  expect_false(small_table %>% has_columns(matches("z")))
+  
+  # Genuine evaluation errors are rethrown
+  expect_error(small_table %>% has_columns(stop("Oh no!")), "Oh no!")
+  expect_error(small_table %>% has_columns(c(stop("Oh no!"))), "Oh no!")
+  expect_error(small_table %>% has_columns(c(a, stop("Oh no!"))), "Oh no!")
+  
+  # Mix of selections work like AND
+  expect_true(small_table %>% has_columns(c(contains("da"), contains("te"))))
+  expect_true(small_table %>% has_columns(c(a, contains("te"))))
+  expect_false(small_table %>% has_columns(c(z, contains("te"))))
+  expect_false(small_table %>% has_columns(c(a, contains("z"))))
+  expect_false(small_table %>% has_columns(c(contains("da"), contains("z"))))
+  
+  # `any_of()`/`all_of()` patterns work
+  has_one <- c("a", "y", "z")
+  has_all <- c("a", "b", "c")
+  has_none <- c("x", "y", "z")
+  expect_true(small_table %>% has_columns(any_of(has_one)))
+  expect_true(small_table %>% has_columns(any_of(has_all)))
+  expect_false(small_table %>% has_columns(any_of(has_none)))
+  expect_false(small_table %>% has_columns(all_of(has_one)))
+  expect_true(small_table %>% has_columns(all_of(has_all)))
+  expect_false(small_table %>% has_columns(all_of(has_none)))
+  
 })

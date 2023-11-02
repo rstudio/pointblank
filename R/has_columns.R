@@ -27,10 +27,10 @@
 #' specified name is present in a table object. This function works well enough
 #' on a table object but it can also be used as part of a formula in any
 #' validation function's `active` argument. Using `active = ~ . %>%
-#' has_columns("column_1")` means that the validation step will be inactive if
+#' has_columns(column_1)` means that the validation step will be inactive if
 #' the target table doesn't contain a column named `column_1`. We can also use
-#' multiple columns in `vars()` so having `active = ~ . %>%
-#' has_columns(vars(column_1, column_2))` in a validation step will make it
+#' multiple columns in `c()`, so having `active = ~ . %>%
+#' has_columns(c(column_1, column_2))` in a validation step will make it
 #' inactive at [interrogate()] time unless the columns `column_1` and `column_2`
 #' are both present.
 #' 
@@ -60,11 +60,10 @@
 #' ```
 #' 
 #' With `has_columns()` we can check for column existence by using it directly
-#' on the table. A column name can be verified as present by using it in double
-#' quotes.
+#' on the table.
 #' 
 #' ```r
-#' small_table %>% has_columns(columns = "date")
+#' small_table %>% has_columns(columns = date)
 #' ```
 #' 
 #' ```
@@ -75,17 +74,17 @@
 #' columns are present in `small_table`.
 #' 
 #' ```r
-#' small_table %>% has_columns(columns = c("a", "b"))
+#' small_table %>% has_columns(columns = c(a, b))
 #' ```
 #' 
 #' ```
 #' ## [1] TRUE
 #' ```
 #' 
-#' It's possible to supply column names in `vars()` as well:
+#' It's possible to use a tidyselect helper as well:
 #' 
 #' ```r
-#' small_table %>% has_columns(columns = vars(a, b))
+#' small_table %>% has_columns(columns = c(a, starts_with("b")))
 #' ```
 #' 
 #' ```
@@ -96,10 +95,24 @@
 #' need to be present to obtain `TRUE`).
 #' 
 #' ```r
-#' small_table %>% has_columns(columns = vars(a, h))
+#' small_table %>% has_columns(columns = c(a, h))
 #' ```
 #' 
 #' ```
+#' ## [1] FALSE
+#' ```
+#' 
+#' The same holds in the case of tidyselect helpers. Because no columns start
+#' with `"h"`, including `starts_with("h")` returns `FALSE` for the entire
+#' check.
+#' 
+#' ```r
+#' small_table %>% has_columns(columns = starts_with("h"))
+#' small_table %>% has_columns(columns = c(a, starts_with("h")))
+#' ```
+#' 
+#' ```
+#' ## [1] FALSE
 #' ## [1] FALSE
 #' ```
 #' 
@@ -120,16 +133,16 @@
 #'   ) %>%
 #'   col_vals_gt(
 #'     columns = c, value = vars(a),
-#'     active = ~ . %>% has_columns(vars(a, c))
+#'     active = ~ . %>% has_columns(c(a, c))
 #'   ) %>%
 #'   col_vals_lt(
 #'     columns = h, value = vars(d),
 #'     preconditions = ~ . %>% dplyr::mutate(h = d - a),
-#'     active = ~ . %>% has_columns(vars(a, d))
+#'     active = ~ . %>% has_columns(c(a, d))
 #'   ) %>%
 #'   col_is_character(
 #'     columns = j,
-#'     active = ~ . %>% has_columns("j")
+#'     active = ~ . %>% has_columns(j)
 #'   ) %>%
 #'   interrogate()
 #' ```

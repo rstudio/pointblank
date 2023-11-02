@@ -166,7 +166,7 @@
 #'   logical value. With this approach, the **pointblank** function
 #'   [has_columns()] can be used to determine whether to make a validation step
 #'   active on the basis of one or more columns existing in the table 
-#'   (e.g., `~ . %>% has_columns(vars(d, e))`).
+#'   (e.g., `~ . %>% has_columns(c(d, e))`).
 #'   
 #' @return For the validation function, the return value is either a
 #'   `ptblank_agent` object or a table object (depending on whether an *agent*

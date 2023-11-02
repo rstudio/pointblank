@@ -152,23 +152,16 @@ exported_tidyselect_fns <- function() {
   c("starts_with", "ends_with", "contains", "matches", "everything")
 }
 
-uses_tidyselect <- function(expr_text) {
-  grepl(
-    "^starts_with\\(|^ends_with\\(|^contains\\(|^matches\\(|^everything\\(",
-    expr_text
-  )
-}
-
 get_assertion_type_at_idx <- function(agent, idx) {
   agent$validation_set[[idx, "assertion_type"]]
 }
 
 get_column_as_sym_at_idx <- function(agent, idx) {
-  rlang::sym(
-    agent$validation_set[[idx, "column"]] %>%
-      unlist() %>%
-      gsub("'", "", .)
-  )
+  column <- unlist(agent$validation_set[[idx, "column"]])
+  if (!is.na(column)) {
+    column <- rlang::sym(gsub("'", "", column))
+  }
+  column
 }
 
 get_values_at_idx <- function(agent, idx) {
@@ -219,45 +212,19 @@ materialize_table <- function(tbl, check = TRUE) {
 }
 
 as_columns_expr <- function(columns) {
-  gsub("^\"|\"$", "", rlang::as_label(columns))
+  columns_expr <- gsub("^\"|\"$", "", rlang::as_label(columns))
+  # Treat NULL and missing `columns` as the same
+  if (columns_expr == "<empty>") {
+    columns_expr <- "NULL"
+  }
+  columns_expr
 }
 
 is_secret_agent <- function(x) {
   is_ptblank_agent(x) && (x$label == "::QUIET::")
 }
 
-resolve_columns <- function(x, var_expr, preconditions, ...,
-                            call = rlang::caller_env()) {
-  
-  force(x) # To avoid `restarting interrupted promise evaluation` warnings
-  
-  out <- tryCatch(
-    expr = resolve_columns_internal(x, var_expr, preconditions, ...,
-                                    call = call),
-    error = function(cnd) cnd
-  )
-  
-  if (rlang::is_error(out)) {
-    # If not in validation-planning context (assert/expect/test)
-    if (is_a_table_object(x) || is_secret_agent(x)) {
-      rlang::cnd_signal(out)
-    } else {
-      # Else (mid-planning): return columns attempted to subset or NA if empty
-      out$i %||% NA_character_
-    }
-  } else {
-    out
-  }
-  
-}
-
-resolve_columns_internal <- function(x, var_expr, preconditions, ..., call) {
-  
-  # Return NA if the expr is NULL
-  if (rlang::quo_is_null(var_expr)) {
-    return(NA_character_)
-  }
-  
+apply_preconditions_for_cols <- function(x, preconditions) {
   # Extract tbl
   tbl <- if (is_ptblank_agent(x)) {
     get_tbl_object(x)
@@ -267,6 +234,56 @@ resolve_columns_internal <- function(x, var_expr, preconditions, ..., call) {
   # Apply preconditions
   if (!is.null(preconditions)) {
     tbl <- apply_preconditions(tbl = tbl, preconditions = preconditions)
+  }
+  tbl
+}
+
+resolve_columns <- function(x, var_expr, preconditions, ...,
+                            call = rlang::caller_env()) {
+  
+  tbl <- apply_preconditions_for_cols(x, preconditions)
+  
+  out <- tryCatch(
+    expr = resolve_columns_internal(tbl, var_expr, ..., call = call),
+    error = function(cnd) cnd
+  )
+  
+  if (rlang::is_error(out)) {
+    # If error is a genuine evaluation error, throw that error
+    if (!is.null(out$parent)) {
+      rlang::cnd_signal(rlang::error_cnd("resolve_eval_err", parent = out))
+    }
+    # If not in validation-planning context (assert/expect/test), rethrow
+    if (is_a_table_object(x) || is_secret_agent(x)) {
+      rlang::cnd_signal(out)
+    } else {
+      # Else (mid-planning): grab columns attempted to subset
+      fail <- out$i
+      success <- resolve_columns_possible(tbl, var_expr)
+      out <- c(success, fail) %||% NA_character_
+    }
+  }
+  
+  out
+  
+}
+
+# If selection gets short-circuited by error, re-run with `strict = FALSE`
+# to safely get the possible column selections
+resolve_columns_possible <- function(tbl, var_expr) {
+  success <- tryCatch(
+    names(tidyselect::eval_select(var_expr, tbl,
+                                  strict = FALSE, allow_empty = FALSE)),
+    error = function(cnd) NULL
+  )
+  success
+}
+
+resolve_columns_internal <- function(tbl, var_expr, ..., call) {
+  
+  # Return NA if the expr is NULL
+  if (rlang::quo_is_null(var_expr)) {
+    return(NA_character_)
   }
   
   # Special case `serially()`: just deparse elements and bypass tidyselect

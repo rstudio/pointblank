@@ -8,7 +8,7 @@
 \usage{
 col_exists(
   x,
-  columns,
+  columns = NULL,
   actions = NULL,
   step_id = NULL,
   label = NULL,

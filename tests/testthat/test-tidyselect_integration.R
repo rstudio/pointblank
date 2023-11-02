@@ -60,7 +60,7 @@ test_that("Full range of tidyselect features available in column selection", {
   # NEW: {tidyselect} `where()` predicate:
   expect_success(expect_rows_distinct(tbl, !tidyselect::where(is.character)))
   expect_success(expect_rows_distinct(tbl, tidyselect::where(is.numeric)))
-  expect_failure(expect_rows_distinct(tbl, tidyselect::where(is.character)))
+  expect_error(expect_rows_distinct(tbl, tidyselect::where(is.character)))
   
   # NEW: {tidyselect} functions in complex expressions
   expect_success(expect_rows_distinct(tbl, c(x, tidyselect::all_of(exist_col))))

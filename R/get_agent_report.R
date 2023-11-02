@@ -751,16 +751,40 @@ get_agent_report <- function(
           }
         }
         
-        if (
-          is.null(column_i) |
-          (is.list(column_i) && is.na(unlist(column_i)))
-        ) {
+        # If column missing
+        if (is.null(column_i) || identical(unlist(column_i), NA_character_)) {
           
-          NA_character_
+          columns_expr <- validation_set$columns_expr[[x]]
+          not_interrogated <- is.na(validation_set$eval_error[[x]])
+          eval_error <- isTRUE(validation_set$eval_error[[x]])
           
-        } else if (is.na(column_i)) {
-          
-          NA_character_
+          # If column selection attempted AND:
+          # - in validation planning, OR
+          # - the evaluation errors, OR
+          # - is a col_exists() step
+          show_column_expr <- columns_expr != "NULL" &&
+            (not_interrogated || eval_error || assertion_str == "col_exists")
+          # Then display the original column selection expression for debugging
+          if (show_column_expr) {
+            as.character(
+              htmltools::tags$p(
+                title = columns_expr,
+                style = htmltools::css(
+                  `margin-top` = "0",
+                  `margin-bottom` = "0",
+                  `font-family` = "monospace",
+                  `white-space` = "nowrap",
+                  `text-overflow` = "ellipsis",
+                  overflow = "hidden",
+                  color = if (eval_error) "firebrick",
+                  `font-face` = "maroon"
+                ),
+                columns_expr
+              )
+            )
+          } else {
+            NA_character_
+          }
           
         } else {
           

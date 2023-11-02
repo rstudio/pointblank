@@ -251,15 +251,6 @@ interrogate <- function(
       agent$validation_set[[i, "eval_active"]] <- FALSE
     }
     
-    # Set the validation step as `active = FALSE` if there is a
-    # no column available as a result of a select expression
-    if (!is.null(agent$validation_set$column[[i]]) &&
-        is.na(agent$validation_set$column[[i]]) &&
-        agent$validation_set$assertion_type[[i]] %in%
-        column_expansion_fns_vec()) {
-      agent$validation_set[[i, "eval_active"]] <- FALSE
-    }
-
     # Skip the validation step if `active = FALSE`
     if (!agent$validation_set[[i, "eval_active"]]) {
       
@@ -1070,7 +1061,7 @@ interrogate_comparison <- function(
   # Obtain the target column as a label
   column <- 
     get_column_as_sym_at_idx(agent = agent, idx = idx) %>%
-    rlang::as_label()
+    as.character()
   
   # Determine whether NAs should be allowed
   na_pass <- get_column_na_pass_at_idx(agent = agent, idx = idx)
@@ -2226,12 +2217,20 @@ interrogate_col_exists <- function(
   # Obtain the target column as a symbol
   column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
   
+  # Get `column_expr` to signal error if user didn't supply `columns`
+  column_input_missing <- agent$validation_set$columns_expr[idx] == "NULL"
+  
   # Create function for validating the `col_exists()` step function
   tbl_col_exists <- function(
     table,
     column,
-    column_names
+    column_names,
+    column_input_missing
   ) {
+    
+    if (column_input_missing) {
+      stop("`columns` argument must be supplied.", call. = FALSE)
+    }
     
     # Ensure that the input `table` is actually a table object
     tbl_validity_check(table = table)
@@ -2244,7 +2243,8 @@ interrogate_col_exists <- function(
     tbl_col_exists(
       table = table,
       column = {{ column }},
-      column_names = column_names
+      column_names = column_names,
+      column_input_missing = column_input_missing
     )
   )
 }
@@ -2313,31 +2313,22 @@ interrogate_distinct <- function(
     table
 ) {
   
-  # Determine if grouping columns are provided in the test
-  # for distinct rows and parse the column names
-  if (!is.na(agent$validation_set$column[idx] %>% unlist())) {
-    
+  column_names <- 
+    get_column_as_sym_at_idx(agent = agent, idx = idx) %>%
+    as.character()
+  
+  if (grepl("(,|&)", column_names)) {
     column_names <- 
-      get_column_as_sym_at_idx(agent = agent, idx = idx) %>%
-      as.character()
-    
-    if (grepl("(,|&)", column_names)) {
-      column_names <- 
-        strsplit(split = "(, |,|&)", column_names) %>%
-        unlist()
-    }
-    
-    if (length(column_names) == 1 && column_names == "NA") {
-      if (uses_tidyselect(expr_text = agent$validation_set$columns_expr[idx])) {
-        column_names <- character(0)
-      }
-    }
-    
-  } else if (is.na(agent$validation_set$column[idx] %>% unlist())) {
-    column_names <- get_all_cols(agent = agent)
+      strsplit(split = "(, |,|&)", column_names) %>%
+      unlist()
   }
   
-  col_syms <- rlang::syms(column_names)
+  if (identical(column_names, NA_character_)) {
+    # If column is missing, let it get caught by `column_validity_has_columns`
+    col_syms <- NULL
+  } else {
+    col_syms <- rlang::syms(column_names)
+  }
   
   # Create function for validating the `rows_distinct()` step function
   tbl_rows_distinct <- function(
@@ -2413,31 +2404,22 @@ interrogate_complete <- function(
     table
 ) {
   
-  # Determine if grouping columns are provided in the test
-  # for distinct rows and parse the column names
-  if (!is.na(agent$validation_set$column[idx] %>% unlist())) {
-    
+  column_names <- 
+    get_column_as_sym_at_idx(agent = agent, idx = idx) %>%
+    as.character()
+  
+  if (grepl("(,|&)", column_names)) {
     column_names <- 
-      get_column_as_sym_at_idx(agent = agent, idx = idx) %>%
-      as.character()
-    
-    if (grepl("(,|&)", column_names)) {
-      column_names <- 
-        strsplit(split = "(, |,|&)", column_names) %>%
-        unlist()
-    }
-    
-    if (length(column_names) == 1 && column_names == "NA") {
-      if (uses_tidyselect(expr_text = agent$validation_set$columns_expr[idx])) {
-        column_names <- character(0)
-      }
-    }
-    
-  } else if (is.na(agent$validation_set$column[idx] %>% unlist())) {
-    column_names <- get_all_cols(agent = agent)
+      strsplit(split = "(, |,|&)", column_names) %>%
+      unlist()
   }
   
-  col_syms <- rlang::syms(column_names)
+  if (identical(column_names, NA_character_)) {
+    # If column is missing, let it get caught by `column_validity_has_columns`
+    col_syms <- NULL
+  } else {
+    col_syms <- rlang::syms(column_names)
+  }
   
   # Create function for validating the `rows_complete()` step function
   tbl_rows_complete <- function(
@@ -2823,15 +2805,9 @@ column_validity_checks_column_value <- function(
     value
 ) {
   
-  table_colnames <- colnames(table)
+  column_validity_checks_column(table, column)
   
-  if (!(as.character(column) %in% table_colnames)) {
-    
-    stop(
-      "The value for `column` doesn't correspond to a column name.",
-      call. = FALSE
-    )
-  }
+  table_colnames <- colnames(table)
   
   if (inherits(value, "name")) {
     
@@ -2851,7 +2827,7 @@ column_validity_checks_column_value <- function(
 # Validity check for presence of columns
 column_validity_has_columns <- function(columns) {
   
-  if (length(columns) < 1) {
+  if (length(columns) < 1 || identical(columns, NA_character_)) {
     stop(
       "The column selection statement that was used yielded no columns.",
       call. = FALSE
@@ -2864,6 +2840,8 @@ column_validity_checks_column <- function(
     table,
     column
 ) {
+  
+  column_validity_has_columns(as.character(column))
   
   table_colnames <- colnames(table)
   
@@ -2884,15 +2862,9 @@ column_validity_checks_ib_nb <- function(
     right
 ) {
   
-  table_colnames <- colnames(table)
+  column_validity_checks_column(table, column)
   
-  if (!(as.character(column) %in% table_colnames)) {
-    
-    stop(
-      "The value for `column` doesn't correspond to a column name.",
-      call. = FALSE
-    )
-  }
+  table_colnames <- colnames(table)
   
   if (inherits(left, "name")) {
     

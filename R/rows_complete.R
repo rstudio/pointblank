@@ -296,7 +296,7 @@ rows_complete <- function(
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
   # `rows_*()` functions treat `NULL` as `everything()`
-  if (rlang::quo_is_null(columns)) {
+  if (rlang::quo_is_null(columns) || rlang::quo_is_missing(columns)) {
     columns <- rlang::quo(tidyselect::everything())
   }
   # Get `columns` as a label
@@ -333,12 +333,8 @@ rows_complete <- function(
   
   agent <- x
   
-  if (length(columns) > 0) {
+  if (length(columns) > 1) {
     columns <- paste(columns, collapse = ", ")
-  } else if (length(columns) == 1) {
-    columns <- columns
-  } else {
-    columns <- NULL
   }
   
   if (is.null(brief)) {

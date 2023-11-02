@@ -15,11 +15,6 @@ test_that("tidyselect errors signaled at report, not during development of valid
   expect_false(a3 %>% interrogate() %>% all_passed())
   expect_false(a4 %>% interrogate() %>% all_passed())
   
-  # Stress testing
-  expect_no_error(agent %>% col_vals_not_null(stop()))
-  expect_no_error(agent %>% col_vals_not_null(c(stop())))
-  expect_no_error(agent %>% col_vals_not_null(all_of(stop())))
-  
 })
 
 test_that("fail state correctly registered in the report for tidyselect errors", {
@@ -50,9 +45,9 @@ test_that("fail state correctly registered in the report for tidyselect errors",
   
 })
 
-test_that("(tidy-)selecting 0 columns = skip the validation step at interrogation", {
+test_that("(tidy-)selecting 0 columns = fail at interrogation", {
   
-  eval_inactive <- function(x) !x$validation_set$eval_active
+  eval_errors <- function(x) interrogate(x)$validation_set$eval_error
   
   # Old behavior for vars()/NULL/<missing> preserved:
   ## 1) No immediate error for zero columns selected
@@ -60,34 +55,33 @@ test_that("(tidy-)selecting 0 columns = skip the validation step at interrogatio
   expect_s3_class(a6 <- agent %>% col_vals_not_null(NULL), "ptblank_agent")
   expect_s3_class(a7 <- agent %>% col_vals_not_null(), "ptblank_agent")
   ## 2) # Treated as inactive in the report
-  expect_true(a5 %>% interrogate() %>% eval_inactive())
-  expect_true(a6 %>% interrogate() %>% eval_inactive())
-  expect_true(a7 %>% interrogate() %>% eval_inactive())
+  expect_true(a5 %>% eval_errors())
+  expect_true(a6 %>% eval_errors())
+  expect_true(a7 %>% eval_errors())
   
   # Same behavior of 0-column selection replicated in tidyselect patterns
   expect_length(small_table %>% dplyr::select(any_of("z")), 0)
   expect_length(small_table %>% dplyr::select(c()), 0)
   expect_s3_class(a8 <- agent %>% col_vals_not_null(any_of("z")), "ptblank_agent")
   expect_s3_class(a9 <- agent %>% col_vals_not_null(c()), "ptblank_agent")
-  expect_true(a8 %>% interrogate() %>% eval_inactive())
-  expect_true(a9 %>% interrogate() %>% eval_inactive())
+  expect_true(a8 %>% eval_errors())
+  expect_true(a9 %>% eval_errors())
   
 })
 
-test_that("tidyselecting 0 columns for rows_* functions = error at interrogation", {
+test_that("tidyselecting 0 columns for rows_* functions = fail at interrogation", {
   
   expect_no_error(a_rows_distinct <- agent %>% rows_distinct(starts_with("z")) %>% interrogate())
-  expect_no_error(a_rows_complete <- agent %>% rows_distinct(starts_with("z")) %>% interrogate())
+  expect_no_error(a_rows_complete <- agent %>% rows_complete(starts_with("z")) %>% interrogate())
   expect_true(a_rows_distinct$validation_set$eval_error)
   expect_true(a_rows_complete$validation_set$eval_error)
   
-  # TODO: 0-column selection from tidyselect helpers *not* caught by `uses_tidyselect()`
-  #       will still have same behavior but show different eval error message
-  #       (errors from `select()` and not from `column_validity_has_columns()` as above)
   expect_no_error(a_rows_distinct2 <- agent %>% rows_distinct(any_of("z")) %>% interrogate())
-  expect_no_error(a_rows_complete2 <- agent %>% rows_distinct(any_of("z")) %>% interrogate())
+  expect_no_error(a_rows_complete2 <- agent %>% rows_complete(any_of("z")) %>% interrogate())
   expect_true(a_rows_distinct2$validation_set$eval_error)
+  expect_identical(unlist(a_rows_distinct2$validation_set$column), NA_character_)
   expect_true(a_rows_complete2$validation_set$eval_error)
+  expect_identical(unlist(a_rows_complete2$validation_set$column), NA_character_)
   
 })
 

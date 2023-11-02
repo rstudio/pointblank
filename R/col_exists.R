@@ -227,7 +227,7 @@ NULL
 #' @export
 col_exists <- function(
     x,
-    columns,
+    columns = NULL,
     actions = NULL,
     step_id = NULL,
     label = NULL,
@@ -242,13 +242,6 @@ col_exists <- function(
   columns <- rlang::enquo(columns)
   # Get `columns` as a label
   columns_expr <- as_columns_expr(columns)
-  # Require columns to be specified
-  if (rlang::quo_is_missing(columns)) {
-    stop('argument "columns" is missing, with no default')
-  }
-  if (rlang::quo_is_null(columns)) {
-    columns <- rlang::quo(tidyselect::everything())
-  }
   
   # Resolve the columns based on the expression
   ## Only for `col_exists()`: error gracefully if column not found
@@ -257,15 +250,14 @@ col_exists <- function(
                            allow_empty = FALSE),
     error = function(cnd) cnd$i %||% cnd
   )
+  ## Missing column selection
   if (rlang::is_error(columns)) {
     cnd <- columns
-    # tidyselect 0-column selection should contextualize attempted column
-    if (is.null(cnd$parent)) {
-      columns <- columns_expr
-    } else {
-      # Evaluation errors should be chained and rethrown
-      rlang::abort("Evaluation error in `columns`", parent = cnd$parent)
+    if (inherits(cnd, "resolve_eval_err")) {
+      # Evaluation errors should be rethrown
+      rlang::cnd_signal(cnd)
     }
+    columns <- NA_character_
   }
 
   if (is_a_table_object(x)) {

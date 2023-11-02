@@ -199,7 +199,7 @@ has_columns <- function(
     column_quos <- list(columns)
   }
   
-  .call = rlang::current_env()
+  .call <- rlang::current_env()
   has_column <- function(col_expr) {
     columns <- tryCatch(
       expr = resolve_columns(x = x, var_expr = col_expr,

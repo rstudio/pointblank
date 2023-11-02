@@ -177,13 +177,13 @@ has_columns <- function(
   }
   
   # Split into quos if multi-length c()/vars() expr
-  if (!rlang::quo_is_call(columns, c("c", "vars"))) {
-    column_quos <- list(columns)
-  } else {
+  if (rlang::quo_is_call(columns, c("c", "vars"))) {
     columns_env <- rlang::quo_get_env(columns)
     column_quos <- lapply(rlang::call_args(columns), function(x) {
       rlang::new_quosure(x, env = columns_env)
     })
+  } else {
+    column_quos <- list(columns)
   }
   
   has_column <- function(col_expr) {

@@ -238,7 +238,7 @@ apply_preconditions_for_cols <- function(x, preconditions) {
   tbl
 }
 
-resolve_columns <- function(x, var_expr, preconditions, ...,
+resolve_columns <- function(x, var_expr, preconditions = NULL, ...,
                             call = rlang::caller_env()) {
   
   tbl <- apply_preconditions_for_cols(x, preconditions)

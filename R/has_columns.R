@@ -170,17 +170,42 @@ has_columns <- function(
     )
   }
   
-  # Normalize the `columns` expression
-  if (inherits(columns, "quosures")) {
-    
-    columns <- 
-      vapply(
-        columns,
-        FUN.VALUE = character(1),
-        USE.NAMES = FALSE,
-        FUN = function(x) as.character(rlang::get_expr(x))
-      )
+  # Capture the `columns` expression
+  columns <- rlang::enquo(columns)
+  if (rlang::quo_is_missing(columns)) {
+    rlang::abort("Must supply a value for `columns`")
   }
   
-  all(columns %in% rlang::names2(x))
+  # Split into quos if multi-length c()/vars() expr
+  if (!rlang::quo_is_call(columns, c("c", "vars"))) {
+    column_quos <- list(columns)
+  } else {
+    columns_env <- rlang::quo_get_env(columns)
+    column_quos <- lapply(rlang::call_args(columns), function(x) {
+      rlang::new_quosure(x, env = columns_env)
+    })
+  }
+  
+  has_column <- function(col_expr) {
+    columns <- tryCatch(
+      expr = resolve_columns(x = x, var_expr = col_expr, allow_empty = FALSE),
+      error = function(cnd) cnd
+    )
+    ## Check for error from {tidyselect}
+    if (rlang::is_error(columns)) {
+      cnd <- columns
+      # Rethrow error if genuine evaluation error
+      if (inherits(cnd, "resolve_eval_err")) {
+        rlang::cnd_signal(cnd)
+      } 
+      # FALSE if "column not found" or "0 columns" error
+      return(FALSE)
+    }
+    ## TRUE if selection successful
+    return(TRUE)
+  }
+  
+  all(vapply(column_quos, has_column, logical(1), USE.NAMES = FALSE))
+  
 }
+

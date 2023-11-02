@@ -43,10 +43,10 @@
 #' 
 #' @param columns *The target columns*
 #'   
-#'   `vector<character>|vars(<columns>)`` // **required**
+#'   `<tidy-select>` // *required*
 #' 
-#'   One or more column names that are to be checked for existence in the table
-#'   `x`.
+#'   One or more columns or column-selecting expressions. Each element is
+#'   checked for a match in the table `x`.
 #'   
 #' @return A length-1 logical vector.
 #' 

@@ -259,6 +259,10 @@ resolve_columns <- function(x, var_expr, preconditions = NULL, ...,
     } else {
       # Else (mid-planning): grab columns attempted to subset
       fail <- out$i
+      # If failure is due to scoping a bad object in the env, re-throw error
+      if (!is.character(fail) && !rlang::is_integerish(fail)) {
+        rlang::cnd_signal(out)
+      }
       success <- resolve_columns_possible(tbl, var_expr)
       out <- c(success, fail) %||% NA_character_
     }

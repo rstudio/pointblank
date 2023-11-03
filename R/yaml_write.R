@@ -1612,6 +1612,9 @@ as_informant_yaml_list <- function(informant) {
     lst_locale <- list(locale = informant$locale)
   }
   
+  # Hide private field
+  metadata <- informant$metadata[names(informant$metadata) != "_private"]
+  
   c(
     type = "informant",           # YAML type: `informant`
     lst_read_fn,                  # table-prep formula (stored in key `tbl`)
@@ -1620,7 +1623,7 @@ as_informant_yaml_list <- function(informant) {
     lst_lang,                     # informant language
     lst_locale,                   # informant locale
     lst_meta_snippets,            # informant metadata snippet statements
-    informant$metadata            # informant metadata entries
+    metadata                      # informant metadata entries
   )
 }
 

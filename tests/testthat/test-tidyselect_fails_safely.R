@@ -1,4 +1,5 @@
 agent <- create_agent(small_table)
+z <- rlang::missing_arg()
 nonexistent_col <- "z"
 
 test_that("tidyselect errors signaled at report, not during development of validation plan", {

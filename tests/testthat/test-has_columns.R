@@ -32,10 +32,11 @@ test_that("the `has_columns()` function works with tidyselect", {
   expect_false(small_table %>% has_columns(last_col() + 1))
   expect_false(small_table %>% has_columns(matches("z")))
   
-  # Genuine evaluation errors are rethrown
+  # Genuine evaluation errors are re-thrown and short-circuits
   expect_error(small_table %>% has_columns(stop("Oh no!")), "Oh no!")
   expect_error(small_table %>% has_columns(c(stop("Oh no!"))), "Oh no!")
   expect_error(small_table %>% has_columns(c(a, stop("Oh no!"))), "Oh no!")
+  expect_error(small_table %>% has_columns(c(stop("Oh no!"), stop("Don't reach me!"))), "Oh no!")
   
   # Mix of selections work like AND
   expect_true(small_table %>% has_columns(c(contains("da"), contains("te"))))

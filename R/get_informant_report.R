@@ -139,6 +139,8 @@ get_informant_report <- function(
     y <- informant$metadata_rev
   } else {
     y <- informant$metadata
+    # Hide private metadata from report
+    y[["_private"]] <- NULL
   }
   
   if ("info_label" %in% names(informant)) {

@@ -213,13 +213,14 @@ has_columns <- function(
       if (inherits(cnd, "resolve_eval_err")) {
         rlang::cnd_signal(cnd)
       } 
-      # FALSE if "column not found" or "0 columns" error
-      return(FALSE)
+      # 0-vector if "column not found" or "0 columns" error
+      return(character(0L))
     }
-    ## TRUE if selection successful
-    return(TRUE)
+    # vector of selections if successful
+    return(columns)
   }
   
-  all(vapply(column_quos, has_column, logical(1), USE.NAMES = FALSE))
+  columns_list <- lapply(column_quos, has_column)
+  all(lengths(columns_list) > 0L)
   
 }

@@ -44,7 +44,17 @@ test_that("the `has_columns()` function works with tidyselect", {
   expect_false(small_table %>% has_columns(c(a, contains("z"))))
   expect_false(small_table %>% has_columns(c(contains("da"), contains("z"))))
   
-  # `any_of()`/`all_of()` patterns work
+  # Nested vector patterns
+  expect_identical(
+    small_table %>% has_columns(c(vars(a, b), vars(c))),
+    small_table %>% has_columns(c(c(a, b), c))
+  )
+  expect_identical(
+    small_table %>% has_columns(c(vars(a, b), vars(c))),
+    small_table %>% has_columns(c(all_of(c("a", "b")), c))
+  )
+  
+  # `any_of()`/`all_of()` patterns with external vectors
   has_one <- c("a", "y", "z")
   has_all <- c("a", "b", "c")
   has_none <- c("x", "y", "z")

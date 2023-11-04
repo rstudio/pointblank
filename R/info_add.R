@@ -449,10 +449,14 @@ info_columns <- function(
   metadata_list <- metadata$metadata
   metadata_columns <- metadata_list$columns
   
-  x <- dplyr::as_tibble(metadata_columns %>% lapply(function(x) 1))
+  if (is.null(x$tbl)) {
+    tbl <- dplyr::as_tibble(metadata_columns %>% lapply(function(x) 1))
+  } else {
+    tbl <- x$tbl
+  }
   
   # Resolve the columns based on the expression
-  columns <- resolve_columns(x = x, var_expr = columns, preconditions = NULL)
+  columns <- resolve_columns(x = tbl, var_expr = columns)
   
   if (length(columns) == 1 && is.na(columns)) {
    

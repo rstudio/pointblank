@@ -303,13 +303,7 @@ resolve_columns_internal <- function(tbl, var_expr, ..., call) {
   }
   # Special case `vars()`-expression for backwards compatibility
   if (rlang::quo_is_call(var_expr, "vars")) {
-    # Convert to the idiomatic `c()`-expr before passing off to tidyselect
-    # * Ensure that vars() always scopes to data (`vars(a)` becomes `c("a")`)
-    vars_args <- lapply(rlang::call_args(var_expr), function(var_arg) {
-      if (rlang::is_symbol(var_arg)) rlang::as_name(var_arg) else var_arg
-    })
-    c_expr <- rlang::call2("c", !!!vars_args)
-    var_expr <- rlang::quo_set_expr(var_expr, c_expr)
+    var_expr <- rlang::quo_set_expr(var_expr, vars_to_c(var_expr))
   }
   
   # Proceed with tidyselect
@@ -321,6 +315,16 @@ resolve_columns_internal <- function(tbl, var_expr, ..., call) {
   }
   
   column
+}
+
+# Convert to the idiomatic `c()`-expr before passing off to tidyselect
+# + ensure that vars() always scopes symbols to data (vars(a) -> c("a"))
+vars_to_c <- function(var_expr) {
+  var_args <- lapply(rlang::call_args(var_expr), function(var_arg) {
+    if (rlang::is_symbol(var_arg)) rlang::as_name(var_arg) else var_arg
+  })
+  c_expr <- rlang::call2("c", !!!var_args)
+  c_expr
 }
 
 resolve_label <- function(label, columns = "", segments = "") {

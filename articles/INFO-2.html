@@ -456,7 +456,7 @@ some of the measured values in the <code>penguins</code> dataset with
 <span>    `ℹ️` <span class="op">=</span> <span class="st">"An integer denoting flipper length"</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches</a></span><span class="op">(</span><span class="st">"length"</span><span class="op">)</span>,</span>
+<span>    columns <span class="op">=</span> <span class="fu">matches</span><span class="op">(</span><span class="st">"length"</span><span class="op">)</span>,</span>
 <span>    `ℹ️` <span class="op">=</span> <span class="st">"(in units of millimeters)."</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
@@ -571,7 +571,7 @@ label: <code>(((label text)))</code>
 <span>    `ℹ️` <span class="op">=</span> <span class="st">"An integer denoting body mass."</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with</a></span><span class="op">(</span><span class="st">"mm"</span><span class="op">)</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with</a></span><span class="op">(</span><span class="st">"g"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu">ends_with</span><span class="op">(</span><span class="st">"mm"</span><span class="op">)</span>, <span class="fu">ends_with</span><span class="op">(</span><span class="st">"g"</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>    `ℹ️` <span class="op">=</span> <span class="st">"((measured))"</span>    </span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/info_section.html">info_section</a></span><span class="op">(</span></span>

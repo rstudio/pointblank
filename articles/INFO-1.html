@@ -303,7 +303,7 @@ from the <strong>palmerpenguins</strong> package.</p>
 <span>    `ℹ️` <span class="op">=</span> <span class="st">"An integer denoting flipper length"</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with</a></span><span class="op">(</span><span class="st">"mm"</span><span class="op">)</span>,</span>
+<span>    columns <span class="op">=</span> <span class="fu">ends_with</span><span class="op">(</span><span class="st">"mm"</span><span class="op">)</span>,</span>
 <span>    `ℹ️` <span class="op">=</span> <span class="st">"(in units of millimeters)."</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
@@ -327,7 +327,7 @@ species, A factor denoting penguin species (Adélie, Chinstrap, and Gentoo); (2)
 <p><br></p>
 <p>We are able to provide subsections with the name <code>ℹ️</code> and,
 furthermore, use <strong>tidyselect</strong> functions like
-<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code> to append <em>info text</em> to a common
+<code>ends_with()</code> to append <em>info text</em> to a common
 subsection that exists across multiple columns. This was useful for
 stating the units which were common across three columns:
 <code>bill_length_mm</code>, <code>bill_depth_mm</code>, and
@@ -336,18 +336,18 @@ stating the units which were common across three columns:
 <strong>pointblank</strong> to make this process easier:</p>
 <ul>
 <li>
-<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>: Match columns that start with a
+<code>starts_with()</code>: Match columns that start with a
 prefix.</li>
 <li>
-<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>: Match columns that end with a suffix.</li>
+<code>ends_with()</code>: Match columns that end with a suffix.</li>
 <li>
-<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>: Match columns that contain a literal
+<code>contains()</code>: Match columns that contain a literal
 string.</li>
 <li>
-<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches()</a></code>: Perform matching with a regular
+<code>matches()</code>: Perform matching with a regular
 expression.</li>
 <li>
-<code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>: Select all columns.</li>
+<code>everything()</code>: Select all columns.</li>
 </ul>
 </div>
 <div class="section level2">

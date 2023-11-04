@@ -122,11 +122,23 @@ test_that("tidyselect errors cannot be downgraded in assertion/expectation on ta
   
 })
 
-# test_that("Other things that may need to get ironed out", {
-#   # Empty `vars()` in rows_* functions resolve to `list(NA)` instead of `NA`
-#   agent %>% rows_distinct(vars())
-#   agent %>% rows_complete(vars())
-#   # Attempting to select using a non-existent variable silently fails
-#   agent %>% col_vals_not_null(all_of(nonexistent_var)) %>% interrogate()
-#   # Current heuristic for re-throwing the error relies on whether agent is "::QUIET::" ...
-# })
+test_that("env scoping with bare symbol patterns", {
+  
+  # `z` is external vector of valid column
+  z <- "a"
+  rlang::local_options(lifecycle_verbosity = "warning")
+  expect_warning({small_table %>% col_vals_not_null(z)}, "deprecated")
+  
+  # `z` is not character
+  z <- mtcars
+  rlang::local_options(lifecycle_verbosity = "quiet")
+  # c() and vars() both error, but different reasons
+  ## c() scopes z in env and determines its invalid
+  expect_error({small_table %>% col_vals_not_null(c(z))}, "`z` must be numeric or character")
+  ## vars() doesn't attempt to scope z in env at all
+  expect_error({small_table %>% col_vals_not_null(vars(z))}, "Column `z` doesn't exist")
+  
+  # Cleanup
+  z <- rlang::missing_arg()
+  
+})

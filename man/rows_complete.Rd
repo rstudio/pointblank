@@ -46,8 +46,8 @@ commonly created with \code{\link[=create_agent]{create_agent()}}.}
 \verb{<tidy-select>} // \emph{default:} \code{everything()}
 
 A column-selecting expression, as one would use inside \code{dplyr::select()}.
-Specifies the column (or a set of columns) to which this validation should
-be applied. See the \emph{Column Names} section for more information.}
+Specifies the set of column(s) for which the completeness of rows is
+checked.}
 
 \item{preconditions}{\emph{Input table modification prior to validation}
 
@@ -126,7 +126,7 @@ be used with \code{.} (serving as the input data table) to evaluate to a single
 logical value. With this approach, the \strong{pointblank} function
 \code{\link[=has_columns]{has_columns()}} can be used to determine whether to make a validation step
 active on the basis of one or more columns existing in the table
-(e.g., \code{~ . \%>\% has_columns(vars(d, e))}).}
+(e.g., \code{~ . \%>\% has_columns(c(d, e))}).}
 
 \item{object}{\emph{A data table for expectations or tests}
 
@@ -168,10 +168,6 @@ directly on a data table or with an \emph{agent} object (technically, a
 be used with a data table. As a validation step or as an expectation, this
 will operate over the number of test units that is equal to the number of
 rows in the table (after any \code{preconditions} have been applied).
-
-We can specify the constraining column names in quotes, in \code{vars()}, and with
-the following \strong{tidyselect} helper functions: \code{starts_with()},
-\code{ends_with()}, \code{contains()}, \code{matches()}, and \code{everything()}.
 }
 \section{Supported Input Tables}{
 

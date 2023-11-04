@@ -16,10 +16,10 @@ The input table. This can be a data frame, tibble, a \code{tbl_dbi} object, or a
 
 \item{columns}{\emph{The target columns}
 
-`vector\if{html}{\out{<character>}}|vars(\if{html}{\out{<columns>}})`` // \strong{required}
+\verb{<tidy-select>} // \emph{required}
 
-One or more column names that are to be checked for existence in the table
-\code{x}.}
+One or more columns or column-selecting expressions. Each element is
+checked for a match in the table \code{x}.}
 }
 \value{
 A length-1 logical vector.
@@ -28,9 +28,9 @@ A length-1 logical vector.
 This utility function can help you easily determine whether a column of a
 specified name is present in a table object. This function works well enough
 on a table object but it can also be used as part of a formula in any
-validation function's \code{active} argument. Using \code{active = ~ . \%>\% has_columns("column_1")} means that the validation step will be inactive if
+validation function's \code{active} argument. Using \code{active = ~ . \%>\% has_columns(column_1)} means that the validation step will be inactive if
 the target table doesn't contain a column named \code{column_1}. We can also use
-multiple columns in \code{vars()} so having \code{active = ~ . \%>\% has_columns(vars(column_1, column_2))} in a validation step will make it
+multiple columns in \code{c()}, so having \code{active = ~ . \%>\% has_columns(c(column_1, column_2))} in a validation step will make it
 inactive at \code{\link[=interrogate]{interrogate()}} time unless the columns \code{column_1} and \code{column_2}
 are both present.
 }
@@ -60,10 +60,9 @@ and the \code{a} through \code{f} columns.
 }\if{html}{\out{</div>}}
 
 With \code{has_columns()} we can check for column existence by using it directly
-on the table. A column name can be verified as present by using it in double
-quotes.
+on the table.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% has_columns(columns = "date")
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% has_columns(columns = date)
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
@@ -72,15 +71,15 @@ quotes.
 Multiple column names can be supplied. The following is \code{TRUE} because both
 columns are present in \code{small_table}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% has_columns(columns = c("a", "b"))
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% has_columns(columns = c(a, b))
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
 }\if{html}{\out{</div>}}
 
-It's possible to supply column names in \code{vars()} as well:
+It's possible to use a tidyselect helper as well:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% has_columns(columns = vars(a, b))
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% has_columns(columns = c(a, starts_with("b")))
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] TRUE
@@ -89,10 +88,22 @@ It's possible to supply column names in \code{vars()} as well:
 Because column \code{h} isn't present, this returns \code{FALSE} (all specified columns
 need to be present to obtain \code{TRUE}).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% has_columns(columns = vars(a, h))
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% has_columns(columns = c(a, h))
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] FALSE
+}\if{html}{\out{</div>}}
+
+The same holds in the case of tidyselect helpers. Because no columns start
+with \code{"h"}, including \code{starts_with("h")} returns \code{FALSE} for the entire
+check.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% has_columns(columns = starts_with("h"))
+small_table \%>\% has_columns(columns = c(a, starts_with("h")))
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] FALSE
+## [1] FALSE
 }\if{html}{\out{</div>}}
 
 The \code{has_columns()} function can be useful in expressions that involve the
@@ -111,16 +122,16 @@ statement there we would get an evaluation failure in the agent report).
   ) \%>\%
   col_vals_gt(
     columns = c, value = vars(a),
-    active = ~ . \%>\% has_columns(vars(a, c))
+    active = ~ . \%>\% has_columns(c(a, c))
   ) \%>\%
   col_vals_lt(
     columns = h, value = vars(d),
     preconditions = ~ . \%>\% dplyr::mutate(h = d - a),
-    active = ~ . \%>\% has_columns(vars(a, d))
+    active = ~ . \%>\% has_columns(c(a, d))
   ) \%>\%
   col_is_character(
     columns = j,
-    active = ~ . \%>\% has_columns("j")
+    active = ~ . \%>\% has_columns(j)
   ) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}

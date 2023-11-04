@@ -34,17 +34,13 @@
 #' test units that is equal to the number of rows in the table (after any
 #' `preconditions` have been applied).
 #'
-#' We can specify the constraining column names in quotes, in `vars()`, and with
-#' the following **tidyselect** helper functions: `starts_with()`,
-#' `ends_with()`, `contains()`, `matches()`, and `everything()`.
-#' 
 #' @param columns *The target columns*
 #' 
 #'   `<tidy-select>` // *default:* `everything()`
 #' 
 #'   A column-selecting expression, as one would use inside `dplyr::select()`.
-#'   Specifies the column (or a set of columns) to which this validation should
-#'   be applied. See the *Column Names* section for more information.
+#'   Specifies the set of column(s) for which the distinctness of rows is
+#'   checked.
 #' 
 #' @inheritParams col_vals_gt
 #'   

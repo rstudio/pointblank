@@ -309,3 +309,54 @@ test_that("The correct title is rendered in the informant report", {
   #   )
   # )
 })
+
+test_that("tidyselect integration in info_columns()", {
+  informant <- create_informant(small_table)
+  informant_lazy <- create_informant(~ small_table)
+  
+  # Column headers stored in `$_private`
+  testthat::expect_s3_class(informant$metadata[["_private"]]$col_ptypes, "data.frame")
+  testthat::expect_s3_class(informant_lazy$metadata[["_private"]]$col_ptypes, "data.frame")
+  
+  cols_with_info <- function(x) {
+    cols_info <- sapply(x$metadata$columns, `[[`, "info")
+    names(which(lengths(cols_info) > 0))
+  }
+  is_timepoint <- function(x) {
+    inherits(x, c("POSIXt", "POSIXct", "POSIXlt", "Date"))
+  }
+  
+  # String-based and class-based matches both work
+  expect_identical({
+    informant %>% 
+      info_columns(
+        columns = starts_with("date"),
+        info = "Time information"
+      ) %>% 
+      cols_with_info()
+  }, {
+    informant %>% 
+      info_columns(
+        columns = where(is_timepoint),
+        info = "Time information"
+      ) %>% 
+      cols_with_info()
+  })
+  # String-based and class-based matches both work
+  expect_identical({
+    informant_lazy %>% 
+      info_columns(
+        columns = starts_with("date"),
+        info = "Time information"
+      ) %>% 
+      cols_with_info()
+  }, {
+    informant_lazy %>% 
+      info_columns(
+        columns = where(is_timepoint),
+        info = "Time information"
+      ) %>% 
+      cols_with_info()
+  })
+  
+})

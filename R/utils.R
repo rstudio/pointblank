@@ -148,8 +148,8 @@ get_next_validation_set_row <- function(agent) {
   step
 }
 
-exported_tidyselect_fns <- function() {
-  c("starts_with", "ends_with", "contains", "matches", "everything")
+tidyselect_helpers <- function() {
+  names(tidyselect::vars_select_helpers)
 }
 
 get_assertion_type_at_idx <- function(agent, idx) {

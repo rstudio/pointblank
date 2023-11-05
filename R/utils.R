@@ -644,8 +644,6 @@ get_threshold_type <- function(threshold) {
   }
 }
 
-# nocov start
-
 all_data_vars <- function(x, data_cols) {
   deparsed <- paste(deparse(x), collapse = "")
   x <- utils::getParseData(parse(text = deparsed))
@@ -698,8 +696,6 @@ pronoun_vars <- function(x, pronoun = c(".data", ".env")) {
   allvars <- unlist(unname(dotdata))
   allvars
 }
-
-# nocov end
 
 all_validations_fns_vec <- function() {
   

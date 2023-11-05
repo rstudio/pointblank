@@ -450,7 +450,7 @@ info_columns <- function(
   metadata_columns <- metadata_list$columns
   
   if (is.null(x$tbl)) {
-    tbl <- dplyr::as_tibble(metadata_columns %>% lapply(function(x) 1))
+    tbl <- metadata_list[["_private"]]$col_ptypes
   } else {
     tbl <- x$tbl
   }

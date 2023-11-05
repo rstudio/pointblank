@@ -2,7 +2,7 @@
 
 ## New features
 
-* Complete `{tidyselect}` support for the `columns` argument of *all validation functions*, as well as in `has_columns()`. `columns` can now takes familiar column-selection expressions as one would use inside `dplyr::select()`. This also begins a process of deprecation:
+* Complete `{tidyselect}` support for the `columns` argument of *all validation functions*, as well as in `has_columns()` and `info_columns`. `columns` can now takes familiar column-selection expressions as one would use inside `dplyr::select()`. This also begins a process of deprecation:
   - `columns = vars(...)` will continue to work, but `c()` now supersedes `vars()`.
   - If passing an *external vector* of column names, it should be wrapped in `all_of()`.
 

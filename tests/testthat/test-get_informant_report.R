@@ -315,8 +315,8 @@ test_that("tidyselect integration in info_columns()", {
   informant_lazy <- create_informant(~ small_table)
   
   # Column headers stored in `$_private`
-  testthat::expect_s3_class(informant$metadata[["_private"]]$col_ptypes, "data.frame")
-  testthat::expect_s3_class(informant_lazy$metadata[["_private"]]$col_ptypes, "data.frame")
+  expect_s3_class(informant$metadata[["_private"]]$col_ptypes, "data.frame")
+  expect_s3_class(informant_lazy$metadata[["_private"]]$col_ptypes, "data.frame")
   
   cols_with_info <- function(x) {
     cols_info <- sapply(x$metadata$columns, `[[`, "info")

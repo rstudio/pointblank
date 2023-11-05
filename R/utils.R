@@ -644,6 +644,56 @@ get_threshold_type <- function(threshold) {
   }
 }
 
+all_data_vars <- function(x) {
+  deparsed <- paste(deparse(x), collapse = "")
+  x <- utils::getParseData(parse(text = deparsed))
+  
+  .data_vars <- pronoun_vars(x, ".data")
+  .env_vars <- pronoun_vars(x, ".env")
+  
+  bare_syms <- x[
+    x$token == "SYMBOL" &
+      !x$text %in% c(".data", ".env") &
+      !x$id %in% c(names(.data_vars), names(.env_vars)),
+    c("id", "text")
+  ]
+  if (nrow(bare_syms) == 0) {
+    all_cols <- unique(.data_vars)
+  } else {
+    unscoped_vars <- bare_syms$text
+    names(unscoped_vars) <- bare_syms$id
+    all_cols <- c(unscoped_vars, .data_vars)
+    all_cols <- all_cols[order(as.integer(names(all_cols)))]
+    all_cols <- unique(all_cols)
+  }
+  
+  if (length(all_cols) == 0) {
+    NA_character_
+  } else {
+    all_cols
+  }
+  
+}
+
+pronoun_vars <- function(x, pronoun = c(".data", ".env")) {
+  pronoun <- match.arg(pronoun)
+  if (!any(x$text == pronoun)) return(character(0))
+  conseq_pronoun <- rle(x$text == pronoun)
+  x$dotdata <- rep(seq_along(conseq_pronoun$values), conseq_pronoun$lengths)
+  x$dotdata <- ifelse(x$text == pronoun, x$dotdata + 1, x$dotdata)
+  dotdata <- lapply(split(x, x$dotdata), function(g) {
+    if (g$text[1] == pronoun && g$token[3] %in% c("'$'", "LBB")) {
+      var <- g$text[4]
+      names(var) <- g$id[4]
+      if (g$token[4] == "STR_CONST") gsub('"', "", var) else var
+    } else {
+      character(0)
+    }
+  })
+  allvars <- unlist(unname(dotdata))
+  allvars
+}
+
 all_validations_fns_vec <- function() {
   
   c(

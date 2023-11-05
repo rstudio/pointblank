@@ -649,7 +649,6 @@ get_threshold_type <- function(threshold) {
 all_data_vars <- function(x, data_cols) {
   deparsed <- paste(deparse(x), collapse = "")
   x <- utils::getParseData(parse(text = deparsed))
-  if (is.null(x)) return(NA_character_)
   
   .data_vars <- pronoun_vars(x, ".data")
   .env_vars <- pronoun_vars(x, ".env")

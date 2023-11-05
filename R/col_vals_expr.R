@@ -339,6 +339,10 @@ col_vals_expr <- function(
     }
   }
   
+  # Extract columns from expr
+  data_cols <- colnames(apply_preconditions_for_cols(x, preconditions))
+  columns <- all_data_vars(expr, data_cols)
+  
   # Resolve segments into list
   segments_list <- 
     resolve_segments(
@@ -400,7 +404,7 @@ col_vals_expr <- function(
         assertion_type = "col_vals_expr",
         i_o = i_o,
         columns_expr = NA_character_,
-        column = NA_character_,
+        column = columns,
         values = expr,
         preconditions = preconditions,
         seg_expr = segments,

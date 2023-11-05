@@ -762,7 +762,8 @@ get_agent_report <- function(
           # - in validation planning, OR
           # - the evaluation errors, OR
           # - is a col_exists() step
-          show_column_expr <- columns_expr != "NULL" &&
+          columns_expr_exists <- !is.na(columns_expr) && columns_expr != "NULL"
+          show_column_expr <- columns_expr_exists &&
             (not_interrogated || eval_error || assertion_str == "col_exists")
           # Then display the original column selection expression for debugging
           if (show_column_expr) {

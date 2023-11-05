@@ -1,4 +1,5 @@
 agent <- create_agent(tbl = small_table[, c("a", "b", "c")])
+z <- rlang::missing_arg()
 mixed_cols <- c("a", "z")
 
 # Column selection expressions to test

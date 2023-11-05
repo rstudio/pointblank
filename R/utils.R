@@ -644,7 +644,7 @@ get_threshold_type <- function(threshold) {
   }
 }
 
-all_data_vars <- function(x) {
+all_data_vars <- function(x, data_cols) {
   deparsed <- paste(deparse(x), collapse = "")
   x <- utils::getParseData(parse(text = deparsed))
   
@@ -666,6 +666,8 @@ all_data_vars <- function(x) {
     all_cols <- all_cols[order(as.integer(names(all_cols)))]
     all_cols <- unique(all_cols)
   }
+  
+  all_cols <- all_cols[all_cols %in% data_cols]
   
   if (length(all_cols) == 0) {
     NA_character_

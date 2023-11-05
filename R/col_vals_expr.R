@@ -340,7 +340,8 @@ col_vals_expr <- function(
   }
   
   # Extract columns from expr
-  columns <- all_data_vars(expr)
+  data_cols <- colnames(apply_preconditions_for_cols(x, preconditions))
+  columns <- all_data_vars(expr, data_cols)
   
   # Resolve segments into list
   segments_list <- 

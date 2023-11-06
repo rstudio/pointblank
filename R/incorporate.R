@@ -371,7 +371,7 @@ incorporate <- function(informant) {
   extra_sections <- 
     base::setdiff(
       names(informant$metadata),
-      c("info_label", "table", "columns")
+      c("info_label", "table", "columns", "_private")
     )
   
   metadata_extra <- informant$metadata[extra_sections]

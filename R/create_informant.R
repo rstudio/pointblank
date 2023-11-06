@@ -399,6 +399,10 @@ create_informant <- function(
     }
   }
   
+  private <- list(
+    col_ptypes = tbl_info$col_ptypes
+  )
+  
   metadata_list <-
     c(
       list(
@@ -409,7 +413,8 @@ create_informant <- function(
           `_type` = table_type
         )
       ),
-      column_list
+      column_list,
+      list(`_private` = private)
     )
 
   # Create the metadata list object

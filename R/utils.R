@@ -758,19 +758,18 @@ get_tbl_dbi_src_details <- function(tbl) {
 get_r_column_names_types <- function(tbl) {
   
   suppressWarnings(
-    column_names_types <-
+    column_header <-
       tbl %>%
       utils::head(1) %>%
-      dplyr::collect() %>%
-      vapply(
-        FUN.VALUE = character(1),
-        FUN = function(x) class(x)[1]
-      )
+      dplyr::collect()
   )
+  column_names_types <-
+    vapply(column_header, function(x) class(x)[1], character(1))
   
   list(
     col_names = names(column_names_types),
-    r_col_types = unname(unlist(column_names_types))
+    r_col_types = unname(unlist(column_names_types)),
+    col_ptypes = utils::head(column_header, 0)
   )
 }
 
@@ -825,7 +824,8 @@ get_tbl_information_df <- function(tbl) {
     db_tbl_name = NA_character_,
     col_names = r_column_names_types$col_names,
     r_col_types = r_column_names_types$r_col_types,
-    db_col_types = NA_character_
+    db_col_types = NA_character_,
+    col_ptypes = r_column_names_types$col_ptypes
   )
 }
 
@@ -849,7 +849,8 @@ get_tbl_information_spark <- function(tbl) {
     db_tbl_name = NA_character_,
     col_names = r_column_names_types$col_names,
     r_col_types = r_column_names_types$r_col_types,
-    db_col_types = db_col_types
+    db_col_types = db_col_types,
+    col_ptypes = r_column_names_types$col_ptypes
   )
 }
 
@@ -1030,7 +1031,8 @@ get_tbl_information_dbi <- function(tbl) {
     db_tbl_name = db_tbl_name,
     col_names = r_column_names_types$col_names,
     r_col_types = r_column_names_types$r_col_types,
-    db_col_types = db_col_types
+    db_col_types = db_col_types,
+    col_ptypes = r_column_names_types$col_ptypes
   )
 }
 
@@ -1074,7 +1076,8 @@ get_tbl_information_arrow <- function(tbl) {
     db_tbl_name = NA_character_,
     col_names = col_names,
     r_col_types = r_col_types,
-    db_col_types = db_col_types
+    db_col_types = db_col_types,
+    col_ptypes = dplyr::collect(utils::head(tbl, 0))
   )
 }
 

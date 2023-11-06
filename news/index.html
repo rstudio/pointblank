@@ -65,7 +65,7 @@
 <div class="section level3">
 <h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
 <ul><li>
-<p>Complete <a href="https://tidyselect.r-lib.org" class="external-link">tidyselect</a> support for the <code>columns</code> argument of <em>all validation functions</em>, as well as in <code><a href="../reference/has_columns.html">has_columns()</a></code>. <code>columns</code> can now takes familiar column-selection expressions as one would use inside <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a></code>. This also begins a process of deprecation:</p>
+<p>Complete <a href="https://tidyselect.r-lib.org" class="external-link">tidyselect</a> support for the <code>columns</code> argument of <em>all validation functions</em>, as well as in <code><a href="../reference/has_columns.html">has_columns()</a></code> and <code>info_columns</code>. <code>columns</code> can now takes familiar column-selection expressions as one would use inside <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a></code>. This also begins a process of deprecation:</p>
 <ul><li>
 <code>columns = vars(...)</code> will continue to work, but <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code> now supersedes <code><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars()</a></code>.</li>
 <li>If passing an <em>external vector</em> of column names, it should be wrapped in <code>all_of()</code>.</li>

@@ -26,7 +26,7 @@ test_that("explicit c()-expr make the yaml roundtrip", {
   # Defaults writing to c()-expr
   expect_message(
     create_agent(~ small_table) %>% col_exists(a) %>% yaml_agent_string(),
-    "columns: c\\(a\\)"
+    'columns: c\\("a"\\)'
   )
   
 })
@@ -100,8 +100,8 @@ test_that("complex column selection expressions make the round trip", {
   yaml_write(agent_pre, expanded = TRUE, filename = agent_yaml)
   agent_post <- yaml_read_agent(agent_yaml)
   
-  expect_message(yaml_agent_string(agent_pre, expanded = TRUE), "c\\(c\\)")
-  expect_message(yaml_agent_string(agent_post, expanded = TRUE), "c\\(c\\)")
+  expect_message(yaml_agent_string(agent_pre, expanded = TRUE), 'c\\("c"\\)')
+  expect_message(yaml_agent_string(agent_post, expanded = TRUE), 'c\\("c"\\)')
   
   expect_identical(
     as_agent_yaml_list(agent_pre, expanded = TRUE),

@@ -60,7 +60,7 @@ test_that("everything() default in `rows_*()` makes yaml roundtrip", {
 test_that("complex column selection expressions make the round trip", {
   
   # `expanded = FALSE` preserves complex expr and makes roundtrip
-  agent_pre <- create_agent(~ small_table) |> 
+  agent_pre <- create_agent(~ small_table) %>% 
     col_vals_lt(
       columns = where(is.numeric) & starts_with("c"),
       value = 8
@@ -90,7 +90,7 @@ test_that("complex column selection expressions make the round trip", {
   
   
   # `expanded = TRUE` resolves immediately and works as expected
-  agent_pre <- create_agent(~ small_table) |> 
+  agent_pre <- create_agent(~ small_table) %>% 
     col_vals_lt(
       columns = where(is.numeric) & starts_with("c"),
       value = 8

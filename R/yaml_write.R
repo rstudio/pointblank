@@ -687,7 +687,7 @@ yaml_agent_string <- function(
 }
 
 as_c_fn <- function(columns) {
-  paste0("c(", columns, ")")
+  paste0("c(", paste0('"', columns, '"', collapse = ", "), ")")
 }
 
 as_list_preconditions <- function(preconditions) {

@@ -539,7 +539,7 @@ make_validation_steps <- function(steps) {
   tidyselect_regex <- 
     paste0(
       "^(",
-      paste(c("vars", "c", exported_tidyselect_fns()), collapse = "|"),
+      paste(c("vars", "c", tidyselect_helpers()), collapse = "|"),
       ")\\(.*?\\)$"
     )
   

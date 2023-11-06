@@ -59,6 +59,7 @@ test_that("everything() default in `rows_*()` makes yaml roundtrip", {
 
 test_that("complex column selection expressions make the round trip", {
   
+  # `expanded = FALSE` preserves complex expr and makes roundtrip
   agent_pre <- create_agent(~ small_table) |> 
     col_vals_lt(
       columns = where(is.numeric) & starts_with("c"),
@@ -86,5 +87,35 @@ test_that("complex column selection expressions make the round trip", {
       interrogate() %>% 
       get_agent_report(display_table = FALSE)
   })
-      
+  
+  
+  # `expanded = TRUE` resolves immediately and works as expected
+  agent_pre <- create_agent(~ small_table) |> 
+    col_vals_lt(
+      columns = where(is.numeric) & starts_with("c"),
+      value = 8
+    )
+  
+  agent_yaml <- tempfile()
+  yaml_write(agent_pre, expanded = TRUE, filename = agent_yaml)
+  agent_post <- yaml_read_agent(agent_yaml)
+  
+  expect_message(yaml_agent_string(agent_pre, expanded = TRUE), "c\\(c\\)")
+  expect_message(yaml_agent_string(agent_post, expanded = TRUE), "c\\(c\\)")
+  
+  expect_identical(
+    as_agent_yaml_list(agent_pre, expanded = TRUE),
+    as_agent_yaml_list(agent_post, expanded = TRUE)
+  )
+  
+  expect_identical({
+    agent_pre %>% 
+      interrogate() %>% 
+      get_agent_report(display_table = FALSE)
+  }, {
+    agent_post %>% 
+      interrogate() %>% 
+      get_agent_report(display_table = FALSE)
+  })
+  
 })

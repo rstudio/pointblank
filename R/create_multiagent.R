@@ -161,7 +161,7 @@ create_multiagent <- function(
   
   agent_list <- list(...)
   if (!all(sapply(agent_list, is_ptblank_agent))) {
-    rlang::abort("Must supply pointblank agents to `...`")
+    rlang::abort("All components of `...` must be an agent")
   }
   agent_list <- rehash_agent_list(agent_list)
   agent_list <- 

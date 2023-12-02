@@ -210,7 +210,7 @@ rehash_agent <- function(agent) {
   vs <- agent$validation_set
   
   new_hash <- sapply(seq_len(nrow(vs)), function(i) {
-    step <- vs[i,]
+    step <- vs[i, ]
     # Rehash from validation set, extracting from list-column when necessary
     hash_validation_step(
       assertion_type = step$assertion_type,

@@ -1715,3 +1715,7 @@ pb_get_image_tag <- function(file, dir = "images") {
     "style=\"width:100\\%;\">"
   )
 }
+
+deparse_1 <- function (expr, collapse = " ", width.cutoff = 500L, ...) {
+  paste(deparse(expr, width.cutoff, ...), collapse = collapse)
+}

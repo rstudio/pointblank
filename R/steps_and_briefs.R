@@ -131,16 +131,16 @@ hash_validation_step <- function(assertion_type,
     as.character(values)
   } else if (is.list(values)) {
     # Resolve `vars()` to scalar string
-    toString(vapply(values, deparse1, character(1)))
+    toString(vapply(values, deparse_1, character(1)))
   } else {
-    deparse1(values)
+    deparse_1(values)
   }
   
   preconditions <- if (inherits(preconditions, "fseq")) {
     # Spell out components of magrittr anonymous function
     environment(preconditions)[["_function_list"]]
   }
-  preconditions <- deparse1(preconditions)
+  preconditions <- deparse_1(preconditions)
   
   step_chr <- c(
     assertion_type = assertion_type,

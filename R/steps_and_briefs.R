@@ -147,12 +147,12 @@ hash_validation_step <- function(assertion_type,
   
   step_chr <- c(
     assertion_type = assertion_type,
-    column = column %||% NA_character_,
+    column = as.character(column %||% NA_character_),
     values = values,
-    na_pass = as.character(na_pass) %||% NA_character_,
+    na_pass = as.character(na_pass %||% NA_character_),
     preconditions = preconditions,
-    seg_col = seg_col %||% NA_character_,
-    seg_val = as.character(seg_val) %||% NA_character_
+    seg_col = as.character(seg_col %||% NA_character_),
+    seg_val = as.character(seg_val %||% NA_character_)
   )
   
   step_hash <- digest::sha1(step_chr)

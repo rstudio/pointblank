@@ -125,6 +125,9 @@ hash_validation_step <- function(assertion_type,
                                  seg_col = NULL,
                                  seg_val = NULL) {
   
+  # pkg version that introduced the current hash implementation
+  hash_version <- "v0.12"
+  
   values <- if (is.null(values) || is_a_table_object(values)) {
     NA_character_
   } else if (rlang::is_scalar_atomic(values)) {
@@ -152,7 +155,9 @@ hash_validation_step <- function(assertion_type,
     seg_val = as.character(seg_val) %||% NA_character_
   )
   
-  digest::sha1(step_chr)
+  step_hash <- digest::sha1(step_chr)
+  
+  paste(step_hash, hash_version, sep = "-")
   
 }
 

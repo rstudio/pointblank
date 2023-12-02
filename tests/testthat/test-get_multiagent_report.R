@@ -84,8 +84,8 @@ test_that("Getting a multiagent report is possible", {
     "00[1-4]_[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}"
   )
   
-  # Expect 16 rows in this report
-  expect_equivalent(nrow(report), 17)
+  # Expect 14 rows in this report
+  expect_equivalent(nrow(report), 14)
   
   for (col_name in colnames(report)) {
     

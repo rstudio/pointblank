@@ -1716,6 +1716,6 @@ pb_get_image_tag <- function(file, dir = "images") {
   )
 }
 
-deparse_inf <- function (expr, collapse = " ", width.cutoff = 500L, ...) {
-  paste(deparse(expr, width.cutoff, ...), collapse = collapse)
+deparse_inf <- function(expr, collapse = " ", ...) {
+  paste(deparse(expr, ...), collapse = collapse)
 }

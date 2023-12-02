@@ -43,27 +43,15 @@ create_validation_step <- function(
   i <- get_next_validation_set_row(agent)
   
   # Calculate the SHA1 hash for the validation step
-  sha1 <-
-    digest::sha1(
-      list(
-        assertion_type = assertion_type,
-        column = ifelse(is.null(column), list(NULL), list(column)),
-        values = ifelse(
-          is.null(values) || is_a_table_object(values),
-          list(NULL), list(values)
-        ),
-        na_pass = ifelse(is.null(na_pass), NA, as.logical(na_pass)),
-        preconditions = ifelse(
-          is.null(preconditions), list(NULL), list(preconditions)
-        ),
-        seg_col = ifelse(
-          is.null(seg_col), NA_character_, as.character(seg_col)
-        ),
-        seg_val = ifelse(
-          is.null(seg_val), NA_character_, as.character(seg_val)
-        )
-      )
-    )
+  sha1 <- hash_validation_step(
+    assertion_type = assertion_type,
+    column = column,
+    values = values,
+    na_pass = na_pass,
+    preconditions = preconditions,
+    seg_col = seg_col,
+    seg_val = seg_val
+  )
   
   # Create a validation step as a single-row `tbl_df` object
   validation_step_df <-
@@ -127,6 +115,45 @@ create_validation_step <- function(
     dplyr::bind_rows(agent$validation_set, validation_step_df)
   
   agent
+}
+
+hash_validation_step <- function(assertion_type,
+                                 column = NULL,
+                                 values = NULL,
+                                 na_pass = NULL,
+                                 preconditions = NULL,
+                                 seg_col = NULL,
+                                 seg_val = NULL) {
+  
+  values <- if (is.null(values) || is_a_table_object(values)) {
+    NA_character_
+  } else if (rlang::is_scalar_atomic(values)) {
+    as.character(values)
+  } else if (is.list(values)) {
+    # Resolve `vars()` to scalar string
+    toString(vapply(values, deparse1, character(1)))
+  } else {
+    deparse1(values)
+  }
+  
+  preconditions <- if (inherits(preconditions, "fseq")) {
+    # Spell out components of magrittr anonymous function
+    environment(preconditions)[["_function_list"]]
+  }
+  preconditions <- deparse1(preconditions)
+  
+  step_chr <- c(
+    assertion_type = assertion_type,
+    column = column %||% NA_character_,
+    values = values,
+    na_pass = as.character(na_pass) %||% NA_character_,
+    preconditions = preconditions,
+    seg_col = seg_col %||% NA_character_,
+    seg_val = as.character(seg_val) %||% NA_character_
+  )
+  
+  digest::sha1(step_chr)
+  
 }
 
 apply_preconditions_to_tbl <- function(agent, idx, tbl) {

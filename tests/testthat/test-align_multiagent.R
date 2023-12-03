@@ -79,7 +79,7 @@ test_that("multiagent alignment is not sensitive to environment", {
     agent1a$validation_set$values,
     agent1b$validation_set$values
   ))
-  expect_equal(nrow(align(agent5a, agent5b)), 1)
+  expect_equal(nrow(align(agent1a, agent1b)), 1)
   
   # Insensitive to formula environment
   agent2a <- local({
@@ -92,7 +92,7 @@ test_that("multiagent alignment is not sensitive to environment", {
     agent2a$validation_set$preconditions,
     agent2b$validation_set$preconditions
   ))
-  expect_equal(nrow(align(agent5a, agent5b)), 1)
+  expect_equal(nrow(align(agent2a, agent2b)), 1)
   
   # Insensitive to function environment
   agent3a <- local({
@@ -109,20 +109,20 @@ test_that("multiagent alignment is not sensitive to environment", {
   
   # But sensitive to function definition
   fn <- function(x) identity(x)
-  agent2a <- agent %>% 
+  agent4a <- agent %>% 
     col_vals_not_null(c, preconditions = fn)
   fn <- function(x) force(x)
-  agent2b <- agent %>% 
+  agent4b <- agent %>% 
     col_vals_not_null(c, preconditions = fn)
   expect_false(identical(
-    agent2a$validation_set$preconditions,
-    agent2b$validation_set$preconditions
+    agent4a$validation_set$preconditions,
+    agent4b$validation_set$preconditions
   ))
   expect_false(identical(
-    agent2a$validation_set$sha1,
-    agent2b$validation_set$sha1
+    agent4a$validation_set$sha1,
+    agent4b$validation_set$sha1
   ))
-  expect_equal(nrow(align(agent2a, agent2b)), 2)
+  expect_equal(nrow(align(agent4a, agent4b)), 2)
 
 })
 
@@ -168,12 +168,13 @@ test_that("multiagent alignment of special data types are correct", {
     col_vals_between(columns = c, left = vars(a), right = vars(d))
   expect_equal(nrow(align(agent5a, agent5b)), 1)
   
-  ## segments
+  ## segments (same expr)
   agent6a <- agent %>% 
     col_vals_lt(columns = c(a, c), value = vars(d), segments = vars(e, f))
   agent6b <- agent %>% 
     col_vals_lt(columns = c(a, c), value = vars(d), segments = vars(e, f))
   expect_equal(nrow(align(agent6a, agent6b)), 10)
+  ## segments (diff expr)
   agent7a <- agent %>% 
     col_vals_lt(columns = c(a, c), value = vars(d), segments = vars(e))
   agent7b <- agent %>% 

@@ -46,6 +46,10 @@ test_that("rehashing reconstructs hash deterministically", {
     rehash_agent(agent_a),
     rehash_agent(agent_b)
   )
+  expect_identical(
+    rehash_agent(agent_a),
+    rehash_agent(rehash_agent(agent_a))
+  )
 })
 
 test_that("multiagent uses rehashing for alignment", {
@@ -132,12 +136,16 @@ test_that("multiagent alignment of special data types are correct", {
   agent1a <- agent %>%
     col_vals_equal(columns = c, value = "c")
   agent1b <- agent %>%
-    col_vals_equal(columns = c, value = vars("c"))
+    col_vals_equal(columns = c, value = vars(c))
   expect_false(identical(
     agent1a$validation_set$sha1,
     agent1b$validation_set$sha1
   ))
   expect_equal(nrow(align(agent1a, agent1b)), 2)
+  c <- "c"
+  agent1c <- agent %>%
+    col_vals_equal(columns = c, value = c)
+  expect_equal(nrow(align(agent1a, agent1c)), 1)
   
   # Aligns identical special data types correctly
   ## Function object
@@ -146,6 +154,14 @@ test_that("multiagent alignment of special data types are correct", {
   agent2b <- agent %>% 
     rows_distinct(preconditions = identity)
   expect_equal(nrow(align(agent2a, agent2b)), 1)
+  ## Ignores bytecode differences (`identical(force, identity)`)
+  agent2c <- agent %>% 
+    rows_distinct(preconditions = force)
+  expect_equal(nrow(align(agent2a, agent2c)), 1)
+  identity2 <- function(y) y
+  agent2d <- agent %>% 
+    rows_distinct(preconditions = identity2)
+  expect_equal(nrow(align(agent2a, agent2d)), 2)
   
   ## Magrittr anonymous function
   agent3a <- agent %>% 
@@ -153,6 +169,9 @@ test_that("multiagent alignment of special data types are correct", {
   agent3b <- agent %>% 
     rows_distinct(preconditions = . %>% identity())
   expect_equal(nrow(align(agent3a, agent3b)), 1)
+  agent3c <- agent %>% 
+    rows_distinct(preconditions = . %>% force())
+  expect_equal(nrow(align(agent3a, agent3c)), 2)
   
   ## Formula + magrittr anonymous function
   agent4a <- agent %>% 
@@ -160,6 +179,9 @@ test_that("multiagent alignment of special data types are correct", {
   agent4b <- agent %>% 
     rows_distinct(preconditions = ~ . %>% identity())
   expect_equal(nrow(align(agent4a, agent4b)), 1)
+  agent4c <- agent %>% 
+    rows_distinct(preconditions = ~ . %>% force())
+  expect_equal(nrow(align(agent4a, agent4c)), 2)
   
   ## `vars()` quosures
   agent5a <- agent %>% 
@@ -167,6 +189,9 @@ test_that("multiagent alignment of special data types are correct", {
   agent5b <- agent %>% 
     col_vals_between(columns = c, left = vars(a), right = vars(d))
   expect_equal(nrow(align(agent5a, agent5b)), 1)
+  agent5c <- agent %>% 
+    col_vals_between(columns = c, left = vars(d), right = vars(a))
+  expect_equal(nrow(align(agent5a, agent5c)), 2)
   
   ## segments (same expr)
   agent6a <- agent %>% 

@@ -19,6 +19,8 @@
 
 * When no columns are returned from a `{tidyselect}` expression in `columns`, the agent's report now displays the originally supplied *expression* instead of simply blank (e.g., in `create_agent(small_table) %>% col_vals_null(matches("z"))`).
 
+* Fixes issue with the hashing implementation to improve performance and alignment of validation steps in the multiagent.
+
 # pointblank 0.11.4
 
 * Fixes issue with gt `0.9.0` compatibility.

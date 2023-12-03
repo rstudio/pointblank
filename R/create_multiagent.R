@@ -160,18 +160,16 @@ create_multiagent <- function(
 ) {
   
   agent_list <- list(...)
-    
+  if (!all(sapply(agent_list, is_ptblank_agent))) {
+    rlang::abort("All components of `...` must be an agent")
+  }
+  agent_list <- rehash_agent_list(agent_list)
   agent_list <- 
     lapply(
       agent_list,
       FUN = function(agent) {
-        
-        # TODO: Ensure that each `agent` in `agent_list` is
-        # actually an agent with `is_ptblank_agent()`
-        
         class(agent) <-
           c(setdiff(class(agent), "ptblank_agent"), "ptblank_agent_i")
-        
         agent
       }
     )
@@ -184,4 +182,51 @@ create_multiagent <- function(
   
   class(agent_series) <- "ptblank_multiagent"
   agent_series
+}
+
+rehash_agent_list <- function(agent_list) {
+  
+  hash_versions <- lapply(agent_list, function(x) {
+    gsub("^.*(-|$)", "", x$validation_set$sha1)
+  })
+  hash_versions <- unique(unlist(hash_versions))
+
+  # agents using any of these hash versions are rehashed
+  to_rehash <- c("")
+    
+  if (any(to_rehash %in% hash_versions) || length(hash_versions) > 1) {
+    lapply(agent_list, rehash_agent)
+  } else {
+    agent_list
+  }
+  
+}
+
+rehash_agent <- function(agent) {
+  
+  cur_hash_version <- get_hash_version()
+  vs <- agent$validation_set
+  
+  new_hash <- sapply(seq_len(nrow(vs)), function(i) {
+    step <- vs[i, ]
+    hash <- step$sha1
+    hash_version <- gsub("^.*(-|$)", "", hash)
+    if (hash_version != cur_hash_version) {
+      # Rehash from validation set, extracting from list-column where necessary
+      hash <- hash_validation_step(
+        assertion_type = step$assertion_type,
+        column = step$column[[1]],
+        values = step$values[[1]],
+        na_pass = step$na_pass,
+        preconditions = step$preconditions[[1]],
+        seg_col = step$seg_col,
+        seg_val = step$seg_val
+      )
+    }
+    hash
+  })
+  
+  agent$validation_set$sha1 <- new_hash
+  agent
+  
 }

@@ -137,3 +137,7 @@ test_that("Creating a valid `multiagent` object is possible", {
     expect_is(agent_i$extracts, "list")
   }
 })
+
+test_that("multiagent checks for agent input", {
+  expect_error(create_multiagent(1, "a"), "must be an agent")
+})

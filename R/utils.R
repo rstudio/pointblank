@@ -1715,3 +1715,12 @@ pb_get_image_tag <- function(file, dir = "images") {
     "style=\"width:100\\%;\">"
   )
 }
+
+deparse_expr <- function(expr, collapse = " ", ...) {
+  if (rlang::is_scalar_atomic(expr)) {
+    as.character(expr)
+  } else {
+    deparsed <- paste(deparse(expr, ...), collapse = collapse)
+    paste("<expr>", deparsed)
+  }
+}

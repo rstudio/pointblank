@@ -141,9 +141,11 @@ hash_validation_step <- function(assertion_type,
   
   preconditions <- if (inherits(preconditions, "fseq")) {
     # Spell out components of magrittr anonymous function
-    environment(preconditions)[["_function_list"]]
+    magrittr_fn_seq <- environment(preconditions)[["_function_list"]]
+    deparse_inf(magrittr_fn_seq)
+  } else {
+    deparse_inf(preconditions)
   }
-  preconditions <- deparse_inf(preconditions)
   
   step_chr <- c(
     assertion_type = assertion_type,

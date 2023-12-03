@@ -204,20 +204,26 @@ rehash_agent_list <- function(agent_list) {
 
 rehash_agent <- function(agent) {
   
+  cur_hash_version <- get_hash_version()
   vs <- agent$validation_set
   
   new_hash <- sapply(seq_len(nrow(vs)), function(i) {
     step <- vs[i, ]
-    # Rehash from validation set, extracting from list-column when necessary
-    hash_validation_step(
-      assertion_type = step$assertion_type,
-      column = step$column[[1]],
-      values = step$values[[1]],
-      na_pass = step$na_pass,
-      preconditions = step$preconditions[[1]],
-      seg_col = step$seg_col,
-      seg_val = step$seg_val
-    )
+    hash <- step$sha1
+    hash_version <- gsub("^.*(-|$)", "", hash)
+    if (hash_version != cur_hash_version) {
+      # Rehash from validation set, extracting from list-column where necessary
+      hash <- hash_validation_step(
+        assertion_type = step$assertion_type,
+        column = step$column[[1]],
+        values = step$values[[1]],
+        na_pass = step$na_pass,
+        preconditions = step$preconditions[[1]],
+        seg_col = step$seg_col,
+        seg_val = step$seg_val
+      )
+    }
+    hash
   })
   
   agent$validation_set$sha1 <- new_hash

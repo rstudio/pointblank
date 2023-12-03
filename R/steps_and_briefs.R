@@ -117,6 +117,10 @@ create_validation_step <- function(
   agent
 }
 
+get_hash_version <- function() {
+  "v0.12"
+}
+
 hash_validation_step <- function(assertion_type,
                                  column = NULL,
                                  values = NULL,
@@ -126,7 +130,7 @@ hash_validation_step <- function(assertion_type,
                                  seg_val = NULL) {
   
   # pkg version that introduced the current hash implementation
-  hash_version <- "v0.12"
+  hash_version <- get_hash_version()
   
   values <- if (is.null(values) || is_a_table_object(values)) {
     NA_character_

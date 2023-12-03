@@ -1716,6 +1716,11 @@ pb_get_image_tag <- function(file, dir = "images") {
   )
 }
 
-deparse_inf <- function(expr, collapse = " ", ...) {
-  paste(deparse(expr, ...), collapse = collapse)
+deparse_expr <- function(expr, collapse = " ", ...) {
+  if (rlang::is_scalar_atomic(expr)) {
+    as.character(expr)
+  } else {
+    deparsed <- paste(deparse(expr, ...), collapse = collapse)
+    paste("<expr>", deparsed)
+  }
 }

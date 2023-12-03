@@ -1,8 +1,10 @@
 agent <- create_agent(small_table)
-align <- function(...) {
+align <- function(..., display_table = FALSE) {
   intel_agents <- suppressMessages(lapply(list(...), interrogate))
   multiagent <- do.call(create_multiagent, intel_agents)
-  get_multiagent_report(multiagent, display_table = FALSE)
+  get_multiagent_report(
+    multiagent, display_table = display_table, display_mode = "wide"
+  )
 }
 
 al <- action_levels(0.05, 0.10, 0.20)
@@ -111,7 +113,7 @@ test_that("multiagent alignment is not sensitive to environment", {
   ))
   expect_equal(nrow(align(agent3a, agent3b)), 1)
   
-  # But sensitive to function definition
+  # But still sensitive to function definition
   fn <- function(x) identity(x)
   agent4a <- agent %>% 
     col_vals_not_null(c, preconditions = fn)
@@ -132,7 +134,7 @@ test_that("multiagent alignment is not sensitive to environment", {
 
 test_that("multiagent alignment of special data types are correct", {
 
-  # `vars(c)` not equivalent to `"c"`
+  # `vars(c)` not equivalent to `"c"` or `"~c"` or `c`
   agent1a <- agent %>%
     col_vals_equal(columns = c, value = "c")
   agent1b <- agent %>%
@@ -146,8 +148,12 @@ test_that("multiagent alignment of special data types are correct", {
   agent1c <- agent %>%
     col_vals_equal(columns = c, value = c)
   expect_equal(nrow(align(agent1a, agent1c)), 1)
+  expect_equal(nrow(align(agent1b, agent1c)), 2)
+  agent1d <- agent %>%
+    col_vals_equal(columns = c, value = "~c")
+  expect_equal(nrow(align(agent1b, agent1d)), 2)
   
-  # Aligns identical special data types correctly
+  # Aligns special data types correctly
   ## Function object
   agent2a <- agent %>% 
     rows_distinct(preconditions = identity)
@@ -193,13 +199,13 @@ test_that("multiagent alignment of special data types are correct", {
     col_vals_between(columns = c, left = vars(d), right = vars(a))
   expect_equal(nrow(align(agent5a, agent5c)), 2)
   
-  ## segments (same expr)
+  ## identical segments (same expr)
   agent6a <- agent %>% 
     col_vals_lt(columns = c(a, c), value = vars(d), segments = vars(e, f))
   agent6b <- agent %>% 
     col_vals_lt(columns = c(a, c), value = vars(d), segments = vars(e, f))
   expect_equal(nrow(align(agent6a, agent6b)), 10)
-  ## segments (diff expr)
+  ## identical segments (diff expr)
   agent7a <- agent %>% 
     col_vals_lt(columns = c(a, c), value = vars(d), segments = vars(e))
   agent7b <- agent %>% 
@@ -208,5 +214,12 @@ test_that("multiagent alignment of special data types are correct", {
     agent7a$validation_set$sha1, agent7b$validation_set$sha1
   )
   expect_equal(nrow(align(agent7a, agent7b)), 4)
+  ## subset of segments (diff expr)
+  agent8a <- agent %>% 
+    col_vals_lt(columns = c(a, c), value = vars(d), segments = vars(e))
+  agent8b <- agent %>% 
+    col_vals_lt(columns = c(a, c), value = vars(d), segments = e ~ c(TRUE))
+  expect_true(all(agent8b$validation_set$sha1 %in% agent8a$validation_set$sha1))
+  expect_equal(nrow(align(agent8a, agent8b)), 4)
   
 })

@@ -130,21 +130,19 @@ hash_validation_step <- function(assertion_type,
   
   values <- if (is.null(values) || is_a_table_object(values)) {
     NA_character_
-  } else if (rlang::is_scalar_atomic(values)) {
-    as.character(values)
   } else if (is.list(values)) {
     # Resolve `vars()` to scalar string
-    toString(vapply(values, deparse_inf, character(1)))
+    toString(vapply(values, deparse_expr, character(1)))
   } else {
-    deparse_inf(values)
+    deparse_expr(values)
   }
   
   preconditions <- if (inherits(preconditions, "fseq")) {
     # Spell out components of magrittr anonymous function
     magrittr_fn_seq <- environment(preconditions)[["_function_list"]]
-    deparse_inf(magrittr_fn_seq)
+    deparse_expr(magrittr_fn_seq)
   } else {
-    deparse_inf(preconditions)
+    deparse_expr(preconditions)
   }
   
   step_chr <- c(

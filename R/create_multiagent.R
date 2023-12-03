@@ -186,7 +186,7 @@ create_multiagent <- function(
 
 rehash_agent_list <- function(agent_list) {
   
-  hash_versions <- sapply(agent_list, function(x) {
+  hash_versions <- lapply(agent_list, function(x) {
     gsub("^.*(-|$)", "", x$validation_set$sha1)
   })
   hash_versions <- unique(unlist(hash_versions))

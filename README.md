@@ -48,7 +48,7 @@ metadata updated so that this important documentation doesn't become stale.
 ## TABLE VALIDATIONS WITH AN AGENT AND DATA QUALITY REPORTING
 
 Data validation can be carried out in *Data Quality Reporting* workflow, 
-ultimately resulting in the production of of a data quality analysis report.
+ultimately resulting in the production of a data quality analysis report.
 This is most useful in a non-interactive mode where data quality for database
 tables and on-disk data files must be periodically checked. The **pointblank**
 *agent* is given a collection of validation functions to define validation

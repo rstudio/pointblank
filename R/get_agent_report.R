@@ -510,7 +510,8 @@ get_agent_report <- function(
         htmltools::HTML(agent_label_styled),
         htmltools::tags$div(
           style = htmltools::css(
-            height = "25px"
+            height = "25px",
+            `padding-top` = "10px"
           ),
           htmltools::HTML(paste0(table_type, action_levels))
         ) 

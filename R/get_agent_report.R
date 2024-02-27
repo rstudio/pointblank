@@ -775,6 +775,7 @@ get_agent_report <- function(
                   `margin-top` = "0",
                   `margin-bottom` = "0",
                   `font-family` = "monospace",
+                  `font-size` = "10px",
                   `white-space` = "nowrap",
                   `text-overflow` = "ellipsis",
                   overflow = "hidden",
@@ -1896,9 +1897,7 @@ get_agent_report <- function(
       agent_report <- 
         agent_report %>%
         gt::tab_header(
-          title = get_lsv(text = c(
-            "agent_report", "pointblank_validation_title_text"
-          ))[[lang]],
+          title = title_text,
           subtitle = gt::md(
             paste0(agent_label_styled, " ", table_type, " <br><br>")
           )

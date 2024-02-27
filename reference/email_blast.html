@@ -119,8 +119,8 @@ hence only available in an internal evaluation context.</p></dd>
 
 <dt>credentials</dt>
 <dd><p>A credentials list object that is produced by either of
-the <code><a href="https://rdrr.io/pkg/blastula/man/credential_helpers.html" class="external-link">blastula::creds()</a></code>, <code><a href="https://rdrr.io/pkg/blastula/man/credential_helpers.html" class="external-link">blastula::creds_anonymous()</a></code>,
-<code><a href="https://rdrr.io/pkg/blastula/man/credential_helpers.html" class="external-link">blastula::creds_key()</a></code>, or <code><a href="https://rdrr.io/pkg/blastula/man/credential_helpers.html" class="external-link">blastula::creds_file()</a></code> functions. Please
+the <code><a href="https://rstudio.github.io/blastula/reference/credential_helpers.html" class="external-link">blastula::creds()</a></code>, <code><a href="https://rstudio.github.io/blastula/reference/credential_helpers.html" class="external-link">blastula::creds_anonymous()</a></code>,
+<code><a href="https://rstudio.github.io/blastula/reference/credential_helpers.html" class="external-link">blastula::creds_key()</a></code>, or <code><a href="https://rstudio.github.io/blastula/reference/credential_helpers.html" class="external-link">blastula::creds_file()</a></code> functions. Please
 refer to the <strong>blastula</strong> documentation for information on how to use these
 functions.</p></dd>
 
@@ -174,7 +174,7 @@ representation.</p>
 <span>      to <span class="op">=</span> <span class="st">"joe_public@example.com"</span>,</span>
 <span>      from <span class="op">=</span> <span class="st">"pb_notif@example.com"</span>,</span>
 <span>      msg_subject <span class="op">=</span> <span class="st">"Table Validation"</span>,</span>
-<span>      credentials <span class="op">=</span> <span class="fu">blastula</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/blastula/man/credential_helpers.html" class="external-link">creds_key</a></span><span class="op">(</span></span>
+<span>      credentials <span class="op">=</span> <span class="fu">blastula</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/blastula/reference/credential_helpers.html" class="external-link">creds_key</a></span><span class="op">(</span></span>
 <span>        id <span class="op">=</span> <span class="st">"smtp2go"</span></span>
 <span>      <span class="op">)</span></span>
 <span>    <span class="op">)</span></span>
@@ -249,7 +249,7 @@ interrogation of data in <code>small_table</code>:</p>
 <span>        to <span class="op">=</span>   <span class="st">"a_person@example.com"</span>,</span>
 <span>        from <span class="op">=</span> <span class="st">"pb_notif@example.com"</span>,</span>
 <span>        msg_subject <span class="op">=</span> <span class="st">"Table Validation"</span>,</span>
-<span>        credentials <span class="op">=</span> <span class="fu">blastula</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/blastula/man/credential_helpers.html" class="external-link">creds_key</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"smtp2go"</span><span class="op">)</span>,</span>
+<span>        credentials <span class="op">=</span> <span class="fu">blastula</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/blastula/reference/credential_helpers.html" class="external-link">creds_key</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"smtp2go"</span><span class="op">)</span>,</span>
 <span>        send_condition <span class="op">=</span> <span class="op">~</span> <span class="cn">TRUE</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">x</span><span class="op">$</span><span class="va">notify</span></span>
 <span>      <span class="op">)</span></span>
 <span>    <span class="op">)</span></span>

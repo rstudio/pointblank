@@ -775,6 +775,7 @@ get_agent_report <- function(
                   `margin-top` = "0",
                   `margin-bottom` = "0",
                   `font-family` = "monospace",
+                  `font-size` = "10px",
                   `white-space` = "nowrap",
                   `text-overflow` = "ellipsis",
                   overflow = "hidden",

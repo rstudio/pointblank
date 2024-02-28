@@ -850,7 +850,7 @@ create_post_step_cli_output_a <- function(
   
   label <- agent$validation_set[i, ]$label
   if (show_step_label && !is.na(label)) {
-    step_label <- paste0(" — {label}")
+    step_label <- paste0(" - {label}")
   } else {
     step_label <- NULL
   }

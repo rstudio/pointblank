@@ -11,3 +11,6 @@ data_qmd_divs <- xml2::xml_find_all(test_qmd, "//div[@data-qmd]")
 data_qmd_divs
 
 stopifnot(length(data_qmd_divs) == 0)
+
+unlink("tests/manual_tests/test-quarto-render.html")
+unlink("tests/manual_tests/test-quarto-render_files/*", recursive = TRUE)

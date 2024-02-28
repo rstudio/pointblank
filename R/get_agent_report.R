@@ -1966,7 +1966,11 @@ get_agent_report <- function(
   
   # nocov end
   
+  # Quarto rendering workaround
+  agent_report <- gt::fmt(agent_report, fns = identity)
+  
   agent_report
+  
 }
 
 get_default_title_text <- function(report_type,

@@ -915,7 +915,11 @@ get_multiagent_report <- function(
   
   class(report_tbl) <- c("ptblank_multiagent_report.wide", class(report_tbl))
   
+  # Quarto rendering workaround
+  report_tbl <- gt::fmt(report_tbl, fns = identity)
+  
   report_tbl
+  
 }
 
 generate_cell_content <- function(

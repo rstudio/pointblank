@@ -1,0 +1,40 @@
+---
+title: "Rendering reports in a Quarto document"
+format: html
+---
+
+```{r}
+library(pointblank)
+```
+
+## agent report
+
+```{r}
+agent <- small_table[, "a"] %>% 
+  create_agent() %>% 
+  col_exists(a) %>% 
+  interrogate()
+agent
+get_agent_report(agent)
+```
+
+
+## informant report
+
+```{r}
+informant <- small_table[, "a"] %>% 
+  create_informant() %>% 
+  info_columns(a, info = "a column")
+informant
+get_informant_report(informant)
+```
+
+## multiagent report
+
+```{r}
+multiagent <- create_multiagent(agent, agent)
+multiagent
+get_multiagent_report(multiagent, display_mode = "long")
+get_multiagent_report(multiagent, display_mode = "wide")
+```
+

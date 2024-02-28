@@ -678,7 +678,11 @@ get_informant_report <- function(
   
   # nocov end
   
+  # Quarto rendering workaround
+  gt_informant_report <- gt::fmt(gt_informant_report, fns = identity)
+  
   gt_informant_report
+  
 }
 
 add_to_tbl <- function(tbl, item, group) {

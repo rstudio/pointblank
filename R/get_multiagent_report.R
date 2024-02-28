@@ -889,6 +889,7 @@ get_multiagent_report <- function(
           #report code {
             font-family: 'IBM Plex Mono', monospace, courier;
             font-size: 11px;
+            color: black;
             background-color: transparent;
             padding: 0;
           }
@@ -914,7 +915,11 @@ get_multiagent_report <- function(
   
   class(report_tbl) <- c("ptblank_multiagent_report.wide", class(report_tbl))
   
+  # Quarto rendering workaround
+  report_tbl <- gt::fmt(report_tbl, fns = identity)
+  
   report_tbl
+  
 }
 
 generate_cell_content <- function(

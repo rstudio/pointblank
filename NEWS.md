@@ -14,6 +14,11 @@
   - `"{.seg_val}"`: The current segment's value/group
   
   These dynamic values may be useful for validations that get expanded into multiple steps.
+  
+* `interrogate()` gains two new options for printing progress in the console output:
+
+  - `progress`: Whether interrogation progress should be printed to the console (`TRUE` for interactive sessions, same as before)
+  - `show_step_label`: Whether each validation step's label value should be printed alongside the progress.
 
 ## Minor improvements and bug fixes
 

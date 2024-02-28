@@ -79,6 +79,19 @@
 #'   A value that limits the possible number of rows returned when sampling
 #'   non-passing rows using the `sample_frac` option.
 #'   
+#' @param show_step_label *Show step labels in progress*
+#' 
+#'   `scalar<logical>` // *default:* `FALSE`
+#' 
+#'   Whether to show the `label` value of each validation step in the console.
+#'
+#' @param progress *Show interrogation progress*
+#' 
+#'   `scalar<logical>` // *default:* `interactive()`
+#' 
+#'   Whether to show the progress of an agent's interrogation in the console.
+#'   Defaults to `TRUE` in interactive sessions.
+#'   
 #' @return A `ptblank_agent` object.
 #'   
 #' @section Examples:
@@ -133,7 +146,9 @@ interrogate <- function(
     get_first_n = NULL,
     sample_n = NULL,
     sample_frac = NULL,
-    sample_limit = 5000
+    sample_limit = 5000,
+    show_step_label = FALSE,
+    progress = interactive()
 ) {
   
   #
@@ -199,7 +214,7 @@ interrogate <- function(
 
   # Quieting of an agent's remarks either when the agent has the
   # special label `"::QUIET::"` or the session is non-interactive
-  if (agent$label == "::QUIET::" || !interactive()) {
+  if (agent$label == "::QUIET::" || !progress) {
     quiet <- TRUE
   } else {
     quiet <- FALSE
@@ -701,6 +716,7 @@ interrogate <- function(
       agent = agent,
       i = i,
       time_diff_s = time_diff_s,
+      show_step_label = show_step_label,
       quiet = quiet
     )
   }
@@ -795,6 +811,7 @@ create_post_step_cli_output_a <- function(
     agent,
     i,
     time_diff_s,
+    show_step_label,
     quiet
 ) {
   
@@ -831,6 +848,13 @@ create_post_step_cli_output_a <- function(
     )) %>% 
     dplyr::pull(condition)
   
+  label <- agent$validation_set[i, ]$label
+  if (show_step_label && !is.na(label)) {
+    step_label <- paste0(" - {label}")
+  } else {
+    step_label <- NULL
+  }
+  
   cli::cli_div(
     theme = list(
       span.green = list(color = "green"),
@@ -845,26 +869,33 @@ create_post_step_cli_output_a <- function(
       c(
         "Step {.field {i}}: an evaluation issue requires attention ",
         "(", interrogation_evaluation, ").",
-        print_time(time_diff_s)
+        print_time(time_diff_s),
+        step_label
       )
     )
   } else if (validation_condition == "NONE" && notify_condition == "NONE") {
     cli::cli_alert_success(
-      c("Step {.field {i}}: {.green OK}.", print_time(time_diff_s))
+      c(
+        "Step {.field {i}}: {.green OK}.",
+        print_time(time_diff_s),
+        step_label
+      )
     )
   } else if (validation_condition != "NONE" && notify_condition == "NONE") {
     if (validation_condition == "STOP") {
       cli::cli_alert_danger(
         c(
           "Step {.field {i}}: {.red STOP} condition met.",
-          print_time(time_diff_s)
+          print_time(time_diff_s),
+          step_label
         )
       )
     } else {
       cli::cli_alert_warning(
         c(
           "Step {.field {i}}: {.yellow WARNING} condition met.",
-          print_time(time_diff_s)
+          print_time(time_diff_s),
+          step_label
         )
       )
     }
@@ -874,7 +905,8 @@ create_post_step_cli_output_a <- function(
         c(
           "Step {.field {i}}: {.red STOP} and ",
           "{.blue NOTIFY} conditions met.",
-          print_time(time_diff_s)
+          print_time(time_diff_s),
+          step_label
         )
       )
     } else {
@@ -882,7 +914,8 @@ create_post_step_cli_output_a <- function(
         c(
           "Step {.field {i}}: {.yellow WARNING} and ",
           "{.blue NOTIFY} conditions met.",
-          print_time(time_diff_s)
+          print_time(time_diff_s),
+          step_label
         )
       )
     }
@@ -890,7 +923,8 @@ create_post_step_cli_output_a <- function(
     cli::cli_alert_warning(
       c(
         "Step {.field {i}}: {.blue NOTIFY} condition met.",
-        print_time(time_diff_s)
+        print_time(time_diff_s),
+        step_label
       )
     )
   }

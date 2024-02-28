@@ -176,9 +176,9 @@
 <span>    preconditions <span class="op">=</span> <span class="op">~</span> <span class="va">.</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>c <span class="op">=</span> <span class="va">a</span> <span class="op">+</span> <span class="va">b</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/col_is_numeric.html">col_is_numeric</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Error<span class="sc">:</span> Exceedance of failed test units where values <span class="cf">in</span> <span class="st">`</span><span class="at">c</span><span class="st">`</span> should have been <span class="sc">&lt;</span> <span class="st">`</span><span class="at">12</span><span class="st">`</span>.</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>The <span class="st">`</span><span class="at">col_vals_lt()</span><span class="st">`</span> validation failed beyond the absolute threshold <span class="fu">level</span> (<span class="dv">1</span>).</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> failure <span class="fu">level</span> (<span class="dv">2</span>) <span class="sc">&gt;=</span> failure <span class="fu">threshold</span> (<span class="dv">1</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>Error<span class="sc">:</span> Exceedance of failed test units where values <span class="cf">in</span> <span class="st">`</span><span class="at">c</span><span class="st">`</span> should have been <span class="sc">&lt;</span> <span class="st">`</span><span class="at">12</span><span class="st">`</span>.</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>The <span class="st">`</span><span class="at">col_vals_lt()</span><span class="st">`</span> validation failed beyond the absolute threshold <span class="fu">level</span> (<span class="dv">1</span>).</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="sc">*</span> failure <span class="fu">level</span> (<span class="dv">2</span>) <span class="sc">&gt;=</span> failure <span class="fu">threshold</span> (<span class="dv">1</span>) </span></code></pre></div>
 <p>We can downgrade this error to a warning with the <code><a href="reference/action_levels.html">warn_on_fail()</a></code> helper function (assigning it to <code>actions</code>). In this way, the data will always be returned, but warnings will appear.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># The `warn_on_fail()` function is a nice</span></span>
@@ -203,20 +203,20 @@
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span>,</span>
 <span>    actions <span class="op">=</span> <span class="fu"><a href="reference/action_levels.html">warn_on_fail</a></span><span class="op">(</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 x 2</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       a     b</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     5     6</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2     7     1</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3     6     0</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4     5     6</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5    NA     0</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6     7     7</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>Warning message<span class="sc">:</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>Exceedance of failed test units where values <span class="cf">in</span> <span class="st">`</span><span class="at">c</span><span class="st">`</span> should have been <span class="sc">&lt;</span> <span class="st">`</span><span class="at">12</span><span class="st">`</span>.</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>The <span class="st">`</span><span class="at">col_vals_lt()</span><span class="st">`</span> validation failed beyond the absolute threshold <span class="fu">level</span> (<span class="dv">1</span>).</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> failure <span class="fu">level</span> (<span class="dv">2</span>) <span class="sc">&gt;=</span> failure <span class="fu">threshold</span> (<span class="dv">1</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 x 2</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="co">#&gt;       a     b</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt; 1     5     6</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#&gt; 2     7     1</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt; 3     6     0</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co">#&gt; 4     5     6</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co">#&gt; 5    NA     0</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co">#&gt; 6     7     7</span></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a>Warning message<span class="sc">:</span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a>Exceedance of failed test units where values <span class="cf">in</span> <span class="st">`</span><span class="at">c</span><span class="st">`</span> should have been <span class="sc">&lt;</span> <span class="st">`</span><span class="at">12</span><span class="st">`</span>.</span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a>The <span class="st">`</span><span class="at">col_vals_lt()</span><span class="st">`</span> validation failed beyond the absolute threshold <span class="fu">level</span> (<span class="dv">1</span>).</span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="sc">*</span> failure <span class="fu">level</span> (<span class="dv">2</span>) <span class="sc">&gt;=</span> failure <span class="fu">threshold</span> (<span class="dv">1</span>) </span></code></pre></div>
 <p>Should you need more fine-grained thresholds and resultant actions, the <code><a href="reference/action_levels.html">action_levels()</a></code> function can be used to specify multiple failure thresholds and side effects for each failure state. However, with <code><a href="reference/action_levels.html">warn_on_fail()</a></code> and <code><a href="reference/action_levels.html">stop_on_fail()</a></code> (applied by default, with <code>stop_at = 1</code>), you should have good enough options for this validation workflow.</p>
 <hr>
 </div>

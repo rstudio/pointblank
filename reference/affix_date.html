@@ -159,23 +159,23 @@ time (<code>FALSE</code>).</p></dd>
 <p>Taking the generic <code>"pb_file"</code> name for a file, we add the current date to it
 as a suffix.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/affix_date.html">affix_date</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="st">"pb_file"</span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "pb_file_2022-04-01"</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="do">## [1] "pb_file_2022-04-01"</span></span></code></pre><p></p></div>
 <p>File extensions won't get in the way:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/affix_date.html">affix_date</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="st">"pb_file.rds"</span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "pb_file_2022-04-01.rds"</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="do">## [1] "pb_file_2022-04-01.rds"</span></span></code></pre><p></p></div>
 <p>The date can be used as a prefix.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/affix_date.html">affix_date</a></span><span class="op">(</span></span>
 <span>  filename <span class="op">=</span> <span class="st">"pb_file"</span>,</span>
 <span>  position <span class="op">=</span> <span class="st">"start"</span></span>
 <span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "2022-04-01_pb_file"</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="do">## [1] "2022-04-01_pb_file"</span></span></code></pre><p></p></div>
 <p>The date pattern can be changed and so can the delimiter.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/affix_date.html">affix_date</a></span><span class="op">(</span></span>
 <span>  filename <span class="op">=</span> <span class="st">"pb_file.yml"</span>,</span>
 <span>  format <span class="op">=</span> <span class="st">"%Y%m%d"</span>,</span>
 <span>  delimiter <span class="op">=</span> <span class="st">"-"</span></span>
 <span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "pb_file-20220401.yml"</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="do">## [1] "pb_file-20220401.yml"</span></span></code></pre><p></p></div>
 </div>
 
 <div class="section">

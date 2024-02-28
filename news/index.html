@@ -82,10 +82,18 @@
 <code>"{.seg_val}"</code>: The current segment’s value/group</li>
 </ul><p>These dynamic values may be useful for validations that get expanded into multiple steps.</p>
 </li>
+<li>
+<p><code><a href="../reference/interrogate.html">interrogate()</a></code> gains two new options for printing progress in the console output:</p>
+<ul><li>
+<code>progress</code>: Whether interrogation progress should be printed to the console (<code>TRUE</code> for interactive sessions, same as before)</li>
+<li>
+<code>show_step_label</code>: Whether each validation step’s label value should be printed alongside the progress.</li>
+</ul></li>
 </ul></div>
 <div class="section level3">
 <h3 id="minor-improvements-and-bug-fixes-development-version">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-development-version"></a></h3>
-<ul><li><p>When no columns are returned from a <a href="https://tidyselect.r-lib.org" class="external-link">tidyselect</a> expression in <code>columns</code>, the agent’s report now displays the originally supplied <em>expression</em> instead of simply blank (e.g., in <code>create_agent(small_table) %&gt;% col_vals_null(matches("z"))</code>).</p></li>
+<ul><li><p>Fixes issue with rendering reports in Quarto html documents.</p></li>
+<li><p>When no columns are returned from a <a href="https://tidyselect.r-lib.org" class="external-link">tidyselect</a> expression in <code>columns</code>, the agent’s report now displays the originally supplied <em>expression</em> instead of simply blank (e.g., in <code>create_agent(small_table) %&gt;% col_vals_null(matches("z"))</code>).</p></li>
 <li><p>Fixes issue with the hashing implementation to improve performance and alignment of validation steps in the multiagent.</p></li>
 </ul></div>
 </div>

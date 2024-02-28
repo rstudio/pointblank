@@ -183,36 +183,36 @@ subsections of YAML keys named for the columns, which are themselves part of
 the top-level <code>columns</code> key. Here is an example of how several calls of
 <code>info_columns()</code> are expressed in R code and how the result corresponds to
 the YAML representation.</p>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R statement</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>informant <span class="sc">%&gt;%</span> </span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">info_columns</span>(</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="st">"date_time"</span>,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">info =</span> <span class="st">"*info text* 1."</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">info_columns</span>(</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="st">"date"</span>,</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">info =</span> <span class="st">"*info text* 2."</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">info_columns</span>(</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="st">"item_count"</span>,</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">info =</span> <span class="st">"*info text* 3. Statistics: {snippet_1}."</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">info_columns</span>(</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="fu">c</span>(date, date_time),</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">info =</span> <span class="st">"UTC time."</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># YAML representation</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>columns<span class="sc">:</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  date_time<span class="sc">:</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    _type<span class="sc">:</span> POSIXct, POSIXt</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    info<span class="sc">:</span> <span class="st">'*info text* 1. UTC time.'</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  date<span class="sc">:</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    _type<span class="sc">:</span> Date</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    info<span class="sc">:</span> <span class="st">'*info text* 2. UTC time.'</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  item_count<span class="sc">:</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    _type<span class="sc">:</span> integer</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    info<span class="sc">:</span> <span class="st">'*info text* 3. Statistics: {snippet_1}.'</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># R statement</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>informant <span class="sc">%&gt;%</span> </span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>  <span class="fu">info_columns</span>(</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>    <span class="at">columns =</span> <span class="st">"date_time"</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>    <span class="at">info =</span> <span class="st">"*info text* 1."</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>  <span class="fu">info_columns</span>(</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>    <span class="at">columns =</span> <span class="st">"date"</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>    <span class="at">info =</span> <span class="st">"*info text* 2."</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>  <span class="fu">info_columns</span>(</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>    <span class="at">columns =</span> <span class="st">"item_count"</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>    <span class="at">info =</span> <span class="st">"*info text* 3. Statistics: {snippet_1}."</span></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>  <span class="fu">info_columns</span>(</span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a>    <span class="at">columns =</span> <span class="fu">c</span>(date, date_time),</span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a>    <span class="at">info =</span> <span class="st">"UTC time."</span></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a>  )</span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a><span class="co"># YAML representation</span></span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a>columns<span class="sc">:</span></span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a>  date_time<span class="sc">:</span></span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a>    _type<span class="sc">:</span> POSIXct, POSIXt</span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a>    info<span class="sc">:</span> <span class="st">'*info text* 1. UTC time.'</span></span>
+<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a>  date<span class="sc">:</span></span>
+<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a>    _type<span class="sc">:</span> Date</span>
+<span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a>    info<span class="sc">:</span> <span class="st">'*info text* 2. UTC time.'</span></span>
+<span id="cb1-28"><a href="#cb1-28" tabindex="-1"></a>  item_count<span class="sc">:</span></span>
+<span id="cb1-29"><a href="#cb1-29" tabindex="-1"></a>    _type<span class="sc">:</span> integer</span>
+<span id="cb1-30"><a href="#cb1-30" tabindex="-1"></a>    info<span class="sc">:</span> <span class="st">'*info text* 3. Statistics: {snippet_1}.'</span></span></code></pre><p></p></div>
 <p>Subsections represented as column names are automatically generated when
 creating an informant. Within these, there can be multiple subsections used
 for holding <em>info text</em> on each column. The subsections used across the

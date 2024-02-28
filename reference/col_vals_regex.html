@@ -418,30 +418,30 @@ function. Here is an example of how a complex call of <code>col_vals_regex()</co
 validation step is expressed in R code and in the corresponding YAML
 representation.</p>
 <p>R statement:</p>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>agent <span class="sc">%&gt;%</span> </span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">col_vals_regex</span>(</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> a,</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">regex =</span> <span class="st">"[0-9]-[a-z]{3}-[0-9]{3}"</span>,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">na_pass =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">preconditions =</span> <span class="sc">~</span> . <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(a <span class="sc">&lt;</span> <span class="dv">10</span>),</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">segments =</span> b <span class="sc">~</span> <span class="fu">c</span>(<span class="st">"group_1"</span>, <span class="st">"group_2"</span>),</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">actions =</span> <span class="fu">action_levels</span>(<span class="at">warn_at =</span> <span class="fl">0.1</span>, <span class="at">stop_at =</span> <span class="fl">0.2</span>),</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">"The `col_vals_regex()` step."</span>,</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">active =</span> <span class="cn">FALSE</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>agent <span class="sc">%&gt;%</span> </span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="fu">col_vals_regex</span>(</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>    <span class="at">columns =</span> a,</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>    <span class="at">regex =</span> <span class="st">"[0-9]-[a-z]{3}-[0-9]{3}"</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>    <span class="at">na_pass =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>    <span class="at">preconditions =</span> <span class="sc">~</span> . <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(a <span class="sc">&lt;</span> <span class="dv">10</span>),</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>    <span class="at">segments =</span> b <span class="sc">~</span> <span class="fu">c</span>(<span class="st">"group_1"</span>, <span class="st">"group_2"</span>),</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>    <span class="at">actions =</span> <span class="fu">action_levels</span>(<span class="at">warn_at =</span> <span class="fl">0.1</span>, <span class="at">stop_at =</span> <span class="fl">0.2</span>),</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">"The `col_vals_regex()` step."</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>    <span class="at">active =</span> <span class="cn">FALSE</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>  )</span></code></pre><p></p></div>
 <p>YAML representation:</p>
-<p></p><div class="sourceCode yaml"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">steps</span><span class="kw">:</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">col_vals_regex</span><span class="kw">:</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">columns</span><span class="kw">:</span><span class="at"> c(a)</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">regex</span><span class="kw">:</span><span class="at"> </span><span class="st">'[0-9]-[a-z]{3}-[0-9]{3}'</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">na_pass</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">preconditions</span><span class="kw">:</span><span class="at"> ~. %&gt;% dplyr::filter(a &lt; 10)</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">segments</span><span class="kw">:</span><span class="at"> b ~ c("group_1", "group_2")</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">actions</span><span class="kw">:</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">warn_fraction</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.1</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">stop_fraction</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.2</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">label</span><span class="kw">:</span><span class="at"> The `col_vals_regex()` step.</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">active</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode yaml"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">steps</span><span class="kw">:</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">col_vals_regex</span><span class="kw">:</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="at">    </span><span class="fu">columns</span><span class="kw">:</span><span class="at"> c(a)</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="at">    </span><span class="fu">regex</span><span class="kw">:</span><span class="at"> </span><span class="st">'[0-9]-[a-z]{3}-[0-9]{3}'</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="at">    </span><span class="fu">na_pass</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="at">    </span><span class="fu">preconditions</span><span class="kw">:</span><span class="at"> ~. %&gt;% dplyr::filter(a &lt; 10)</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="at">    </span><span class="fu">segments</span><span class="kw">:</span><span class="at"> b ~ c("group_1", "group_2")</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="at">    </span><span class="fu">actions</span><span class="kw">:</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="at">      </span><span class="fu">warn_fraction</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.1</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="at">      </span><span class="fu">stop_fraction</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.2</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="at">    </span><span class="fu">label</span><span class="kw">:</span><span class="at"> The `col_vals_regex()` step.</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="at">    </span><span class="fu">active</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span></code></pre><p></p></div>
 <p>In practice, both of these will often be shorter as only the <code>columns</code> and
 <code>regex</code> arguments require values. Arguments with default values won't be
 written to YAML when using <code><a href="yaml_write.html">yaml_write()</a></code> (though it is acceptable to include

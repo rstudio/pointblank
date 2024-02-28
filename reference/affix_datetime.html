@@ -173,37 +173,37 @@ local time (<code>FALSE</code>).</p></dd>
 <p>Taking the generic <code>"pb_file"</code> name for a file, we add the current datetime
 to it as a suffix.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/affix_datetime.html">affix_datetime</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="st">"pb_file"</span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "pb_file_2022-04-01_00-32-53"</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="do">## [1] "pb_file_2022-04-01_00-32-53"</span></span></code></pre><p></p></div>
 <p>File extensions won't get in the way:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/affix_datetime.html">affix_datetime</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="st">"pb_file.rds"</span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "pb_file_2022-04-01_00-32-53.rds"</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="do">## [1] "pb_file_2022-04-01_00-32-53.rds"</span></span></code></pre><p></p></div>
 <p>The datetime can be used as a prefix.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/affix_datetime.html">affix_datetime</a></span><span class="op">(</span></span>
 <span>  filename <span class="op">=</span> <span class="st">"pb_file"</span>,</span>
 <span>  position <span class="op">=</span> <span class="st">"start"</span></span>
 <span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "2022-04-01_00-32-53_pb_file"</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="do">## [1] "2022-04-01_00-32-53_pb_file"</span></span></code></pre><p></p></div>
 <p>The datetime pattern can be changed and so can the delimiter.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/affix_datetime.html">affix_datetime</a></span><span class="op">(</span></span>
 <span>  filename <span class="op">=</span> <span class="st">"pb_file.yml"</span>,</span>
 <span>  format <span class="op">=</span> <span class="st">"%Y%m%d_%H%M%S"</span>,</span>
 <span>  delimiter <span class="op">=</span> <span class="st">"-"</span></span>
 <span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "pb_file-20220401_003253.yml"</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="do">## [1] "pb_file-20220401_003253.yml"</span></span></code></pre><p></p></div>
 <p>Time zone information can be included. By default, all datetimes are given in
 the UTC time zone.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/affix_datetime.html">affix_datetime</a></span><span class="op">(</span></span>
 <span>  filename <span class="op">=</span> <span class="st">"pb_file.yml"</span>,</span>
 <span>  add_tz <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "pb_file_2022-04-01_00-32-53Z.yml"</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="do">## [1] "pb_file_2022-04-01_00-32-53Z.yml"</span></span></code></pre><p></p></div>
 <p>We can use the system's local time zone with <code>utc_time = FALSE</code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/affix_datetime.html">affix_datetime</a></span><span class="op">(</span></span>
 <span>  filename <span class="op">=</span> <span class="st">"pb_file.yml"</span>,</span>
 <span>  utc_time <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  add_tz <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "pb_file_2022-03-31_20-32-53-0400.yml"</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="do">## [1] "pb_file_2022-03-31_20-32-53-0400.yml"</span></span></code></pre><p></p></div>
 </div>
 
 <div class="section">

@@ -143,32 +143,32 @@ retrieval of the target table.</p>
 <p>To get a sense of which expressions are being used to generate the new agent,
 we can use <code>yaml_agent_show_exprs()</code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/yaml_agent_show_exprs.html">yaml_agent_show_exprs</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="st">"agent-small_table.yml"</span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">create_agent</span>(</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">tbl =</span> <span class="sc">~</span>small_table,</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">actions =</span> <span class="fu">action_levels</span>(</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">warn_at =</span> <span class="fl">0.1</span>,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">stop_at =</span> <span class="fl">0.25</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">notify_at =</span> <span class="fl">0.35</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">tbl_name =</span> <span class="st">"small_table"</span>,</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">label =</span> <span class="st">"A simple example with the `small_table`."</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">col_exists</span>(</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="fu">c</span>(date, date_time)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">col_vals_regex</span>(</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> b,</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">regex =</span> <span class="st">"[0-9]-[a-z]{3}-[0-9]{3}"</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rows_distinct</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">col_vals_gt</span>(</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> d,</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">value =</span> <span class="dv">100</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">col_vals_lte</span>(</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> c,</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">value =</span> <span class="dv">5</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  ) </span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">create_agent</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="at">tbl =</span> <span class="sc">~</span>small_table,</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>  <span class="at">actions =</span> <span class="fu">action_levels</span>(</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>    <span class="at">warn_at =</span> <span class="fl">0.1</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>    <span class="at">stop_at =</span> <span class="fl">0.25</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>    <span class="at">notify_at =</span> <span class="fl">0.35</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>  ),</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>  <span class="at">tbl_name =</span> <span class="st">"small_table"</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>  <span class="at">label =</span> <span class="st">"A simple example with the `small_table`."</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>  <span class="fu">col_exists</span>(</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>    <span class="at">columns =</span> <span class="fu">c</span>(date, date_time)</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>  <span class="fu">col_vals_regex</span>(</span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>    <span class="at">columns =</span> b,</span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a>    <span class="at">regex =</span> <span class="st">"[0-9]-[a-z]{3}-[0-9]{3}"</span></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a>  <span class="fu">rows_distinct</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a>  <span class="fu">col_vals_gt</span>(</span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a>    <span class="at">columns =</span> d,</span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a>    <span class="at">value =</span> <span class="dv">100</span></span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a>  <span class="fu">col_vals_lte</span>(</span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a>    <span class="at">columns =</span> c,</span>
+<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a>    <span class="at">value =</span> <span class="dv">5</span></span>
+<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a>  ) </span></code></pre><p></p></div>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>

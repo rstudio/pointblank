@@ -358,26 +358,26 @@ in the corresponding YAML representation.</p>
 <span>  locale <span class="op">=</span> <span class="st">"fr_CA"</span></span>
 <span><span class="op">)</span></span></code></pre><p></p></div>
 <p>YAML representation:</p>
-<p></p><div class="sourceCode yaml"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">type</span><span class="kw">:</span><span class="at"> agent</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl</span><span class="kw">:</span><span class="at"> ~small_table</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_name</span><span class="kw">:</span><span class="at"> small_table</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span><span class="kw">:</span><span class="at"> An example.</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lang</span><span class="kw">:</span><span class="at"> fr</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">locale</span><span class="kw">:</span><span class="at"> fr_CA</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">actions</span><span class="kw">:</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">warn_fraction</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.1</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">stop_fraction</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.25</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">notify_fraction</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.35</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">fns</span><span class="kw">:</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">notify</span><span class="kw">:</span><span class="at"> ~email_blast(x, to = "joe_public@example.com",</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="at">      from = "pb_notif@example.com",</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="at">      msg_subject = "Table Validation",</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="at">      credentials = blastula::creds_key(id = "smtp2go"))</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">end_fns</span><span class="kw">:</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> ~beepr::beep(2)</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> ~Sys.sleep(1)</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">embed_report</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">steps</span><span class="kw">:</span><span class="at"> </span><span class="kw">[]</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode yaml"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">type</span><span class="kw">:</span><span class="at"> agent</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">tbl</span><span class="kw">:</span><span class="at"> ~small_table</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">tbl_name</span><span class="kw">:</span><span class="at"> small_table</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">label</span><span class="kw">:</span><span class="at"> An example.</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">lang</span><span class="kw">:</span><span class="at"> fr</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">locale</span><span class="kw">:</span><span class="at"> fr_CA</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="fu">actions</span><span class="kw">:</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="at">  </span><span class="fu">warn_fraction</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.1</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="at">  </span><span class="fu">stop_fraction</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.25</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="at">  </span><span class="fu">notify_fraction</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.35</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="at">  </span><span class="fu">fns</span><span class="kw">:</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="at">    </span><span class="fu">notify</span><span class="kw">:</span><span class="at"> ~email_blast(x, to = "joe_public@example.com",</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="at">      from = "pb_notif@example.com",</span></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="at">      msg_subject = "Table Validation",</span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="at">      credentials = blastula::creds_key(id = "smtp2go"))</span></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="fu">end_fns</span><span class="kw">:</span></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a><span class="kw">-</span><span class="at"> ~beepr::beep(2)</span></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a><span class="kw">-</span><span class="at"> ~Sys.sleep(1)</span></span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a><span class="fu">embed_report</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a><span class="fu">steps</span><span class="kw">:</span><span class="at"> </span><span class="kw">[]</span></span></code></pre><p></p></div>
 <p>In practice, this YAML file will be shorter since arguments with default
 values won't be written to YAML when using <code><a href="yaml_write.html">yaml_write()</a></code> (though it is
 acceptable to include them with their default when generating the YAML by
@@ -530,7 +530,7 @@ for the 4th step with <code><a href="get_agent_x_list.html">get_agent_x_list()</
 <p>And then we can peruse the different parts of the list. Let's get the
 fraction of test units that failed.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">xl_step_4</span><span class="op">$</span><span class="va">f_failed</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.15385</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#&gt; [1] 0.15385</span></span></code></pre><p></p></div>
 <p>An x-list not specific to any step will have way more information and a
 slightly different structure. See <code><a href="get_agent_x_list.html">help(get_agent_x_list)</a></code> for more info.</p>
 </div>

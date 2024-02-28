@@ -85,7 +85,9 @@ how the interrogation went down.</p>
 <span>  get_first_n <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  sample_n <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  sample_frac <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  sample_limit <span class="op">=</span> <span class="fl">5000</span></span>
+<span>  sample_limit <span class="op">=</span> <span class="fl">5000</span>,</span>
+<span>  show_step_label <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  progress <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -139,6 +141,19 @@ option will apply a hard limit to the returned rows.</p></dd>
 <p><code>scalar&lt;integer&gt;</code> // <em>default:</em> <code>5000</code></p>
 <p>A value that limits the possible number of rows returned when sampling
 non-passing rows using the <code>sample_frac</code> option.</p></dd>
+
+
+<dt>show_step_label</dt>
+<dd><p><em>Show step labels in progress</em></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
+<p>Whether to show the <code>label</code> value of each validation step in the console.</p></dd>
+
+
+<dt>progress</dt>
+<dd><p><em>Show interrogation progress</em></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive()</a></code></p>
+<p>Whether to show the progress of an agent's interrogation in the console.
+Defaults to <code>TRUE</code> in interactive sessions.</p></dd>
 
 </dl></div>
     <div class="section level2">

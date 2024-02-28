@@ -1951,6 +1951,7 @@ get_agent_report <- function(
           }
           #pb_agent code {
             font-family: 'IBM Plex Mono', monospace, courier;
+            color: black;
             background-color: transparent;
             padding: 0;
           }

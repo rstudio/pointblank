@@ -889,6 +889,7 @@ get_multiagent_report <- function(
           #report code {
             font-family: 'IBM Plex Mono', monospace, courier;
             font-size: 11px;
+            color: black;
             background-color: transparent;
             padding: 0;
           }

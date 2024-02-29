@@ -2,7 +2,7 @@
 
 ## New features
 
-* Complete `{tidyselect}` support for the `columns` argument of *all validation functions*, as well as in `has_columns()` and `info_columns`. `columns` can now takes familiar column-selection expressions as one would use inside `dplyr::select()`. This also begins a process of deprecation:
+* Complete `{tidyselect}` support for the `columns` argument of *all validation functions*, as well as in `has_columns()` and `info_columns`. The `columns` argument can now take familiar column-selection expressions as one would use inside `dplyr::select()`. This also begins a process of deprecation:
   - `columns = vars(...)` will continue to work, but `c()` now supersedes `vars()`.
   - If passing an *external vector* of column names, it should be wrapped in `all_of()`.
 
@@ -22,9 +22,9 @@
 
 ## Minor improvements and bug fixes
 
-* Fixes issue with rendering reports in Quarto html documents.
+* Fixes issue with rendering reports in Quarto HTML documents.
 
-* When no columns are returned from a `{tidyselect}` expression in `columns`, the agent's report now displays the originally supplied *expression* instead of simply blank (e.g., in `create_agent(small_table) %>% col_vals_null(matches("z"))`).
+* When no columns are returned from a `{tidyselect}` expression in `columns`, the agent's report now displays the originally supplied *expression* instead of simply blank (e.g., in `create_agent(small_table) |> col_vals_null(matches("z"))`).
 
 * Fixes issue with the hashing implementation to improve performance and alignment of validation steps in the multiagent.
 

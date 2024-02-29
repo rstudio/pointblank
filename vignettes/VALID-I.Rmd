@@ -82,11 +82,11 @@ agent <-
     tbl_name = "small_table",
     label = "VALID-I Example No. 1"
   ) %>%
-  col_is_posix(vars(date_time)) %>%
-  col_vals_in_set(vars(f), set = c("low", "mid", "high")) %>%
-  col_vals_lt(vars(a), value = 10) %>%
-  col_vals_regex(vars(b), regex = "^[0-9]-[a-z]{3}-[0-9]{3}$") %>%
-  col_vals_between(vars(d), left = 0, right = 5000) %>%
+  col_is_posix(date_time) %>%
+  col_vals_in_set(f, set = c("low", "mid", "high")) %>%
+  col_vals_lt(a, value = 10) %>%
+  col_vals_regex(b, regex = "^[0-9]-[a-z]{3}-[0-9]{3}$") %>%
+  col_vals_between(d, left = 0, right = 5000) %>%
   interrogate()
 ```
 
@@ -147,11 +147,11 @@ agent <-
     label = "VALID-I Example No. 2",
     actions = al
   ) %>%
-  col_is_posix(vars(date_time)) %>%
-  col_vals_in_set(vars(f), set = c("low", "mid")) %>%
-  col_vals_lt(vars(a), value = 7) %>%
-  col_vals_regex(vars(b), regex = "^[0-9]-[a-w]{3}-[2-9]{3}$") %>%
-  col_vals_between(vars(d), left = 0, right = 4000) %>%
+  col_is_posix(date_time) %>%
+  col_vals_in_set(f, set = c("low", "mid")) %>%
+  col_vals_lt(a, value = 7) %>%
+  col_vals_regex(b, regex = "^[0-9]-[a-w]{3}-[2-9]{3}$") %>%
+  col_vals_between(d, left = 0, right = 4000) %>%
   interrogate()
 ```
 
@@ -204,11 +204,11 @@ agent <-
     label = "VALID-I Example No. 3",
     actions = al
   ) %>%
-  col_is_posix(vars(date_time)) %>%
-  col_vals_in_set(vars(f), set = c("low", "mid")) %>%
-  col_vals_lt(vars(a), value = 7) %>%
-  col_vals_regex(vars(b), regex = "^[0-9]-[a-w]{3}-[2-9]{3}$") %>%
-  col_vals_between(vars(d), left = 0, right = 4000) %>%
+  col_is_posix(date_time) %>%
+  col_vals_in_set(f, set = c("low", "mid")) %>%
+  col_vals_lt(a, value = 7) %>%
+  col_vals_regex(b, regex = "^[0-9]-[a-w]{3}-[2-9]{3}$") %>%
+  col_vals_between(d, left = 0, right = 4000) %>%
   interrogate()
 ```
 
@@ -267,7 +267,7 @@ The message in the console shows us what's available in `x`, with some indicatio
 glue::glue(
   "In Step {x$i}, there were {x$n} test units and {x$f_failed * 100}% \\
   failed. STOP condition met: {tolower(x$stop)}."
-  )
+)
 ```
 
 ```

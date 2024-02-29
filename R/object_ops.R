@@ -205,7 +205,7 @@
 #'     info = "Time-based values."
 #'   ) %>%
 #'   info_columns(
-#'     columns = "date",
+#'     columns = date,
 #'     info = "The date part of `date_time`."
 #'   ) %>%
 #'   incorporate()
@@ -680,7 +680,7 @@ x_read_disk <- function(
 #'     info = "Time-based values."
 #'   ) %>%
 #'   info_columns(
-#'     columns = "date",
+#'     columns = date,
 #'     info = "The date part of `date_time`."
 #'   ) %>%
 #'   incorporate()

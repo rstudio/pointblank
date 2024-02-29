@@ -141,14 +141,14 @@ dplyr::tibble(
     b = c(6, 1, 0, 6,  0, 7)
   ) %>%
   col_vals_between(
-    vars(a), 1, 9,
+    a, 1, 9,
     na_pass = TRUE
   ) %>%
   col_vals_lt(
-    vars(c), 12,
+    c, 12,
     preconditions = ~ . %>% dplyr::mutate(c = a + b)
   ) %>%
-  col_is_numeric(vars(a, b))
+  col_is_numeric(c(a, b))
 ```
 
     Error: Exceedance of failed test units where values in `c` should have been < `12`.
@@ -169,17 +169,17 @@ dplyr::tibble(
     b = c(6, 1, 0, 6,  0, 7)
   ) %>%
   col_vals_between(
-    vars(a), 1, 9,
+    a, 1, 9,
     na_pass = TRUE,
     actions = warn_on_fail()
   ) %>%
   col_vals_lt(
-    vars(c), 12,
+    c, 12,
     preconditions = ~ . %>% dplyr::mutate(c = a + b),
     actions = warn_on_fail()
   ) %>%
   col_is_numeric(
-    vars(a, b),
+    c(a, b),
     actions = warn_on_fail()
   )
 ```
@@ -267,19 +267,19 @@ informant <-
     `README` pages. Column names are `a` and `b`. ((Cool stuff))"
   ) %>%
   info_columns(
-    columns = "a",
+    columns = a,
     info = "This column has an `NA` value. [[Watch out!]]<<color: red;>>"
   ) %>%
   info_columns(
-    columns = "a",
+    columns = a,
     info = "Mean value is `{a_mean}`."
   ) %>%
   info_columns(
-    columns = "b",
+    columns = b,
     info = "Like column `a`. The lowest value is `{b_lowest}`."
   ) %>%
   info_columns(
-    columns = "b",
+    columns = b,
     info = "The highest value is `{b_highest}`."
   ) %>%
   info_snippet(

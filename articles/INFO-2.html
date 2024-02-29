@@ -175,7 +175,7 @@ interpolation, and here’s the continuation of the above example:</p>
 <code class="sourceCode R"><span><span class="va">informant</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="va">informant</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">d</span>,</span>
 <span>    info <span class="op">=</span> <span class="st">"This column contains fairly large numbers (much larger than</span></span>
 <span><span class="st">    those numbers in column `a`. The mean value is {mean_d}, which is</span></span>
 <span><span class="st">    far greater than any number in that other column."</span></span>
@@ -213,7 +213,7 @@ Let’s write the whole thing again and finish it off with a call to
 <span>    fn <span class="op">=</span> <span class="op">~</span> <span class="va">.</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="va">.</span><span class="op">$</span><span class="va">d</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">d</span>,</span>
 <span>    info <span class="op">=</span> <span class="st">"This column contains fairly large numbers (much larger than</span></span>
 <span><span class="st">    those numbers in column `a`. The mean value is {mean_d}, which is</span></span>
 <span><span class="st">    far greater than any number in that other column."</span></span>
@@ -366,11 +366,11 @@ Management</em></a> article.</p>
 <span>    label <span class="op">=</span> <span class="st">"The `penguins` dataset from the **palmerpenguins** 📦."</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="st">"species"</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">species</span>,</span>
 <span>    `ℹ️` <span class="op">=</span> <span class="st">"A factor denoting penguin species ({species_snippet})."</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="st">"island"</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">island</span>,</span>
 <span>    `ℹ️` <span class="op">=</span> <span class="st">"A factor denoting island in Palmer Archipelago, Antarctica</span></span>
 <span><span class="st">    ({island_snippet})."</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
@@ -404,7 +404,7 @@ column):</p>
 <code class="sourceCode R"><span><span class="va">informant_pp</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">informant_pp</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="st">"year"</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">year</span>,</span>
 <span>    `ℹ️` <span class="op">=</span> <span class="st">"The study year ({year_snippet})."</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/info_snippet.html">info_snippet</a></span><span class="op">(</span></span>
@@ -443,16 +443,16 @@ some of the measured values in the <code>penguins</code> dataset with
 <code class="sourceCode R"><span><span class="va">informant_pp</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">informant_pp</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="st">"bill_length_mm"</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">bill_length_mm</span>,</span>
 <span>    `ℹ️` <span class="op">=</span> <span class="st">"A number denoting bill length"</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="st">"bill_depth_mm"</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">bill_depth_mm</span>,</span>
 <span>    `ℹ️` <span class="op">=</span> <span class="st">"A number denoting bill depth (in the range of</span></span>
 <span><span class="st">    {min_depth} to {max_depth} millimeters)."</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="st">"flipper_length_mm"</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">flipper_length_mm</span>,</span>
 <span>    `ℹ️` <span class="op">=</span> <span class="st">"An integer denoting flipper length"</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
@@ -460,7 +460,7 @@ some of the measured values in the <code>penguins</code> dataset with
 <span>    `ℹ️` <span class="op">=</span> <span class="st">"(in units of millimeters)."</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="st">"flipper_length_mm"</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">flipper_length_mm</span>,</span>
 <span>    `ℹ️` <span class="op">=</span> <span class="st">"Largest observed is {largest_flipper_length} mm."</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/info_snippet.html">info_snippet</a></span><span class="op">(</span></span>
@@ -567,7 +567,7 @@ label: <code>(((label text)))</code>
 <code class="sourceCode R"><span><span class="va">informant_pp</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">informant_pp</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">body_mass_g</span><span class="op">)</span>, </span>
+<span>    columns <span class="op">=</span> <span class="va">body_mass_g</span>, </span>
 <span>    `ℹ️` <span class="op">=</span> <span class="st">"An integer denoting body mass."</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
@@ -630,7 +630,7 @@ style rules using the <code>[[ ]]&lt;&lt; &gt;&gt;</code> syntax.</p>
 <code class="sourceCode R"><span><span class="va">informant_pp</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">informant_pp</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">sex</span><span class="op">)</span>, </span>
+<span>    columns <span class="op">=</span> <span class="va">sex</span>, </span>
 <span>    `ℹ️` <span class="op">=</span> <span class="st">"A [[factor]]&lt;&lt;text-decoration: underline;&gt;&gt; </span></span>
 <span><span class="st">    denoting penguin sex (female or male)."</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>

@@ -194,7 +194,7 @@ then look at the resulting report.</p>
 <span>    description <span class="op">=</span> <span class="st">"This table is included in the **pointblank** pkg."</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="st">"date_time"</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">date_time</span>,</span>
 <span>    info <span class="op">=</span> <span class="st">"This column is full of timestamps."</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/info_section.html">info_section</a></span><span class="op">(</span></span>
@@ -235,7 +235,7 @@ a single word, then we can enclose that text in back ticks. For example,
 why not put some emoji in your subsection name?</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">informant</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="../reference/info_tabular.html">info_tabular</a></span><span class="op">(</span>`🔄 updates` <span class="op">=</span> <span class="st">"This table is not regularly updated."</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="../reference/info_tabular.html">info_tabular</a></span><span class="op">(</span><span class="st">"🔄 updates"</span> <span class="op">=</span> <span class="st">"This table is not regularly updated."</span><span class="op">)</span></span></code></pre></div>
 <div style="text-align: center;">
 <img src="https://silly-jackson-b3dec8.netlify.app/informant_report_4.png" alt="This is the same tabular report entitled 'Pointblank Information' as in previous figures. This is an excerpt of the full output, showing the header and the first section (newly added). The header contains information about the input table (identifying it as a tibble called 'small_table') and includes the number of rows (13) and columns (8). In the table body, there is a section entitled 'Table' (the 'Columns' section, available in the full output, is not presented here). The 'Table' section (the first in the reporting table) contains subsections called 'Description' and 'Updates'. Within the 'Description' section there is the text 'This table is included in the pointblank package'. Within the 'Updates' section, we have the text 'This table is not regularly updated'." width="80%">
 </div>
@@ -282,24 +282,24 @@ from the <strong>palmerpenguins</strong> package.</p>
 <span>    label <span class="op">=</span> <span class="st">"The `penguins` dataset from the **palmerpenguins** 📦."</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="st">"species"</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">species</span>,</span>
 <span>    `ℹ️` <span class="op">=</span> <span class="st">"A factor denoting penguin species (*Adélie*, *Chinstrap*, and *Gentoo*)."</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="st">"island"</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">island</span>,</span>
 <span>    `ℹ️` <span class="op">=</span> <span class="st">"A factor denoting island in Palmer Archipelago, Antarctica</span></span>
 <span><span class="st">    (*Biscoe*, *Dream*, or *Torgersen*)."</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="st">"bill_length_mm"</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">bill_length_mm</span>,</span>
 <span>    `ℹ️` <span class="op">=</span> <span class="st">"A number denoting bill length"</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="st">"bill_depth_mm"</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">bill_depth_mm</span>,</span>
 <span>    `ℹ️` <span class="op">=</span> <span class="st">"A number denoting bill depth"</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="st">"flipper_length_mm"</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">flipper_length_mm</span>,</span>
 <span>    `ℹ️` <span class="op">=</span> <span class="st">"An integer denoting flipper length"</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
@@ -307,15 +307,15 @@ from the <strong>palmerpenguins</strong> package.</p>
 <span>    `ℹ️` <span class="op">=</span> <span class="st">"(in units of millimeters)."</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="st">"body_mass_g"</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">body_mass_g</span>,</span>
 <span>    `ℹ️` <span class="op">=</span> <span class="st">"An integer denoting body mass (grams)."</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="st">"sex"</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">sex</span>,</span>
 <span>    `ℹ️` <span class="op">=</span> <span class="st">"A factor denoting penguin sex (`\"female\"`, `\"male\"`)."</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="st">"year"</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">year</span>,</span>
 <span>    `ℹ️` <span class="op">=</span> <span class="st">"The study year (e.g., `2007`, `2008`, `2009`)."</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>

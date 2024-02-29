@@ -255,7 +255,7 @@ values to be skipped. The best I could do was the above.</p>
 <p>The <strong>pointblank</strong> version of this task makes for a more
 succinct and understandable expectation expression:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/col_vals_between.html">expect_col_vals_between</a></span><span class="op">(</span><span class="va">small_table</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, <span class="fl">2</span>, <span class="fl">9</span>, na_pass <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/col_vals_between.html">expect_col_vals_between</a></span><span class="op">(</span><span class="va">small_table</span>, <span class="va">c</span>, <span class="fl">2</span>, <span class="fl">9</span>, na_pass <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>The arguments in the <code><a href="../reference/col_vals_between.html">expect_col_vals_between()</a></code> give us
 everything we need to check tabular data without having to do subsetting
 and perform other transformations. There are a few added benefits.

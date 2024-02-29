@@ -168,14 +168,14 @@
 <span>    b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">6</span>,  <span class="fl">0</span>, <span class="fl">7</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, <span class="fl">1</span>, <span class="fl">9</span>,</span>
+<span>    <span class="va">a</span>, <span class="fl">1</span>, <span class="fl">9</span>,</span>
 <span>    na_pass <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, <span class="fl">12</span>,</span>
+<span>    <span class="va">c</span>, <span class="fl">12</span>,</span>
 <span>    preconditions <span class="op">=</span> <span class="op">~</span> <span class="va">.</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>c <span class="op">=</span> <span class="va">a</span> <span class="op">+</span> <span class="va">b</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="reference/col_is_numeric.html">col_is_numeric</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="reference/col_is_numeric.html">col_is_numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>Error<span class="sc">:</span> Exceedance of failed test units where values <span class="cf">in</span> <span class="st">`</span><span class="at">c</span><span class="st">`</span> should have been <span class="sc">&lt;</span> <span class="st">`</span><span class="at">12</span><span class="st">`</span>.</span>
 <span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>The <span class="st">`</span><span class="at">col_vals_lt()</span><span class="st">`</span> validation failed beyond the absolute threshold <span class="fu">level</span> (<span class="dv">1</span>).</span>
 <span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="sc">*</span> failure <span class="fu">level</span> (<span class="dv">2</span>) <span class="sc">&gt;=</span> failure <span class="fu">threshold</span> (<span class="dv">1</span>) </span></code></pre></div>
@@ -190,17 +190,17 @@
 <span>    b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">6</span>,  <span class="fl">0</span>, <span class="fl">7</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, <span class="fl">1</span>, <span class="fl">9</span>,</span>
+<span>    <span class="va">a</span>, <span class="fl">1</span>, <span class="fl">9</span>,</span>
 <span>    na_pass <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    actions <span class="op">=</span> <span class="fu"><a href="reference/action_levels.html">warn_on_fail</a></span><span class="op">(</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, <span class="fl">12</span>,</span>
+<span>    <span class="va">c</span>, <span class="fl">12</span>,</span>
 <span>    preconditions <span class="op">=</span> <span class="op">~</span> <span class="va">.</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>c <span class="op">=</span> <span class="va">a</span> <span class="op">+</span> <span class="va">b</span><span class="op">)</span>,</span>
 <span>    actions <span class="op">=</span> <span class="fu"><a href="reference/action_levels.html">warn_on_fail</a></span><span class="op">(</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/col_is_numeric.html">col_is_numeric</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span>,</span>
 <span>    actions <span class="op">=</span> <span class="fu"><a href="reference/action_levels.html">warn_on_fail</a></span><span class="op">(</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 x 2</span></span>
@@ -256,19 +256,19 @@
 <span><span class="st">    `README` pages. Column names are `a` and `b`. ((Cool stuff))"</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="st">"a"</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">a</span>,</span>
 <span>    info <span class="op">=</span> <span class="st">"This column has an `NA` value. [[Watch out!]]&lt;&lt;color: red;&gt;&gt;"</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="st">"a"</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">a</span>,</span>
 <span>    info <span class="op">=</span> <span class="st">"Mean value is `{a_mean}`."</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="st">"b"</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">b</span>,</span>
 <span>    info <span class="op">=</span> <span class="st">"Like column `a`. The lowest value is `{b_lowest}`."</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="st">"b"</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">b</span>,</span>
 <span>    info <span class="op">=</span> <span class="st">"The highest value is `{b_highest}`."</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/info_snippet.html">info_snippet</a></span><span class="op">(</span></span>

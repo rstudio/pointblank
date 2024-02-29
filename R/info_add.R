@@ -331,15 +331,15 @@ info_tabular <- function(
 #' # R statement
 #' informant %>% 
 #'   info_columns(
-#'     columns = "date_time",
+#'     columns = date_time,
 #'     info = "*info text* 1."
 #'   ) %>%
 #'   info_columns(
-#'     columns = "date",
+#'     columns = date,
 #'     info = "*info text* 2."
 #'   ) %>%
 #'   info_columns(
-#'     columns = "item_count",
+#'     columns = item_count,
 #'     info = "*info text* 3. Statistics: {snippet_1}."
 #'   ) %>%
 #'   info_columns(
@@ -409,7 +409,7 @@ info_tabular <- function(
 #'     info = "Time-based values (e.g., `Sys.time()`)."
 #'   ) %>%
 #'   info_columns(
-#'     columns = "date",
+#'     columns = date,
 #'     info = "The date part of `date_time`. ((CALC))"
 #'   )
 #' ```
@@ -609,11 +609,11 @@ info_columns <- function(
 #' informant <-
 #'   informant %>%
 #'   info_columns(
-#'     columns = "item_revenue",
+#'     columns = item_revenue,
 #'     info = "Revenue reported in USD."
 #'   ) %>%
 #'   info_columns(
-#'     columns = "acquisition",
+#'     columns = acquisition,
 #'     `top list` = "{top5_aq}"
 #'   ) %>%
 #'   info_snippet(
@@ -1013,7 +1013,7 @@ info_section <- function(
 #' # R statement
 #' informant %>% 
 #'   info_columns(
-#'     columns = "date_time",
+#'     columns = date_time,
 #'     `Latest Date` = "The latest date is {latest_date}."
 #'   ) %>%
 #'   info_snippet(
@@ -1076,7 +1076,7 @@ info_section <- function(
 #'     info = "Time-based values (e.g., `Sys.time()`)."
 #'   ) %>%
 #'   info_columns(
-#'     columns = "date",
+#'     columns = date,
 #'     info = "The date part of `date_time`. ((CALC))"
 #'   ) %>%
 #'   info_section(
@@ -1264,7 +1264,7 @@ info_snippet <- function(
 #'     label = "An example."
 #'   ) %>% 
 #'   info_columns(
-#'     columns = "f",
+#'     columns = f,
 #'     `Items` = "This column contains {values_f}."
 #'   ) %>%
 #'   info_snippet(
@@ -1495,7 +1495,7 @@ snip_list <- function(
 #'     label = "An example."
 #'   ) %>% 
 #'   info_columns(
-#'     columns = "d",
+#'     columns = d,
 #'     `Stats` = "Stats (fivenum): {stats_d}."
 #'   ) %>%
 #'   info_snippet(
@@ -1574,7 +1574,7 @@ snip_stats <- function(
 #'     label = "An example."
 #'   ) %>% 
 #'   info_columns(
-#'     columns = "a",
+#'     columns = a,
 #'     `Lowest Value` = "Lowest value is {lowest_a}."
 #'   ) %>%
 #'   info_snippet(
@@ -1648,7 +1648,7 @@ snip_lowest <- function(column) {
 #'     label = "An example."
 #'   ) %>% 
 #'   info_columns(
-#'     columns = "a",
+#'     columns = a,
 #'     `Highest Value` = "Highest value is {highest_a}."
 #'   ) %>%
 #'   info_snippet(

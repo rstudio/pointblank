@@ -116,11 +116,11 @@ and \code{acquisition} columns and view the updated report.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <-
   informant \%>\%
   info_columns(
-    columns = "item_revenue",
+    columns = item_revenue,
     info = "Revenue reported in USD."
   ) \%>\%
   info_columns(
-    columns = "acquisition",
+    columns = acquisition,
     `top list` = "\{top5_aq\}"
   ) \%>\%
   info_snippet(

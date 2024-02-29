@@ -114,15 +114,15 @@ the YAML representation.
 \if{html}{\out{<div class="sourceCode">}}\preformatted{# R statement
 informant \%>\% 
   info_columns(
-    columns = "date_time",
+    columns = date_time,
     info = "*info text* 1."
   ) \%>\%
   info_columns(
-    columns = "date",
+    columns = date,
     info = "*info text* 2."
   ) \%>\%
   info_columns(
-    columns = "item_count",
+    columns = item_count,
     info = "*info text* 3. Statistics: \{snippet_1\}."
   ) \%>\%
   info_columns(
@@ -193,7 +193,7 @@ existing if it lands in the same area).
     info = "Time-based values (e.g., `Sys.time()`)."
   ) \%>\%
   info_columns(
-    columns = "date",
+    columns = date,
     info = "The date part of `date_time`. ((CALC))"
   )
 }\if{html}{\out{</div>}}

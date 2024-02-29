@@ -175,8 +175,8 @@ Upon printing the \code{informant} object, we see the additions made to the
 
 \seealso{
 Other Information Functions: 
-\code{\link{info_columns_from_tbl}()},
 \code{\link{info_columns}()},
+\code{\link{info_columns_from_tbl}()},
 \code{\link{info_section}()},
 \code{\link{info_snippet}()},
 \code{\link{snip_highest}()},

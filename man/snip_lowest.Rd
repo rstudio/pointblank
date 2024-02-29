@@ -37,7 +37,7 @@ the snippet into the info text. Note here that the order of the
     label = "An example."
   ) \%>\% 
   info_columns(
-    columns = "a",
+    columns = a,
     `Lowest Value` = "Lowest value is \{lowest_a\}."
   ) \%>\%
   info_snippet(
@@ -66,8 +66,8 @@ We can print the \code{informant} object to see the information report.
 
 \seealso{
 Other Information Functions: 
-\code{\link{info_columns_from_tbl}()},
 \code{\link{info_columns}()},
+\code{\link{info_columns_from_tbl}()},
 \code{\link{info_section}()},
 \code{\link{info_snippet}()},
 \code{\link{info_tabular}()},

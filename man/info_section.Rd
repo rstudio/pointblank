@@ -192,8 +192,8 @@ section and its own information.
 
 \seealso{
 Other Information Functions: 
-\code{\link{info_columns_from_tbl}()},
 \code{\link{info_columns}()},
+\code{\link{info_columns_from_tbl}()},
 \code{\link{info_snippet}()},
 \code{\link{info_tabular}()},
 \code{\link{snip_highest}()},

@@ -80,7 +80,7 @@ demonstrate their relationship here).
 \if{html}{\out{<div class="sourceCode">}}\preformatted{# R statement
 informant \%>\% 
   info_columns(
-    columns = "date_time",
+    columns = date_time,
     `Latest Date` = "The latest date is \{latest_date\}."
   ) \%>\%
   info_snippet(
@@ -143,7 +143,7 @@ the highest value in that column).
     info = "Time-based values (e.g., `Sys.time()`)."
   ) \%>\%
   info_columns(
-    columns = "date",
+    columns = date,
     info = "The date part of `date_time`. ((CALC))"
   ) \%>\%
   info_section(
@@ -194,8 +194,8 @@ informant
 
 \seealso{
 Other Information Functions: 
-\code{\link{info_columns_from_tbl}()},
 \code{\link{info_columns}()},
+\code{\link{info_columns_from_tbl}()},
 \code{\link{info_section}()},
 \code{\link{info_tabular}()},
 \code{\link{snip_highest}()},

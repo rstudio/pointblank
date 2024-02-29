@@ -14,6 +14,7 @@
 ^README\.md$
 ^index\.md$
 ^LICENSE\.md$
+^CITATION\.cff$
 vignettes
 man/figures/
 ^tests/manual_tests$

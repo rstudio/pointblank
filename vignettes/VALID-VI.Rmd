@@ -26,8 +26,8 @@ To start things off, here's an example that uses an expression that takes the `s
 
 ```{r validate = TRUE}
 small_table %>% 
-  col_is_date("date") %>% 
-  col_vals_in_set(vars(f), set = c("low", "mid"))
+  col_is_date(date) %>% 
+  col_vals_in_set(f, set = c("low", "mid"))
 ```
 
 Clicking the above `1 validation failed.` button will reveal that the *expression* failed validation because of a validation function failing within it. If you break it down, really one validation step in the chain passed (the first one) and one failed (the second). If there were additional validation steps that would otherwise pass, we'd still get the same result and output because the failing step ends execution.
@@ -38,7 +38,7 @@ Because this workflow is meant to stop an expression from executing at the first
 
 ```{r validate = TRUE}
 col_is_date(small_table, "date")
-col_vals_in_set(small_table, vars(f), set = c("low", "mid"))
+col_vals_in_set(small_table, f, set = c("low", "mid"))
 ```
 
 It still says that `1 validation failed.` (this workflow focuses on the negatives) but pressing the button reveals that the first one passed and the second failed. This is much clearer and we don't run the risk of not evaluating validations because a validation failed earlier in a pipeline.
@@ -48,12 +48,12 @@ Here's an example where all validations in individual expressions pass, showing 
 <img src="images/code_block_3.png" />
 
 ```{r validate = TRUE}
-col_is_date(small_table, "date")
-col_is_posix(small_table, vars(date_time))
-col_vals_in_set(small_table, vars(f), set = c("low", "mid", "high"))
-col_vals_lt(small_table, vars(a), value = 10)
-col_vals_regex(small_table, vars(b), regex = "^[0-9]-[a-z]{3}-[0-9]{3}$")
-col_vals_between(small_table, vars(d), left = 0, right = 10000)
+col_is_date(small_table, date)
+col_is_posix(small_table, date_time)
+col_vals_in_set(small_table, f, set = c("low", "mid", "high"))
+col_vals_lt(small_table, a, value = 10)
+col_vals_regex(small_table, b, regex = "^[0-9]-[a-z]{3}-[0-9]{3}$")
+col_vals_between(small_table, d, left = 0, right = 10000)
 ```
 
 It's worth reminding at this point that failed validations do not stop execution of the R Markdown rendering. Otherwise you wouldn't see a document with any failing validations, and, you wouldn't know where those failed validations occurred. The expectation for this workflow is to add in the relevant validation expressions at key junctures and should any failures occur, one can fix the underlying issues until all (or enough) validations pass.
@@ -92,11 +92,11 @@ create_agent(
     label = "VALID-I Example No. 2",
     actions = al
   ) %>%
-  col_is_posix(vars(date_time)) %>%
-  col_vals_in_set(vars(f), set = c("low", "mid")) %>%
-  col_vals_lt(vars(a), value = 7) %>%
-  col_vals_regex(vars(b), regex = "^[0-9]-[a-w]{3}-[2-9]{3}$") %>%
-  col_vals_between(vars(d), left = 0, right = 4000) %>%
+  col_is_posix(date_time) %>%
+  col_vals_in_set(f, set = c("low", "mid")) %>%
+  col_vals_lt(a, value = 7) %>%
+  col_vals_regex(b, regex = "^[0-9]-[a-w]{3}-[2-9]{3}$") %>%
+  col_vals_between(d, left = 0, right = 4000) %>%
   interrogate()
 ```
 

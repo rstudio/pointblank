@@ -24,7 +24,7 @@
 
 * Fixes issue with rendering reports in Quarto HTML documents.
 
-* When no columns are returned from a `{tidyselect}` expression in `columns`, the agent's report now displays the originally supplied *expression* instead of simply blank (e.g., in `create_agent(small_table) |> col_vals_null(matches("z"))`).
+* When no columns are returned from a `{tidyselect}` expression in `columns`, the agent's report now displays the originally supplied *expression* instead of being simply blank (e.g., in `create_agent(small_table) |> col_vals_null(matches("z"))`).
 
 * Fixes issue with the hashing implementation to improve performance and alignment of validation steps in the multiagent.
 

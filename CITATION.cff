@@ -3,7 +3,7 @@ message: 'If you wish to cite the "pointblank" package use:'
 type: software
 license: MIT
 title: 'pointblank: Data Validation and Organization of Metadata for Local and Remote Tables'
-version: 0.9.0
+version: 0.12.0
 abstract: Validate data in data frames, 'tibble' objects, 'Spark'
     'DataFrames', and database tables. Validation pipelines can be made using
     easily-readable, consecutive validation steps. Upon execution of the
@@ -21,6 +21,10 @@ authors:
   given-names: Mauricio
   email: mavargas11@uc.cl
   orcid: https://orcid.org/0000-0003-1017-7574
+- family-names: Choe
+  given-names: June
+  email: jchoe001@gmail.com
+  orcid: https://orcid.org/0000-0002-0701-921X
 repository: https://CRAN.R-project.org/package=pointblank
 repository-code: https://github.com/rstudio/pointblank
 url: https://rstudio.github.io/pointblank/

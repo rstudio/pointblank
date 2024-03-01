@@ -192,7 +192,7 @@ interrogate <- function(
       # TODO: create a better `stop()` message
       stop(
         "The `read_fn` object must be a function or an R formula.\n",
-        "* A function can be made with `function()` {<table reading code>}.\n",
+        "* A function can be made with `function()` {<tbl reading code>}.\n",
         "* An R formula can also be used, with the expression on the RHS.",
         call. = FALSE
       )

@@ -519,8 +519,8 @@ test_col_schema_match <- function(
 #'   then any values provided to `...` will be ignored. This can either be a
 #'   table object, a table-prep formula.This can be a table object such as a
 #'   data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
-#'   Alternatively, a table-prep formula (`~ <table reading code>`) or a
-#'   function (`function() <table reading code>`) can be used to lazily read in
+#'   Alternatively, a table-prep formula (`~ <tbl reading code>`) or a
+#'   function (`function() <tbl reading code>`) can be used to lazily read in
 #'   the table at interrogation time.
 #'   
 #' @param .db_col_types *Use R column types or database column types?*

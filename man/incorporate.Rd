@@ -84,7 +84,7 @@ use \code{incorporate()} to work the snippets into the info text.
     info = "Time-based values (e.g., `Sys.time()`)."
   ) \%>\%
   info_columns(
-    columns = "date",
+    columns = date,
     info = "The date part of `date_time`. ((CALC))"
   ) \%>\%
   info_section(

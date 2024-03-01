@@ -20,7 +20,7 @@ snip_list(
 \arguments{
 \item{column}{\emph{The target column}
 
-`scalar\if{html}{\out{<character>}}`` // \strong{required}
+\verb{scalar<character>} // \strong{required}
 
 The name of the column that contains the target values.}
 
@@ -128,7 +128,7 @@ the \code{\link[=info_columns]{info_columns()}} and \code{\link[=info_snippet]{i
     label = "An example."
   ) \%>\% 
   info_columns(
-    columns = "f",
+    columns = f,
     `Items` = "This column contains \{values_f\}."
   ) \%>\%
   info_snippet(
@@ -157,8 +157,8 @@ We can print the \code{informant} object to see the information report.
 
 \seealso{
 Other Information Functions: 
-\code{\link{info_columns_from_tbl}()},
 \code{\link{info_columns}()},
+\code{\link{info_columns_from_tbl}()},
 \code{\link{info_section}()},
 \code{\link{info_snippet}()},
 \code{\link{info_tabular}()},

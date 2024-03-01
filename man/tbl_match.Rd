@@ -38,8 +38,8 @@ commonly created with \code{\link[=create_agent]{create_agent()}}.}
 A table to compare against the target table. This can either be a table
 object, a table-prep formula. This can be a table object such as a data
 frame, a tibble, a \code{tbl_dbi} object, or a \code{tbl_spark} object.
-Alternatively, a table-prep formula (\verb{~ <table reading code>}) or a
-function (\verb{function() <table reading code>}) can be used to lazily read in
+Alternatively, a table-prep formula (\verb{~ <tbl reading code>}) or a
+function (\verb{function() <tbl reading code>}) can be used to lazily read in
 the table at interrogation time.}
 
 \item{preconditions}{\emph{Input table modification prior to validation}
@@ -451,12 +451,12 @@ Other validation functions:
 \code{\link{col_vals_decreasing}()},
 \code{\link{col_vals_equal}()},
 \code{\link{col_vals_expr}()},
-\code{\link{col_vals_gte}()},
 \code{\link{col_vals_gt}()},
+\code{\link{col_vals_gte}()},
 \code{\link{col_vals_in_set}()},
 \code{\link{col_vals_increasing}()},
-\code{\link{col_vals_lte}()},
 \code{\link{col_vals_lt}()},
+\code{\link{col_vals_lte}()},
 \code{\link{col_vals_make_set}()},
 \code{\link{col_vals_make_subset}()},
 \code{\link{col_vals_not_between}()},

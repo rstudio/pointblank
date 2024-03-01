@@ -42,7 +42,7 @@ get_agent_report() function, where there are more reporting options."><meta prop
     
     <a class="navbar-brand me-2" href="../index.html">pointblank</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.11.4.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.12.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -132,14 +132,14 @@ table. This reporting of the interrogation can also be accessed with the
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>tbl</dt>
 <dd><p><em>Table or expression for reading in one</em></p>
-<p><code>obj:&lt;tbl_*&gt;|&lt;table reading expression&gt;</code> // <strong>required</strong></p>
+<p><code>obj:&lt;tbl_*&gt;|&lt;tbl reading expression&gt;</code> // <strong>required</strong></p>
 <p>The input table. This can be a data frame, a tibble, a <code>tbl_dbi</code> object, or
 a <code>tbl_spark</code> object. Alternatively, an expression can be supplied to serve
 as instructions on how to retrieve the target table at interrogation-time.
 There are two ways to specify an association to a target table: (1) as a
 table-prep formula, which is a right-hand side (RHS) formula expression
-(e.g., <code>~ { &lt;table reading code&gt;}</code>), or (2) as a function (e.g.,
-<code>function() { &lt;table reading code&gt;}</code>).</p></dd>
+(e.g., <code>~ { &lt;tbl reading code&gt;}</code>), or (2) as a function (e.g.,
+<code>function() { &lt;tbl reading code&gt;}</code>).</p></dd>
 
 
 <dt>tbl_name</dt>

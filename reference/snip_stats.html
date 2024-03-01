@@ -32,7 +32,7 @@ P90, maximum
     
     <a class="navbar-brand me-2" href="../index.html">pointblank</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.11.4.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.12.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -104,7 +104,7 @@ P90, maximum</p></li>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>column</dt>
 <dd><p><em>The target column</em></p>
-<p>`scalar<character>`` // <strong>required</strong></character></p>
+<p><code>scalar&lt;character&gt;</code> // <strong>required</strong></p>
 <p>The name of the column that contains the target values.</p></dd>
 
 
@@ -139,7 +139,7 @@ the snippet into the info text. Note here that the order of the
 <span>    label <span class="op">=</span> <span class="st">"An example."</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="st">"d"</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">d</span>,</span>
 <span>    `Stats` <span class="op">=</span> <span class="st">"Stats (fivenum): {stats_d}."</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/info_snippet.html">info_snippet</a></span><span class="op">(</span></span>
@@ -160,8 +160,8 @@ the snippet into the info text. Note here that the order of the
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other Information Functions: 
-<code><a href="info_columns_from_tbl.html">info_columns_from_tbl</a>()</code>,
 <code><a href="info_columns.html">info_columns</a>()</code>,
+<code><a href="info_columns_from_tbl.html">info_columns_from_tbl</a>()</code>,
 <code><a href="info_section.html">info_section</a>()</code>,
 <code><a href="info_snippet.html">info_snippet</a>()</code>,
 <code><a href="info_tabular.html">info_tabular</a>()</code>,

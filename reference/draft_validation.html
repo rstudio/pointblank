@@ -30,7 +30,7 @@ case better than starting with an empty code editor view."><meta property="og:im
     
     <a class="navbar-brand me-2" href="../index.html">pointblank</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.11.4.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.12.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -214,7 +214,7 @@ formally tested (so be mindful of this when using unsupported backends with
 
 <p>Let's draft a validation plan for the <code><a href="https://dplyr.tidyverse.org/reference/storms.html" class="external-link">dplyr::storms</a></code> dataset.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/storms.html" class="external-link">storms</a></span></span>
-<span><span class="co">#&gt; # A tibble: 19,066 x 13</span></span>
+<span><span class="co">#&gt; # A tibble: 19,537 x 13</span></span>
 <span><span class="co">#&gt;    name   year month   day  hour   lat  long status      category  wind pressure</span></span>
 <span><span class="co">#&gt;    &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;          &lt;dbl&gt; &lt;int&gt;    &lt;int&gt;</span></span>
 <span><span class="co">#&gt;  1 Amy    1975     6    27     0  27.5 -79   tropical d~       NA    25     1013</span></span>
@@ -227,7 +227,7 @@ formally tested (so be mindful of this when using unsupported backends with
 <span><span class="co">#&gt;  8 Amy    1975     6    28    18  34   -77   tropical d~       NA    30     1006</span></span>
 <span><span class="co">#&gt;  9 Amy    1975     6    29     0  34.4 -75.8 tropical s~       NA    35     1004</span></span>
 <span><span class="co">#&gt; 10 Amy    1975     6    29     6  34   -74.8 tropical s~       NA    40     1002</span></span>
-<span><span class="co">#&gt; # i 19,056 more rows</span></span>
+<span><span class="co">#&gt; # i 19,527 more rows</span></span>
 <span><span class="co">#&gt; # i 2 more variables: tropicalstorm_force_diameter &lt;int&gt;,</span></span>
 <span><span class="co">#&gt; #   hurricane_force_diameter &lt;int&gt;</span></span></code></pre><p></p></div>
 <p>The <code>draft_validation()</code> function creates an .R file by default. Using just

@@ -26,7 +26,7 @@ preconditions have been applied)."><meta property="og:image" content="https://rs
     
     <a class="navbar-brand me-2" href="../index.html">pointblank</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.11.4.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.12.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -138,9 +138,9 @@ commonly created with <code><a href="create_agent.html">create_agent()</a></code
 against the target table in terms of row count values. If supplying a
 comparison table, it can either be a table object such as a data frame, a
 tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spark</code> object. Alternatively, a
-table-prep formula (<code>~ &lt;table reading code&gt;</code>) or a function (`function()
-  </p><table reading code class="table">`) can be used to lazily read in the comparison table
-  at interrogation time.
+table-prep formula (<code>~ &lt;tbl reading code&gt;</code>) or a function
+(<code>function() &lt;tbl reading code&gt;</code>) can be used to lazily read in the
+comparison table at interrogation time.</p></dd>
 
 
 <dt>preconditions</dt>
@@ -249,8 +249,7 @@ units up to that absolute threshold value will result in a succeeding
 means that 15 percent of failing test units results in an overall test
 failure.</p></dd>
 
-
-    
+</dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
@@ -533,12 +532,12 @@ us.</p>
 <code><a href="col_vals_decreasing.html">col_vals_decreasing</a>()</code>,
 <code><a href="col_vals_equal.html">col_vals_equal</a>()</code>,
 <code><a href="col_vals_expr.html">col_vals_expr</a>()</code>,
-<code><a href="col_vals_gte.html">col_vals_gte</a>()</code>,
 <code><a href="col_vals_gt.html">col_vals_gt</a>()</code>,
+<code><a href="col_vals_gte.html">col_vals_gte</a>()</code>,
 <code><a href="col_vals_in_set.html">col_vals_in_set</a>()</code>,
 <code><a href="col_vals_increasing.html">col_vals_increasing</a>()</code>,
-<code><a href="col_vals_lte.html">col_vals_lte</a>()</code>,
 <code><a href="col_vals_lt.html">col_vals_lt</a>()</code>,
+<code><a href="col_vals_lte.html">col_vals_lte</a>()</code>,
 <code><a href="col_vals_make_set.html">col_vals_make_set</a>()</code>,
 <code><a href="col_vals_make_subset.html">col_vals_make_subset</a>()</code>,
 <code><a href="col_vals_not_between.html">col_vals_not_between</a>()</code>,
@@ -556,9 +555,11 @@ us.</p>
 <code><a href="tbl_match.html">tbl_match</a>()</code></p></div>
     </div>
 
-  
-  <aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
-    </nav></aside><footer><div class="pkgdown-footer-left">
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside></div>
+
+
+    <footer><div class="pkgdown-footer-left">
   <p></p><p>Developed by Richard Iannone, Mauricio Vargas, June Choe.</p>
 </div>
 
@@ -566,5 +567,11 @@ us.</p>
   <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
-    </footer></table></dd></dl></div></main></div></div></body></html>
+    </footer></div>
+
+  
+
+  
+
+  </body></html>
 

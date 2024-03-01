@@ -36,7 +36,7 @@ missing info text will be pruned from tbl.'><meta property="og:image" content="h
     
     <a class="navbar-brand me-2" href="../index.html">pointblank</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.11.4.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.12.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -187,11 +187,11 @@ and <code>acquisition</code> columns and view the updated report.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">informant</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">informant</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="st">"item_revenue"</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">item_revenue</span>,</span>
 <span>    info <span class="op">=</span> <span class="st">"Revenue reported in USD."</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="st">"acquisition"</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">acquisition</span>,</span>
 <span>    `top list` <span class="op">=</span> <span class="st">"{top5_aq}"</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/info_snippet.html">info_snippet</a></span><span class="op">(</span></span>

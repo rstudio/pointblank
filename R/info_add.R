@@ -246,7 +246,7 @@ info_tabular <- function(
 #' 
 #' @param columns *The target columns*
 #'   
-#'   `vector<character>|vars(<columns>)`` // **required**
+#'   `vector<character>|vars(<columns>)` // **required**
 #' 
 #'   The column or set of columns to focus on. Can be defined as a column name
 #'   in quotes (e.g., `"<column_name>"`), one or more column names in `vars()`
@@ -723,7 +723,7 @@ check_info_columns_tbl <- function(tbl) {
 #'   
 #' @param section_name *The section name*
 #' 
-#'   `scalar<character>`` // **required**
+#'   `scalar<character>` // **required**
 #' 
 #'   The name of the section for which this information pertains.
 #'   
@@ -965,7 +965,7 @@ info_section <- function(
 #' 
 #' @param snippet_name *The snippet name*
 #' 
-#'   `scalar<character>`` // **required**
+#'   `scalar<character>` // **required**
 #' 
 #'   The name for snippet, which is used for interpolating the result of the
 #'   snippet formula into *info text* defined by an `info_*()` function.
@@ -1162,7 +1162,7 @@ info_snippet <- function(
 #' 
 #' @param column *The target column*
 #'   
-#'   `scalar<character>`` // **required**
+#'   `scalar<character>` // **required**
 #' 
 #'   The name of the column that contains the target values.
 #' 
@@ -1465,7 +1465,7 @@ snip_list <- function(
 #'
 #' @param column *The target column*
 #'   
-#'   `scalar<character>`` // **required**
+#'   `scalar<character>` // **required**
 #' 
 #'   The name of the column that contains the target values.
 #' 
@@ -1552,7 +1552,7 @@ snip_stats <- function(
 #' 
 #' @param column *The target column*
 #'   
-#'   `scalar<character>`` // **required**
+#'   `scalar<character>` // **required**
 #' 
 #'   The name of the column that contains the target values.
 #'   
@@ -1626,7 +1626,7 @@ snip_lowest <- function(column) {
 #' 
 #' @param column *The target column*
 #'   
-#'   `scalar<character>`` // **required**
+#'   `scalar<character>` // **required**
 #' 
 #'   The name of the column that contains the target values.
 #'   

@@ -16,7 +16,7 @@ use of the \code{\link[=create_informant]{create_informant()}} function.}
 
 \item{snippet_name}{\emph{The snippet name}
 
-`scalar\if{html}{\out{<character>}}`` // \strong{required}
+\verb{scalar<character>} // \strong{required}
 
 The name for snippet, which is used for interpolating the result of the
 snippet formula into \emph{info text} defined by an \verb{info_*()} function.}

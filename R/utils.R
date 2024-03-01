@@ -199,7 +199,7 @@ materialize_table <- function(tbl, check = TRUE) {
     stop(
       "The `tbl` object must either be a table, a function, or a formula.\n",
       "* A table-prep formula can be used (with the expression on the RHS).\n",
-      "* A function can be made with `function()` {<table reading code>}.",
+      "* A function can be made with `function()` {<tbl reading code>}.",
       call. = FALSE
     )
   }  

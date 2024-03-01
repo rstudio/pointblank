@@ -22,8 +22,8 @@ An option to use a table object to define the schema. If this is provided
 then any values provided to \code{...} will be ignored. This can either be a
 table object, a table-prep formula.This can be a table object such as a
 data frame, a tibble, a \code{tbl_dbi} object, or a \code{tbl_spark} object.
-Alternatively, a table-prep formula (\verb{~ <table reading code>}) or a
-function (\verb{function() <table reading code>}) can be used to lazily read in
+Alternatively, a table-prep formula (\verb{~ <tbl reading code>}) or a
+function (\verb{function() <tbl reading code>}) can be used to lazily read in
 the table at interrogation time.}
 
 \item{.db_col_types}{\emph{Use R column types or database column types?}

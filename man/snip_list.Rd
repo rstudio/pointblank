@@ -20,7 +20,7 @@ snip_list(
 \arguments{
 \item{column}{\emph{The target column}
 
-`scalar\if{html}{\out{<character>}}`` // \strong{required}
+\verb{scalar<character>} // \strong{required}
 
 The name of the column that contains the target values.}
 

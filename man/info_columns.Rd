@@ -16,7 +16,7 @@ use of the \code{\link[=create_informant]{create_informant()}} function.}
 
 \item{columns}{\emph{The target columns}
 
-`vector\if{html}{\out{<character>}}|vars(\if{html}{\out{<columns>}})`` // \strong{required}
+\verb{vector<character>|vars(<columns>)} // \strong{required}
 
 The column or set of columns to focus on. Can be defined as a column name
 in quotes (e.g., \code{"<column_name>"}), one or more column names in \code{vars()}

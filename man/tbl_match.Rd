@@ -38,8 +38,8 @@ commonly created with \code{\link[=create_agent]{create_agent()}}.}
 A table to compare against the target table. This can either be a table
 object, a table-prep formula. This can be a table object such as a data
 frame, a tibble, a \code{tbl_dbi} object, or a \code{tbl_spark} object.
-Alternatively, a table-prep formula (\verb{~ <table reading code>}) or a
-function (\verb{function() <table reading code>}) can be used to lazily read in
+Alternatively, a table-prep formula (\verb{~ <tbl reading code>}) or a
+function (\verb{function() <tbl reading code>}) can be used to lazily read in
 the table at interrogation time.}
 
 \item{preconditions}{\emph{Input table modification prior to validation}

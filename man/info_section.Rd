@@ -16,7 +16,7 @@ use of the \code{\link[=create_informant]{create_informant()}} function.}
 
 \item{section_name}{\emph{The section name}
 
-`scalar\if{html}{\out{<character>}}`` // \strong{required}
+\verb{scalar<character>} // \strong{required}
 
 The name of the section for which this information pertains.}
 

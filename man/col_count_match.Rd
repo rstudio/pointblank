@@ -38,10 +38,9 @@ Either a literal value for the number of columns, or, a table to compare
 against the target table in terms of column count values. If supplying a
 comparison table, it can either be a table object such as a data frame, a
 tibble, a \code{tbl_dbi} object, or a \code{tbl_spark} object. Alternatively, a
-table-prep formula (\verb{~ <table reading code>}) or a function (`function()\if{html}{\out{
-  <table reading code>`) can be used to lazily read in the comparison table
-  at interrogation time.
-}}}
+table-prep formula (\verb{~ <tbl reading code>}) or a function (
+\verb{function() <tbl reading code>}) can be used to lazily read in the
+comparison table at interrogation time.}
 
 \item{preconditions}{\emph{Input table modification prior to validation}
 

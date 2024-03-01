@@ -844,7 +844,7 @@ export_report <- function(
 #'   
 #' @param tbl *Table or expression for reading in one*
 #' 
-#'   `obj:<tbl_*>|<table reading expression>` // **required**
+#'   `obj:<tbl_*>|<tbl reading expression>` // **required**
 #' 
 #'   The input table for the *agent* or the *informant*. This can be a data
 #'   frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
@@ -852,8 +852,8 @@ export_report <- function(
 #'   how to retrieve the target table at interrogation- or incorporation-time.
 #'   There are two ways to specify an association to a target table: (1) as a
 #'   table-prep formula, which is a right-hand side (RHS) formula expression
-#'   (e.g., `~ { <table reading code>}`), or (2) as a function (e.g.,
-#'   `function() { <table reading code>}`).
+#'   (e.g., `~ { <tbl reading code>}`), or (2) as a function (e.g.,
+#'   `function() { <tbl reading code>}`).
 #'   
 #' @param tbl_name *A table name*
 #' 

@@ -43,9 +43,9 @@
 #'   against the target table in terms of row count values. If supplying a
 #'   comparison table, it can either be a table object such as a data frame, a
 #'   tibble, a `tbl_dbi` object, or a `tbl_spark` object. Alternatively, a
-#'   table-prep formula (`~ <table reading code>`) or a function (`function()
-#'   <table reading code>`) can be used to lazily read in the comparison table
-#'   at interrogation time.
+#'   table-prep formula (`~ <tbl reading code>`) or a function
+#'   (`function() <tbl reading code>`) can be used to lazily read in the
+#'   comparison table at interrogation time.
 #'   
 #' @param tbl_compare *[Deprecated] Comparison table*
 #' 

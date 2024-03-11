@@ -1,8 +1,15 @@
 resolve_columns <- function(x, var_expr, preconditions = NULL, ...,
                             call = rlang::caller_env()) {
   
+  # Materialize table and apply preconditions for tidyselect
   tbl <- apply_preconditions_for_cols(x, preconditions)
   
+  # If tbl cannot (yet) materialize, don't attempt tidyselect and return early
+  if (is.null(tbl)) {
+    return(resolve_columns_notidyselect(var_expr))
+  }
+  
+  # Attempt tidyselect
   out <- tryCatch(
     expr = resolve_columns_internal(tbl, var_expr, ..., call = call),
     error = function(cnd) cnd
@@ -30,6 +37,25 @@ resolve_columns <- function(x, var_expr, preconditions = NULL, ...,
   
   out
   
+}
+
+resolve_columns_notidyselect <- function(var_expr, call) {
+  # Error if attempting to tidyselect on a lazy tbl that cannot materialize
+  var_str <- rlang::expr_deparse(rlang::quo_get_expr(var_expr))
+  if (any(sapply(names(tidyselect::vars_select_helpers), grepl, var_str))) {
+    rlang::abort(
+      "Cannot use tidyselect helpers for an undefined lazy tbl.",
+      call = call
+    )
+  }
+  
+  # Force column selection to character vector
+  if (rlang::quo_is_symbol(var_expr)) {
+    var_expr <- rlang::as_name(var_expr)
+  } else if (rlang::quo_is_call(var_expr, c("vars", "c"))) {
+    var_expr <- rlang::quo_set_expr(var_expr, vars_to_c(var_expr))
+  }
+  rlang::eval_tidy(var_expr)
 }
 
 # Apply the preconditions function and resolve to data frame for tidyselect

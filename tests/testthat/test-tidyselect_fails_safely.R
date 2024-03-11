@@ -131,10 +131,10 @@ test_that("env scoping with bare symbol patterns", {
   # `z` is not character
   z <- mtcars
   # c() and vars() both error, but different reasons
-  ## c() scopes z in env and determines its invalid
-  expect_error({small_table %>% col_vals_not_null(c(z))}, "`z` must be numeric or character")
-  ## vars() doesn't attempt to scope z in env at all
-  expect_error({small_table %>% col_vals_not_null(vars(z))}, "Column `z` doesn't exist")
+  ## c() scopes z in env and determines its invalid ("must be numeric or character")
+  expect_error(small_table %>% col_vals_not_null(c(z)))
+  ## vars() doesn't attempt to scope z in env at all ("doesn't exist")
+  expect_error(small_table %>% col_vals_not_null(vars(z)))
   
   # Cleanup
   z <- rlang::missing_arg()

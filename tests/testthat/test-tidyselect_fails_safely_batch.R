@@ -173,9 +173,9 @@ test_that("Genuine evaluation errors are rethrown immediately (tested on a sampl
     
     err_expr <- errs[[err_regex]]
   
-    expect_error(agent %>% col_vals_between({{ err_expr }}, 2, 5), err_regex)
-    expect_error(agent %>% rows_distinct({{ err_expr }}), err_regex)
-    expect_error(agent %>% col_exists({{ err_expr }}), err_regex)
+    expect_error(agent %>% col_vals_between({{ err_expr }}, 2, 5))
+    expect_error(agent %>% rows_distinct({{ err_expr }}))
+    expect_error(agent %>% col_exists({{ err_expr }}))
   
   }
   

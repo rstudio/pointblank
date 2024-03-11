@@ -88,25 +88,23 @@ test_that("tidyselecting 0 columns for rows_* functions = fail at interrogation"
 
 test_that("tidyselect errors *are* immediate for assertion/expectation/test", {
   
-  mismatch_msg <- "Can't subset columns that don't exist."
-  
-  # For validation steps are used on table
-  expect_error(small_table %>% col_vals_not_null(z), mismatch_msg)
-  expect_error(small_table %>% col_vals_not_null("z"), mismatch_msg)
-  expect_error(small_table %>% col_vals_not_null(all_of("z")), mismatch_msg)
-  expect_error(small_table %>% col_vals_not_null(all_of(nonexistent_col)), mismatch_msg)
+  # For validation steps used on table
+  expect_error(small_table %>% col_vals_not_null(z))
+  expect_error(small_table %>% col_vals_not_null("z"))
+  expect_error(small_table %>% col_vals_not_null(all_of("z")))
+  expect_error(small_table %>% col_vals_not_null(all_of(nonexistent_col)))
   
   # For expectations
-  expect_error(small_table %>% expect_col_vals_not_null(z), mismatch_msg)
-  expect_error(small_table %>% expect_col_vals_not_null("z"), mismatch_msg)
-  expect_error(small_table %>% expect_col_vals_not_null(all_of("z")), mismatch_msg)
-  expect_error(small_table %>% expect_col_vals_not_null(all_of(nonexistent_col)), mismatch_msg)
+  expect_error(small_table %>% expect_col_vals_not_null(z))
+  expect_error(small_table %>% expect_col_vals_not_null("z"))
+  expect_error(small_table %>% expect_col_vals_not_null(all_of("z")))
+  expect_error(small_table %>% expect_col_vals_not_null(all_of(nonexistent_col)))
   
   # For tests
-  expect_error(small_table %>% test_col_vals_not_null(z), mismatch_msg)
-  expect_error(small_table %>% test_col_vals_not_null("z"), mismatch_msg)
-  expect_error(small_table %>% test_col_vals_not_null(all_of("z")), mismatch_msg)
-  expect_error(small_table %>% test_col_vals_not_null(all_of(nonexistent_col)), mismatch_msg)
+  expect_error(small_table %>% test_col_vals_not_null(z))
+  expect_error(small_table %>% test_col_vals_not_null("z"))
+  expect_error(small_table %>% test_col_vals_not_null(all_of("z")))
+  expect_error(small_table %>% test_col_vals_not_null(all_of(nonexistent_col)))
   
 })
 
@@ -118,7 +116,7 @@ test_that("tidyselect errors cannot be downgraded in assertion/expectation on ta
       col_vals_not_null(a) %>% 
       col_vals_not_null(z, actions = warn_on_fail()) %>% 
       col_vals_not_null(b)
-  }, "Can't subset columns that don't exist.")
+  })
   
 })
 

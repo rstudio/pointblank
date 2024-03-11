@@ -10,8 +10,8 @@ resolve_columns <- function(x, var_expr, preconditions = NULL, ...,
   tbl <- apply_preconditions_for_cols(x, preconditions)
   
   # If tbl cannot (yet) materialize, don't attempt tidyselect and return early
-  if (is.null(tbl)) {
-    return(resolve_columns_notidyselect(var_expr, call = call))
+  if (rlang::is_error(tbl)) {
+    return(resolve_columns_notidyselect(var_expr, tbl, call = call))
   }
   
   # Attempt tidyselect
@@ -44,12 +44,13 @@ resolve_columns <- function(x, var_expr, preconditions = NULL, ...,
   
 }
 
-resolve_columns_notidyselect <- function(var_expr, call) {
+resolve_columns_notidyselect <- function(var_expr, parent, call) {
   # Error if attempting to tidyselect on a lazy tbl that cannot materialize
   var_str <- rlang::expr_deparse(rlang::quo_get_expr(var_expr))
   if (any(sapply(names(tidyselect::vars_select_helpers), grepl, var_str))) {
     rlang::abort(
       "Cannot use tidyselect helpers for an undefined lazy tbl.",
+      parent = parent,
       call = call
     )
   }
@@ -67,7 +68,7 @@ resolve_columns_notidyselect <- function(var_expr, call) {
 apply_preconditions_for_cols <- function(x, preconditions) {
   # Extract tbl
   tbl <- if (is_ptblank_agent(x)) {
-    tryCatch(get_tbl_object(x), error = function(...) NULL)
+    tryCatch(get_tbl_object(x), error = function(cnd) cnd)
   } else if (is_a_table_object(x)) {
     x
   }

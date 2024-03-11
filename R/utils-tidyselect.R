@@ -1,12 +1,17 @@
 resolve_columns <- function(x, var_expr, preconditions = NULL, ...,
                             call = rlang::caller_env()) {
   
+  # If columns is just character vector, pass it through
+  if (rlang::is_character(rlang::quo_get_expr(var_expr))) {
+    return(rlang::eval_tidy(var_expr))
+  }
+  
   # Materialize table and apply preconditions for tidyselect
   tbl <- apply_preconditions_for_cols(x, preconditions)
   
   # If tbl cannot (yet) materialize, don't attempt tidyselect and return early
   if (is.null(tbl)) {
-    return(resolve_columns_notidyselect(var_expr))
+    return(resolve_columns_notidyselect(var_expr, call = call))
   }
   
   # Attempt tidyselect

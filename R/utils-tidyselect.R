@@ -36,12 +36,12 @@ resolve_columns <- function(x, var_expr, preconditions = NULL, ...,
 apply_preconditions_for_cols <- function(x, preconditions) {
   # Extract tbl
   tbl <- if (is_ptblank_agent(x)) {
-    get_tbl_object(x)
+    tryCatch(get_tbl_object(x), error = function(...) NULL)
   } else if (is_a_table_object(x)) {
     x
   }
   # Apply preconditions
-  if (!is.null(preconditions)) {
+  if (!is.null(tbl) && !is.null(preconditions)) {
     tbl <- apply_preconditions(tbl = tbl, preconditions = preconditions)
   }
   tbl

@@ -73,7 +73,7 @@ apply_preconditions_for_cols <- function(x, preconditions) {
     x
   }
   # Apply preconditions
-  if (!is.null(tbl) && !is.null(preconditions)) {
+  if (!rlang::is_error(tbl) && !is.null(preconditions)) {
     tbl <- apply_preconditions(tbl = tbl, preconditions = preconditions)
   }
   tbl

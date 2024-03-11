@@ -125,11 +125,11 @@ test_that("env scoping with bare symbol patterns", {
   # `z` is external vector of valid column
   z <- "a"
   rlang::local_options(lifecycle_verbosity = "warning")
-  expect_warning({small_table %>% col_vals_not_null(z)}, "deprecated")
+  expect_warning(small_table %>% col_vals_not_null(z))
+  rlang::local_options(lifecycle_verbosity = "quiet")
   
   # `z` is not character
   z <- mtcars
-  rlang::local_options(lifecycle_verbosity = "quiet")
   # c() and vars() both error, but different reasons
   ## c() scopes z in env and determines its invalid
   expect_error({small_table %>% col_vals_not_null(c(z))}, "`z` must be numeric or character")

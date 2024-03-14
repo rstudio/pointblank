@@ -1086,10 +1086,6 @@ interrogate_comparison <- function(
   # Normalize a column in `vars()` to a `name` object
   if (inherits(value, "list")) {
     value <- value[1][[1]] %>% rlang::get_expr()
-  } else {
-    if (is.character(value)) {
-      value <- paste0("'", value, "'")
-    }
   }
   
   # Obtain the target column as a label

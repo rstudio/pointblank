@@ -1086,10 +1086,6 @@ interrogate_comparison <- function(
   # Normalize a column in `vars()` to a `name` object
   if (inherits(value, "list")) {
     value <- value[1][[1]] %>% rlang::get_expr()
-  } else {
-    if (is.character(value)) {
-      value <- paste0("'", value, "'")
-    }
   }
   
   # Obtain the target column as a label
@@ -1132,20 +1128,20 @@ tbl_val_comparison <- function(
   )
   
   # Construct a string-based expression for the validation
-  expression <- paste(column, operator, value)
+  expression <- call(operator, as.symbol(column), value)
   
   if (is_tbl_mssql(table)) {
     
     table %>%
       dplyr::mutate(pb_is_good_ = dplyr::case_when(
-        !!rlang::parse_expr(expression) ~ 1,
+        !!expression ~ 1,
         TRUE ~ 0
       ))
     
   } else {
     
     table %>%
-      dplyr::mutate(pb_is_good_ = !!rlang::parse_expr(expression)) %>%
+      dplyr::mutate(pb_is_good_ = !!expression) %>%
       dplyr::mutate(pb_is_good_ = dplyr::case_when(
         is.na(pb_is_good_) ~ na_pass,
         TRUE ~ pb_is_good_

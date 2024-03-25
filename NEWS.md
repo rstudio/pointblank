@@ -1,5 +1,11 @@
 # pointblank 0.12.1
 
+- Ensured that the column string is a symbol before constructing the expression for the `col_vals_*()` functions.
+
+- No longer resolve columns with tidyselect when the target table cannot be materialized.
+
+- Relaxed tests on tidyselect error messages.
+
 # pointblank 0.12.0
 
 ## New features

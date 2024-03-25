@@ -1,4 +1,4 @@
-# pointblank (development version)
+# pointblank 0.12.1
 
 # pointblank 0.12.0
 

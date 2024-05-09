@@ -1,5 +1,7 @@
 # pointblank (development version)
 
+- Fixed a regression in `col_vals_*()` functions, where `vars("col")` was evaluating to the string `"col"`. Behavior of `vars("col")` is now aligned back with `vars(col)` - both evaluate to the column name `col`.
+
 # pointblank 0.12.1
 
 - Ensured that the column string is a symbol before constructing the expression for the `col_vals_*()` functions.

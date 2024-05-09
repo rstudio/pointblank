@@ -1085,8 +1085,8 @@ interrogate_comparison <- function(
 
   # Normalize a column in `vars()` to a `name` object
   if (inherits(value, "list") && rlang::is_quosure(value[1][[1]])) {
-    # Both `vars(col)`, `vars("col")` become `.data$col` for `dplyr::mutate()`
-    value <- rlang::data_sym(rlang::quo_get_expr(value[1][[1]]))
+    # Both `vars(col)` and `vars("col")` become `col` for `dplyr::mutate()`
+    value <- rlang::sym(rlang::quo_get_expr(value[1][[1]]))
   }
   
   # Obtain the target column as a label

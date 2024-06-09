@@ -294,4 +294,11 @@ test_that("col_vals_expr() shows used columns", {
   expect_setequal(columns[[3]], c("a", "b"))
   expect_equal(columns[[4]], "a")
   
+  report_columns <- get_agent_report(agent, display_table = FALSE)$columns
+  
+  expect_equal(report_columns[1], "a")
+  expect_setequal(strsplit(report_columns[2], ", ")[[1]], c("a", "b", "c"))
+  expect_setequal(strsplit(report_columns[3], ", ")[[1]], c("a", "b"))
+  expect_equal(report_columns[4], "a")
+  
 })

@@ -262,3 +262,43 @@ test_that("The correct title is rendered in the agent report", {
   #   )
   # )
 })
+
+test_that("col_vals_expr() shows used columns", {
+  
+  tbl <-
+    dplyr::tibble(
+      a = c(1, 2, 1, 7, 8, 6),
+      b = c(0, 0, 0, 1, 1, 1),
+      c = c(0.5, 0.3, 0.8, 1.4, 1.9, 1.2),
+    )
+  c <- 1
+  
+  agent <- tbl %>%
+    create_agent() %>% 
+    # Uses column `a`
+    col_vals_expr(expr = ~ a %% 1 == 0) %>% 
+    # Uses columns `a`, `b`, `c`
+    col_vals_expr(expr = ~ case_when(
+      b == 0 ~ a %>% between(0, 5) & c < 1,
+      b == 1 ~ a > 5 & c >= 1
+    )) %>% 
+    # Uses columns `a` and `b`, and injects global variable `c`
+    col_vals_expr(expr(.data$a + b == !!c)) %>% 
+    # Uses column `a` but variable `d` is not defined (= not a column)
+    col_vals_expr(expr = ~ a + d > 0) %>% 
+    interrogate()
+  
+  columns <- agent$validation_set$column
+  expect_equal(columns[[1]], "a")
+  expect_setequal(columns[[2]], c("a", "b", "c"))
+  expect_setequal(columns[[3]], c("a", "b"))
+  expect_equal(columns[[4]], "a")
+  
+  report_columns <- get_agent_report(agent, display_table = FALSE)$columns
+  
+  expect_equal(report_columns[1], "a")
+  expect_setequal(strsplit(report_columns[2], ", ")[[1]], c("a", "b", "c"))
+  expect_setequal(strsplit(report_columns[3], ", ")[[1]], c("a", "b"))
+  expect_equal(report_columns[4], "a")
+  
+})

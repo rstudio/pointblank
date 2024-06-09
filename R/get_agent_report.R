@@ -333,11 +333,11 @@ get_agent_report <- function(
       FUN.VALUE = character(1),
       USE.NAMES = FALSE,
       FUN = function(x) {
-        ifelse(
-          is.null(x),
-          NA_character_,
-          unlist(x)
-        )
+        if (is.null(x)) {
+          NA_character_
+        } else {
+          toString(unique(x))
+        }
       }
     )
 

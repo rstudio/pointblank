@@ -11,7 +11,7 @@
 #  
 #  This file is part of the 'rstudio/pointblank' project.
 #  
-#  Copyright (c) 2017-2023 pointblank authors
+#  Copyright (c) 2017-2024 pointblank authors
 #  
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
@@ -83,7 +83,7 @@
 #'     info = "Time-based values (e.g., `Sys.time()`)."
 #'   ) %>%
 #'   info_columns(
-#'     columns = "date",
+#'     columns = date,
 #'     info = "The date part of `date_time`. ((CALC))"
 #'   ) %>%
 #'   info_section(
@@ -207,7 +207,7 @@ incorporate <- function(informant) {
       # TODO: Improve the `stop()` message here
       stop(
         "The `read_fn` object must be a function or an R formula.\n",
-        "* A function can be made with `function()` {<table reading code>}.\n",
+        "* A function can be made with `function()` {<tbl reading code>}.\n",
         "* An R formula can also be used, with the expression on the RHS.",
         call. = FALSE
       )
@@ -371,7 +371,7 @@ incorporate <- function(informant) {
   extra_sections <- 
     base::setdiff(
       names(informant$metadata),
-      c("info_label", "table", "columns")
+      c("info_label", "table", "columns", "_private")
     )
   
   metadata_extra <- informant$metadata[extra_sections]

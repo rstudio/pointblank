@@ -223,19 +223,19 @@ If you'd like to test your **pointblank** validation skill, guess whether each o
 
 
 ```{r echo=FALSE, eval=FALSE}
-small_table %>% test_col_is_logical(vars(e))
+small_table %>% test_col_is_logical(e)
 ```
 
 ```{r echo=FALSE, eval=FALSE}
-small_table %>% test_col_vals_between(vars(c), left = 1, right = 10)
+small_table %>% test_col_vals_between(c, left = 1, right = 10)
 ```
 
 ```{r echo=FALSE, eval=FALSE}
-small_table %>% test_col_vals_between(vars(c), left = 0, right = vars(d), na_pass = TRUE, threshold = 0.5)
+small_table %>% test_col_vals_between(c, left = 0, right = vars(d), na_pass = TRUE, threshold = 0.5)
 ```
 
 ```{r echo=FALSE, eval=FALSE}
-small_table %>% test_col_vals_between(vars(c), left = 0, right = vars(d), na_pass = TRUE, threshold = 3)
+small_table %>% test_col_vals_between(c, left = 0, right = vars(d), na_pass = TRUE, threshold = 3)
 ```
 
 ```{r echo=FALSE, eval=FALSE}
@@ -243,21 +243,21 @@ small_table %>% test_col_schema_match(col_schema(.tbl = small_table_sqlite()))
 ```
 
 ```{r echo=FALSE, eval=FALSE}
-small_table %>% test_col_vals_in_set(vars(a), set = 1:10)
+small_table %>% test_col_vals_in_set(a, set = 1:10)
 ```
 
 ```{r echo=FALSE, eval=FALSE}
-small_table %>% test_col_vals_regex(vars(b), regex = ".-[a-z]{3}.*")
+small_table %>% test_col_vals_regex(b, regex = ".-[a-z]{3}.*")
 ```
 
 ```{r echo=FALSE, eval=FALSE}
-small_table %>% test_col_exists(columns = "g")
+small_table %>% test_col_exists(g)
 ```
 
 ```{r echo=FALSE, eval=FALSE}
 small_table %>% 
   test_col_vals_gt(
-    vars(z), value = vars(a),
+    z, value = vars(a),
     preconditions = ~ . %>% dplyr::mutate(z = c + e), threshold = 0.5
   )
 ```

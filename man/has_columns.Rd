@@ -157,8 +157,8 @@ x_list$eval_warning
 
 \seealso{
 Other Utility and Helper Functions: 
-\code{\link{affix_datetime}()},
 \code{\link{affix_date}()},
+\code{\link{affix_datetime}()},
 \code{\link{col_schema}()},
 \code{\link{from_github}()},
 \code{\link{stop_if_not}()}

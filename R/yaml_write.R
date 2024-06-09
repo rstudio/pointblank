@@ -11,7 +11,7 @@
 #  
 #  This file is part of the 'rstudio/pointblank' project.
 #  
-#  Copyright (c) 2017-2023 pointblank authors
+#  Copyright (c) 2017-2024 pointblank authors
 #  
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
@@ -687,7 +687,7 @@ yaml_agent_string <- function(
 }
 
 as_c_fn <- function(columns) {
-  paste0("c(", columns, ")")
+  paste0("c(", paste0('"', columns, '"', collapse = ", "), ")")
 }
 
 as_list_preconditions <- function(preconditions) {
@@ -1612,6 +1612,9 @@ as_informant_yaml_list <- function(informant) {
     lst_locale <- list(locale = informant$locale)
   }
   
+  # Hide private field
+  metadata <- informant$metadata[names(informant$metadata) != "_private"]
+  
   c(
     type = "informant",           # YAML type: `informant`
     lst_read_fn,                  # table-prep formula (stored in key `tbl`)
@@ -1620,7 +1623,7 @@ as_informant_yaml_list <- function(informant) {
     lst_lang,                     # informant language
     lst_locale,                   # informant locale
     lst_meta_snippets,            # informant metadata snippet statements
-    informant$metadata            # informant metadata entries
+    metadata                      # informant metadata entries
   )
 }
 

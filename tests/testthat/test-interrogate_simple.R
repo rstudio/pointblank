@@ -2124,3 +2124,12 @@ test_that("The inclusivity options work well for the range-based validations", {
       )
   )
 })
+
+test_that("vars(col) and vars('col') both evaluate to tbl column", {
+  
+  df <- data.frame(x = Sys.Date() + 1, y = Sys.Date())
+  
+  expect_true(test_col_vals_gt(df, x, vars(y)))
+  expect_true(test_col_vals_gt(df, x, vars("y")))
+
+})

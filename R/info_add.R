@@ -11,7 +11,7 @@
 #  
 #  This file is part of the 'rstudio/pointblank' project.
 #  
-#  Copyright (c) 2017-2023 pointblank authors
+#  Copyright (c) 2017-2024 pointblank authors
 #  
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
@@ -246,7 +246,7 @@ info_tabular <- function(
 #' 
 #' @param columns *The target columns*
 #'   
-#'   `vector<character>|vars(<columns>)`` // **required**
+#'   `vector<character>|vars(<columns>)` // **required**
 #' 
 #'   The column or set of columns to focus on. Can be defined as a column name
 #'   in quotes (e.g., `"<column_name>"`), one or more column names in `vars()`
@@ -331,15 +331,15 @@ info_tabular <- function(
 #' # R statement
 #' informant %>% 
 #'   info_columns(
-#'     columns = "date_time",
+#'     columns = date_time,
 #'     info = "*info text* 1."
 #'   ) %>%
 #'   info_columns(
-#'     columns = "date",
+#'     columns = date,
 #'     info = "*info text* 2."
 #'   ) %>%
 #'   info_columns(
-#'     columns = "item_count",
+#'     columns = item_count,
 #'     info = "*info text* 3. Statistics: {snippet_1}."
 #'   ) %>%
 #'   info_columns(
@@ -409,7 +409,7 @@ info_tabular <- function(
 #'     info = "Time-based values (e.g., `Sys.time()`)."
 #'   ) %>%
 #'   info_columns(
-#'     columns = "date",
+#'     columns = date,
 #'     info = "The date part of `date_time`. ((CALC))"
 #'   )
 #' ```
@@ -450,7 +450,7 @@ info_columns <- function(
   metadata_columns <- metadata_list$columns
   
   if (is.null(x$tbl)) {
-    tbl <- dplyr::as_tibble(metadata_columns %>% lapply(function(x) 1))
+    tbl <- metadata_list[["_private"]]$col_ptypes
   } else {
     tbl <- x$tbl
   }
@@ -609,11 +609,11 @@ info_columns <- function(
 #' informant <-
 #'   informant %>%
 #'   info_columns(
-#'     columns = "item_revenue",
+#'     columns = item_revenue,
 #'     info = "Revenue reported in USD."
 #'   ) %>%
 #'   info_columns(
-#'     columns = "acquisition",
+#'     columns = acquisition,
 #'     `top list` = "{top5_aq}"
 #'   ) %>%
 #'   info_snippet(
@@ -723,7 +723,7 @@ check_info_columns_tbl <- function(tbl) {
 #'   
 #' @param section_name *The section name*
 #' 
-#'   `scalar<character>`` // **required**
+#'   `scalar<character>` // **required**
 #' 
 #'   The name of the section for which this information pertains.
 #'   
@@ -965,7 +965,7 @@ info_section <- function(
 #' 
 #' @param snippet_name *The snippet name*
 #' 
-#'   `scalar<character>`` // **required**
+#'   `scalar<character>` // **required**
 #' 
 #'   The name for snippet, which is used for interpolating the result of the
 #'   snippet formula into *info text* defined by an `info_*()` function.
@@ -1013,7 +1013,7 @@ info_section <- function(
 #' # R statement
 #' informant %>% 
 #'   info_columns(
-#'     columns = "date_time",
+#'     columns = date_time,
 #'     `Latest Date` = "The latest date is {latest_date}."
 #'   ) %>%
 #'   info_snippet(
@@ -1076,7 +1076,7 @@ info_section <- function(
 #'     info = "Time-based values (e.g., `Sys.time()`)."
 #'   ) %>%
 #'   info_columns(
-#'     columns = "date",
+#'     columns = date,
 #'     info = "The date part of `date_time`. ((CALC))"
 #'   ) %>%
 #'   info_section(
@@ -1162,7 +1162,7 @@ info_snippet <- function(
 #' 
 #' @param column *The target column*
 #'   
-#'   `scalar<character>`` // **required**
+#'   `scalar<character>` // **required**
 #' 
 #'   The name of the column that contains the target values.
 #' 
@@ -1264,7 +1264,7 @@ info_snippet <- function(
 #'     label = "An example."
 #'   ) %>% 
 #'   info_columns(
-#'     columns = "f",
+#'     columns = f,
 #'     `Items` = "This column contains {values_f}."
 #'   ) %>%
 #'   info_snippet(
@@ -1465,7 +1465,7 @@ snip_list <- function(
 #'
 #' @param column *The target column*
 #'   
-#'   `scalar<character>`` // **required**
+#'   `scalar<character>` // **required**
 #' 
 #'   The name of the column that contains the target values.
 #' 
@@ -1495,7 +1495,7 @@ snip_list <- function(
 #'     label = "An example."
 #'   ) %>% 
 #'   info_columns(
-#'     columns = "d",
+#'     columns = d,
 #'     `Stats` = "Stats (fivenum): {stats_d}."
 #'   ) %>%
 #'   info_snippet(
@@ -1552,7 +1552,7 @@ snip_stats <- function(
 #' 
 #' @param column *The target column*
 #'   
-#'   `scalar<character>`` // **required**
+#'   `scalar<character>` // **required**
 #' 
 #'   The name of the column that contains the target values.
 #'   
@@ -1574,7 +1574,7 @@ snip_stats <- function(
 #'     label = "An example."
 #'   ) %>% 
 #'   info_columns(
-#'     columns = "a",
+#'     columns = a,
 #'     `Lowest Value` = "Lowest value is {lowest_a}."
 #'   ) %>%
 #'   info_snippet(
@@ -1626,7 +1626,7 @@ snip_lowest <- function(column) {
 #' 
 #' @param column *The target column*
 #'   
-#'   `scalar<character>`` // **required**
+#'   `scalar<character>` // **required**
 #' 
 #'   The name of the column that contains the target values.
 #'   
@@ -1648,7 +1648,7 @@ snip_lowest <- function(column) {
 #'     label = "An example."
 #'   ) %>% 
 #'   info_columns(
-#'     columns = "a",
+#'     columns = a,
 #'     `Highest Value` = "Highest value is {highest_a}."
 #'   ) %>%
 #'   info_snippet(

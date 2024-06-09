@@ -11,7 +11,7 @@
 #  
 #  This file is part of the 'rstudio/pointblank' project.
 #  
-#  Copyright (c) 2017-2023 pointblank authors
+#  Copyright (c) 2017-2024 pointblank authors
 #  
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
@@ -79,6 +79,19 @@
 #'   A value that limits the possible number of rows returned when sampling
 #'   non-passing rows using the `sample_frac` option.
 #'   
+#' @param show_step_label *Show step labels in progress*
+#' 
+#'   `scalar<logical>` // *default:* `FALSE`
+#' 
+#'   Whether to show the `label` value of each validation step in the console.
+#'
+#' @param progress *Show interrogation progress*
+#' 
+#'   `scalar<logical>` // *default:* `interactive()`
+#' 
+#'   Whether to show the progress of an agent's interrogation in the console.
+#'   Defaults to `TRUE` in interactive sessions.
+#'   
 #' @return A `ptblank_agent` object.
 #'   
 #' @section Examples:
@@ -133,7 +146,9 @@ interrogate <- function(
     get_first_n = NULL,
     sample_n = NULL,
     sample_frac = NULL,
-    sample_limit = 5000
+    sample_limit = 5000,
+    show_step_label = FALSE,
+    progress = interactive()
 ) {
   
   #
@@ -177,7 +192,7 @@ interrogate <- function(
       # TODO: create a better `stop()` message
       stop(
         "The `read_fn` object must be a function or an R formula.\n",
-        "* A function can be made with `function()` {<table reading code>}.\n",
+        "* A function can be made with `function()` {<tbl reading code>}.\n",
         "* An R formula can also be used, with the expression on the RHS.",
         call. = FALSE
       )
@@ -199,7 +214,7 @@ interrogate <- function(
 
   # Quieting of an agent's remarks either when the agent has the
   # special label `"::QUIET::"` or the session is non-interactive
-  if (agent$label == "::QUIET::" || !interactive()) {
+  if (agent$label == "::QUIET::" || !progress) {
     quiet <- TRUE
   } else {
     quiet <- FALSE
@@ -701,6 +716,7 @@ interrogate <- function(
       agent = agent,
       i = i,
       time_diff_s = time_diff_s,
+      show_step_label = show_step_label,
       quiet = quiet
     )
   }
@@ -795,6 +811,7 @@ create_post_step_cli_output_a <- function(
     agent,
     i,
     time_diff_s,
+    show_step_label,
     quiet
 ) {
   
@@ -831,6 +848,13 @@ create_post_step_cli_output_a <- function(
     )) %>% 
     dplyr::pull(condition)
   
+  label <- agent$validation_set[i, ]$label
+  if (show_step_label && !is.na(label)) {
+    step_label <- paste0(" - {label}")
+  } else {
+    step_label <- NULL
+  }
+  
   cli::cli_div(
     theme = list(
       span.green = list(color = "green"),
@@ -845,26 +869,33 @@ create_post_step_cli_output_a <- function(
       c(
         "Step {.field {i}}: an evaluation issue requires attention ",
         "(", interrogation_evaluation, ").",
-        print_time(time_diff_s)
+        print_time(time_diff_s),
+        step_label
       )
     )
   } else if (validation_condition == "NONE" && notify_condition == "NONE") {
     cli::cli_alert_success(
-      c("Step {.field {i}}: {.green OK}.", print_time(time_diff_s))
+      c(
+        "Step {.field {i}}: {.green OK}.",
+        print_time(time_diff_s),
+        step_label
+      )
     )
   } else if (validation_condition != "NONE" && notify_condition == "NONE") {
     if (validation_condition == "STOP") {
       cli::cli_alert_danger(
         c(
           "Step {.field {i}}: {.red STOP} condition met.",
-          print_time(time_diff_s)
+          print_time(time_diff_s),
+          step_label
         )
       )
     } else {
       cli::cli_alert_warning(
         c(
           "Step {.field {i}}: {.yellow WARNING} condition met.",
-          print_time(time_diff_s)
+          print_time(time_diff_s),
+          step_label
         )
       )
     }
@@ -874,7 +905,8 @@ create_post_step_cli_output_a <- function(
         c(
           "Step {.field {i}}: {.red STOP} and ",
           "{.blue NOTIFY} conditions met.",
-          print_time(time_diff_s)
+          print_time(time_diff_s),
+          step_label
         )
       )
     } else {
@@ -882,7 +914,8 @@ create_post_step_cli_output_a <- function(
         c(
           "Step {.field {i}}: {.yellow WARNING} and ",
           "{.blue NOTIFY} conditions met.",
-          print_time(time_diff_s)
+          print_time(time_diff_s),
+          step_label
         )
       )
     }
@@ -890,7 +923,8 @@ create_post_step_cli_output_a <- function(
     cli::cli_alert_warning(
       c(
         "Step {.field {i}}: {.blue NOTIFY} condition met.",
-        print_time(time_diff_s)
+        print_time(time_diff_s),
+        step_label
       )
     )
   }
@@ -1050,12 +1084,9 @@ interrogate_comparison <- function(
   value <- get_values_at_idx(agent = agent, idx = idx)
 
   # Normalize a column in `vars()` to a `name` object
-  if (inherits(value, "list")) {
-    value <- value[1][[1]] %>% rlang::get_expr()
-  } else {
-    if (is.character(value)) {
-      value <- paste0("'", value, "'")
-    }
+  if (inherits(value, "list") && rlang::is_quosure(value[1][[1]])) {
+    # Both `vars(col)` and `vars("col")` become `col` for `dplyr::mutate()`
+    value <- rlang::sym(rlang::quo_get_expr(value[1][[1]]))
   }
   
   # Obtain the target column as a label
@@ -1098,20 +1129,20 @@ tbl_val_comparison <- function(
   )
   
   # Construct a string-based expression for the validation
-  expression <- paste(column, operator, value)
+  expression <- call(operator, as.symbol(column), value)
   
   if (is_tbl_mssql(table)) {
     
     table %>%
       dplyr::mutate(pb_is_good_ = dplyr::case_when(
-        !!rlang::parse_expr(expression) ~ 1,
+        !!expression ~ 1,
         TRUE ~ 0
       ))
     
   } else {
     
     table %>%
-      dplyr::mutate(pb_is_good_ = !!rlang::parse_expr(expression)) %>%
+      dplyr::mutate(pb_is_good_ = !!expression) %>%
       dplyr::mutate(pb_is_good_ = dplyr::case_when(
         is.na(pb_is_good_) ~ na_pass,
         TRUE ~ pb_is_good_

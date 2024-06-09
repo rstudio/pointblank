@@ -10,7 +10,9 @@ interrogate(
   get_first_n = NULL,
   sample_n = NULL,
   sample_frac = NULL,
-  sample_limit = 5000
+  sample_limit = 5000,
+  show_step_label = FALSE,
+  progress = interactive()
 )
 }
 \arguments{
@@ -63,6 +65,19 @@ option will apply a hard limit to the returned rows.}
 
 A value that limits the possible number of rows returned when sampling
 non-passing rows using the \code{sample_frac} option.}
+
+\item{show_step_label}{\emph{Show step labels in progress}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+Whether to show the \code{label} value of each validation step in the console.}
+
+\item{progress}{\emph{Show interrogation progress}
+
+\verb{scalar<logical>} // \emph{default:} \code{interactive()}
+
+Whether to show the progress of an agent's interrogation in the console.
+Defaults to \code{TRUE} in interactive sessions.}
 }
 \value{
 A \code{ptblank_agent} object.

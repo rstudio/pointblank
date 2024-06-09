@@ -155,7 +155,7 @@ integrated into the text.
     info = "Time-based values."
   ) \%>\%
   info_columns(
-    columns = "date",
+    columns = date,
     info = "The date part of `date_time`."
   ) \%>\%
   incorporate()

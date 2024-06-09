@@ -11,7 +11,7 @@
 #  
 #  This file is part of the 'rstudio/pointblank' project.
 #  
-#  Copyright (c) 2017-2023 pointblank authors
+#  Copyright (c) 2017-2024 pointblank authors
 #  
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
@@ -139,6 +139,8 @@ get_informant_report <- function(
     y <- informant$metadata_rev
   } else {
     y <- informant$metadata
+    # Hide private metadata from report
+    y[["_private"]] <- NULL
   }
   
   if ("info_label" %in% names(informant)) {
@@ -675,6 +677,11 @@ get_informant_report <- function(
     c("ptblank_informant_report", class(gt_informant_report))
   
   # nocov end
+  
+  # Quarto rendering workaround
+  if (check_quarto()) {
+    gt_informant_report <- gt::fmt(gt_informant_report, fns = identity)
+  }
   
   gt_informant_report
 }

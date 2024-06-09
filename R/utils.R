@@ -11,7 +11,7 @@
 #  
 #  This file is part of the 'rstudio/pointblank' project.
 #  
-#  Copyright (c) 2017-2023 pointblank authors
+#  Copyright (c) 2017-2024 pointblank authors
 #  
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
@@ -148,8 +148,8 @@ get_next_validation_set_row <- function(agent) {
   step
 }
 
-exported_tidyselect_fns <- function() {
-  c("starts_with", "ends_with", "contains", "matches", "everything")
+tidyselect_helpers <- function() {
+  names(tidyselect::vars_select_helpers)
 }
 
 get_assertion_type_at_idx <- function(agent, idx) {
@@ -199,7 +199,7 @@ materialize_table <- function(tbl, check = TRUE) {
     stop(
       "The `tbl` object must either be a table, a function, or a formula.\n",
       "* A table-prep formula can be used (with the expression on the RHS).\n",
-      "* A function can be made with `function()` {<table reading code>}.",
+      "* A function can be made with `function()` {<tbl reading code>}.",
       call. = FALSE
     )
   }  
@@ -222,109 +222,6 @@ as_columns_expr <- function(columns) {
 
 is_secret_agent <- function(x) {
   is_ptblank_agent(x) && (x$label == "::QUIET::")
-}
-
-apply_preconditions_for_cols <- function(x, preconditions) {
-  # Extract tbl
-  tbl <- if (is_ptblank_agent(x)) {
-    get_tbl_object(x)
-  } else if (is_a_table_object(x)) {
-    x
-  }
-  # Apply preconditions
-  if (!is.null(preconditions)) {
-    tbl <- apply_preconditions(tbl = tbl, preconditions = preconditions)
-  }
-  tbl
-}
-
-resolve_columns <- function(x, var_expr, preconditions = NULL, ...,
-                            call = rlang::caller_env()) {
-  
-  tbl <- apply_preconditions_for_cols(x, preconditions)
-  
-  out <- tryCatch(
-    expr = resolve_columns_internal(tbl, var_expr, ..., call = call),
-    error = function(cnd) cnd
-  )
-  
-  if (rlang::is_error(out)) {
-    # If error is a genuine evaluation error, throw that error
-    if (!is.null(out$parent)) {
-      rlang::cnd_signal(rlang::error_cnd("resolve_eval_err", parent = out))
-    }
-    # If not in validation-planning context (assert/expect/test), rethrow
-    if (is_a_table_object(x) || is_secret_agent(x)) {
-      rlang::cnd_signal(out)
-    } else {
-      # Else (mid-planning): grab columns attempted to subset
-      fail <- out$i
-      # If failure is due to scoping a bad object in the env, re-throw error
-      if (!is.character(fail) && !rlang::is_integerish(fail)) {
-        rlang::cnd_signal(out)
-      }
-      success <- resolve_columns_possible(tbl, var_expr)
-      out <- c(success, fail) %||% NA_character_
-    }
-  }
-  
-  out
-  
-}
-
-# If selection gets short-circuited by error, re-run with `strict = FALSE`
-# to safely get the possible column selections
-resolve_columns_possible <- function(tbl, var_expr) {
-  success <- tryCatch(
-    names(tidyselect::eval_select(var_expr, tbl,
-                                  strict = FALSE, allow_empty = FALSE)),
-    error = function(cnd) NULL
-  )
-  success
-}
-
-resolve_columns_internal <- function(tbl, var_expr, ..., call) {
-  
-  # Return NA if the expr is NULL
-  if (rlang::quo_is_null(var_expr)) {
-    return(NA_character_)
-  }
-  
-  # Special case `serially()`: just deparse elements and bypass tidyselect
-  if (rlang::is_empty(tbl)) {
-    var_expr <- rlang::quo_get_expr(var_expr)
-    if (rlang::is_symbol(var_expr) || rlang::is_scalar_character(var_expr)) {
-      column <- rlang::as_name(var_expr)
-    } else {
-      cols <- rlang::call_args(var_expr)
-      column <- vapply(cols, rlang::as_name, character(1), USE.NAMES = FALSE)
-    }
-    return(column)
-  }
-  # Special case `vars()`-expression for backwards compatibility
-  if (rlang::quo_is_call(var_expr, "vars")) {
-    var_expr <- rlang::quo_set_expr(var_expr, vars_to_c(var_expr))
-  }
-  
-  # Proceed with tidyselect
-  column <- tidyselect::eval_select(var_expr, tbl, error_call = call, ...)
-  column <- names(column)
-  
-  if (length(column) < 1) {
-    column <- NA_character_
-  }
-  
-  column
-}
-
-# Convert to the idiomatic `c()`-expr before passing off to tidyselect
-# + ensure that vars() always scopes symbols to data (vars(a) -> c("a"))
-vars_to_c <- function(var_expr) {
-  var_args <- lapply(rlang::call_args(var_expr), function(var_arg) {
-    if (rlang::is_symbol(var_arg)) rlang::as_name(var_arg) else var_arg
-  })
-  c_expr <- rlang::call2("c", !!!var_args)
-  c_expr
 }
 
 resolve_label <- function(label, columns = "", segments = "") {
@@ -815,19 +712,18 @@ get_tbl_dbi_src_details <- function(tbl) {
 get_r_column_names_types <- function(tbl) {
   
   suppressWarnings(
-    column_names_types <-
+    column_header <-
       tbl %>%
       utils::head(1) %>%
-      dplyr::collect() %>%
-      vapply(
-        FUN.VALUE = character(1),
-        FUN = function(x) class(x)[1]
-      )
+      dplyr::collect()
   )
+  column_names_types <-
+    vapply(column_header, function(x) class(x)[1], character(1))
   
   list(
     col_names = names(column_names_types),
-    r_col_types = unname(unlist(column_names_types))
+    r_col_types = unname(unlist(column_names_types)),
+    col_ptypes = utils::head(column_header, 0)
   )
 }
 
@@ -882,7 +778,8 @@ get_tbl_information_df <- function(tbl) {
     db_tbl_name = NA_character_,
     col_names = r_column_names_types$col_names,
     r_col_types = r_column_names_types$r_col_types,
-    db_col_types = NA_character_
+    db_col_types = NA_character_,
+    col_ptypes = r_column_names_types$col_ptypes
   )
 }
 
@@ -906,7 +803,8 @@ get_tbl_information_spark <- function(tbl) {
     db_tbl_name = NA_character_,
     col_names = r_column_names_types$col_names,
     r_col_types = r_column_names_types$r_col_types,
-    db_col_types = db_col_types
+    db_col_types = db_col_types,
+    col_ptypes = r_column_names_types$col_ptypes
   )
 }
 
@@ -1087,7 +985,8 @@ get_tbl_information_dbi <- function(tbl) {
     db_tbl_name = db_tbl_name,
     col_names = r_column_names_types$col_names,
     r_col_types = r_column_names_types$r_col_types,
-    db_col_types = db_col_types
+    db_col_types = db_col_types,
+    col_ptypes = r_column_names_types$col_ptypes
   )
 }
 
@@ -1131,7 +1030,8 @@ get_tbl_information_arrow <- function(tbl) {
     db_tbl_name = NA_character_,
     col_names = col_names,
     r_col_types = r_col_types,
-    db_col_types = db_col_types
+    db_col_types = db_col_types,
+    col_ptypes = dplyr::collect(utils::head(tbl, 0))
   )
 }
 
@@ -1768,4 +1668,13 @@ pb_get_image_tag <- function(file, dir = "images") {
     "alt=\"", alt_text, "\" ",
     "style=\"width:100\\%;\">"
   )
+}
+
+deparse_expr <- function(expr, collapse = " ", ...) {
+  if (rlang::is_scalar_atomic(expr)) {
+    as.character(expr)
+  } else {
+    deparsed <- paste(deparse(expr, ...), collapse = collapse)
+    paste("<expr>", deparsed)
+  }
 }

@@ -57,10 +57,10 @@ dplyr::glimpse(specifications)
 }
 \seealso{
 Other Datasets: 
-\code{\link{game_revenue_info}},
 \code{\link{game_revenue}},
-\code{\link{small_table_sqlite}()},
-\code{\link{small_table}}
+\code{\link{game_revenue_info}},
+\code{\link{small_table}},
+\code{\link{small_table_sqlite}()}
 }
 \concept{Datasets}
 \keyword{datasets}

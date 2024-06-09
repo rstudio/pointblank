@@ -11,7 +11,7 @@
 #  
 #  This file is part of the 'rstudio/pointblank' project.
 #  
-#  Copyright (c) 2017-2023 pointblank authors
+#  Copyright (c) 2017-2024 pointblank authors
 #  
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
@@ -889,6 +889,7 @@ get_multiagent_report <- function(
           #report code {
             font-family: 'IBM Plex Mono', monospace, courier;
             font-size: 11px;
+            color: black;
             background-color: transparent;
             padding: 0;
           }
@@ -913,6 +914,11 @@ get_multiagent_report <- function(
   }
   
   class(report_tbl) <- c("ptblank_multiagent_report.wide", class(report_tbl))
+  
+  # Quarto rendering workaround
+  if (check_quarto()) {
+    report_tbl <- gt::fmt(report_tbl, fns = identity)
+  }
   
   report_tbl
 }

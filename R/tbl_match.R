@@ -11,7 +11,7 @@
 #  
 #  This file is part of the 'rstudio/pointblank' project.
 #  
-#  Copyright (c) 2017-2023 pointblank authors
+#  Copyright (c) 2017-2024 pointblank authors
 #  
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
@@ -43,8 +43,8 @@
 #'   A table to compare against the target table. This can either be a table
 #'   object, a table-prep formula. This can be a table object such as a data
 #'   frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
-#'   Alternatively, a table-prep formula (`~ <table reading code>`) or a
-#'   function (`function() <table reading code>`) can be used to lazily read in
+#'   Alternatively, a table-prep formula (`~ <tbl reading code>`) or a
+#'   function (`function() <tbl reading code>`) can be used to lazily read in
 #'   the table at interrogation time.
 #'   
 #' @return For the validation function, the return value is either a

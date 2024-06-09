@@ -11,7 +11,7 @@
 #  
 #  This file is part of the 'rstudio/pointblank' project.
 #  
-#  Copyright (c) 2017-2023 pointblank authors
+#  Copyright (c) 2017-2024 pointblank authors
 #  
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
@@ -539,7 +539,7 @@ make_validation_steps <- function(steps) {
   tidyselect_regex <- 
     paste0(
       "^(",
-      paste(c("vars", "c", exported_tidyselect_fns()), collapse = "|"),
+      paste(c("vars", "c", tidyselect_helpers()), collapse = "|"),
       ")\\(.*?\\)$"
     )
   

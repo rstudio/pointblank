@@ -71,7 +71,7 @@ informant <-
     description = "This table is included in the **pointblank** pkg."
   ) %>%
   info_columns(
-    columns = "date_time",
+    columns = date_time,
     info = "This column is full of timestamps."
   ) %>%
   info_section(
@@ -97,7 +97,7 @@ The `info_tabular()` function adds information to the **TABLE** section. We use 
 
 ```{r eval=FALSE}
 informant %>% 
-  info_tabular(`🔄 updates` = "This table is not regularly updated.")
+  info_tabular("🔄 updates" = "This table is not regularly updated.")
 ```
 
 <div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/informant_report_4.png"
@@ -128,24 +128,24 @@ informant_pp <-
     label = "The `penguins` dataset from the **palmerpenguins** 📦."
   ) %>% 
   info_columns(
-    columns = "species",
+    columns = species,
     `ℹ️` = "A factor denoting penguin species (*Adélie*, *Chinstrap*, and *Gentoo*)."
   ) %>%
   info_columns(
-    columns = "island",
+    columns = island,
     `ℹ️` = "A factor denoting island in Palmer Archipelago, Antarctica
     (*Biscoe*, *Dream*, or *Torgersen*)."
   ) %>%
   info_columns(
-    columns = "bill_length_mm",
+    columns = bill_length_mm,
     `ℹ️` = "A number denoting bill length"
   ) %>%
   info_columns(
-    columns = "bill_depth_mm",
+    columns = bill_depth_mm,
     `ℹ️` = "A number denoting bill depth"
   ) %>%
   info_columns(
-    columns = "flipper_length_mm",
+    columns = flipper_length_mm,
     `ℹ️` = "An integer denoting flipper length"
   ) %>%
   info_columns(
@@ -153,15 +153,15 @@ informant_pp <-
     `ℹ️` = "(in units of millimeters)."
   ) %>%
   info_columns(
-    columns = "body_mass_g",
+    columns = body_mass_g,
     `ℹ️` = "An integer denoting body mass (grams)."
   ) %>%
   info_columns(
-    columns = "sex",
+    columns = sex,
     `ℹ️` = "A factor denoting penguin sex (`\"female\"`, `\"male\"`)."
   ) %>%
   info_columns(
-    columns = "year",
+    columns = year,
     `ℹ️` = "The study year (e.g., `2007`, `2008`, `2009`)."
   )
 

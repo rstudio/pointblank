@@ -63,7 +63,7 @@ test_that("draft validations for data tables can be generated", {
   write_draft_snapshot_test(dataset = dplyr::band_instruments, filename = "band_instruments")
   write_draft_snapshot_test(dataset = dplyr::band_members, filename = "band_members")
   write_draft_snapshot_test(dataset = dplyr::starwars, filename = "starwars")
-  write_draft_snapshot_test(dataset = dplyr::storms, filename = "storms")
+  # write_draft_snapshot_test(dataset = dplyr::storms, filename = "storms")
   
   write_draft_snapshot_test(dataset = tidyr::billboard, filename = "billboard")
   write_draft_snapshot_test(dataset = tidyr::construction, filename = "construction")

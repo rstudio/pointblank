@@ -1,3 +1,5 @@
+z <- rlang::missing_arg()
+
 test_that("the `has_columns()` function works when used directly with data", {
   
   # Expect TRUE when *all* of the given column names is present

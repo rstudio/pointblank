@@ -11,7 +11,7 @@
 #  
 #  This file is part of the 'rstudio/pointblank' project.
 #  
-#  Copyright (c) 2017-2023 pointblank authors
+#  Copyright (c) 2017-2024 pointblank authors
 #  
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
@@ -43,27 +43,15 @@ create_validation_step <- function(
   i <- get_next_validation_set_row(agent)
   
   # Calculate the SHA1 hash for the validation step
-  sha1 <-
-    digest::sha1(
-      list(
-        assertion_type = assertion_type,
-        column = ifelse(is.null(column), list(NULL), list(column)),
-        values = ifelse(
-          is.null(values) || is_a_table_object(values),
-          list(NULL), list(values)
-        ),
-        na_pass = ifelse(is.null(na_pass), NA, as.logical(na_pass)),
-        preconditions = ifelse(
-          is.null(preconditions), list(NULL), list(preconditions)
-        ),
-        seg_col = ifelse(
-          is.null(seg_col), NA_character_, as.character(seg_col)
-        ),
-        seg_val = ifelse(
-          is.null(seg_val), NA_character_, as.character(seg_val)
-        )
-      )
-    )
+  sha1 <- hash_validation_step(
+    assertion_type = assertion_type,
+    column = column,
+    values = values,
+    na_pass = na_pass,
+    preconditions = preconditions,
+    seg_col = seg_col,
+    seg_val = seg_val
+  )
   
   # Create a validation step as a single-row `tbl_df` object
   validation_step_df <-
@@ -127,6 +115,54 @@ create_validation_step <- function(
     dplyr::bind_rows(agent$validation_set, validation_step_df)
   
   agent
+}
+
+get_hash_version <- function() {
+  "v0.12"
+}
+
+hash_validation_step <- function(assertion_type,
+                                 column = NULL,
+                                 values = NULL,
+                                 na_pass = NULL,
+                                 preconditions = NULL,
+                                 seg_col = NULL,
+                                 seg_val = NULL) {
+  
+  # pkg version that introduced the current hash implementation
+  hash_version <- get_hash_version()
+  
+  values <- if (is.null(values) || is_a_table_object(values)) {
+    NA_character_
+  } else if (is.list(values)) {
+    # Resolve `vars()` to scalar string
+    toString(vapply(values, deparse_expr, character(1)))
+  } else {
+    deparse_expr(values)
+  }
+  
+  preconditions <- if (inherits(preconditions, "fseq")) {
+    # Spell out components of magrittr anonymous function
+    magrittr_fn_seq <- environment(preconditions)[["_function_list"]]
+    deparse_expr(magrittr_fn_seq)
+  } else {
+    deparse_expr(preconditions)
+  }
+  
+  step_chr <- c(
+    assertion_type = assertion_type,
+    column = as.character(column %||% NA_character_),
+    values = values,
+    na_pass = as.character(na_pass %||% NA_character_),
+    preconditions = preconditions,
+    seg_col = as.character(seg_col %||% NA_character_),
+    seg_val = as.character(seg_val %||% NA_character_)
+  )
+  
+  step_hash <- digest::sha1(step_chr)
+  
+  paste(step_hash, hash_version, sep = "-")
+  
 }
 
 apply_preconditions_to_tbl <- function(agent, idx, tbl) {

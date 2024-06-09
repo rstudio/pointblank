@@ -2,6 +2,7 @@ tbl <- data.frame(x = 1:2, y = 1:2, nonunique = "A")
 exist_col <- "y"
 nonunique_col <- "nonunique"
 nonexist_col <- "z"
+z <- rlang::missing_arg()
 
 test_that("Backwards compatibility with `vars()`", {
   

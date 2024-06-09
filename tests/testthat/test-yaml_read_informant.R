@@ -35,7 +35,6 @@ test_that("Reading an informant from YAML is possible", {
       section_name = "rows",
       row_count = "There are {row_count} rows available."
     )
-  
   yaml_write(informant, filename = "informant-test_table.yml")
   
   informant_from_yaml <- yaml_read_informant(filename = "informant-test_table.yml")
@@ -60,6 +59,8 @@ test_that("Reading an informant from YAML is possible", {
   # Expect that the informant (which never had `incorporate()`
   # run on it) is equivalent to the informant object created
   # via `yaml_read_informant()` (i.e., reading in the YAML file)
+  # - *Except* private fields which are note written
+  informant$metadata$`_private` <- NULL
   expect_equivalent(informant, informant_from_yaml)
   
   # Use `incorporate()` on the informant; this creates the list

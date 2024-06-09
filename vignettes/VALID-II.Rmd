@@ -19,11 +19,11 @@ Let's adapt an example used in the [*VALID-I: Data Quality Reporting Workflow*](
 
 ```{r error=TRUE, paged.print=FALSE}
 small_table %>%
-  col_is_posix(vars(date_time)) %>%
-  col_vals_in_set(vars(f), set = c("low", "mid", "high")) %>%
-  col_vals_lt(vars(a), value = 10) %>%
-  col_vals_regex(vars(b), regex = "^[0-9]-[a-z]{3}-[0-9]{3}$") %>%
-  col_vals_between(vars(d), left = 0, right = 5000)
+  col_is_posix(date_time) %>%
+  col_vals_in_set(f, set = c("low", "mid", "high")) %>%
+  col_vals_lt(a, value = 10) %>%
+  col_vals_regex(b, regex = "^[0-9]-[a-z]{3}-[0-9]{3}$") %>%
+  col_vals_between(d, left = 0, right = 5000)
 ```
 
 In terms of the expressions used in the pipeline, you might notice that the `create_agent()` and `interrogate()` functions are absent. This is due to the secondary role of the validation functions, where they can operate directly and immediately on the data, acting as a sort of filter. If all validations in this pipeline pass (i.e., there are no failing test units in any of the validation steps), then the `small_table` data is returned. Otherwise, as it's currently written, a stoppage will occur on any such failure.
@@ -41,23 +41,23 @@ There are two helper functions that are convenient for this workflow: `warn_on_f
 ```{r error=TRUE, paged.print=FALSE}
 small_table %>%
   col_is_posix(
-    vars(date_time),
+    date_time,
     actions = stop_on_fail(stop_at = 1)
   ) %>%
   col_vals_in_set(
-    vars(f), set = c("low", "mid", "high"),
+    f, set = c("low", "mid", "high"),
     actions = stop_on_fail(stop_at = 1)
   ) %>%
   col_vals_lt(
-    vars(a), value = 10,
+    a, value = 10,
     actions = stop_on_fail(stop_at = 1)
   ) %>%
   col_vals_regex(
-    vars(b), regex = "^[0-9]-[a-z]{3}-[0-9]{3}$",
+    b, regex = "^[0-9]-[a-z]{3}-[0-9]{3}$",
     actions = stop_on_fail(stop_at = 1)
   ) %>%
   col_vals_between(
-    vars(d), left = 0, right = 5000,
+    d, left = 0, right = 5000,
     actions = stop_on_fail(stop_at = 1)
   )
 ```
@@ -67,23 +67,23 @@ If we want to instead issue warnings, perhaps with less stringent failure thresh
 ```{r warn=TRUE, paged.print=FALSE}
 small_table %>%
   col_is_posix(
-    vars(date_time),
+    date_time,
     actions = warn_on_fail()
   ) %>%
   col_vals_in_set(
-    vars(f), set = c("low", "mid", "high"),
+    f, set = c("low", "mid", "high"),
     actions = warn_on_fail(warn_at = 0.2)
   ) %>%
   col_vals_lt(
-    vars(a), value = 10,
+    a, value = 10,
     actions = warn_on_fail(warn_at = 3)
   ) %>%
   col_vals_regex(
-    vars(b), regex = "^[0-9]-[a-z]{3}-[0-9]{3}$",
+    b, regex = "^[0-9]-[a-z]{3}-[0-9]{3}$",
     actions = warn_on_fail(warn_at = 0.2)
   ) %>%
   col_vals_between(
-    vars(d), left = 0, right = 5000,
+    d, left = 0, right = 5000,
     actions = warn_on_fail(warn_at = 1)
   )
 ```
@@ -122,11 +122,11 @@ Finally, we will apply this object to every validation function call in the expr
 
 ```{r error=TRUE, paged.print=FALSE}
 small_table %>%
-  col_is_posix(vars(date_time), actions = al) %>%
-  col_vals_in_set(vars(f), set = c("low", "mid"), actions = al) %>%
-  col_vals_lt(vars(a), value = 7, actions = al) %>%
-  col_vals_regex(vars(b), regex = "^[0-9]-[a-w]{3}-[2-9]{3}$", actions = al) %>%
-  col_vals_between(vars(d), left = 0, right = 4000, actions = al)
+  col_is_posix(date_time, actions = al) %>%
+  col_vals_in_set(f, set = c("low", "mid"), actions = al) %>%
+  col_vals_lt(a, value = 7, actions = al) %>%
+  col_vals_regex(b, regex = "^[0-9]-[a-w]{3}-[2-9]{3}$", actions = al) %>%
+  col_vals_between(d, left = 0, right = 4000, actions = al)
 ```
 
 In addition to an error and a warning, the `log4r_step()` function used for the `NOTIFY` condition generates, in this case, a new `"pb_log_file"` text file for logs. We can examine it with `readLines()`; it has a single entry that relates to `Step 1` (the `col_vals_in_set()` step):

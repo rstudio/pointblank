@@ -11,7 +11,7 @@
 #  
 #  This file is part of the 'rstudio/pointblank' project.
 #  
-#  Copyright (c) 2017-2023 pointblank authors
+#  Copyright (c) 2017-2024 pointblank authors
 #  
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
@@ -510,7 +510,8 @@ get_agent_report <- function(
         htmltools::HTML(agent_label_styled),
         htmltools::tags$div(
           style = htmltools::css(
-            height = "25px"
+            height = "25px",
+            `padding-top` = "10px"
           ),
           htmltools::HTML(paste0(table_type, action_levels))
         ) 
@@ -774,6 +775,7 @@ get_agent_report <- function(
                   `margin-top` = "0",
                   `margin-bottom` = "0",
                   `font-family` = "monospace",
+                  `font-size` = "10px",
                   `white-space` = "nowrap",
                   `text-overflow` = "ellipsis",
                   overflow = "hidden",
@@ -1895,9 +1897,7 @@ get_agent_report <- function(
       agent_report <- 
         agent_report %>%
         gt::tab_header(
-          title = get_lsv(text = c(
-            "agent_report", "pointblank_validation_title_text"
-          ))[[lang]],
+          title = title_text,
           subtitle = gt::md(
             paste0(agent_label_styled, " ", table_type, " <br><br>")
           )
@@ -1951,6 +1951,7 @@ get_agent_report <- function(
           }
           #pb_agent code {
             font-family: 'IBM Plex Mono', monospace, courier;
+            color: black;
             background-color: transparent;
             padding: 0;
           }
@@ -1965,11 +1966,15 @@ get_agent_report <- function(
   
   # nocov end
   
+  # Quarto rendering workaround
+  if (check_quarto()) {
+    agent_report <- gt::fmt(agent_report, fns = identity)
+  }
+  
   agent_report
 }
 
-get_default_title_text <- function(report_type,
-                                   lang) {
+get_default_title_text <- function(report_type, lang) {
   
   if (report_type == "informant") {
     title_text <- 

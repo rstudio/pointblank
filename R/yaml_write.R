@@ -687,6 +687,7 @@ yaml_agent_string <- function(
 }
 
 as_c_fn <- function(columns) {
+  columns <- strsplit(unlist(columns), ", ")[[1]]
   paste0("c(", paste0('"', columns, '"', collapse = ", "), ")")
 }
 

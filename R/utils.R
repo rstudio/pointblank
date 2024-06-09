@@ -544,8 +544,9 @@ get_threshold_type <- function(threshold) {
 # nocov start
 
 all_data_vars <- function(x, data_cols) {
-  deparsed <- paste(deparse(x), collapse = "")
-  x <- utils::getParseData(parse(text = deparsed))
+  deparsed <- paste(deparse(x, width.cutoff = 500L), collapse = " ")
+  reparsed <- parse(text = deparsed, keep.source = TRUE)
+  x <- utils::getParseData(reparsed)
   if (is.null(x)) return(NA_character_)
   
   .data_vars <- pronoun_vars(x, ".data")

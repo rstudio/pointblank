@@ -573,7 +573,7 @@ all_data_vars <- function(x, data_cols) {
   if (length(all_cols) == 0) {
     NA_character_
   } else {
-    all_cols
+    sort(all_cols)
   }
   
 }

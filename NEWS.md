@@ -6,6 +6,8 @@
 
 - Fixed a regression in `col_vals_*()` functions, where `vars("col")` was evaluating to the string `"col"`. Behavior of `vars("col")` is now aligned back with `vars(col)` - both evaluate to the column name `col`.
 
+- Warnings/errors arising from comparing `columns` to a `value` of different class (for example, comparing a datetime column to a date value `Sys.Date()` instead of another datetime value `Sys.time()`) are now signalled appropriately at `interrogate()`.
+
 # pointblank 0.12.1
 
 - Ensured that the column string is a symbol before constructing the expression for the `col_vals_*()` functions.

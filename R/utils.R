@@ -165,7 +165,21 @@ get_column_as_sym_at_idx <- function(agent, idx) {
 }
 
 get_values_at_idx <- function(agent, idx) {
-  agent$validation_set[[idx, "values"]] %>% unlist(recursive = FALSE)
+  
+  # Get list-column element (`values` is always a length-1 list)
+  values <- agent$validation_set[[idx, "values"]]
+  
+  # Expressions (via `col_vals_expr()`) and functions (via `specially()`)
+  # can get the old `unlist()` treatment
+  if (rlang::is_expression(values[[1]]) || rlang::is_function(values[[1]])) {
+    values <- unlist(values, recursive = FALSE)
+  } else {
+    # In other cases (e.g., `values`, `left`, `right`), flatten with subsetting
+    # to preserve class
+    values <- values[[1]]
+  }
+  
+  values
 }
 
 get_column_na_pass_at_idx <- function(agent, idx) {

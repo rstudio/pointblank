@@ -2133,3 +2133,25 @@ test_that("vars(col) and vars('col') both evaluate to tbl column", {
   expect_true(test_col_vals_gt(df, x, vars("y")))
 
 })
+
+test_that("class preserved in `value`", {
+  
+  # A custom class with a `==` method that simply errors
+  custom_val <- structure(1L, class = "pb-test-custom-class")
+  registerS3method(
+    "==", "pb-test-custom-class", function(x, ...) stop("Bad class for `==`")
+  )
+  
+  # We expect error (class preserved) vs. TRUE (class stripped)
+  expect_error(custom_val == 1L)
+  expect_true(unclass(custom_val) == 1L)
+  
+  # Error is correctly thrown and safely caught at interrogate
+  expect_no_error({
+    agent <- create_agent(data.frame(col = custom_val)) %>% 
+      col_vals_equal(columns = col, value = 1L) %>% 
+      interrogate()
+  })
+  expect_true(agent$validation_set$eval_error)
+  
+})

@@ -1436,10 +1436,10 @@ interrogate_set <- function(
       }
       
       extra_variables <- 
-        base::setdiff(table_col_distinct_values, set)
+        table_col_distinct_values[!table_col_distinct_values %in% set]
       
       table_col_distinct_set <-
-        base::intersect(table_col_distinct_values, set)
+        table_col_distinct_values[table_col_distinct_values %in% set]
 
       dplyr::bind_rows(
         dplyr::tibble(set_element = as.character(set)) %>%
@@ -1511,7 +1511,7 @@ interrogate_set <- function(
       }
       
       table_col_distinct_set <-
-        base::intersect(table_col_distinct_values, set)
+        table_col_distinct_values[table_col_distinct_values %in% set]
       
       dplyr::tibble(set_element = as.character(set)) %>%
         dplyr::left_join(

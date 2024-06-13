@@ -171,7 +171,7 @@ get_values_at_idx <- function(agent, idx) {
   
   # Expressions (via `col_vals_expr()`) and functions (via `specially()`)
   # can get the old `unlist()` treatment
-  if (rlang::is_expression(values[[1]]) | rlang::is_function(values[[1]])) {
+  if (rlang::is_expression(values[[1]]) || rlang::is_function(values[[1]])) {
     values <- unlist(values, recursive = FALSE)
   } else {
     # In other cases (e.g., `values`, `left`, `right`), flatten with subsetting

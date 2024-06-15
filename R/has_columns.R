@@ -206,20 +206,23 @@ has_columns <- function(
                              allow_empty = FALSE, call = .call),
       error = function(cnd) cnd
     )
-    ## Check for error from {tidyselect}
+    ## If error from {tidyselect}, counts as no selection
     if (rlang::is_error(columns)) {
       cnd <- columns
       # Rethrow error if genuine evaluation error
       if (inherits(cnd, "resolve_eval_err")) {
         rlang::cnd_signal(cnd)
       } 
-      # 0-vector if "column not found" or "0 columns" error
+      # Return length-0 vector if "column not found" or "0 columns" error
       return(character(0L))
+    } else {
+    ## If columns succesfully resolved to character, return only existing ones
+      return(intersect(columns, colnames(x)))
     }
-    # vector of selections if successful
-    return(columns)
   }
   
+  # A list of columns (character vector) selected by elements of `columns`
+  # - Ex: `c(a, b:c)` becomes `list("a", c("b", "c"))` if data has those columns
   columns_list <- lapply(column_quos, has_column)
   all(lengths(columns_list) > 0L)
   

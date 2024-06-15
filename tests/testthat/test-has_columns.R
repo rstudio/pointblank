@@ -9,8 +9,12 @@ test_that("the `has_columns()` function works when used directly with data", {
   expect_true(small_table %>% has_columns(c(vars(a, b), vars(c))))
   
   # Expect FALSE when *any* of the given column names is absent 
-  expect_false(small_table %>% has_columns(vars(a, h)))
-  expect_false(small_table %>% has_columns(vars(h, j)))
+  expect_false(small_table %>% has_columns(vars(z)))
+  expect_false(small_table %>% has_columns("z"))
+  expect_false(small_table %>% has_columns(vars(a, z)))
+  expect_false(small_table %>% has_columns(vars(z, zz)))
+  expect_false(small_table %>% has_columns(c("a", "z")))
+  expect_false(small_table %>% has_columns(c("z", "zz")))
   
   # Expect that using inputs that are not tabular result in errors
   expect_error(has_columns(list(a = "2"), "a"))
@@ -33,6 +37,9 @@ test_that("the `has_columns()` function works with tidyselect", {
   expect_false(small_table %>% has_columns(ends_with("z")))
   expect_false(small_table %>% has_columns(last_col() + 1))
   expect_false(small_table %>% has_columns(matches("z")))
+  
+  # Expect FALSE when *any* of the given column names is absent 
+  expect_false(small_table %>% has_columns(c(a, z)))
   
   # Genuine evaluation errors are re-thrown and short-circuits
   expect_error(small_table %>% has_columns(stop("Oh no!")), "Oh no!")

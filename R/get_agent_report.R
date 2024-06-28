@@ -1336,7 +1336,7 @@ get_agent_report <- function(
           pb_call = agent$validation_set$capture_stack[[x]]$pb_call
         )
         msg_warning <- pointblank_cnd_to_string(
-          cnd = agent$validation_set$capture_stack[[x]]$error,
+          cnd = agent$validation_set$capture_stack[[x]]$warning,
           pb_call = agent$validation_set$capture_stack[[x]]$pb_call
         )
         

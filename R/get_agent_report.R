@@ -2462,19 +2462,16 @@ store_footnote <- function(
   )
 }
 
-# Function for formatting errors/warnings in `$capture_stack`
+# Function for formatting error in `$capture_stack`
 pointblank_cnd_to_string <- function(cnd, pb_call) {
   if (is.null(cnd)) return(character(0))
-  new <- cnd
-  ## 1) Truncate call and point to the specific interrogate function
-  new$call <- rlang::call2(":::", quote(pointblank), pb_call[1])
-  # 2) Use error from *within* `mutate()`
-  new$message <- new$parent$message
-  new$parent <- NULL
-  # 3) Remove traceback
-  new$trace <- NULL
-  # 4) Turn off cli formatting
-  new$use_cli_format <- FALSE
-  # 5) Rethrow and capture as non-formatted string
+  # Reformatting not yet implemented for warnings 
+  if (rlang::is_warning(cnd)) return(cnd)
+  # Reconstruct trimmed down error and rethrow without cli
+  new <- rlang::error_cnd(
+    call = rlang::call2(":::", quote(pointblank), pb_call[1]),
+    message = cnd$parent$message %||% cnd$message,
+    use_cli_format = FALSE
+  )
   as.character(try(rlang::cnd_signal(new), silent = TRUE))
 }

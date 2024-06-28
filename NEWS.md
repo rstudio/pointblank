@@ -8,6 +8,8 @@
 
 - Warnings/errors arising from comparing `columns` to a `value` of different class (for example, comparing a datetime column to a date value `Sys.Date()` instead of another datetime value `Sys.time()`) are now signalled appropriately at `interrogate()`.
 
+- Improved readability of error and warning messages rendered as tooltip to the agent report.
+
 # pointblank 0.12.1
 
 - Ensured that the column string is a symbol before constructing the expression for the `col_vals_*()` functions.

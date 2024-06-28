@@ -2924,6 +2924,8 @@ column_validity_checks_ib_nb <- function(
 
 pointblank_try_catch <- function(expr) {
   
+  call <- rlang::enexpr(expr)
+  
   warn <- err <- NULL
   
   value <- 
@@ -2936,7 +2938,7 @@ pointblank_try_catch <- function(expr) {
         invokeRestart("muffleWarning")
       })
   
-  eval_list <- list(value = value, warning = warn, error = err)
+  eval_list <- list(value = value, warning = warn, error = err, pb_call = call)
 
   class(eval_list) <- "table_eval"
   eval_list
@@ -2956,7 +2958,7 @@ add_reporting_data <- function(
   has_warnings <- !is.null(tbl_checked$warning)
   has_error <- !is.null(tbl_checked$error)
 
-  capture_stack <- tbl_checked[c("warning", "error")]
+  capture_stack <- tbl_checked[c("warning", "error", "pb_call")]
   
   agent$validation_set$eval_warning[idx] <- has_warnings
   agent$validation_set$eval_error[idx] <- has_error

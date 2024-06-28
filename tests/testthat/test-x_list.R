@@ -152,11 +152,11 @@ test_that("An x-list for a step is structurally correct", {
   expect_is(x_list_after$capture_stack, "list")
   expect_equal(
     length(x_list_after$capture_stack %>% unlist(recursive = FALSE)),
-    2
+    3
   )
   expect_equal(
     names(x_list_after$capture_stack %>% unlist(recursive = FALSE)),
-    c("warning", "error")
+    c("warning", "error", "pb_call")
   )
   expect_is(x_list_after$n, "numeric")
   expect_equal(x_list_after$n, 13)

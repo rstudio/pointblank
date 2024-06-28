@@ -67,6 +67,7 @@
 <ul><li><p><code><a href="../reference/col_vals_expr.html">col_vals_expr()</a></code> now shows used columns in the agent report</p></li>
 <li><p>Fixed a regression in <code>col_vals_*()</code> functions, where <code>vars("col")</code> was evaluating to the string <code>"col"</code>. Behavior of <code>vars("col")</code> is now aligned back with <code>vars(col)</code> - both evaluate to the column name <code>col</code>.</p></li>
 <li><p>Warnings/errors arising from comparing <code>columns</code> to a <code>value</code> of different class (for example, comparing a datetime column to a date value <code><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date()</a></code> instead of another datetime value <code><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time()</a></code>) are now signalled appropriately at <code><a href="../reference/interrogate.html">interrogate()</a></code>.</p></li>
+<li><p>Improved readability of error and warning messages rendered as tooltip to the agent report.</p></li>
 </ul></div>
 </div>
     <div class="section level2">

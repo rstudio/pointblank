@@ -1329,6 +1329,16 @@ get_agent_report <- function(
       FUN.VALUE = character(1),
       USE.NAMES = FALSE,
       FUN = function(x) {
+
+        # Reformat error/warning to string
+        msg_error <- pointblank_cnd_to_string(
+          cnd = agent$validation_set$capture_stack[[x]]$error,
+          pb_call = agent$validation_set$capture_stack[[x]]$pb_call
+        )
+        msg_warning <- pointblank_cnd_to_string(
+          cnd = agent$validation_set$capture_stack[[x]]$error,
+          pb_call = agent$validation_set$capture_stack[[x]]$pb_call
+        )
         
         if (is.na(eval[x])) {
           
@@ -1352,7 +1362,7 @@ get_agent_report <- function(
           
           text <- 
             htmltools::htmlEscape(
-              agent$validation_set$capture_stack[[x]]$error %>%
+              msg_error %>%
                 tidy_gsub("\"", "'")
             )
           
@@ -1378,7 +1388,7 @@ get_agent_report <- function(
           
           text <- 
             htmltools::htmlEscape(
-              agent$validation_set$capture_stack[[x]]$warning %>%
+              msg_warning %>%
                 tidy_gsub("\"", "'")
             )
           
@@ -1404,7 +1414,7 @@ get_agent_report <- function(
           
           text <-
             htmltools::htmlEscape(
-              agent$validation_set$capture_stack[[x]]$error %>%
+              msg_error %>%
                 tidy_gsub("\"", "'")
             )
           
@@ -2450,4 +2460,21 @@ store_footnote <- function(
       note = note
     )
   )
+}
+
+# Function for formatting errors/warnings in `$capture_stack`
+pointblank_cnd_to_string <- function(cnd, pb_call) {
+  if (is.null(cnd)) return(character(0))
+  new <- cnd
+  ## 1) Truncate call and point to the specific interrogate function
+  new$call <- rlang::call2(":::", quote(pointblank), pb_call[1])
+  # 2) Use error from *within* `mutate()`
+  new$message <- new$parent$message
+  new$parent <- NULL
+  # 3) Remove traceback
+  new$trace <- NULL
+  # 4) Turn off cli formatting
+  new$use_cli_format <- FALSE
+  # 5) Rethrow and capture as non-formatted string
+  as.character(try(rlang::cnd_signal(new), silent = TRUE))
 }

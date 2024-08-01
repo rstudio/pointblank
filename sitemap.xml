@@ -1,417 +1,141 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://rstudio.github.io/pointblank/404.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/CODE_OF_CONDUCT.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/CONTRIBUTING.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/PULL_REQUEST_TEMPLATE.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/articles/INFO-1.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/articles/INFO-2.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/articles/VALID-I.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/articles/VALID-II.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/articles/VALID-III.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/articles/VALID-IV.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/articles/VALID-V.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/articles/VALID-VI.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/articles/validation_workflows.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/index.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/action_levels.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/activate_steps.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/affix_date.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/affix_datetime.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/all_passed.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/col_count_match.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/col_exists.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/col_is_character.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/col_is_date.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/col_is_factor.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/col_is_integer.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/col_is_logical.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/col_is_numeric.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/col_is_posix.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/col_schema.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/col_schema_match.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/col_vals_between.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/col_vals_decreasing.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/col_vals_equal.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/col_vals_expr.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/col_vals_gt.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/col_vals_gte.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/col_vals_in_set.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/col_vals_increasing.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/col_vals_lt.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/col_vals_lte.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/col_vals_make_set.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/col_vals_make_subset.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/col_vals_not_between.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/col_vals_not_equal.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/col_vals_not_in_set.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/col_vals_not_null.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/col_vals_null.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/col_vals_regex.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/col_vals_within_spec.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/conjointly.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/create_agent.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/create_informant.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/create_multiagent.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/db_tbl.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/deactivate_steps.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/draft_validation.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/email_blast.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/email_create.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/export_report.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/file_tbl.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/from_github.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/game_revenue.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/game_revenue_info.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/get_agent_report.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/get_agent_x_list.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/get_data_extracts.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/get_informant_report.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/get_multiagent_report.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/get_sundered_data.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/get_tt_param.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/has_columns.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/incorporate.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/info_columns.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/info_columns_from_tbl.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/info_section.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/info_snippet.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/info_tabular.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/interrogate.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/log4r_step.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/pipe.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/print.action_levels.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/print.ptblank_agent.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/print.ptblank_informant.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/print.ptblank_multiagent.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/print.ptblank_multiagent_report.long.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/print.ptblank_tbl_scan.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/print.read_fn.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/print.tbl_store.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/print.x_list_i.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/print.x_list_n.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/read_disk_multiagent.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/reexports.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/remove_steps.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/row_count_match.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/rows_complete.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/rows_distinct.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/scan_data.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/serially.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/set_tbl.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/small_table.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/small_table_sqlite.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/snip_highest.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/snip_list.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/snip_lowest.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/snip_stats.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/specially.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/specifications.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/stock_msg_body.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/stock_msg_footer.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/stop_if_not.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/tbl_get.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/tbl_match.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/tbl_source.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/tbl_store.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/tt_string_info.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/tt_summary_stats.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/tt_tbl_colnames.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/tt_tbl_dims.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/tt_time_shift.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/tt_time_slice.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/validate_rmd.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/write_testthat_file.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/x_read_disk.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/x_write_disk.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/yaml_agent_interrogate.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/yaml_agent_show_exprs.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/yaml_agent_string.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/yaml_exec.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/yaml_informant_incorporate.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/yaml_read_agent.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/yaml_read_informant.html</loc>
-  </url>
-  <url>
-    <loc>https://rstudio.github.io/pointblank/reference/yaml_write.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://rstudio.github.io/pointblank/404.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/CODE_OF_CONDUCT.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/CONTRIBUTING.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/LICENSE-text.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/LICENSE.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/PULL_REQUEST_TEMPLATE.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/articles/INFO-1.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/articles/INFO-2.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/articles/VALID-I.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/articles/VALID-II.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/articles/VALID-III.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/articles/VALID-IV.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/articles/VALID-V.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/articles/VALID-VI.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/articles/index.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/articles/validation_workflows.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/authors.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/index.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/news/index.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/action_levels.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/activate_steps.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/affix_date.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/affix_datetime.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/all_passed.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/col_count_match.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/col_exists.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/col_is_character.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/col_is_date.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/col_is_factor.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/col_is_integer.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/col_is_logical.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/col_is_numeric.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/col_is_posix.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/col_schema.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/col_schema_match.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/col_vals_between.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/col_vals_decreasing.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/col_vals_equal.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/col_vals_expr.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/col_vals_gt.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/col_vals_gte.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/col_vals_in_set.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/col_vals_increasing.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/col_vals_lt.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/col_vals_lte.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/col_vals_make_set.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/col_vals_make_subset.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/col_vals_not_between.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/col_vals_not_equal.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/col_vals_not_in_set.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/col_vals_not_null.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/col_vals_null.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/col_vals_regex.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/col_vals_within_spec.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/conjointly.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/create_agent.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/create_informant.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/create_multiagent.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/db_tbl.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/deactivate_steps.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/draft_validation.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/email_blast.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/email_create.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/export_report.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/file_tbl.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/from_github.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/game_revenue.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/game_revenue_info.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/get_agent_report.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/get_agent_x_list.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/get_data_extracts.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/get_informant_report.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/get_multiagent_report.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/get_sundered_data.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/get_tt_param.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/has_columns.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/incorporate.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/index.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/info_columns.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/info_columns_from_tbl.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/info_section.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/info_snippet.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/info_tabular.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/interrogate.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/log4r_step.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/pipe.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/print.action_levels.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/print.ptblank_agent.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/print.ptblank_informant.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/print.ptblank_multiagent.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/print.ptblank_multiagent_report.long.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/print.ptblank_tbl_scan.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/print.read_fn.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/print.tbl_store.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/print.x_list_i.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/print.x_list_n.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/read_disk_multiagent.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/reexports.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/remove_steps.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/row_count_match.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/rows_complete.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/rows_distinct.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/scan_data.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/serially.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/set_tbl.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/small_table.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/small_table_sqlite.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/snip_highest.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/snip_list.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/snip_lowest.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/snip_stats.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/specially.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/specifications.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/stock_msg_body.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/stock_msg_footer.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/stop_if_not.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/tbl_get.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/tbl_match.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/tbl_source.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/tbl_store.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/tt_string_info.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/tt_summary_stats.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/tt_tbl_colnames.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/tt_tbl_dims.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/tt_time_shift.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/tt_time_slice.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/validate_rmd.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/write_testthat_file.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/x_read_disk.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/x_write_disk.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/yaml_agent_interrogate.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/yaml_agent_show_exprs.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/yaml_agent_string.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/yaml_exec.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/yaml_informant_incorporate.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/yaml_read_agent.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/yaml_read_informant.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/yaml_write.html</loc></url>
 </urlset>
+

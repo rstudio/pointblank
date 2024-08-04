@@ -159,7 +159,7 @@ create_multiagent <- function(
     locale = NULL
 ) {
   
-  agent_list <- list(...)
+  agent_list <- rlang::list2(...)
   if (!all(sapply(agent_list, is_ptblank_agent))) {
     rlang::abort("All components of `...` must be an agent")
   }

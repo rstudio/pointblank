@@ -268,6 +268,14 @@ get_sundered_data <- function(
     )
   }
   
+  # Stop function if `tbl_checked` is not present
+  if (!"tbl_checked" %in% colnames(agent$validation_set)) {
+    stop(
+      "`agent` is missing `tbl_checked` information required for sundering. ",
+      "See `?interrogate`."
+    )
+  }
+  
   # Get the row count of the input table
   row_count_input_tbl <- 
     input_tbl %>%

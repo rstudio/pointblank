@@ -1,0 +1,15 @@
+linters: linters_with_defaults(
+  object_usage_linter = NULL,
+  trailing_whitespace_linter = NULL,
+  cyclocomp_linter = NULL
+)
+  
+exclusions: list(
+  "tests",
+  "man",
+  "vignettes",
+  "data-raw",
+  "inst",
+  "tests/testthat",
+  list.files("tests", recursive = TRUE, full.names = TRUE)
+)

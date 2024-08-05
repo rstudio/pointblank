@@ -49,3 +49,4 @@ tests/testthat/test-utils_profiling.R
 tests/testthat/test-write_testthat_file.R
 tests/testthat/test-yaml.R
 tests/testthat/test-yaml_exec.R
+^.lintr$

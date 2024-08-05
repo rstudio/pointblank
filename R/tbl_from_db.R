@@ -368,14 +368,7 @@ db_tbl <- function(
     dbname <- bq_project
   }
   
-  if (!requireNamespace("DBI", quietly = TRUE)) {
-    
-    stop(
-      "Accessing a database table requires the DBI package:\n",
-      "* It can be installed with `install.packages(\"DBI\")`.",
-      call. = FALSE
-    )
-  }
+  rlang::check_installed("DBI", "to access a database table.")
   
   if (is.character(dbtype)) {
     
@@ -523,72 +516,27 @@ db_tbl <- function(
 # nolint start
 
 RPostgres_driver <- function() {
-  
-  if (!requireNamespace("RPostgres", quietly = TRUE)) {
-    
-    stop(
-      "Accessing a PostgreSQL table requires the RPostgres package:\n",
-      "* It can be installed with `install.packages(\"RPostgres\")`.",
-      call. = FALSE
-    )
-  }
-  
+  rlang::check_installed("RPostgres", "to access a PostgreSQL table.")
   RPostgres::Postgres()
 }
 
 RMySQL_driver <- function() {
-  
-  if (!requireNamespace("RMySQL", quietly = TRUE)) {
-    
-    stop(
-      "Accessing a MariaDB or MySQL table requires the RMySQL package:\n",
-      "* It can be installed with `install.packages(\"RMySQL\")`.",
-      call. = FALSE
-    )
-  }
-  
+  rlang::check_installed("RMySQL", "to access a MariaDB or MySQL table.")
   RMySQL::MySQL()
 }
 
 bigrquery_driver <- function() {
-  
-  if (!requireNamespace("bigrquery", quietly = TRUE)) {
-    
-    stop(
-      "Accessing a BigQuery table requires the bigrquery package:\n",
-      "* It can be installed with `install.packages(\"bigrquery\")`.",
-      call. = FALSE
-    )
-  }
-  
+  rlang::check_installed("bigquery", "to access a BigQuery table.")
   bigrquery::bigquery()
 }
 
 DuckDB_driver <- function() {
-  
-  if (!requireNamespace("duckdb", quietly = TRUE)) {
-    
-    stop(
-      "Accessing a DuckDB table requires the duckdb package:\n",
-      "* It can be installed with `install.packages(\"duckdb\")`.",
-      call. = FALSE
-    )
-  }
-  
+  rlang::check_installed("duckdb", "to access a DuckDB table.")
   duckdb::duckdb()
 }
 
 RSQLite_driver <- function() {
-  
-  if (!requireNamespace("RSQLite", quietly = TRUE)) {
-    
-    stop(
-      "Accessing a SQLite table requires the RSQLite package:\n",
-      "* It can be installed with `install.packages(\"RSQLite\")`.",
-      call. = FALSE
-    )
-  }
-  
+  rlang::check_installed("RSQLite", "to access a SQLite table.")
   RSQLite::SQLite()
 }
 

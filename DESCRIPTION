@@ -51,8 +51,6 @@ Imports:
 Suggests:
     arrow,
     bigrquery,
-    covr,
-    crayon,
     data.table,
     duckdb,
     ggforce,

@@ -1606,8 +1606,8 @@ cli_bullet_msg <- function(
   msg <- glue::glue_collapse(msg, "\n")
   msg <- glue::glue(msg, .envir = .envir)
   
-  if (!is.null(color) && requireNamespace("crayon", quietly = TRUE)) {
-    color_style <- crayon::make_style(color)
+  if (!is.null(color)) {
+    color_style <- cli::make_ansi_style(color)
     bullet <- color_style(bullet)
   }
 

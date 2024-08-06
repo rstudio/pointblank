@@ -3146,7 +3146,7 @@ perform_action <- function(
     }
   }
   
-  return(NULL)
+  NULL
 }
 
 perform_end_action <- function(agent) {
@@ -3243,7 +3243,7 @@ perform_end_action <- function(agent) {
     y %>% rlang::f_rhs() %>% rlang::eval_tidy()
   })
   
-  return(NULL)
+  NULL
 }
 
 add_table_extract <- function(

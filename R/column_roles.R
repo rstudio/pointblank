@@ -805,7 +805,7 @@ get_column_role_character <- function(data_column) {
     
   }
   
-  return("string")
+  "string"
 }
 
 get_column_role_numeric <- function(data_column) {
@@ -864,7 +864,7 @@ get_column_role_numeric <- function(data_column) {
     return(paste0(role, "numeric.continuous"))
   }
   
-  return(paste0(role, "numeric"))
+  paste0(role, "numeric")
 }
 
 strptime_8601_formats <-

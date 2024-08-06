@@ -187,9 +187,10 @@ apply_segments_to_tbl <- function(agent, idx, tbl) {
   }
   
   # Generate a second set of 'preconditions' to filter the table
+  seg_val <- gsub("'", "\\\\'", seg_val)
   preconditions <- 
     stats::as.formula(
-      glue::glue("~ . %>% dplyr::filter({seg_col} == '{seg_val}')")
+      glue::glue("~ . %>% dplyr::filter(`{seg_col}` == '{seg_val}')")
     )
   
   tbl <- apply_preconditions(tbl = tbl, preconditions = preconditions)

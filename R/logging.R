@@ -184,14 +184,7 @@ log4r_step <- function(
     append_to = "pb_log_file"
 ) {
   
-  if (!requireNamespace("log4r", quietly = TRUE)) {
-    
-    stop(
-      "Using the `log4r_step()` function requires the log4r package:\n",
-      "* It can be installed with `install.packages(\"log4r\")`.",
-      call. = FALSE
-    )
-  }
+  rlang::check_installed("log4r", "to use the `log4r_step()` function.")
   
   type <- x$this_type
   warn_val <- x$warn

@@ -116,14 +116,7 @@ validate_rmd <- function(
   
   if (test_options$perform_logging) {
     
-    if (!requireNamespace("log4r", quietly = TRUE)) {
-      
-      stop(
-        "Using the `log4r_step()` function requires the log4r package:\n",
-        "* It can be installed with `install.packages(\"log4r\")`.",
-        call. = FALSE
-      )
-    }
+    rlang::check_installed("log4r", "to use the `log4r_step()` function.")
     
     # Create a log4r `logger` object and store it in `test_options`
     test_options$logger <- 
@@ -641,7 +634,7 @@ knitr_chunk_hook <- function(x, options) {
 #' @export
 stop_if_not <- function(...) {
   
-  res <- list(...)
+  res <- rlang::list2(...)
   
   n <- length(res)
   

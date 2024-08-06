@@ -221,26 +221,10 @@ scan_data <- function(
   }
   
   if (any(c("interactions", "correlations") %in% sections)) {
-    
-    if (!requireNamespace("ggplot2", quietly = TRUE)) {
-      
-      stop(
-        "The `interactions` and `correlations` sections require ", 
-        "the ggplot2 package:\n",
-        "* It can be installed with `install.packages(\"ggplot2\")`.",
-        call. = FALSE
-      )
-    }
-    
-    if (!requireNamespace("ggforce", quietly = TRUE)) {
-      
-      stop(
-        "The `interactions` and `correlations` sections require ", 
-        "the ggforce package:\n",
-        "* It can be installed with `install.packages(\"ggforce\")`.",
-        call. = FALSE
-      )
-    }
+    rlang::check_installed(
+      c("ggforce", "ggplot2"),
+      "to use the `interactions` and `correlations` sections."
+    )
   }
   
   # Normalize the reporting language identifier and stop if necessary

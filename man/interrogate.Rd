@@ -7,6 +7,7 @@
 interrogate(
   agent,
   extract_failed = TRUE,
+  extract_tbl_checked = TRUE,
   get_first_n = NULL,
   sample_n = NULL,
   sample_frac = NULL,
@@ -30,6 +31,15 @@ the \code{\link[=create_agent]{create_agent()}} function.}
 An option to collect rows that didn't pass a particular validation step.
 The default is \code{TRUE} and further options allow for fine control of how
 these rows are collected.}
+
+\item{extract_tbl_checked}{\emph{Collect validation results from each step}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+An option to collect processed data frames produced by executing the
+validation steps. This information is necessary for some functions
+(e.g., \code{get_sundered_data()}), but may grow to a large size. To opt out
+of attaching this data to the agent, set this argument to \code{FALSE}.}
 
 \item{get_first_n}{\emph{Get the first n values}
 

@@ -73,18 +73,10 @@
 small_table_sqlite <- function() {
 
   # nocov start
-  
-  if (!requireNamespace("DBI", quietly = TRUE) &&
-      !requireNamespace("RSQLite", quietly = TRUE)) {
-    
-    stop(
-      "Creating the SQLite table object requires both the DBI and RSQLite ",
-      "packages:\n",
-      "* Install them with `install.packages(\"DBI\")` and ",
-      "`install.packages(\"RSQLite\")`.",
-      call. = FALSE
-    )
-  }
+  rlang::check_installed(
+    c("DBI", "RSQLite"),
+    "to create an SQLite table object."
+  )
   
   con <- 
     DBI::dbConnect(

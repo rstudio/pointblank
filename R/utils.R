@@ -1221,10 +1221,15 @@ pb_str_catalog <- function(
     oxford = TRUE,
     as_code = TRUE,
     quot_str = NULL,
+    na_rm = FALSE,
     lang = NULL
 ) {
   
   if (is.null(lang)) lang <- "en"
+  
+  if (na_rm) {
+    item_vector <- item_vector[!is.na(item_vector)]
+  }
   
   item_count <- length(item_vector)
 
@@ -1606,8 +1611,8 @@ cli_bullet_msg <- function(
   msg <- glue::glue_collapse(msg, "\n")
   msg <- glue::glue(msg, .envir = .envir)
   
-  if (!is.null(color) && requireNamespace("crayon", quietly = TRUE)) {
-    color_style <- crayon::make_style(color)
+  if (!is.null(color)) {
+    color_style <- cli::make_ansi_style(color)
     bullet <- color_style(bullet)
   }
 

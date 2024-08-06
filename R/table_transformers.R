@@ -546,18 +546,7 @@ tt_time_shift <- function(
     time_shift = "0y 0m 0d 0H 0M 0S"
 ) {
   
-  # nocov start
-  
-  if (!requireNamespace("lubridate", quietly = TRUE)) {
-    
-    stop(
-      "The `tt_time_shift()` function requires the lubridate package:\n",
-      "* It can be installed with `install.packages(\"lubridate\")`.",
-      call. = FALSE
-    )
-  }
-  
-  # nocov end
+  rlang::check_installed("lubridate", "to use the `tt_time_shift()` function.")
   
   # Determine whether the `tbl` object is acceptable here
   check_is_a_table_object(tbl = tbl)
@@ -760,18 +749,7 @@ tt_time_slice <- function(
     arrange = FALSE
 ) {
   
-  # nocov start
-  
-  if (!requireNamespace("lubridate", quietly = TRUE)) {
-    
-    stop(
-      "The `tt_time_shift()` function requires the lubridate package:\n",
-      "* It can be installed with `install.packages(\"lubridate\")`.",
-      call. = FALSE
-    )
-  }
-  
-  # nocov end
+  rlang::check_installed("lubridate", "to use the `tt_time_slice()` function.")
   
   keep <- match.arg(keep)
   

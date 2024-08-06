@@ -1231,6 +1231,12 @@ info_snippet <- function(
 #'   derived from `character` or `factor` values; numbers, dates, and logical
 #'   values won't have quotation marks. We can explicitly use quotations (or
 #'   not) with either `TRUE` or `FALSE` here.
+#'   
+#' @param na_rm *Remove NA values from list*
+#' 
+#'   `scalar<logical>` // *default:* `FALSE`
+#' 
+#'   An option for whether NA values should be counted as an item in the list.
 #' 
 #' @param lang *Reporting language*
 #' 
@@ -1301,6 +1307,7 @@ snip_list <- function(
     oxford = TRUE,
     as_code = TRUE,
     quot_str = NULL,
+    na_rm = FALSE,
     lang = NULL
 ) {
 
@@ -1376,6 +1383,7 @@ snip_list <- function(
             oxford = <<oxford>>,
             as_code = <<as_code>>,
             quot_str = <<quot_str>>,
+            na_rm = <<na_rm>>,
             lang = <<lang>>
           )",
           .open = "<<", .close = ">>"   
@@ -1406,6 +1414,7 @@ snip_list <- function(
             oxford = <<oxford>>,
             as_code = <<as_code>>,
             quot_str = <<quot_str>>,
+            na_rm = <<na_rm>>,
             lang = <<lang>>
           )",
           .open = "<<", .close = ">>"   
@@ -1435,6 +1444,7 @@ snip_list <- function(
             oxford = <<oxford>>,
             as_code = <<as_code>>,
             quot_str = <<quot_str>>,
+            na_rm = <<na_rm>>,
             lang = <<lang>>
           )",
           .open = "<<", .close = ">>"   

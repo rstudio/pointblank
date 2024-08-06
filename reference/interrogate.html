@@ -67,6 +67,7 @@ how the interrogation went down.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">interrogate</span><span class="op">(</span></span>
 <span>  <span class="va">agent</span>,</span>
 <span>  extract_failed <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  extract_tbl_checked <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  get_first_n <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  sample_n <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  sample_frac <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -93,6 +94,15 @@ the <code><a href="create_agent.html">create_agent()</a></code> function.</p></d
 <p>An option to collect rows that didn't pass a particular validation step.
 The default is <code>TRUE</code> and further options allow for fine control of how
 these rows are collected.</p></dd>
+
+
+<dt id="arg-extract-tbl-checked">extract_tbl_checked<a class="anchor" aria-label="anchor" href="#arg-extract-tbl-checked"></a></dt>
+<dd><p><em>Collect validation results from each step</em></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
+<p>An option to collect processed data frames produced by executing the
+validation steps. This information is necessary for some functions
+(e.g., <code><a href="get_sundered_data.html">get_sundered_data()</a></code>), but may grow to a large size. To opt out
+of attaching this data to the agent, set this argument to <code>FALSE</code>.</p></dd>
 
 
 <dt id="arg-get-first-n">get_first_n<a class="anchor" aria-label="anchor" href="#arg-get-first-n"></a></dt>

@@ -44,6 +44,15 @@
 #'   The default is `TRUE` and further options allow for fine control of how
 #'   these rows are collected.
 #'   
+#' @param extract_tbl_checked *Collect validation results from each step*
+#' 
+#'   `scalar<logical>` // *default:* `TRUE`
+#' 
+#'   An option to collect processed data frames produced by executing the
+#'   validation steps. This information is necessary for some functions
+#'   (e.g., `get_sundered_data()`), but may grow to a large size. To opt out
+#'   of attaching this data to the agent, set this argument to `FALSE`.
+#'   
 #' @param get_first_n *Get the first n values*
 #' 
 #'   `scalar<integer>` // *default:* `NULL` (`optional`)
@@ -143,6 +152,7 @@
 interrogate <- function(
     agent,
     extract_failed = TRUE,
+    extract_tbl_checked = TRUE,
     get_first_n = NULL,
     sample_n = NULL,
     sample_frac = NULL,
@@ -728,6 +738,11 @@ interrogate <- function(
   # Bestowing of the class `"has_intel"` to the agent, given that
   # all validation steps have been carried out
   class(agent) <- c("has_intel", "ptblank_agent")
+  
+  # Drop $tbl_checked if `extract_tbl_checked = FALSE`
+  if (!extract_tbl_checked) {
+    agent$validation_set$tbl_checked <- NULL
+  }
   
   # Add the ending time to the `agent` object
   agent$time_end <- Sys.time()

@@ -215,10 +215,10 @@ has_columns <- function(
       } 
       # Return length-0 vector if "column not found" or "0 columns" error
       return(character(0L))
-    } else {
-    ## If columns succesfully resolved to character, return only existing ones
-      return(intersect(columns, colnames(x)))
     }
+    
+    ## If columns succesfully resolved to character, return only existing ones
+    intersect(columns, colnames(x))
   }
   
   # A list of columns (character vector) selected by elements of `columns`

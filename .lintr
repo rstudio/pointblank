@@ -1,15 +1,14 @@
 linters: linters_with_defaults(
   object_usage_linter = NULL,
   trailing_whitespace_linter = NULL,
-  cyclocomp_linter = NULL
-)
-  
+  # cyclocomp_linter is no longer a default linter in lintr 3.2.0
+  cyclocomp_linter = NULL,
+  indentation_linter = NULL
+  )
 exclusions: list(
   "tests",
   "man",
   "vignettes",
   "data-raw",
-  "inst",
-  "tests/testthat",
-  list.files("tests", recursive = TRUE, full.names = TRUE)
-)
+  "inst"
+  )

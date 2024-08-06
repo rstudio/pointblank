@@ -193,7 +193,7 @@ info_tabular <- function(
     ...
 ) {
   
-  metadata_items <- list(...)
+  metadata_items <- rlang::list2(...)
   
   metadata <- x
   
@@ -442,7 +442,7 @@ info_columns <- function(
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
   
-  metadata_items <- list(...)
+  metadata_items <- rlang::list2(...)
   
   metadata <- x
   
@@ -892,7 +892,7 @@ info_section <- function(
     ...
 ) {
   
-  metadata_items <- list(...)
+  metadata_items <- rlang::list2(...)
   
   metadata <- x
   

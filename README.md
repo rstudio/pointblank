@@ -5,19 +5,18 @@
 
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/pointblank)](https://CRAN.R-project.org/package=pointblank)
-<a href="https://cran.r-project.org/package=pointblank"><img src="https://www.r-pkg.org/badges/version/pointblank" alt="CRAN status" /></a>
-<a href="https://opensource.org/license/mit/"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" /></a>
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/license/mit/)
 [![R-CMD-check](https://github.com/rstudio/pointblank/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rstudio/pointblank/actions/workflows/R-CMD-check.yaml)
-[![Codecov test coverage](https://codecov.io/gh/rstudio/pointblank/graph/badge.svg)](https://app.codecov.io/gh/rstudio/pointblank)
 [![Linting](https://github.com/rstudio/pointblank/actions/workflows/lint.yaml/badge.svg)](https://github.com/rstudio/pointblank/actions/workflows/lint.yaml)
-<a href="https://bestpractices.coreinfrastructure.org/projects/4310"><img src="https://bestpractices.coreinfrastructure.org/projects/4310/badge" alt="Best Practices"></a>
-<a href="https://www.repostatus.org/#active"><img src="https://www.repostatus.org/badges/latest/active.svg" alt="The project has reached a stable, usable state and is being actively developed." /></a>
-<a href="https://CRAN.R-project.org/package=pointblank"><img src="https://cranlogs.r-pkg.org/badges/pointblank" alt="Monthly Downloads"></a>
-<a href="https://CRAN.R-project.org/package=pointblank"><img src="https://cranlogs.r-pkg.org/badges/grand-total/pointblank" alt="Total Downloads"></a>
+[![Codecov test coverage](https://codecov.io/gh/rstudio/pointblank/graph/badge.svg)](https://app.codecov.io/gh/rstudio/pointblank)
+[![Best Practices](https://bestpractices.coreinfrastructure.org/projects/4310/badge)](https://bestpractices.coreinfrastructure.org/projects/4310)
+[![The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![Monthly Downloads](https://cranlogs.r-pkg.org/badges/pointblank)](https://CRAN.R-project.org/package=pointblank)
+[![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/pointblank)](https://CRAN.R-project.org/package=pointblank)
 [![Posit Cloud](https://img.shields.io/badge/Posit%20Cloud-pointblank%20Test%20Drive-blue?style=social&logo=rstudio&logoColor=75AADB)](https://rstudio.cloud/project/3411822)
-<a href="https://www.contributor-covenant.org/version/2/1/code_of_conduct.html"><img src="https://img.shields.io/badge/Contributor%20Covenant-v2.1%20adopted-ff69b4.svg" alt="Contributor Covenant" /></a>
-
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.1%20adopted-ff69b4.svg)](https://www.contributor-covenant.org/version/2/1/code_of_conduct.html)
 <!-- badges: end -->
+
 <hr style="color:transparent" />
 <br />
 </div>

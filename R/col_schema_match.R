@@ -617,7 +617,7 @@ col_schema <- function(
   
   db_col_types <- match.arg(.db_col_types)
 
-  x <- list(...)
+  x <- rlang::list2(...)
 
   # Transform SQL column types to lowercase to allow
   # both uppercase and lowercase conventions while

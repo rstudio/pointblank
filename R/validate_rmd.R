@@ -634,7 +634,7 @@ knitr_chunk_hook <- function(x, options) {
 #' @export
 stop_if_not <- function(...) {
   
-  res <- list(...)
+  res <- rlang::list2(...)
   
   n <- length(res)
   

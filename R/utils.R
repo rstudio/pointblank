@@ -1221,10 +1221,15 @@ pb_str_catalog <- function(
     oxford = TRUE,
     as_code = TRUE,
     quot_str = NULL,
+    na_rm = FALSE,
     lang = NULL
 ) {
   
   if (is.null(lang)) lang <- "en"
+  
+  if (na_rm) {
+    item_vector <- item_vector[!is.na(item_vector)]
+  }
   
   item_count <- length(item_vector)
 

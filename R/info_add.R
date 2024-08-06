@@ -193,7 +193,7 @@ info_tabular <- function(
     ...
 ) {
   
-  metadata_items <- list(...)
+  metadata_items <- rlang::list2(...)
   
   metadata <- x
   
@@ -442,7 +442,7 @@ info_columns <- function(
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
   
-  metadata_items <- list(...)
+  metadata_items <- rlang::list2(...)
   
   metadata <- x
   
@@ -892,7 +892,7 @@ info_section <- function(
     ...
 ) {
   
-  metadata_items <- list(...)
+  metadata_items <- rlang::list2(...)
   
   metadata <- x
   
@@ -1231,6 +1231,12 @@ info_snippet <- function(
 #'   derived from `character` or `factor` values; numbers, dates, and logical
 #'   values won't have quotation marks. We can explicitly use quotations (or
 #'   not) with either `TRUE` or `FALSE` here.
+#'   
+#' @param na_rm *Remove NA values from list*
+#' 
+#'   `scalar<logical>` // *default:* `FALSE`
+#' 
+#'   An option for whether NA values should be counted as an item in the list.
 #' 
 #' @param lang *Reporting language*
 #' 
@@ -1301,6 +1307,7 @@ snip_list <- function(
     oxford = TRUE,
     as_code = TRUE,
     quot_str = NULL,
+    na_rm = FALSE,
     lang = NULL
 ) {
 
@@ -1365,9 +1372,9 @@ snip_list <- function(
       stats::as.formula(
         as.character(
           glue::glue(
-            "~ . %>% dplyr::select(<<column>>) %>%",
+            "~ . %>% dplyr::select(`<<column>>`) %>%",
             "dplyr::distinct() %>%",
-            "dplyr::pull(<<column>>) %>%",
+            "dplyr::pull(`<<column>>`) %>%",
             ifelse(reverse, "rev() %>%", ""),
             "pb_str_catalog(
             limit = <<limit[1]>>,
@@ -1376,6 +1383,7 @@ snip_list <- function(
             oxford = <<oxford>>,
             as_code = <<as_code>>,
             quot_str = <<quot_str>>,
+            na_rm = <<na_rm>>,
             lang = <<lang>>
           )",
           .open = "<<", .close = ">>"   
@@ -1389,16 +1397,16 @@ snip_list <- function(
       stats::as.formula(
         as.character(
           glue::glue(
-            "~ . %>% dplyr::select(<<column>>) %>%",
-            "dplyr::group_by(<<column>>) %>%",
+            "~ . %>% dplyr::select(`<<column>>`) %>%",
+            "dplyr::group_by(`<<column>>`) %>%",
             "dplyr::summarize(`_count_` = dplyr::n(), .groups = 'keep') %>%",
             ifelse(
               reverse,
               "dplyr::arrange(`_count_`) %>%",
               "dplyr::arrange(dplyr::desc(`_count_`)) %>%"
             ),
-            "dplyr::select(<<column>>) %>%",
-            "dplyr::pull(<<column>>) %>%",
+            "dplyr::select(`<<column>>`) %>%",
+            "dplyr::pull(`<<column>>`) %>%",
             "pb_str_catalog(
             limit = <<limit[1]>>,
             sep = <<sep>>,
@@ -1406,6 +1414,7 @@ snip_list <- function(
             oxford = <<oxford>>,
             as_code = <<as_code>>,
             quot_str = <<quot_str>>,
+            na_rm = <<na_rm>>,
             lang = <<lang>>
           )",
           .open = "<<", .close = ">>"   
@@ -1420,9 +1429,9 @@ snip_list <- function(
       stats::as.formula(
         as.character(
           glue::glue(
-            "~ . %>% dplyr::select(<<column>>) %>%",
+            "~ . %>% dplyr::select(`<<column>>`) %>%",
             "dplyr::distinct() %>%",
-            "dplyr::pull(<<column>>) %>%",
+            "dplyr::pull(`<<column>>`) %>%",
             ifelse(
               reverse,
               "sort(decreasing = TRUE) %>%",
@@ -1435,6 +1444,7 @@ snip_list <- function(
             oxford = <<oxford>>,
             as_code = <<as_code>>,
             quot_str = <<quot_str>>,
+            na_rm = <<na_rm>>,
             lang = <<lang>>
           )",
           .open = "<<", .close = ">>"   
@@ -1533,7 +1543,7 @@ snip_stats <- function(
     as.character(
       glue::glue(
         "~ . %>%
-    dplyr::select(<<column>>) %>%
+    dplyr::select(`<<column>>`) %>%
     pb_str_summary(type = '<<type>>')",
     .open = "<<", .close = ">>"
       )
@@ -1607,8 +1617,8 @@ snip_lowest <- function(column) {
     as.character(
       glue::glue(
         "~ . %>%
-    dplyr::select(<<column>>) %>% dplyr::distinct() %>%
-    dplyr::summarize(`pb_summary` = min(<<column>>, na.rm = TRUE)) %>%
+    dplyr::select(`<<column>>`) %>% dplyr::distinct() %>%
+    dplyr::summarize(`pb_summary` = min(`<<column>>`, na.rm = TRUE)) %>%
     dplyr::pull(`pb_summary`) %>% as.character()",
     .open = "<<", .close = ">>"
       )
@@ -1681,8 +1691,8 @@ snip_highest <- function(column) {
     as.character(
       glue::glue(
         "~ . %>%
-    dplyr::select(<<column>>) %>% dplyr::distinct() %>%
-    dplyr::summarize(`pb_summary` = max(<<column>>, na.rm = TRUE)) %>%
+    dplyr::select(`<<column>>`) %>% dplyr::distinct() %>%
+    dplyr::summarize(`pb_summary` = max(`<<column>>`, na.rm = TRUE)) %>%
     dplyr::pull(`pb_summary`) %>% as.character()",
     .open = "<<", .close = ">>"
       )

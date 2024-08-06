@@ -14,6 +14,7 @@ snip_list(
   oxford = TRUE,
   as_code = TRUE,
   quot_str = NULL,
+  na_rm = FALSE,
   lang = NULL
 )
 }
@@ -89,6 +90,12 @@ An option for whether list items should be set in double quotes. If \code{NULL}
 derived from \code{character} or \code{factor} values; numbers, dates, and logical
 values won't have quotation marks. We can explicitly use quotations (or
 not) with either \code{TRUE} or \code{FALSE} here.}
+
+\item{na_rm}{\emph{Remove NA values from list}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+An option for whether NA values should be counted as an item in the list.}
 
 \item{lang}{\emph{Reporting language}
 

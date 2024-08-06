@@ -511,6 +511,30 @@ test_that("the `snip_list()` function works", {
       small_table
     )
   )
+  
+  # na_rm ignores NA values in list
+  expect_match(
+    run_snip(
+      snip_list(column = "f", na_rm = FALSE),
+      small_table %>% dplyr::mutate(f = ifelse(f == "high", NA, f))
+    ),
+    "NA"
+  )
+  expect_no_match(
+    run_snip(
+      snip_list(column = "f", na_rm = TRUE),
+      small_table %>% dplyr::mutate(f = ifelse(f == "high", NA, f))
+    ),
+    "NA"
+  )
+  expect_equal(
+    run_snip(
+      snip_list(column = "f", na_rm = TRUE),
+      small_table %>% dplyr::mutate(f = NA)
+    ),
+    "---"
+  )
+  
 })
 
 test_that("the `snip_stats()` function works", {

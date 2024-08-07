@@ -60,7 +60,7 @@
 #' overridden. Furthermore, if `actions` is NULL in this workflow (the default),
 #' **pointblank** will use a `stop_at` value of `1` (providing a detailed,
 #' context-specific error message if there are any *failing* units). We can
-#' absolutely suppress this automatic stopping behavior by at each validation
+#' absolutely suppress this automatic stopping behavior at each validation
 #' step by setting `active = FALSE`. In this interactive data case, there is no
 #' stock function given for `notify_at`. The `notify` failure state is less
 #' commonly used in this workflow as it is in the *agent*-based one.

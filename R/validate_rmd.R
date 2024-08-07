@@ -674,8 +674,7 @@ stop_if_not <- function(...) {
     
     return(TRUE)
     
-  } else {
-    
-    return()
   }
+  
+  NULL
 }

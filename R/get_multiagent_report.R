@@ -1510,6 +1510,6 @@ generate_cell_content <- function(
     
     return(cell_content)
   }
-  
+  NULL
   # nocov end
 }

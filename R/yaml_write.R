@@ -704,9 +704,9 @@ as_list_preconditions <- function(preconditions) {
         gsub("function (x) \n{", "function(x) {", ., fixed = TRUE)
     )
     
-  } else {
-    return(as.character(preconditions))
   }
+  
+  as.character(preconditions)
 }
 
 as_list_segments <- function(segments) {
@@ -741,9 +741,9 @@ as_list_active <- function(active) {
 
   if (is.logical(active[[1]])) {
     return(active[[1]])
-  } else {
-    return(as.character(active))
   }
+  
+  as.character(active)
 }
 
 to_list_action_levels <- function(actions) {

@@ -1,14 +1,20 @@
-on: [push, pull_request]
+# Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
+# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
 
-name: lint
+name: lint.yaml
+
+permissions: read-all
 
 jobs:
   lint:
     runs-on: ubuntu-latest
-    
     env:
-      GITHUB_PAT: ${{ secrets.GHA_PAT }}
-    
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
 
@@ -16,41 +22,13 @@ jobs:
         with:
           use-public-rspm: true
 
-      - uses: r-lib/actions/setup-pandoc@v2
-
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::pkgdown, local::.
-          needs: website
-
-      - name: Install package
-        run: R CMD INSTALL .
-
-      - name: Install dependencies
-        run: |
-          install.packages(c("remotes"))
-          remotes::install_deps(dependencies = TRUE)
-          remotes::install_cran("lintr")
-        shell: Rscript {0}
+          extra-packages: any::lintr, local::.
+          needs: lint
 
       - name: Lint
-        run: |
-          out <- 
-            lintr::lint_package(
-              linters = lintr::linters_with_defaults(
-                object_usage_linter = NULL,
-                trailing_whitespace_linter = NULL,
-                cyclocomp_linter = NULL,
-                indentation_linter = NULL
-              ),
-            exclusions = c(
-              list.files("tests", recursive = TRUE, full.names = TRUE),
-              list.files("man", recursive = TRUE, full.names = TRUE),
-              list.files("vignettes", recursive = TRUE, full.names = TRUE),
-              list.files("data-raw", recursive = TRUE, full.names = TRUE),
-              list.files("inst", recursive = TRUE, full.names = TRUE)
-            )
-          )
-          print(out)
-          if (length(out)) stop("lints found")
+        run: lintr::lint_package()
         shell: Rscript {0}
+        env:
+          LINTR_ERROR_ON_LINT: true

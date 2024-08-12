@@ -1187,15 +1187,18 @@ get_agent_report <- function(
           NA_character_
           
         } else {
-          
+
           text <-
-            values_i %>%
-            tidy_gsub(
-              "~",
-              "<span style=\"color: purple;\">&marker;</span>"
-            ) %>%
-            unname()
-          
+            unname(
+              tidy_gsub(
+                values_i,
+                "~",
+                "<span style=\"color: purple;\">&marker;</span>"
+              )
+            )
+            
+          text <- gsub("$", "&dollar;", values_i, fixed = TRUE)
+
           text <- paste(text, collapse = ", ")
           
           if (size == "small") {

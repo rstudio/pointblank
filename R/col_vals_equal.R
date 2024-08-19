@@ -366,8 +366,7 @@ col_vals_equal <- function(
   agent <- x
 
   if (is.null(brief)) {
-    
-    brief <- 
+    brief <-
       generate_autobriefs(
         agent = agent,
         columns = columns,
@@ -375,6 +374,8 @@ col_vals_equal <- function(
         values = value,
         assertion_type = "col_vals_equal"
       )
+  } else {
+    brief <- resolve_briefs(brief, columns, segments_list)
   }
   
   # Normalize any provided `step_id` value(s)

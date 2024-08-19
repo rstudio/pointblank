@@ -279,8 +279,10 @@ col_exists <- function(
   agent <- x
 
   if (is.null(brief)) {
-    brief <- 
+    brief <-
       generate_autobriefs(agent, columns, preconditions, values, "col_exists")
+  } else {
+    brief <- resolve_briefs(brief, columns)
   }
   
   # Normalize any provided `step_id` value(s)

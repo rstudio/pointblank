@@ -448,7 +448,8 @@ get_agent_report <- function(
   
   # nocov start
   
-  validation_set <- validation_set[report_tbl$i, ]
+  validation_set <- validation_set %>% 
+    dplyr::filter(.data$i == report_tbl$i)
   eval <- eval[report_tbl$i]
   extracts <- 
     agent$extracts[

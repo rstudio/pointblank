@@ -262,12 +262,12 @@ col_is_posix <- function(
   
   agent <- x
   
-  if (is.null(brief)) {
-    brief <- 
-      generate_autobriefs(
-        agent, columns, preconditions, values, "col_is_posix"
-      )
-  }
+  brief <- resolve_briefs(
+    brief = brief, agent = agent,
+    columns = columns,
+    preconditions = preconditions, values = value,
+    assertion_type = "col_is_posix"
+  )
   
   # Normalize any provided `step_id` value(s)
   step_id <- normalize_step_id(step_id, columns, agent)

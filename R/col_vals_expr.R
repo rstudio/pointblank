@@ -371,14 +371,12 @@ col_vals_expr <- function(
   
   agent <- x
   
-  if (is.null(brief)) {
-    
-    brief <-
-      create_autobrief(
-        agent = agent,
-        assertion_type = "col_vals_expr"
-      )
-  }
+  brief <- resolve_briefs(
+    brief = brief, agent = agent,
+    columns = columns, segments_list = segments_list,
+    preconditions = preconditions,
+    assertion_type = "col_vals_expr"
+  )
   
   # Normalize any provided `step_id` value(s)
   step_id <- normalize_step_id(step_id, columns = "column", agent)

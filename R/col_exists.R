@@ -281,7 +281,7 @@ col_exists <- function(
   brief <- resolve_briefs(
     brief = brief, agent = agent,
     columns = columns,
-    preconditions = preconditions,
+    preconditions = preconditions, values = value,
     assertion_type = "col_exists"
   )
   

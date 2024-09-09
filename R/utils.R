@@ -239,10 +239,15 @@ is_secret_agent <- function(x) {
 }
 
 resolve_briefs <- function(brief, agent,
-                           columns = "", segments_list = "",
-                           preconditions, values, assertion_type) {
+                           columns = NULL, segments_list = list(NULL),
+                           preconditions = NULL, values = NULL,
+                           assertion_type) {
   if (is.null(brief)) {
-    generate_autobriefs(agent, columns, preconditions, values, assertion_type)
+    generate_autobriefs(
+      agent = agent, columns = columns,
+      preconditions = preconditions, values = values,
+      assertion_type = assertion_type
+    )
   } else {
     n_columns <- length(columns)
     n_segments <- length(segments_list)

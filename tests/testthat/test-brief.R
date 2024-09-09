@@ -21,9 +21,17 @@ test_that("`brief` recycles when possible", {
       col_vals_equal(
         c("a", "b"), 0,
         segments = vars(f),
-        brief = c("one", "two")
+        brief = c("one", "two", "three")
     ),
-    "must be length 1 or 6, not 2"
+    "must be length 1 or 6, not 3"
+  )
+  
+  expect_error(
+    create_agent(small_table) %>% 
+      col_exists("a", brief = c("one", "two")) %>% 
+      el("validation_set") %>% 
+      el("brief"),
+    "must be length 1, not 2"
   )
 
 })

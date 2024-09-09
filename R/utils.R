@@ -254,9 +254,11 @@ resolve_briefs <- function(brief, agent,
     n_combinations <- n_columns * n_segments
     # Brief must be a single string or matched in length
     if (!length(brief) %in% c(1L, n_combinations)) {
-      cli::cli_abort(
-        "`brief` must be length 1 or {n_combinations}, not {length(brief)}."
-      )
+      cli::cli_abort(paste0(
+        "`brief` must be length 1",
+        if (n_combinations != 1L) " or {n_combinations}",
+        ", not {length(brief)}."
+      ))
     }
     # Recycle the string
     rep_len(brief, n_combinations)

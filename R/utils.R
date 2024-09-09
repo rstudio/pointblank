@@ -239,7 +239,7 @@ is_secret_agent <- function(x) {
 }
 
 resolve_briefs <- function(brief, agent,
-                           columns = NULL, segments_list = list(NULL),
+                           columns = list(NULL), segments_list = list(NULL),
                            preconditions = NULL, values = NULL,
                            assertion_type) {
   if (is.null(brief)) {

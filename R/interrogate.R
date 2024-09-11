@@ -2958,7 +2958,8 @@ pointblank_try_catch <- function(expr) {
         invokeRestart("muffleWarning")
       })
   
-  eval_list <- list(value = value, warning = warn, error = err, pb_call = call_fn)
+  eval_list <- list(value = value, warning = warn, error = err,
+                    pb_call = call_fn)
 
   class(eval_list) <- "table_eval"
   eval_list

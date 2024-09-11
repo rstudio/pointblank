@@ -2473,7 +2473,7 @@ pointblank_cnd_to_string <- function(cnd, pb_call) {
   if (rlang::is_warning(cnd)) return(cnd)
   # Reconstruct trimmed down error and rethrow without cli
   new <- rlang::error_cnd(
-    call = rlang::call2(":::", quote(pointblank), pb_call[1]),
+    call = rlang::call2(":::", quote(pointblank), rlang::sym(pb_call)),
     message = cnd$parent$message %||% cnd$message,
     use_cli_format = FALSE
   )

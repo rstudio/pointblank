@@ -2940,6 +2940,11 @@ column_validity_checks_ib_nb <- function(
 pointblank_try_catch <- function(expr) {
   
   call <- rlang::enexpr(expr)
+  call_fn <- if (rlang::is_call_simple(call)) {
+    deparse(call[[1]]) # ex: "tbl_call_exists"
+  } else {
+    "<internal>"
+  }
   
   warn <- err <- NULL
   
@@ -2953,7 +2958,7 @@ pointblank_try_catch <- function(expr) {
         invokeRestart("muffleWarning")
       })
   
-  eval_list <- list(value = value, warning = warn, error = err, pb_call = call)
+  eval_list <- list(value = value, warning = warn, error = err, pb_call = call_fn)
 
   class(eval_list) <- "table_eval"
   eval_list

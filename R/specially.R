@@ -11,7 +11,7 @@
 #  
 #  This file is part of the 'rstudio/pointblank' project.
 #  
-#  Copyright (c) 2017-2023 pointblank authors
+#  Copyright (c) 2017-2024 pointblank authors
 #  
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
@@ -103,6 +103,17 @@
 #' choices depending on the situation (the first produces a warning when a
 #' quarter of the total test units fails, the other `stop()`s at the same
 #' threshold level).
+#' 
+#' @section Labels:
+#' 
+#' `label` may be a single string or a character vector that matches the number
+#' of expanded steps. `label` also supports `{glue}` syntax and exposes the
+#' following dynamic variables contextualized to the current step:
+#'   
+#' - `"{.step}"`: The validation step name
+#'     
+#' The glue context also supports ordinary expressions for further flexibility
+#' (e.g., `"{toupper(.step)}"`) as long as they return a length-1 string.
 #' 
 #' @section Briefs:
 #' 
@@ -366,6 +377,7 @@ specially <- function(
   
   # Add one or more validation steps based on the
   # length of `segments_list`
+  label <- resolve_label(label, segments = segments_list)
   for (i in seq_along(segments_list)) {
     
     seg_col <- names(segments_list[i])
@@ -386,7 +398,7 @@ specially <- function(
         seg_val = seg_val,
         actions = covert_actions(actions, agent),
         step_id = step_id,
-        label = label,
+        label = label[[i]],
         brief = brief,
         active = active
       )

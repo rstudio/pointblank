@@ -4,21 +4,19 @@
 <a href='https://rstudio.github.io/pointblank/'><img src="man/figures/logo.svg" width="350px"/></a>
 
 <!-- badges: start -->
-<a href="https://cran.r-project.org/package=pointblank"><img src="https://www.r-pkg.org/badges/version/pointblank" alt="CRAN status" /></a>
-<a href="https://opensource.org/license/mit/"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" /></a>
-<a href="https://github.com/rstudio/pointblank/actions"><img src="https://github.com/rstudio/pointblank/workflows/R-CMD-check/badge.svg" alt="R build status" /></a>
-<a href="https://github.com/rstudio/pointblank/actions"><img src="https://github.com/rstudio/pointblank/workflows/lint/badge.svg" alt="Linting" /></a>
-<a href="https://app.codecov.io/gh/rstudio/pointblank?branch=main"><img src="https://codecov.io/gh/rstudio/pointblank/branch/main/graph/badge.svg" alt="Coverage status" /></a>
-
-<a href="https://bestpractices.coreinfrastructure.org/projects/4310"><img src="https://bestpractices.coreinfrastructure.org/projects/4310/badge" alt="Best Practices"></a>
-<a href="https://www.repostatus.org/#active"><img src="https://www.repostatus.org/badges/latest/active.svg" alt="The project has reached a stable, usable state and is being actively developed." /></a>
-<a href="https://CRAN.R-project.org/package=pointblank"><img src="https://cranlogs.r-pkg.org/badges/pointblank" alt="Monthly Downloads"></a>
-<a href="https://CRAN.R-project.org/package=pointblank"><img src="https://cranlogs.r-pkg.org/badges/grand-total/pointblank" alt="Total Downloads"></a>
-
+[![CRAN status](https://www.r-pkg.org/badges/version/pointblank)](https://CRAN.R-project.org/package=pointblank)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/license/mit/)
+[![R-CMD-check](https://github.com/rstudio/pointblank/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rstudio/pointblank/actions/workflows/R-CMD-check.yaml)
+[![Linting](https://github.com/rstudio/pointblank/actions/workflows/lint.yaml/badge.svg)](https://github.com/rstudio/pointblank/actions/workflows/lint.yaml)
+[![Codecov test coverage](https://codecov.io/gh/rstudio/pointblank/graph/badge.svg)](https://app.codecov.io/gh/rstudio/pointblank)
+[![Best Practices](https://bestpractices.coreinfrastructure.org/projects/4310/badge)](https://bestpractices.coreinfrastructure.org/projects/4310)
+[![The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![Monthly Downloads](https://cranlogs.r-pkg.org/badges/pointblank)](https://CRAN.R-project.org/package=pointblank)
+[![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/pointblank)](https://CRAN.R-project.org/package=pointblank)
 [![Posit Cloud](https://img.shields.io/badge/Posit%20Cloud-pointblank%20Test%20Drive-blue?style=social&logo=rstudio&logoColor=75AADB)](https://rstudio.cloud/project/3411822)
-
-<a href="https://www.contributor-covenant.org/version/2/1/code_of_conduct.html"><img src="https://img.shields.io/badge/Contributor%20Covenant-v2.1%20adopted-ff69b4.svg" alt="Contributor Covenant" /></a>
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.1%20adopted-ff69b4.svg)](https://www.contributor-covenant.org/version/2/1/code_of_conduct.html)
 <!-- badges: end -->
+
 <hr style="color:transparent" />
 <br />
 </div>
@@ -48,7 +46,7 @@ metadata updated so that this important documentation doesn't become stale.
 ## TABLE VALIDATIONS WITH AN AGENT AND DATA QUALITY REPORTING
 
 Data validation can be carried out in *Data Quality Reporting* workflow, 
-ultimately resulting in the production of of a data quality analysis report.
+ultimately resulting in the production of a data quality analysis report.
 This is most useful in a non-interactive mode where data quality for database
 tables and on-disk data files must be periodically checked. The **pointblank**
 *agent* is given a collection of validation functions to define validation
@@ -141,14 +139,14 @@ dplyr::tibble(
     b = c(6, 1, 0, 6,  0, 7)
   ) %>%
   col_vals_between(
-    vars(a), 1, 9,
+    a, 1, 9,
     na_pass = TRUE
   ) %>%
   col_vals_lt(
-    vars(c), 12,
+    c, 12,
     preconditions = ~ . %>% dplyr::mutate(c = a + b)
   ) %>%
-  col_is_numeric(vars(a, b))
+  col_is_numeric(c(a, b))
 ```
 
     Error: Exceedance of failed test units where values in `c` should have been < `12`.
@@ -169,17 +167,17 @@ dplyr::tibble(
     b = c(6, 1, 0, 6,  0, 7)
   ) %>%
   col_vals_between(
-    vars(a), 1, 9,
+    a, 1, 9,
     na_pass = TRUE,
     actions = warn_on_fail()
   ) %>%
   col_vals_lt(
-    vars(c), 12,
+    c, 12,
     preconditions = ~ . %>% dplyr::mutate(c = a + b),
     actions = warn_on_fail()
   ) %>%
   col_is_numeric(
-    vars(a, b),
+    c(a, b),
     actions = warn_on_fail()
   )
 ```
@@ -267,19 +265,19 @@ informant <-
     `README` pages. Column names are `a` and `b`. ((Cool stuff))"
   ) %>%
   info_columns(
-    columns = "a",
+    columns = a,
     info = "This column has an `NA` value. [[Watch out!]]<<color: red;>>"
   ) %>%
   info_columns(
-    columns = "a",
+    columns = a,
     info = "Mean value is `{a_mean}`."
   ) %>%
   info_columns(
-    columns = "b",
+    columns = b,
     info = "Like column `a`. The lowest value is `{b_lowest}`."
   ) %>%
   info_columns(
-    columns = "b",
+    columns = b,
     info = "The highest value is `{b_highest}`."
   ) %>%
   info_snippet(

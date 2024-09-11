@@ -7,10 +7,13 @@
 interrogate(
   agent,
   extract_failed = TRUE,
+  extract_tbl_checked = TRUE,
   get_first_n = NULL,
   sample_n = NULL,
   sample_frac = NULL,
-  sample_limit = 5000
+  sample_limit = 5000,
+  show_step_label = FALSE,
+  progress = interactive()
 )
 }
 \arguments{
@@ -28,6 +31,15 @@ the \code{\link[=create_agent]{create_agent()}} function.}
 An option to collect rows that didn't pass a particular validation step.
 The default is \code{TRUE} and further options allow for fine control of how
 these rows are collected.}
+
+\item{extract_tbl_checked}{\emph{Collect validation results from each step}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+An option to collect processed data frames produced by executing the
+validation steps. This information is necessary for some functions
+(e.g., \code{get_sundered_data()}), but may grow to a large size. To opt out
+of attaching this data to the agent, set this argument to \code{FALSE}.}
 
 \item{get_first_n}{\emph{Get the first n values}
 
@@ -63,6 +75,19 @@ option will apply a hard limit to the returned rows.}
 
 A value that limits the possible number of rows returned when sampling
 non-passing rows using the \code{sample_frac} option.}
+
+\item{show_step_label}{\emph{Show step labels in progress}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+Whether to show the \code{label} value of each validation step in the console.}
+
+\item{progress}{\emph{Show interrogation progress}
+
+\verb{scalar<logical>} // \emph{default:} \code{interactive()}
+
+Whether to show the progress of an agent's interrogation in the console.
+Defaults to \code{TRUE} in interactive sessions.}
 }
 \value{
 A \code{ptblank_agent} object.
@@ -106,7 +131,7 @@ process.
     tbl = tbl,
     label = "`interrogate()` example"
   ) \%>\%
-  col_vals_gt(columns = vars(a), value = 5) \%>\%
+  col_vals_gt(columns = a, value = 5) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
 

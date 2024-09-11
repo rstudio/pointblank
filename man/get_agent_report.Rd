@@ -211,7 +211,7 @@ greater than \code{4}.
     tbl_name = "small_table",
     label = "An example."
   ) \%>\%
-  col_vals_gt(columns = vars(a), value = 4) \%>\%
+  col_vals_gt(columns = a, value = 4) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
 

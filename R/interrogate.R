@@ -11,7 +11,7 @@
 #  
 #  This file is part of the 'rstudio/pointblank' project.
 #  
-#  Copyright (c) 2017-2023 pointblank authors
+#  Copyright (c) 2017-2024 pointblank authors
 #  
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
@@ -43,6 +43,15 @@
 #'   An option to collect rows that didn't pass a particular validation step.
 #'   The default is `TRUE` and further options allow for fine control of how
 #'   these rows are collected.
+#'   
+#' @param extract_tbl_checked *Collect validation results from each step*
+#' 
+#'   `scalar<logical>` // *default:* `TRUE`
+#' 
+#'   An option to collect processed data frames produced by executing the
+#'   validation steps. This information is necessary for some functions
+#'   (e.g., `get_sundered_data()`), but may grow to a large size. To opt out
+#'   of attaching this data to the agent, set this argument to `FALSE`.
 #'   
 #' @param get_first_n *Get the first n values*
 #' 
@@ -79,6 +88,19 @@
 #'   A value that limits the possible number of rows returned when sampling
 #'   non-passing rows using the `sample_frac` option.
 #'   
+#' @param show_step_label *Show step labels in progress*
+#' 
+#'   `scalar<logical>` // *default:* `FALSE`
+#' 
+#'   Whether to show the `label` value of each validation step in the console.
+#'
+#' @param progress *Show interrogation progress*
+#' 
+#'   `scalar<logical>` // *default:* `interactive()`
+#' 
+#'   Whether to show the progress of an agent's interrogation in the console.
+#'   Defaults to `TRUE` in interactive sessions.
+#'   
 #' @return A `ptblank_agent` object.
 #'   
 #' @section Examples:
@@ -105,7 +127,7 @@
 #'     tbl = tbl,
 #'     label = "`interrogate()` example"
 #'   ) %>%
-#'   col_vals_gt(columns = vars(a), value = 5) %>%
+#'   col_vals_gt(columns = a, value = 5) %>%
 #'   interrogate()
 #' ```
 #' 
@@ -130,10 +152,13 @@
 interrogate <- function(
     agent,
     extract_failed = TRUE,
+    extract_tbl_checked = TRUE,
     get_first_n = NULL,
     sample_n = NULL,
     sample_frac = NULL,
-    sample_limit = 5000
+    sample_limit = 5000,
+    show_step_label = FALSE,
+    progress = interactive()
 ) {
   
   #
@@ -177,7 +202,7 @@ interrogate <- function(
       # TODO: create a better `stop()` message
       stop(
         "The `read_fn` object must be a function or an R formula.\n",
-        "* A function can be made with `function()` {<table reading code>}.\n",
+        "* A function can be made with `function()` {<tbl reading code>}.\n",
         "* An R formula can also be used, with the expression on the RHS.",
         call. = FALSE
       )
@@ -199,7 +224,7 @@ interrogate <- function(
 
   # Quieting of an agent's remarks either when the agent has the
   # special label `"::QUIET::"` or the session is non-interactive
-  if (agent$label == "::QUIET::" || !interactive()) {
+  if (agent$label == "::QUIET::" || !progress) {
     quiet <- TRUE
   } else {
     quiet <- FALSE
@@ -251,15 +276,6 @@ interrogate <- function(
       agent$validation_set[[i, "eval_active"]] <- FALSE
     }
     
-    # Set the validation step as `active = FALSE` if there is a
-    # no column available as a result of a select expression
-    if (!is.null(agent$validation_set$column[[i]]) &&
-        is.na(agent$validation_set$column[[i]]) &&
-        agent$validation_set$assertion_type[[i]] %in%
-        column_expansion_fns_vec()) {
-      agent$validation_set[[i, "eval_active"]] <- FALSE
-    }
-
     # Skip the validation step if `active = FALSE`
     if (!agent$validation_set[[i, "eval_active"]]) {
       
@@ -710,6 +726,7 @@ interrogate <- function(
       agent = agent,
       i = i,
       time_diff_s = time_diff_s,
+      show_step_label = show_step_label,
       quiet = quiet
     )
   }
@@ -721,6 +738,11 @@ interrogate <- function(
   # Bestowing of the class `"has_intel"` to the agent, given that
   # all validation steps have been carried out
   class(agent) <- c("has_intel", "ptblank_agent")
+  
+  # Drop $tbl_checked if `extract_tbl_checked = FALSE`
+  if (!extract_tbl_checked) {
+    agent$validation_set$tbl_checked <- NULL
+  }
   
   # Add the ending time to the `agent` object
   agent$time_end <- Sys.time()
@@ -804,6 +826,7 @@ create_post_step_cli_output_a <- function(
     agent,
     i,
     time_diff_s,
+    show_step_label,
     quiet
 ) {
   
@@ -840,6 +863,13 @@ create_post_step_cli_output_a <- function(
     )) %>% 
     dplyr::pull(condition)
   
+  label <- agent$validation_set[i, ]$label
+  if (show_step_label && !is.na(label)) {
+    step_label <- paste0(" - {label}")
+  } else {
+    step_label <- NULL
+  }
+  
   cli::cli_div(
     theme = list(
       span.green = list(color = "green"),
@@ -854,26 +884,33 @@ create_post_step_cli_output_a <- function(
       c(
         "Step {.field {i}}: an evaluation issue requires attention ",
         "(", interrogation_evaluation, ").",
-        print_time(time_diff_s)
+        print_time(time_diff_s),
+        step_label
       )
     )
   } else if (validation_condition == "NONE" && notify_condition == "NONE") {
     cli::cli_alert_success(
-      c("Step {.field {i}}: {.green OK}.", print_time(time_diff_s))
+      c(
+        "Step {.field {i}}: {.green OK}.",
+        print_time(time_diff_s),
+        step_label
+      )
     )
   } else if (validation_condition != "NONE" && notify_condition == "NONE") {
     if (validation_condition == "STOP") {
       cli::cli_alert_danger(
         c(
           "Step {.field {i}}: {.red STOP} condition met.",
-          print_time(time_diff_s)
+          print_time(time_diff_s),
+          step_label
         )
       )
     } else {
       cli::cli_alert_warning(
         c(
           "Step {.field {i}}: {.yellow WARNING} condition met.",
-          print_time(time_diff_s)
+          print_time(time_diff_s),
+          step_label
         )
       )
     }
@@ -883,7 +920,8 @@ create_post_step_cli_output_a <- function(
         c(
           "Step {.field {i}}: {.red STOP} and ",
           "{.blue NOTIFY} conditions met.",
-          print_time(time_diff_s)
+          print_time(time_diff_s),
+          step_label
         )
       )
     } else {
@@ -891,7 +929,8 @@ create_post_step_cli_output_a <- function(
         c(
           "Step {.field {i}}: {.yellow WARNING} and ",
           "{.blue NOTIFY} conditions met.",
-          print_time(time_diff_s)
+          print_time(time_diff_s),
+          step_label
         )
       )
     }
@@ -899,7 +938,8 @@ create_post_step_cli_output_a <- function(
     cli::cli_alert_warning(
       c(
         "Step {.field {i}}: {.blue NOTIFY} condition met.",
-        print_time(time_diff_s)
+        print_time(time_diff_s),
+        step_label
       )
     )
   }
@@ -1059,18 +1099,15 @@ interrogate_comparison <- function(
   value <- get_values_at_idx(agent = agent, idx = idx)
 
   # Normalize a column in `vars()` to a `name` object
-  if (inherits(value, "list")) {
-    value <- value[1][[1]] %>% rlang::get_expr()
-  } else {
-    if (is.character(value)) {
-      value <- paste0("'", value, "'")
-    }
+  if (inherits(value, "list") && rlang::is_quosure(value[1][[1]])) {
+    # Both `vars(col)` and `vars("col")` become `col` for `dplyr::mutate()`
+    value <- rlang::sym(rlang::quo_get_expr(value[1][[1]]))
   }
   
   # Obtain the target column as a label
   column <- 
     get_column_as_sym_at_idx(agent = agent, idx = idx) %>%
-    rlang::as_label()
+    as.character()
   
   # Determine whether NAs should be allowed
   na_pass <- get_column_na_pass_at_idx(agent = agent, idx = idx)
@@ -1107,20 +1144,20 @@ tbl_val_comparison <- function(
   )
   
   # Construct a string-based expression for the validation
-  expression <- paste(column, operator, value)
+  expression <- call(operator, as.symbol(column), value)
   
   if (is_tbl_mssql(table)) {
     
     table %>%
       dplyr::mutate(pb_is_good_ = dplyr::case_when(
-        !!rlang::parse_expr(expression) ~ 1,
+        !!expression ~ 1,
         TRUE ~ 0
       ))
     
   } else {
     
     table %>%
-      dplyr::mutate(pb_is_good_ = !!rlang::parse_expr(expression)) %>%
+      dplyr::mutate(pb_is_good_ = !!expression) %>%
       dplyr::mutate(pb_is_good_ = dplyr::case_when(
         is.na(pb_is_good_) ~ na_pass,
         TRUE ~ pb_is_good_
@@ -1414,10 +1451,10 @@ interrogate_set <- function(
       }
       
       extra_variables <- 
-        base::setdiff(table_col_distinct_values, set)
+        table_col_distinct_values[!table_col_distinct_values %in% set]
       
       table_col_distinct_set <-
-        base::intersect(table_col_distinct_values, set)
+        table_col_distinct_values[table_col_distinct_values %in% set]
 
       dplyr::bind_rows(
         dplyr::tibble(set_element = as.character(set)) %>%
@@ -1489,7 +1526,7 @@ interrogate_set <- function(
       }
       
       table_col_distinct_set <-
-        base::intersect(table_col_distinct_values, set)
+        table_col_distinct_values[table_col_distinct_values %in% set]
       
       dplyr::tibble(set_element = as.character(set)) %>%
         dplyr::left_join(
@@ -2226,12 +2263,20 @@ interrogate_col_exists <- function(
   # Obtain the target column as a symbol
   column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
   
+  # Get `column_expr` to signal error if user didn't supply `columns`
+  column_input_missing <- agent$validation_set$columns_expr[idx] == "NULL"
+  
   # Create function for validating the `col_exists()` step function
   tbl_col_exists <- function(
     table,
     column,
-    column_names
+    column_names,
+    column_input_missing
   ) {
+    
+    if (column_input_missing) {
+      stop("`columns` argument must be supplied.", call. = FALSE)
+    }
     
     # Ensure that the input `table` is actually a table object
     tbl_validity_check(table = table)
@@ -2244,7 +2289,8 @@ interrogate_col_exists <- function(
     tbl_col_exists(
       table = table,
       column = {{ column }},
-      column_names = column_names
+      column_names = column_names,
+      column_input_missing = column_input_missing
     )
   )
 }
@@ -2313,31 +2359,22 @@ interrogate_distinct <- function(
     table
 ) {
   
-  # Determine if grouping columns are provided in the test
-  # for distinct rows and parse the column names
-  if (!is.na(agent$validation_set$column[idx] %>% unlist())) {
-    
+  column_names <- 
+    get_column_as_sym_at_idx(agent = agent, idx = idx) %>%
+    as.character()
+  
+  if (grepl("(,|&)", column_names)) {
     column_names <- 
-      get_column_as_sym_at_idx(agent = agent, idx = idx) %>%
-      as.character()
-    
-    if (grepl("(,|&)", column_names)) {
-      column_names <- 
-        strsplit(split = "(, |,|&)", column_names) %>%
-        unlist()
-    }
-    
-    if (length(column_names) == 1 && column_names == "NA") {
-      if (uses_tidyselect(expr_text = agent$validation_set$columns_expr[idx])) {
-        column_names <- character(0)
-      }
-    }
-    
-  } else if (is.na(agent$validation_set$column[idx] %>% unlist())) {
-    column_names <- get_all_cols(agent = agent)
+      strsplit(split = "(, |,|&)", column_names) %>%
+      unlist()
   }
   
-  col_syms <- rlang::syms(column_names)
+  if (identical(column_names, NA_character_)) {
+    # If column is missing, let it get caught by `column_validity_has_columns`
+    col_syms <- NULL
+  } else {
+    col_syms <- rlang::syms(column_names)
+  }
   
   # Create function for validating the `rows_distinct()` step function
   tbl_rows_distinct <- function(
@@ -2413,31 +2450,22 @@ interrogate_complete <- function(
     table
 ) {
   
-  # Determine if grouping columns are provided in the test
-  # for distinct rows and parse the column names
-  if (!is.na(agent$validation_set$column[idx] %>% unlist())) {
-    
+  column_names <- 
+    get_column_as_sym_at_idx(agent = agent, idx = idx) %>%
+    as.character()
+  
+  if (grepl("(,|&)", column_names)) {
     column_names <- 
-      get_column_as_sym_at_idx(agent = agent, idx = idx) %>%
-      as.character()
-    
-    if (grepl("(,|&)", column_names)) {
-      column_names <- 
-        strsplit(split = "(, |,|&)", column_names) %>%
-        unlist()
-    }
-    
-    if (length(column_names) == 1 && column_names == "NA") {
-      if (uses_tidyselect(expr_text = agent$validation_set$columns_expr[idx])) {
-        column_names <- character(0)
-      }
-    }
-    
-  } else if (is.na(agent$validation_set$column[idx] %>% unlist())) {
-    column_names <- get_all_cols(agent = agent)
+      strsplit(split = "(, |,|&)", column_names) %>%
+      unlist()
   }
   
-  col_syms <- rlang::syms(column_names)
+  if (identical(column_names, NA_character_)) {
+    # If column is missing, let it get caught by `column_validity_has_columns`
+    col_syms <- NULL
+  } else {
+    col_syms <- rlang::syms(column_names)
+  }
   
   # Create function for validating the `rows_complete()` step function
   tbl_rows_complete <- function(
@@ -2823,15 +2851,9 @@ column_validity_checks_column_value <- function(
     value
 ) {
   
-  table_colnames <- colnames(table)
+  column_validity_checks_column(table, column)
   
-  if (!(as.character(column) %in% table_colnames)) {
-    
-    stop(
-      "The value for `column` doesn't correspond to a column name.",
-      call. = FALSE
-    )
-  }
+  table_colnames <- colnames(table)
   
   if (inherits(value, "name")) {
     
@@ -2851,7 +2873,7 @@ column_validity_checks_column_value <- function(
 # Validity check for presence of columns
 column_validity_has_columns <- function(columns) {
   
-  if (length(columns) < 1) {
+  if (length(columns) < 1 || identical(columns, NA_character_)) {
     stop(
       "The column selection statement that was used yielded no columns.",
       call. = FALSE
@@ -2864,6 +2886,8 @@ column_validity_checks_column <- function(
     table,
     column
 ) {
+  
+  column_validity_has_columns(as.character(column))
   
   table_colnames <- colnames(table)
   
@@ -2884,15 +2908,9 @@ column_validity_checks_ib_nb <- function(
     right
 ) {
   
-  table_colnames <- colnames(table)
+  column_validity_checks_column(table, column)
   
-  if (!(as.character(column) %in% table_colnames)) {
-    
-    stop(
-      "The value for `column` doesn't correspond to a column name.",
-      call. = FALSE
-    )
-  }
+  table_colnames <- colnames(table)
   
   if (inherits(left, "name")) {
     
@@ -2921,6 +2939,8 @@ column_validity_checks_ib_nb <- function(
 
 pointblank_try_catch <- function(expr) {
   
+  call <- rlang::enexpr(expr)
+  
   warn <- err <- NULL
   
   value <- 
@@ -2933,7 +2953,7 @@ pointblank_try_catch <- function(expr) {
         invokeRestart("muffleWarning")
       })
   
-  eval_list <- list(value = value, warning = warn, error = err)
+  eval_list <- list(value = value, warning = warn, error = err, pb_call = call)
 
   class(eval_list) <- "table_eval"
   eval_list
@@ -2953,7 +2973,7 @@ add_reporting_data <- function(
   has_warnings <- !is.null(tbl_checked$warning)
   has_error <- !is.null(tbl_checked$error)
 
-  capture_stack <- tbl_checked[c("warning", "error")]
+  capture_stack <- tbl_checked[c("warning", "error", "pb_call")]
   
   agent$validation_set$eval_warning[idx] <- has_warnings
   agent$validation_set$eval_error[idx] <- has_error
@@ -3141,7 +3161,7 @@ perform_action <- function(
     }
   }
   
-  return(NULL)
+  NULL
 }
 
 perform_end_action <- function(agent) {
@@ -3238,7 +3258,7 @@ perform_end_action <- function(agent) {
     y %>% rlang::f_rhs() %>% rlang::eval_tidy()
   })
   
-  return(NULL)
+  NULL
 }
 
 add_table_extract <- function(

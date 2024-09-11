@@ -11,7 +11,7 @@
 #  
 #  This file is part of the 'rstudio/pointblank' project.
 #  
-#  Copyright (c) 2017-2023 pointblank authors
+#  Copyright (c) 2017-2024 pointblank authors
 #  
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
@@ -133,6 +133,20 @@
 #' choices depending on the situation (the first produces a warning when a
 #' quarter of the total test units fails, the other `stop()`s at the same
 #' threshold level).
+#' 
+#' @section Labels:
+#' 
+#' `label` may be a single string or a character vector that matches the number
+#' of expanded steps. `label` also supports `{glue}` syntax and exposes the
+#' following dynamic variables contextualized to the current step:
+#'   
+#' - `"{.step}"`: The validation step name
+#' - `"{.col}"`: The current column name
+#' - `"{.seg_col}"`: The current segment's column name
+#' - `"{.seg_val}"`: The current segment's value/group
+#'     
+#' The glue context also supports ordinary expressions for further flexibility
+#' (e.g., `"{toupper(.step)}"`) as long as they return a length-1 string.
 #' 
 #' @section Briefs:
 #' 
@@ -325,6 +339,10 @@ col_vals_expr <- function(
     }
   }
   
+  # Extract columns from expr
+  data_cols <- colnames(apply_preconditions_for_cols(x, preconditions))
+  columns <- all_data_vars(expr, data_cols)
+  
   # Resolve segments into list
   segments_list <- 
     resolve_segments(
@@ -374,6 +392,7 @@ col_vals_expr <- function(
   
   # Add one or more validation steps based on the
   # length of `segments_list`
+  label <- resolve_label(label, segments = segments_list)
   for (i in seq_along(segments_list)) {
     
     seg_col <- names(segments_list[i])
@@ -385,7 +404,7 @@ col_vals_expr <- function(
         assertion_type = "col_vals_expr",
         i_o = i_o,
         columns_expr = NA_character_,
-        column = NA_character_,
+        column = columns,
         values = expr,
         preconditions = preconditions,
         seg_expr = segments,
@@ -393,7 +412,7 @@ col_vals_expr <- function(
         seg_val = seg_val,
         actions = covert_actions(actions, agent),
         step_id = step_id,
-        label = label,
+        label = label[[i]],
         brief = brief,
         active = active
       )

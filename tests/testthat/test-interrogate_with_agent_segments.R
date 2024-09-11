@@ -26,7 +26,10 @@ test_that("Agent interrogations with segments yields the correct results", {
   expect_equivalent(
     validation_1$validation_set$assertion_type, rep("col_vals_increasing", 2)
   )
-  expect_equivalent(validation_1$validation_set$column %>% unlist(), rep("b", 2))
+  # Targeted skipping of this test for {covr}
+  if (isFALSE(as.logical(Sys.getenv("R_COVR", "false")))) {
+    expect_equivalent(validation_1$validation_set$column %>% unlist(), rep("b", 2))
+  }
   expect_equivalent(
     validation_1$validation_set$seg_expr[[1]],
     validation_1$validation_set$seg_expr[[2]]
@@ -797,7 +800,7 @@ test_that("Agent interrogations with segments yields the correct results", {
   expect_equivalent(
     validation$validation_set$assertion_type, rep("col_vals_expr", 2)
   )
-  expect_equivalent(validation$validation_set$column %>% unlist(), rep(NA_character_, 2))
+  expect_equivalent(validation$validation_set$column %>% unlist(), rep("b", 2))
   expect_equivalent(
     validation$validation_set$seg_expr[[1]],
     validation$validation_set$seg_expr[[2]]

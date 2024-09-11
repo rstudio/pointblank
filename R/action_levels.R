@@ -11,7 +11,7 @@
 #  
 #  This file is part of the 'rstudio/pointblank' project.
 #  
-#  Copyright (c) 2017-2023 pointblank authors
+#  Copyright (c) 2017-2024 pointblank authors
 #  
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
@@ -154,10 +154,10 @@
 #'     actions = al
 #'   ) %>%
 #'   col_vals_gt(
-#'     columns = vars(a), value = 2
+#'     columns = a, value = 2
 #'   ) %>%
 #'   col_vals_lt(
-#'     columns = vars(d), value = 20000
+#'     columns = d, value = 20000
 #'   ) %>%
 #'   interrogate()
 #' ```
@@ -188,11 +188,11 @@
 #'     actions = al
 #'   ) %>%
 #'   col_vals_gt(
-#'     columns = vars(a), value = 2,
+#'     columns = a, value = 2,
 #'     actions = warn_on_fail(warn_at = 0.5)
 #'   ) %>%
 #'   col_vals_lt(
-#'     columns = vars(d), value = 20000
+#'     columns = d, value = 20000
 #'   ) %>%
 #'   interrogate()
 #' ```
@@ -220,7 +220,7 @@
 #' ```r
 #' small_table %>%
 #'   col_vals_gt(
-#'     columns = vars(a), value = 2,
+#'     columns = a, value = 2,
 #'     actions = warn_on_fail(warn_at = 2)
 #'   )
 #' ```
@@ -256,7 +256,7 @@
 #' 
 #' ```r
 #' small_table %>%
-#'   col_vals_gt(columns = vars(a), value = 2)
+#'   col_vals_gt(columns = a, value = 2)
 #' ```
 #' 
 #' ```
@@ -273,7 +273,7 @@
 #' ```r
 #' small_table %>%
 #'   col_vals_gt(
-#'     columns = vars(a), value = 2,
+#'     columns = a, value = 2,
 #'     actions = stop_on_fail(stop_at = 1)
 #'   )
 #' ```

@@ -11,7 +11,7 @@
 #  
 #  This file is part of the 'rstudio/pointblank' project.
 #  
-#  Copyright (c) 2017-2023 pointblank authors
+#  Copyright (c) 2017-2024 pointblank authors
 #  
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
@@ -145,8 +145,8 @@
 #'     tbl = tbl,
 #'     actions = al
 #'   ) %>%
-#'   col_vals_gt(columns = vars(a), value = 7) %>%
-#'   col_is_numeric(columns = vars(a)) %>%
+#'   col_vals_gt(columns = a, value = 7) %>%
+#'   col_is_numeric(columns = a) %>%
 #'   interrogate()
 #' ```
 #'   

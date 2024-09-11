@@ -56,7 +56,7 @@ test_that("Incorporating an informant yields the correct results", {
   # `informant$metadata_rev`
   expect_equal(
     names(informant_inc$metadata),
-    c("table", "columns", "rows")
+    c("table", "columns", "_private", "rows")
   )
   expect_equal(
     names(informant_inc$metadata_rev),

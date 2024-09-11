@@ -16,7 +16,7 @@ use of the \code{\link[=create_informant]{create_informant()}} function.}
 
 \item{columns}{\emph{The target columns}
 
-`vector\if{html}{\out{<character>}}|vars(\if{html}{\out{<columns>}})`` // \strong{required}
+\verb{vector<character>|vars(<columns>)} // \strong{required}
 
 The column or set of columns to focus on. Can be defined as a column name
 in quotes (e.g., \code{"<column_name>"}), one or more column names in \code{vars()}
@@ -114,19 +114,19 @@ the YAML representation.
 \if{html}{\out{<div class="sourceCode">}}\preformatted{# R statement
 informant \%>\% 
   info_columns(
-    columns = "date_time",
+    columns = date_time,
     info = "*info text* 1."
   ) \%>\%
   info_columns(
-    columns = "date",
+    columns = date,
     info = "*info text* 2."
   ) \%>\%
   info_columns(
-    columns = "item_count",
+    columns = item_count,
     info = "*info text* 3. Statistics: \{snippet_1\}."
   ) \%>\%
   info_columns(
-    columns = vars(date, date_time),
+    columns = c(date, date_time),
     info = "UTC time."
   )
 
@@ -185,7 +185,7 @@ existing if it lands in the same area).
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <-
   informant \%>\%
   info_columns(
-    columns = vars(a),
+    columns = a,
     info = "In the range of 1 to 10. ((SIMPLE))"
   ) \%>\%
   info_columns(
@@ -193,7 +193,7 @@ existing if it lands in the same area).
     info = "Time-based values (e.g., `Sys.time()`)."
   ) \%>\%
   info_columns(
-    columns = "date",
+    columns = date,
     info = "The date part of `date_time`. ((CALC))"
   )
 }\if{html}{\out{</div>}}

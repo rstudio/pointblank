@@ -1,5 +1,53 @@
 # pointblank (development version)
 
+## Minor improvements and bug fixes
+
+- `col_vals_expr()` now shows used columns in the agent report
+
+- Fixed a regression in `col_vals_*()` functions, where `vars("col")` was evaluating to the string `"col"`. Behavior of `vars("col")` is now aligned back with `vars(col)` - both evaluate to the column name `col`.
+
+- Warnings/errors arising from comparing `columns` to a `value` of different class (for example, comparing a datetime column to a date value `Sys.Date()` instead of another datetime value `Sys.time()`) are now signalled appropriately at `interrogate()`.
+
+- Improved readability of error and warning messages rendered as tooltip to the agent report.
+
+# pointblank 0.12.1
+
+- Ensured that the column string is a symbol before constructing the expression for the `col_vals_*()` functions.
+
+- No longer resolve columns with tidyselect when the target table cannot be materialized.
+
+- Relaxed tests on tidyselect error messages.
+
+# pointblank 0.12.0
+
+## New features
+
+* Complete `{tidyselect}` support for the `columns` argument of *all validation functions*, as well as in `has_columns()` and `info_columns`. The `columns` argument can now take familiar column-selection expressions as one would use inside `dplyr::select()`. This also begins a process of deprecation:
+  - `columns = vars(...)` will continue to work, but `c()` now supersedes `vars()`.
+  - If passing an *external vector* of column names, it should be wrapped in `all_of()`.
+
+* The `label` argument of validation functions now exposes the following string variables via `{glue}` syntax:
+
+  - `"{.step}"`: The validation step name
+  - `"{.col}"`: The current column name
+  - `"{.seg_col}"`: The current segment's column name
+  - `"{.seg_val}"`: The current segment's value/group
+  
+  These dynamic values may be useful for validations that get expanded into multiple steps.
+  
+* `interrogate()` gains two new options for printing progress in the console output:
+
+  - `progress`: Whether interrogation progress should be printed to the console (`TRUE` for interactive sessions, same as before)
+  - `show_step_label`: Whether each validation step's label value should be printed alongside the progress.
+
+## Minor improvements and bug fixes
+
+* Fixes issue with rendering reports in Quarto HTML documents.
+
+* When no columns are returned from a `{tidyselect}` expression in `columns`, the agent's report now displays the originally supplied *expression* instead of being simply blank (e.g., in `create_agent(small_table) |> col_vals_null(matches("z"))`).
+
+* Fixes issue with the hashing implementation to improve performance and alignment of validation steps in the multiagent.
+
 # pointblank 0.11.4
 
 * Fixes issue with gt `0.9.0` compatibility.

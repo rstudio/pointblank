@@ -11,7 +11,7 @@
 #  
 #  This file is part of the 'rstudio/pointblank' project.
 #  
-#  Copyright (c) 2017-2023 pointblank authors
+#  Copyright (c) 2017-2024 pointblank authors
 #  
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
@@ -27,10 +27,10 @@
 #' specified name is present in a table object. This function works well enough
 #' on a table object but it can also be used as part of a formula in any
 #' validation function's `active` argument. Using `active = ~ . %>%
-#' has_columns("column_1")` means that the validation step will be inactive if
+#' has_columns(column_1)` means that the validation step will be inactive if
 #' the target table doesn't contain a column named `column_1`. We can also use
-#' multiple columns in `vars()` so having `active = ~ . %>%
-#' has_columns(vars(column_1, column_2))` in a validation step will make it
+#' multiple columns in `c()`, so having `active = ~ . %>%
+#' has_columns(c(column_1, column_2))` in a validation step will make it
 #' inactive at [interrogate()] time unless the columns `column_1` and `column_2`
 #' are both present.
 #' 
@@ -43,10 +43,10 @@
 #' 
 #' @param columns *The target columns*
 #'   
-#'   `vector<character>|vars(<columns>)`` // **required**
+#'   `<tidy-select>` // *required*
 #' 
-#'   One or more column names that are to be checked for existence in the table
-#'   `x`.
+#'   One or more columns or column-selecting expressions. Each element is
+#'   checked for a match in the table `x`.
 #'   
 #' @return A length-1 logical vector.
 #' 
@@ -60,11 +60,10 @@
 #' ```
 #' 
 #' With `has_columns()` we can check for column existence by using it directly
-#' on the table. A column name can be verified as present by using it in double
-#' quotes.
+#' on the table.
 #' 
 #' ```r
-#' small_table %>% has_columns(columns = "date")
+#' small_table %>% has_columns(columns = date)
 #' ```
 #' 
 #' ```
@@ -75,17 +74,17 @@
 #' columns are present in `small_table`.
 #' 
 #' ```r
-#' small_table %>% has_columns(columns = c("a", "b"))
+#' small_table %>% has_columns(columns = c(a, b))
 #' ```
 #' 
 #' ```
 #' ## [1] TRUE
 #' ```
 #' 
-#' It's possible to supply column names in `vars()` as well:
+#' It's possible to use a tidyselect helper as well:
 #' 
 #' ```r
-#' small_table %>% has_columns(columns = vars(a, b))
+#' small_table %>% has_columns(columns = c(a, starts_with("b")))
 #' ```
 #' 
 #' ```
@@ -96,10 +95,24 @@
 #' need to be present to obtain `TRUE`).
 #' 
 #' ```r
-#' small_table %>% has_columns(columns = vars(a, h))
+#' small_table %>% has_columns(columns = c(a, h))
 #' ```
 #' 
 #' ```
+#' ## [1] FALSE
+#' ```
+#' 
+#' The same holds in the case of tidyselect helpers. Because no columns start
+#' with `"h"`, including `starts_with("h")` returns `FALSE` for the entire
+#' check.
+#' 
+#' ```r
+#' small_table %>% has_columns(columns = starts_with("h"))
+#' small_table %>% has_columns(columns = c(a, starts_with("h")))
+#' ```
+#' 
+#' ```
+#' ## [1] FALSE
 #' ## [1] FALSE
 #' ```
 #' 
@@ -119,17 +132,17 @@
 #'     tbl_name = "small_table"
 #'   ) %>%
 #'   col_vals_gt(
-#'     columns = vars(c), value = vars(a),
-#'     active = ~ . %>% has_columns(vars(a, c))
+#'     columns = c, value = vars(a),
+#'     active = ~ . %>% has_columns(c(a, c))
 #'   ) %>%
 #'   col_vals_lt(
-#'     columns = vars(h), value = vars(d),
+#'     columns = h, value = vars(d),
 #'     preconditions = ~ . %>% dplyr::mutate(h = d - a),
-#'     active = ~ . %>% has_columns(vars(a, d))
+#'     active = ~ . %>% has_columns(c(a, d))
 #'   ) %>%
 #'   col_is_character(
-#'     columns = vars(j),
-#'     active = ~ . %>% has_columns("j")
+#'     columns = j,
+#'     active = ~ . %>% has_columns(j)
 #'   ) %>%
 #'   interrogate()
 #' ```
@@ -170,17 +183,47 @@ has_columns <- function(
     )
   }
   
-  # Normalize the `columns` expression
-  if (inherits(columns, "quosures")) {
-    
-    columns <- 
-      vapply(
-        columns,
-        FUN.VALUE = character(1),
-        USE.NAMES = FALSE,
-        FUN = function(x) as.character(rlang::get_expr(x))
-      )
+  # Capture the `columns` expression
+  columns <- rlang::enquo(columns)
+  if (rlang::quo_is_missing(columns)) {
+    rlang::abort("Must supply a value for `columns`")
   }
   
-  all(columns %in% rlang::names2(x))
+  # Split into quos if multi-length c()/vars() expr
+  if (rlang::quo_is_call(columns, c("c", "vars"))) {
+    columns_env <- rlang::quo_get_env(columns)
+    column_quos <- lapply(rlang::call_args(columns), function(x) {
+      rlang::new_quosure(x, env = columns_env)
+    })
+  } else {
+    column_quos <- list(columns)
+  }
+  
+  .call <- rlang::current_env()
+  has_column <- function(col_expr) {
+    columns <- tryCatch(
+      expr = resolve_columns(x = x, var_expr = col_expr,
+                             allow_empty = FALSE, call = .call),
+      error = function(cnd) cnd
+    )
+    ## If error from {tidyselect}, counts as no selection
+    if (rlang::is_error(columns)) {
+      cnd <- columns
+      # Rethrow error if genuine evaluation error
+      if (inherits(cnd, "resolve_eval_err")) {
+        rlang::cnd_signal(cnd)
+      } 
+      # Return length-0 vector if "column not found" or "0 columns" error
+      return(character(0L))
+    }
+    
+    ## If columns succesfully resolved to character, return only existing ones
+    intersect(columns, colnames(x))
+  }
+  
+  # A list of columns (character vector) selected by elements of `columns`
+  # - Ex: `c(a, b:c)` becomes `list("a", c("b", "c"))` if data has those columns
+  columns_list <- lapply(column_quos, has_column)
+  all(lengths(columns_list) > 0L)
+  
 }

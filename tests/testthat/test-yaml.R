@@ -800,7 +800,7 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   
   expect_equal(
     get_oneline_expr_str(agent %>% rows_distinct()),
-    "rows_distinct()"
+    "rows_distinct(columns = everything())"
   )
   expect_equal(
     get_oneline_expr_str(agent %>% rows_distinct(columns = vars(a, b))),
@@ -888,3 +888,4 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
     "col_schema_match(schema = col_schema(a = \"integer\",b = \"character\"),label = \"my_label\")"
   )
 })
+

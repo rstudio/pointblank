@@ -11,7 +11,7 @@
 #  
 #  This file is part of the 'rstudio/pointblank' project.
 #  
-#  Copyright (c) 2017-2023 pointblank authors
+#  Copyright (c) 2017-2024 pointblank authors
 #  
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
@@ -133,14 +133,14 @@
 #' ```r
 #' agent <-
 #'   agent %>% 
-#'   col_exists(columns = vars(date, date_time)) %>%
+#'   col_exists(columns = c(date, date_time)) %>%
 #'   col_vals_regex(
-#'     columns = vars(b),
+#'     columns = b,
 #'     regex = "[0-9]-[a-z]{3}-[0-9]{3}"
 #'   ) %>%
 #'   rows_distinct() %>%
-#'   col_vals_gt(columns = vars(d), value = 100) %>%
-#'   col_vals_lte(columns = vars(c), value = 5) %>%
+#'   col_vals_gt(columns = d, value = 100) %>%
+#'   col_vals_lte(columns = c, value = 5) %>%
 #'   interrogate()
 #' ```
 #'
@@ -197,7 +197,7 @@
 #'     fn = snip_lowest(column = "a")
 #'   ) %>%
 #'   info_columns(
-#'     columns = vars(a),
+#'     columns = a,
 #'     info = "From {low_a} to {high_a}."
 #'   ) %>%
 #'   info_columns(
@@ -205,7 +205,7 @@
 #'     info = "Time-based values."
 #'   ) %>%
 #'   info_columns(
-#'     columns = "date",
+#'     columns = date,
 #'     info = "The date part of `date_time`."
 #'   ) %>%
 #'   incorporate()
@@ -240,13 +240,13 @@
 #'     actions = al
 #'   ) %>%
 #'   col_vals_gt(
-#'     columns = vars(b),
-#'     value = vars(g),
+#'     columns = b,
+#'     value = g,
 #'     na_pass = TRUE,
 #'     label = "b > g"
 #'   ) %>%
 #'   col_is_character(
-#'     columns = vars(b, f),
+#'     columns = c(b, f),
 #'     label = "Verifying character-type columns" 
 #'   ) %>%
 #'   interrogate()
@@ -611,14 +611,14 @@ x_read_disk <- function(
 #' ```r
 #' agent <-
 #'   agent %>% 
-#'   col_exists(columns = vars(date, date_time)) %>%
+#'   col_exists(columns = c(date, date_time)) %>%
 #'   col_vals_regex(
-#'     columns = vars(b),
+#'     columns = b,
 #'     regex = "[0-9]-[a-z]{3}-[0-9]{3}"
 #'   ) %>%
 #'   rows_distinct() %>%
-#'   col_vals_gt(columns = vars(d), value = 100) %>%
-#'   col_vals_lte(columns = vars(c), value = 5) %>%
+#'   col_vals_gt(columns = d, value = 100) %>%
+#'   col_vals_lte(columns = c, value = 5) %>%
 #'   interrogate()
 #' ```
 #'
@@ -672,7 +672,7 @@ x_read_disk <- function(
 #'     fn = snip_lowest(column = "a")
 #'   ) %>%
 #'   info_columns(
-#'     columns = vars(a),
+#'     columns = a,
 #'     info = "From {low_a} to {high_a}."
 #'   ) %>%
 #'   info_columns(
@@ -680,7 +680,7 @@ x_read_disk <- function(
 #'     info = "Time-based values."
 #'   ) %>%
 #'   info_columns(
-#'     columns = "date",
+#'     columns = date,
 #'     info = "The date part of `date_time`."
 #'   ) %>%
 #'   incorporate()
@@ -844,7 +844,7 @@ export_report <- function(
 #'   
 #' @param tbl *Table or expression for reading in one*
 #' 
-#'   `obj:<tbl_*>|<table reading expression>` // **required**
+#'   `obj:<tbl_*>|<tbl reading expression>` // **required**
 #' 
 #'   The input table for the *agent* or the *informant*. This can be a data
 #'   frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
@@ -852,8 +852,8 @@ export_report <- function(
 #'   how to retrieve the target table at interrogation- or incorporation-time.
 #'   There are two ways to specify an association to a target table: (1) as a
 #'   table-prep formula, which is a right-hand side (RHS) formula expression
-#'   (e.g., `~ { <table reading code>}`), or (2) as a function (e.g.,
-#'   `function() { <table reading code>}`).
+#'   (e.g., `~ { <tbl reading code>}`), or (2) as a function (e.g.,
+#'   `function() { <tbl reading code>}`).
 #'   
 #' @param tbl_name *A table name*
 #' 
@@ -895,9 +895,9 @@ export_report <- function(
 #'     label = "An example.",
 #'     actions = al
 #'   ) %>%
-#'   col_exists(columns = vars(date, date_time)) %>%
+#'   col_exists(columns = c(date, date_time)) %>%
 #'   col_vals_regex(
-#'     columns = vars(b),
+#'     columns = b,
 #'     regex = "[0-9]-[a-z]{3}-[0-9]{3}"
 #'   ) %>%
 #'   rows_distinct() %>%

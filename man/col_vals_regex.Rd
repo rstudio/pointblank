@@ -49,10 +49,11 @@ commonly created with \code{\link[=create_agent]{create_agent()}}.}
 
 \item{columns}{\emph{The target columns}
 
-\verb{<column-targeting expression>} // \strong{required}
+\verb{<tidy-select>} // \strong{required}
 
-The column (or a set of columns, provided as a character vector) to which
-this validation should be applied.}
+A column-selecting expression, as one would use inside \code{dplyr::select()}.
+Specifies the column (or a set of columns) to which this validation should
+be applied. See the \emph{Column Names} section for more information.}
 
 \item{regex}{\emph{Regex pattern}
 
@@ -112,12 +113,13 @@ produce (influenced by the number of \code{columns} provided), (2) be an ID
 string not used in any previous validation step, and (3) be a vector with
 unique values.}
 
-\item{label}{\emph{An optional label for the validation step}
+\item{label}{\emph{Optional label for the validation step}
 
-\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+\verb{vector<character>} // \emph{default:} \code{NULL} (\code{optional})
 
-An optional label for the validation step. This label appears in the
-\emph{agent} report and, for the best appearance, it should be kept quite short.}
+Optional label for the validation step. This label appears in the \emph{agent}
+report and, for the best appearance, it should be kept quite short. See
+the \emph{Labels} section for more information.}
 
 \item{brief}{\emph{Brief description for the validation step}
 
@@ -144,7 +146,7 @@ be used with \code{.} (serving as the input data table) to evaluate to a single
 logical value. With this approach, the \strong{pointblank} function
 \code{\link[=has_columns]{has_columns()}} can be used to determine whether to make a validation step
 active on the basis of one or more columns existing in the table
-(e.g., \code{~ . \%>\% has_columns(vars(d, e))}).}
+(e.g., \code{~ . \%>\% has_columns(c(d, e))}).}
 
 \item{object}{\emph{A data table for expectations or tests}
 
@@ -213,12 +215,17 @@ formally tested (so be mindful of this when using unsupported backends with
 \section{Column Names}{
 
 
-If providing multiple column names, the result will be an expansion of
-validation steps to that number of column names (e.g., \code{vars(col_a, col_b)}
-will result in the entry of two validation steps). Aside from column names in
-quotes and in \code{vars()}, \strong{tidyselect} helper functions are available for
-specifying columns. They are: \code{starts_with()}, \code{ends_with()}, \code{contains()},
-\code{matches()}, and \code{everything()}.
+\code{columns} may be a single column (as symbol \code{a} or string \code{"a"}) or a vector
+of columns (\code{c(a, b, c)} or \code{c("a", "b", "c")}). \code{{tidyselect}} helpers
+are also supported, such as \code{contains("date")} and \code{where(is.double)}. If
+passing an \emph{external vector} of columns, it should be wrapped in \code{all_of()}.
+
+When multiple columns are selected by \code{columns}, the result will be an
+expansion of validation steps to that number of columns (e.g.,
+\code{c(col_a, col_b)} will result in the entry of two validation steps).
+
+Previously, columns could be specified in \code{vars()}. This continues to work,
+but \code{c()} offers the same capability and supersedes \code{vars()} in \code{columns}.
 }
 
 \section{Missing Values}{
@@ -300,6 +307,23 @@ quarter of the total test units fails, the other \code{stop()}s at the same
 threshold level).
 }
 
+\section{Labels}{
+
+
+\code{label} may be a single string or a character vector that matches the number
+of expanded steps. \code{label} also supports \code{{glue}} syntax and exposes the
+following dynamic variables contextualized to the current step:
+\itemize{
+\item \code{"{.step}"}: The validation step name
+\item \code{"{.col}"}: The current column name
+\item \code{"{.seg_col}"}: The current segment's column name
+\item \code{"{.seg_val}"}: The current segment's value/group
+}
+
+The glue context also supports ordinary expressions for further flexibility
+(e.g., \code{"{toupper(.step)}"}) as long as they return a length-1 string.
+}
+
 \section{Briefs}{
 
 
@@ -326,7 +350,7 @@ R statement:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{agent \%>\% 
   col_vals_regex(
-    columns = vars(a),
+    columns = a,
     regex = "[0-9]-[a-z]\{3\}-[0-9]\{3\}",
     na_pass = TRUE,
     preconditions = ~ . \%>\% dplyr::filter(a < 10),
@@ -341,7 +365,7 @@ YAML representation:
 
 \if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
 - col_vals_regex:
-    columns: vars(a)
+    columns: c(a)
     regex: '[0-9]-[a-z]\{3\}-[0-9]\{3\}'
     na_pass: true
     preconditions: ~. \%>\% dplyr::filter(a < 10)
@@ -399,7 +423,7 @@ units, one for each row).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = small_table) \%>\%
-  col_vals_regex(columns = vars(b), regex = pattern) \%>\%
+  col_vals_regex(columns = b, regex = pattern) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
 
@@ -421,7 +445,7 @@ through but should \code{stop()} if there is a single test unit failing. The
 behavior of side effects can be customized with the \code{actions} option.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
-  col_vals_regex(columns = vars(b), regex = pattern) \%>\%
+  col_vals_regex(columns = b, regex = pattern) \%>\%
   dplyr::slice(1:5)
 #> # A tibble: 5 x 8
 #>   date_time           date           a b             c      d e     f    
@@ -439,7 +463,7 @@ behavior of side effects can be customized with the \code{actions} option.
 With the \verb{expect_*()} form, we would typically perform one validation at a
 time. This is primarily used in \strong{testthat} tests.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_regex(small_table, columns = vars(b), regex = pattern)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_col_vals_regex(small_table, columns = b, regex = pattern)
 }\if{html}{\out{</div>}}
 }
 
@@ -448,7 +472,7 @@ time. This is primarily used in \strong{testthat} tests.
 With the \verb{test_*()} form, we should get a single logical value returned to
 us.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% test_col_vals_regex(columns = vars(b), regex = pattern)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% test_col_vals_regex(columns = b, regex = pattern)
 #> [1] TRUE
 }\if{html}{\out{</div>}}
 }
@@ -475,12 +499,12 @@ Other validation functions:
 \code{\link{col_vals_decreasing}()},
 \code{\link{col_vals_equal}()},
 \code{\link{col_vals_expr}()},
-\code{\link{col_vals_gte}()},
 \code{\link{col_vals_gt}()},
+\code{\link{col_vals_gte}()},
 \code{\link{col_vals_in_set}()},
 \code{\link{col_vals_increasing}()},
-\code{\link{col_vals_lte}()},
 \code{\link{col_vals_lt}()},
+\code{\link{col_vals_lte}()},
 \code{\link{col_vals_make_set}()},
 \code{\link{col_vals_make_subset}()},
 \code{\link{col_vals_not_between}()},

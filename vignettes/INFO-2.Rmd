@@ -44,7 +44,7 @@ The `small_table` dataset is associated with the `informant` as the target table
 informant <- 
   informant %>%
   info_columns(
-    columns = vars(d),
+    columns = d,
     info = "This column contains fairly large numbers (much larger than
     those numbers in column `a`. The mean value is {mean_d}, which is
     far greater than any number in that other column."
@@ -76,7 +76,7 @@ informant <-
     fn = ~ . %>% .$d %>% mean() %>% round(1)
   ) %>%
     info_columns(
-    columns = vars(d),
+    columns = d,
     info = "This column contains fairly large numbers (much larger than
     those numbers in column `a`. The mean value is {mean_d}, which is
     far greater than any number in that other column."
@@ -181,11 +181,11 @@ informant_pp <-
     label = "The `penguins` dataset from the **palmerpenguins** 📦."
   ) %>% 
   info_columns(
-    columns = "species",
+    columns = species,
     `ℹ️` = "A factor denoting penguin species ({species_snippet})."
   ) %>%
   info_columns(
-    columns = "island",
+    columns = island,
     `ℹ️` = "A factor denoting island in Palmer Archipelago, Antarctica
     ({island_snippet})."
   ) %>%
@@ -216,7 +216,7 @@ This also works for numeric values. Let's use `snip_list()` to provide a text sn
 informant_pp <-
   informant_pp %>%
   info_columns(
-    columns = "year",
+    columns = year,
     `ℹ️` = "The study year ({year_snippet})."
   ) %>%
   info_snippet(
@@ -244,16 +244,16 @@ We can get the lowest and highest values from a column and inject those formatte
 informant_pp <-
   informant_pp %>%
   info_columns(
-    columns = "bill_length_mm",
+    columns = bill_length_mm,
     `ℹ️` = "A number denoting bill length"
   ) %>%
   info_columns(
-    columns = "bill_depth_mm",
+    columns = bill_depth_mm,
     `ℹ️` = "A number denoting bill depth (in the range of
     {min_depth} to {max_depth} millimeters)."
   ) %>%
   info_columns(
-    columns = "flipper_length_mm",
+    columns = flipper_length_mm,
     `ℹ️` = "An integer denoting flipper length"
   ) %>%
   info_columns(
@@ -261,7 +261,7 @@ informant_pp <-
     `ℹ️` = "(in units of millimeters)."
   ) %>%
   info_columns(
-    columns = "flipper_length_mm",
+    columns = flipper_length_mm,
     `ℹ️` = "Largest observed is {largest_flipper_length} mm."
   ) %>%
   info_snippet(
@@ -338,7 +338,7 @@ We can take portions of text and present them as labels. These will help you cal
 informant_pp <-
   informant_pp %>%
   info_columns(
-    columns = vars(body_mass_g), 
+    columns = body_mass_g, 
     `ℹ️` = "An integer denoting body mass."
   ) %>%
   info_columns(
@@ -396,7 +396,7 @@ Continuing with our **palmerpenguins** reporting, we'll add some more *info text
 informant_pp <-
   informant_pp %>%
   info_columns(
-    columns = vars(sex), 
+    columns = sex, 
     `ℹ️` = "A [[factor]]<<text-decoration: underline;>> 
     denoting penguin sex (female or male)."
   ) %>%

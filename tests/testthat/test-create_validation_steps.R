@@ -1036,7 +1036,7 @@ test_that("Creating a `rows_distinct()` step is possible", {
   expect_equivalent(validation$tbl_name, "small_table")
   expect_equivalent(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equivalent(validation$validation_set$assertion_type, "rows_distinct")
-  expect_true(is.na(validation$validation_set$column %>% .[[1]] %>% .[[1]]))
+  expect_equivalent(validation$validation_set$column %>% unlist(), "date_time, date, a, b, c, d, e, f")
   expect_true(is.null(validation$validation_set[["values"]][[1]]))
   expect_true(is.na(validation$validation_set$all_passed))
   expect_true(is.na(validation$validation_set$n))

@@ -11,7 +11,7 @@
 #  
 #  This file is part of the 'rstudio/pointblank' project.
 #  
-#  Copyright (c) 2017-2023 pointblank authors
+#  Copyright (c) 2017-2024 pointblank authors
 #  
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
@@ -304,14 +304,14 @@ yaml_agent_interrogate <- function(
 #'       notify_at = 0.35
 #'     )
 #'   ) %>%
-#'   col_exists(columns = vars(date, date_time)) %>%
+#'   col_exists(columns = c(date, date_time)) %>%
 #'   col_vals_regex(
-#'     columns = vars(b),
+#'     columns = b,
 #'     regex = "[0-9]-[a-z]{3}-[0-9]{3}"
 #'   ) %>%
 #'   rows_distinct() %>%
-#'   col_vals_gt(columns = vars(d), value = 100) %>%
-#'   col_vals_lte(columns = vars(c), value = 5)
+#'   col_vals_gt(columns = d, value = 100) %>%
+#'   col_vals_lte(columns = c, value = 5)
 #' ```
 #'
 #' The agent can be written to a **pointblank** YAML file with [yaml_write()].
@@ -357,19 +357,19 @@ yaml_agent_interrogate <- function(
 #'   label = "A simple example with the `small_table`."
 #' ) %>%
 #'   col_exists(
-#'     columns = vars(date, date_time)
+#'     columns = c(date, date_time)
 #'   ) %>%
 #'   col_vals_regex(
-#'     columns = vars(b),
+#'     columns = b,
 #'     regex = "[0-9]-[a-z]{3}-[0-9]{3}"
 #'   ) %>%
 #'   rows_distinct() %>%
 #'   col_vals_gt(
-#'     columns = vars(d),
+#'     columns = d,
 #'     value = 100
 #'   ) %>%
 #'   col_vals_lte(
-#'     columns = vars(c),
+#'     columns = c,
 #'     value = 5
 #'   ) 
 #' ```
@@ -539,7 +539,7 @@ make_validation_steps <- function(steps) {
   tidyselect_regex <- 
     paste0(
       "^(",
-      paste(c("vars", exported_tidyselect_fns()), collapse = "|"),
+      paste(c("vars", "c", tidyselect_helpers()), collapse = "|"),
       ")\\(.*?\\)$"
     )
   

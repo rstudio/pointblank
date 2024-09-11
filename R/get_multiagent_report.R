@@ -11,7 +11,7 @@
 #  
 #  This file is part of the 'rstudio/pointblank' project.
 #  
-#  Copyright (c) 2017-2023 pointblank authors
+#  Copyright (c) 2017-2024 pointblank authors
 #  
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
@@ -146,32 +146,32 @@
 #'     actions = al
 #'   ) %>%
 #'   col_vals_gt(
-#'     columns = vars(date_time),
+#'     columns = date_time,
 #'     value = vars(date),
 #'     na_pass = TRUE
 #'   ) %>%
 #'   col_vals_gt(
-#'     columns = vars(b), 
+#'     columns = b, 
 #'     value = vars(g),
 #'     na_pass = TRUE
 #'   ) %>%
 #'   rows_distinct() %>%
 #'   col_vals_equal(
-#'     columns = vars(d), 
+#'     columns = d, 
 #'     value = vars(d),
 #'     na_pass = TRUE
 #'   ) %>%
 #'   col_vals_between(
-#'     columns = vars(c), 
+#'     columns = c, 
 #'     left = vars(a), right = vars(d)
 #'   ) %>%
 #'   col_vals_not_between(
-#'     columns = vars(c),
+#'     columns = c,
 #'     left = 10, right = 20,
 #'     na_pass = TRUE
 #'   ) %>%
-#'   rows_distinct(columns = vars(d, e, f)) %>%
-#'   col_is_integer(columns = vars(a)) %>%
+#'   rows_distinct(columns = d, e, f) %>%
+#'   col_is_integer(columns = a) %>%
 #'   interrogate()
 #' ```
 #' 
@@ -181,9 +181,9 @@
 #' ```r
 #' agent_2 <- 
 #'   agent_1 %>%
-#'   col_exists(columns = vars(date, date_time)) %>%
+#'   col_exists(columns = date, date_time) %>%
 #'   col_vals_regex(
-#'     columns = vars(b), 
+#'     columns = b, 
 #'     regex = "[0-9]-[a-z]{3}-[0-9]{3}",
 #'     active = FALSE
 #'   ) %>%
@@ -197,7 +197,7 @@
 #' agent_3 <- 
 #'   agent_2 %>%
 #'   col_vals_in_set(
-#'     columns = vars(f),
+#'     columns = f,
 #'     set = c("low", "mid", "high")
 #'   ) %>%
 #'   remove_steps(i = 5) %>%
@@ -889,6 +889,7 @@ get_multiagent_report <- function(
           #report code {
             font-family: 'IBM Plex Mono', monospace, courier;
             font-size: 11px;
+            color: black;
             background-color: transparent;
             padding: 0;
           }
@@ -913,6 +914,11 @@ get_multiagent_report <- function(
   }
   
   class(report_tbl) <- c("ptblank_multiagent_report.wide", class(report_tbl))
+  
+  # Quarto rendering workaround
+  if (check_quarto()) {
+    report_tbl <- gt::fmt(report_tbl, fns = identity)
+  }
   
   report_tbl
 }
@@ -1504,6 +1510,6 @@ generate_cell_content <- function(
     
     return(cell_content)
   }
-  
+  NULL
   # nocov end
 }

@@ -55,7 +55,7 @@ within the series. A finishing validation function call (e.g.,
 \code{\link[=col_vals_increasing]{col_vals_increasing()}}, etc.) can optionally be inserted at the end of the
 series, serving as a validation step that only undergoes interrogation if
 the prior tests adequately pass. An example of this is
-\verb{~ test_column_exists(., vars(a)), ~ col_vals_not_null(., vars(a))}).}
+\verb{~ test_column_exists(., a), ~ col_vals_not_null(., a)}).}
 
 \item{.list}{\emph{Alternative to \code{...}}
 
@@ -97,12 +97,13 @@ produce (influenced by the number of \code{columns} provided), (2) be an ID
 string not used in any previous validation step, and (3) be a vector with
 unique values.}
 
-\item{label}{\emph{An optional label for the validation step}
+\item{label}{\emph{Optional label for the validation step}
 
-\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+\verb{vector<character>} // \emph{default:} \code{NULL} (\code{optional})
 
-An optional label for the validation step. This label appears in the
-\emph{agent} report and, for the best appearance, it should be kept quite short.}
+Optional label for the validation step. This label appears in the \emph{agent}
+report and, for the best appearance, it should be kept quite short. See
+the \emph{Labels} section for more information.}
 
 \item{brief}{\emph{Brief description for the validation step}
 
@@ -129,7 +130,7 @@ be used with \code{.} (serving as the input data table) to evaluate to a single
 logical value. With this approach, the \strong{pointblank} function
 \code{\link[=has_columns]{has_columns()}} can be used to determine whether to make a validation step
 active on the basis of one or more columns existing in the table
-(e.g., \code{~ . \%>\% has_columns(vars(d, e))}).}
+(e.g., \code{~ . \%>\% has_columns(c(d, e))}).}
 
 \item{object}{\emph{A data table for expectations or tests}
 
@@ -191,9 +192,9 @@ or any \code{segments})
 
 Here's an example of how to arrange expressions:
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{~ test_col_exists(., columns = vars(count)),
-~ test_col_is_numeric(., columns = vars(count)),
-~ col_vals_gt(., columns = vars(count), value = 2)
+\if{html}{\out{<div class="sourceCode">}}\preformatted{~ test_col_exists(., columns = count),
+~ test_col_is_numeric(., columns = count),
+~ col_vals_gt(., columns = count, value = 2)
 }\if{html}{\out{</div>}}
 
 This series concentrates on the column called \code{count} and first checks
@@ -234,12 +235,17 @@ formally tested (so be mindful of this when using unsupported backends with
 \section{Column Names}{
 
 
-If providing multiple column names in any of the supplied validation steps,
-the result will be an expansion of sub-validation steps to that number of
-column names. Aside from column names in quotes and in \code{vars()},
-\strong{tidyselect} helper functions are available for specifying columns. They
-are: \code{starts_with()}, \code{ends_with()}, \code{contains()}, \code{matches()}, and
-\code{everything()}.
+\code{columns} may be a single column (as symbol \code{a} or string \code{"a"}) or a vector
+of columns (\code{c(a, b, c)} or \code{c("a", "b", "c")}). \code{{tidyselect}} helpers
+are also supported, such as \code{contains("date")} and \code{where(is.double)}. If
+passing an \emph{external vector} of columns, it should be wrapped in \code{all_of()}.
+
+When multiple columns are selected by \code{columns}, the result will be an
+expansion of validation steps to that number of columns (e.g.,
+\code{c(col_a, col_b)} will result in the entry of two validation steps).
+
+Previously, columns could be specified in \code{vars()}. This continues to work,
+but \code{c()} offers the same capability and supersedes \code{vars()} in \code{columns}.
 }
 
 \section{Preconditions}{
@@ -280,6 +286,20 @@ quarter of the total test units fails, the other \code{stop()}s at the same
 threshold level).
 }
 
+\section{Labels}{
+
+
+\code{label} may be a single string or a character vector that matches the number
+of expanded steps. \code{label} also supports \code{{glue}} syntax and exposes the
+following dynamic variables contextualized to the current step:
+\itemize{
+\item \code{"{.step}"}: The validation step name
+}
+
+The glue context also supports ordinary expressions for further flexibility
+(e.g., \code{"{toupper(.step)}"}) as long as they return a length-1 string.
+}
+
 \section{Briefs}{
 
 
@@ -306,9 +326,9 @@ R statement:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
   serially(
-    ~ col_vals_lt(., columns = vars(a), value = 8),
-    ~ col_vals_gt(., columns = vars(c), value = vars(a)),
-    ~ col_vals_not_null(., columns = vars(b)),
+    ~ test_col_vals_lt(., columns = a, value = 8),
+    ~ test_col_vals_gt(., columns = c, value = vars(a)),
+    ~ col_vals_not_null(., columns = b),
     preconditions = ~ . \%>\% dplyr::filter(a < 10),
     actions = action_levels(warn_at = 0.1, stop_at = 0.2), 
     label = "The `serially()` step.",
@@ -321,9 +341,9 @@ YAML representation:
 \if{html}{\out{<div class="sourceCode yaml">}}\preformatted{steps:
 - serially:
     fns:
-    - ~col_vals_lt(., columns = vars(a), value = 8)
-    - ~col_vals_gt(., columns = vars(c), value = vars(a))
-    - ~col_vals_not_null(., vars(b))
+    - ~test_col_vals_lt(., columns = a, value = 8)
+    - ~test_col_vals_gt(., columns = c, value = vars(a))
+    - ~col_vals_not_null(., columns = b)
     preconditions: ~. \%>\% dplyr::filter(a < 10)
     actions:
       warn_fraction: 0.1
@@ -375,9 +395,9 @@ validation).
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_1 <-
   create_agent(tbl = tbl) \%>\%
   serially(
-    ~ test_col_is_numeric(., columns = vars(a, b)),
-    ~ test_col_vals_not_null(., columns = vars(a, b)),
-    ~ col_vals_gt(., columns = vars(b), value = vars(a))
+    ~ test_col_is_numeric(., columns = c(a, b)),
+    ~ test_col_vals_not_null(., columns = c(a, b)),
+    ~ col_vals_gt(., columns = b, value = vars(a))
     ) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
@@ -401,8 +421,8 @@ serial tests are performed.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_2 <-
   create_agent(tbl = tbl) \%>\%
   serially(
-    ~ test_col_is_numeric(., columns = vars(a, b)),
-    ~ test_col_vals_not_null(., columns = vars(a, b))
+    ~ test_col_is_numeric(., columns = c(a, b)),
+    ~ test_col_vals_not_null(., columns = c(a, b))
   ) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
@@ -424,9 +444,9 @@ behavior of side effects can be customized with the \code{actions} option.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   serially(
-    ~ test_col_is_numeric(., columns = vars(a, b)),
-    ~ test_col_vals_not_null(., columns = vars(a, b)),
-    ~ col_vals_gt(., columns = vars(b), value = vars(a))
+    ~ test_col_is_numeric(., columns = c(a, b)),
+    ~ test_col_vals_not_null(., columns = c(a, b)),
+    ~ col_vals_gt(., columns = b, value = vars(a))
   )
 #> # A tibble: 3 x 3
 #>       a     b     c
@@ -444,9 +464,9 @@ time. This is primarily used in \strong{testthat} tests.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_serially(
   tbl,
-  ~ test_col_is_numeric(., columns = vars(a, b)),
-  ~ test_col_vals_not_null(., columns = vars(a, b)),
-  ~ col_vals_gt(., columns = vars(b), value = vars(a))
+  ~ test_col_is_numeric(., columns = c(a, b)),
+  ~ test_col_vals_not_null(., columns = c(a, b)),
+  ~ col_vals_gt(., columns = b, value = vars(a))
 )
 }\if{html}{\out{</div>}}
 }
@@ -458,9 +478,9 @@ us.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   test_serially(
-    ~ test_col_is_numeric(., columns = vars(a, b)),
-    ~ test_col_vals_not_null(., columns = vars(a, b)),
-    ~ col_vals_gt(., columns = vars(b), value = vars(a))
+    ~ test_col_is_numeric(., columns = c(a, b)),
+    ~ test_col_vals_not_null(., columns = c(a, b)),
+    ~ col_vals_gt(., columns = b, value = vars(a))
   )
 #> [1] TRUE
 }\if{html}{\out{</div>}}
@@ -488,12 +508,12 @@ Other validation functions:
 \code{\link{col_vals_decreasing}()},
 \code{\link{col_vals_equal}()},
 \code{\link{col_vals_expr}()},
-\code{\link{col_vals_gte}()},
 \code{\link{col_vals_gt}()},
+\code{\link{col_vals_gte}()},
 \code{\link{col_vals_in_set}()},
 \code{\link{col_vals_increasing}()},
-\code{\link{col_vals_lte}()},
 \code{\link{col_vals_lt}()},
+\code{\link{col_vals_lte}()},
 \code{\link{col_vals_make_set}()},
 \code{\link{col_vals_make_subset}()},
 \code{\link{col_vals_not_between}()},

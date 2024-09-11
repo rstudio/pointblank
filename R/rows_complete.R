@@ -11,7 +11,7 @@
 #  
 #  This file is part of the 'rstudio/pointblank' project.
 #  
-#  Copyright (c) 2017-2023 pointblank authors
+#  Copyright (c) 2017-2024 pointblank authors
 #  
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
@@ -32,10 +32,14 @@
 #' be used with a data table. As a validation step or as an expectation, this
 #' will operate over the number of test units that is equal to the number of
 #' rows in the table (after any `preconditions` have been applied).
-#'
-#' We can specify the constraining column names in quotes, in `vars()`, and with
-#' the following **tidyselect** helper functions: `starts_with()`,
-#' `ends_with()`, `contains()`, `matches()`, and `everything()`.
+#' 
+#' @param columns *The target columns*
+#' 
+#'   `<tidy-select>` // *default:* `everything()`
+#' 
+#'   A column-selecting expression, as one would use inside `dplyr::select()`.
+#'   Specifies the set of column(s) for which the completeness of rows is
+#'   checked.
 #' 
 #' @inheritParams col_vals_gt
 #'   
@@ -126,6 +130,20 @@
 #' warning when a quarter of the total test units fails, the other `stop()`s at
 #' the same threshold level).
 #' 
+#' @section Labels:
+#' 
+#' `label` may be a single string or a character vector that matches the number
+#' of expanded steps. `label` also supports `{glue}` syntax and exposes the
+#' following dynamic variables contextualized to the current step:
+#'   
+#' - `"{.step}"`: The validation step name
+#' - `"{.col}"`: The current column name
+#' - `"{.seg_col}"`: The current segment's column name
+#' - `"{.seg_val}"`: The current segment's value/group
+#'     
+#' The glue context also supports ordinary expressions for further flexibility
+#' (e.g., `"{toupper(.step)}"`) as long as they return a length-1 string.
+#' 
 #' @section Briefs:
 #' 
 #' Want to describe this validation step in some detail? Keep in mind that this
@@ -150,7 +168,7 @@
 #' ```r
 #' agent %>% 
 #'   rows_complete(
-#'     columns = vars(a, b),
+#'     columns = c(a, b),
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
@@ -164,7 +182,7 @@
 #' ```yaml
 #' steps:
 #' - rows_complete:
-#'     columns: vars(a, b)
+#'     columns: c(a, b)
 #'     preconditions: ~. %>% dplyr::filter(a < 10)
 #'     segments: b ~ c("group_1", "group_2")
 #'     actions:
@@ -205,7 +223,7 @@
 #' ```r
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
-#'   rows_complete(columns = vars(a, b)) %>%
+#'   rows_complete(columns = c(a, b)) %>%
 #'   interrogate()
 #' ```
 #' 
@@ -227,7 +245,7 @@
 #' 
 #' ```{r}
 #' tbl %>%
-#'   rows_complete(columns = vars(a, b)) %>%
+#'   rows_complete(columns = c(a, b)) %>%
 #'   dplyr::pull(a)
 #' ```
 #' 
@@ -237,7 +255,7 @@
 #' time. This is primarily used in **testthat** tests.
 #' 
 #' ```r
-#' expect_rows_complete(tbl, columns = vars(a, b))
+#' expect_rows_complete(tbl, columns = c(a, b))
 #' ```
 #' 
 #' ## D: Using the test function
@@ -246,7 +264,7 @@
 #' us.
 #' 
 #' ```{r}
-#' test_rows_complete(tbl, columns = vars(a, b))
+#' test_rows_complete(tbl, columns = c(a, b))
 #' ```
 #' 
 #' @family validation functions
@@ -261,7 +279,7 @@ NULL
 #' @export
 rows_complete <- function(
     x,
-    columns = NULL,
+    columns = tidyselect::everything(),
     preconditions = NULL,
     segments = NULL,
     actions = NULL,
@@ -271,28 +289,17 @@ rows_complete <- function(
     active = TRUE
 ) {
   
-  # Get `columns` as a label
-  columns_expr <- 
-    rlang::as_label(rlang::quo(!!enquo(columns))) %>%
-    gsub("^\"|\"$", "", .)
-  
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
-  
-  if (uses_tidyselect(expr_text = columns_expr)) {
-    
-    # Resolve the columns based on the expression
-    columns <- resolve_columns(x = x, var_expr = columns, preconditions = NULL)
-    
-  } else {
-    
-    # Resolve the columns based on the expression
-    if (!is.null(rlang::eval_tidy(columns)) && !is.null(columns)) {
-      columns <- resolve_columns(x = x, var_expr = columns, preconditions)
-    } else {
-      columns <- NULL
-    }
+  # `rows_*()` functions treat `NULL` as `everything()`
+  if (rlang::quo_is_null(columns) || rlang::quo_is_missing(columns)) {
+    columns <- rlang::quo(tidyselect::everything())
   }
+  # Get `columns` as a label
+  columns_expr <- as_columns_expr(columns)
+  
+  # Resolve the columns based on the expression
+  columns <- resolve_columns(x = x, var_expr = columns, preconditions = NULL)
   
   # Resolve segments into list
   segments_list <-
@@ -307,7 +314,7 @@ rows_complete <- function(
     secret_agent <- 
       create_agent(x, label = "::QUIET::") %>%
       rows_complete(
-        columns = columns,
+        columns = tidyselect::all_of(columns),
         preconditions = preconditions,
         segments = segments,
         label = label,
@@ -322,12 +329,8 @@ rows_complete <- function(
   
   agent <- x
   
-  if (length(columns) > 0) {
+  if (length(columns) > 1) {
     columns <- paste(columns, collapse = ", ")
-  } else if (length(columns) == 1) {
-    columns <- columns
-  } else {
-    columns <- NULL
   }
   
   if (is.null(brief)) {
@@ -352,6 +355,7 @@ rows_complete <- function(
   
   # Add one or more validation steps based on the
   # length of `segments`
+  label <- resolve_label(label, segments = segments_list)
   for (i in seq_along(segments_list)) {
     
     seg_col <- names(segments_list[i])
@@ -371,7 +375,7 @@ rows_complete <- function(
         seg_val = seg_val,
         actions = covert_actions(actions, agent),
         step_id = step_id,
-        label = label,
+        label = label[[i]],
         brief = brief,
         active = active
       )
@@ -385,7 +389,7 @@ rows_complete <- function(
 #' @export
 expect_rows_complete <- function(
     object,
-    columns = NULL,
+    columns = tidyselect::everything(),
     preconditions = NULL,
     threshold = 1
 ) {
@@ -440,7 +444,7 @@ expect_rows_complete <- function(
 #' @export
 test_rows_complete <- function(
     object,
-    columns = NULL,
+    columns = tidyselect::everything(),
     preconditions = NULL,
     threshold = 1
 ) {

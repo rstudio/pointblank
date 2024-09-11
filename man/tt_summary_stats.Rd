@@ -65,7 +65,7 @@ ensure that the maximum revenue for individual purchases in the
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_summary_stats(tbl = game_revenue) \%>\%
   col_vals_lt(
-    columns = vars(item_revenue),
+    columns = item_revenue,
     value = 150,
     segments = .param. ~ "max"
   )
@@ -92,7 +92,7 @@ that the median revenue is somewhere between $8 and $12.
   dplyr::filter(item_type == "iap") \%>\%
   tt_summary_stats() \%>\%
   col_vals_between(
-    columns = vars(item_revenue),
+    columns = item_revenue,
     left = 8, right = 12,
     segments = .param. ~ "med"
   )
@@ -132,7 +132,7 @@ step that isolates the row of the median statistic.
   rows_complete() \%>\%
   rows_distinct() \%>\%
   col_vals_between(
-    columns = vars(item_revenue),
+    columns = item_revenue,
     left = 8, right = 12,
     preconditions = ~ . \%>\%
       dplyr::filter(item_type == "iap") \%>\%

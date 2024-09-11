@@ -11,7 +11,7 @@
 #  
 #  This file is part of the 'rstudio/pointblank' project.
 #  
-#  Copyright (c) 2017-2023 pointblank authors
+#  Copyright (c) 2017-2024 pointblank authors
 #  
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
@@ -148,15 +148,8 @@ get_next_validation_set_row <- function(agent) {
   step
 }
 
-exported_tidyselect_fns <- function() {
-  c("starts_with", "ends_with", "contains", "matches", "everything")
-}
-
-uses_tidyselect <- function(expr_text) {
-  grepl(
-    "^starts_with\\(|^ends_with\\(|^contains\\(|^matches\\(|^everything\\(",
-    expr_text
-  )
+tidyselect_helpers <- function() {
+  names(tidyselect::vars_select_helpers)
 }
 
 get_assertion_type_at_idx <- function(agent, idx) {
@@ -164,15 +157,29 @@ get_assertion_type_at_idx <- function(agent, idx) {
 }
 
 get_column_as_sym_at_idx <- function(agent, idx) {
-  rlang::sym(
-    agent$validation_set[[idx, "column"]] %>%
-      unlist() %>%
-      gsub("'", "", .)
-  )
+  column <- unlist(agent$validation_set[[idx, "column"]])
+  if (!is.na(column)) {
+    column <- rlang::sym(gsub("'", "", column))
+  }
+  column
 }
 
 get_values_at_idx <- function(agent, idx) {
-  agent$validation_set[[idx, "values"]] %>% unlist(recursive = FALSE)
+  
+  # Get list-column element (`values` is always a length-1 list)
+  values <- agent$validation_set[[idx, "values"]]
+  
+  # Expressions (via `col_vals_expr()`) and functions (via `specially()`)
+  # can get the old `unlist()` treatment
+  if (rlang::is_expression(values[[1]]) || rlang::is_function(values[[1]])) {
+    values <- unlist(values, recursive = FALSE)
+  } else {
+    # In other cases (e.g., `values`, `left`, `right`), flatten with subsetting
+    # to preserve class
+    values <- values[[1]]
+  }
+  
+  values
 }
 
 get_column_na_pass_at_idx <- function(agent, idx) {
@@ -206,7 +213,7 @@ materialize_table <- function(tbl, check = TRUE) {
     stop(
       "The `tbl` object must either be a table, a function, or a formula.\n",
       "* A table-prep formula can be used (with the expression on the RHS).\n",
-      "* A function can be made with `function()` {<table reading code>}.",
+      "* A function can be made with `function()` {<tbl reading code>}.",
       call. = FALSE
     )
   }  
@@ -218,75 +225,45 @@ materialize_table <- function(tbl, check = TRUE) {
   tbl
 }
 
-resolve_expr_to_cols <- function(tbl, var_expr) {
-  
-  var_expr <- enquo(var_expr)
-  
-  if ((var_expr %>% rlang::get_expr() %>% as.character())[1] == "vars") {
-    
-    cols <- (var_expr %>% rlang::get_expr() %>% as.character())[-1]
-    return(cols)
+as_columns_expr <- function(columns) {
+  columns_expr <- gsub("^\"|\"$", "", rlang::as_label(columns))
+  # Treat NULL and missing `columns` as the same
+  if (columns_expr == "<empty>") {
+    columns_expr <- "NULL"
   }
-  
-  tidyselect::vars_select(.vars = colnames(tbl), {{ var_expr }}) %>% unname()
+  columns_expr
 }
 
-resolve_columns <- function(x, var_expr, preconditions) {
-  
-  # If getting a character vector as `var_expr`, simply return the vector
-  # since this should already be a vector of column names and it's not necessary
-  # to resolve this against the target table
-  if (is.character(var_expr)) {
-    return(var_expr)
+is_secret_agent <- function(x) {
+  is_ptblank_agent(x) && (x$label == "::QUIET::")
+}
+
+resolve_label <- function(label, columns = "", segments = "") {
+  n_columns <- length(columns)
+  n_segments <- length(segments)
+  n_combinations <- n_columns * n_segments
+  # If label is NULL, turn into NA for vector storage
+  if (is.null(label)) {
+    label <- NA_character_
   }
-  
-  # nocov start
-  
-  # Return an empty character vector if the expr is NULL
-  if (inherits(var_expr, "quosure") &&
-      var_expr %>% rlang::as_label() == "NULL") {
-    
-    return(character(NA_character_))
+  # If length-1, match length of col-x-seg combination
+  if (length(label) == 1) {
+    label <- rep_len(label, n_combinations)
   }
-  
-  # nocov end
-  
-  # Get the column names from a non-NULL, non-character expression
-  if (is.null(preconditions)) {
-    
-    if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
-      
-      column <- resolve_expr_to_cols(tbl = x, var_expr = !!var_expr)
-      
-    } else if (inherits(x, ("ptblank_agent"))) {
-      
-      tbl <- get_tbl_object(agent = x)
-      column <- resolve_expr_to_cols(tbl = tbl, var_expr = !!var_expr)
-    }
-    
-  } else {
-    
-    if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
-      
-      tbl <- apply_preconditions(tbl = x, preconditions = preconditions)
-      
-      column <- resolve_expr_to_cols(tbl = tbl, var_expr = !!var_expr)
-      
-    } else if (inherits(x, ("ptblank_agent"))) {
-      
-      tbl <- get_tbl_object(agent = x)
-      
-      tbl <- apply_preconditions(tbl = tbl, preconditions = preconditions)
-      
-      column <- resolve_expr_to_cols(tbl = tbl, var_expr = !!var_expr)
-    }
+  # Check for length match
+  if (length(label) != n_combinations) {
+    rlang::abort(paste0("`label` must be length 1 or ", n_combinations,
+                        ", not ", length(label)))
   }
-  
-  if (length(column) < 1) {
-    column <- NA_character_
+  # Create a columns * segments matrix of the (recycled) label vector
+  # - Fill by row to preserve order (for loops iterate the j before the i)
+  out <- matrix(label, nrow = n_columns, ncol = n_segments, byrow = TRUE)
+  # If missing columns and/or segments, collapse to vector/scalar
+  if (missing(columns) || missing(segments)) {
+    out <- as.vector(out)
   }
-  
-  column
+  # A matrix/vector subsettable via `out[col]`, `out[seg]`, or `out[col,seg]`
+  out
 }
 
 #' The `resolve_segments()` function works with input from the `segments`
@@ -322,7 +299,7 @@ resolve_segments <- function(x, seg_expr, preconditions) {
   }
   
   segments_list <- list()
-
+  
   # Process each `seg_expr` element
   for (i in seq_along(seg_expr)) {
     
@@ -344,7 +321,7 @@ resolve_segments <- function(x, seg_expr, preconditions) {
         
         col_seg_vals <- 
           tbl %>%
-          dplyr::select(.env$column_name) %>%
+          dplyr::select(tidyselect::all_of(column_name)) %>%
           dplyr::distinct() %>%
           dplyr::pull()
         
@@ -578,6 +555,64 @@ get_threshold_type <- function(threshold) {
   }
 }
 
+# nocov start
+
+all_data_vars <- function(x, data_cols) {
+  deparsed <- paste(deparse(x, width.cutoff = 500L), collapse = " ")
+  reparsed <- parse(text = deparsed, keep.source = TRUE)
+  x <- utils::getParseData(reparsed)
+  if (is.null(x)) return(NA_character_)
+  
+  .data_vars <- pronoun_vars(x, ".data")
+  .env_vars <- pronoun_vars(x, ".env")
+  
+  bare_syms <- x[
+    x$token == "SYMBOL" &
+      !x$text %in% c(".data", ".env") &
+      !x$id %in% c(names(.data_vars), names(.env_vars)),
+    c("id", "text")
+  ]
+  if (nrow(bare_syms) == 0) {
+    all_cols <- unique(.data_vars)
+  } else {
+    unscoped_vars <- bare_syms$text
+    names(unscoped_vars) <- bare_syms$id
+    all_cols <- c(unscoped_vars, .data_vars)
+    all_cols <- all_cols[order(as.integer(names(all_cols)))]
+    all_cols <- unique(all_cols)
+  }
+  
+  all_cols <- all_cols[all_cols %in% data_cols]
+  
+  if (length(all_cols) == 0) {
+    NA_character_
+  } else {
+    sort(all_cols)
+  }
+  
+}
+
+pronoun_vars <- function(x, pronoun = c(".data", ".env")) {
+  pronoun <- match.arg(pronoun)
+  if (!any(x$text == pronoun)) return(character(0))
+  conseq_pronoun <- rle(x$text == pronoun)
+  x$dotdata <- rep(seq_along(conseq_pronoun$values), conseq_pronoun$lengths)
+  x$dotdata <- ifelse(x$text == pronoun, x$dotdata + 1, x$dotdata)
+  dotdata <- lapply(split(x, x$dotdata), function(g) {
+    if (g$text[1] == pronoun && g$token[3] %in% c("'$'", "LBB")) {
+      var <- g$text[4]
+      names(var) <- g$id[4]
+      if (g$token[4] == "STR_CONST") gsub('"', "", var) else var
+    } else {
+      character(0)
+    }
+  })
+  allvars <- unlist(unname(dotdata))
+  allvars
+}
+
+# nocov end
+
 all_validations_fns_vec <- function() {
   
   c(
@@ -692,19 +727,18 @@ get_tbl_dbi_src_details <- function(tbl) {
 get_r_column_names_types <- function(tbl) {
   
   suppressWarnings(
-    column_names_types <-
+    column_header <-
       tbl %>%
       utils::head(1) %>%
-      dplyr::collect() %>%
-      vapply(
-        FUN.VALUE = character(1),
-        FUN = function(x) class(x)[1]
-      )
+      dplyr::collect()
   )
+  column_names_types <-
+    vapply(column_header, function(x) class(x)[1], character(1))
   
   list(
     col_names = names(column_names_types),
-    r_col_types = unname(unlist(column_names_types))
+    r_col_types = unname(unlist(column_names_types)),
+    col_ptypes = utils::head(column_header, 0)
   )
 }
 
@@ -759,7 +793,8 @@ get_tbl_information_df <- function(tbl) {
     db_tbl_name = NA_character_,
     col_names = r_column_names_types$col_names,
     r_col_types = r_column_names_types$r_col_types,
-    db_col_types = NA_character_
+    db_col_types = NA_character_,
+    col_ptypes = r_column_names_types$col_ptypes
   )
 }
 
@@ -783,7 +818,8 @@ get_tbl_information_spark <- function(tbl) {
     db_tbl_name = NA_character_,
     col_names = r_column_names_types$col_names,
     r_col_types = r_column_names_types$r_col_types,
-    db_col_types = db_col_types
+    db_col_types = db_col_types,
+    col_ptypes = r_column_names_types$col_ptypes
   )
 }
 
@@ -927,7 +963,7 @@ get_tbl_information_dbi <- function(tbl) {
           DBI::dbDataType(
             tbl_connection,
             tbl %>%
-              dplyr::select(x) %>%
+              dplyr::select(tidyselect::all_of(x)) %>%
               utils::head(1) %>%
               dplyr::collect() %>%
               dplyr::pull(x)
@@ -964,7 +1000,8 @@ get_tbl_information_dbi <- function(tbl) {
     db_tbl_name = db_tbl_name,
     col_names = r_column_names_types$col_names,
     r_col_types = r_column_names_types$r_col_types,
-    db_col_types = db_col_types
+    db_col_types = db_col_types,
+    col_ptypes = r_column_names_types$col_ptypes
   )
 }
 
@@ -1008,7 +1045,8 @@ get_tbl_information_arrow <- function(tbl) {
     db_tbl_name = NA_character_,
     col_names = col_names,
     r_col_types = r_col_types,
-    db_col_types = db_col_types
+    db_col_types = db_col_types,
+    col_ptypes = dplyr::collect(utils::head(tbl, 0))
   )
 }
 
@@ -1183,10 +1221,15 @@ pb_str_catalog <- function(
     oxford = TRUE,
     as_code = TRUE,
     quot_str = NULL,
+    na_rm = FALSE,
     lang = NULL
 ) {
   
   if (is.null(lang)) lang <- "en"
+  
+  if (na_rm) {
+    item_vector <- item_vector[!is.na(item_vector)]
+  }
   
   item_count <- length(item_vector)
 
@@ -1568,8 +1611,8 @@ cli_bullet_msg <- function(
   msg <- glue::glue_collapse(msg, "\n")
   msg <- glue::glue(msg, .envir = .envir)
   
-  if (!is.null(color) && requireNamespace("crayon", quietly = TRUE)) {
-    color_style <- crayon::make_style(color)
+  if (!is.null(color)) {
+    color_style <- cli::make_ansi_style(color)
     bullet <- color_style(bullet)
   }
 
@@ -1590,16 +1633,14 @@ print_time <- function(time_diff_s) {
   
   if (time_diff_s < 1) {
     return("")
-  } else {
-    return(
-      paste0(
-        " {.time_taken (",
-        round(time_diff_s, 1) %>%
-          formatC(format = "f", drop0trailing = FALSE, digits = 1),
-        " s)}"
-      )
-    )
   }
+  
+  paste0(
+    " {.time_taken (",
+    round(time_diff_s, 1) %>%
+      formatC(format = "f", drop0trailing = FALSE, digits = 1),
+    " s)}"
+  )
 }
 
 gt_missing <- 
@@ -1645,4 +1686,13 @@ pb_get_image_tag <- function(file, dir = "images") {
     "alt=\"", alt_text, "\" ",
     "style=\"width:100\\%;\">"
   )
+}
+
+deparse_expr <- function(expr, collapse = " ", ...) {
+  if (rlang::is_scalar_atomic(expr)) {
+    as.character(expr)
+  } else {
+    deparsed <- paste(deparse(expr, ...), collapse = collapse)
+    paste("<expr>", deparsed)
+  }
 }

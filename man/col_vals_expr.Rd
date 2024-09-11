@@ -83,12 +83,13 @@ produce (influenced by the number of \code{columns} provided), (2) be an ID
 string not used in any previous validation step, and (3) be a vector with
 unique values.}
 
-\item{label}{\emph{An optional label for the validation step}
+\item{label}{\emph{Optional label for the validation step}
 
-\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+\verb{vector<character>} // \emph{default:} \code{NULL} (\code{optional})
 
-An optional label for the validation step. This label appears in the
-\emph{agent} report and, for the best appearance, it should be kept quite short.}
+Optional label for the validation step. This label appears in the \emph{agent}
+report and, for the best appearance, it should be kept quite short. See
+the \emph{Labels} section for more information.}
 
 \item{brief}{\emph{Brief description for the validation step}
 
@@ -115,7 +116,7 @@ be used with \code{.} (serving as the input data table) to evaluate to a single
 logical value. With this approach, the \strong{pointblank} function
 \code{\link[=has_columns]{has_columns()}} can be used to determine whether to make a validation step
 active on the basis of one or more columns existing in the table
-(e.g., \code{~ . \%>\% has_columns(vars(d, e))}).}
+(e.g., \code{~ . \%>\% has_columns(c(d, e))}).}
 
 \item{object}{\emph{A data table for expectations or tests}
 
@@ -250,6 +251,23 @@ otherwise, nothing happens. For the \verb{col_vals_*()}-type functions, using
 choices depending on the situation (the first produces a warning when a
 quarter of the total test units fails, the other \code{stop()}s at the same
 threshold level).
+}
+
+\section{Labels}{
+
+
+\code{label} may be a single string or a character vector that matches the number
+of expanded steps. \code{label} also supports \code{{glue}} syntax and exposes the
+following dynamic variables contextualized to the current step:
+\itemize{
+\item \code{"{.step}"}: The validation step name
+\item \code{"{.col}"}: The current column name
+\item \code{"{.seg_col}"}: The current segment's column name
+\item \code{"{.seg_val}"}: The current segment's value/group
+}
+
+The glue context also supports ordinary expressions for further flexibility
+(e.g., \code{"{toupper(.step)}"}) as long as they return a length-1 string.
 }
 
 \section{Briefs}{
@@ -438,12 +456,12 @@ Other validation functions:
 \code{\link{col_vals_between}()},
 \code{\link{col_vals_decreasing}()},
 \code{\link{col_vals_equal}()},
-\code{\link{col_vals_gte}()},
 \code{\link{col_vals_gt}()},
+\code{\link{col_vals_gte}()},
 \code{\link{col_vals_in_set}()},
 \code{\link{col_vals_increasing}()},
-\code{\link{col_vals_lte}()},
 \code{\link{col_vals_lt}()},
+\code{\link{col_vals_lte}()},
 \code{\link{col_vals_make_set}()},
 \code{\link{col_vals_make_subset}()},
 \code{\link{col_vals_not_between}()},

@@ -11,7 +11,7 @@
 #  
 #  This file is part of the 'rstudio/pointblank' project.
 #  
-#  Copyright (c) 2017-2023 pointblank authors
+#  Copyright (c) 2017-2024 pointblank authors
 #  
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
@@ -67,7 +67,7 @@
 #' ```{r}
 #' tt_summary_stats(tbl = game_revenue) %>%
 #'   col_vals_lt(
-#'     columns = vars(item_revenue),
+#'     columns = item_revenue,
 #'     value = 150,
 #'     segments = .param. ~ "max"
 #'   )
@@ -83,7 +83,7 @@
 #'   dplyr::filter(item_type == "iap") %>%
 #'   tt_summary_stats() %>%
 #'   col_vals_between(
-#'     columns = vars(item_revenue),
+#'     columns = item_revenue,
 #'     left = 8, right = 12,
 #'     segments = .param. ~ "med"
 #'   )
@@ -112,7 +112,7 @@
 #'   rows_complete() %>%
 #'   rows_distinct() %>%
 #'   col_vals_between(
-#'     columns = vars(item_revenue),
+#'     columns = item_revenue,
 #'     left = 8, right = 12,
 #'     preconditions = ~ . %>%
 #'       dplyr::filter(item_type == "iap") %>%
@@ -161,7 +161,7 @@ tt_summary_stats <- function(tbl) {
     
     if (r_col_types[i] %in% c("integer", "numeric")) {
       
-      data_col <- dplyr::select(tbl, col_names[i])
+      data_col <- dplyr::select(tbl, tidyselect::all_of(col_names[i]))
       
       # nocov start
       
@@ -238,11 +238,11 @@ tt_summary_stats <- function(tbl) {
 #' ```{r}
 #' tt_string_info(tbl = game_revenue) %>%
 #'   col_vals_equal(
-#'     columns = vars(player_id),
+#'     columns = player_id,
 #'     value = 15
 #'   ) %>%
 #'   col_vals_equal(
-#'     columns = vars(session_id),
+#'     columns = session_id,
 #'     value = 24
 #'   )
 #' ```
@@ -256,7 +256,7 @@ tt_summary_stats <- function(tbl) {
 #' ```{r}
 #' tt_string_info(tbl = small_table) %>%
 #'   test_col_vals_lte(
-#'     columns = vars(f),
+#'     columns = f,
 #'     value = 4
 #'   )
 #' ```
@@ -286,7 +286,7 @@ tt_string_info <- function(tbl) {
     
     if (r_col_types[i] == "character") {
       
-      data_col <- dplyr::select(tbl, col_names[i])
+      data_col <- dplyr::select(tbl, tidyselect::all_of(col_names[i]))
       
       suppressWarnings({
         info_list <- get_table_column_nchar_stats(data_column = data_col)
@@ -343,7 +343,7 @@ tt_string_info <- function(tbl) {
 #' tt_tbl_dims(tbl = game_revenue) %>%
 #'   dplyr::filter(.param. == "rows") %>%
 #'   test_col_vals_gt(
-#'     columns = vars(value),
+#'     columns = value,
 #'     value = 1500
 #'   )
 #' ```
@@ -355,7 +355,7 @@ tt_string_info <- function(tbl) {
 #' tt_tbl_dims(tbl = small_table) %>%
 #'   dplyr::filter(.param. == "columns") %>%
 #'   test_col_vals_lt(
-#'     columns = vars(value),
+#'     columns = value,
 #'     value = 10
 #'   )
 #' ```
@@ -421,7 +421,7 @@ tt_tbl_dims <- function(tbl) {
 #' ```{r}
 #' tt_tbl_colnames(tbl = game_revenue) %>%
 #'   test_col_vals_make_subset(
-#'     columns = vars(value),
+#'     columns = value,
 #'     set = c("acquisition", "country")
 #'   )
 #' ```
@@ -436,7 +436,7 @@ tt_tbl_dims <- function(tbl) {
 #'   tt_tbl_colnames() %>%
 #'   tt_string_info() %>%
 #'   test_col_vals_lt(
-#'     columns = vars(value),
+#'     columns = value,
 #'     value = 15
 #'   )
 #' ```
@@ -546,18 +546,7 @@ tt_time_shift <- function(
     time_shift = "0y 0m 0d 0H 0M 0S"
 ) {
   
-  # nocov start
-  
-  if (!requireNamespace("lubridate", quietly = TRUE)) {
-    
-    stop(
-      "The `tt_time_shift()` function requires the lubridate package:\n",
-      "* It can be installed with `install.packages(\"lubridate\")`.",
-      call. = FALSE
-    )
-  }
-  
-  # nocov end
+  rlang::check_installed("lubridate", "to use the `tt_time_shift()` function.")
   
   # Determine whether the `tbl` object is acceptable here
   check_is_a_table_object(tbl = tbl)
@@ -585,7 +574,7 @@ tt_time_shift <- function(
         tbl %>%
         dplyr::mutate(
           dplyr::across(
-            .cols = time_columns,
+            .cols = tidyselect::all_of(time_columns),
             .fns = ~ lubridate::days(n_days) + .
           )
         )
@@ -596,7 +585,7 @@ tt_time_shift <- function(
         tbl %>%
         dplyr::mutate(
           dplyr::across(
-            .cols = time_columns,
+            .cols = tidyselect::all_of(time_columns),
             .fns = ~ time_shift + .
           )
         )
@@ -645,7 +634,7 @@ tt_time_shift <- function(
           tbl %>%
           dplyr::mutate(
             dplyr::across(
-              .cols = time_columns,
+              .cols = tidyselect::all_of(time_columns),
               .fns = ~ fn_time(time_value * direction_val) + .)
           )
       }
@@ -760,18 +749,7 @@ tt_time_slice <- function(
     arrange = FALSE
 ) {
   
-  # nocov start
-  
-  if (!requireNamespace("lubridate", quietly = TRUE)) {
-    
-    stop(
-      "The `tt_time_shift()` function requires the lubridate package:\n",
-      "* It can be installed with `install.packages(\"lubridate\")`.",
-      call. = FALSE
-    )
-  }
-  
-  # nocov end
+  rlang::check_installed("lubridate", "to use the `tt_time_slice()` function.")
   
   keep <- match.arg(keep)
   
@@ -953,7 +931,7 @@ tt_time_slice <- function(
 #'     keep = "right"
 #'   ) %>%
 #'   test_col_vals_lte(
-#'     columns = vars(session_duration), 
+#'     columns = session_duration, 
 #'     value = get_tt_param(
 #'       tbl = stats_tbl,
 #'       param = "max",
@@ -1058,9 +1036,9 @@ get_tt_param <- function(
     # Obtain the value from the `tbl` through a `select()`, `filter()`, `pull()`
     param_value <-
       tbl %>%
-      dplyr::select(.param., .env$column) %>%
+      dplyr::select(.param., tidyselect::all_of(column)) %>%
       dplyr::filter(.param. == .env$param) %>%
-      dplyr::pull(.env$column)
+      dplyr::pull(tidyselect::all_of(column))
     
   } else if (tt_type == "tbl_dims") {
     

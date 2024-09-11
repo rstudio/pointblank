@@ -11,7 +11,7 @@
 #  
 #  This file is part of the 'rstudio/pointblank' project.
 #  
-#  Copyright (c) 2017-2023 pointblank authors
+#  Copyright (c) 2017-2024 pointblank authors
 #  
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
@@ -107,7 +107,7 @@
 #'   label = "An example that uses a table store.",
 #'   actions = action_levels(warn_at = 0.10)
 #' ) %>% 
-#'   col_exists(vars(date, date_time)) %>%
+#'   col_exists(c(date, date_time)) %>%
 #'   write_yaml()
 #' ```
 #'   
@@ -122,7 +122,7 @@
 #' locale: en
 #' steps:
 #'   - col_exists:
-#'     columns: vars(date, date_time)
+#'     columns: c(date, date_time)
 #' ```
 #' 
 #' Now, whenever the `sml_table_high` table needs to be validated, it can be
@@ -620,7 +620,7 @@ add_to_name_list <- function(
 #'     label = "`tbl_source()` example",
 #'     actions = action_levels(warn_at = 0.10)
 #'   ) %>% 
-#'   col_exists(columns = vars(date, date_time)) %>%
+#'   col_exists(columns = c(date, date_time)) %>%
 #'   interrogate()
 #' ```
 #' 

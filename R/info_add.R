@@ -11,7 +11,7 @@
 #  
 #  This file is part of the 'rstudio/pointblank' project.
 #  
-#  Copyright (c) 2017-2023 pointblank authors
+#  Copyright (c) 2017-2024 pointblank authors
 #  
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
@@ -193,7 +193,7 @@ info_tabular <- function(
     ...
 ) {
   
-  metadata_items <- list(...)
+  metadata_items <- rlang::list2(...)
   
   metadata <- x
   
@@ -246,7 +246,7 @@ info_tabular <- function(
 #' 
 #' @param columns *The target columns*
 #'   
-#'   `vector<character>|vars(<columns>)`` // **required**
+#'   `vector<character>|vars(<columns>)` // **required**
 #' 
 #'   The column or set of columns to focus on. Can be defined as a column name
 #'   in quotes (e.g., `"<column_name>"`), one or more column names in `vars()`
@@ -331,19 +331,19 @@ info_tabular <- function(
 #' # R statement
 #' informant %>% 
 #'   info_columns(
-#'     columns = "date_time",
+#'     columns = date_time,
 #'     info = "*info text* 1."
 #'   ) %>%
 #'   info_columns(
-#'     columns = "date",
+#'     columns = date,
 #'     info = "*info text* 2."
 #'   ) %>%
 #'   info_columns(
-#'     columns = "item_count",
+#'     columns = item_count,
 #'     info = "*info text* 3. Statistics: {snippet_1}."
 #'   ) %>%
 #'   info_columns(
-#'     columns = vars(date, date_time),
+#'     columns = c(date, date_time),
 #'     info = "UTC time."
 #'   )
 #' 
@@ -401,7 +401,7 @@ info_tabular <- function(
 #' informant <-
 #'   informant %>%
 #'   info_columns(
-#'     columns = vars(a),
+#'     columns = a,
 #'     info = "In the range of 1 to 10. ((SIMPLE))"
 #'   ) %>%
 #'   info_columns(
@@ -409,7 +409,7 @@ info_tabular <- function(
 #'     info = "Time-based values (e.g., `Sys.time()`)."
 #'   ) %>%
 #'   info_columns(
-#'     columns = "date",
+#'     columns = date,
 #'     info = "The date part of `date_time`. ((CALC))"
 #'   )
 #' ```
@@ -442,17 +442,21 @@ info_columns <- function(
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
   
-  metadata_items <- list(...)
+  metadata_items <- rlang::list2(...)
   
   metadata <- x
   
   metadata_list <- metadata$metadata
   metadata_columns <- metadata_list$columns
   
-  x <- dplyr::as_tibble(metadata_columns %>% lapply(function(x) 1))
+  if (is.null(x$tbl)) {
+    tbl <- metadata_list[["_private"]]$col_ptypes
+  } else {
+    tbl <- x$tbl
+  }
   
   # Resolve the columns based on the expression
-  columns <- resolve_columns(x = x, var_expr = columns, preconditions = NULL)
+  columns <- resolve_columns(x = tbl, var_expr = columns)
   
   if (length(columns) == 1 && is.na(columns)) {
    
@@ -605,11 +609,11 @@ info_columns <- function(
 #' informant <-
 #'   informant %>%
 #'   info_columns(
-#'     columns = "item_revenue",
+#'     columns = item_revenue,
 #'     info = "Revenue reported in USD."
 #'   ) %>%
 #'   info_columns(
-#'     columns = "acquisition",
+#'     columns = acquisition,
 #'     `top list` = "{top5_aq}"
 #'   ) %>%
 #'   info_snippet(
@@ -719,7 +723,7 @@ check_info_columns_tbl <- function(tbl) {
 #'   
 #' @param section_name *The section name*
 #' 
-#'   `scalar<character>`` // **required**
+#'   `scalar<character>` // **required**
 #' 
 #'   The name of the section for which this information pertains.
 #'   
@@ -888,7 +892,7 @@ info_section <- function(
     ...
 ) {
   
-  metadata_items <- list(...)
+  metadata_items <- rlang::list2(...)
   
   metadata <- x
   
@@ -961,7 +965,7 @@ info_section <- function(
 #' 
 #' @param snippet_name *The snippet name*
 #' 
-#'   `scalar<character>`` // **required**
+#'   `scalar<character>` // **required**
 #' 
 #'   The name for snippet, which is used for interpolating the result of the
 #'   snippet formula into *info text* defined by an `info_*()` function.
@@ -1009,7 +1013,7 @@ info_section <- function(
 #' # R statement
 #' informant %>% 
 #'   info_columns(
-#'     columns = "date_time",
+#'     columns = date_time,
 #'     `Latest Date` = "The latest date is {latest_date}."
 #'   ) %>%
 #'   info_snippet(
@@ -1064,7 +1068,7 @@ info_section <- function(
 #'     fn = snip_highest(column = "a")
 #'   ) %>%
 #'   info_columns(
-#'     columns = vars(a),
+#'     columns = a,
 #'     info = "In the range of 1 to {max_a}. ((SIMPLE))"
 #'   ) %>%
 #'   info_columns(
@@ -1072,7 +1076,7 @@ info_section <- function(
 #'     info = "Time-based values (e.g., `Sys.time()`)."
 #'   ) %>%
 #'   info_columns(
-#'     columns = "date",
+#'     columns = date,
 #'     info = "The date part of `date_time`. ((CALC))"
 #'   ) %>%
 #'   info_section(
@@ -1158,7 +1162,7 @@ info_snippet <- function(
 #' 
 #' @param column *The target column*
 #'   
-#'   `scalar<character>`` // **required**
+#'   `scalar<character>` // **required**
 #' 
 #'   The name of the column that contains the target values.
 #' 
@@ -1227,6 +1231,12 @@ info_snippet <- function(
 #'   derived from `character` or `factor` values; numbers, dates, and logical
 #'   values won't have quotation marks. We can explicitly use quotations (or
 #'   not) with either `TRUE` or `FALSE` here.
+#'   
+#' @param na_rm *Remove NA values from list*
+#' 
+#'   `scalar<logical>` // *default:* `FALSE`
+#' 
+#'   An option for whether NA values should be counted as an item in the list.
 #' 
 #' @param lang *Reporting language*
 #' 
@@ -1260,7 +1270,7 @@ info_snippet <- function(
 #'     label = "An example."
 #'   ) %>% 
 #'   info_columns(
-#'     columns = "f",
+#'     columns = f,
 #'     `Items` = "This column contains {values_f}."
 #'   ) %>%
 #'   info_snippet(
@@ -1297,6 +1307,7 @@ snip_list <- function(
     oxford = TRUE,
     as_code = TRUE,
     quot_str = NULL,
+    na_rm = FALSE,
     lang = NULL
 ) {
 
@@ -1361,9 +1372,9 @@ snip_list <- function(
       stats::as.formula(
         as.character(
           glue::glue(
-            "~ . %>% dplyr::select(<<column>>) %>%",
+            "~ . %>% dplyr::select(`<<column>>`) %>%",
             "dplyr::distinct() %>%",
-            "dplyr::pull(<<column>>) %>%",
+            "dplyr::pull(`<<column>>`) %>%",
             ifelse(reverse, "rev() %>%", ""),
             "pb_str_catalog(
             limit = <<limit[1]>>,
@@ -1372,6 +1383,7 @@ snip_list <- function(
             oxford = <<oxford>>,
             as_code = <<as_code>>,
             quot_str = <<quot_str>>,
+            na_rm = <<na_rm>>,
             lang = <<lang>>
           )",
           .open = "<<", .close = ">>"   
@@ -1385,16 +1397,16 @@ snip_list <- function(
       stats::as.formula(
         as.character(
           glue::glue(
-            "~ . %>% dplyr::select(<<column>>) %>%",
-            "dplyr::group_by(<<column>>) %>%",
+            "~ . %>% dplyr::select(`<<column>>`) %>%",
+            "dplyr::group_by(`<<column>>`) %>%",
             "dplyr::summarize(`_count_` = dplyr::n(), .groups = 'keep') %>%",
             ifelse(
               reverse,
               "dplyr::arrange(`_count_`) %>%",
               "dplyr::arrange(dplyr::desc(`_count_`)) %>%"
             ),
-            "dplyr::select(<<column>>) %>%",
-            "dplyr::pull(<<column>>) %>%",
+            "dplyr::select(`<<column>>`) %>%",
+            "dplyr::pull(`<<column>>`) %>%",
             "pb_str_catalog(
             limit = <<limit[1]>>,
             sep = <<sep>>,
@@ -1402,6 +1414,7 @@ snip_list <- function(
             oxford = <<oxford>>,
             as_code = <<as_code>>,
             quot_str = <<quot_str>>,
+            na_rm = <<na_rm>>,
             lang = <<lang>>
           )",
           .open = "<<", .close = ">>"   
@@ -1416,9 +1429,9 @@ snip_list <- function(
       stats::as.formula(
         as.character(
           glue::glue(
-            "~ . %>% dplyr::select(<<column>>) %>%",
+            "~ . %>% dplyr::select(`<<column>>`) %>%",
             "dplyr::distinct() %>%",
-            "dplyr::pull(<<column>>) %>%",
+            "dplyr::pull(`<<column>>`) %>%",
             ifelse(
               reverse,
               "sort(decreasing = TRUE) %>%",
@@ -1431,6 +1444,7 @@ snip_list <- function(
             oxford = <<oxford>>,
             as_code = <<as_code>>,
             quot_str = <<quot_str>>,
+            na_rm = <<na_rm>>,
             lang = <<lang>>
           )",
           .open = "<<", .close = ">>"   
@@ -1461,7 +1475,7 @@ snip_list <- function(
 #'
 #' @param column *The target column*
 #'   
-#'   `scalar<character>`` // **required**
+#'   `scalar<character>` // **required**
 #' 
 #'   The name of the column that contains the target values.
 #' 
@@ -1491,7 +1505,7 @@ snip_list <- function(
 #'     label = "An example."
 #'   ) %>% 
 #'   info_columns(
-#'     columns = "d",
+#'     columns = d,
 #'     `Stats` = "Stats (fivenum): {stats_d}."
 #'   ) %>%
 #'   info_snippet(
@@ -1529,7 +1543,7 @@ snip_stats <- function(
     as.character(
       glue::glue(
         "~ . %>%
-    dplyr::select(<<column>>) %>%
+    dplyr::select(`<<column>>`) %>%
     pb_str_summary(type = '<<type>>')",
     .open = "<<", .close = ">>"
       )
@@ -1548,7 +1562,7 @@ snip_stats <- function(
 #' 
 #' @param column *The target column*
 #'   
-#'   `scalar<character>`` // **required**
+#'   `scalar<character>` // **required**
 #' 
 #'   The name of the column that contains the target values.
 #'   
@@ -1570,7 +1584,7 @@ snip_stats <- function(
 #'     label = "An example."
 #'   ) %>% 
 #'   info_columns(
-#'     columns = "a",
+#'     columns = a,
 #'     `Lowest Value` = "Lowest value is {lowest_a}."
 #'   ) %>%
 #'   info_snippet(
@@ -1603,8 +1617,8 @@ snip_lowest <- function(column) {
     as.character(
       glue::glue(
         "~ . %>%
-    dplyr::select(<<column>>) %>% dplyr::distinct() %>%
-    dplyr::summarize(`pb_summary` = min(<<column>>, na.rm = TRUE)) %>%
+    dplyr::select(`<<column>>`) %>% dplyr::distinct() %>%
+    dplyr::summarize(`pb_summary` = min(`<<column>>`, na.rm = TRUE)) %>%
     dplyr::pull(`pb_summary`) %>% as.character()",
     .open = "<<", .close = ">>"
       )
@@ -1622,7 +1636,7 @@ snip_lowest <- function(column) {
 #' 
 #' @param column *The target column*
 #'   
-#'   `scalar<character>`` // **required**
+#'   `scalar<character>` // **required**
 #' 
 #'   The name of the column that contains the target values.
 #'   
@@ -1644,7 +1658,7 @@ snip_lowest <- function(column) {
 #'     label = "An example."
 #'   ) %>% 
 #'   info_columns(
-#'     columns = "a",
+#'     columns = a,
 #'     `Highest Value` = "Highest value is {highest_a}."
 #'   ) %>%
 #'   info_snippet(
@@ -1677,8 +1691,8 @@ snip_highest <- function(column) {
     as.character(
       glue::glue(
         "~ . %>%
-    dplyr::select(<<column>>) %>% dplyr::distinct() %>%
-    dplyr::summarize(`pb_summary` = max(<<column>>, na.rm = TRUE)) %>%
+    dplyr::select(`<<column>>`) %>% dplyr::distinct() %>%
+    dplyr::summarize(`pb_summary` = max(`<<column>>`, na.rm = TRUE)) %>%
     dplyr::pull(`pb_summary`) %>% as.character()",
     .open = "<<", .close = ">>"
       )

@@ -11,7 +11,7 @@
 #  
 #  This file is part of the 'rstudio/pointblank' project.
 #  
-#  Copyright (c) 2017-2023 pointblank authors
+#  Copyright (c) 2017-2024 pointblank authors
 #  
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
@@ -154,116 +154,116 @@
 #'   ) %>%
 #'   # Expect that column `name` is of type: character
 #'   col_is_character(
-#'     columns = vars(name)
+#'     columns = name
 #'   ) %>%
 #'   # Expect that column `year` is of type: numeric
 #'   col_is_numeric(
-#'     columns = vars(year)
+#'     columns = year
 #'   ) %>%
 #'   # Expect that values in `year` should be between `1975` and `2020`
 #'   col_vals_between(
-#'     columns = vars(year),
+#'     columns = year,
 #'     left = 1975,
 #'     right = 2020
 #'   ) %>%
 #'   # Expect that column `month` is of type: numeric
 #'   col_is_numeric(
-#'     columns = vars(month)
+#'     columns = month
 #'   ) %>%
 #'   # Expect that values in `month` should be between `1` and `12`
 #'   col_vals_between(
-#'     columns = vars(month),
+#'     columns = month,
 #'     left = 1,
 #'     right = 12
 #'   ) %>%
 #'   # Expect that column `day` is of type: integer
 #'   col_is_integer(
-#'     columns = vars(day)
+#'     columns = day
 #'   ) %>%
 #'   # Expect that values in `day` should be between `1` and `31`
 #'   col_vals_between(
-#'     columns = vars(day),
+#'     columns = day,
 #'     left = 1,
 #'     right = 31
 #'   ) %>%
 #'   # Expect that column `hour` is of type: numeric
 #'   col_is_numeric(
-#'     columns = vars(hour)
+#'     columns = hour
 #'   ) %>%
 #'   # Expect that values in `hour` should be between `0` and `23`
 #'   col_vals_between(
-#'     columns = vars(hour),
+#'     columns = hour,
 #'     left = 0,
 #'     right = 23
 #'   ) %>%
 #'   # Expect that column `lat` is of type: numeric
 #'   col_is_numeric(
-#'     columns = vars(lat)
+#'     columns = lat
 #'   ) %>%
 #'   # Expect that values in `lat` should be between `-90` and `90`
 #'   col_vals_between(
-#'     columns = vars(lat),
+#'     columns = lat,
 #'     left = -90,
 #'     right = 90
 #'   ) %>%
 #'   # Expect that column `long` is of type: numeric
 #'   col_is_numeric(
-#'     columns = vars(long)
+#'     columns = long
 #'   ) %>%
 #'   # Expect that values in `long` should be between `-180` and `180`
 #'   col_vals_between(
-#'     columns = vars(long),
+#'     columns = long,
 #'     left = -180,
 #'     right = 180
 #'   ) %>%
 #'   # Expect that column `status` is of type: character
 #'   col_is_character(
-#'     columns = vars(status)
+#'     columns = status
 #'   ) %>%
 #'   # Expect that column `category` is of type: factor
 #'   col_is_factor(
-#'     columns = vars(category)
+#'     columns = category
 #'   ) %>%
 #'   # Expect that column `wind` is of type: integer
 #'   col_is_integer(
-#'     columns = vars(wind)
+#'     columns = wind
 #'   ) %>%
 #'   # Expect that values in `wind` should be between `10` and `160`
 #'   col_vals_between(
-#'     columns = vars(wind),
+#'     columns = wind,
 #'     left = 10,
 #'     right = 160
 #'   ) %>%
 #'   # Expect that column `pressure` is of type: integer
 #'   col_is_integer(
-#'     columns = vars(pressure)
+#'     columns = pressure
 #'   ) %>%
 #'   # Expect that values in `pressure` should be between `882` and `1022`
 #'   col_vals_between(
-#'     columns = vars(pressure),
+#'     columns = pressure,
 #'     left = 882,
 #'     right = 1022
 #'   ) %>%
 #'   # Expect that column `tropicalstorm_force_diameter` is of type: integer
 #'   col_is_integer(
-#'     columns = vars(tropicalstorm_force_diameter)
+#'     columns = tropicalstorm_force_diameter
 #'   ) %>%
 #'   # Expect that values in `tropicalstorm_force_diameter` should be between
 #'   # `0` and `870`
 #'   col_vals_between(
-#'     columns = vars(tropicalstorm_force_diameter),
+#'     columns = tropicalstorm_force_diameter,
 #'     left = 0,
 #'     right = 870,
 #'     na_pass = TRUE
 #'   ) %>%
 #'   # Expect that column `hurricane_force_diameter` is of type: integer
 #'   col_is_integer(
-#'     columns = vars(hurricane_force_diameter)
+#'     columns = hurricane_force_diameter
 #'   ) %>%
 #'   # Expect that values in `hurricane_force_diameter` should be between
 #'   # `0` and `300`
 #'   col_vals_between(
-#'     columns = vars(hurricane_force_diameter),
+#'     columns = hurricane_force_diameter,
 #'     left = 0,
 #'     right = 300,
 #'     na_pass = TRUE

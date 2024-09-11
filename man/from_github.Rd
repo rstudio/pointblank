@@ -65,7 +65,7 @@ where GitHub URLs for raw user content are needed.
 #       col_types = "TDdcddlc"
 #     )
 #   ) \%>\%
-#   col_vals_gt(vars(a), 0) \%>\%
+#   col_vals_gt(a, 0) \%>\%
 #   interrogate()
 
 # The `from_github()` helper function is
@@ -97,8 +97,8 @@ where GitHub URLs for raw user content are needed.
 }
 \seealso{
 Other Utility and Helper Functions: 
-\code{\link{affix_datetime}()},
 \code{\link{affix_date}()},
+\code{\link{affix_datetime}()},
 \code{\link{col_schema}()},
 \code{\link{has_columns}()},
 \code{\link{stop_if_not}()}

@@ -19,15 +19,15 @@ create_agent(
 \arguments{
 \item{tbl}{\emph{Table or expression for reading in one}
 
-\verb{obj:<tbl_*>|<table reading expression>} // \strong{required}
+\verb{obj:<tbl_*>|<tbl reading expression>} // \strong{required}
 
 The input table. This can be a data frame, a tibble, a \code{tbl_dbi} object, or
 a \code{tbl_spark} object. Alternatively, an expression can be supplied to serve
 as instructions on how to retrieve the target table at interrogation-time.
 There are two ways to specify an association to a target table: (1) as a
 table-prep formula, which is a right-hand side (RHS) formula expression
-(e.g., \verb{~ \{ <table reading code>\}}), or (2) as a function (e.g.,
-\verb{function() \{ <table reading code>\}}).}
+(e.g., \verb{~ \{ <tbl reading code>\}}), or (2) as a function (e.g.,
+\verb{function() \{ <tbl reading code>\}}).}
 
 \item{tbl_name}{\emph{A table name}
 
@@ -412,16 +412,16 @@ to actually perform the validations and gather intel.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   agent \%>\% 
-  col_exists(columns = vars(date, date_time)) \%>\%
+  col_exists(columns = date, date_time) \%>\%
   col_vals_regex(
-    columns = vars(b),
+    columns = b,
     regex = "[0-9]-[a-z]\{3\}-[0-9]\{3\}"
   ) \%>\%
   rows_distinct() \%>\%
-  col_vals_gt(columns = vars(d), value = 100) \%>\%
-  col_vals_lte(columns = vars(c), value = 5) \%>\%
+  col_vals_gt(columns = d, value = 100) \%>\%
+  col_vals_lte(columns = c, value = 5) \%>\%
   col_vals_between(
-    columns = vars(c),
+    columns = c,
     left = vars(a), right = vars(d),
     na_pass = TRUE
   ) \%>\%

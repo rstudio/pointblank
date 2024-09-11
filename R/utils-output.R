@@ -11,7 +11,7 @@
 #  
 #  This file is part of the 'rstudio/pointblank' project.
 #  
-#  Copyright (c) 2017-2023 pointblank authors
+#  Copyright (c) 2017-2024 pointblank authors
 #  
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
@@ -163,6 +163,10 @@ get_rds_tbl_info_files_tbl <- function(rds_tbl, tbl_name) {
   }
   
   rds_tbl[rds_tbl$tbl_name == tbl_name, "information_files"][[1]][[1]]
+}
+
+check_quarto <- function() {
+  Sys.getenv("QUARTO_BIN_PATH") != ""
 }
 
 # nocov end

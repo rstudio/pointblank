@@ -11,7 +11,7 @@
 #  
 #  This file is part of the 'rstudio/pointblank' project.
 #  
-#  Copyright (c) 2017-2023 pointblank authors
+#  Copyright (c) 2017-2024 pointblank authors
 #  
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
@@ -34,26 +34,6 @@ dplyr::between
 #' @importFrom rlang expr
 #' @export
 rlang::expr
-
-#' @importFrom tidyselect starts_with
-#' @export
-tidyselect::starts_with
-
-#' @importFrom tidyselect ends_with
-#' @export
-tidyselect::ends_with
-
-#' @importFrom tidyselect contains
-#' @export
-tidyselect::contains
-
-#' @importFrom tidyselect matches
-#' @export
-tidyselect::matches
-
-#' @importFrom tidyselect everything
-#' @export
-tidyselect::everything
 
 #' @importFrom blastula creds
 #' @export

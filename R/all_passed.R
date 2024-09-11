@@ -11,7 +11,7 @@
 #  
 #  This file is part of the 'rstudio/pointblank' project.
 #  
-#  Copyright (c) 2017-2023 pointblank authors
+#  Copyright (c) 2017-2024 pointblank authors
 #  
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
@@ -77,9 +77,9 @@
 #' ```r
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
-#'   col_vals_gt(columns = vars(a), value = 3) %>%
-#'   col_vals_lte(columns = vars(a), value = 10) %>%
-#'   col_vals_increasing(columns = vars(a)) %>%
+#'   col_vals_gt(columns = a, value = 3) %>%
+#'   col_vals_lte(columns = a, value = 10) %>%
+#'   col_vals_increasing(columns = a) %>%
 #'   interrogate()
 #' ```
 #' 

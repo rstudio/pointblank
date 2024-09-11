@@ -9,7 +9,7 @@ snip_stats(column, type = c("5num", "7num", "bowley"))
 \arguments{
 \item{column}{\emph{The target column}
 
-`scalar\if{html}{\out{<character>}}`` // \strong{required}
+\verb{scalar<character>} // \strong{required}
 
 The name of the column that contains the target values.}
 
@@ -55,7 +55,7 @@ the snippet into the info text. Note here that the order of the
     label = "An example."
   ) \%>\% 
   info_columns(
-    columns = "d",
+    columns = d,
     `Stats` = "Stats (fivenum): \{stats_d\}."
   ) \%>\%
   info_snippet(
@@ -84,8 +84,8 @@ We can print the \code{informant} object to see the information report.
 
 \seealso{
 Other Information Functions: 
-\code{\link{info_columns_from_tbl}()},
 \code{\link{info_columns}()},
+\code{\link{info_columns_from_tbl}()},
 \code{\link{info_section}()},
 \code{\link{info_snippet}()},
 \code{\link{info_tabular}()},

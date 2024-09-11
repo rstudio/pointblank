@@ -11,7 +11,7 @@
 #  
 #  This file is part of the 'rstudio/pointblank' project.
 #  
-#  Copyright (c) 2017-2023 pointblank authors
+#  Copyright (c) 2017-2024 pointblank authors
 #  
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
@@ -210,7 +210,7 @@
 #'     tbl_name = "small_table",
 #'     label = "An example."
 #'   ) %>%
-#'   col_vals_gt(columns = vars(a), value = 4) %>%
+#'   col_vals_gt(columns = a, value = 4) %>%
 #'   interrogate()
 #' ```
 #' 
@@ -333,11 +333,11 @@ get_agent_report <- function(
       FUN.VALUE = character(1),
       USE.NAMES = FALSE,
       FUN = function(x) {
-        ifelse(
-          is.null(x),
-          NA_character_,
-          unlist(x)
-        )
+        if (is.null(x)) {
+          NA_character_
+        } else {
+          toString(unique(x))
+        }
       }
     )
 
@@ -448,7 +448,8 @@ get_agent_report <- function(
   
   # nocov start
   
-  validation_set <- validation_set[report_tbl$i, ]
+  validation_set <- validation_set %>% 
+    dplyr::filter(.data$i %in% report_tbl$i)
   eval <- eval[report_tbl$i]
   extracts <- 
     agent$extracts[
@@ -510,7 +511,8 @@ get_agent_report <- function(
         htmltools::HTML(agent_label_styled),
         htmltools::tags$div(
           style = htmltools::css(
-            height = "25px"
+            height = "25px",
+            `padding-top` = "10px"
           ),
           htmltools::HTML(paste0(table_type, action_levels))
         ) 
@@ -751,16 +753,42 @@ get_agent_report <- function(
           }
         }
         
-        if (
-          is.null(column_i) |
-          (is.list(column_i) && is.na(unlist(column_i)))
-        ) {
+        # If column missing
+        if (is.null(column_i) || identical(unlist(column_i), NA_character_)) {
           
-          NA_character_
+          columns_expr <- validation_set$columns_expr[[x]]
+          not_interrogated <- is.na(validation_set$eval_error[[x]])
+          eval_error <- isTRUE(validation_set$eval_error[[x]])
           
-        } else if (is.na(column_i)) {
-          
-          NA_character_
+          # If column selection attempted AND:
+          # - in validation planning, OR
+          # - the evaluation errors, OR
+          # - is a col_exists() step
+          columns_expr_exists <- !is.na(columns_expr) && columns_expr != "NULL"
+          show_column_expr <- columns_expr_exists &&
+            (not_interrogated || eval_error || assertion_str == "col_exists")
+          # Then display the original column selection expression for debugging
+          if (show_column_expr) {
+            as.character(
+              htmltools::tags$p(
+                title = columns_expr,
+                style = htmltools::css(
+                  `margin-top` = "0",
+                  `margin-bottom` = "0",
+                  `font-family` = "monospace",
+                  `font-size` = "10px",
+                  `white-space` = "nowrap",
+                  `text-overflow` = "ellipsis",
+                  overflow = "hidden",
+                  color = if (eval_error) "firebrick",
+                  `font-face` = "maroon"
+                ),
+                columns_expr
+              )
+            )
+          } else {
+            NA_character_
+          }
           
         } else {
           
@@ -1160,15 +1188,18 @@ get_agent_report <- function(
           NA_character_
           
         } else {
-          
+
           text <-
-            values_i %>%
-            tidy_gsub(
-              "~",
-              "<span style=\"color: purple;\">&marker;</span>"
-            ) %>%
-            unname()
-          
+            unname(
+              tidy_gsub(
+                values_i,
+                "~",
+                "<span style=\"color: purple;\">&marker;</span>"
+              )
+            )
+            
+          text <- gsub("$", "&dollar;", values_i, fixed = TRUE)
+
           text <- paste(text, collapse = ", ")
           
           if (size == "small") {
@@ -1302,6 +1333,16 @@ get_agent_report <- function(
       FUN.VALUE = character(1),
       USE.NAMES = FALSE,
       FUN = function(x) {
+
+        # Reformat error/warning to string
+        msg_error <- pointblank_cnd_to_string(
+          cnd = agent$validation_set$capture_stack[[x]]$error,
+          pb_call = agent$validation_set$capture_stack[[x]]$pb_call
+        )
+        msg_warning <- pointblank_cnd_to_string(
+          cnd = agent$validation_set$capture_stack[[x]]$warning,
+          pb_call = agent$validation_set$capture_stack[[x]]$pb_call
+        )
         
         if (is.na(eval[x])) {
           
@@ -1325,7 +1366,7 @@ get_agent_report <- function(
           
           text <- 
             htmltools::htmlEscape(
-              agent$validation_set$capture_stack[[x]]$error %>%
+              msg_error %>%
                 tidy_gsub("\"", "'")
             )
           
@@ -1351,7 +1392,7 @@ get_agent_report <- function(
           
           text <- 
             htmltools::htmlEscape(
-              agent$validation_set$capture_stack[[x]]$warning %>%
+              msg_warning %>%
                 tidy_gsub("\"", "'")
             )
           
@@ -1377,7 +1418,7 @@ get_agent_report <- function(
           
           text <-
             htmltools::htmlEscape(
-              agent$validation_set$capture_stack[[x]]$error %>%
+              msg_error %>%
                 tidy_gsub("\"", "'")
             )
           
@@ -1870,9 +1911,7 @@ get_agent_report <- function(
       agent_report <- 
         agent_report %>%
         gt::tab_header(
-          title = get_lsv(text = c(
-            "agent_report", "pointblank_validation_title_text"
-          ))[[lang]],
+          title = title_text,
           subtitle = gt::md(
             paste0(agent_label_styled, " ", table_type, " <br><br>")
           )
@@ -1926,6 +1965,7 @@ get_agent_report <- function(
           }
           #pb_agent code {
             font-family: 'IBM Plex Mono', monospace, courier;
+            color: black;
             background-color: transparent;
             padding: 0;
           }
@@ -1940,11 +1980,15 @@ get_agent_report <- function(
   
   # nocov end
   
+  # Quarto rendering workaround
+  if (check_quarto()) {
+    agent_report <- gt::fmt(agent_report, fns = identity)
+  }
+  
   agent_report
 }
 
-get_default_title_text <- function(report_type,
-                                   lang) {
+get_default_title_text <- function(report_type, lang) {
   
   if (report_type == "informant") {
     title_text <- 
@@ -2420,4 +2464,18 @@ store_footnote <- function(
       note = note
     )
   )
+}
+
+# Function for formatting error in `$capture_stack`
+pointblank_cnd_to_string <- function(cnd, pb_call) {
+  if (is.null(cnd)) return(character(0))
+  # Reformatting not yet implemented for warnings 
+  if (rlang::is_warning(cnd)) return(cnd)
+  # Reconstruct trimmed down error and rethrow without cli
+  new <- rlang::error_cnd(
+    call = rlang::call2(":::", quote(pointblank), pb_call[1]),
+    message = cnd$parent$message %||% cnd$message,
+    use_cli_format = FALSE
+  )
+  as.character(try(rlang::cnd_signal(new), silent = TRUE))
 }

@@ -88,8 +88,8 @@ R statement:
     )
   )
 ) \%>\%
-  col_vals_gt(vars(a), 1) \%>\%
-  col_vals_lt(vars(a), 7) 
+  col_vals_gt(a, 1) \%>\%
+  col_vals_lt(a, 7) 
 }\if{html}{\out{</div>}}
 
 YAML representation:
@@ -110,10 +110,10 @@ end_fns: ~email_blast(x, to = "joe_public@example.com",
 embed_report: true
 steps:
 - col_vals_gt:
-    columns: vars(a)
+    columns: c(a)
     value: 1.0
 - col_vals_lt:
-    columns: vars(a)
+    columns: c(a)
     value: 7.0
 }\if{html}{\out{</div>}}
 }
@@ -170,8 +170,8 @@ interrogation of data in \code{small_table}:
       )
     )
   ) \%>\%
-  col_vals_gt(vars(a), value = 1) \%>\%
-  col_vals_lt(vars(a), value = 7) \%>\%
+  col_vals_gt(a, value = 1) \%>\%
+  col_vals_lt(a, value = 7) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
 

@@ -11,7 +11,7 @@
 #  
 #  This file is part of the 'rstudio/pointblank' project.
 #  
-#  Copyright (c) 2017-2023 pointblank authors
+#  Copyright (c) 2017-2024 pointblank authors
 #  
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
@@ -94,9 +94,9 @@
 #'       dplyr::select(a:f),
 #'     label = "`get_sundered_data()`"
 #'   ) %>%
-#'   col_vals_gt(columns = vars(d), value = 1000) %>%
+#'   col_vals_gt(columns = d, value = 1000) %>%
 #'   col_vals_between(
-#'     columns = vars(c),
+#'     columns = c,
 #'     left = vars(a), right = vars(d),
 #'     na_pass = TRUE
 #'   ) %>%
@@ -265,6 +265,14 @@ get_sundered_data <- function(
       "This table needs to have `id_cols` specified, otherwise ",
       "sundering cannot be done",
       call. = FALSE
+    )
+  }
+  
+  # Stop function if `tbl_checked` is not present
+  if (!"tbl_checked" %in% colnames(agent$validation_set)) {
+    stop(
+      "`agent` is missing `tbl_checked` information required for sundering. ",
+      "See `?interrogate`."
     )
   }
   

@@ -14,13 +14,14 @@ snip_list(
   oxford = TRUE,
   as_code = TRUE,
   quot_str = NULL,
+  na_rm = FALSE,
   lang = NULL
 )
 }
 \arguments{
 \item{column}{\emph{The target column}
 
-`scalar\if{html}{\out{<character>}}`` // \strong{required}
+\verb{scalar<character>} // \strong{required}
 
 The name of the column that contains the target values.}
 
@@ -90,6 +91,12 @@ derived from \code{character} or \code{factor} values; numbers, dates, and logic
 values won't have quotation marks. We can explicitly use quotations (or
 not) with either \code{TRUE} or \code{FALSE} here.}
 
+\item{na_rm}{\emph{Remove NA values from list}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+An option for whether NA values should be counted as an item in the list.}
+
 \item{lang}{\emph{Reporting language}
 
 \verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
@@ -128,7 +135,7 @@ the \code{\link[=info_columns]{info_columns()}} and \code{\link[=info_snippet]{i
     label = "An example."
   ) \%>\% 
   info_columns(
-    columns = "f",
+    columns = f,
     `Items` = "This column contains \{values_f\}."
   ) \%>\%
   info_snippet(
@@ -157,8 +164,8 @@ We can print the \code{informant} object to see the information report.
 
 \seealso{
 Other Information Functions: 
-\code{\link{info_columns_from_tbl}()},
 \code{\link{info_columns}()},
+\code{\link{info_columns_from_tbl}()},
 \code{\link{info_section}()},
 \code{\link{info_snippet}()},
 \code{\link{info_tabular}()},

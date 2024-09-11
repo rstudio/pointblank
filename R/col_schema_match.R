@@ -11,7 +11,7 @@
 #  
 #  This file is part of the 'rstudio/pointblank' project.
 #  
-#  Copyright (c) 2017-2023 pointblank authors
+#  Copyright (c) 2017-2024 pointblank authors
 #  
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
@@ -131,6 +131,17 @@
 #' depending on the situation (the first produces a warning, the other
 #' `stop()`s).
 #'
+#' @section Labels:
+#' 
+#' `label` may be a single string or a character vector that matches the number
+#' of expanded steps. `label` also supports `{glue}` syntax and exposes the
+#' following dynamic variables contextualized to the current step:
+#'   
+#' - `"{.step}"`: The validation step name
+#'     
+#' The glue context also supports ordinary expressions for further flexibility
+#' (e.g., `"{toupper(.step)}"`) as long as they return a length-1 string.
+#' 
 #' @section Briefs:
 #' 
 #' Want to describe this validation step in some detail? Keep in mind that this
@@ -508,8 +519,8 @@ test_col_schema_match <- function(
 #'   then any values provided to `...` will be ignored. This can either be a
 #'   table object, a table-prep formula.This can be a table object such as a
 #'   data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
-#'   Alternatively, a table-prep formula (`~ <table reading code>`) or a
-#'   function (`function() <table reading code>`) can be used to lazily read in
+#'   Alternatively, a table-prep formula (`~ <tbl reading code>`) or a
+#'   function (`function() <tbl reading code>`) can be used to lazily read in
 #'   the table at interrogation time.
 #'   
 #' @param .db_col_types *Use R column types or database column types?*
@@ -606,7 +617,7 @@ col_schema <- function(
   
   db_col_types <- match.arg(.db_col_types)
 
-  x <- list(...)
+  x <- rlang::list2(...)
 
   # Transform SQL column types to lowercase to allow
   # both uppercase and lowercase conventions while

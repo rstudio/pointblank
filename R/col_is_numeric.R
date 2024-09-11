@@ -11,7 +11,7 @@
 #  
 #  This file is part of the 'rstudio/pointblank' project.
 #  
-#  Copyright (c) 2017-2023 pointblank authors
+#  Copyright (c) 2017-2024 pointblank authors
 #  
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
@@ -63,12 +63,17 @@
 #'
 #' @section Column Names:
 #' 
-#' If providing multiple column names, the result will be an expansion of
-#' validation steps to that number of column names (e.g., `vars(col_a, col_b)`
-#' will result in the entry of two validation steps). Aside from column names in
-#' quotes and in `vars()`, **tidyselect** helper functions are available for
-#' specifying columns. They are: `starts_with()`, `ends_with()`, `contains()`,
-#' `matches()`, and `everything()`.
+#' `columns` may be a single column (as symbol `a` or string `"a"`) or a vector
+#' of columns (`c(a, b, c)` or `c("a", "b", "c")`). `{tidyselect}` helpers
+#' are also supported, such as `contains("date")` and `where(is.double)`. If
+#' passing an *external vector* of columns, it should be wrapped in `all_of()`.
+#' 
+#' When multiple columns are selected by `columns`, the result will be an
+#' expansion of validation steps to that number of columns (e.g.,
+#' `c(col_a, col_b)` will result in the entry of two validation steps).
+#' 
+#' Previously, columns could be specified in `vars()`. This continues to work, 
+#' but `c()` offers the same capability and supersedes `vars()` in `columns`.
 #' 
 #' @section Actions:
 #' 
@@ -83,6 +88,18 @@
 #' happens. For the `col_is_*()`-type functions, using `action_levels(warn_at =
 #' 1)` or `action_levels(stop_at = 1)` are good choices depending on the
 #' situation (the first produces a warning, the other will `stop()`).
+#' 
+#' @section Labels:
+#' 
+#' `label` may be a single string or a character vector that matches the number
+#' of expanded steps. `label` also supports `{glue}` syntax and exposes the
+#' following dynamic variables contextualized to the current step:
+#'   
+#' - `"{.step}"`: The validation step name
+#' - `"{.col}"`: The current column name
+#'     
+#' The glue context also supports ordinary expressions for further flexibility
+#' (e.g., `"{toupper(.step)}"`) as long as they return a length-1 string.
 #' 
 #' @section Briefs:
 #' 
@@ -108,7 +125,7 @@
 #' ```r
 #' agent %>% 
 #'   col_is_numeric(
-#'     columns = vars(a),
+#'     columns = a,
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
 #'     label = "The `col_is_numeric()` step.",
 #'     active = FALSE
@@ -120,7 +137,7 @@
 #' ```yaml
 #' steps:
 #' - col_is_numeric:
-#'     columns: vars(a)
+#'     columns: c(a)
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2
@@ -152,7 +169,7 @@
 #' ```r
 #' agent <-
 #'   create_agent(tbl = small_table) %>%
-#'   col_is_numeric(columns = vars(d)) %>%
+#'   col_is_numeric(columns = d) %>%
 #'   interrogate()
 #' ```
 #' 
@@ -174,7 +191,7 @@
 #' 
 #' ```{r}
 #' small_table %>%
-#'   col_is_numeric(columns = vars(d)) %>%
+#'   col_is_numeric(columns = d) %>%
 #'   dplyr::slice(1:5)
 #' ```
 #' 
@@ -184,7 +201,7 @@
 #' time. This is primarily used in **testthat** tests.
 #' 
 #' ```r
-#' expect_col_is_numeric(small_table, columns = vars(d))
+#' expect_col_is_numeric(small_table, columns = d)
 #' ```
 #' 
 #' ## D: Using the test function
@@ -193,7 +210,7 @@
 #' us.
 #' 
 #' ```{r}
-#' small_table %>% test_col_is_numeric(columns = vars(d))
+#' small_table %>% test_col_is_numeric(columns = d)
 #' ```
 #' 
 #' @family validation functions
@@ -219,13 +236,10 @@ col_is_numeric <- function(
   preconditions <- NULL
   values <- NULL
   
-  # Get `columns` as a label
-  columns_expr <- 
-    rlang::as_label(rlang::quo(!!enquo(columns))) %>%
-    gsub("^\"|\"$", "", .)
-  
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
+  # Get `columns` as a label
+  columns_expr <- as_columns_expr(columns)
   
   # Resolve the columns based on the expression
   columns <- resolve_columns(x = x, var_expr = columns, preconditions = NULL)
@@ -235,7 +249,7 @@ col_is_numeric <- function(
     secret_agent <-
       create_agent(x, label = "::QUIET::") %>%
       col_is_numeric(
-        columns = columns,
+        columns = tidyselect::all_of(columns),
         label = label,
         brief = brief,
         actions = prime_actions(actions),
@@ -267,7 +281,8 @@ col_is_numeric <- function(
   
   # Add one or more validation steps based on the
   # length of the `columns` variable
-  for (i in seq(columns)) {
+  label <- resolve_label(label, columns)
+  for (i in seq_along(columns)) {
     
     agent <-
       create_validation_step(
@@ -279,7 +294,7 @@ col_is_numeric <- function(
         preconditions = NULL,
         actions = covert_actions(actions, agent),
         step_id = step_id[i],
-        label = label,
+        label = label[[i]],
         brief = brief[i],
         active = active
       )

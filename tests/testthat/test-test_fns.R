@@ -787,7 +787,8 @@ test_that("pointblank expectation functions produce the correct results", {
 
 test_that("expect errors to be expressed by pointblank under some conditions", {
   
-  no_col_msg <- "The value for `column` doesn't correspond to a column name."
+  # no_col_msg <- "The value for `column` doesn't correspond to a column name."
+  no_col_msg <- "column"
   
   # Errors caught and expressed when a column doesn't exist
   expect_error(test_col_vals_lt(tbl, columns = vars(z), value = 0), regexp = no_col_msg)

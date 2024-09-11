@@ -11,7 +11,7 @@
 #  
 #  This file is part of the 'rstudio/pointblank' project.
 #  
-#  Copyright (c) 2017-2023 pointblank authors
+#  Copyright (c) 2017-2024 pointblank authors
 #  
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
@@ -43,9 +43,9 @@
 #'   against the target table in terms of column count values. If supplying a
 #'   comparison table, it can either be a table object such as a data frame, a
 #'   tibble, a `tbl_dbi` object, or a `tbl_spark` object. Alternatively, a
-#'   table-prep formula (`~ <table reading code>`) or a function (`function()
-#'   <table reading code>`) can be used to lazily read in the comparison table
-#'   at interrogation time.
+#'   table-prep formula (`~ <tbl reading code>`) or a function (
+#'   `function() <tbl reading code>`) can be used to lazily read in the
+#'   comparison table at interrogation time.
 #'   
 #' @return For the validation function, the return value is either a
 #'   `ptblank_agent` object or a table object (depending on whether an agent
@@ -102,6 +102,17 @@
 #' `action_levels(warn_at = 1)` or `action_levels(stop_at = 1)` are good choices
 #' depending on the situation (the first produces a warning, the other
 #' `stop()`s).
+#' 
+#' @section Labels:
+#' 
+#' `label` may be a single string or a character vector that matches the number
+#' of expanded steps. `label` also supports `{glue}` syntax and exposes the
+#' following dynamic variables contextualized to the current step:
+#'   
+#' - `"{.step}"`: The validation step name
+#'     
+#' The glue context also supports ordinary expressions for further flexibility
+#' (e.g., `"{toupper(.step)}"`) as long as they return a length-1 string.
 #' 
 #' @section Briefs:
 #' 

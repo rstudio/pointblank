@@ -11,7 +11,7 @@
 #  
 #  This file is part of the 'rstudio/pointblank' project.
 #  
-#  Copyright (c) 2017-2023 pointblank authors
+#  Copyright (c) 2017-2024 pointblank authors
 #  
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
@@ -135,7 +135,7 @@
 #'       col_types = "TDdcddlc"
 #'     )
 #'   ) %>%
-#'   col_vals_gt(columns = vars(a), value = 0)
+#'   col_vals_gt(columns = a, value = 0)
 #' ```
 #'
 #' All of the file-reading instructions are encapsulated in the `tbl` expression
@@ -162,7 +162,7 @@
 #'     tbl_name = "small_table",
 #'     label = "`file_tbl()` example.",
 #'   ) %>%
-#'   col_vals_gt(columns = vars(a), value = 0) %>%
+#'   col_vals_gt(columns = a, value = 0) %>%
 #'   interrogate()
 #' ```
 #' 
@@ -285,13 +285,7 @@ file_tbl <- function(
     verify = TRUE
 ) {
   
-  if (!requireNamespace("readr", quietly = TRUE)) {
-    stop(
-      "Reading a table from a file requires the readr package:\n",
-      " * It can be installed with `install.packages(\"readr\")`.",
-      call. = FALSE
-    )
-  }
+  rlang::check_installed("readr", "to read a table from a file.")
   
   file_extension <- tolower(tools::file_ext(file))
   file_name <- basename(file)
@@ -463,7 +457,7 @@ file_tbl <- function(
 #' #       col_types = "TDdcddlc"
 #' #     )
 #' #   ) %>%
-#' #   col_vals_gt(vars(a), 0) %>%
+#' #   col_vals_gt(a, 0) %>%
 #' #   interrogate()
 #' 
 #' # The `from_github()` helper function is
@@ -529,13 +523,7 @@ from_github <- function(
     
   } else if (grepl("#", repo, fixed = TRUE)) {
     
-    if (!requireNamespace("jsonlite", quietly = TRUE)) {
-      stop(
-        "Getting a table from a file in a PR requires the jsonlite package:\n",
-        " * It can be installed with `install.packages(\"jsonlite\")`.",
-        call. = FALSE
-      )
-    }
+    rlang::check_installed("jsonlite", "to get a table from a file in a PR.")
 
     pr_number <- unlist(strsplit(repo, "#"))[2]
     pulls_doc_tempfile <- tempfile(pattern = "pulls", fileext = ".json")

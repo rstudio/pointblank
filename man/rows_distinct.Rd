@@ -8,7 +8,7 @@
 \usage{
 rows_distinct(
   x,
-  columns = NULL,
+  columns = tidyselect::everything(),
   preconditions = NULL,
   segments = NULL,
   actions = NULL,
@@ -20,12 +20,17 @@ rows_distinct(
 
 expect_rows_distinct(
   object,
-  columns = NULL,
+  columns = tidyselect::everything(),
   preconditions = NULL,
   threshold = 1
 )
 
-test_rows_distinct(object, columns = NULL, preconditions = NULL, threshold = 1)
+test_rows_distinct(
+  object,
+  columns = tidyselect::everything(),
+  preconditions = NULL,
+  threshold = 1
+)
 }
 \arguments{
 \item{x}{\emph{A pointblank agent or a data table}
@@ -38,10 +43,11 @@ commonly created with \code{\link[=create_agent]{create_agent()}}.}
 
 \item{columns}{\emph{The target columns}
 
-\verb{<column-targeting expression>} // \strong{required}
+\verb{<tidy-select>} // \emph{default:} \code{everything()}
 
-The column (or a set of columns, provided as a character vector) to which
-this validation should be applied.}
+A column-selecting expression, as one would use inside \code{dplyr::select()}.
+Specifies the set of column(s) for which the distinctness of rows is
+checked.}
 
 \item{preconditions}{\emph{Input table modification prior to validation}
 
@@ -87,12 +93,13 @@ produce (influenced by the number of \code{columns} provided), (2) be an ID
 string not used in any previous validation step, and (3) be a vector with
 unique values.}
 
-\item{label}{\emph{An optional label for the validation step}
+\item{label}{\emph{Optional label for the validation step}
 
-\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+\verb{vector<character>} // \emph{default:} \code{NULL} (\code{optional})
 
-An optional label for the validation step. This label appears in the
-\emph{agent} report and, for the best appearance, it should be kept quite short.}
+Optional label for the validation step. This label appears in the \emph{agent}
+report and, for the best appearance, it should be kept quite short. See
+the \emph{Labels} section for more information.}
 
 \item{brief}{\emph{Brief description for the validation step}
 
@@ -119,7 +126,7 @@ be used with \code{.} (serving as the input data table) to evaluate to a single
 logical value. With this approach, the \strong{pointblank} function
 \code{\link[=has_columns]{has_columns()}} can be used to determine whether to make a validation step
 active on the basis of one or more columns existing in the table
-(e.g., \code{~ . \%>\% has_columns(vars(d, e))}).}
+(e.g., \code{~ . \%>\% has_columns(c(d, e))}).}
 
 \item{object}{\emph{A data table for expectations or tests}
 
@@ -162,10 +169,6 @@ expectation and test functions can only be used with a data table. As a
 validation step or as an expectation, this will operate over the number of
 test units that is equal to the number of rows in the table (after any
 \code{preconditions} have been applied).
-
-We can specify the constraining column names in quotes, in \code{vars()}, and with
-the following \strong{tidyselect} helper functions: \code{starts_with()},
-\code{ends_with()}, \code{contains()}, \code{matches()}, and \code{everything()}.
 }
 \section{Supported Input Tables}{
 
@@ -256,6 +259,23 @@ warning when a quarter of the total test units fails, the other \code{stop()}s a
 the same threshold level).
 }
 
+\section{Labels}{
+
+
+\code{label} may be a single string or a character vector that matches the number
+of expanded steps. \code{label} also supports \code{{glue}} syntax and exposes the
+following dynamic variables contextualized to the current step:
+\itemize{
+\item \code{"{.step}"}: The validation step name
+\item \code{"{.col}"}: The current column name
+\item \code{"{.seg_col}"}: The current segment's column name
+\item \code{"{.seg_val}"}: The current segment's value/group
+}
+
+The glue context also supports ordinary expressions for further flexibility
+(e.g., \code{"{toupper(.step)}"}) as long as they return a length-1 string.
+}
+
 \section{Briefs}{
 
 
@@ -282,7 +302,7 @@ R statement:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
   rows_distinct(
-    columns = vars(a, b),
+    columns = c(a, b),
     preconditions = ~ . \%>\% dplyr::filter(a < 10),
     segments = b ~ c("group_1", "group_2"),
     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
@@ -295,7 +315,7 @@ YAML representation:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{steps:
 - rows_distinct:
-    columns: vars(a, b)
+    columns: c(a, b)
     preconditions: ~. \%>\% dplyr::filter(a < 10)
     segments: b ~ c("group_1", "group_2")
     actions:
@@ -344,7 +364,7 @@ duplicate rows (i.e., all rows are distinct).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(tbl = tbl) \%>\%
-  rows_distinct(columns = vars(a, b)) \%>\%
+  rows_distinct(columns = c(a, b)) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
 
@@ -366,7 +386,7 @@ through but should \code{stop()} if there is a single test unit failing. The
 behavior of side effects can be customized with the \code{actions} option.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
-  rows_distinct(columns = vars(a, b)) \%>\%
+  rows_distinct(columns = c(a, b)) \%>\%
   dplyr::pull(a)
 #> [1] 5 7 6 5 8 7
 }\if{html}{\out{</div>}}
@@ -377,7 +397,7 @@ behavior of side effects can be customized with the \code{actions} option.
 With the \verb{expect_*()} form, we would typically perform one validation at a
 time. This is primarily used in \strong{testthat} tests.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_rows_distinct(tbl, columns = vars(a, b))
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{expect_rows_distinct(tbl, columns = c(a, b))
 }\if{html}{\out{</div>}}
 }
 
@@ -386,7 +406,7 @@ time. This is primarily used in \strong{testthat} tests.
 With the \verb{test_*()} form, we should get a single logical value returned to
 us.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{test_rows_distinct(tbl, columns = vars(a, b))
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{test_rows_distinct(tbl, columns = c(a, b))
 #> [1] TRUE
 }\if{html}{\out{</div>}}
 }
@@ -413,12 +433,12 @@ Other validation functions:
 \code{\link{col_vals_decreasing}()},
 \code{\link{col_vals_equal}()},
 \code{\link{col_vals_expr}()},
-\code{\link{col_vals_gte}()},
 \code{\link{col_vals_gt}()},
+\code{\link{col_vals_gte}()},
 \code{\link{col_vals_in_set}()},
 \code{\link{col_vals_increasing}()},
-\code{\link{col_vals_lte}()},
 \code{\link{col_vals_lt}()},
+\code{\link{col_vals_lte}()},
 \code{\link{col_vals_make_set}()},
 \code{\link{col_vals_make_subset}()},
 \code{\link{col_vals_not_between}()},

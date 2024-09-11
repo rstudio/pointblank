@@ -11,7 +11,7 @@
 #  
 #  This file is part of the 'rstudio/pointblank' project.
 #  
-#  Copyright (c) 2017-2023 pointblank authors
+#  Copyright (c) 2017-2024 pointblank authors
 #  
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
@@ -221,26 +221,10 @@ scan_data <- function(
   }
   
   if (any(c("interactions", "correlations") %in% sections)) {
-    
-    if (!requireNamespace("ggplot2", quietly = TRUE)) {
-      
-      stop(
-        "The `interactions` and `correlations` sections require ", 
-        "the ggplot2 package:\n",
-        "* It can be installed with `install.packages(\"ggplot2\")`.",
-        call. = FALSE
-      )
-    }
-    
-    if (!requireNamespace("ggforce", quietly = TRUE)) {
-      
-      stop(
-        "The `interactions` and `correlations` sections require ", 
-        "the ggforce package:\n",
-        "* It can be installed with `install.packages(\"ggforce\")`.",
-        call. = FALSE
-      )
-    }
+    rlang::check_installed(
+      c("ggforce", "ggplot2"),
+      "to use the `interactions` and `correlations` sections."
+    )
   }
   
   # Normalize the reporting language identifier and stop if necessary
@@ -1041,7 +1025,7 @@ probe_columns_numeric <- function(
     locale
 ) {
   
-  data_column <- dplyr::select(data, {{ column }})
+  data_column <- dplyr::select(data, tidyselect::any_of(column))
   
   column_description_gt <- 
     get_column_description_gt(
@@ -1133,7 +1117,7 @@ probe_columns_character <- function(
     locale
 ) {
   
-  data_column <- data %>% dplyr::select({{ column }})
+  data_column <- data %>% dplyr::select(tidyselect::any_of(column))
   
   column_description_gt <- 
     get_column_description_gt(
@@ -1184,7 +1168,7 @@ probe_columns_logical <- function(
     locale
 ) {
   
-  data_column <- data %>% dplyr::select({{ column }})
+  data_column <- data %>% dplyr::select(tidyselect::any_of(column))
   
   column_description_gt <- 
     get_column_description_gt(
@@ -1211,7 +1195,7 @@ probe_columns_factor <- function(
     locale
 ) {
   
-  data_column <- data %>% dplyr::select({{ column }})
+  data_column <- data %>% dplyr::select(tidyselect::any_of(column))
   
   column_description_gt <- 
     get_column_description_gt(
@@ -1238,7 +1222,7 @@ probe_columns_date <- function(
     locale
 ) {
   
-  data_column <- data %>% dplyr::select({{ column }})
+  data_column <- data %>% dplyr::select(tidyselect::any_of(column))
   
   column_description_gt <- 
     get_column_description_gt(
@@ -1265,7 +1249,7 @@ probe_columns_posix <- function(
     locale
 ) {
   
-  data_column <- data %>% dplyr::select({{ column }})
+  data_column <- data %>% dplyr::select(tidyselect::any_of(column))
   
   column_description_gt <- 
     get_column_description_gt(
@@ -1290,7 +1274,7 @@ probe_columns_other <- function(
     n_rows
 ) {
   
-  data_column <- data %>% dplyr::select({{ column }})
+  data_column <- data %>% dplyr::select(tidyselect::any_of(column))
   
   column_classes <- paste(class(data_column), collapse = ", ")
   

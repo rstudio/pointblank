@@ -11,7 +11,7 @@
 #  
 #  This file is part of the 'rstudio/pointblank' project.
 #  
-#  Copyright (c) 2017-2023 pointblank authors
+#  Copyright (c) 2017-2024 pointblank authors
 #  
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
@@ -79,7 +79,7 @@
 #'   
 #'   expect_col_exists(
 #'     tbl,
-#'     columns = vars(date_time),
+#'     columns = date_time,
 #'     threshold = 1
 #'   ) 
 #' })
@@ -88,7 +88,7 @@
 #'   
 #'   expect_col_vals_lte(
 #'     tbl,
-#'     columns = vars(c),
+#'     columns = c,
 #'     value = 5,
 #'     threshold = 0.25
 #'   ) 
@@ -106,8 +106,8 @@
 #'     tbl = ~ small_table,
 #'     actions = action_levels(stop_at = 0.25)
 #'   ) %>%
-#'   col_exists(vars(date_time)) %>%
-#'   col_vals_lte(vars(c), value = 5)
+#'   col_exists(date_time) %>%
+#'   col_vals_lte(c, value = 5)
 #'   
 #' write_testthat_file(
 #'   agent = agent,
@@ -206,13 +206,13 @@
 #'     label = "An example.",
 #'     actions = al
 #'   ) %>%
-#'   col_exists(vars(date, date_time)) %>%
+#'   col_exists(c(date, date_time)) %>%
 #'   col_vals_regex(
-#'     vars(b),
+#'     b,
 #'     regex = "[0-9]-[a-z]{3}-[0-9]{3}"
 #'   ) %>%
-#'   col_vals_gt(vars(d), value = 100) %>%
-#'   col_vals_lte(vars(c), value = 5) %>%
+#'   col_vals_gt(d, value = 100) %>%
+#'   col_vals_lte(c, value = 5) %>%
 #'   interrogate()
 #' ```
 #' 
@@ -245,7 +245,7 @@
 #'   
 #'   expect_col_exists(
 #'     tbl,
-#'     columns = vars(date),
+#'     columns = date,
 #'     threshold = 1
 #'   ) 
 #' })
@@ -254,7 +254,7 @@
 #'   
 #'   expect_col_exists(
 #'     tbl,
-#'     columns = vars(date_time),
+#'     columns = date_time,
 #'     threshold = 1
 #'   ) 
 #' })
@@ -264,7 +264,7 @@
 #'   
 #'   expect_col_vals_regex(
 #'     tbl,
-#'     columns = vars(b),
+#'     columns = b,
 #'     regex = "[0-9]-[a-z]{3}-[0-9]{3}",
 #'     threshold = 0.25
 #'   ) 
@@ -274,7 +274,7 @@
 #'   
 #'   expect_col_vals_gt(
 #'     tbl,
-#'     columns = vars(d),
+#'     columns = d,
 #'     value = 100,
 #'     threshold = 0.25
 #'   ) 
@@ -284,7 +284,7 @@
 #'   
 #'   expect_col_vals_lte(
 #'     tbl,
-#'     columns = vars(c),
+#'     columns = c,
 #'     value = 5,
 #'     threshold = 0.25
 #'   ) 

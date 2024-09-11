@@ -2941,7 +2941,7 @@ pointblank_try_catch <- function(expr) {
   
   call <- rlang::enexpr(expr)
   call_fn <- if (rlang::is_call_simple(call)) {
-    deparse(call[[1]]) # ex: "tbl_call_exists"
+    deparse(call[[1]]) # ex: "tbl_val_comparison"
   } else {
     "<internal>"
   }

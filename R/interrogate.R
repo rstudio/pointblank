@@ -311,6 +311,13 @@ interrogate <- function(
           assertion_type = assertion_type
         )
       
+      if (assertion_type == "col_vals_expr") {
+        # Extract columns from expr and update validation set with used columns
+        expr <- get_values_at_idx(agent = agent, idx = i)[[1]]
+        columns <- all_data_vars(expr, data_cols = colnames(table))
+        agent$validation_set[[i, "column"]] <- list(columns)
+      }
+      
     } else if (assertion_type == "conjointly") {
       
       validation_formulas <- get_values_at_idx(agent = agent, idx = i)

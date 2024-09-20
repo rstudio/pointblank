@@ -54,11 +54,19 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="pointblank-development-version">pointblank (development version)<a class="anchor" aria-label="anchor" href="#pointblank-development-version"></a></h2>
 <div class="section level3">
+<h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
+<ul><li><p>New argument <code>extract_tbl_checked</code> in <code><a href="../reference/interrogate.html">interrogate()</a></code>. When <code>FALSE</code>, the <code>$tbl_checked</code> column from the validation set will be dropped before returning the agent. This may be helpful in reducing object size for large agents. (<a href="https://github.com/rstudio/pointblank/issues/554" class="external-link">#554</a>)</p></li>
+<li><p>New argument <code>na_rm</code> in <code><a href="../reference/snip_list.html">snip_list()</a></code>. When <code>TRUE</code>, <code>NA</code> values will not be included in the list of items in the snippet. (<a href="https://github.com/rstudio/pointblank/issues/556" class="external-link">#556</a>)</p></li>
+</ul></div>
+<div class="section level3">
 <h3 id="minor-improvements-and-bug-fixes-development-version">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-development-version"></a></h3>
-<ul><li><p><code><a href="../reference/col_vals_expr.html">col_vals_expr()</a></code> now shows used columns in the agent report</p></li>
-<li><p>Fixed a regression in <code>col_vals_*()</code> functions, where <code>vars("col")</code> was evaluating to the string <code>"col"</code>. Behavior of <code>vars("col")</code> is now aligned back with <code>vars(col)</code> - both evaluate to the column name <code>col</code>.</p></li>
-<li><p>Warnings/errors arising from comparing <code>columns</code> to a <code>value</code> of different class (for example, comparing a datetime column to a date value <code><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date()</a></code> instead of another datetime value <code><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time()</a></code>) are now signalled appropriately at <code><a href="../reference/interrogate.html">interrogate()</a></code>.</p></li>
-<li><p>Improved readability of error and warning messages rendered as tooltip to the agent report.</p></li>
+<ul><li><p>Improved readability of error messages rendered as tooltip to the agent report. (<a href="https://github.com/rstudio/pointblank/issues/543" class="external-link">#543</a>)</p></li>
+<li><p><code><a href="../reference/col_vals_expr.html">col_vals_expr()</a></code> shows used columns in the agent report when interrogated (<a href="https://github.com/rstudio/pointblank/issues/570" class="external-link">#570</a>)</p></li>
+<li><p>Functions accepting <code>...</code> now use <code><a href="https://rlang.r-lib.org/reference/list2.html" class="external-link">rlang::list2()</a></code>, enabling dynamic dots. For example, a multiagent can now be constructed from a <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> of agents using <code>create_multiagent(!!!list_of_agents)</code>. (<a href="https://github.com/rstudio/pointblank/issues/553" class="external-link">#553</a>)</p></li>
+<li><p>Fixed bug with non-standard column names in some validation functions (<a href="https://github.com/rstudio/pointblank/issues/555" class="external-link">#555</a>)</p></li>
+<li><p>Fixed a regression in <code>col_vals_*()</code> functions, where <code>vars("col")</code> was evaluating to the string <code>"col"</code>. Behavior of <code>vars("col")</code> is now aligned back with <code>vars(col)</code> - both evaluate to the column name <code>col</code>. (<a href="https://github.com/rstudio/pointblank/issues/535" class="external-link">#535</a>)</p></li>
+<li><p>Problems arising from comparing <code>columns</code> to a <code>value</code> of different class (for example, comparing a datetime column to a date value <code><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date()</a></code> instead of another datetime value <code><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time()</a></code>) are now signalled appropriately at <code><a href="../reference/interrogate.html">interrogate()</a></code>. (<a href="https://github.com/rstudio/pointblank/issues/539" class="external-link">#539</a>)</p></li>
+<li><p>Fixed bug in <code><a href="../reference/has_columns.html">has_columns()</a></code> failing to detect non-existing columns when supplied as a character vector. (<a href="https://github.com/rstudio/pointblank/issues/540" class="external-link">#540</a>)</p></li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -408,7 +416,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer></div>

@@ -1,14 +1,26 @@
 # pointblank (development version)
 
+## New features
+
+- New argument `extract_tbl_checked` in `interrogate()`. When `FALSE`, the `$tbl_checked` column from the validation set will be dropped before returning the agent. This may be helpful in reducing object size for large agents. (#554)
+
+- New argument `na_rm` in `snip_list()`. When `TRUE`, `NA` values will not be included in the list of items in the snippet. (#556)
+
 ## Minor improvements and bug fixes
 
-- `col_vals_expr()` now shows used columns in the agent report
+- Improved readability of error messages rendered as tooltip to the agent report. (#543)
 
-- Fixed a regression in `col_vals_*()` functions, where `vars("col")` was evaluating to the string `"col"`. Behavior of `vars("col")` is now aligned back with `vars(col)` - both evaluate to the column name `col`.
+- `col_vals_expr()` shows used columns in the agent report when interrogated (#570)
 
-- Warnings/errors arising from comparing `columns` to a `value` of different class (for example, comparing a datetime column to a date value `Sys.Date()` instead of another datetime value `Sys.time()`) are now signalled appropriately at `interrogate()`.
+- Functions accepting `...` now use `rlang::list2()`, enabling dynamic dots. For example, a multiagent can now be constructed from a `list()` of agents using `create_multiagent(!!!list_of_agents)`. (#553)
 
-- Improved readability of error and warning messages rendered as tooltip to the agent report.
+- Fixed bug with non-standard column names in some validation functions (#555)
+
+- Fixed a regression in `col_vals_*()` functions, where `vars("col")` was evaluating to the string `"col"`. Behavior of `vars("col")` is now aligned back with `vars(col)` - both evaluate to the column name `col`. (#535)
+
+- Problems arising from comparing `columns` to a `value` of different class (for example, comparing a datetime column to a date value `Sys.Date()` instead of another datetime value `Sys.time()`) are now signalled appropriately at `interrogate()`. (#539)
+
+- Fixed bug in `has_columns()` failing to detect non-existing columns when supplied as a character vector. (#540)
 
 # pointblank 0.12.1
 

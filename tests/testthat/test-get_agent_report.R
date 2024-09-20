@@ -302,3 +302,19 @@ test_that("col_vals_expr() shows used columns", {
   expect_equal(report_columns[4], "a")
   
 })
+
+test_that("report shows informative error tooltips", {
+  
+  df <- data.frame(date = "invalid date")
+  agent <- create_agent(df) |> 
+    col_vals_equal(date, Sys.Date()) |> 
+    interrogate(progress = TRUE)
+  report <- get_agent_report(agent)
+  
+  error_source <- agent$validation_set$capture_stack[[1]]$pb_call
+  error_tooltip <- report$`_data`$eval_sym
+  
+  expect_equal(error_source, "tbl_val_comparison")
+  expect_true(grepl(error_source, error_tooltip))
+  
+})

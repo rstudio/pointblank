@@ -85,7 +85,7 @@ by default, indicating the reason for the failure. If you were to supply the
 overridden. Furthermore, if \code{actions} is NULL in this workflow (the default),
 \strong{pointblank} will use a \code{stop_at} value of \code{1} (providing a detailed,
 context-specific error message if there are any \emph{failing} units). We can
-absolutely suppress this automatic stopping behavior by at each validation
+absolutely suppress this automatic stopping behavior at each validation
 step by setting \code{active = FALSE}. In this interactive data case, there is no
 stock function given for \code{notify_at}. The \code{notify} failure state is less
 commonly used in this workflow as it is in the \emph{agent}-based one.

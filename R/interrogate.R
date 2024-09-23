@@ -311,6 +311,13 @@ interrogate <- function(
           assertion_type = assertion_type
         )
       
+      if (assertion_type == "col_vals_expr") {
+        # Extract columns from expr and update validation set with used columns
+        expr <- get_values_at_idx(agent = agent, idx = i)[[1]]
+        columns <- all_data_vars(expr, data_cols = colnames(table))
+        agent$validation_set[[i, "column"]] <- list(columns)
+      }
+      
     } else if (assertion_type == "conjointly") {
       
       validation_formulas <- get_values_at_idx(agent = agent, idx = i)
@@ -2940,6 +2947,11 @@ column_validity_checks_ib_nb <- function(
 pointblank_try_catch <- function(expr) {
   
   call <- rlang::enexpr(expr)
+  call_fn <- if (rlang::is_call_simple(call)) {
+    deparse(call[[1]]) # ex: "tbl_val_comparison"
+  } else {
+    "<internal>"
+  }
   
   warn <- err <- NULL
   
@@ -2953,7 +2965,8 @@ pointblank_try_catch <- function(expr) {
         invokeRestart("muffleWarning")
       })
   
-  eval_list <- list(value = value, warning = warn, error = err, pb_call = call)
+  eval_list <- list(value = value, warning = warn, error = err,
+                    pb_call = call_fn)
 
   class(eval_list) <- "table_eval"
   eval_list

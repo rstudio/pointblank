@@ -358,7 +358,8 @@ install.packages("pointblank")
 You can also install the development version of **pointblank** from **GitHub**:
 
 ``` r
-devtools::install_github("rstudio/pointblank")
+# install.packages("pak")
+pak::pak("rstudio/pointblank")
 ```
 
 If you encounter a bug, have usage questions, or want to share ideas to

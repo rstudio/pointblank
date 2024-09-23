@@ -2155,3 +2155,28 @@ test_that("class preserved in `value`", {
   expect_true(agent$validation_set$eval_error)
   
 })
+
+test_that("col_vals_expr extracts used columns lazily", {
+  
+  agent_uninterrogated <- create_agent(tbl = iris) |> 
+    col_vals_expr(~ Petal.Length > Petal.Width)
+  expect_equal(
+    agent_uninterrogated$validation_set$column[[1]],
+    NA_character_
+  )
+  
+  agent_interrogated <- agent_uninterrogated %>% 
+    interrogate()
+  expect_equal(
+    agent_interrogated$validation_set$column[[1]],
+    c("Petal.Length", "Petal.Width")
+  )
+  
+  agent_inactive <- create_agent(tbl = iris) |> 
+    col_vals_expr(~ Petal.Length > Petal.Width, active = FALSE)
+  expect_equal(
+    agent_inactive$validation_set$column[[1]],
+    NA_character_
+  )
+  
+})

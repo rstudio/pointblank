@@ -238,6 +238,33 @@ is_secret_agent <- function(x) {
   is_ptblank_agent(x) && (x$label == "::QUIET::")
 }
 
+resolve_briefs <- function(brief, agent,
+                           columns = list(NULL), segments_list = list(NULL),
+                           preconditions = NULL, values = NULL,
+                           assertion_type) {
+  if (is.null(brief)) {
+    generate_autobriefs(
+      agent = agent, columns = columns,
+      preconditions = preconditions, values = values,
+      assertion_type = assertion_type
+    )
+  } else {
+    n_columns <- length(columns)
+    n_segments <- length(segments_list)
+    n_combinations <- n_columns * n_segments
+    # Brief must be a single string or matched in length
+    if (!length(brief) %in% c(1L, n_combinations)) {
+      cli::cli_abort(paste0(
+        "`brief` must be length 1",
+        if (n_combinations != 1L) " or {n_combinations}",
+        ", not {length(brief)}."
+      ))
+    }
+    # Recycle the string
+    rep_len(brief, n_combinations)
+  }
+}
+
 resolve_label <- function(label, columns = "", segments = "") {
   n_columns <- length(columns)
   n_segments <- length(segments)

@@ -448,8 +448,10 @@ get_agent_report <- function(
   
   # nocov start
   
+  # resolve `arrange_by` + post-`interrogate()` filtering of `$validation_set`
+  rows_keep <- match(report_tbl$i, validation_set$i)
   validation_set <- validation_set %>% 
-    dplyr::filter(.data$i %in% report_tbl$i)
+    dplyr::slice(.env$rows_keep)
   eval <- eval[report_tbl$i]
   extracts <- 
     agent$extracts[

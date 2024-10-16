@@ -330,14 +330,20 @@ test_that("rows of report can be shuffled or dropped", {
     col_exists("fail") %>% 
     interrogate()
   
+  # Steps:
+  # - 1) Pass (low severity)
+  # - 2) Skip (no severity)
+  # - 3) Fail (high severity)
   base <- get_agent_report(agent, display_table = FALSE)
   
+  # Basic shuffling of row order via `arrange_by`
   shuffled <- get_agent_report(agent, arrange_by = "severity", display_table = FALSE)
   expect_identical(
     base[c(3, 1, 2),],
     shuffled
   )
   
+  # With manual filtering of `$validation_set` (#563)
   agent2 <- agent
   agent2$validation_set <- agent2$validation_set[agent2$validation_set$eval_active, ]
   filtered <- get_agent_report(agent2, display_table = FALSE)
@@ -345,10 +351,10 @@ test_that("rows of report can be shuffled or dropped", {
     base[c(1, 3), ],
     filtered
   )
-  shuffled_then_filtered <- get_agent_report(agent2, arrange_by = "severity", display_table = FALSE)
+  filtered_then_shuffled <- get_agent_report(agent2, arrange_by = "severity", display_table = FALSE)
   expect_identical(
     base[c(3, 1), ],
-    shuffled_then_filtered
+    filtered_then_shuffled
   )
   
   

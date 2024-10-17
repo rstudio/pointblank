@@ -401,16 +401,12 @@ conjointly <- function(
   
   agent <- x
   
-  if (is.null(brief)) {
-    
-    brief <-
-      create_autobrief(
-        agent = agent,
-        assertion_type = "conjointly",
-        preconditions = preconditions,
-        values = validation_formulas
-      )
-  }
+  brief <- resolve_briefs(
+    brief = brief, agent = agent,
+    segments_list = segments_list,
+    preconditions = preconditions, values = validation_formulas,
+    assertion_type = "conjointly"
+  )
   
   # Normalize any provided `step_id` value(s)
   step_id <- normalize_step_id(step_id, columns = "column", agent)

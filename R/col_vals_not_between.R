@@ -431,17 +431,12 @@ col_vals_not_between <- function(
   
   agent <- x
   
-  if (is.null(brief)) {
-    
-    brief <- 
-      generate_autobriefs(
-        agent = agent,
-        columns = columns,
-        preconditions = preconditions,
-        values = c(left, right),
-        assertion_type = "col_vals_not_between"
-      )
-  }
+  brief <- resolve_briefs(
+    brief = brief, agent = agent,
+    columns = columns, segments_list = segments_list,
+    preconditions = preconditions, values = c(left, right),
+    assertion_type = "col_vals_not_between"
+  )
   
   # Normalize any provided `step_id` value(s)
   step_id <- normalize_step_id(step_id, columns, agent)

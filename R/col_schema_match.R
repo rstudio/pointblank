@@ -356,14 +356,10 @@ col_schema_match <- function(
   
   agent <- x
   
-  if (is.null(brief)) {
-    
-    brief <-
-      create_autobrief(
-        agent = agent,
-        assertion_type = "col_schema_match"
-      )
-  }
+  brief <- resolve_briefs(
+    brief = brief, agent = agent,
+    assertion_type = "col_schema_match"
+  )
   
   # Normalize any provided `step_id` value(s)
   step_id <- normalize_step_id(step_id, columns = "column", agent)

@@ -1,4 +1,4 @@
-# pointblank (development version)
+# pointblank 0.12.2
 
 ## New features
 

@@ -1,7 +1,17 @@
 test_that("`brief` recycles when possible", {
 
+  agent <- create_agent(small_table)
+  
+  expect_length(
+    agent %>% 
+      col_exists(c("a", "b"), brief = NULL) %>% 
+      el("validation_set") %>% 
+      el("brief"),
+    2L
+  )
+  
   expect_equal(
-    create_agent(small_table) %>% 
+    agent %>% 
       col_exists(c("a", "b"), brief = "one") %>% 
       el("validation_set") %>% 
       el("brief"),
@@ -9,7 +19,7 @@ test_that("`brief` recycles when possible", {
   )
 
   expect_equal(
-    create_agent(small_table) %>% 
+    agent %>% 
       col_exists(c("a", "b"), brief = c("one", "two")) %>% 
       el("validation_set") %>% 
       el("brief"),
@@ -17,7 +27,7 @@ test_that("`brief` recycles when possible", {
   )
 
   expect_error(
-    create_agent(small_table) %>% 
+    agent %>% 
       col_vals_equal(
         c("a", "b"), 0,
         segments = vars(f),
@@ -27,7 +37,7 @@ test_that("`brief` recycles when possible", {
   )
   
   expect_error(
-    create_agent(small_table) %>% 
+    agent %>% 
       col_exists("a", brief = c("one", "two")) %>% 
       el("validation_set") %>% 
       el("brief"),

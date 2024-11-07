@@ -318,3 +318,44 @@ test_that("report shows informative error tooltips", {
   expect_true(grepl(error_source, error_tooltip))
   
 })
+
+test_that("rows of report can be shuffled or dropped", {
+  
+  agent <- iris %>%  
+    create_agent(actions = action_levels(warn_at = 1)) %>% 
+    col_exists("Petal.Length",
+               active = has_columns(iris, Petal.Length)) %>% 
+    col_exists("skip",
+               active = has_columns(iris, Spec)) %>% 
+    col_exists("fail") %>% 
+    interrogate()
+  
+  # Steps:
+  # - 1) Pass (low severity)
+  # - 2) Skip (no severity)
+  # - 3) Fail (high severity)
+  base <- get_agent_report(agent, display_table = FALSE)
+  
+  # Basic shuffling of row order via `arrange_by`
+  shuffled <- get_agent_report(agent, arrange_by = "severity", display_table = FALSE)
+  expect_identical(
+    base[c(3, 1, 2),],
+    shuffled
+  )
+  
+  # With manual filtering of `$validation_set` (#563)
+  agent2 <- agent
+  agent2$validation_set <- agent2$validation_set[agent2$validation_set$eval_active, ]
+  filtered <- get_agent_report(agent2, display_table = FALSE)
+  expect_identical(
+    base[c(1, 3), ],
+    filtered
+  )
+  filtered_then_shuffled <- get_agent_report(agent2, arrange_by = "severity", display_table = FALSE)
+  expect_identical(
+    base[c(3, 1), ],
+    filtered_then_shuffled
+  )
+  
+  
+})

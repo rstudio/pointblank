@@ -1,26 +1,36 @@
 # pointblank (development version)
 
-## New features
+# pointblank 0.12.2
 
-- New argument `extract_tbl_checked` in `interrogate()`. When `FALSE`, the `$tbl_checked` column from the validation set will be dropped before returning the agent. This may be helpful in reducing object size for large agents. (#554)
+This release provides a few minor improvements along with many bug fixes.
 
-- New argument `na_rm` in `snip_list()`. When `TRUE`, `NA` values will not be included in the list of items in the snippet. (#556)
+- New argument `extract_tbl_checked` added to `interrogate()`. When `FALSE`, the `$tbl_checked` column from the validation set will be dropped before returning the agent. This may be helpful in reducing object size for large agents (#542). (#554)
 
-## Minor improvements and bug fixes
+- The new argument `na_rm` in `snip_list()` suppresses any `NA` values so that they won't included in the snippet's list of items (#547). (#556)
 
-- Improved readability of error messages rendered as tooltip to the agent report. (#543)
+- Improved readability of error messages rendered as tooltips in the agent report. (#543)
 
-- `col_vals_expr()` shows used columns in the agent report when interrogated (#570)
+- `col_vals_expr()` shows used columns in the agent report when interrogated. (#570)
 
-- Functions accepting `...` now use `rlang::list2()`, enabling dynamic dots. For example, a multiagent can now be constructed from a `list()` of agents using `create_multiagent(!!!list_of_agents)`. (#553)
+- Improved the matching of rows between `agent$validation_step` and the rows of the agent report (#563). (#565)
 
-- Fixed bug with non-standard column names in some validation functions (#555)
+- Functions accepting `...` now use `rlang::list2()`, enabling dynamic dots. For example, a multiagent can now be constructed from a `list()` of agents using `create_multiagent(!!!list_of_agents)` (#552). (#553)
+
+- Fixed bug with non-standard column names in some validation functions (#545, #546). (#555)
 
 - Fixed a regression in `col_vals_*()` functions, where `vars("col")` was evaluating to the string `"col"`. Behavior of `vars("col")` is now aligned back with `vars(col)` - both evaluate to the column name `col`. (#535)
 
-- Problems arising from comparing `columns` to a `value` of different class (for example, comparing a datetime column to a date value `Sys.Date()` instead of another datetime value `Sys.time()`) are now signalled appropriately at `interrogate()`. (#539)
+- Problems arising from comparing `columns` to a `value` of different class (for example, comparing a datetime column to a date value `Sys.Date()` instead of another datetime value `Sys.time()`) are now signalled appropriately at `interrogate()` (#536, #537). (#539)
 
 - Fixed bug in `has_columns()` failing to detect non-existing columns when supplied as a character vector. (#540)
+
+- Replace uses of `crayon::make_style()` with `cli::make_ansi_style()`, removing the `crayon` dependency. (#559, thanks @olivroy!)
+
+- Use `rlang::check_installed()` to perform checks of optional package installs. (#559, @olivroy)
+
+- Modernized CI workflows with dedicated linting action. (#560, @olivroy)
+
+- Avoid unwanted equation formatting in agent report arising from arbitrary `"$"` characters (#561). (#562)
 
 # pointblank 0.12.1
 

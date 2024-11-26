@@ -90,37 +90,33 @@ test_that("Creating a valid `informant` object is possible", {
   # not specifying `tbl_name` results in an `NA` for `tbl_name`; we
   # also expect a warning
   expect_warning(
-    expect_equal(
-      create_informant(read_fn = ~ pointblank::small_table) %>% .$tbl_name,
-      NA_character_
-    )
+      obj <- create_informant(read_fn = ~ pointblank::small_table) %>% .$tbl_name,
   )
+  expect_equal(obj, NA_character_)
   
   # Expect that there is a preference for reading a table from
   # a `tbl` if the deprecated `read_fn` is also supplied with a
   # target table; also expect a warning and a message
-  informant_2 <- 
-    expect_message(
-      expect_warning(
-        create_informant(
-          tbl = tbl,
-          read_fn = ~ pointblank::small_table
-        )
+  expect_message(
+    expect_warning(
+      informant_2 <- create_informant(
+        tbl = tbl,
+        read_fn = ~ pointblank::small_table
       )
     )
+  )
   
   expect_equal(informant_2$metadata$table$`_columns`, 2)
   expect_equal(informant_2$metadata$table$`_rows`, 6)
   
-  informant_3 <- 
-    expect_message(
-      expect_warning(
-        create_informant(
-          tbl = tbl,
-          read_fn = function() pointblank::small_table
-        )
+  expect_message(
+    expect_warning(
+      informant_3 <- create_informant(
+        tbl = tbl,
+        read_fn = function() pointblank::small_table
       )
     )
+  )
   
   expect_equal(informant_3$metadata$table$`_columns`, 2)
   expect_equal(informant_3$metadata$table$`_rows`, 6)

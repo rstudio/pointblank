@@ -15,7 +15,7 @@ test_that("Creating a `col_is_character()` step is possible", {
   expect_equal(validation$tbl_name, "small_table")
   expect_equal(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equal(validation$validation_set$assertion_type, "col_is_character")
-  expect_equal(validation$validation_set$column, "b")
+  expect_equal_unlist(validation$validation_set$column, "b")
   expect_true(is.null(validation$validation_set[["values"]][[1]]))
   expect_true(is.na(validation$validation_set$all_passed))
   expect_true(is.na(validation$validation_set$n))
@@ -37,7 +37,7 @@ test_that("Creating a `col_is_character()` step is possible", {
   expect_equal(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
-  expect_equal(
+  expect_equal_unlist(
     validation_all$validation_set$column,
     c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
@@ -59,7 +59,7 @@ test_that("Creating a `col_is_date()` step is possible", {
   expect_equal(validation$tbl_name,  "small_table")
   expect_equal(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equal(validation$validation_set$assertion_type, "col_is_date")
-  expect_equal(validation$validation_set$column, "b")
+  expect_equal_unlist(validation$validation_set$column, "b")
   expect_true(is.null(validation$validation_set[["values"]][[1]]))
   expect_true(is.na(validation$validation_set$all_passed))
   expect_true(is.na(validation$validation_set$n))
@@ -81,7 +81,7 @@ test_that("Creating a `col_is_date()` step is possible", {
   expect_equal(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
-  expect_equal(
+  expect_equal_unlist(
     validation_all$validation_set$column,
     c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
@@ -103,7 +103,7 @@ test_that("Creating a `col_is_factor()` step is possible", {
   expect_equal(validation$tbl_name, "small_table")
   expect_equal(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equal(validation$validation_set$assertion_type, "col_is_factor")
-  expect_equal(validation$validation_set$column, "b")
+  expect_equal_unlist(validation$validation_set$column, "b")
   expect_true(is.null(validation$validation_set[["values"]][[1]]))
   expect_true(is.na(validation$validation_set$all_passed))
   expect_true(is.na(validation$validation_set$n))
@@ -125,7 +125,7 @@ test_that("Creating a `col_is_factor()` step is possible", {
   expect_equal(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
-  expect_equal(
+  expect_equal_unlist(
     validation_all$validation_set$column,
     c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
@@ -147,7 +147,7 @@ test_that("Creating a `col_is_integer()` step is possible", {
   expect_equal(validation$tbl_name, "small_table")
   expect_equal(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equal(validation$validation_set$assertion_type, "col_is_integer")
-  expect_equal(validation$validation_set$column, "b")
+  expect_equal_unlist(validation$validation_set$column, "b")
   expect_true(is.null(validation$validation_set[["values"]][[1]]))
   expect_true(is.na(validation$validation_set$all_passed))
   expect_true(is.na(validation$validation_set$n))
@@ -169,7 +169,7 @@ test_that("Creating a `col_is_integer()` step is possible", {
   expect_equal(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
-  expect_equal(
+  expect_equal_unlist(
     validation_all$validation_set$column,
     c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
@@ -191,7 +191,7 @@ test_that("Creating a `col_is_logical()` step is possible", {
   expect_equal(validation$tbl_name, "small_table")
   expect_equal(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equal(validation$validation_set$assertion_type, "col_is_logical")
-  expect_equal(validation$validation_set$column, "b")
+  expect_equal_unlist(validation$validation_set$column, "b")
   expect_true(is.null(validation$validation_set[["values"]][[1]]))
   expect_true(is.na(validation$validation_set$all_passed))
   expect_true(is.na(validation$validation_set$n))
@@ -213,7 +213,7 @@ test_that("Creating a `col_is_logical()` step is possible", {
   expect_equal(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
-  expect_equal(
+  expect_equal_unlist(
     validation_all$validation_set$column,
     c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
@@ -235,7 +235,7 @@ test_that("Creating a `col_is_numeric()` step is possible", {
   expect_equal(validation$tbl_name, "small_table")
   expect_equal(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equal(validation$validation_set$assertion_type, "col_is_numeric")
-  expect_equal(validation$validation_set$column, "b")
+  expect_equal_unlist(validation$validation_set$column, "b")
   expect_true(is.null(validation$validation_set[["values"]][[1]]))
   expect_true(is.na(validation$validation_set$all_passed))
   expect_true(is.na(validation$validation_set$n))
@@ -257,7 +257,7 @@ test_that("Creating a `col_is_numeric()` step is possible", {
   expect_equal(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
-  expect_equal(
+  expect_equal_unlist(
     validation_all$validation_set$column,
     c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
@@ -279,7 +279,7 @@ test_that("Creating a `col_is_posix()` step is possible", {
   expect_equal(validation$tbl_name, "small_table")
   expect_equal(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equal(validation$validation_set$assertion_type, "col_is_posix")
-  expect_equal(validation$validation_set$column, "b")
+  expect_equal_unlist(validation$validation_set$column, "b")
   expect_true(is.null(validation$validation_set[["values"]][[1]]))
   expect_true(is.na(validation$validation_set$all_passed))
   expect_true(is.na(validation$validation_set$n))
@@ -301,7 +301,7 @@ test_that("Creating a `col_is_posix()` step is possible", {
   expect_equal(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
-  expect_equal(
+  expect_equal_unlist(
     validation_all$validation_set$column,
     c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
@@ -323,7 +323,7 @@ test_that("Creating a `col_vals_between()` step is possible", {
   expect_equal(validation$tbl_name, "small_table")
   expect_equal(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equal(validation$validation_set$assertion_type, "col_vals_between")
-  expect_equal(validation$validation_set$column, "b")
+  expect_equal_unlist(validation$validation_set$column, "b")
   expect_equal(validation$validation_set[["values"]] %>% unlist(), c(2, 10))
   expect_true(is.na(validation$validation_set$all_passed))
   expect_true(is.na(validation$validation_set$n))
@@ -345,7 +345,7 @@ test_that("Creating a `col_vals_between()` step is possible", {
   expect_equal(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
-  expect_equal(
+  expect_equal_unlist(
     validation_all$validation_set$column,
     c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
@@ -367,7 +367,7 @@ test_that("Creating a `col_vals_not_between()` step is possible", {
   expect_equal(validation$tbl_name, "small_table")
   expect_equal(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equal(validation$validation_set$assertion_type, "col_vals_not_between")
-  expect_equal(validation$validation_set$column, "b")
+  expect_equal_unlist(validation$validation_set$column, "b")
   expect_equal(validation$validation_set[["values"]] %>% unlist(), c(2, 10))
   expect_true(is.na(validation$validation_set$all_passed))
   expect_true(is.na(validation$validation_set$n))
@@ -389,7 +389,7 @@ test_that("Creating a `col_vals_not_between()` step is possible", {
   expect_equal(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
-  expect_equal(
+  expect_equal_unlist(
     validation_all$validation_set$column,
     c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
@@ -411,7 +411,7 @@ test_that("Creating a `col_vals_equal()` step is possible", {
   expect_equal(validation$tbl_name, "small_table")
   expect_equal(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equal(validation$validation_set$assertion_type, "col_vals_equal")
-  expect_equal(validation$validation_set$column, "b")
+  expect_equal_unlist(validation$validation_set$column, "b")
   expect_equal(validation$validation_set[["values"]] %>% unlist(), 5)
   expect_true(is.na(validation$validation_set$all_passed))
   expect_true(is.na(validation$validation_set$n))
@@ -433,7 +433,7 @@ test_that("Creating a `col_vals_equal()` step is possible", {
   expect_equal(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
-  expect_equal(
+  expect_equal_unlist(
     validation_all$validation_set$column,
     c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
@@ -455,7 +455,7 @@ test_that("Creating a `col_vals_not_equal()` step is possible", {
   expect_equal(validation$tbl_name, "small_table")
   expect_equal(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equal(validation$validation_set$assertion_type, "col_vals_not_equal")
-  expect_equal(validation$validation_set$column, "b")
+  expect_equal_unlist(validation$validation_set$column, "b")
   expect_equal(validation$validation_set[["values"]] %>% unlist(), 5)
   expect_true(is.na(validation$validation_set$all_passed))
   expect_true(is.na(validation$validation_set$n))
@@ -477,7 +477,7 @@ test_that("Creating a `col_vals_not_equal()` step is possible", {
   expect_equal(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
-  expect_equal(
+  expect_equal_unlist(
     validation_all$validation_set$column,
     c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
@@ -499,7 +499,7 @@ test_that("Creating a `col_vals_gt()` step is possible", {
   expect_equal(validation$tbl_name, "small_table")
   expect_equal(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equal(validation$validation_set$assertion_type, "col_vals_gt")
-  expect_equal(validation$validation_set$column, "b")
+  expect_equal_unlist(validation$validation_set$column, "b")
   expect_equal(validation$validation_set[["values"]] %>% unlist(), 5)
   expect_true(is.na(validation$validation_set$all_passed))
   expect_true(is.na(validation$validation_set$n))
@@ -521,7 +521,7 @@ test_that("Creating a `col_vals_gt()` step is possible", {
   expect_equal(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
-  expect_equal(
+  expect_equal_unlist(
     validation_all$validation_set$column,
     c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
@@ -543,7 +543,7 @@ test_that("Creating a `col_vals_gte()` step is possible", {
   expect_equal(validation$tbl_name, "small_table")
   expect_equal(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equal(validation$validation_set$assertion_type, "col_vals_gte")
-  expect_equal(validation$validation_set$column, "b")
+  expect_equal_unlist(validation$validation_set$column, "b")
   expect_equal(validation$validation_set[["values"]] %>% unlist(), 5)
   expect_true(is.na(validation$validation_set$all_passed))
   expect_true(is.na(validation$validation_set$n))
@@ -565,7 +565,7 @@ test_that("Creating a `col_vals_gte()` step is possible", {
   expect_equal(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
-  expect_equal(
+  expect_equal_unlist(
     validation_all$validation_set$column,
     c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
@@ -587,7 +587,7 @@ test_that("Creating a `col_vals_lt()` step is possible", {
   expect_equal(validation$tbl_name, "small_table")
   expect_equal(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equal(validation$validation_set$assertion_type, "col_vals_lt")
-  expect_equal(validation$validation_set$column, "b")
+  expect_equal_unlist(validation$validation_set$column, "b")
   expect_equal(validation$validation_set[["values"]] %>% unlist(), 5)
   expect_true(is.na(validation$validation_set$all_passed))
   expect_true(is.na(validation$validation_set$n))
@@ -609,7 +609,7 @@ test_that("Creating a `col_vals_lt()` step is possible", {
   expect_equal(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
-  expect_equal(
+  expect_equal_unlist(
     validation_all$validation_set$column,
     c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
@@ -631,7 +631,7 @@ test_that("Creating a `col_vals_lte()` step is possible", {
   expect_equal(validation$tbl_name, "small_table")
   expect_equal(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equal(validation$validation_set$assertion_type, "col_vals_lte")
-  expect_equal(validation$validation_set$column, "b")
+  expect_equal_unlist(validation$validation_set$column, "b")
   expect_equal(validation$validation_set[["values"]] %>% unlist(), 5)
   expect_true(is.na(validation$validation_set$all_passed))
   expect_true(is.na(validation$validation_set$n))
@@ -653,7 +653,7 @@ test_that("Creating a `col_vals_lte()` step is possible", {
   expect_equal(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
-  expect_equal(
+  expect_equal_unlist(
     validation_all$validation_set$column,
     c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
@@ -675,7 +675,7 @@ test_that("Creating a `col_vals_in_set()` step is possible", {
   expect_equal(validation$tbl_name, "small_table")
   expect_equal(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equal(validation$validation_set$assertion_type, "col_vals_in_set")
-  expect_equal(validation$validation_set$column, "b")
+  expect_equal_unlist(validation$validation_set$column, "b")
   expect_equal(validation$validation_set[["values"]] %>% unlist(), c("1-bcd-345", "5-jdo-903"))
   expect_true(is.na(validation$validation_set$all_passed))
   expect_true(is.na(validation$validation_set$n))
@@ -697,7 +697,7 @@ test_that("Creating a `col_vals_in_set()` step is possible", {
   expect_equal(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
-  expect_equal(
+  expect_equal_unlist(
     validation_all$validation_set$column,
     c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
@@ -719,7 +719,7 @@ test_that("Creating a `col_vals_not_in_set()` step is possible", {
   expect_equal(validation$tbl_name, "small_table")
   expect_equal(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equal(validation$validation_set$assertion_type, "col_vals_not_in_set")
-  expect_equal(validation$validation_set$column, "b")
+  expect_equal_unlist(validation$validation_set$column, "b")
   expect_equal(validation$validation_set[["values"]] %>% unlist(), c("1-bcd-345", "5-jdo-903"))
   expect_true(is.na(validation$validation_set$all_passed))
   expect_true(is.na(validation$validation_set$n))
@@ -741,7 +741,7 @@ test_that("Creating a `col_vals_not_in_set()` step is possible", {
   expect_equal(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
-  expect_equal(
+  expect_equal_unlist(
     validation_all$validation_set$column,
     c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
@@ -763,7 +763,7 @@ test_that("Creating a `col_vals_make_set()` step is possible", {
   expect_equal(validation$tbl_name, "small_table")
   expect_equal(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equal(validation$validation_set$assertion_type, "col_vals_make_set")
-  expect_equal(validation$validation_set$column, "f")
+  expect_equal_unlist(validation$validation_set$column, "f")
   expect_equal(validation$validation_set[["values"]] %>% unlist(), c("low", "high", "mid"))
   expect_true(is.na(validation$validation_set$all_passed))
   expect_true(is.na(validation$validation_set$n))
@@ -785,7 +785,7 @@ test_that("Creating a `col_vals_make_set()` step is possible", {
   expect_equal(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
-  expect_equal(
+  expect_equal_unlist(
     validation_all$validation_set$column,
     c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
@@ -807,7 +807,7 @@ test_that("Creating a `col_vals_make_subset()` step is possible", {
   expect_equal(validation$tbl_name, "small_table")
   expect_equal(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equal(validation$validation_set$assertion_type, "col_vals_make_subset")
-  expect_equal(validation$validation_set$column, "f")
+  expect_equal_unlist(validation$validation_set$column, "f")
   expect_equal(validation$validation_set[["values"]] %>% unlist(), c("low", "high"))
   expect_true(is.na(validation$validation_set$all_passed))
   expect_true(is.na(validation$validation_set$n))
@@ -829,7 +829,7 @@ test_that("Creating a `col_vals_make_subset()` step is possible", {
   expect_equal(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
-  expect_equal(
+  expect_equal_unlist(
     validation_all$validation_set$column,
     c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
@@ -851,7 +851,7 @@ test_that("Creating a `col_vals_regex()` step is possible", {
   expect_equal(validation$tbl_name, "small_table")
   expect_equal(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equal(validation$validation_set$assertion_type, "col_vals_regex")
-  expect_equal(validation$validation_set$column, "b")
+  expect_equal_unlist(validation$validation_set$column, "b")
   expect_equal(validation$validation_set[["values"]] %>% unlist(), "[0-9]-.*")
   expect_true(is.na(validation$validation_set$all_passed))
   expect_true(is.na(validation$validation_set$n))
@@ -873,7 +873,7 @@ test_that("Creating a `col_vals_regex()` step is possible", {
   expect_equal(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
-  expect_equal(
+  expect_equal_unlist(
     validation_all$validation_set$column,
     c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
@@ -897,9 +897,9 @@ test_that("Creating a `col_vals_within_spec()` step is possible", {
     "isbn_numbers", "vin_numbers", "zip_codes", "credit_card_numbers", 
     "iban_austria", "swift_numbers", "phone_numbers", "email_addresses", 
     "urls", "ipv4_addresses", "ipv6_addresses", "mac_addresses"
-    ))
+  ))
   expect_equal(validation$validation_set$assertion_type, "col_vals_within_spec")
-  expect_equal(validation$validation_set$column, "zip_codes")
+  expect_equal_unlist(validation$validation_set$column, "zip_codes")
   expect_equal(validation$validation_set[["values"]] %>% unlist(), "postal[usa]")
   expect_true(is.na(validation$validation_set$all_passed))
   expect_true(is.na(validation$validation_set$n))
@@ -921,7 +921,7 @@ test_that("Creating a `col_vals_within_spec()` step is possible", {
   expect_equal(nrow(validation_all$validation_set), 12)
   
   # Expect all column names in `validation_all$validation_set$column`
-  expect_equal(
+  expect_equal_unlist(
     validation_all$validation_set$column,
     c(
       "isbn_numbers", "vin_numbers", "zip_codes", "credit_card_numbers", 
@@ -948,8 +948,8 @@ test_that("Creating a `col_vals_null()` step is possible", {
   expect_equal(validation$tbl_name, "small_table")
   expect_equal(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equal(validation$validation_set$assertion_type, "col_vals_null")
-  expect_equal(validation$validation_set$column, "b")
-  expect_true(is.null(validation$validation_set[["values"]][[1]]))
+  expect_equal_unlist(validation$validation_set$column, "b")
+  expect_null(validation$validation_set[["values"]][[1]])
   expect_true(is.na(validation$validation_set$all_passed))
   expect_true(is.na(validation$validation_set$n))
   expect_true(is.na(validation$validation_set$n_passed))
@@ -970,7 +970,7 @@ test_that("Creating a `col_vals_null()` step is possible", {
   expect_equal(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
-  expect_equal(
+  expect_equal_unlist(
     validation_all$validation_set$column,
     c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
@@ -992,7 +992,7 @@ test_that("Creating a `col_vals_not_null()` step is possible", {
   expect_equal(validation$tbl_name, "small_table")
   expect_equal(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equal(validation$validation_set$assertion_type, "col_vals_not_null")
-  expect_equal(validation$validation_set$column, "b")
+  expect_equal_unlist(validation$validation_set$column, "b")
   expect_true(is.null(validation$validation_set[["values"]][[1]]))
   expect_true(is.na(validation$validation_set$all_passed))
   expect_true(is.na(validation$validation_set$n))
@@ -1014,7 +1014,7 @@ test_that("Creating a `col_vals_not_null()` step is possible", {
   expect_equal(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
-  expect_equal(
+  expect_equal_unlist(
     validation_all$validation_set$column,
     c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })

@@ -94,7 +94,7 @@ test_that("Interrogating with an agent yields the correct results", {
   expect_equal(validation$validation_set$f_passed, 1)
   expect_equal(validation$validation_set$f_failed, 0)
   expect_equal(nrow(validation$validation_set), 1)
-
+  
   # Use the `col_exists()` function to create
   # a validation step, then, `interrogate()`
   validation <-

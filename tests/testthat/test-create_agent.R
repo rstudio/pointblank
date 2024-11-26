@@ -107,37 +107,33 @@ test_that("Creating a valid `agent` object is possible", {
   # Expect that using a `read_fn` to read in a table but
   # not specifying `tbl_name` results in an `NA` for `tbl_name`; also,
   # expect a warning
-  expect_equal(
-    expect_warning(
-      create_agent(read_fn = ~ pointblank::small_table)
-    ) %>% .$tbl_name,
-    NA_character_
+  expect_warning(
+    obj <- create_agent(read_fn = ~ pointblank::small_table)$tbl_name
   )
+  expect_equal(obj, NA_character_)
   
   # Expect that if a table is supplied to both `tbl` and `read_fn`
   # there is a preference for using the value from `tbl`; also,
   # expect a warning and a message
-  agent_2 <- 
-    expect_message(
-      expect_warning(
-        create_agent(
-          tbl = tbl,
-          read_fn = ~ pointblank::small_table
-        )
+  expect_message(
+    expect_warning(
+      agent_2 <- create_agent(
+        tbl = tbl,
+        read_fn = ~ pointblank::small_table
       )
     )
+  )
   
   expect_equal(agent_2$col_names, c("a", "b"))
   
-  agent_3 <-
-    expect_message(
-      expect_warning(
-        create_agent(
-          tbl = tbl,
-          read_fn = function() pointblank::small_table
-        )
+  expect_message(
+    expect_warning(
+      agent_3 <- create_agent(
+        tbl = tbl,
+        read_fn = function() pointblank::small_table
       )
     )
+  )
   
   expect_equal(agent_3$col_names, c("a", "b"))
   

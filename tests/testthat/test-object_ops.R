@@ -82,7 +82,7 @@ test_that("The `x_write_disk()` and `x_read_disk()` functions works as expected"
   
   # Expect the `tbl` data to be in the agent object
   expect_s3_class(agent_test_2$tbl, "tbl_df")
-  expect_equivalent(agent_test_2$tbl, small_table)
+  expect_equal(agent_test_2$tbl, small_table)
   
   # Expect the `extracts` to be an empty list
   expect_type(agent_test_2$extracts, "list")
@@ -151,7 +151,7 @@ test_that("The `x_write_disk()` and `x_read_disk()` functions works as expected"
   
   # Expect the new `tbl` data to be in the agent object
   expect_s3_class(agent_test_4$tbl, "tbl_df")
-  expect_equivalent(agent_test_4$tbl, small_table)
+  expect_equal(agent_test_4$tbl, small_table)
   
   # Expect the `tbl_name` to remain as `small_table_sqlite()`
   expect_equal(agent_test_4$tbl_name, "small_table_sqlite()")
@@ -177,7 +177,7 @@ test_that("The `x_write_disk()` and `x_read_disk()` functions works as expected"
   
   # Expect the new `tbl` data to be in the agent object
   expect_s3_class(agent_test_4$tbl, "tbl_df")
-  expect_equivalent(agent_test_4$tbl, small_table)
+  expect_equal(agent_test_4$tbl, small_table)
   
   # Expect the `tbl_name` to still be `small_table_sqlite()`
   expect_equal(agent_test_4$tbl_name, "small_table_sqlite()")
@@ -222,7 +222,7 @@ test_that("The `set_tbl()` function works as expected", {
   agent <- create_agent(tbl = specifications)
   
   expect_s3_class(agent$tbl, "tbl_df")
-  expect_equivalent(agent$tbl, specifications)
+  expect_equal(agent$tbl, specifications)
   expect_null(agent$read_fn)
   expect_equal(agent$tbl_name, "specifications")
   expect_match(agent$label, "\\[.*?\\]")
@@ -232,7 +232,7 @@ test_that("The `set_tbl()` function works as expected", {
   agent_replace_1 <- agent %>% set_tbl(tbl = game_revenue)
   
   expect_s3_class(agent_replace_1$tbl, "tbl_df")
-  expect_equivalent(agent_replace_1$tbl, game_revenue)
+  expect_equal(agent_replace_1$tbl, game_revenue)
   expect_null(agent_replace_1$read_fn)
   expect_equal(agent_replace_1$tbl_name, "specifications")
   expect_equal(agent_replace_1$label, agent$label)
@@ -249,7 +249,7 @@ test_that("The `set_tbl()` function works as expected", {
     )
   
   expect_s3_class(agent_replace_2$tbl, "tbl_df")
-  expect_equivalent(agent_replace_2$tbl, game_revenue)
+  expect_equal(agent_replace_2$tbl, game_revenue)
   expect_null(agent_replace_2$read_fn)
   expect_equal(agent_replace_2$tbl_name, "game_revenue")
   expect_match(agent_replace_2$label, "Checking the game revenue table.")

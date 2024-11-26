@@ -59,7 +59,7 @@ test_that("Reading an informant from YAML is possible", {
   # via `yaml_read_informant()` (i.e., reading in the YAML file)
   # - *Except* private fields which are note written
   informant$metadata$`_private` <- NULL
-  expect_equivalent(informant, informant_from_yaml)
+  expect_equal(informant, informant_from_yaml)
   
   # Use `incorporate()` on the informant; this creates the list
   # component `metadata_rev` in the `informant` which is for

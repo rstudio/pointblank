@@ -209,7 +209,7 @@ test_that("sundered data can be combined to a single `tbl_df` with a single flag
   expect_equal(unique(c_4$.pb_combined), c(1L, 0L))
   
   # Expect the rows to be in the same order as the input table
-  expect_equivalent(combined_data_tbl %>% dplyr::select(-.pb_combined), small_table)
+  expect_equal(combined_data_tbl %>% dplyr::select(-.pb_combined), small_table)
 })
 
 test_that("sundered data can be generated and retrieved with a `tbl_df` (one step)", {

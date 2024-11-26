@@ -13,7 +13,7 @@ test_that("Utility functions won't fail us", {
   is_ptblank_agent(x = small_table) %>% expect_false()
   
   agent %>% get_tbl_object() %>% expect_s3_class("tbl_df")
-  agent %>% get_tbl_object() %>% expect_equivalent(small_table)
+  agent %>% get_tbl_object() %>% expect_equal(small_table)
   
   agent %>% has_agent_intel() %>% expect_false()
   agent %>% interrogate() %>% has_agent_intel() %>% expect_true()

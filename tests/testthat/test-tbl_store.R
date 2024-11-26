@@ -1,5 +1,4 @@
 skip_on_os(os = "windows")
-local_edition(3)
 
 test_that("A table store object can be created and used effectively", {
   

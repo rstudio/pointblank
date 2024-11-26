@@ -45,12 +45,10 @@ test_that("Reading an informant from YAML is possible", {
   expect_is(informant_from_yaml, "ptblank_informant")
   
   # Expect both informant objects to successfully produce a report
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     report_1 <- get_informant_report(informant)
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     report_1_from_yaml <- get_informant_report(informant_from_yaml)
   )
   expect_is(report_1, "gt_tbl")
@@ -79,12 +77,10 @@ test_that("Reading an informant from YAML is possible", {
   expect_null(informant_inc_from_yaml$metadata_rev)
   
   # Expect both informant objects to successfully produce a report
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     report_1_inc <- get_informant_report(informant_inc)
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     report_1_from_yaml_inc <- get_informant_report(informant_inc_from_yaml)
   )
   expect_is(report_1_inc, "gt_tbl")

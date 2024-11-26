@@ -436,10 +436,10 @@ test_that("sundering can occur (with exceptions) when there are preconditions", 
   # Expect no error if there are mixed preconditions across
   # the validations but the validation steps actually used for
   # sundering don't have mixed preconditions
-  expect_error(regexp = NA, agent_p_unused %>% get_sundered_data(type = "pass"))
-  expect_error(regexp = NA, agent_p_unused %>% get_sundered_data(type = "fail"))
-  expect_error(regexp = NA, agent_p_unused %>% get_sundered_data(type = "combined"))
-  expect_error(regexp = NA, agent_p_unused %>% get_sundered_data(type = NULL))
+  expect_no_error(agent_p_unused %>% get_sundered_data(type = "pass"))
+  expect_no_error(agent_p_unused %>% get_sundered_data(type = "fail"))
+  expect_no_error(agent_p_unused %>% get_sundered_data(type = "combined"))
+  expect_no_error(agent_p_unused %>% get_sundered_data(type = NULL))
   
   # Get the 'pass' data piece using `get_sundered_data()` and `agent_p_unused`
   pass_data_tbl_u <- agent_p_unused %>% get_sundered_data(type = "pass")

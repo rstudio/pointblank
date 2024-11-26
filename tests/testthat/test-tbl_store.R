@@ -99,8 +99,8 @@ test_that("A table store object can be created and used effectively", {
   
   # Expect the `tbl_formula` to be compatible with the `tbl` argument in
   # `create_agent()` and `create_informant()`
-  expect_error(regexp = NA, create_agent(tbl = tbl_formula))
-  expect_error(regexp = NA, create_informant(tbl = tbl_formula))
+  expect_no_error(create_agent(tbl = tbl_formula))
+  expect_no_error(create_informant(tbl = tbl_formula))
   
   # Materialize all tables from the `tbls` table store with `tbl_get()`
   # tbl_small_tbl_duckdb <- tbl_get(tbl = "small_tbl_duckdb", store = tbls)

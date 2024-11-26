@@ -708,7 +708,7 @@ test_that("Interrogating for valid row values", {
   # Use the `col_vals_gt()` function to create
   # a validation step (with a precondition), then,
   # `interrogate()`; using a column name for `value`
-  expect_warning(regexp = NA,
+  expect_no_warning(
     validation <-
       create_agent(tbl = small_table) %>%
       col_vals_gt(
@@ -1974,7 +1974,7 @@ test_that("Select validation steps can be `active` or not", {
   # to potentially warn when there is a single unit failing in each step
   # (however this won't happen because `active = FALSE` means that an
   # interrogation isn't even performed)
-  expect_warning(regexp = NA,
+  expect_no_warning(
     small_table %>%
       col_is_character(columns = vars(b), actions = al, active = FALSE) %>%
       col_is_numeric(columns = vars(a), actions = al, active = FALSE) %>%

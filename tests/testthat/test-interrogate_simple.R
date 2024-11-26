@@ -1407,10 +1407,10 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect no warning or error if all column names are correct
-  expect_warning(regexp = NA,
+  expect_no_warning(
     tbl %>% col_exists(columns = colnames(tbl), actions = warn_on_fail())
   )
-  expect_error(regexp = NA,
+  expect_no_error(
     tbl %>% col_exists(columns = colnames(tbl), actions = stop_on_fail())
   )
   
@@ -1789,7 +1789,6 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
   # simple validation steps with NAs, switching the
   # value of the `na_pass` option
   expect_warning(
-    regexp = NULL,
     dplyr::tibble(a = c(1.5, 1.5, 1.5, NA)) %>%
       col_vals_equal(
         columns = vars(a),
@@ -1799,8 +1798,7 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
       )
   )
   
-  expect_warning(
-    regexp = NA,
+  expect_no_warning(
     dplyr::tibble(a = c(1.5, 1.5, 1.5, NA)) %>%
       col_vals_equal(
         columns = vars(a),
@@ -1814,7 +1812,6 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
   # simple validation steps with NAs, switching the
   # value of the `na_pass` option
   expect_warning(
-    regexp = NULL,
     dplyr::tibble(a = c(1.5, 1.5, 1.5, NA)) %>%
       col_vals_not_equal(
         columns = vars(a),
@@ -1824,8 +1821,7 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
       )
   )
   
-  expect_warning(
-    regexp = NA,
+  expect_no_warning(
     dplyr::tibble(a = c(1.5, 1.5, 1.5, NA)) %>%
       col_vals_not_equal(
         columns = vars(a),
@@ -1839,7 +1835,6 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
   # simple validation steps with NAs, switching the
   # value of the `na_pass` option
   expect_warning(
-    regexp = NULL,
     dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
       col_vals_gt(
         columns = vars(a),
@@ -1849,8 +1844,7 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
       )
   )
   
-  expect_warning(
-    regexp = NA,
+  expect_no_warning(
     dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
       col_vals_gt(
         columns = vars(a),
@@ -1864,7 +1858,6 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
   # simple validation steps with NAs, switching the
   # value of the `na_pass` option
   expect_warning(
-    regexp = NULL,
     dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
       col_vals_gte(
         columns = vars(a),
@@ -1874,8 +1867,7 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
       )
   )
   
-  expect_warning(
-    regexp = NA,
+  expect_no_warning(
     dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
       col_vals_gte(
         columns = vars(a),
@@ -1889,7 +1881,6 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
   # simple validation steps with NAs, switching the
   # value of the `na_pass` option
   expect_warning(
-    regexp = NULL,
     dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
       col_vals_lt(
         columns = vars(a),
@@ -1899,8 +1890,7 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
       )
   )
   
-  expect_warning(
-    regexp = NA,
+  expect_no_warning(
     dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
       col_vals_lt(
         columns = vars(a),
@@ -1914,7 +1904,6 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
   # simple validation steps with NAs, switching the
   # value of the `na_pass` option
   expect_warning(
-    regexp = NULL,
     dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
       col_vals_lte(
         columns = vars(a),
@@ -1924,8 +1913,7 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
       )
   )
   
-  expect_warning(
-    regexp = NA,
+  expect_no_warning(
     dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
       col_vals_lte(
         columns = vars(a),
@@ -1939,7 +1927,6 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
   # simple validation steps with NAs, switching the
   # value of the `na_pass` option
   expect_warning(
-    regexp = NULL,
     dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
       col_vals_between(
         columns = vars(a),
@@ -1949,8 +1936,7 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
       )
   )
   
-  expect_warning(
-    regexp = NA,
+  expect_no_warning(
     dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
       col_vals_between(
         columns = vars(a),
@@ -1964,7 +1950,6 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
   # simple validation steps with NAs, switching the
   # value of the `na_pass` option
   expect_warning(
-    regexp = NULL,
     dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
       col_vals_not_between(
         columns = vars(a),
@@ -1974,8 +1959,7 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
       )
   )
   
-  expect_warning(
-    regexp = NA,
+  expect_no_warning(
     dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
       col_vals_not_between(
         columns = vars(a),
@@ -1989,7 +1973,6 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
   # simple validation steps with NAs, switching the
   # value of the `na_pass` option
   expect_warning(
-    regexp = NULL,
     dplyr::tibble(a = c("1-bcd-345", "3-ldm-038", NA)) %>%
       col_vals_regex(
         columns = vars(a),
@@ -1999,8 +1982,7 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
       )
   )
   
-  expect_warning(
-    regexp = NA,
+  expect_no_warning(
     dplyr::tibble(a = c("1-bcd-345", "3-ldm-038", NA)) %>%
       col_vals_regex(
         columns = vars(a),
@@ -2015,8 +1997,7 @@ test_that("The inclusivity options work well for the range-based validations", {
 
   simple_tbl <- dplyr::tibble(a = 1:10)
   
-  expect_warning(
-    regexp = NA,
+  expect_no_warning(
     simple_tbl %>%
       col_vals_between(
         columns = vars(a), left = 1, right = 10,
@@ -2026,7 +2007,6 @@ test_that("The inclusivity options work well for the range-based validations", {
   )
   
   expect_warning(
-    regexp = NULL,
     simple_tbl %>%
       col_vals_between(
         columns = vars(a), left = 1, right = 10,
@@ -2036,7 +2016,6 @@ test_that("The inclusivity options work well for the range-based validations", {
   )
   
   expect_warning(
-    regexp = NULL,
     simple_tbl %>%
       col_vals_between(
         columns = vars(a), left = 1, right = 10,
@@ -2045,8 +2024,7 @@ test_that("The inclusivity options work well for the range-based validations", {
       )
   )
   
-  expect_warning(
-    regexp = NA,
+  expect_no_warning(
     simple_tbl %>%
       col_vals_between(
         columns = vars(a), left = 1, right = 10,
@@ -2055,7 +2033,6 @@ test_that("The inclusivity options work well for the range-based validations", {
       )
   )
   expect_warning(
-    regexp = NULL,
     simple_tbl %>%
       col_vals_between(
         columns = vars(a), left = 1, right = 10,
@@ -2065,7 +2042,6 @@ test_that("The inclusivity options work well for the range-based validations", {
   )
   
   expect_warning(
-    regexp = NULL,
     simple_tbl %>%
       col_vals_not_between(
         columns = vars(a), left = 10, right = 12,
@@ -2074,8 +2050,7 @@ test_that("The inclusivity options work well for the range-based validations", {
       )
   )
   
-  expect_warning(
-    regexp = NA,
+  expect_no_warning(
     simple_tbl %>%
       col_vals_not_between(
         columns = vars(a), left = 10, right = 12,
@@ -2084,8 +2059,7 @@ test_that("The inclusivity options work well for the range-based validations", {
       )
   )
   
-  expect_warning(
-    regexp = NA,
+  expect_no_warning(
     simple_tbl %>%
       col_vals_not_between(
         columns = vars(a), left = 10, right = 12,
@@ -2095,7 +2069,6 @@ test_that("The inclusivity options work well for the range-based validations", {
   )
   
   expect_warning(
-    regexp = NULL,
     simple_tbl %>%
       col_vals_not_between(
         columns = vars(a), left = -2, right = 1,
@@ -2104,8 +2077,7 @@ test_that("The inclusivity options work well for the range-based validations", {
       )
   )
   
-  expect_warning(
-    regexp = NA,
+  expect_no_warning(
     simple_tbl %>%
       col_vals_not_between(
         columns = vars(a), left = -2, right = 1,
@@ -2114,8 +2086,7 @@ test_that("The inclusivity options work well for the range-based validations", {
       )
   )
   
-  expect_warning(
-    regexp = NA,
+  expect_no_warning(
     simple_tbl %>%
       col_vals_not_between(
         columns = vars(a), left = -2, right = 1,

@@ -68,12 +68,10 @@ test_that("Incorporating an informant yields the correct results", {
   expect_is(informant_inc, "ptblank_informant")
   
   # Don't expect an error if the `read_fn` is valid
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     informant %>% incorporate()
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     informant %>% 
       set_tbl(
         tbl = function() readr::read_csv(file = "test_table.csv", col_types = "TDdcddlc")
@@ -178,12 +176,10 @@ test_that("Incorporating an informant from YAML yields the correct results", {
   expect_is(informant_inc_yaml, "ptblank_informant")
   
   # Don't expect an error if the `read_fn` is valid
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     informant_inc_yaml %>% incorporate()
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     informant_inc_yaml %>% 
       set_tbl(
         tbl = function() readr::read_csv(file = "test_table.csv", col_types = "TDdcddlc")

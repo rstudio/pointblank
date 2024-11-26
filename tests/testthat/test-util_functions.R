@@ -148,8 +148,7 @@ test_that("Utility functions won't fail us", {
     expect_equal("single")
   
   # Don't expect a warning for the above
-  expect_warning(
-    regexp = NA,
+  expect_no_warning(
     normalize_step_id(step_id = "single", columns = columns[1], agent_0)
   )
   
@@ -180,8 +179,7 @@ test_that("Utility functions won't fail us", {
     expect_equal(c("single.0001", "single.0002", "single.0003"))
   
   # Don't expect a warning for the above
-  expect_warning(
-    regexp = NA,
+  expect_no_warning(
     normalize_step_id(step_id = "single", columns = columns, agent_0)
   )
   
@@ -201,8 +199,7 @@ test_that("Utility functions won't fail us", {
     expect_equal(c("one", "two", "three"))
   
   # Don't expect a warning for the above
-  expect_warning(
-    regexp = NA,
+  expect_no_warning(
     normalize_step_id(step_id = c("one", "two", "three"), columns = columns, agent_0)
   )
   
@@ -234,12 +231,10 @@ test_that("Utility functions won't fail us", {
   
   # There should be no duplicates (and no errors) when starting with
   # an agent that has no validation steps
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     check_step_id_duplicates(step_id = "1", agent_0)
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     check_step_id_duplicates(step_id = c("one", "two", "three"), agent_0)
   )
   
@@ -254,8 +249,7 @@ test_that("Utility functions won't fail us", {
   )
   
   # Expect no errors if not providing any `step_id` values
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     create_agent(tbl = small_table) %>%
       col_exists(vars(a)) %>%
       col_exists(vars(b)) %>%
@@ -751,8 +745,8 @@ test_that("Utility functions won't fail us", {
     glue_safely("Easy as {one}, {two}, {three}."),
     "Easy as 1, 2, 3."
   )
-  expect_error(regexp = NA, glue_safely("Easy as {one}, {two}, {three}."))
-  expect_error(regexp = NA, glue_safely("Easy as {LETTERS[1]}, B, C."))
+  expect_no_error(glue_safely("Easy as {one}, {two}, {three}."))
+  expect_no_error(glue_safely("Easy as {LETTERS[1]}, B, C."))
   
   #
   # print_time

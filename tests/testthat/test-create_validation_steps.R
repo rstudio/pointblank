@@ -52,7 +52,7 @@ test_that("Creating a `col_is_date()` step is possible", {
   
   # Expect the class name for the object
   # to be `ptblank_agent`
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   
   # Expect elements of the object to be equivalent
   # to specific parameters
@@ -96,7 +96,7 @@ test_that("Creating a `col_is_factor()` step is possible", {
   
   # Expect the class name for the object
   # to be `ptblank_agent`
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   
   # Expect elements of the object to be equivalent
   # to specific parameters
@@ -140,7 +140,7 @@ test_that("Creating a `col_is_integer()` step is possible", {
   
   # Expect the class name for the object
   # to be `ptblank_agent`
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   
   # Expect elements of the object to be equivalent
   # to specific parameters
@@ -184,7 +184,7 @@ test_that("Creating a `col_is_logical()` step is possible", {
   
   # Expect the class name for the object
   # to be `ptblank_agent`
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   
   # Expect elements of the object to be equivalent
   # to specific parameters
@@ -228,7 +228,7 @@ test_that("Creating a `col_is_numeric()` step is possible", {
   
   # Expect the class name for the object
   # to be `ptblank_agent`
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   
   # Expect elements of the object to be equivalent
   # to specific parameters
@@ -272,7 +272,7 @@ test_that("Creating a `col_is_posix()` step is possible", {
   
   # Expect the class name for the object
   # to be `ptblank_agent`
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   
   # Expect elements of the object to be equivalent
   # to specific parameters
@@ -316,7 +316,7 @@ test_that("Creating a `col_vals_between()` step is possible", {
   
   # Expect the class name for the object
   # to be `ptblank_agent`
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   
   # Expect elements of the object to be equivalent
   # to specific parameters
@@ -360,7 +360,7 @@ test_that("Creating a `col_vals_not_between()` step is possible", {
   
   # Expect the class name for the object
   # to be `ptblank_agent`
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   
   # Expect elements of the object to be equivalent
   # to specific parameters
@@ -404,7 +404,7 @@ test_that("Creating a `col_vals_equal()` step is possible", {
   
   # Expect the class name for the object
   # to be `ptblank_agent`
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   
   # Expect elements of the object to be equivalent
   # to specific parameters
@@ -448,7 +448,7 @@ test_that("Creating a `col_vals_not_equal()` step is possible", {
   
   # Expect the class name for the object
   # to be `ptblank_agent`
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   
   # Expect elements of the object to be equivalent
   # to specific parameters
@@ -492,7 +492,7 @@ test_that("Creating a `col_vals_gt()` step is possible", {
   
   # Expect the class name for the object
   # to be `ptblank_agent`
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   
   # Expect elements of the object to be equivalent
   # to specific parameters
@@ -536,7 +536,7 @@ test_that("Creating a `col_vals_gte()` step is possible", {
   
   # Expect the class name for the object
   # to be `ptblank_agent`
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   
   # Expect elements of the object to be equivalent
   # to specific parameters
@@ -580,7 +580,7 @@ test_that("Creating a `col_vals_lt()` step is possible", {
   
   # Expect the class name for the object
   # to be `ptblank_agent`
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   
   # Expect elements of the object to be equivalent
   # to specific parameters
@@ -624,7 +624,7 @@ test_that("Creating a `col_vals_lte()` step is possible", {
   
   # Expect the class name for the object
   # to be `ptblank_agent`
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   
   # Expect elements of the object to be equivalent
   # to specific parameters
@@ -668,7 +668,7 @@ test_that("Creating a `col_vals_in_set()` step is possible", {
   
   # Expect the class name for the object
   # to be `ptblank_agent`
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   
   # Expect elements of the object to be equivalent
   # to specific parameters
@@ -712,7 +712,7 @@ test_that("Creating a `col_vals_not_in_set()` step is possible", {
   
   # Expect the class name for the object
   # to be `ptblank_agent`
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   
   # Expect elements of the object to be equivalent
   # to specific parameters
@@ -756,7 +756,7 @@ test_that("Creating a `col_vals_make_set()` step is possible", {
   
   # Expect the class name for the object
   # to be `ptblank_agent`
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   
   # Expect elements of the object to be equivalent
   # to specific parameters
@@ -800,7 +800,7 @@ test_that("Creating a `col_vals_make_subset()` step is possible", {
   
   # Expect the class name for the object
   # to be `ptblank_agent`
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   
   # Expect elements of the object to be equivalent
   # to specific parameters
@@ -844,7 +844,7 @@ test_that("Creating a `col_vals_regex()` step is possible", {
   
   # Expect the class name for the object
   # to be `ptblank_agent`
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   
   # Expect elements of the object to be equivalent
   # to specific parameters
@@ -888,7 +888,7 @@ test_that("Creating a `col_vals_within_spec()` step is possible", {
   
   # Expect the class name for the object
   # to be `ptblank_agent`
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   
   # Expect elements of the object to be equivalent
   # to specific parameters
@@ -941,7 +941,7 @@ test_that("Creating a `col_vals_null()` step is possible", {
   
   # Expect the class name for the object
   # to be `ptblank_agent`
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   
   # Expect elements of the object to be equivalent
   # to specific parameters
@@ -985,7 +985,7 @@ test_that("Creating a `col_vals_not_null()` step is possible", {
   
   # Expect the class name for the object
   # to be `ptblank_agent`
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   
   # Expect elements of the object to be equivalent
   # to specific parameters
@@ -1029,7 +1029,7 @@ test_that("Creating a `rows_distinct()` step is possible", {
   
   # Expect the class name for the object
   # to be `ptblank_agent`
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   
   # Expect elements of the object to be equivalent
   # to specific parameters
@@ -1055,7 +1055,7 @@ test_that("Creating a `row_count_match()` step is possible", {
   validation <-
     create_agent(tbl = small_table) %>%
     row_count_match(count = small_table)
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   
   # Expect elements of the object to be equivalent
   # to specific parameters
@@ -1074,32 +1074,32 @@ test_that("Creating a `row_count_match()` step is possible", {
   validation <-
     create_agent(tbl = small_table) %>%
     row_count_match(count = ~ small_table)
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   expect_true(rlang::is_formula(validation$validation_set[["values"]][[1]]))
   
   validation <-
     create_agent(tbl = small_table) %>%
     row_count_match(count = small_table ~ pointblank::small_table)
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   expect_true(rlang::is_formula(validation$validation_set[["values"]][[1]]))
   
   validation <-
     create_agent(tbl = small_table) %>%
     row_count_match(count = function() small_table)
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   expect_true(is.function(validation$validation_set[["values"]][[1]]))
   
   validation <-
     create_agent(tbl = small_table) %>%
     row_count_match(count = 13)
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   expect_true(is.numeric(validation$validation_set[["values"]][[1]]))
   expect_equal(validation$validation_set[["values"]][[1]], 13)
   
   validation <-
     create_agent(tbl = small_table) %>%
     row_count_match(count = 13L)
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   expect_true(is.numeric(validation$validation_set[["values"]][[1]]))
   expect_equal(validation$validation_set[["values"]][[1]], 13)
 })
@@ -1110,7 +1110,7 @@ test_that("Creating a `col_count_match()` step is possible", {
   validation <-
     create_agent(tbl = small_table) %>%
     col_count_match(count = small_table)
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   
   # Expect elements of the object to be equivalent
   # to specific parameters
@@ -1129,32 +1129,32 @@ test_that("Creating a `col_count_match()` step is possible", {
   validation <-
     create_agent(tbl = small_table) %>%
     col_count_match(count = ~ small_table)
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   expect_true(rlang::is_formula(validation$validation_set[["values"]][[1]]))
   
   validation <-
     create_agent(tbl = small_table) %>%
     col_count_match(count = small_table ~ pointblank::small_table)
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   expect_true(rlang::is_formula(validation$validation_set[["values"]][[1]]))
   
   validation <-
     create_agent(tbl = small_table) %>%
     col_count_match(count = function() small_table)
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   expect_true(is.function(validation$validation_set[["values"]][[1]]))
   
   validation <-
     create_agent(tbl = small_table) %>%
     col_count_match(count = 8)
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   expect_true(is.numeric(validation$validation_set[["values"]][[1]]))
   expect_equal(validation$validation_set[["values"]][[1]], 8)
   
   validation <-
     create_agent(tbl = small_table) %>%
     col_count_match(count = 8L)
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   expect_true(is.numeric(validation$validation_set[["values"]][[1]]))
   expect_equal(validation$validation_set[["values"]][[1]], 8)
 })
@@ -1165,7 +1165,7 @@ test_that("Creating a `tbl_match()` step is possible", {
   validation <-
     create_agent(tbl = small_table) %>%
     tbl_match(tbl_compare = small_table)
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   
   # Expect elements of the object to be equivalent
   # to specific parameters
@@ -1184,18 +1184,18 @@ test_that("Creating a `tbl_match()` step is possible", {
   validation <-
     create_agent(tbl = small_table) %>%
     tbl_match(tbl_compare = ~ small_table)
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   expect_true(rlang::is_formula(validation$validation_set[["values"]][[1]]))
   
   validation <-
     create_agent(tbl = small_table) %>%
     tbl_match(tbl_compare = small_table ~ pointblank::small_table)
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   expect_true(rlang::is_formula(validation$validation_set[["values"]][[1]]))
   
   validation <-
     create_agent(tbl = small_table) %>%
     tbl_match(tbl_compare = function() small_table)
-  expect_S3_class(validation, "ptblank_agent")
+  expect_s3_class(validation, "ptblank_agent")
   expect_true(is.function(validation$validation_set[["values"]][[1]]))
 })

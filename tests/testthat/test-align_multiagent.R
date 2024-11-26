@@ -56,11 +56,11 @@ test_that("rehashing reconstructs hash deterministically", {
 
 test_that("multiagent uses rehashing for alignment", {
   multiagent <- create_multiagent(agent_a, agent_b)
-  expect_equivalent(
+  expect_equal(
     rehash_agent(agent_a),
     multiagent$agents[[1]]
   )
-  expect_equivalent(
+  expect_equal(
     rehash_agent(agent_b),
     multiagent$agents[[2]]
   )

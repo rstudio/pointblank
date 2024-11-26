@@ -51,7 +51,7 @@ test_that("Getting data extracts is possible", {
   
   # Expect that using `get_data_extracts()` without
   # specifying `i` gives us an empty list in this case
-  get_data_extracts(agent) %>% expect_equivalent(list())
+  get_data_extracts(agent) %>% expect_equal(list())
   
   # Expect an error if the `i` value is valid but doesn't
   # have an associated data extract

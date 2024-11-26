@@ -26,18 +26,18 @@ test_that("Interrogating with an agent yields the correct results", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_schema_match")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_schema_match")
   expect_true(is.na(validation$validation_set$column %>% unlist()))
   expect_s3_class(validation$validation_set[["values"]][[1]], "col_schema")
   expect_s3_class(validation$validation_set[["values"]][[1]], "r_type")
   expect_true(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 1)
-  expect_equivalent(validation$validation_set$n_passed, 1)
-  expect_equivalent(validation$validation_set$n_failed, 0)
-  expect_equivalent(validation$validation_set$f_passed, 1)
-  expect_equivalent(validation$validation_set$f_failed, 0)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 1)
+  expect_equal(validation$validation_set$n_passed, 1)
+  expect_equal(validation$validation_set$n_failed, 0)
+  expect_equal(validation$validation_set$f_passed, 1)
+  expect_equal(validation$validation_set$f_failed, 0)
+  expect_equal(nrow(validation$validation_set), 1)
   
   
   # Use the `col_schema_match()` function with a `col_schema` object
@@ -55,18 +55,18 @@ test_that("Interrogating with an agent yields the correct results", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_schema_match")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_schema_match")
   expect_true(is.na(validation$validation_set$column %>% unlist()))
   expect_s3_class(validation$validation_set[["values"]][[1]], "col_schema")
   expect_s3_class(validation$validation_set[["values"]][[1]], "r_type")
   expect_true(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 1)
-  expect_equivalent(validation$validation_set$n_passed, 1)
-  expect_equivalent(validation$validation_set$n_failed, 0)
-  expect_equivalent(validation$validation_set$f_passed, 1)
-  expect_equivalent(validation$validation_set$f_failed, 0)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 1)
+  expect_equal(validation$validation_set$n_passed, 1)
+  expect_equal(validation$validation_set$n_failed, 0)
+  expect_equal(validation$validation_set$f_passed, 1)
+  expect_equal(validation$validation_set$f_failed, 0)
+  expect_equal(nrow(validation$validation_set), 1)
   
   # Expect an error if a `col_schema` object isn't provided to `schema`
   expect_error(
@@ -93,17 +93,17 @@ test_that("Interrogating with an agent yields the correct results", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "row_count_match")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "row_count_match")
   expect_true(is.na(validation$validation_set$column %>% unlist()))
   expect_s3_class(validation$validation_set[["values"]][[1]], "tbl_df")
   expect_true(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 1)
-  expect_equivalent(validation$validation_set$n_passed, 1)
-  expect_equivalent(validation$validation_set$n_failed, 0)
-  expect_equivalent(validation$validation_set$f_passed, 1)
-  expect_equivalent(validation$validation_set$f_failed, 0)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 1)
+  expect_equal(validation$validation_set$n_passed, 1)
+  expect_equal(validation$validation_set$n_failed, 0)
+  expect_equal(validation$validation_set$f_passed, 1)
+  expect_equal(validation$validation_set$f_failed, 0)
+  expect_equal(nrow(validation$validation_set), 1)
   
   # Use the `row_count_match()` function to create
   # a validation step with a literal `count` value,
@@ -114,17 +114,17 @@ test_that("Interrogating with an agent yields the correct results", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "row_count_match")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "row_count_match")
   expect_true(is.na(validation$validation_set$column %>% unlist()))
   expect_true(is.numeric(validation$validation_set[["values"]][[1]]))
   expect_true(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 1)
-  expect_equivalent(validation$validation_set$n_passed, 1)
-  expect_equivalent(validation$validation_set$n_failed, 0)
-  expect_equivalent(validation$validation_set$f_passed, 1)
-  expect_equivalent(validation$validation_set$f_failed, 0)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 1)
+  expect_equal(validation$validation_set$n_passed, 1)
+  expect_equal(validation$validation_set$n_failed, 0)
+  expect_equal(validation$validation_set$f_passed, 1)
+  expect_equal(validation$validation_set$f_failed, 0)
+  expect_equal(nrow(validation$validation_set), 1)
   
   #
   # col_count_match()
@@ -139,17 +139,17 @@ test_that("Interrogating with an agent yields the correct results", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_count_match")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_count_match")
   expect_true(is.na(validation$validation_set$column %>% unlist()))
   expect_true(inherits(validation$validation_set[["values"]][[1]], "tbl_df"))
   expect_true(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 1)
-  expect_equivalent(validation$validation_set$n_passed, 1)
-  expect_equivalent(validation$validation_set$n_failed, 0)
-  expect_equivalent(validation$validation_set$f_passed, 1)
-  expect_equivalent(validation$validation_set$f_failed, 0)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 1)
+  expect_equal(validation$validation_set$n_passed, 1)
+  expect_equal(validation$validation_set$n_failed, 0)
+  expect_equal(validation$validation_set$f_passed, 1)
+  expect_equal(validation$validation_set$f_failed, 0)
+  expect_equal(nrow(validation$validation_set), 1)
   
   # Use the `col_count_match()` function to create
   # a validation step with a literal `count` value,
@@ -160,17 +160,17 @@ test_that("Interrogating with an agent yields the correct results", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_count_match")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_count_match")
   expect_true(is.na(validation$validation_set$column %>% unlist()))
   expect_true(is.numeric(validation$validation_set[["values"]][[1]]))
   expect_true(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 1)
-  expect_equivalent(validation$validation_set$n_passed, 1)
-  expect_equivalent(validation$validation_set$n_failed, 0)
-  expect_equivalent(validation$validation_set$f_passed, 1)
-  expect_equivalent(validation$validation_set$f_failed, 0)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 1)
+  expect_equal(validation$validation_set$n_passed, 1)
+  expect_equal(validation$validation_set$n_failed, 0)
+  expect_equal(validation$validation_set$f_passed, 1)
+  expect_equal(validation$validation_set$f_failed, 0)
+  expect_equal(nrow(validation$validation_set), 1)
   
   #
   # tbl_count_match()
@@ -184,17 +184,17 @@ test_that("Interrogating with an agent yields the correct results", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "tbl_match")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "tbl_match")
   expect_true(is.na(validation$validation_set$column %>% unlist()))
   expect_true(inherits(validation$validation_set[["values"]][[1]], "tbl_df"))
   expect_true(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 1)
-  expect_equivalent(validation$validation_set$n_passed, 1)
-  expect_equivalent(validation$validation_set$n_failed, 0)
-  expect_equivalent(validation$validation_set$f_passed, 1)
-  expect_equivalent(validation$validation_set$f_failed, 0)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 1)
+  expect_equal(validation$validation_set$n_passed, 1)
+  expect_equal(validation$validation_set$n_failed, 0)
+  expect_equal(validation$validation_set$f_passed, 1)
+  expect_equal(validation$validation_set$f_failed, 0)
+  expect_equal(nrow(validation$validation_set), 1)
   
   #
   # col_exists()
@@ -209,17 +209,17 @@ test_that("Interrogating with an agent yields the correct results", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_exists")
-  expect_equivalent(validation$validation_set$column, "g")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_exists")
+  expect_equal(validation$validation_set$column, "g")
   expect_true(is.null(validation$validation_set[["values"]][[1]]))
   expect_false(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 1)
-  expect_equivalent(validation$validation_set$n_passed, 0)
-  expect_equivalent(validation$validation_set$n_failed, 1)
-  expect_equivalent(validation$validation_set$f_passed, 0)
-  expect_equivalent(validation$validation_set$f_failed, 1)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 1)
+  expect_equal(validation$validation_set$n_passed, 0)
+  expect_equal(validation$validation_set$n_failed, 1)
+  expect_equal(validation$validation_set$f_passed, 0)
+  expect_equal(validation$validation_set$f_failed, 1)
+  expect_equal(nrow(validation$validation_set), 1)
   
   #
   # col_is_character()
@@ -233,17 +233,17 @@ test_that("Interrogating with an agent yields the correct results", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_is_character")
-  expect_equivalent(validation$validation_set$column, "b")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_is_character")
+  expect_equal(validation$validation_set$column, "b")
   expect_true(is.null(validation$validation_set[["values"]][[1]]))
   expect_true(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 1)
-  expect_equivalent(validation$validation_set$n_passed, 1)
-  expect_equivalent(validation$validation_set$n_failed, 0)
-  expect_equivalent(validation$validation_set$f_passed, 1)
-  expect_equivalent(validation$validation_set$f_failed, 0)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 1)
+  expect_equal(validation$validation_set$n_passed, 1)
+  expect_equal(validation$validation_set$n_failed, 0)
+  expect_equal(validation$validation_set$f_passed, 1)
+  expect_equal(validation$validation_set$f_failed, 0)
+  expect_equal(nrow(validation$validation_set), 1)
   
   #
   # col_is_numeric()
@@ -257,17 +257,17 @@ test_that("Interrogating with an agent yields the correct results", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_is_numeric")
-  expect_equivalent(validation$validation_set$column, "a")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_is_numeric")
+  expect_equal(validation$validation_set$column, "a")
   expect_true(is.null(validation$validation_set[["values"]][[1]]))
   expect_false(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 1)
-  expect_equivalent(validation$validation_set$n_passed, 0)
-  expect_equivalent(validation$validation_set$n_failed, 1)
-  expect_equivalent(validation$validation_set$f_passed, 0)
-  expect_equivalent(validation$validation_set$f_failed, 1)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 1)
+  expect_equal(validation$validation_set$n_passed, 0)
+  expect_equal(validation$validation_set$n_failed, 1)
+  expect_equal(validation$validation_set$f_passed, 0)
+  expect_equal(validation$validation_set$f_failed, 1)
+  expect_equal(nrow(validation$validation_set), 1)
   
   #
   # col_is_posix()
@@ -281,17 +281,17 @@ test_that("Interrogating with an agent yields the correct results", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_is_posix")
-  expect_equivalent(validation$validation_set$column, "date_time")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_is_posix")
+  expect_equal(validation$validation_set$column, "date_time")
   expect_true(is.null(validation$validation_set[["values"]][[1]]))
   expect_true(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 1)
-  expect_equivalent(validation$validation_set$n_passed, 1)
-  expect_equivalent(validation$validation_set$n_failed, 0)
-  expect_equivalent(validation$validation_set$f_passed, 1)
-  expect_equivalent(validation$validation_set$f_failed, 0)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 1)
+  expect_equal(validation$validation_set$n_passed, 1)
+  expect_equal(validation$validation_set$n_failed, 0)
+  expect_equal(validation$validation_set$f_passed, 1)
+  expect_equal(validation$validation_set$f_failed, 0)
+  expect_equal(nrow(validation$validation_set), 1)
   
   #
   # col_is_date()
@@ -305,17 +305,17 @@ test_that("Interrogating with an agent yields the correct results", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_is_date")
-  expect_equivalent(validation$validation_set$column, "date")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_is_date")
+  expect_equal(validation$validation_set$column, "date")
   expect_true(is.null(validation$validation_set[["values"]][[1]]))
   expect_true(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 1)
-  expect_equivalent(validation$validation_set$n_passed, 1)
-  expect_equivalent(validation$validation_set$n_failed, 0)
-  expect_equivalent(validation$validation_set$f_passed, 1)
-  expect_equivalent(validation$validation_set$f_failed, 0)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 1)
+  expect_equal(validation$validation_set$n_passed, 1)
+  expect_equal(validation$validation_set$n_failed, 0)
+  expect_equal(validation$validation_set$f_passed, 1)
+  expect_equal(validation$validation_set$f_failed, 0)
+  expect_equal(nrow(validation$validation_set), 1)
   
   #
   # col_is_integer()
@@ -329,17 +329,17 @@ test_that("Interrogating with an agent yields the correct results", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_is_integer")
-  expect_equivalent(validation$validation_set$column, "a")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_is_integer")
+  expect_equal(validation$validation_set$column, "a")
   expect_true(is.null(validation$validation_set[["values"]][[1]]))
   expect_true(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 1)
-  expect_equivalent(validation$validation_set$n_passed, 1)
-  expect_equivalent(validation$validation_set$n_failed, 0)
-  expect_equivalent(validation$validation_set$f_passed, 1)
-  expect_equivalent(validation$validation_set$f_failed, 0)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 1)
+  expect_equal(validation$validation_set$n_passed, 1)
+  expect_equal(validation$validation_set$n_failed, 0)
+  expect_equal(validation$validation_set$f_passed, 1)
+  expect_equal(validation$validation_set$f_failed, 0)
+  expect_equal(nrow(validation$validation_set), 1)
   
   #
   # col_is_logical()
@@ -353,17 +353,17 @@ test_that("Interrogating with an agent yields the correct results", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_is_logical")
-  expect_equivalent(validation$validation_set$column, "e")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_is_logical")
+  expect_equal(validation$validation_set$column, "e")
   expect_true(is.null(validation$validation_set[["values"]][[1]]))
   expect_true(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 1)
-  expect_equivalent(validation$validation_set$n_passed, 1)
-  expect_equivalent(validation$validation_set$n_failed, 0)
-  expect_equivalent(validation$validation_set$f_passed, 1)
-  expect_equivalent(validation$validation_set$f_failed, 0)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 1)
+  expect_equal(validation$validation_set$n_passed, 1)
+  expect_equal(validation$validation_set$n_failed, 0)
+  expect_equal(validation$validation_set$f_passed, 1)
+  expect_equal(validation$validation_set$f_failed, 0)
+  expect_equal(nrow(validation$validation_set), 1)
 })
 
 test_that("Interrogating for valid row values", {
@@ -383,17 +383,17 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_between")
-  expect_equivalent(validation$validation_set$column, "d")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_vals_between")
+  expect_equal(validation$validation_set$column, "d")
   expect_true(is.list(validation$validation_set[["values"]]))
   expect_false(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 13)
-  expect_equivalent(validation$validation_set$n_passed, 12)
-  expect_equivalent(validation$validation_set$n_failed, 1)
-  expect_equivalent(validation$validation_set$f_passed, 0.92308)
-  expect_equivalent(validation$validation_set$f_failed, 0.07692)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 13)
+  expect_equal(validation$validation_set$n_passed, 12)
+  expect_equal(validation$validation_set$n_failed, 1)
+  expect_equal(validation$validation_set$f_passed, 0.92308)
+  expect_equal(validation$validation_set$f_failed, 0.07692)
+  expect_equal(nrow(validation$validation_set), 1)
   
   # Use the `col_vals_between()` function to create
   # a validation step (with a precondition), then,
@@ -408,17 +408,17 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_between")
-  expect_equivalent(validation$validation_set$column, "d")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_vals_between")
+  expect_equal(validation$validation_set$column, "d")
   expect_true(is.list(validation$validation_set[["values"]]))
   expect_true(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 11)
-  expect_equivalent(validation$validation_set$n_passed, 11)
-  expect_equivalent(validation$validation_set$n_failed, 0)
-  expect_equivalent(validation$validation_set$f_passed, 1)
-  expect_equivalent(validation$validation_set$f_failed, 0)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 11)
+  expect_equal(validation$validation_set$n_passed, 11)
+  expect_equal(validation$validation_set$n_failed, 0)
+  expect_equal(validation$validation_set$f_passed, 1)
+  expect_equal(validation$validation_set$f_failed, 0)
+  expect_equal(nrow(validation$validation_set), 1)
   
   # Use the `col_vals_between()` function to create
   # a validation step, then, `interrogate()`; using
@@ -432,17 +432,17 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_between")
-  expect_equivalent(validation$validation_set$column, "c")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_vals_between")
+  expect_equal(validation$validation_set$column, "c")
   expect_true(is.list(validation$validation_set[["values"]]))
   expect_false(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 13)
-  expect_equivalent(validation$validation_set$n_passed, 7)
-  expect_equivalent(validation$validation_set$n_failed, 6)
-  expect_equivalent(validation$validation_set$f_passed, 0.53846)
-  expect_equivalent(validation$validation_set$f_failed, 0.46154)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 13)
+  expect_equal(validation$validation_set$n_passed, 7)
+  expect_equal(validation$validation_set$n_failed, 6)
+  expect_equal(validation$validation_set$f_passed, 0.53846)
+  expect_equal(validation$validation_set$f_failed, 0.46154)
+  expect_equal(nrow(validation$validation_set), 1)
   
   # Use the `col_vals_between()` function to create
   # a validation step (comparison with a character value)
@@ -454,17 +454,17 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_between")
-  expect_equivalent(validation$validation_set$column, "f")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_vals_between")
+  expect_equal(validation$validation_set$column, "f")
   expect_true(is.list(validation$validation_set[["values"]]))
   expect_false(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 13)
-  expect_equivalent(validation$validation_set$n_passed, 7)
-  expect_equivalent(validation$validation_set$n_failed, 6)
-  expect_equivalent(validation$validation_set$f_passed, 0.53846)
-  expect_equivalent(validation$validation_set$f_failed, 0.46154)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 13)
+  expect_equal(validation$validation_set$n_passed, 7)
+  expect_equal(validation$validation_set$n_failed, 6)
+  expect_equal(validation$validation_set$f_passed, 0.53846)
+  expect_equal(validation$validation_set$f_failed, 0.46154)
+  expect_equal(nrow(validation$validation_set), 1)
   
   # Use the `col_vals_between()` function to create
   # a validation step, then, `interrogate()`; using
@@ -478,17 +478,17 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_between")
-  expect_equivalent(validation$validation_set$column, "c")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_vals_between")
+  expect_equal(validation$validation_set$column, "c")
   expect_true(is.list(validation$validation_set[["values"]]))
   expect_false(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 13)
-  expect_equivalent(validation$validation_set$n_passed, 11)
-  expect_equivalent(validation$validation_set$n_failed, 2)
-  expect_equivalent(validation$validation_set$f_passed, 0.84615)
-  expect_equivalent(validation$validation_set$f_failed, 0.15385)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 13)
+  expect_equal(validation$validation_set$n_passed, 11)
+  expect_equal(validation$validation_set$n_failed, 2)
+  expect_equal(validation$validation_set$f_passed, 0.84615)
+  expect_equal(validation$validation_set$f_failed, 0.15385)
+  expect_equal(nrow(validation$validation_set), 1)
   
   # Use the `col_vals_not_between()` function to create
   # a validation step, then, `interrogate()`
@@ -501,17 +501,17 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_not_between")
-  expect_equivalent(validation$validation_set$column, "d")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_vals_not_between")
+  expect_equal(validation$validation_set$column, "d")
   expect_true(is.list(validation$validation_set[["values"]]))
   expect_false(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 13)
-  expect_equivalent(validation$validation_set$n_passed, 9)
-  expect_equivalent(validation$validation_set$n_failed, 4)
-  expect_equivalent(validation$validation_set$f_passed, 0.69231)
-  expect_equivalent(validation$validation_set$f_failed, 0.30769)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 13)
+  expect_equal(validation$validation_set$n_passed, 9)
+  expect_equal(validation$validation_set$n_failed, 4)
+  expect_equal(validation$validation_set$f_passed, 0.69231)
+  expect_equal(validation$validation_set$f_failed, 0.30769)
+  expect_equal(nrow(validation$validation_set), 1)
   
   # Use the `col_vals_not_between()` function to create
   # a validation step (with a precondition), then,
@@ -526,17 +526,17 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_not_between")
-  expect_equivalent(validation$validation_set$column, "d")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_vals_not_between")
+  expect_equal(validation$validation_set$column, "d")
   expect_true(is.list(validation$validation_set[["values"]]))
   expect_false(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 11)
-  expect_equivalent(validation$validation_set$n_passed, 7)
-  expect_equivalent(validation$validation_set$n_failed, 4)
-  expect_equivalent(validation$validation_set$f_passed, 0.63636)
-  expect_equivalent(validation$validation_set$f_failed, 0.36364)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 11)
+  expect_equal(validation$validation_set$n_passed, 7)
+  expect_equal(validation$validation_set$n_failed, 4)
+  expect_equal(validation$validation_set$f_passed, 0.63636)
+  expect_equal(validation$validation_set$f_failed, 0.36364)
+  expect_equal(nrow(validation$validation_set), 1)
   
   #
   # col_vals_equal()
@@ -550,17 +550,17 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_equal")
-  expect_equivalent(validation$validation_set$column, "d")
-  expect_equivalent(validation$validation_set[["values"]] %>% unlist(), 283.94)
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_vals_equal")
+  expect_equal(validation$validation_set$column, "d")
+  expect_equal(validation$validation_set[["values"]] %>% unlist(), 283.94)
   expect_false(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 13)
-  expect_equivalent(validation$validation_set$n_passed, 1)
-  expect_equivalent(validation$validation_set$n_failed, 12)
-  expect_equivalent(validation$validation_set$f_passed, 0.07692)
-  expect_equivalent(validation$validation_set$f_failed, 0.92308)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 13)
+  expect_equal(validation$validation_set$n_passed, 1)
+  expect_equal(validation$validation_set$n_failed, 12)
+  expect_equal(validation$validation_set$f_passed, 0.07692)
+  expect_equal(validation$validation_set$f_failed, 0.92308)
+  expect_equal(nrow(validation$validation_set), 1)
   
   # Use the `col_vals_equal()` function to create
   # a validation step (with a precondition), then,
@@ -575,17 +575,17 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_equal")
-  expect_equivalent(validation$validation_set$column, "d")
-  expect_equivalent(validation$validation_set[["values"]] %>% unlist(), 283.94)
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_vals_equal")
+  expect_equal(validation$validation_set$column, "d")
+  expect_equal(validation$validation_set[["values"]] %>% unlist(), 283.94)
   expect_false(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 11)
-  expect_equivalent(validation$validation_set$n_passed, 1)
-  expect_equivalent(validation$validation_set$n_failed, 10)
-  expect_equivalent(validation$validation_set$f_passed, 0.09091)
-  expect_equivalent(validation$validation_set$f_failed, 0.90909)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 11)
+  expect_equal(validation$validation_set$n_passed, 1)
+  expect_equal(validation$validation_set$n_failed, 10)
+  expect_equal(validation$validation_set$f_passed, 0.09091)
+  expect_equal(validation$validation_set$f_failed, 0.90909)
+  expect_equal(nrow(validation$validation_set), 1)
   
   # Use the `col_vals_equal()` function to create
   # a validation step (equality for a character value)
@@ -598,17 +598,17 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_equal")
-  expect_equivalent(validation$validation_set$column, "f")
-  expect_equivalent(validation$validation_set[["values"]] %>% unlist(), "high")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_vals_equal")
+  expect_equal(validation$validation_set$column, "f")
+  expect_equal(validation$validation_set[["values"]] %>% unlist(), "high")
   expect_false(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 13)
-  expect_equivalent(validation$validation_set$n_passed, 6)
-  expect_equivalent(validation$validation_set$n_failed, 7)
-  expect_equivalent(validation$validation_set$f_passed, 0.46154)
-  expect_equivalent(validation$validation_set$f_failed, 0.53846)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 13)
+  expect_equal(validation$validation_set$n_passed, 6)
+  expect_equal(validation$validation_set$n_failed, 7)
+  expect_equal(validation$validation_set$f_passed, 0.46154)
+  expect_equal(validation$validation_set$f_failed, 0.53846)
+  expect_equal(nrow(validation$validation_set), 1)
   
   #
   # col_vals_not_equal()
@@ -622,17 +622,17 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_not_equal")
-  expect_equivalent(validation$validation_set$column, "d")
-  expect_equivalent(validation$validation_set[["values"]] %>% unlist(), 283.94)
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_vals_not_equal")
+  expect_equal(validation$validation_set$column, "d")
+  expect_equal(validation$validation_set[["values"]] %>% unlist(), 283.94)
   expect_false(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 13)
-  expect_equivalent(validation$validation_set$n_passed, 12)
-  expect_equivalent(validation$validation_set$n_failed, 1)
-  expect_equivalent(validation$validation_set$f_passed, 0.92308)
-  expect_equivalent(validation$validation_set$f_failed, 0.07692)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 13)
+  expect_equal(validation$validation_set$n_passed, 12)
+  expect_equal(validation$validation_set$n_failed, 1)
+  expect_equal(validation$validation_set$f_passed, 0.92308)
+  expect_equal(validation$validation_set$f_failed, 0.07692)
+  expect_equal(nrow(validation$validation_set), 1)
   
   # Use the `col_vals_not_equal()` function to create
   # a validation step, then, `interrogate()`; using
@@ -643,17 +643,17 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_not_equal")
-  expect_equivalent(validation$validation_set$column, "a")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_vals_not_equal")
+  expect_equal(validation$validation_set$column, "a")
   expect_true(is.list(validation$validation_set[["values"]]))
   expect_true(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 13)
-  expect_equivalent(validation$validation_set$n_passed, 13)
-  expect_equivalent(validation$validation_set$n_failed, 0)
-  expect_equivalent(validation$validation_set$f_passed, 1)
-  expect_equivalent(validation$validation_set$f_failed, 0)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 13)
+  expect_equal(validation$validation_set$n_passed, 13)
+  expect_equal(validation$validation_set$n_failed, 0)
+  expect_equal(validation$validation_set$f_passed, 1)
+  expect_equal(validation$validation_set$f_failed, 0)
+  expect_equal(nrow(validation$validation_set), 1)
   
   # Use the `col_vals_not_equal()` function to create
   # a validation step (with a precondition), then,
@@ -668,17 +668,17 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_not_equal")
-  expect_equivalent(validation$validation_set$column, "d")
-  expect_equivalent(validation$validation_set[["values"]] %>% unlist(), 283.94)
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_vals_not_equal")
+  expect_equal(validation$validation_set$column, "d")
+  expect_equal(validation$validation_set[["values"]] %>% unlist(), 283.94)
   expect_false(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 11)
-  expect_equivalent(validation$validation_set$n_passed, 10)
-  expect_equivalent(validation$validation_set$n_failed, 1)
-  expect_equivalent(validation$validation_set$f_passed, 0.90909)
-  expect_equivalent(validation$validation_set$f_failed, 0.09091)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 11)
+  expect_equal(validation$validation_set$n_passed, 10)
+  expect_equal(validation$validation_set$n_failed, 1)
+  expect_equal(validation$validation_set$f_passed, 0.90909)
+  expect_equal(validation$validation_set$f_failed, 0.09091)
+  expect_equal(nrow(validation$validation_set), 1)
   
   #
   # col_vals_gt()
@@ -693,17 +693,17 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_gt")
-  expect_equivalent(validation$validation_set$column, "date_time")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_vals_gt")
+  expect_equal(validation$validation_set$column, "date_time")
   expect_true(is.list(validation$validation_set[["values"]]))
   expect_true(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 13)
-  expect_equivalent(validation$validation_set$n_passed, 13)
-  expect_equivalent(validation$validation_set$n_failed, 0)
-  expect_equivalent(validation$validation_set$f_passed, 1)
-  expect_equivalent(validation$validation_set$f_failed, 0)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 13)
+  expect_equal(validation$validation_set$n_passed, 13)
+  expect_equal(validation$validation_set$n_failed, 0)
+  expect_equal(validation$validation_set$f_passed, 1)
+  expect_equal(validation$validation_set$f_failed, 0)
+  expect_equal(nrow(validation$validation_set), 1)
   
   # Use the `col_vals_gt()` function to create
   # a validation step (with a precondition), then,
@@ -718,17 +718,17 @@ test_that("Interrogating for valid row values", {
   )
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_gt")
-  expect_equivalent(validation$validation_set$column, "date_time")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_vals_gt")
+  expect_equal(validation$validation_set$column, "date_time")
   expect_true(is.list(validation$validation_set[["values"]]))
   expect_true(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 13)
-  expect_equivalent(validation$validation_set$n_passed, 13)
-  expect_equivalent(validation$validation_set$n_failed, 0)
-  expect_equivalent(validation$validation_set$f_passed, 1)
-  expect_equivalent(validation$validation_set$f_failed, 0)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 13)
+  expect_equal(validation$validation_set$n_passed, 13)
+  expect_equal(validation$validation_set$n_failed, 0)
+  expect_equal(validation$validation_set$f_passed, 1)
+  expect_equal(validation$validation_set$f_failed, 0)
+  expect_equal(nrow(validation$validation_set), 1)
   
   # Use the `col_vals_gt()` function to create
   # a validation step (comparison with a Date value)
@@ -738,17 +738,17 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_gt")
-  expect_equivalent(validation$validation_set$column, "date_time")
-  expect_equivalent(validation$validation_set[["values"]] %>% unlist(), "2016-01-05")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_vals_gt")
+  expect_equal(validation$validation_set$column, "date_time")
+  expect_equal(validation$validation_set[["values"]] %>% unlist(), "2016-01-05")
   expect_false(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 13)
-  expect_equivalent(validation$validation_set$n_passed, 11)
-  expect_equivalent(validation$validation_set$n_failed, 2)
-  expect_equivalent(validation$validation_set$f_passed, 0.84615)
-  expect_equivalent(validation$validation_set$f_failed, 0.15385)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 13)
+  expect_equal(validation$validation_set$n_passed, 11)
+  expect_equal(validation$validation_set$n_failed, 2)
+  expect_equal(validation$validation_set$f_passed, 0.84615)
+  expect_equal(validation$validation_set$f_failed, 0.15385)
+  expect_equal(nrow(validation$validation_set), 1)
   
   # Use the `col_vals_gt()` function to create
   # a validation step (comparison with a character value)
@@ -758,17 +758,17 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_gt")
-  expect_equivalent(validation$validation_set$column, "f")
-  expect_equivalent(validation$validation_set[["values"]] %>% unlist(), "l")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_vals_gt")
+  expect_equal(validation$validation_set$column, "f")
+  expect_equal(validation$validation_set[["values"]] %>% unlist(), "l")
   expect_false(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 13)
-  expect_equivalent(validation$validation_set$n_passed, 7)
-  expect_equivalent(validation$validation_set$n_failed, 6)
-  expect_equivalent(validation$validation_set$f_passed, 0.53846)
-  expect_equivalent(validation$validation_set$f_failed, 0.46154)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 13)
+  expect_equal(validation$validation_set$n_passed, 7)
+  expect_equal(validation$validation_set$n_failed, 6)
+  expect_equal(validation$validation_set$f_passed, 0.53846)
+  expect_equal(validation$validation_set$f_failed, 0.46154)
+  expect_equal(nrow(validation$validation_set), 1)
   
   #
   # rows_distinct()
@@ -782,17 +782,17 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "rows_distinct")
-  expect_equivalent(validation$validation_set$column %>% unlist(), "date_time, date, a, b, c, d, e, f")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "rows_distinct")
+  expect_equal(validation$validation_set$column %>% unlist(), "date_time, date, a, b, c, d, e, f")
   expect_true(is.null(validation$validation_set[["values"]][[1]]))
   expect_false(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 13)
-  expect_equivalent(validation$validation_set$n_passed, 11)
-  expect_equivalent(validation$validation_set$n_failed, 2)
-  expect_equivalent(validation$validation_set$f_passed, 0.84615)
-  expect_equivalent(validation$validation_set$f_failed, 0.15385)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 13)
+  expect_equal(validation$validation_set$n_passed, 11)
+  expect_equal(validation$validation_set$n_failed, 2)
+  expect_equal(validation$validation_set$f_passed, 0.84615)
+  expect_equal(validation$validation_set$f_failed, 0.15385)
+  expect_equal(nrow(validation$validation_set), 1)
   
   # Use the `rows_distinct()` function to create
   # a validation step (with a precondition), then,
@@ -805,17 +805,17 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "rows_distinct")
-  expect_equivalent(validation$validation_set$column %>% unlist(), "date_time, date, a, b, c, d, e, f")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "rows_distinct")
+  expect_equal(validation$validation_set$column %>% unlist(), "date_time, date, a, b, c, d, e, f")
   expect_true(is.null(validation$validation_set[["values"]][[1]]))
   expect_true(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 11)
-  expect_equivalent(validation$validation_set$n_passed, 11)
-  expect_equivalent(validation$validation_set$n_failed, 0)
-  expect_equivalent(validation$validation_set$f_passed, 1)
-  expect_equivalent(validation$validation_set$f_failed, 0)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 11)
+  expect_equal(validation$validation_set$n_passed, 11)
+  expect_equal(validation$validation_set$n_failed, 0)
+  expect_equal(validation$validation_set$f_passed, 1)
+  expect_equal(validation$validation_set$f_failed, 0)
+  expect_equal(nrow(validation$validation_set), 1)
   
   # Use the `rows_distinct()` function to create
   # a validation step for selected columns, then,
@@ -826,17 +826,17 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "rows_distinct")
-  expect_equivalent(validation$validation_set$column %>% unlist(), "date_time, a")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "rows_distinct")
+  expect_equal(validation$validation_set$column %>% unlist(), "date_time, a")
   expect_true(is.null(validation$validation_set[["values"]][[1]]))
   expect_false(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 13)
-  expect_equivalent(validation$validation_set$n_passed, 11)
-  expect_equivalent(validation$validation_set$n_failed, 2)
-  expect_equivalent(validation$validation_set$f_passed, 0.84615)
-  expect_equivalent(validation$validation_set$f_failed, 0.15385)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 13)
+  expect_equal(validation$validation_set$n_passed, 11)
+  expect_equal(validation$validation_set$n_failed, 2)
+  expect_equal(validation$validation_set$f_passed, 0.84615)
+  expect_equal(validation$validation_set$f_failed, 0.15385)
+  expect_equal(nrow(validation$validation_set), 1)
   
   # Use the `rows_distinct()` function to create
   # a validation step for columns queried with a
@@ -847,17 +847,17 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "rows_distinct")
-  expect_equivalent(validation$validation_set$column %>% unlist(), "date_time, date, a")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "rows_distinct")
+  expect_equal(validation$validation_set$column %>% unlist(), "date_time, date, a")
   expect_true(is.null(validation$validation_set[["values"]][[1]]))
   expect_false(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 13)
-  expect_equivalent(validation$validation_set$n_passed, 11)
-  expect_equivalent(validation$validation_set$n_failed, 2)
-  expect_equivalent(validation$validation_set$f_passed, 0.84615)
-  expect_equivalent(validation$validation_set$f_failed, 0.15385)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 13)
+  expect_equal(validation$validation_set$n_passed, 11)
+  expect_equal(validation$validation_set$n_failed, 2)
+  expect_equal(validation$validation_set$f_passed, 0.84615)
+  expect_equal(validation$validation_set$f_failed, 0.15385)
+  expect_equal(nrow(validation$validation_set), 1)
   
   #
   # rows_complete()
@@ -871,17 +871,17 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "rows_complete")
-  expect_equivalent(validation$validation_set$column %>% unlist(), "date_time, date, a, b, c, d, e, f")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "rows_complete")
+  expect_equal(validation$validation_set$column %>% unlist(), "date_time, date, a, b, c, d, e, f")
   expect_true(is.null(validation$validation_set[["values"]][[1]]))
   expect_false(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 13)
-  expect_equivalent(validation$validation_set$n_passed, 11)
-  expect_equivalent(validation$validation_set$n_failed, 2)
-  expect_equivalent(validation$validation_set$f_passed, 0.84615)
-  expect_equivalent(validation$validation_set$f_failed, 0.15385)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 13)
+  expect_equal(validation$validation_set$n_passed, 11)
+  expect_equal(validation$validation_set$n_failed, 2)
+  expect_equal(validation$validation_set$f_passed, 0.84615)
+  expect_equal(validation$validation_set$f_failed, 0.15385)
+  expect_equal(nrow(validation$validation_set), 1)
   
   # Use the `rows_complete()` function to create
   # a validation step (with a precondition), then,
@@ -894,17 +894,17 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "rows_complete")
-  expect_equivalent(validation$validation_set$column %>% unlist(), "date_time, date, a, b, c, d, e, f")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "rows_complete")
+  expect_equal(validation$validation_set$column %>% unlist(), "date_time, date, a, b, c, d, e, f")
   expect_true(is.null(validation$validation_set[["values"]][[1]]))
   expect_true(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 3)
-  expect_equivalent(validation$validation_set$n_passed, 3)
-  expect_equivalent(validation$validation_set$n_failed, 0)
-  expect_equivalent(validation$validation_set$f_passed, 1)
-  expect_equivalent(validation$validation_set$f_failed, 0)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 3)
+  expect_equal(validation$validation_set$n_passed, 3)
+  expect_equal(validation$validation_set$n_failed, 0)
+  expect_equal(validation$validation_set$f_passed, 1)
+  expect_equal(validation$validation_set$f_failed, 0)
+  expect_equal(nrow(validation$validation_set), 1)
   
   # Use the `rows_complete()` function to create
   # a validation step for selected columns, then,
@@ -915,17 +915,17 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "rows_complete")
-  expect_equivalent(validation$validation_set$column %>% unlist(), "date_time, a")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "rows_complete")
+  expect_equal(validation$validation_set$column %>% unlist(), "date_time, a")
   expect_true(is.null(validation$validation_set[["values"]][[1]]))
   expect_true(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 13)
-  expect_equivalent(validation$validation_set$n_passed, 13)
-  expect_equivalent(validation$validation_set$n_failed, 0)
-  expect_equivalent(validation$validation_set$f_passed, 1)
-  expect_equivalent(validation$validation_set$f_failed, 0)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 13)
+  expect_equal(validation$validation_set$n_passed, 13)
+  expect_equal(validation$validation_set$n_failed, 0)
+  expect_equal(validation$validation_set$f_passed, 1)
+  expect_equal(validation$validation_set$f_failed, 0)
+  expect_equal(nrow(validation$validation_set), 1)
   
   # Use the `rows_complete()` function to create
   # a validation step for columns queried with a
@@ -936,17 +936,17 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "rows_complete")
-  expect_equivalent(validation$validation_set$column %>% unlist(), "date_time, date, a")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "rows_complete")
+  expect_equal(validation$validation_set$column %>% unlist(), "date_time, date, a")
   expect_true(is.null(validation$validation_set[["values"]][[1]]))
   expect_true(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 13)
-  expect_equivalent(validation$validation_set$n_passed, 13)
-  expect_equivalent(validation$validation_set$n_failed, 0)
-  expect_equivalent(validation$validation_set$f_passed, 1)
-  expect_equivalent(validation$validation_set$f_failed, 0)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 13)
+  expect_equal(validation$validation_set$n_passed, 13)
+  expect_equal(validation$validation_set$n_failed, 0)
+  expect_equal(validation$validation_set$f_passed, 1)
+  expect_equal(validation$validation_set$f_failed, 0)
+  expect_equal(nrow(validation$validation_set), 1)
   
   #
   # col_vals_in_set()
@@ -960,17 +960,17 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_in_set")
-  expect_equivalent(validation$validation_set$column, "f")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_vals_in_set")
+  expect_equal(validation$validation_set$column, "f")
   expect_true(is.list(validation$validation_set[["values"]]))
   expect_true(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 13)
-  expect_equivalent(validation$validation_set$n_passed, 13)
-  expect_equivalent(validation$validation_set$n_failed, 0)
-  expect_equivalent(validation$validation_set$f_passed, 1)
-  expect_equivalent(validation$validation_set$f_failed, 0)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 13)
+  expect_equal(validation$validation_set$n_passed, 13)
+  expect_equal(validation$validation_set$n_failed, 0)
+  expect_equal(validation$validation_set$f_passed, 1)
+  expect_equal(validation$validation_set$f_failed, 0)
+  expect_equal(nrow(validation$validation_set), 1)
   
   #
   # col_vals_not_in_set()
@@ -984,17 +984,17 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_not_in_set")
-  expect_equivalent(validation$validation_set$column, "f")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_vals_not_in_set")
+  expect_equal(validation$validation_set$column, "f")
   expect_true(is.list(validation$validation_set[["values"]]))
   expect_true(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 13)
-  expect_equivalent(validation$validation_set$n_passed, 13)
-  expect_equivalent(validation$validation_set$n_failed, 0)
-  expect_equivalent(validation$validation_set$f_passed, 1)
-  expect_equivalent(validation$validation_set$f_failed, 0)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 13)
+  expect_equal(validation$validation_set$n_passed, 13)
+  expect_equal(validation$validation_set$n_failed, 0)
+  expect_equal(validation$validation_set$f_passed, 1)
+  expect_equal(validation$validation_set$f_failed, 0)
+  expect_equal(nrow(validation$validation_set), 1)
   
   # Make another pass with the `col_vals_not_in_set()`
   # function to create a validation step, then, perform an
@@ -1005,17 +1005,17 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_not_in_set")
-  expect_equivalent(validation$validation_set$column, "f")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_vals_not_in_set")
+  expect_equal(validation$validation_set$column, "f")
   expect_true(is.list(validation$validation_set[["values"]]))
   expect_true(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 13)
-  expect_equivalent(validation$validation_set$n_passed, 13)
-  expect_equivalent(validation$validation_set$n_failed, 0)
-  expect_equivalent(validation$validation_set$f_passed, 1)
-  expect_equivalent(validation$validation_set$f_failed, 0)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 13)
+  expect_equal(validation$validation_set$n_passed, 13)
+  expect_equal(validation$validation_set$n_failed, 0)
+  expect_equal(validation$validation_set$f_passed, 1)
+  expect_equal(validation$validation_set$f_failed, 0)
+  expect_equal(nrow(validation$validation_set), 1)
   
   #
   # col_vals_make_set()
@@ -1029,19 +1029,19 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_make_set")
-  expect_equivalent(validation$validation_set$column, "f")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_vals_make_set")
+  expect_equal(validation$validation_set$column, "f")
   expect_true(is.list(validation$validation_set[["values"]]))
   expect_true(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 4)
-  expect_equivalent(validation$validation_set$n_passed, 4)
-  expect_equivalent(validation$validation_set$n_failed, 0)
-  expect_equivalent(validation$validation_set$f_passed, 1)
-  expect_equivalent(validation$validation_set$f_failed, 0)
+  expect_equal(validation$validation_set$n, 4)
+  expect_equal(validation$validation_set$n_passed, 4)
+  expect_equal(validation$validation_set$n_failed, 0)
+  expect_equal(validation$validation_set$f_passed, 1)
+  expect_equal(validation$validation_set$f_failed, 0)
   
   # Expect a single row in `validation$validation_set`
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(nrow(validation$validation_set), 1)
   
   # Make another pass with `col_vals_make_set()` function to create
   # a validation step, then, `interrogate()`
@@ -1051,19 +1051,19 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_make_set")
-  expect_equivalent(validation$validation_set$column, "f")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_vals_make_set")
+  expect_equal(validation$validation_set$column, "f")
   expect_true(is.list(validation$validation_set[["values"]]))
   expect_false(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 3)
-  expect_equivalent(validation$validation_set$n_passed, 2)
-  expect_equivalent(validation$validation_set$n_failed, 1)
-  expect_equivalent(validation$validation_set$f_passed, 0.66667)
-  expect_equivalent(validation$validation_set$f_failed, 0.33333)
+  expect_equal(validation$validation_set$n, 3)
+  expect_equal(validation$validation_set$n_passed, 2)
+  expect_equal(validation$validation_set$n_failed, 1)
+  expect_equal(validation$validation_set$f_passed, 0.66667)
+  expect_equal(validation$validation_set$f_failed, 0.33333)
   
   # Expect a single row in `validation$validation_set`
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(nrow(validation$validation_set), 1)
   
   # Make another pass with `col_vals_make_set()` function to create
   # a validation step, then, `interrogate()`
@@ -1073,19 +1073,19 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_make_set")
-  expect_equivalent(validation$validation_set$column, "f")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_vals_make_set")
+  expect_equal(validation$validation_set$column, "f")
   expect_true(is.list(validation$validation_set[["values"]]))
   expect_false(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 3)
-  expect_equivalent(validation$validation_set$n_passed, 1)
-  expect_equivalent(validation$validation_set$n_failed, 2)
-  expect_equivalent(validation$validation_set$f_passed, 0.33333)
-  expect_equivalent(validation$validation_set$f_failed, 0.66667)
+  expect_equal(validation$validation_set$n, 3)
+  expect_equal(validation$validation_set$n_passed, 1)
+  expect_equal(validation$validation_set$n_failed, 2)
+  expect_equal(validation$validation_set$f_passed, 0.33333)
+  expect_equal(validation$validation_set$f_failed, 0.66667)
   
   # Expect a single row in `validation$validation_set`
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(nrow(validation$validation_set), 1)
   
   #
   # col_vals_make_subset()
@@ -1099,19 +1099,19 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_make_subset")
-  expect_equivalent(validation$validation_set$column, "f")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_vals_make_subset")
+  expect_equal(validation$validation_set$column, "f")
   expect_true(is.list(validation$validation_set[["values"]]))
   expect_true(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 3)
-  expect_equivalent(validation$validation_set$n_passed, 3)
-  expect_equivalent(validation$validation_set$n_failed, 0)
-  expect_equivalent(validation$validation_set$f_passed, 1)
-  expect_equivalent(validation$validation_set$f_failed, 0)
+  expect_equal(validation$validation_set$n, 3)
+  expect_equal(validation$validation_set$n_passed, 3)
+  expect_equal(validation$validation_set$n_failed, 0)
+  expect_equal(validation$validation_set$f_passed, 1)
+  expect_equal(validation$validation_set$f_failed, 0)
   
   # Expect a single row in `validation$validation_set`
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(nrow(validation$validation_set), 1)
   
   # Make another pass with the `col_vals_make_subset()` function to create
   # a validation step, then, `interrogate()`
@@ -1121,19 +1121,19 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_make_subset")
-  expect_equivalent(validation$validation_set$column, "f")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_vals_make_subset")
+  expect_equal(validation$validation_set$column, "f")
   expect_true(is.list(validation$validation_set[["values"]]))
   expect_true(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 2)
-  expect_equivalent(validation$validation_set$n_passed, 2)
-  expect_equivalent(validation$validation_set$n_failed, 0)
-  expect_equivalent(validation$validation_set$f_passed, 1)
-  expect_equivalent(validation$validation_set$f_failed, 0)
+  expect_equal(validation$validation_set$n, 2)
+  expect_equal(validation$validation_set$n_passed, 2)
+  expect_equal(validation$validation_set$n_failed, 0)
+  expect_equal(validation$validation_set$f_passed, 1)
+  expect_equal(validation$validation_set$f_failed, 0)
   
   # Expect a single row in `validation$validation_set`
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(nrow(validation$validation_set), 1)
   
   # Make another pass with the `col_vals_make_subset()` function to create
   # a validation step, then, `interrogate()`
@@ -1143,19 +1143,19 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_make_subset")
-  expect_equivalent(validation$validation_set$column, "f")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_vals_make_subset")
+  expect_equal(validation$validation_set$column, "f")
   expect_true(is.list(validation$validation_set[["values"]]))
   expect_false(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 4)
-  expect_equivalent(validation$validation_set$n_passed, 3)
-  expect_equivalent(validation$validation_set$n_failed, 1)
-  expect_equivalent(validation$validation_set$f_passed, 0.75)
-  expect_equivalent(validation$validation_set$f_failed, 0.25)
+  expect_equal(validation$validation_set$n, 4)
+  expect_equal(validation$validation_set$n_passed, 3)
+  expect_equal(validation$validation_set$n_failed, 1)
+  expect_equal(validation$validation_set$f_passed, 0.75)
+  expect_equal(validation$validation_set$f_failed, 0.25)
   
   # Expect a single row in `validation$validation_set`
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(nrow(validation$validation_set), 1)
   
   #
   # col_vals_not_null()
@@ -1169,17 +1169,17 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_not_null")
-  expect_equivalent(validation$validation_set$column, "c")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_vals_not_null")
+  expect_equal(validation$validation_set$column, "c")
   expect_true(is.null(validation$validation_set[["values"]][[1]]))
   expect_false(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 13)
-  expect_equivalent(validation$validation_set$n_passed, 11)
-  expect_equivalent(validation$validation_set$n_failed, 2)
-  expect_equivalent(validation$validation_set$f_passed, 0.84615)
-  expect_equivalent(validation$validation_set$f_failed, 0.15385)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 13)
+  expect_equal(validation$validation_set$n_passed, 11)
+  expect_equal(validation$validation_set$n_failed, 2)
+  expect_equal(validation$validation_set$f_passed, 0.84615)
+  expect_equal(validation$validation_set$f_failed, 0.15385)
+  expect_equal(nrow(validation$validation_set), 1)
   
   # Use the `col_vals_not_null()` function to create
   # a validation step (with a precondition), then,
@@ -1194,17 +1194,17 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_not_null")
-  expect_equivalent(validation$validation_set$column, "c")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_vals_not_null")
+  expect_equal(validation$validation_set$column, "c")
   expect_true(is.null(validation$validation_set[["values"]][[1]]))
   expect_true(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 8)
-  expect_equivalent(validation$validation_set$n_passed, 8)
-  expect_equivalent(validation$validation_set$n_failed, 0)
-  expect_equivalent(validation$validation_set$f_passed, 1)
-  expect_equivalent(validation$validation_set$f_failed, 0)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 8)
+  expect_equal(validation$validation_set$n_passed, 8)
+  expect_equal(validation$validation_set$n_failed, 0)
+  expect_equal(validation$validation_set$f_passed, 1)
+  expect_equal(validation$validation_set$f_failed, 0)
+  expect_equal(nrow(validation$validation_set), 1)
   
   #
   # col_vals_null()
@@ -1218,17 +1218,17 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_null")
-  expect_equivalent(validation$validation_set$column, "c")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_vals_null")
+  expect_equal(validation$validation_set$column, "c")
   expect_true(is.null(validation$validation_set[["values"]][[1]]))
   expect_false(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 13)
-  expect_equivalent(validation$validation_set$n_passed, 2)
-  expect_equivalent(validation$validation_set$n_failed, 11)
-  expect_equivalent(validation$validation_set$f_passed, 0.15385)
-  expect_equivalent(validation$validation_set$f_failed, 0.84615)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 13)
+  expect_equal(validation$validation_set$n_passed, 2)
+  expect_equal(validation$validation_set$n_failed, 11)
+  expect_equal(validation$validation_set$f_passed, 0.15385)
+  expect_equal(validation$validation_set$f_failed, 0.84615)
+  expect_equal(nrow(validation$validation_set), 1)
   
   # Use the `col_vals_null()` function to create
   # a validation step (with a precondition), then,
@@ -1243,17 +1243,17 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_null")
-  expect_equivalent(validation$validation_set$column, "c")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_vals_null")
+  expect_equal(validation$validation_set$column, "c")
   expect_true(is.null(validation$validation_set[["values"]][[1]]))
   expect_true(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 2)
-  expect_equivalent(validation$validation_set$n_passed, 2)
-  expect_equivalent(validation$validation_set$n_failed, 0)
-  expect_equivalent(validation$validation_set$f_passed, 1)
-  expect_equivalent(validation$validation_set$f_failed, 0)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 2)
+  expect_equal(validation$validation_set$n_passed, 2)
+  expect_equal(validation$validation_set$n_failed, 0)
+  expect_equal(validation$validation_set$f_passed, 1)
+  expect_equal(validation$validation_set$f_failed, 0)
+  expect_equal(nrow(validation$validation_set), 1)
   
   #
   # col_vals_increasing()
@@ -1394,17 +1394,17 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_regex")
-  expect_equivalent(validation$validation_set$column, "b")
-  expect_equivalent(validation$validation_set[["values"]] %>% unlist(), "[0-9]-[a-z]{3}-[0-9]{3}")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_vals_regex")
+  expect_equal(validation$validation_set$column, "b")
+  expect_equal(validation$validation_set[["values"]] %>% unlist(), "[0-9]-[a-z]{3}-[0-9]{3}")
   expect_true(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 13)
-  expect_equivalent(validation$validation_set$n_passed, 13)
-  expect_equivalent(validation$validation_set$n_failed, 0)
-  expect_equivalent(validation$validation_set$f_passed, 1)
-  expect_equivalent(validation$validation_set$f_failed, 0)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 13)
+  expect_equal(validation$validation_set$n_passed, 13)
+  expect_equal(validation$validation_set$n_failed, 0)
+  expect_equal(validation$validation_set$f_passed, 1)
+  expect_equal(validation$validation_set$f_failed, 0)
+  expect_equal(nrow(validation$validation_set), 1)
   
   # Use the `col_vals_regex()` function to create
   # a validation step (with a precondition), then,
@@ -1419,17 +1419,17 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_regex")
-  expect_equivalent(validation$validation_set$column, "f")
-  expect_equivalent(validation$validation_set[["values"]] %>% unlist(), "[a-z]{3}")
+  expect_equal(validation$tbl_name, "small_table")
+  expect_equal(validation$validation_set$assertion_type, "col_vals_regex")
+  expect_equal(validation$validation_set$column, "f")
+  expect_equal(validation$validation_set[["values"]] %>% unlist(), "[a-z]{3}")
   expect_true(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 7)
-  expect_equivalent(validation$validation_set$n_passed, 7)
-  expect_equivalent(validation$validation_set$n_failed, 0)
-  expect_equivalent(validation$validation_set$f_passed, 1)
-  expect_equivalent(validation$validation_set$f_failed, 0)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 7)
+  expect_equal(validation$validation_set$n_passed, 7)
+  expect_equal(validation$validation_set$n_failed, 0)
+  expect_equal(validation$validation_set$f_passed, 1)
+  expect_equal(validation$validation_set$f_failed, 0)
+  expect_equal(nrow(validation$validation_set), 1)
   
   #
   # col_vals_within_spec()
@@ -1446,17 +1446,17 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "specifications")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_within_spec")
-  expect_equivalent(validation$validation_set$column, "isbn_numbers")
-  expect_equivalent(validation$validation_set[["values"]] %>% unlist(), "isbn")
+  expect_equal(validation$tbl_name, "specifications")
+  expect_equal(validation$validation_set$assertion_type, "col_vals_within_spec")
+  expect_equal(validation$validation_set$column, "isbn_numbers")
+  expect_equal(validation$validation_set[["values"]] %>% unlist(), "isbn")
   expect_false(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 8)
-  expect_equivalent(validation$validation_set$n_passed, 5)
-  expect_equivalent(validation$validation_set$n_failed, 3)
-  expect_equivalent(validation$validation_set$f_passed, 0.625)
-  expect_equivalent(validation$validation_set$f_failed, 0.375)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 8)
+  expect_equal(validation$validation_set$n_passed, 5)
+  expect_equal(validation$validation_set$n_failed, 3)
+  expect_equal(validation$validation_set$f_passed, 0.625)
+  expect_equal(validation$validation_set$f_failed, 0.375)
+  expect_equal(nrow(validation$validation_set), 1)
   
   # Use the `col_vals_within_spec()` function to create
   # a validation step (with a precondition), then,
@@ -1471,17 +1471,17 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "specifications")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_within_spec")
-  expect_equivalent(validation$validation_set$column, "isbn_numbers")
-  expect_equivalent(validation$validation_set[["values"]] %>% unlist(), "isbn")
+  expect_equal(validation$tbl_name, "specifications")
+  expect_equal(validation$validation_set$assertion_type, "col_vals_within_spec")
+  expect_equal(validation$validation_set$column, "isbn_numbers")
+  expect_equal(validation$validation_set[["values"]] %>% unlist(), "isbn")
   expect_false(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 7)
-  expect_equivalent(validation$validation_set$n_passed, 5)
-  expect_equivalent(validation$validation_set$n_failed, 2)
-  expect_equivalent(validation$validation_set$f_passed, 0.71429)
-  expect_equivalent(validation$validation_set$f_failed, 0.28571)
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(validation$validation_set$n, 7)
+  expect_equal(validation$validation_set$n_passed, 5)
+  expect_equal(validation$validation_set$n_failed, 2)
+  expect_equal(validation$validation_set$f_passed, 0.71429)
+  expect_equal(validation$validation_set$f_failed, 0.28571)
+  expect_equal(nrow(validation$validation_set), 1)
 })
 
 test_that("Interrogating with an agent incorporates the `na_pass` option", {

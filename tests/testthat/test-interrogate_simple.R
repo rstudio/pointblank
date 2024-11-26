@@ -64,7 +64,7 @@ test_that("Interrogating simply returns the expected results", {
     )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
@@ -78,7 +78,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   rm(tbl_result)
   
@@ -111,7 +111,7 @@ test_that("Interrogating simply returns the expected results", {
     )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
@@ -125,7 +125,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   rm(tbl_result)
   
@@ -160,7 +160,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
@@ -173,7 +173,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   rm(tbl_result)
   
@@ -208,7 +208,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
@@ -222,7 +222,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   rm(tbl_result)
   
@@ -255,7 +255,7 @@ test_that("Interrogating simply returns the expected results", {
     )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
@@ -269,7 +269,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   rm(tbl_result)
   
@@ -302,7 +302,7 @@ test_that("Interrogating simply returns the expected results", {
     )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
@@ -316,7 +316,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   rm(tbl_result)
   
@@ -349,7 +349,7 @@ test_that("Interrogating simply returns the expected results", {
     )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
@@ -363,7 +363,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   rm(tbl_result)
   
@@ -396,7 +396,7 @@ test_that("Interrogating simply returns the expected results", {
     )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
@@ -410,7 +410,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   rm(tbl_result)
   
@@ -440,7 +440,7 @@ test_that("Interrogating simply returns the expected results", {
     )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
@@ -455,7 +455,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   rm(tbl_result)
   
@@ -489,7 +489,7 @@ test_that("Interrogating simply returns the expected results", {
     )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
@@ -503,7 +503,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   rm(tbl_result)
   
@@ -536,7 +536,7 @@ test_that("Interrogating simply returns the expected results", {
     )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
@@ -550,7 +550,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   rm(tbl_result)
   
@@ -583,7 +583,7 @@ test_that("Interrogating simply returns the expected results", {
     )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
@@ -597,7 +597,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   rm(tbl_result)
   
@@ -644,7 +644,7 @@ test_that("Interrogating simply returns the expected results", {
     )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   # Use the `col_vals_make_subset()` function to perform
   # another simple validation step
@@ -657,7 +657,7 @@ test_that("Interrogating simply returns the expected results", {
     )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
@@ -671,7 +671,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   rm(tbl_result)
   
@@ -717,7 +717,7 @@ test_that("Interrogating simply returns the expected results", {
     )
   
   # Expect that `tbl_result` is equivalent to `increasing_tbl`
-  expect_equivalent(increasing_tbl, tbl_result)
+  expect_equal(increasing_tbl, tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
@@ -730,7 +730,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `increasing_tbl`
-  expect_equivalent(increasing_tbl, tbl_result)
+  expect_equal(increasing_tbl, tbl_result)
   
   rm(tbl_result)
   
@@ -761,7 +761,7 @@ test_that("Interrogating simply returns the expected results", {
     )
   
   # Expect that `tbl_result` is equivalent to `decreasing_tbl`
-  expect_equivalent(decreasing_tbl, tbl_result)
+  expect_equal(decreasing_tbl, tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
@@ -774,7 +774,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `decreasing_tbl`
-  expect_equivalent(decreasing_tbl, tbl_result)
+  expect_equal(decreasing_tbl, tbl_result)
   
   rm(tbl_result)
   
@@ -806,7 +806,7 @@ test_that("Interrogating simply returns the expected results", {
     )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
@@ -820,7 +820,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   rm(tbl_result)
   
@@ -852,7 +852,7 @@ test_that("Interrogating simply returns the expected results", {
     )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
@@ -865,7 +865,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   rm(tbl_result)
   
@@ -897,7 +897,7 @@ test_that("Interrogating simply returns the expected results", {
     )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
@@ -911,7 +911,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   rm(tbl_result)
   
@@ -944,7 +944,7 @@ test_that("Interrogating simply returns the expected results", {
     )
   
   # Expect that `tbl_result` is equivalent to `specifications[1:5, ]`
-  expect_equivalent(specifications[1:5, ], tbl_result)
+  expect_equal(specifications[1:5, ], tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
@@ -958,7 +958,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `specifications[1:6, ]`
-  expect_equivalent(specifications[1:6, ], tbl_result)
+  expect_equal(specifications[1:6, ], tbl_result)
   
   rm(tbl_result)
   
@@ -990,7 +990,7 @@ test_that("Interrogating simply returns the expected results", {
     )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
@@ -1003,7 +1003,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   rm(tbl_result)
   
@@ -1029,7 +1029,7 @@ test_that("Interrogating simply returns the expected results", {
   tbl_result <- tbl[1:2, ] %>% rows_distinct()
   
   # Expect that `tbl_result` is equivalent to `tbl[1:2, ]`
-  expect_equivalent(tbl[1:2, ], tbl_result)
+  expect_equal(tbl[1:2, ], tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
@@ -1037,7 +1037,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   rm(tbl_result)
   
@@ -1058,7 +1058,7 @@ test_that("Interrogating simply returns the expected results", {
   tbl_result <- tbl_complete_yes %>% rows_complete()
   
   # Expect that `tbl_result` is equivalent to `tbl_complete_yes`
-  expect_equivalent(tbl_complete_yes, tbl_result)
+  expect_equal(tbl_complete_yes, tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
@@ -1066,7 +1066,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl_complete_no, tbl_result)
+  expect_equal(tbl_complete_no, tbl_result)
   
   rm(tbl_result)
   
@@ -1087,7 +1087,7 @@ test_that("Interrogating simply returns the expected results", {
   tbl_result <- tbl %>% col_is_character(columns = vars(b))
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
@@ -1100,7 +1100,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   rm(tbl_result)
   
@@ -1133,7 +1133,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
@@ -1146,7 +1146,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   rm(tbl_result)
   
@@ -1177,7 +1177,7 @@ test_that("Interrogating simply returns the expected results", {
     )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
@@ -1190,7 +1190,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   rm(tbl_result)
   
@@ -1221,7 +1221,7 @@ test_that("Interrogating simply returns the expected results", {
     )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
@@ -1234,7 +1234,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   rm(tbl_result)
   
@@ -1265,7 +1265,7 @@ test_that("Interrogating simply returns the expected results", {
     )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
@@ -1278,7 +1278,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   rm(tbl_result)
   
@@ -1306,7 +1306,7 @@ test_that("Interrogating simply returns the expected results", {
     col_is_logical(columns = vars(e), actions = warn_on_fail())
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
@@ -1316,7 +1316,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   rm(tbl_result)
   
@@ -1342,7 +1342,7 @@ test_that("Interrogating simply returns the expected results", {
   tbl_result <- tbl %>% col_is_factor(columns = vars(g))
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
@@ -1355,7 +1355,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   rm(tbl_result)
   
@@ -1428,14 +1428,14 @@ test_that("Interrogating simply returns the expected results", {
     )
   
   # Expect that `tbl_result` is equivalent to `tbl[1:2, ]`
-  expect_equivalent(tbl[1:2, ], tbl_result)
+  expect_equal(tbl[1:2, ], tbl_result)
   
   # Use the `col_schema_match()` function to perform
   # another simple validation step
   tbl_result <- tbl[1:2, ] %>% col_schema_match(schema = schema_correct)
   
   # Expect that `tbl_result` is equivalent to `tbl[1:2, ]`
-  expect_equivalent(tbl[1:2, ], tbl_result)
+  expect_equal(tbl[1:2, ], tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
@@ -1448,7 +1448,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   rm(tbl_result)
   
@@ -1480,7 +1480,7 @@ test_that("Interrogating simply returns the expected results", {
     )
   
   # Expect that `tbl_result` is equivalent to `small_table`
-  expect_equivalent(small_table, tbl_result)
+  expect_equal(small_table, tbl_result)
   
   # Use the `row_count_match()` function to perform
   # another simple validation step
@@ -1489,7 +1489,7 @@ test_that("Interrogating simply returns the expected results", {
     row_count_match(count = ~ pointblank::small_table)
   
   # Expect that `tbl_result` is equivalent to `small_table`
-  expect_equivalent(small_table, tbl_result)
+  expect_equal(small_table, tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
@@ -1502,7 +1502,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `tbl_complete_yes`
-  expect_equivalent(tbl_complete_yes, tbl_result)
+  expect_equal(tbl_complete_yes, tbl_result)
   
   rm(tbl_result)
   
@@ -1528,7 +1528,7 @@ test_that("Interrogating simply returns the expected results", {
     )
   
   # Expect that `tbl_result` is equivalent to `small_table`
-  expect_equivalent(small_table, tbl_result)
+  expect_equal(small_table, tbl_result)
   
   # Use the `row_count_match()` function to perform
   # another simple validation step
@@ -1537,7 +1537,7 @@ test_that("Interrogating simply returns the expected results", {
     row_count_match(count = 13L)
   
   # Expect that `tbl_result` is equivalent to `small_table`
-  expect_equivalent(small_table, tbl_result)
+  expect_equal(small_table, tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
@@ -1550,7 +1550,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `tbl_complete_yes`
-  expect_equivalent(tbl_complete_yes, tbl_result)
+  expect_equal(tbl_complete_yes, tbl_result)
   
   rm(tbl_result)
   
@@ -1583,7 +1583,7 @@ test_that("Interrogating simply returns the expected results", {
     )
   
   # Expect that `tbl_result` is equivalent to `small_table`
-  expect_equivalent(small_table, tbl_result)
+  expect_equal(small_table, tbl_result)
   
   # Use the `col_count_match()` function to perform
   # another simple validation step
@@ -1592,7 +1592,7 @@ test_that("Interrogating simply returns the expected results", {
     col_count_match(count = ~ pointblank::small_table)
   
   # Expect that `tbl_result` is equivalent to `small_table`
-  expect_equivalent(small_table, tbl_result)
+  expect_equal(small_table, tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
@@ -1605,7 +1605,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `tbl_complete_yes`
-  expect_equivalent(tbl_complete_yes, tbl_result)
+  expect_equal(tbl_complete_yes, tbl_result)
   
   rm(tbl_result)
   
@@ -1631,7 +1631,7 @@ test_that("Interrogating simply returns the expected results", {
     )
   
   # Expect that `tbl_result` is equivalent to `small_table`
-  expect_equivalent(small_table, tbl_result)
+  expect_equal(small_table, tbl_result)
   
   # Use the `col_count_match()` function to perform
   # another simple validation step
@@ -1640,7 +1640,7 @@ test_that("Interrogating simply returns the expected results", {
     col_count_match(count = 8L)
   
   # Expect that `tbl_result` is equivalent to `small_table`
-  expect_equivalent(small_table, tbl_result)
+  expect_equal(small_table, tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
@@ -1653,7 +1653,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `tbl_complete_yes`
-  expect_equivalent(tbl_complete_yes, tbl_result)
+  expect_equal(tbl_complete_yes, tbl_result)
   
   rm(tbl_result)
   
@@ -1684,7 +1684,7 @@ test_that("Interrogating simply returns the expected results", {
     )
   
   # Expect that `tbl_result` is equivalent to `small_table`
-  expect_equivalent(small_table, tbl_result)
+  expect_equal(small_table, tbl_result)
   
   # Use the `tbl_match()` function to perform
   # another simple validation step
@@ -1693,7 +1693,7 @@ test_that("Interrogating simply returns the expected results", {
     tbl_match(tbl_compare = ~ pointblank::small_table)
   
   # Expect that `tbl_result` is equivalent to `small_table`
-  expect_equivalent(small_table, tbl_result)
+  expect_equal(small_table, tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
@@ -1706,7 +1706,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `tbl_complete_yes`
-  expect_equivalent(tbl_complete_yes, tbl_result)
+  expect_equal(tbl_complete_yes, tbl_result)
   
   rm(tbl_result)
   
@@ -1741,7 +1741,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
@@ -1764,7 +1764,7 @@ test_that("Interrogating simply returns the expected results", {
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  expect_equal(tbl, tbl_result)
   
   rm(tbl_result)
   

@@ -11,14 +11,14 @@ test_that("Getting an agent report is possible", {
   report <- get_agent_report(agent, display_table = FALSE)
   
   # Expect that the report has specific column names
-  expect_equivalent(
+  expect_equal(
     colnames(report),
     c("i", "type", "columns", "values", "precon", "active", "eval",
       "units", "n_pass", "f_pass", "W", "S", "N", "extract")
   )
   
   # Expect a single row in this report
-  expect_equivalent(nrow(report), 1)
+  expect_equal(nrow(report), 1)
   
   # Expect certain column types for this report
   expect_type(report$type, "character")

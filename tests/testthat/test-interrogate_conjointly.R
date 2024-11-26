@@ -147,12 +147,12 @@ test_that("Interrogating conjointly with an agent yields the correct results", {
     interrogate()
   
   # Expect a single row in `validation$validation_set`
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(nrow(validation$validation_set), 1)
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "tbl")
-  expect_equivalent(validation$validation_set$i, 1)
-  expect_equivalent(validation$validation_set$assertion_type, "conjointly")
+  expect_equal(validation$tbl_name, "tbl")
+  expect_equal(validation$validation_set$i, 1)
+  expect_equal(validation$validation_set$assertion_type, "conjointly")
   expect_true(is.list(validation$validation_set$column))
   expect_true(is.list(validation$validation_set[["values"]]))
   expect_true(is.na(validation$validation_set$na_pass))

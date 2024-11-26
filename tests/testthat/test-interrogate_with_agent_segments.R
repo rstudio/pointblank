@@ -23,22 +23,22 @@ test_that("Agent interrogations with segments yields the correct results", {
     interrogate()
   
   # Expect certain values in `validation_1$validation_set`
-  expect_equivalent(
+  expect_equal(
     validation_1$validation_set$assertion_type, rep("col_vals_increasing", 2)
   )
   # Targeted skipping of this test for {covr}
   if (isFALSE(as.logical(Sys.getenv("R_COVR", "false")))) {
-    expect_equivalent(validation_1$validation_set$column %>% unlist(), rep("b", 2))
+    expect_equal(validation_1$validation_set$column %>% unlist(), rep("b", 2))
   }
-  expect_equivalent(
+  expect_equal(
     validation_1$validation_set$seg_expr[[1]],
     validation_1$validation_set$seg_expr[[2]]
   )
-  expect_equivalent(validation_1$validation_set$seg_col, rep("a", 2))
-  expect_equivalent(validation_1$validation_set$seg_val, c("group_inc_1", "group_inc_2"))
-  expect_equivalent(validation_1$validation_set$all_passed, c(TRUE, TRUE))
-  expect_equivalent(validation_1$validation_set$n, c(5, 10))
-  expect_equivalent(nrow(validation_1$validation_set), 2)
+  expect_equal(validation_1$validation_set$seg_col, rep("a", 2))
+  expect_equal(validation_1$validation_set$seg_val, c("group_inc_1", "group_inc_2"))
+  expect_equal(validation_1$validation_set$all_passed, c(TRUE, TRUE))
+  expect_equal(validation_1$validation_set$n, c(5, 10))
+  expect_equal(nrow(validation_1$validation_set), 2)
   
   # Use the `col_vals_increasing()` function with `segments`,
   # segmenting the data by two grouping values from a single column; the
@@ -52,19 +52,19 @@ test_that("Agent interrogations with segments yields the correct results", {
     interrogate()
   
   # Expect certain values in `validation_2$validation_set`
-  expect_equivalent(
+  expect_equal(
     validation_2$validation_set$assertion_type, rep("col_vals_increasing", 2)
   )
-  expect_equivalent(validation_2$validation_set$column %>% unlist(), rep("b", 2))
-  expect_equivalent(
+  expect_equal(validation_2$validation_set$column %>% unlist(), rep("b", 2))
+  expect_equal(
     validation_2$validation_set$seg_expr[[1]],
     validation_2$validation_set$seg_expr[[2]]
   )
-  expect_equivalent(validation_2$validation_set$seg_col, rep("a", 2))
-  expect_equivalent(validation_2$validation_set$seg_val, c("group_inc_1", "group_inc_2"))
-  expect_equivalent(validation_2$validation_set$all_passed, c(TRUE, TRUE))
-  expect_equivalent(validation_2$validation_set$n, c(5, 10))
-  expect_equivalent(nrow(validation_2$validation_set), 2)
+  expect_equal(validation_2$validation_set$seg_col, rep("a", 2))
+  expect_equal(validation_2$validation_set$seg_val, c("group_inc_1", "group_inc_2"))
+  expect_equal(validation_2$validation_set$all_passed, c(TRUE, TRUE))
+  expect_equal(validation_2$validation_set$n, c(5, 10))
+  expect_equal(nrow(validation_2$validation_set), 2)
   
   # Use the `col_vals_increasing()` function with `segments`,
   # segmenting the data by *all* grouping values from a single column (`a`)
@@ -75,24 +75,24 @@ test_that("Agent interrogations with segments yields the correct results", {
     interrogate()
   
   # Expect certain values in `validation_3$validation_set`
-  expect_equivalent(
+  expect_equal(
     validation_3$validation_set$assertion_type, rep("col_vals_increasing", 4)
   )
-  expect_equivalent(validation_3$validation_set$column %>% unlist(), rep("b", 4))
-  expect_equivalent(
+  expect_equal(validation_3$validation_set$column %>% unlist(), rep("b", 4))
+  expect_equal(
     validation_3$validation_set$seg_expr[[1]],
     validation_3$validation_set$seg_expr[[2]],
     validation_3$validation_set$seg_expr[[3]],
     validation_3$validation_set$seg_expr[[4]],
   )
-  expect_equivalent(validation_3$validation_set$seg_col, rep("a", 4))
-  expect_equivalent(
+  expect_equal(validation_3$validation_set$seg_col, rep("a", 4))
+  expect_equal(
     validation_3$validation_set$seg_val,
     c("group_inc_1", "group_inc_2", "group_not", NA_character_)
   )
-  expect_equivalent(validation_3$validation_set$all_passed, c(TRUE, TRUE, FALSE, FALSE))
-  expect_equivalent(validation_3$validation_set$n, c(5, 10, 5, 30))
-  expect_equivalent(nrow(validation_3$validation_set), 4)
+  expect_equal(validation_3$validation_set$all_passed, c(TRUE, TRUE, FALSE, FALSE))
+  expect_equal(validation_3$validation_set$n, c(5, 10, 5, 30))
+  expect_equal(nrow(validation_3$validation_set), 4)
   
   # Use the `col_vals_increasing()` function with `segments`,
   # segmenting the data by *all* grouping values from a single column (`a`),
@@ -109,19 +109,19 @@ test_that("Agent interrogations with segments yields the correct results", {
     interrogate()
   
   # Expect certain values in `validation_4$validation_set`
-  expect_equivalent(
+  expect_equal(
     validation_4$validation_set$assertion_type, rep("col_vals_increasing", 2)
   )
-  expect_equivalent(validation_4$validation_set$column %>% unlist(), rep("b", 2))
-  expect_equivalent(
+  expect_equal(validation_4$validation_set$column %>% unlist(), rep("b", 2))
+  expect_equal(
     validation_4$validation_set$seg_expr[[1]],
     validation_4$validation_set$seg_expr[[2]]
   )
-  expect_equivalent(validation_4$validation_set$seg_col, rep("a", 2))
-  expect_equivalent(validation_4$validation_set$seg_val, c("group_inc_1", "group_inc_2"))
-  expect_equivalent(validation_4$validation_set$all_passed, c(TRUE, TRUE))
-  expect_equivalent(validation_4$validation_set$n, c(5, 10))
-  expect_equivalent(nrow(validation_4$validation_set), 2)
+  expect_equal(validation_4$validation_set$seg_col, rep("a", 2))
+  expect_equal(validation_4$validation_set$seg_val, c("group_inc_1", "group_inc_2"))
+  expect_equal(validation_4$validation_set$all_passed, c(TRUE, TRUE))
+  expect_equal(validation_4$validation_set$n, c(5, 10))
+  expect_equal(nrow(validation_4$validation_set), 2)
 
   # Use the `col_vals_increasing()` function with `segments`,
   # segmenting the data by two grouping values from a single column; this
@@ -135,19 +135,19 @@ test_that("Agent interrogations with segments yields the correct results", {
     interrogate()
   
   # Expect certain values in `validation_5$validation_set`
-  expect_equivalent(
+  expect_equal(
     validation_5$validation_set$assertion_type, rep("col_vals_increasing", 2)
   )
-  expect_equivalent(validation_5$validation_set$column %>% unlist(), rep("b", 2))
-  expect_equivalent(
+  expect_equal(validation_5$validation_set$column %>% unlist(), rep("b", 2))
+  expect_equal(
     validation_5$validation_set$seg_expr[[1]],
     validation_5$validation_set$seg_expr[[2]]
   )
-  expect_equivalent(validation_5$validation_set$seg_col, rep("a", 2))
-  expect_equivalent(validation_5$validation_set$seg_val, c("group_inc_1", "group_inc_2"))
-  expect_equivalent(validation_5$validation_set$all_passed, c(TRUE, TRUE))
-  expect_equivalent(validation_5$validation_set$n, c(5, 10))
-  expect_equivalent(nrow(validation_5$validation_set), 2)
+  expect_equal(validation_5$validation_set$seg_col, rep("a", 2))
+  expect_equal(validation_5$validation_set$seg_val, c("group_inc_1", "group_inc_2"))
+  expect_equal(validation_5$validation_set$all_passed, c(TRUE, TRUE))
+  expect_equal(validation_5$validation_set$n, c(5, 10))
+  expect_equal(nrow(validation_5$validation_set), 2)
   
   # Use the `col_vals_increasing()` function with `segments`,
   # segmenting the data by two grouping values from a single column: one
@@ -195,19 +195,19 @@ test_that("Agent interrogations with segments yields the correct results", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(
+  expect_equal(
     validation$validation_set$assertion_type, rep("col_vals_decreasing", 2)
   )
-  expect_equivalent(validation$validation_set$column %>% unlist(), rep("b", 2))
-  expect_equivalent(
+  expect_equal(validation$validation_set$column %>% unlist(), rep("b", 2))
+  expect_equal(
     validation$validation_set$seg_expr[[1]],
     validation$validation_set$seg_expr[[2]]
   )
-  expect_equivalent(validation$validation_set$seg_col, rep("a", 2))
-  expect_equivalent(validation$validation_set$seg_val, c("group_dec_1", "group_dec_2"))
-  expect_equivalent(validation$validation_set$all_passed, c(TRUE, TRUE))
-  expect_equivalent(validation$validation_set$n, c(5, 10))
-  expect_equivalent(nrow(validation$validation_set), 2)
+  expect_equal(validation$validation_set$seg_col, rep("a", 2))
+  expect_equal(validation$validation_set$seg_val, c("group_dec_1", "group_dec_2"))
+  expect_equal(validation$validation_set$all_passed, c(TRUE, TRUE))
+  expect_equal(validation$validation_set$n, c(5, 10))
+  expect_equal(nrow(validation$validation_set), 2)
   
   #
   # col_vals_lt
@@ -232,19 +232,19 @@ test_that("Agent interrogations with segments yields the correct results", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(
+  expect_equal(
     validation$validation_set$assertion_type, rep("col_vals_lt", 2)
   )
-  expect_equivalent(validation$validation_set$column %>% unlist(), rep("b", 2))
-  expect_equivalent(
+  expect_equal(validation$validation_set$column %>% unlist(), rep("b", 2))
+  expect_equal(
     validation$validation_set$seg_expr[[1]],
     validation$validation_set$seg_expr[[2]]
   )
-  expect_equivalent(validation$validation_set$seg_col, rep("a", 2))
-  expect_equivalent(validation$validation_set$seg_val, c("group_1", "group_2"))
-  expect_equivalent(validation$validation_set$all_passed, c(TRUE, FALSE))
-  expect_equivalent(validation$validation_set$n, c(5, 10))
-  expect_equivalent(nrow(validation$validation_set), 2)
+  expect_equal(validation$validation_set$seg_col, rep("a", 2))
+  expect_equal(validation$validation_set$seg_val, c("group_1", "group_2"))
+  expect_equal(validation$validation_set$all_passed, c(TRUE, FALSE))
+  expect_equal(validation$validation_set$n, c(5, 10))
+  expect_equal(nrow(validation$validation_set), 2)
   
   #
   # col_vals_lte
@@ -269,19 +269,19 @@ test_that("Agent interrogations with segments yields the correct results", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(
+  expect_equal(
     validation$validation_set$assertion_type, rep("col_vals_lte", 2)
   )
-  expect_equivalent(validation$validation_set$column %>% unlist(), rep("b", 2))
-  expect_equivalent(
+  expect_equal(validation$validation_set$column %>% unlist(), rep("b", 2))
+  expect_equal(
     validation$validation_set$seg_expr[[1]],
     validation$validation_set$seg_expr[[2]]
   )
-  expect_equivalent(validation$validation_set$seg_col, rep("a", 2))
-  expect_equivalent(validation$validation_set$seg_val, c("group_1", "group_2"))
-  expect_equivalent(validation$validation_set$all_passed, c(TRUE, TRUE))
-  expect_equivalent(validation$validation_set$n, c(5, 10))
-  expect_equivalent(nrow(validation$validation_set), 2)
+  expect_equal(validation$validation_set$seg_col, rep("a", 2))
+  expect_equal(validation$validation_set$seg_val, c("group_1", "group_2"))
+  expect_equal(validation$validation_set$all_passed, c(TRUE, TRUE))
+  expect_equal(validation$validation_set$n, c(5, 10))
+  expect_equal(nrow(validation$validation_set), 2)
   
   #
   # col_vals_equal
@@ -306,19 +306,19 @@ test_that("Agent interrogations with segments yields the correct results", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(
+  expect_equal(
     validation$validation_set$assertion_type, rep("col_vals_equal", 2)
   )
-  expect_equivalent(validation$validation_set$column %>% unlist(), rep("b", 2))
-  expect_equivalent(
+  expect_equal(validation$validation_set$column %>% unlist(), rep("b", 2))
+  expect_equal(
     validation$validation_set$seg_expr[[1]],
     validation$validation_set$seg_expr[[2]]
   )
-  expect_equivalent(validation$validation_set$seg_col, rep("a", 2))
-  expect_equivalent(validation$validation_set$seg_val, c("group_1", "group_2"))
-  expect_equivalent(validation$validation_set$all_passed, c(FALSE, TRUE))
-  expect_equivalent(validation$validation_set$n, c(5, 10))
-  expect_equivalent(nrow(validation$validation_set), 2)
+  expect_equal(validation$validation_set$seg_col, rep("a", 2))
+  expect_equal(validation$validation_set$seg_val, c("group_1", "group_2"))
+  expect_equal(validation$validation_set$all_passed, c(FALSE, TRUE))
+  expect_equal(validation$validation_set$n, c(5, 10))
+  expect_equal(nrow(validation$validation_set), 2)
   
   #
   # col_vals_not_equal
@@ -343,19 +343,19 @@ test_that("Agent interrogations with segments yields the correct results", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(
+  expect_equal(
     validation$validation_set$assertion_type, rep("col_vals_not_equal", 2)
   )
-  expect_equivalent(validation$validation_set$column %>% unlist(), rep("b", 2))
-  expect_equivalent(
+  expect_equal(validation$validation_set$column %>% unlist(), rep("b", 2))
+  expect_equal(
     validation$validation_set$seg_expr[[1]],
     validation$validation_set$seg_expr[[2]]
   )
-  expect_equivalent(validation$validation_set$seg_col, rep("a", 2))
-  expect_equivalent(validation$validation_set$seg_val, c("group_1", "group_2"))
-  expect_equivalent(validation$validation_set$all_passed, c(TRUE, FALSE))
-  expect_equivalent(validation$validation_set$n, c(5, 10))
-  expect_equivalent(nrow(validation$validation_set), 2)
+  expect_equal(validation$validation_set$seg_col, rep("a", 2))
+  expect_equal(validation$validation_set$seg_val, c("group_1", "group_2"))
+  expect_equal(validation$validation_set$all_passed, c(TRUE, FALSE))
+  expect_equal(validation$validation_set$n, c(5, 10))
+  expect_equal(nrow(validation$validation_set), 2)
   
   #
   # col_vals_gte
@@ -380,19 +380,19 @@ test_that("Agent interrogations with segments yields the correct results", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(
+  expect_equal(
     validation$validation_set$assertion_type, rep("col_vals_gte", 2)
   )
-  expect_equivalent(validation$validation_set$column %>% unlist(), rep("b", 2))
-  expect_equivalent(
+  expect_equal(validation$validation_set$column %>% unlist(), rep("b", 2))
+  expect_equal(
     validation$validation_set$seg_expr[[1]],
     validation$validation_set$seg_expr[[2]]
   )
-  expect_equivalent(validation$validation_set$seg_col, rep("a", 2))
-  expect_equivalent(validation$validation_set$seg_val, c("group_1", "group_2"))
-  expect_equivalent(validation$validation_set$all_passed, c(TRUE, TRUE))
-  expect_equivalent(validation$validation_set$n, c(5, 10))
-  expect_equivalent(nrow(validation$validation_set), 2)
+  expect_equal(validation$validation_set$seg_col, rep("a", 2))
+  expect_equal(validation$validation_set$seg_val, c("group_1", "group_2"))
+  expect_equal(validation$validation_set$all_passed, c(TRUE, TRUE))
+  expect_equal(validation$validation_set$n, c(5, 10))
+  expect_equal(nrow(validation$validation_set), 2)
   
   #
   # col_vals_gt
@@ -417,19 +417,19 @@ test_that("Agent interrogations with segments yields the correct results", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(
+  expect_equal(
     validation$validation_set$assertion_type, rep("col_vals_gt", 2)
   )
-  expect_equivalent(validation$validation_set$column %>% unlist(), rep("b", 2))
-  expect_equivalent(
+  expect_equal(validation$validation_set$column %>% unlist(), rep("b", 2))
+  expect_equal(
     validation$validation_set$seg_expr[[1]],
     validation$validation_set$seg_expr[[2]]
   )
-  expect_equivalent(validation$validation_set$seg_col, rep("a", 2))
-  expect_equivalent(validation$validation_set$seg_val, c("group_1", "group_2"))
-  expect_equivalent(validation$validation_set$all_passed, c(FALSE, TRUE))
-  expect_equivalent(validation$validation_set$n, c(5, 10))
-  expect_equivalent(nrow(validation$validation_set), 2)
+  expect_equal(validation$validation_set$seg_col, rep("a", 2))
+  expect_equal(validation$validation_set$seg_val, c("group_1", "group_2"))
+  expect_equal(validation$validation_set$all_passed, c(FALSE, TRUE))
+  expect_equal(validation$validation_set$n, c(5, 10))
+  expect_equal(nrow(validation$validation_set), 2)
   
   #
   # col_vals_between
@@ -453,19 +453,19 @@ test_that("Agent interrogations with segments yields the correct results", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(
+  expect_equal(
     validation$validation_set$assertion_type, rep("col_vals_between", 2)
   )
-  expect_equivalent(validation$validation_set$column %>% unlist(), rep("b", 2))
-  expect_equivalent(
+  expect_equal(validation$validation_set$column %>% unlist(), rep("b", 2))
+  expect_equal(
     validation$validation_set$seg_expr[[1]],
     validation$validation_set$seg_expr[[2]]
   )
-  expect_equivalent(validation$validation_set$seg_col, rep("a", 2))
-  expect_equivalent(validation$validation_set$seg_val, c("group_1", "group_2"))
-  expect_equivalent(validation$validation_set$all_passed, c(TRUE, TRUE))
-  expect_equivalent(validation$validation_set$n, c(4, 4))
-  expect_equivalent(nrow(validation$validation_set), 2)
+  expect_equal(validation$validation_set$seg_col, rep("a", 2))
+  expect_equal(validation$validation_set$seg_val, c("group_1", "group_2"))
+  expect_equal(validation$validation_set$all_passed, c(TRUE, TRUE))
+  expect_equal(validation$validation_set$n, c(4, 4))
+  expect_equal(nrow(validation$validation_set), 2)
   
   #
   # col_vals_not_between
@@ -481,10 +481,10 @@ test_that("Agent interrogations with segments yields the correct results", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(
+  expect_equal(
     validation$validation_set$assertion_type, rep("col_vals_not_between", 2)
   )
-  expect_equivalent(validation$validation_set$column %>% unlist(), rep("b", 2))
+  expect_equal(validation$validation_set$column %>% unlist(), rep("b", 2))
   expect_equivalent(
     validation$validation_set$seg_expr[[1]],
     validation$validation_set$seg_expr[[2]]

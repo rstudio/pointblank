@@ -41,8 +41,8 @@ test_that("Reading an informant from YAML is possible", {
   
   # Expect that the original informant and the one read
   # back from YAML are both of the class `ptblank_informant`
-  expect_is(informant, "ptblank_informant")
-  expect_is(informant_from_yaml, "ptblank_informant")
+  expect_s3_class(informant, "ptblank_informant")
+  expect_s3_class(informant_from_yaml, "ptblank_informant")
   
   # Expect both informant objects to successfully produce a report
   expect_no_error(
@@ -51,8 +51,8 @@ test_that("Reading an informant from YAML is possible", {
   expect_no_error(
     report_1_from_yaml <- get_informant_report(informant_from_yaml)
   )
-  expect_is(report_1, "gt_tbl")
-  expect_is(report_1_from_yaml, "gt_tbl")
+  expect_s3_class(report_1, "gt_tbl")
+  expect_s3_class(report_1_from_yaml, "gt_tbl")
   
   # Expect that the informant (which never had `incorporate()`
   # run on it) is equivalent to the informant object created
@@ -83,8 +83,8 @@ test_that("Reading an informant from YAML is possible", {
   expect_no_error(
     report_1_from_yaml_inc <- get_informant_report(informant_inc_from_yaml)
   )
-  expect_is(report_1_inc, "gt_tbl")
-  expect_is(report_1_from_yaml_inc, "gt_tbl")
+  expect_s3_class(report_1_inc, "gt_tbl")
+  expect_s3_class(report_1_from_yaml_inc, "gt_tbl")
 })
 
 fs::file_delete(path = "informant-test_table.yml")

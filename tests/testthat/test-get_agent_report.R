@@ -21,17 +21,17 @@ test_that("Getting an agent report is possible", {
   expect_equivalent(nrow(report), 1)
   
   # Expect certain column types for this report
-  expect_is(report$type, "character")
-  expect_is(report$columns, "character")
-  expect_is(report$values, "character")
-  expect_is(report$precon, "character")
-  expect_is(report$units, "numeric")
-  expect_is(report$n_pass, "numeric")
-  expect_is(report$f_pass, "numeric")
-  expect_is(report$W, "logical")
-  expect_is(report$S, "logical")
-  expect_is(report$N, "logical")
-  expect_is(report$extract, "integer")
+  expect_type(report$type, "character")
+  expect_type(report$columns, "character")
+  expect_type(report$values, "character")
+  expect_type(report$precon, "character")
+  expect_type(report$units, "double")
+  expect_type(report$n_pass, "double")
+  expect_type(report$f_pass, "double")
+  expect_type(report$W, "logical")
+  expect_type(report$S, "logical")
+  expect_type(report$N, "logical")
+  expect_type(report$extract, "integer")
   
   # Use `col_is_character()` function to create
   # a validation step but do not `interrogate()`

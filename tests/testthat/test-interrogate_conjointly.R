@@ -19,30 +19,30 @@ test_that("Interrogating conjointly with an agent yields the correct results", {
     interrogate()
   
   # Expect a single row in `validation$validation_set`
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(nrow(validation$validation_set), 1)
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "tbl")
-  expect_equivalent(validation$validation_set$i, 1)
-  expect_equivalent(validation$validation_set$assertion_type, "conjointly")
-  expect_true(is.list(validation$validation_set$column))
-  expect_true(is.list(validation$validation_set[["values"]]))
+  expect_equal(validation$tbl_name, "tbl")
+  expect_equal(validation$validation_set$i, 1)
+  expect_equal(validation$validation_set$assertion_type, "conjointly")
+  expect_type(validation$validation_set$column, "list")
+  expect_type(validation$validation_set[["values"]], "list")
   expect_true(is.na(validation$validation_set$na_pass))
-  expect_true(is.list(validation$validation_set$preconditions))
-  expect_true(is.list(validation$validation_set$actions))
+  expect_type(validation$validation_set$preconditions, "list")
+  expect_type(validation$validation_set$actions, "list")
   expect_false(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 6)
-  expect_equivalent(validation$validation_set$n_passed, 4)
-  expect_equivalent(validation$validation_set$n_failed, 2)
-  expect_equivalent(validation$validation_set$f_passed, 0.66667)
-  expect_equivalent(validation$validation_set$f_failed, 0.33333)
+  expect_equal(validation$validation_set$n, 6)
+  expect_equal(validation$validation_set$n_passed, 4)
+  expect_equal(validation$validation_set$n_failed, 2)
+  expect_equal(validation$validation_set$f_passed, 0.66667)
+  expect_equal(validation$validation_set$f_failed, 0.33333)
   
   validation$validation_set[["values"]] %>% unlist() %>% length() %>%
     expect_equal(3)
   
-  expect_is(validation$validation_set[["values"]] %>% unlist() %>% .[[1]], "formula")
-  expect_is(validation$validation_set[["values"]] %>% unlist() %>% .[[2]], "formula")
-  expect_is(validation$validation_set[["values"]] %>% unlist() %>% .[[3]], "formula")
+  expect_s3_class(validation$validation_set[["values"]] %>% unlist() %>% .[[1]], "formula")
+  expect_s3_class(validation$validation_set[["values"]] %>% unlist() %>% .[[2]], "formula")
+  expect_s3_class(validation$validation_set[["values"]] %>% unlist() %>% .[[3]], "formula")
   
   validation$validation_set[["values"]] %>% unlist() %>% .[[1]] %>% as.character() %>%
     expect_equal(c("~", "col_vals_gt(., columns = vars(a), value = 4)"))
@@ -68,23 +68,23 @@ test_that("Interrogating conjointly with an agent yields the correct results", {
     interrogate()
   
   # Expect a single row in `validation$validation_set`
-  expect_equivalent(nrow(validation$validation_set), 1)
+  expect_equal(nrow(validation$validation_set), 1)
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "tbl")
-  expect_equivalent(validation$validation_set$i, 1)
-  expect_equivalent(validation$validation_set$assertion_type, "conjointly")
+  expect_equal(validation$tbl_name, "tbl")
+  expect_equal(validation$validation_set$i, 1)
+  expect_equal(validation$validation_set$assertion_type, "conjointly")
   expect_true(is.list(validation$validation_set$column))
   expect_true(is.list(validation$validation_set[["values"]]))
   expect_true(is.na(validation$validation_set$na_pass))
   expect_true(is.list(validation$validation_set$preconditions))
   expect_true(is.list(validation$validation_set$actions))
   expect_true(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 2)
-  expect_equivalent(validation$validation_set$n_passed, 2)
-  expect_equivalent(validation$validation_set$n_failed, 0)
-  expect_equivalent(validation$validation_set$f_passed, 1)
-  expect_equivalent(validation$validation_set$f_failed, 0)
+  expect_equal(validation$validation_set$n, 2)
+  expect_equal(validation$validation_set$n_passed, 2)
+  expect_equal(validation$validation_set$n_failed, 0)
+  expect_equal(validation$validation_set$f_passed, 1)
+  expect_equal(validation$validation_set$f_failed, 0)
   
   validation$validation_set[["values"]] %>% unlist() %>% length() %>%
     expect_equal(3)
@@ -92,21 +92,21 @@ test_that("Interrogating conjointly with an agent yields the correct results", {
   validation$validation_set[["preconditions"]] %>% unlist() %>% length() %>%
     expect_equal(1)
   
-  expect_is(
+  expect_s3_class(
     validation$validation_set[["values"]] %>%
       unlist() %>%
       .[[1]],
     "formula"
   )
   
-  expect_is(
+  expect_s3_class(
     validation$validation_set[["values"]] %>%
       unlist() %>%
       .[[2]],
     "formula"
   )
   
-  expect_is(
+  expect_s3_class(
     validation$validation_set[["values"]] %>%
       unlist() %>%
       .[[3]],
@@ -159,23 +159,21 @@ test_that("Interrogating conjointly with an agent yields the correct results", {
   expect_true(is.list(validation$validation_set$preconditions))
   expect_true(is.list(validation$validation_set$actions))
   expect_true(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 6)
-  expect_equivalent(validation$validation_set$n_passed, 6)
-  expect_equivalent(validation$validation_set$n_failed, 0)
-  expect_equivalent(validation$validation_set$f_passed, 1)
-  expect_equivalent(validation$validation_set$f_failed, 0)
+  expect_equal(validation$validation_set$n, 6)
+  expect_equal(validation$validation_set$n_passed, 6)
+  expect_equal(validation$validation_set$n_failed, 0)
+  expect_equal(validation$validation_set$f_passed, 1)
+  expect_equal(validation$validation_set$f_failed, 0)
   
   validation$validation_set[["values"]] %>%
     unlist() %>%
-    length() %>%
-    expect_equal(1)
+    expect_length(1)
   
   validation$validation_set[["preconditions"]] %>% 
     unlist() %>%
-    length() %>%
-    expect_equal(0)
+    expect_length(0)
   
-  expect_is(
+  expect_s3_class(
     validation$validation_set[["values"]] %>%
       unlist() %>%
       .[[1]],

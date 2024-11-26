@@ -43,7 +43,7 @@ test_that("Getting an information report is possible", {
   report <- get_informant_report(informant_inc)
   
   # Expect that the report is a gt table
-  expect_is(report, "gt_tbl")
+  expect_s3_class(report, "gt_tbl")
 })
 
 test_that("Getting a more advanced information report is possible", {
@@ -185,7 +185,7 @@ Dimorphism and Environmental Variability within a Community of Antarctic Penguin
   report <- get_informant_report(informant_inc)
   
   # Expect that the report is a gt table
-  expect_is(report, "gt_tbl")
+  expect_s3_class(report, "gt_tbl")
 })
 
 test_that("The correct title is rendered in the informant report", {

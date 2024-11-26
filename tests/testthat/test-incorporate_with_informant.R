@@ -64,8 +64,8 @@ test_that("Incorporating an informant yields the correct results", {
   )
   
   # Expect informant objects of class `ptblank_informant`
-  expect_is(informant, "ptblank_informant")
-  expect_is(informant_inc, "ptblank_informant")
+  expect_s3_class(informant, "ptblank_informant")
+  expect_s3_class(informant_inc, "ptblank_informant")
   
   # Don't expect an error if the `read_fn` is valid
   expect_no_error(
@@ -172,8 +172,8 @@ test_that("Incorporating an informant from YAML yields the correct results", {
   )
   
   # Expect informant objects of class `ptblank_informant`
-  expect_is(informant, "ptblank_informant")
-  expect_is(informant_inc_yaml, "ptblank_informant")
+  expect_s3_class(informant, "ptblank_informant")
+  expect_s3_class(informant_inc_yaml, "ptblank_informant")
   
   # Don't expect an error if the `read_fn` is valid
   expect_no_error(

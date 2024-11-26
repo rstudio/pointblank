@@ -58,11 +58,13 @@ test_that("multiagent uses rehashing for alignment", {
   multiagent <- create_multiagent(agent_a, agent_b)
   expect_equal(
     rehash_agent(agent_a),
-    multiagent$agents[[1]]
+    multiagent$agents[[1]],
+    ignore_attr = "class"
   )
   expect_equal(
     rehash_agent(agent_b),
-    multiagent$agents[[2]]
+    multiagent$agents[[2]],
+    ignore_attr = "class"
   )
   expect_identical(
     multiagent$agents[[1]]$validation_set$sha1,

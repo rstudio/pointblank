@@ -1927,8 +1927,8 @@ test_that("Select validation steps can be `active` or not", {
   # warn when there is a single unit failing in each step
   al <- action_levels(warn_at = 1)
   
-  expect_warning(
-    small_table %>%
+  expect_snapshot(
+    obj <- small_table %>%
       col_is_character(columns = vars(b), actions = al) %>%
       col_is_numeric(columns = vars(a), actions = al) %>%
       col_is_posix(columns = vars(date_time), actions = al) %>%

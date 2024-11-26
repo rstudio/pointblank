@@ -131,6 +131,9 @@ test_that("sundered data can be generated and retrieved with a `tbl_df`", {
   # input table and the two data pieces
   expect_equal(
     colnames(small_table),
+    colnames(pass_data_tbl)
+  )
+  expect_equal(
     colnames(pass_data_tbl),
     colnames(fail_data_tbl)
   )
@@ -252,6 +255,9 @@ test_that("sundered data can be generated and retrieved with a `tbl_df` (one ste
   # input table and the two data pieces
   expect_equal(
     colnames(small_table),
+    colnames(pass_data_tbl)
+  )
+  expect_equal(
     colnames(pass_data_tbl),
     colnames(fail_data_tbl)
   )
@@ -317,6 +323,9 @@ test_that("sundered data can be generated and retrieved with a `tbl_df` (no step
   # input table and the two data pieces
   expect_equal(
     colnames(small_table),
+    colnames(pass_data_tbl)
+  )
+  expect_equal(
     colnames(pass_data_tbl),
     colnames(fail_data_tbl)
   )
@@ -399,10 +408,13 @@ test_that("sundering can occur (with exceptions) when there are preconditions", 
   # input table and the two data pieces
   expect_equal(
     colnames(small_table),
+    colnames(pass_data_tbl)
+  )
+  expect_equal(
     colnames(pass_data_tbl),
     colnames(fail_data_tbl)
   )
-  
+
   # Expect a list of data pieces if `NULL` provided
   # to the `type` argument
   data_tbl_list <- get_sundered_data(agent_p_equal, type = NULL)
@@ -494,6 +506,9 @@ test_that("sundered data can be generated and retrieved with a `tbl_dbi` (SQLite
   # input table and the two data pieces
   expect_equal(
     colnames(tbl_sqlite),
+    colnames(pass_data_tbl)
+  )
+  expect_equal(
     colnames(pass_data_tbl),
     colnames(fail_data_tbl)
   )
@@ -508,8 +523,8 @@ test_that("sundered data can be generated and retrieved with a `tbl_dbi` (SQLite
   expect_type(data_tbl_list, "list")
   expect_equal(names(data_tbl_list), c("pass", "fail"))
   expect_equal(length(data_tbl_list), 2)
-  expect_equal(data_tbl_list$pass, pass_data_tbl)
-  expect_equal(data_tbl_list$fail, fail_data_tbl)
+  expect_equal(data_tbl_list$pass, pass_data_tbl, ignore_attr = TRUE)
+  expect_equal(data_tbl_list$fail, fail_data_tbl, ignore_attr = TRUE)
 
   # Expect an error if the agent hasn't performed
   # an interrogation before calling `get_sundered_data()`

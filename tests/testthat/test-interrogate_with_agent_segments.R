@@ -81,9 +81,15 @@ test_that("Agent interrogations with segments yields the correct results", {
   expect_equal(validation_3$validation_set$column %>% unlist(), rep("b", 4))
   expect_equal(
     validation_3$validation_set$seg_expr[[1]],
-    validation_3$validation_set$seg_expr[[2]],
+    validation_3$validation_set$seg_expr[[2]]
+  )
+  expect_equal(
+    validation_3$validation_set$seg_expr[[1]],
+    validation_3$validation_set$seg_expr[[3]]
+  )
+  expect_equal(
     validation_3$validation_set$seg_expr[[3]],
-    validation_3$validation_set$seg_expr[[4]],
+    validation_3$validation_set$seg_expr[[4]]
   )
   expect_equal(validation_3$validation_set$seg_col, rep("a", 4))
   expect_equal(

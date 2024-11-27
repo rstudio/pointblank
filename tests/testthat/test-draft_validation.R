@@ -1,5 +1,3 @@
-skip_on_os(os = "windows")
-
 work_path <- "./generated_r_files"
 
 if (fs::dir_exists(path = work_path)) {

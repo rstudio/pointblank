@@ -19,13 +19,11 @@ vignettes
 man/figures/
 ^tests/manual_tests$
 ^inst/translations$
-tests/testthat/_snaps
 tests/testthat/postgres.R
 tests/testthat/postgres-2.R
 tests/testthat/test-col_schema.R
 tests/testthat/test-column_roles.R
 tests/testthat/test-create_validation_steps.R
-tests/testthat/test-draft_validation.R
 tests/testthat/test-expectation_fns.R
 tests/testthat/test-file_naming.R
 tests/testthat/test-get_agent_report.R

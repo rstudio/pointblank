@@ -1,10 +1,10 @@
 skip_on_ci()
 
 test_that("pointblank agent works with dittodb-mocked Postgres database connection", {
-  
+
   # Create a connection to the `trade_statistics`
   # database hosted publicly at "tradestatistics.io"
-  
+
   dittodb::with_mock_db({
     # start_db_capturing()
     con <- DBI::dbConnect(
@@ -15,11 +15,11 @@ test_that("pointblank agent works with dittodb-mocked Postgres database connecti
       host = "tradestatistics.io",
       port = 5432
     )
-    
+
     # Set failure thresholds and functions that are
     # actioned from exceeding certain error levels
     al <- action_levels(warn_at = 0.02, stop_at = 0.05, notify_at = 0.10)
-    
+
     # Validate the `assembly` table in the `aedes_aegypti_core_55_1d` DB
     # the expect_warning is used to suppres the message
     # dbFetch `n` is ignored while mocking databases.
@@ -29,8 +29,8 @@ test_that("pointblank agent works with dittodb-mocked Postgres database connecti
           label = "trade_statistics: 'hs07_yrp' table",
           actions = al
         ) %>%
-        col_vals_gte(vars(export_value_usd), 0) %>% 
-        col_vals_gte(vars(import_value_usd), 0) %>% 
+        col_vals_gte(vars(export_value_usd), 0) %>%
+        col_vals_gte(vars(import_value_usd), 0) %>%
         col_schema_match(
           schema = col_schema(
             year = "integer",
@@ -41,10 +41,10 @@ test_that("pointblank agent works with dittodb-mocked Postgres database connecti
           )
         ) %>%
         interrogate())
-    
+
     DBI::dbDisconnect(con)
     # stop_db_capturing()
-    
+
     expect_equal(agent$label, "trade_statistics: 'hs07_yrp' table")
     expect_equal(agent$tbl_name, NA_character_)
     expect_equal(agent$tbl_src, "postgres")

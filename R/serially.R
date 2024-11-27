@@ -1,28 +1,28 @@
 #------------------------------------------------------------------------------#
-# 
-#                 _         _    _      _                _    
-#                (_)       | |  | |    | |              | |   
+#
+#                 _         _    _      _                _
+#                (_)       | |  | |    | |              | |
 #   _ __    ___   _  _ __  | |_ | |__  | |  __ _  _ __  | | __
 #  | '_ \  / _ \ | || '_ \ | __|| '_ \ | | / _` || '_ \ | |/ /
-#  | |_) || (_) || || | | || |_ | |_) || || (_| || | | ||   < 
+#  | |_) || (_) || || | | || |_ | |_) || || (_| || | | ||   <
 #  | .__/  \___/ |_||_| |_| \__||_.__/ |_| \__,_||_| |_||_|\_\
-#  | |                                                        
-#  |_|                                                        
-#  
+#  | |
+#  |_|
+#
 #  This file is part of the 'rstudio/pointblank' project.
-#  
+#
 #  Copyright (c) 2017-2024 pointblank authors
-#  
+#
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
-# 
+#
 #------------------------------------------------------------------------------#
 
 
 #' Run several tests and a final validation in a serial manner
 #'
 #' @description
-#' 
+#'
 #' The `serially()` validation function allows for a series of tests to run in
 #' sequence before either culminating in a final validation step or simply
 #' exiting the series. This construction allows for pre-testing that may make
@@ -33,34 +33,34 @@
 #' of checks in a prescribed order and, if all pass, then the goal of this
 #' testing has been achieved (e.g., checking if a table matches another through
 #' a series of increasingly specific tests).
-#' 
+#'
 #' A series as specified inside `serially()` is composed with a listing of
 #' calls, and we would draw upon test functions (**T**) to describe tests and
 #' optionally provide a finalizing call with a validation function (**V**).
 #' The following constraints apply:
-#' 
+#'
 #' - there must be at least one test function in the series (**T** -> **V** is
 #' good, **V** is *not*)
 #' - there can only be one validation function call, **V**; it's optional but,
 #' if included, it must be placed at the end (**T** -> **T** -> **V** is good,
-#' these sequences are bad: (1) **T** -> **V** -> **T**, (2) **T** -> **T** -> 
+#' these sequences are bad: (1) **T** -> **V** -> **T**, (2) **T** -> **T** ->
 #' **V** -> **V**)
 #' - a validation function call (**V**), if included, mustn't itself yield
 #' multiple validation steps (this may happen when providing multiple `columns`
 #' or any `segments`)
-#' 
+#'
 #' Here's an example of how to arrange expressions:
-#' 
+#'
 #' ```
 #' ~ test_col_exists(., columns = count),
 #' ~ test_col_is_numeric(., columns = count),
 #' ~ col_vals_gt(., columns = count, value = 2)
 #' ```
-#' 
+#'
 #' This series concentrates on the column called `count` and first checks
 #' whether the column exists, then checks if that column is numeric, and then
 #' finally validates whether all values in the column are greater than `2`.
-#' 
+#'
 #' Note that in the above listing of calls, the `.` stands in for the target
 #' table and is always necessary here. Also important is that all `test_*()`
 #' functions have a `threshold` argument that is set to `1` by default. Should
@@ -68,13 +68,13 @@
 #' integer value (as an absolute threshold of failing test units) or a
 #' decimal value between `0` and `1` (serving as a fractional threshold of
 #' failing test units).
-#' 
+#'
 #' @inheritParams col_vals_gt
-#' 
+#'
 #' @param ... *Test/validation expressions*
-#' 
+#'
 #'   `<test/validation expressions>` // **required** (or, use `.list`)
-#' 
+#'
 #'   A collection one-sided formulas that consist of `test_*()` function calls
 #'   (e.g., [test_col_vals_between()], etc.) arranged in sequence of intended
 #'   interrogation order. Typically, validations up until the final one would
@@ -84,24 +84,24 @@
 #'   series, serving as a validation step that only undergoes interrogation if
 #'   the prior tests adequately pass. An example of this is
 #'   `~ test_column_exists(., a), ~ col_vals_not_null(., a)`).
-#'   
+#'
 #' @param .list *Alternative to `...`*
-#' 
+#'
 #'   `<list of multiple expressions>` // **required** (or, use `...`)
-#' 
+#'
 #'   Allows for the use of a list as an input alternative to `...`.
-#' 
+#'
 #' @return For the validation function, the return value is either a
 #'   `ptblank_agent` object or a table object (depending on whether an agent
 #'   object or a table was passed to `x`). The expectation function invisibly
 #'   returns its input but, in the context of testing data, the function is
 #'   called primarily for its potential side-effects (e.g., signaling failure).
 #'   The test function returns a logical value.
-#' 
+#'
 #' @section Supported Input Tables:
-#' 
+#'
 #' The types of data tables that are officially supported are:
-#' 
+#'
 #'  - data frames (`data.frame`) and tibbles (`tbl_df`)
 #'  - Spark DataFrames (`tbl_spark`)
 #'  - the following database tables (`tbl_dbi`):
@@ -111,27 +111,27 @@
 #'    - *BigQuery* tables (using `bigrquery::bigquery()`)
 #'    - *DuckDB* tables (through `duckdb::duckdb()`)
 #'    - *SQLite* (with `RSQLite::SQLite()`)
-#'    
+#'
 #' Other database tables may work to varying degrees but they haven't been
 #' formally tested (so be mindful of this when using unsupported backends with
 #' **pointblank**).
 #'
 #' @section Column Names:
-#' 
+#'
 #' `columns` may be a single column (as symbol `a` or string `"a"`) or a vector
 #' of columns (`c(a, b, c)` or `c("a", "b", "c")`). `{tidyselect}` helpers
 #' are also supported, such as `contains("date")` and `where(is.double)`. If
 #' passing an *external vector* of columns, it should be wrapped in `all_of()`.
-#' 
+#'
 #' When multiple columns are selected by `columns`, the result will be an
 #' expansion of validation steps to that number of columns (e.g.,
 #' `c(col_a, col_b)` will result in the entry of two validation steps).
-#' 
-#' Previously, columns could be specified in `vars()`. This continues to work, 
+#'
+#' Previously, columns could be specified in `vars()`. This continues to work,
 #' but `c()` offers the same capability and supersedes `vars()` in `columns`.
-#' 
+#'
 #' @section Preconditions:
-#' 
+#'
 #' Providing expressions as `preconditions` means **pointblank** will preprocess
 #' the target table during interrogation as a preparatory step. It might happen
 #' that a particular validation requires a calculated column, some filtering of
@@ -148,9 +148,9 @@
 #' serves as the input data table to be transformed (e.g., `~ . %>%
 #' dplyr::mutate(col_b = col_a + 10)`). Alternatively, a function could instead
 #' be supplied (e.g., `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
-#' 
+#'
 #' @section Actions:
-#' 
+#'
 #' Often, we will want to specify `actions` for the validation. This argument,
 #' present in every validation function, takes a specially-crafted list
 #' object that is best produced by the [action_levels()] function. Read that
@@ -159,33 +159,33 @@
 #' want at least a single threshold level (specified as either the fraction of
 #' test units failed, or, an absolute value), often using the `warn_at`
 #' argument. This is especially true when `x` is a table object because,
-#' otherwise, nothing happens. For the `col_vals_*()`-type functions, using 
+#' otherwise, nothing happens. For the `col_vals_*()`-type functions, using
 #' `action_levels(warn_at = 0.25)` or `action_levels(stop_at = 0.25)` are good
 #' choices depending on the situation (the first produces a warning when a
 #' quarter of the total test units fails, the other `stop()`s at the same
 #' threshold level).
-#' 
+#'
 #' @section Labels:
-#' 
+#'
 #' `label` may be a single string or a character vector that matches the number
 #' of expanded steps. `label` also supports `{glue}` syntax and exposes the
 #' following dynamic variables contextualized to the current step:
-#'   
+#'
 #' - `"{.step}"`: The validation step name
-#'     
+#'
 #' The glue context also supports ordinary expressions for further flexibility
 #' (e.g., `"{toupper(.step)}"`) as long as they return a length-1 string.
-#' 
+#'
 #' @section Briefs:
-#' 
+#'
 #' Want to describe this validation step in some detail? Keep in mind that this
 #' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
 #' with some text that fits. Don't worry if you don't want to do it. The
 #' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
 #' then be automatically generated.
-#' 
+#'
 #' @section YAML:
-#' 
+#'
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
 #' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
 #' or interrogate the target table (via [yaml_agent_interrogate()]). When
@@ -194,24 +194,24 @@
 #' function. Here is an example of how a complex call of `serially()` as a
 #' validation step is expressed in R code and in the corresponding YAML
 #' representation.
-#' 
+#'
 #' R statement:
-#' 
+#'
 #' ```r
-#' agent %>% 
+#' agent %>%
 #'   serially(
 #'     ~ test_col_vals_lt(., columns = a, value = 8),
 #'     ~ test_col_vals_gt(., columns = c, value = vars(a)),
 #'     ~ col_vals_not_null(., columns = b),
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
-#'     actions = action_levels(warn_at = 0.1, stop_at = 0.2), 
+#'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
 #'     label = "The `serially()` step.",
 #'     active = FALSE
 #'   )
 #' ```
-#' 
+#'
 #' YAML representation:
-#' 
+#'
 #' ```yaml
 #' steps:
 #' - serially:
@@ -226,7 +226,7 @@
 #'     label: The `serially()` step.
 #'     active: false
 #' ```
-#' 
+#'
 #' In practice, both of these will often be shorter as only the expressions for
 #' validation steps are necessary. Arguments with default values won't be
 #' written to YAML when using [yaml_write()] (though it is acceptable to include
@@ -235,11 +235,11 @@
 #' writing to disk by using the [yaml_agent_string()] function.
 #'
 #' @section Examples:
-#' 
+#'
 #' For all examples here, we'll use a simple table with three numeric columns
 #' (`a`, `b`, and `c`). This is a very basic table but it'll be more useful when
 #' explaining things later.
-#' 
+#'
 #' ```{r}
 #' tbl <-
 #'   dplyr::tibble(
@@ -247,12 +247,12 @@
 #'     b = c(6, 4, 9),
 #'     c = c(1, 2, 3)
 #'   )
-#'   
+#'
 #' tbl
 #' ```
-#'   
+#'
 #' ## A: Using an `agent` with validation functions and then `interrogate()`
-#' 
+#'
 #' The `serially()` function can be set up to perform a series of tests and then
 #' perform a validation (only if all tests pass). Here, we are going to (1) test
 #' whether columns `a` and `b` are numeric, (2) check that both don't have any
@@ -260,7 +260,7 @@
 #' values in `b` are greater than values in `a`. We'll determine if this
 #' validation has any failing test units (there are 4 tests and a final
 #' validation).
-#' 
+#'
 #' ```r
 #' agent_1 <-
 #'   create_agent(tbl = tbl) %>%
@@ -271,23 +271,23 @@
 #'     ) %>%
 #'   interrogate()
 #' ```
-#' 
+#'
 #' Printing the `agent` in the console shows the validation report in the
 #' Viewer. Here is an excerpt of validation report, showing the single entry
 #' that corresponds to the validation step demonstrated here.
-#' 
+#'
 #' \if{html}{
 #' \out{
 #' `r pb_get_image_tag(file = "man_serially_1.png")`
 #' }
 #' }
-#' 
+#'
 #' What's going on? All four of the tests passed and so the final validation
 #' occurred. There were no failing test units in that either!
 #'
 #' The final validation is optional and so here is a variation where only the
 #' serial tests are performed.
-#' 
+#'
 #' ```r
 #' agent_2 <-
 #'   create_agent(tbl = tbl) %>%
@@ -297,21 +297,21 @@
 #'   ) %>%
 #'   interrogate()
 #' ```
-#' 
+#'
 #' Everything is good here too:
-#' 
+#'
 #' \if{html}{
 #' \out{
 #' `r pb_get_image_tag(file = "man_serially_2.png")`
 #' }
 #' }
-#' 
+#'
 #' ## B: Using the validation function directly on the data (no `agent`)
-#' 
+#'
 #' This way of using validation functions acts as a data filter. Data is passed
 #' through but should `stop()` if there is a single test unit failing. The
 #' behavior of side effects can be customized with the `actions` option.
-#' 
+#'
 #' ```{r}
 #' tbl %>%
 #'   serially(
@@ -322,10 +322,10 @@
 #' ```
 #'
 #' ## C: Using the expectation function
-#' 
+#'
 #' With the `expect_*()` form, we would typically perform one validation at a
 #' time. This is primarily used in **testthat** tests.
-#' 
+#'
 #' ```r
 #' expect_serially(
 #'   tbl,
@@ -334,12 +334,12 @@
 #'   ~ col_vals_gt(., columns = b, value = vars(a))
 #' )
 #' ```
-#' 
+#'
 #' ## D: Using the test function
-#' 
+#'
 #' With the `test_*()` form, we should get a single logical value returned to
 #' us.
-#' 
+#'
 #' ```{r}
 #' tbl %>%
 #'   test_serially(
@@ -352,13 +352,13 @@
 #' @family validation functions
 #' @section Function ID:
 #' 2-35
-#' 
+#'
 #' @name serially
 NULL
 
 #' @rdname serially
 #' @import rlang
-#' 
+#'
 #' @export
 serially <- function(
     x,
@@ -371,14 +371,14 @@ serially <- function(
     brief = NULL,
     active = TRUE
 ) {
-  
+
   segments <- NULL
-  
+
   # Obtain all of the group's elements
   list_elements <- .list
-  
+
   dots_attrs <- list_elements[rlang::names2(list_elements) != ""]
-  
+
   validation_formulas <-
     list_elements[
       vapply(
@@ -388,102 +388,102 @@ serially <- function(
         USE.NAMES = FALSE
       )
     ]
-  
+
   assertion_types <-
     vapply(
       validation_formulas,
       FUN.VALUE = character(1),
       USE.NAMES = FALSE,
       FUN = function(x) {
-        
+
         x %>%
           rlang::f_rhs() %>%
           as.character() %>%
           .[[1]]
       }
     )
-  
+
   # Check that the vector of `assertion_types` uses valid
   # validation function names (including the `test_*()` variants)
   in_set_of_fns <-
     all(
-      assertion_types %in% 
+      assertion_types %in%
         c(
           all_validations_fns_vec(),
           paste0("test_", all_validations_fns_vec())
         )
     )
-  
+
   if (!in_set_of_fns) {
-    
+
     stop(
       "All `serially()` steps must use validation or test function calls.",
       call. = FALSE
     )
   }
-  
+
   # There must be at least one `test_*()` step; if not, stop the function
-  has_a_test <- 
+  has_a_test <-
     any(assertion_types %in% paste0("test_", all_validations_fns_vec()))
-  
+
   if (!has_a_test) {
-    
+
     stop(
       "There must be at least one `test_*()` function call in `serially()`.",
       call. = FALSE
     )
   }
-  
+
   # Check whether the series has any validation calls
   any_validations <-
     any(assertion_types %in% all_validations_fns_vec())
-  
+
   # If there are any validations we must ensure a few things
   # [1] there isn't more than one call
   # [2] the validation call must be the final call
   # [3] the finalizing validation mustn't itself yield multiple steps
   if (any_validations) {
-    
+
     # Check [1]: more than one validation function call
     has_multiple_validations <-
       sum(assertion_types %in% all_validations_fns_vec()) > 1
-    
+
     if (has_multiple_validations) {
-      
+
       stop(
         "There cannot be multiple validation function calls in `serially()`",
         call. = FALSE
       )
     }
-    
+
     # Check [2]: validation function call must be final call
     validation_is_final_call <-
       which(assertion_types %in% all_validations_fns_vec()) ==
       length(assertion_types)
-    
+
     if (!validation_is_final_call) {
-      
+
       stop(
         "The validation function call must be the final one in `serially()`",
         call. = FALSE
       )
     }
-    
+
     # Check [3]: the validation function call cannot yield multiple steps
     validation_step_call_args <-
       validation_formulas[length(validation_formulas)][[1]] %>%
       as.call() %>%
       rlang::call_args()
-    
+
     # Check the first argument
     if (!as.character(validation_step_call_args[[1]]) == ".") {
-      
+
       stop(
         "The first argument to a validation function call must be \".\"",
         call. = FALSE
       )
     }
-    
+
     # Check whether the validation function is of type that has an
     # expandable `columns` argument
     has_expandable_cols_arg <-
@@ -496,16 +496,16 @@ serially <- function(
           "conjointly"
         )
       )
-    
+
     if (has_expandable_cols_arg) {
-      
-      has_multiple_cols <- 
+
+      has_multiple_cols <-
         rlang::as_label(validation_step_call_args[[2]]) %>%
         gsub("^\"|\"$", "", .) %>%
         grepl(",", x = .)
-      
+
       if (has_multiple_cols) {
-        
+
         stop(
           "The finalizing validation function call must only operate on a ",
           "single column",
@@ -514,7 +514,7 @@ serially <- function(
       }
     }
   }
-  
+
   # Resolve segments into list
   segments_list <-
     resolve_segments(
@@ -522,9 +522,9 @@ serially <- function(
       seg_expr = segments,
       preconditions = preconditions
     )
-  
+
   if (is_a_table_object(x)) {
-    
+
     secret_agent <-
       create_agent(x, label = "::QUIET::") %>%
       serially(
@@ -537,16 +537,16 @@ serially <- function(
         active = active
       ) %>%
       interrogate()
-    
+
     return(x)
   }
-  
+
   agent <- x
-  
+
   if (is.null(brief)) {
-    
+
     validation_n <- length(validation_formulas)
-    
+
     assertion_types <-
       vapply(
         validation_formulas,
@@ -559,27 +559,27 @@ serially <- function(
             .[[1]]
         }
       )
-    
+
     # Initialize the `serially_validation_set` tibble
     serially_validation_set <- dplyr::tibble()
-    
+
     has_final_validation <-
       assertion_types[length(assertion_types)] %in% all_validations_fns_vec()
-    
+
     # Get the total number of `test_*()` calls supplied
-    test_call_n <- 
+    test_call_n <-
       if (has_final_validation) validation_n - 1 else validation_n
-    
+
     #
     # Determine the total number of test steps
     #
-    
+
     # Create a `double_agent` that will be used just for determining
     # the number of test steps
     double_agent <- create_agent(tbl = dplyr::tibble(), label = "::QUIET::")
-    
+
     for (k in seq_len(test_call_n)) {
-      
+
       double_agent <-
         eval(
           expr = parse(
@@ -591,20 +591,20 @@ serially <- function(
               tidy_gsub("^test_", "") %>%
               tidy_gsub("threshold\\s+?=\\s.*$", ")") %>%
               tidy_gsub(",\\s+?\\)$", ")")
-            
+
           ),
           envir = NULL
         )
     }
-    
+
     test_step_n <- nrow(double_agent$validation_set)
-    
+
     if (has_final_validation) {
-      
+
       final_validation_type <- assertion_types[length(assertion_types)]
-      
+
       double_agent <- create_agent(tbl = dplyr::tibble(), label = "::QUIET::")
-      
+
       double_agent <-
         eval(
           expr = parse(
@@ -616,21 +616,21 @@ serially <- function(
               tidy_gsub("^test_", "") %>%
               tidy_gsub("threshold\\s+?=\\s.*$", ")") %>%
               tidy_gsub(",\\s+?\\)$", ")")
-            
+
           ),
           envir = NULL
         )
-      
+
       final_validation_values <- double_agent$validation_set$values
       final_validation_column <- double_agent$validation_set$column
-      
+
     } else {
-      
+
       final_validation_type <- NA_character_
       final_validation_values <- list(NULL)
       final_validation_column <- list(NULL)
     }
-    
+
     brief <-
       create_autobrief(
         agent = agent,
@@ -647,25 +647,25 @@ serially <- function(
         )
       )
   }
-  
+
   # Normalize any provided `step_id` value(s)
   step_id <- normalize_step_id(step_id, columns = "column", agent)
-  
+
   # Get the next step number for the `validation_set` tibble
   i_o <- get_next_validation_set_row(agent)
-  
+
   # Check `step_id` value(s) against all other `step_id`
   # values in earlier validation steps
   check_step_id_duplicates(step_id, agent)
-  
+
   # Add one or more validation steps based on the
   # length of `segments_list`
   label <- resolve_label(label, segments = segments_list)
   for (i in seq_along(segments_list)) {
-    
+
     seg_col <- names(segments_list[i])
     seg_val <- unname(unlist(segments_list[i]))
-    
+
     agent <-
       create_validation_step(
         agent = agent,
@@ -686,7 +686,7 @@ serially <- function(
         active = active
       )
   }
-  
+
   agent
 }
 
@@ -700,10 +700,10 @@ expect_serially <- function(
     preconditions = NULL,
     threshold = 1
 ) {
-  
+
   fn_name <- "expect_serially"
-  
-  vs <- 
+
+  vs <-
     create_agent(tbl = object, label = "::QUIET::") %>%
     serially(
       .list = .list,
@@ -712,23 +712,23 @@ expect_serially <- function(
     ) %>%
     interrogate() %>%
     .$validation_set
-  
+
   x <- vs$notify %>% all()
-  
+
   threshold_type <- get_threshold_type(threshold = threshold)
-  
+
   if (threshold_type == "proportional") {
     failed_amount <- vs$f_failed
   } else {
     failed_amount <- vs$n_failed
   }
-  
+
   # TODO: express warnings and errors here
-  
+
   act <- testthat::quasi_label(enquo(x), arg = "object")
-  
+
   values_text <- prep_values_text(values = vs$values, limit = 3, lang = "en")
-  
+
   testthat::expect(
     ok = identical(!as.vector(act$val), TRUE),
     failure_message = glue::glue(
@@ -737,9 +737,9 @@ expect_serially <- function(
       )
     )
   )
-  
+
   act$val <- object
-  
+
   invisible(act$val)
 }
 
@@ -753,8 +753,8 @@ test_serially <- function(
     preconditions = NULL,
     threshold = 1
 ) {
-  
-  vs <- 
+
+  vs <-
     create_agent(tbl = object, label = "::QUIET::") %>%
     serially(
       .list = .list,
@@ -763,13 +763,13 @@ test_serially <- function(
     ) %>%
     interrogate() %>%
     .$validation_set
-  
+
   if (inherits(vs$capture_stack[[1]]$warning, "simpleWarning")) {
     warning(conditionMessage(vs$capture_stack[[1]]$warning))
   }
   if (inherits(vs$capture_stack[[1]]$error, "simpleError")) {
     stop(conditionMessage(vs$capture_stack[[1]]$error))
   }
-  
+
   all(!vs$notify)
 }

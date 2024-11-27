@@ -1,25 +1,25 @@
 resolve_columns <- function(x, var_expr, preconditions = NULL, ...,
                             call = rlang::caller_env()) {
-  
+
   # If columns is just character vector, pass it through
   if (rlang::is_character(rlang::quo_get_expr(var_expr))) {
     return(rlang::eval_tidy(var_expr))
   }
-  
+
   # Materialize table and apply preconditions for tidyselect
   tbl <- apply_preconditions_for_cols(x, preconditions)
-  
+
   # If tbl cannot (yet) materialize, don't attempt tidyselect and return early
   if (rlang::is_error(tbl)) {
     return(resolve_columns_notidyselect(var_expr, tbl, call = call))
   }
-  
+
   # Attempt tidyselect
   out <- tryCatch(
     expr = resolve_columns_internal(tbl, var_expr, ..., call = call),
     error = function(cnd) cnd
   )
-  
+
   if (rlang::is_error(out)) {
     # If error is a genuine evaluation error, throw that error
     if (!is_subscript_error(out)) {
@@ -39,9 +39,9 @@ resolve_columns <- function(x, var_expr, preconditions = NULL, ...,
       out <- c(success, fail) %||% NA_character_
     }
   }
-  
+
   out
-  
+
 }
 
 resolve_columns_notidyselect <- function(var_expr, parent, call) {
@@ -54,7 +54,7 @@ resolve_columns_notidyselect <- function(var_expr, parent, call) {
       call = call
     )
   }
-  
+
   # Force column selection to character vector
   if (rlang::quo_is_symbol(var_expr)) {
     var_expr <- rlang::as_name(var_expr)
@@ -98,12 +98,12 @@ resolve_columns_possible <- function(tbl, var_expr) {
 
 # Resolve column selections to integer
 resolve_columns_internal <- function(tbl, var_expr, ..., call) {
-  
+
   # Return NA if the expr is NULL
   if (rlang::quo_is_null(var_expr)) {
     return(NA_character_)
   }
-  
+
   # Special case `serially()`: just deparse elements and bypass tidyselect
   if (rlang::is_empty(tbl)) {
     var_expr <- rlang::quo_get_expr(var_expr)
@@ -119,15 +119,15 @@ resolve_columns_internal <- function(tbl, var_expr, ..., call) {
   if (rlang::quo_is_call(var_expr, "vars")) {
     var_expr <- rlang::quo_set_expr(var_expr, vars_to_c(var_expr))
   }
-  
+
   # Proceed with tidyselect
   column <- tidyselect::eval_select(var_expr, tbl, error_call = call, ...)
   column <- names(column)
-  
+
   if (length(column) < 1) {
     column <- NA_character_
   }
-  
+
   column
 }
 

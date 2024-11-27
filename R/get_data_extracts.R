@@ -1,28 +1,28 @@
 #------------------------------------------------------------------------------#
-# 
-#                 _         _    _      _                _    
-#                (_)       | |  | |    | |              | |   
+#
+#                 _         _    _      _                _
+#                (_)       | |  | |    | |              | |
 #   _ __    ___   _  _ __  | |_ | |__  | |  __ _  _ __  | | __
 #  | '_ \  / _ \ | || '_ \ | __|| '_ \ | | / _` || '_ \ | |/ /
-#  | |_) || (_) || || | | || |_ | |_) || || (_| || | | ||   < 
+#  | |_) || (_) || || | | || |_ | |_) || || (_| || | | ||   <
 #  | .__/  \___/ |_||_| |_| \__||_.__/ |_| \__,_||_| |_||_|\_\
-#  | |                                                        
-#  |_|                                                        
-#  
+#  | |
+#  |_|
+#
 #  This file is part of the 'rstudio/pointblank' project.
-#  
+#
 #  Copyright (c) 2017-2024 pointblank authors
-#  
+#
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
-# 
+#
 #------------------------------------------------------------------------------#
 
 
 #' Collect data extracts from a validation step
 #'
 #' @description
-#' 
+#'
 #' In an agent-based workflow (i.e., initiating with [create_agent()]), after
 #' interrogation with [interrogate()], we can extract the row data that didn't
 #' pass row-based validation steps with the `get_data_extracts()` function.
@@ -46,30 +46,30 @@
 #' extracts.
 #'
 #' @param agent *The pointblank agent object*
-#' 
+#'
 #'   `obj:<ptblank_agent>` // **required**
-#' 
+#'
 #'   A **pointblank** *agent* object that is commonly created through the use of
 #'   the [create_agent()] function. It should have had [interrogate()] called on
 #'   it, such that the validation steps were carried out and any sample rows
 #'   from non-passing validations could potentially be available in the object.
-#'   
+#'
 #' @param i *A validation step number*
-#'   
+#'
 #'   `scalar<integer>` // *default:* `NULL` (`optional`)
-#' 
+#'
 #'   The validation step number, which is assigned to each validation step by
 #'   **pointblank** in the order of definition. If `NULL` (the default), all
 #'   data extract tables will be provided in a list object.
-#' 
+#'
 #' @return A list of tables if `i` is not provided, or, a standalone table if
 #'   `i` is given.
-#' 
+#'
 #' @section Examples:
-#' 
+#'
 #' Create a series of two validation steps focused on testing row values for
 #' part of the `small_table` object. Use [interrogate()] right after that.
-#' 
+#'
 #' ```r
 #' agent <-
 #'   create_agent(
@@ -85,61 +85,61 @@
 #'   ) %>%
 #'   interrogate()
 #' ```
-#' 
+#'
 #' Using `get_data_extracts()` with its defaults returns of a list of tables,
 #' where each table is named after the validation step that has an extract
 #' available.
-#' 
+#'
 #' ```r
 #' agent %>% get_data_extracts()
 #' ```
-#' 
+#'
 #' \preformatted{## $`1`
 #' ## # A tibble: 6 × 6
-#' ##       a b             c     d e     f    
+#' ##       a b             c     d e     f
 #' ##   <int> <chr>     <dbl> <dbl> <lgl> <chr>
-#' ## 1     8 3-ldm-038     7  284. TRUE  low  
-#' ## 2     7 1-knw-093     3  843. TRUE  high 
-#' ## 3     3 5-bce-642     9  838. FALSE high 
-#' ## 4     3 5-bce-642     9  838. FALSE high 
-#' ## 5     4 2-dmx-010     7  834. TRUE  low  
-#' ## 6     2 7-dmx-010     8  108. FALSE low  
-#' ## 
+#' ## 1     8 3-ldm-038     7  284. TRUE  low
+#' ## 2     7 1-knw-093     3  843. TRUE  high
+#' ## 3     3 5-bce-642     9  838. FALSE high
+#' ## 4     3 5-bce-642     9  838. FALSE high
+#' ## 5     4 2-dmx-010     7  834. TRUE  low
+#' ## 6     2 7-dmx-010     8  108. FALSE low
+#' ##
 #' ## $`2`
 #' ## # A tibble: 4 × 6
-#' ##       a b             c     d e     f    
+#' ##       a b             c     d e     f
 #' ##   <int> <chr>     <dbl> <dbl> <lgl> <chr>
-#' ## 1     6 8-kdg-938     3 2343. TRUE  high 
-#' ## 2     8 3-ldm-038     7  284. TRUE  low  
-#' ## 3     7 1-knw-093     3  843. TRUE  high 
+#' ## 1     6 8-kdg-938     3 2343. TRUE  high
+#' ## 2     8 3-ldm-038     7  284. TRUE  low
+#' ## 3     7 1-knw-093     3  843. TRUE  high
 #' ## 4     4 5-boe-639     2 1036. FALSE low}
-#' 
-#' 
-#' 
+#'
+#'
+#'
 #' We can get an extract for a specific step by specifying it in the `i`
 #' argument. Let's get the failing rows from the first validation step (the
 #' [col_vals_gt()] one).
-#' 
+#'
 #' ```r
 #' agent %>% get_data_extracts(i = 1)
 #' ```
-#' 
+#'
 #' \preformatted{## # A tibble: 6 × 6
-#' ##       a b             c     d e     f    
+#' ##       a b             c     d e     f
 #' ##   <int> <chr>     <dbl> <dbl> <lgl> <chr>
-#' ## 1     8 3-ldm-038     7  284. TRUE  low  
-#' ## 2     7 1-knw-093     3  843. TRUE  high 
-#' ## 3     3 5-bce-642     9  838. FALSE high 
-#' ## 4     3 5-bce-642     9  838. FALSE high 
-#' ## 5     4 2-dmx-010     7  834. TRUE  low  
+#' ## 1     8 3-ldm-038     7  284. TRUE  low
+#' ## 2     7 1-knw-093     3  843. TRUE  high
+#' ## 3     3 5-bce-642     9  838. FALSE high
+#' ## 4     3 5-bce-642     9  838. FALSE high
+#' ## 5     4 2-dmx-010     7  834. TRUE  low
 #' ## 6     2 7-dmx-010     8  108. FALSE low}
-#' 
-#' 
-#' 
+#'
+#'
+#'
 #' @family Post-interrogation
 #' @section Function ID:
 #' 8-2
-#' 
+#'
 #' @export
 get_data_extracts <- function(
     agent,
@@ -149,38 +149,38 @@ get_data_extracts <- function(
   # Stop function if the agent hasn't
   # yet performed an interrogation
   if (!inherits(agent, "has_intel")) {
-    
+
     stop(
       "The `agent` has not yet performed an interrogation.",
       call. = FALSE
     )
   }
-  
+
   # Get the number of validation steps
   validation_steps <- unique(agent$validation_set$i)
-  
+
   if (is.null(i)) {
     return(agent$extracts)
   }
-  
+
   # Stop function if the `i`th step does not exist in `agent`
   if (!(i %in% seq(validation_steps))) {
-    
+
     stop("The provided step number does not exist.", call. = FALSE)
   }
-  
+
   # Get the names of the extracts
   extract_names <- names(agent$extracts)
-  
+
   # Stop function if the `i`th step does not have an extract available
   if (!(as.character(i) %in% extract_names)) {
-    
+
     stop(
       "The provided step number does not have an associated extract.",
       call. = FALSE
     )
   }
-  
+
   # Get the data extract
   agent$extracts[[as.character(i)]]
 }

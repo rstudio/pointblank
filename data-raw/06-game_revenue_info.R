@@ -1,6 +1,6 @@
 library(tidyverse)
 
-game_revenue_info <- 
+game_revenue_info <-
   dplyr::tibble(
     column = c(
       "player_id",

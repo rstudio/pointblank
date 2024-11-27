@@ -1,6 +1,6 @@
 skip_on_os(os = "windows")
 
-iban_valid <- 
+iban_valid <-
   list(
     AL = c(
       "AL86751639367318444714198669",
@@ -522,7 +522,7 @@ postal_code_valid <-
       "69057-002",
       "91350-200",
       "20940-040"
-    ), 
+    ),
     BT = c(
       "11001",
       "12002",
@@ -594,7 +594,7 @@ postal_code_valid <-
       "5129",
       "9110",
       "9125"
-    ), 
+    ),
     CX = c(
       "6798"
     ),
@@ -790,7 +790,7 @@ postal_code_valid <-
     ),
     IR = c(
       "1193653471"
-    ), 
+    ),
     IS = c(
       "104",
       "108",
@@ -932,7 +932,7 @@ postal_code_valid <-
       "440001",
       "800001",
       "962001"
-    ), 
+    ),
     NI = c(
       "11001",
       "21002",
@@ -1016,7 +1016,7 @@ postal_code_valid <-
       "34411",
       "39150",
       "96001"
-    ), 
+    ),
     PL = c(
       "56-730",
       "56-210",
@@ -1084,7 +1084,7 @@ postal_code_valid <-
       "452181",
       "658001",
       "676020"
-    ), 
+    ),
     SA = c(
       "11564",
       "21577",
@@ -1162,7 +1162,7 @@ postal_code_valid <-
     ),
     SO = c(
       "JH 09010"
-    ), 
+    ),
     SV = c(
       "CP 1120",
       "CP 2118",
@@ -1233,7 +1233,7 @@ postal_code_valid <-
       "59422",
       "60446",
       "51226"
-    ), 
+    ),
     UM = c(
       "96898"
     ),
@@ -1293,7 +1293,7 @@ postal_code_valid <-
       "98600",
       "98610",
       "98620"
-    ), 
+    ),
     YT = c(
       "97600",
       "97605",
@@ -1800,11 +1800,11 @@ ipv6_address_invalid <-
   )
 
 test_that("IBAN numbers can be successfully validated", {
-  
+
   # Check all IBAN numbers for weak validity (i.e, validity not
   # based on country-specific features)
   expect_true(all(check_iban(unname(unlist(iban_valid)))))
-  
+
   # Check IBAN numbers from different countries
   expect_true(all(check_iban(iban_valid[["AL"]], country = "AL")))
   expect_true(all(check_iban(iban_valid[["AD"]], country = "AD")))
@@ -1866,10 +1866,10 @@ test_that("IBAN numbers can be successfully validated", {
 })
 
 test_that("Postal codes can be successfully validated", {
-  
+
   expect_true(all(check_postal_code(postal_code_valid[["AD"]], country = "AD")))
   expect_true(all(check_postal_code(postal_code_valid[["AF"]], country = "AF")))
-  expect_true(all(check_postal_code(postal_code_valid[["AI"]], country = "AI"))) 
+  expect_true(all(check_postal_code(postal_code_valid[["AI"]], country = "AI")))
   expect_true(all(check_postal_code(postal_code_valid[["AL"]], country = "AL")))
   expect_true(all(check_postal_code(postal_code_valid[["AM"]], country = "AM")))
   expect_true(all(check_postal_code(postal_code_valid[["AR"]], country = "AR")))
@@ -2014,69 +2014,69 @@ test_that("Postal codes can be successfully validated", {
 })
 
 test_that("VIN numbers can be successfully validated", {
-  
+
   expect_true(all(check_vin(vin_valid)))
   expect_true(all(!check_vin(vin_invalid)))
 })
 
 test_that("ISBN numbers can be successfully validated", {
-  
+
   expect_true(all(check_isbn(c(isbn_10_valid, isbn_13_valid))))
   expect_true(all(!check_isbn(c(isbn_10_invalid, isbn_13_invalid))))
 })
 
 test_that("Phone numbers can be successfully validated", {
-  
+
   expect_true(all(check_phone(phone_valid)))
   expect_true(all(! check_phone(phone_invalid)))
 })
 
 test_that("MAC addresses can be successfully validated", {
-  
+
   expect_true(all(check_mac(mac_valid)))
   expect_true(all(!check_mac(mac_invalid)))
 })
 
 test_that("Swift/BIC numbers can be successfully validated", {
-  
+
   expect_true(all(check_swift_bic(swift_bic_valid)))
   expect_true(all(!check_swift_bic(swift_bic_invalid)))
 })
 
 test_that("Email addresses can be successfully validated", {
-  
+
   expect_true(all(check_email(email_valid)))
   expect_true(all(!check_email(email_invalid)))
 })
 
 test_that("URLs can be successfully validated", {
-  
+
   expect_true(all(check_url(url_valid)))
   expect_true(all(!check_url(url_invalid)))
 })
 
 test_that("IPv4 addresses can be successfully validated", {
-  
+
   expect_true(all(check_ipv4_address(ipv4_address_valid)))
   expect_true(all(!check_ipv4_address(ipv4_address_invalid)))
 })
 
 test_that("IPv6 addresses can be successfully validated", {
-  
+
   expect_true(all(check_ipv6_address(ipv6_address_valid)))
   expect_true(all(!check_ipv6_address(ipv6_address_invalid)))
 })
 
 test_that("Credit card numbers can be successfully validated", {
-  
+
   expect_true(all(check_credit_card(credit_card_valid)))
   expect_true(all(!check_credit_card(credit_card_invalid)))
 })
 
 test_that("the `is_isbn_10()` function works", {
-  
+
   isbn_10 <- c("0307957802", "0679405828", "0679405437", "0307268217")
-  
+
   expect_true(is_isbn_10(isbn_10[1]))
   expect_true(is_isbn_10(isbn_10[2]))
   expect_true(is_isbn_10(isbn_10[3]))
@@ -2084,9 +2084,9 @@ test_that("the `is_isbn_10()` function works", {
 })
 
 test_that("the `is_isbn_13()` function works", {
-  
+
   isbn_13 <- c("978-0307957801", "978-0679405825", "978-0679405436", "978-0307268211")
-  
+
   expect_true(is_isbn_13(isbn_13[1]))
   expect_true(is_isbn_13(isbn_13[2]))
   expect_true(is_isbn_13(isbn_13[3]))
@@ -2094,29 +2094,29 @@ test_that("the `is_isbn_13()` function works", {
 })
 
 test_that("functions that clean up strings all work", {
-  
+
   strings <- c("978-0307957801", "978-0307957801 ", "isbn978-0307957801", " isbn:978 - 0307957801")
-  
+
   expect_equal(
     remove_hyphens(strings),
     c("9780307957801", "9780307957801 ", "isbn9780307957801", " isbn:978  0307957801")
   )
-  
+
   expect_equal(
     remove_spaces(strings),
     c("978-0307957801", "978-0307957801", "isbn978-0307957801", "isbn:978-0307957801")
   )
-  
+
   expect_equal(
     remove_letters(strings),
     c("978-0307957801", "978-0307957801 ", "978-0307957801", " :978 - 0307957801")
   )
-  
+
   expect_equal(
     remove_punctuation(strings),
     c("978 0307957801", "978 0307957801 ", "isbn978 0307957801", " isbn 978   0307957801")
   )
-  
+
   expect_equal(
     strings %>%
       remove_hyphens() %>%
@@ -2128,7 +2128,7 @@ test_that("functions that clean up strings all work", {
 })
 
 test_that("the `is_vin()` function works", {
-  
+
   expect_true(is_vin(specifications$vin_numbers[1]))
   expect_true(is_vin(specifications$vin_numbers[2]))
   expect_true(is_vin(specifications$vin_numbers[3]))
@@ -2138,22 +2138,22 @@ test_that("the `is_vin()` function works", {
 })
 
 # test_that("the `check_vin_db()` function works", {
-#   
-#   spec_table_duckdb <- 
+#
+#   spec_table_duckdb <-
 #     db_tbl(table = specifications, dbname = ":memory:", dbtype = "duckdb") %>%
 #     dplyr::select(vin_numbers)
-#   
+#
 #   duck_vin_db_check_tbl <-
 #     check_vin_db(
 #       table = spec_table_duckdb,
 #       column = vin_numbers
 #     )
-#   
+#
 #   expect_equal(
 #     colnames(duck_vin_db_check_tbl),
 #     c("vin_numbers", "pb_is_good_")
 #   )
-#   
+#
 #   expect_equal(
 #     duck_vin_db_check_tbl %>% dplyr::pull(pb_is_good_),
 #     c(rep(TRUE, 5), NA, FALSE, FALSE)

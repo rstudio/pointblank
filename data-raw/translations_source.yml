@@ -684,7 +684,7 @@ autobriefs:
     pl: "Przekroczenie nieudanych jednostek testowych, w których nie było pełnych wierszy w wybranych kolumnach."
     da: "Overskridelse af antal fejlslagne enhedstests, hvor der ikke var komplette rækker på tværs af de valgte kolonner."
     sv: "Överstiger antalet misslyckade enhetstest där det inte fanns fullständiga rader över de valda kolumnerna."
-    nl: "Overschrijding van mislukte testeenheden waarbij er geen volledige rijen waren in de geselecteerde kolommen."  
+    nl: "Overschrijding van mislukte testeenheden waarbij er geen volledige rijen waren in de geselecteerde kolommen."
   col_schema_match_expectation_text:
     en: "Expect that column schemas match."
     fr: "On s'attend à ce que les schémas de colonnes correspondent."

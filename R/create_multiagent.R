@@ -1,28 +1,28 @@
 #------------------------------------------------------------------------------#
-# 
-#                 _         _    _      _                _    
-#                (_)       | |  | |    | |              | |   
+#
+#                 _         _    _      _                _
+#                (_)       | |  | |    | |              | |
 #   _ __    ___   _  _ __  | |_ | |__  | |  __ _  _ __  | | __
 #  | '_ \  / _ \ | || '_ \ | __|| '_ \ | | / _` || '_ \ | |/ /
-#  | |_) || (_) || || | | || |_ | |_) || || (_| || | | ||   < 
+#  | |_) || (_) || || | | || |_ | |_) || || (_| || | | ||   <
 #  | .__/  \___/ |_||_| |_| \__||_.__/ |_| \__,_||_| |_||_|\_\
-#  | |                                                        
-#  |_|                                                        
-#  
+#  | |
+#  |_|
+#
 #  This file is part of the 'rstudio/pointblank' project.
-#  
+#
 #  Copyright (c) 2017-2024 pointblank authors
-#  
+#
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
-# 
+#
 #------------------------------------------------------------------------------#
 
 
 #' Create a **pointblank** *multiagent* object
 #'
 #' @description
-#' 
+#'
 #' Multiple *agents* can be part of a single object called the *multiagent*.
 #' This can be useful when gathering multiple agents that have performed
 #' interrogations in the past (perhaps saved to disk with [x_write_disk()]).
@@ -35,15 +35,15 @@
 #' are equivalent across interrogations.
 #'
 #' @param ... *Pointblank agents*
-#' 
+#'
 #'   `<series of obj:<ptblank_agent>>` // **required**
-#' 
+#'
 #'   One or more **pointblank** agent objects.
-#' 
+#'
 #' @param lang *Reporting language*
-#' 
+#'
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
-#' 
+#'
 #'   The language to use for any reporting that will be generated from the
 #'   *multiagent*. (e.g., individual *agent reports*, *multiagent reports*,
 #'   etc.). By default, `NULL` will create English (`"en"`) text. Other options
@@ -51,25 +51,25 @@
 #'   (`"es"`), Portuguese (`"pt"`), Turkish (`"tr"`), Chinese (`"zh"`), Russian
 #'   (`"ru"`), Polish (`"pl"`), Danish (`"da"`), Swedish (`"sv"`), and Dutch
 #'   (`"nl"`).
-#'   
+#'
 #' @param locale *Locale for value formatting within reports*
-#' 
+#'
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
-#' 
+#'
 #'   An optional locale ID to use for formatting values in the reporting outputs
 #'   according the locale's rules. Examples include `"en_US"` for English
 #'   (United States) and `"fr_FR"` for French (France); more simply, this can be
 #'   a language identifier without a country designation, like "es" for Spanish
 #'   (Spain, same as `"es_ES"`).
-#'   
+#'
 #' @return A `ptblank_multiagent` object.
-#' 
+#'
 #' @section Examples:
-#' 
+#'
 #' For the example below, we'll use two different, yet simple tables.
-#' 
+#'
 #' First, `tbl_1`:
-#' 
+#'
 #' ```{r}
 #' tbl_1 <-
 #'   dplyr::tibble(
@@ -80,26 +80,26 @@
 #'     e = LETTERS[b],
 #'     f = LETTERS[c]
 #'   )
-#'   
+#'
 #' tbl_1
 #' ```
 #' And next, `tbl_2`:
-#' 
+#'
 #' ```{r}
 #' tbl_2 <-
 #'   dplyr::tibble(
 #'     a = c(5, 7, 6, 5, 8, 7),
 #'     b = LETTERS[1:6]
 #'   )
-#' 
+#'
 #' tbl_2
 #' ```
-#' 
+#'
 #' Next, we'll create two different agents, each interrogating a different
 #' table.
-#' 
+#'
 #' First up, is `agent_1`:
-#' 
+#'
 #' ```r
 #' agent_1 <-
 #'   create_agent(
@@ -110,9 +110,9 @@
 #'   col_vals_gt(columns = a, value = 4) %>%
 #'   interrogate()
 #' ```
-#' 
+#'
 #' Then, `agent_2`:
-#' 
+#'
 #' ```r
 #' agent_2 <-
 #'   create_agent(
@@ -123,31 +123,31 @@
 #'   col_is_character(columns = b) %>%
 #'   interrogate()
 #' ```
-#' 
+#'
 #' Now, we'll combine the two agents into a *multiagent* with the
 #' `create_multiagent()` function. Printing the `"ptblank_multiagent"` object
 #' displays the multiagent report with its default options (i.e., a 'long'
 #' report view).
-#' 
+#'
 #' ```r
 #' multiagent <- create_multiagent(agent_1, agent_2)
-#'   
+#'
 #' multiagent
 #' ```
-#' 
+#'
 #' \if{html}{
 #' \out{
 #' `r pb_get_image_tag(file = "man_create_multiagent_1.png")`
 #' }
 #' }
-#' 
+#'
 #' To take advantage of more display options, we could use the
 #' [get_multiagent_report()] function. The added functionality there allows for
 #' a 'wide' view of the data (useful for monitoring validations of the same
 #' table over repeated interrogations), the ability to modify the title of the
 #' multiagent report, and a means to export the report to HTML (via
 #' [export_report()]).
-#' 
+#'
 #' @family The multiagent
 #' @section Function ID:
 #' 10-1
@@ -158,13 +158,13 @@ create_multiagent <- function(
     lang = NULL,
     locale = NULL
 ) {
-  
+
   agent_list <- rlang::list2(...)
   if (!all(sapply(agent_list, is_ptblank_agent))) {
     rlang::abort("All components of `...` must be an agent")
   }
   agent_list <- rehash_agent_list(agent_list)
-  agent_list <- 
+  agent_list <-
     lapply(
       agent_list,
       FUN = function(agent) {
@@ -173,19 +173,19 @@ create_multiagent <- function(
         agent
       }
     )
-  
+
   agent_series <-
     list(
       overview_tbl = list(),
       agents = agent_list
     )
-  
+
   class(agent_series) <- "ptblank_multiagent"
   agent_series
 }
 
 rehash_agent_list <- function(agent_list) {
-  
+
   hash_versions <- lapply(agent_list, function(x) {
     gsub("^.*(-|$)", "", x$validation_set$sha1)
   })
@@ -193,20 +193,20 @@ rehash_agent_list <- function(agent_list) {
 
   # agents using any of these hash versions are rehashed
   to_rehash <- c("")
-    
+
   if (any(to_rehash %in% hash_versions) || length(hash_versions) > 1) {
     lapply(agent_list, rehash_agent)
   } else {
     agent_list
   }
-  
+
 }
 
 rehash_agent <- function(agent) {
-  
+
   cur_hash_version <- get_hash_version()
   vs <- agent$validation_set
-  
+
   new_hash <- sapply(seq_len(nrow(vs)), function(i) {
     step <- vs[i, ]
     hash <- step$sha1
@@ -225,8 +225,8 @@ rehash_agent <- function(agent) {
     }
     hash
   })
-  
+
   agent$validation_set$sha1 <- new_hash
   agent
-  
+
 }

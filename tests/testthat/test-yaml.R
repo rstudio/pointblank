@@ -7,7 +7,7 @@ if (fs::dir_exists(path = work_path)) {
 fs::dir_create(path = work_path)
 
 get_oneline_expr_str <- function(agent, expanded = FALSE) {
-  
+
   agent %>%
     agent_get_exprs(expanded = expanded) %>%
     gsub("create_agent\\(.*?%>%\n", "", .) %>%
@@ -16,7 +16,7 @@ get_oneline_expr_str <- function(agent, expanded = FALSE) {
 }
 
 test_that("YAML writing and reading works as expected", {
-  
+
   al <- action_levels(warn_at = 0.1, stop_at = 0.2)
 
   agent <-
@@ -52,12 +52,12 @@ test_that("YAML writing and reading works as expected", {
       ~ col_vals_not_null(., vars(b))
     ) %>%
     col_vals_between(vars(c), left = 2.03, right = vars(d), na_pass = TRUE)
-  
+
   # Expect a `ptblank_agent` object but don't expect it to
   # have any intel (the `has_intel` class)
   expect_s3_class(agent, "ptblank_agent")
   expect_false(inherits(agent, "has_intel"))
-  
+
   # Expect that `yaml_agent_string` shows a YAML string in the
   # console and returns nothing (when reading from an agent)
   expect_null(suppressMessages(yaml_agent_string(agent = agent)))
@@ -185,7 +185,7 @@ test_that("YAML writing and reading works as expected", {
     agent_intel$validation_set$n_failed,
     c(0, 1, 0, 0, 0, 11, 0, 0, 2, rep(0, 8), 2, 2, 0, 7, 1)
   )
-  
+
   # Expect an error if using `yaml_agent_string()` with both an
   # agent and a YAML file
   expect_error(
@@ -194,11 +194,11 @@ test_that("YAML writing and reading works as expected", {
       filename = file.path(temp_dir, "test.yaml")
     )
   )
-  
+
   # Expect an error if using `yaml_agent_string()` with neither an
   # agent nor a YAML file specified
   expect_error(yaml_agent_string())
-  
+
   # Expect an error if using `as_agent_yaml_list()` with an agent
   # that doesn't have a table-prep formula specified
   expect_error(
@@ -213,13 +213,13 @@ if (fs::dir_exists(path = work_path)) {
 }
 
 test_that("Individual validation steps make the YAML round-trip successfully", {
-  
+
   agent <- create_agent(tbl = ~ small_table, label = "testthat")
 
   #
   # col_vals_lt()
   #
-  
+
   expect_equal(
     get_oneline_expr_str(agent %>% col_vals_lt(vars(a), 1)),
     "col_vals_lt(columns = vars(a),value = 1)"
@@ -238,7 +238,7 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   )
   expect_equal(
     get_oneline_expr_str(
-      agent %>% 
+      agent %>%
         col_vals_lt(
           vars(a), 1, na_pass = TRUE,
           preconditions = ~ . %>% dplyr::filter(a > 2)
@@ -248,7 +248,7 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   )
   expect_equal(
     get_oneline_expr_str(
-      agent %>% 
+      agent %>%
         col_vals_lt(
           vars(a), 1, na_pass = TRUE,
           preconditions = function(x) { x %>% dplyr::filter(a > 2) }
@@ -258,7 +258,7 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   )
   expect_equal(
     get_oneline_expr_str(
-      agent %>% 
+      agent %>%
         col_vals_lt(
           vars(a), 1, na_pass = TRUE,
           preconditions = function(x) {
@@ -302,11 +302,11 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   #   get_oneline_expr_str(agent %>% col_vals_lt(vars(a, c), 1, step_id = "my_id")),
   #   "col_vals_lt(columns = vars(a, c),value = 1,step_id = \"my_id\")"
   # )
-  
+
   #
   # col_vals_between()
   #
-  
+
   expect_equal(
     get_oneline_expr_str(agent %>% col_vals_between(vars(a), left = -5, right = 15)),
     "col_vals_between(columns = vars(a),left = -5,right = 15)"
@@ -329,7 +329,7 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   )
   expect_equal(
     get_oneline_expr_str(
-      agent %>% 
+      agent %>%
         col_vals_between(
           vars(c), left = vars(a), right = vars(d), na_pass = TRUE,
           preconditions = ~ . %>% dplyr::filter(a > 2)
@@ -363,11 +363,11 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
     get_oneline_expr_str(agent %>% col_vals_between(vars(c), left = vars(a), right = vars(d), inclusive = c(FALSE, FALSE))),
     "col_vals_between(columns = vars(c),left = vars(a),right = vars(d),inclusive = c(FALSE, FALSE))"
   )
-  
+
   #
   # col_vals_not_between()
   #
-  
+
   expect_equal(
     get_oneline_expr_str(agent %>% col_vals_not_between(vars(a), left = -5, right = 15)),
     "col_vals_not_between(columns = vars(a),left = -5,right = 15)"
@@ -390,7 +390,7 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   )
   expect_equal(
     get_oneline_expr_str(
-      agent %>% 
+      agent %>%
         col_vals_not_between(
           vars(c), left = vars(a), right = vars(d), na_pass = TRUE,
           preconditions = ~ . %>% dplyr::filter(a > 2)
@@ -412,11 +412,11 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
     get_oneline_expr_str(agent %>% col_vals_not_between(vars(a), left = -5, right = 15, label = "my_label")),
     "col_vals_not_between(columns = vars(a),left = -5,right = 15,label = \"my_label\")"
   )
-  
+
   #
   # col_vals_in_set()
   #
-  
+
   expect_equal(
     get_oneline_expr_str(agent %>% col_vals_in_set(vars(f), set = c("low", "high"))),
     "col_vals_in_set(columns = vars(f),set = c(\"low\", \"high\"))"
@@ -435,7 +435,7 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   )
   expect_equal(
     get_oneline_expr_str(
-      agent %>% 
+      agent %>%
         col_vals_in_set(
           vars(c), set = c(1:10),
           preconditions = ~ . %>% dplyr::filter(a > 2)
@@ -445,7 +445,7 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   )
   expect_equal(
     get_oneline_expr_str(
-      agent %>% 
+      agent %>%
         col_vals_in_set(
           vars(c), set = c(1:10),
           actions = action_levels(warn_at = 0.1, stop_at = 0.2)
@@ -457,11 +457,11 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
     get_oneline_expr_str(agent %>% col_vals_in_set(vars(f), set = c("low", "high"), label = "my_label")),
     "col_vals_in_set(columns = vars(f),set = c(\"low\", \"high\"),label = \"my_label\")"
   )
-  
+
   #
   # col_vals_not_in_set()
   #
-  
+
   expect_equal(
     get_oneline_expr_str(agent %>% col_vals_not_in_set(vars(f), set = c("low", "high"))),
     "col_vals_not_in_set(columns = vars(f),set = c(\"low\", \"high\"))"
@@ -480,7 +480,7 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   )
   expect_equal(
     get_oneline_expr_str(
-      agent %>% 
+      agent %>%
         col_vals_not_in_set(
           vars(c), set = c(1:10),
           preconditions = ~ . %>% dplyr::filter(a > 2)
@@ -490,7 +490,7 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   )
   expect_equal(
     get_oneline_expr_str(
-      agent %>% 
+      agent %>%
         col_vals_not_in_set(
           vars(c), set = c(1:10),
           actions = action_levels(warn_at = 0.1, stop_at = 0.2)
@@ -502,11 +502,11 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
     get_oneline_expr_str(agent %>% col_vals_not_in_set(vars(f), set = c("low", "high"), label = "my_label")),
     "col_vals_not_in_set(columns = vars(f),set = c(\"low\", \"high\"),label = \"my_label\")"
   )
-  
+
   #
   # col_vals_make_set()
   #
-  
+
   expect_equal(
     get_oneline_expr_str(agent %>% col_vals_make_set(vars(f), set = c("low", "high"))),
     "col_vals_make_set(columns = vars(f),set = c(\"low\", \"high\"))"
@@ -525,7 +525,7 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   )
   expect_equal(
     get_oneline_expr_str(
-      agent %>% 
+      agent %>%
         col_vals_make_set(
           vars(c), set = c(1:10),
           preconditions = ~ . %>% dplyr::filter(a > 2)
@@ -535,7 +535,7 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   )
   expect_equal(
     get_oneline_expr_str(
-      agent %>% 
+      agent %>%
         col_vals_make_set(
           vars(c), set = c(1:10),
           actions = action_levels(warn_at = 0.1, stop_at = 0.2)
@@ -547,11 +547,11 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
     get_oneline_expr_str(agent %>% col_vals_make_set(vars(f), set = c("low", "high"), label = "my_label")),
     "col_vals_make_set(columns = vars(f),set = c(\"low\", \"high\"),label = \"my_label\")"
   )
-  
+
   #
   # col_vals_make_subset()
   #
-  
+
   expect_equal(
     get_oneline_expr_str(agent %>% col_vals_make_subset(vars(f), set = c("low", "high"))),
     "col_vals_make_subset(columns = vars(f),set = c(\"low\", \"high\"))"
@@ -570,7 +570,7 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   )
   expect_equal(
     get_oneline_expr_str(
-      agent %>% 
+      agent %>%
         col_vals_make_subset(
           vars(c), set = c(1:10),
           preconditions = ~ . %>% dplyr::filter(a > 2)
@@ -580,7 +580,7 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   )
   expect_equal(
     get_oneline_expr_str(
-      agent %>% 
+      agent %>%
         col_vals_make_subset(
           vars(c), set = c(1:10),
           actions = action_levels(warn_at = 0.1, stop_at = 0.2)
@@ -592,11 +592,11 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
     get_oneline_expr_str(agent %>% col_vals_make_subset(vars(f), set = c("low", "high"), label = "my_label")),
     "col_vals_make_subset(columns = vars(f),set = c(\"low\", \"high\"),label = \"my_label\")"
   )
-  
+
   #
   # col_vals_increasing()
   #
-  
+
   expect_equal(
     get_oneline_expr_str(agent %>% col_vals_increasing(vars(a))),
     "col_vals_increasing(columns = vars(a))"
@@ -619,11 +619,11 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
     ),
     "col_vals_increasing(columns = vars(a),decreasing_tol = 0.52)"
   )
-  
+
   #
   # col_vals_decreasing()
   #
-  
+
   expect_equal(
     get_oneline_expr_str(agent %>% col_vals_decreasing(vars(a))),
     "col_vals_decreasing(columns = vars(a))"
@@ -646,11 +646,11 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
     ),
     "col_vals_decreasing(columns = vars(a),increasing_tol = 0.52)"
   )
-  
+
   #
   # col_vals_null()
   #
-  
+
   expect_equal(
     get_oneline_expr_str(agent %>% col_vals_null(vars(c))),
     "col_vals_null(columns = vars(c))"
@@ -663,11 +663,11 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
     get_oneline_expr_str(agent %>% col_vals_null(vars(c), label = "my_label")),
     "col_vals_null(columns = vars(c),label = \"my_label\")"
   )
-  
+
   #
   # col_vals_not_null()
   #
-  
+
   expect_equal(
     get_oneline_expr_str(agent %>% col_vals_not_null(vars(c))),
     "col_vals_not_null(columns = vars(c))"
@@ -680,11 +680,11 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
     get_oneline_expr_str(agent %>% col_vals_not_null(vars(c), label = "my_label")),
     "col_vals_not_null(columns = vars(c),label = \"my_label\")"
   )
-  
+
   #
   # col_vals_regex()
   #
-  
+
   expect_equal(
     get_oneline_expr_str(agent %>% col_vals_regex(vars(b), regex = "[0-9]-[a-z]{3}-[0-9]{3}")),
     "col_vals_regex(columns = vars(b),regex = \"[0-9]-[a-z]{3}-[0-9]{3}\")"
@@ -693,11 +693,11 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
     get_oneline_expr_str(agent %>% col_vals_regex(vars(b), regex = "[0-9]-[a-z]{3}-[0-9]{3}", label = "my_label")),
     "col_vals_regex(columns = vars(b),regex = \"[0-9]-[a-z]{3}-[0-9]{3}\",label = \"my_label\")"
   )
-  
+
   #
   # col_vals_within_spec()
   #
-  
+
   agent_spec <- create_agent(tbl = ~ specifications, label = "testthat")
 
   expect_equal(
@@ -708,20 +708,20 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
     get_oneline_expr_str(agent_spec %>% col_vals_within_spec(columns = vars(vin_numbers), spec = "VIN", label = "my_label")),
     "col_vals_within_spec(columns = vars(vin_numbers),spec = \"vin\",label = \"my_label\")"
   )
-  
+
   #
   # col_vals_expr()
   #
-  
+
   tbl_1 <<-
     dplyr::tibble(
       a = c(1, 2, 1, 7, 8, 6),
       b = c(0, 0, 0, 1, 1, 1),
       c = c(0.5, 0.3, 0.8, 1.4, 1.9, 1.2),
     )
-  
+
   agent_expr <- create_agent(tbl = ~ tbl_1, label = "testthat")
-  
+
   expect_equal(
     get_oneline_expr_str(agent_expr %>% col_vals_expr(expr(a %% 1 == 0))),
     "col_vals_expr(expr = ~a%%1 == 0)"
@@ -748,16 +748,16 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   #
   # conjointly()
   #
-  
+
   tbl_2 <<-
     dplyr::tibble(
       a = c(5, 2, 6),
       b = c(3, 4, 6),
       c = c(9, 8, 7)
     )
-  
+
   agent_conjointly <- create_agent(tbl = ~ tbl_2, label = "testthat")
-  
+
   expect_equal(
     get_oneline_expr_str(
       agent_conjointly %>%
@@ -793,11 +793,11 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
     ),
     "conjointly(~col_vals_lt(., vars(a), 8),~col_vals_gt(., vars(c), vars(a)),~col_vals_not_null(., vars(b)),label = \"my_label\")"
   )
-  
+
   #
   # rows_distinct()
   #
-  
+
   expect_equal(
     get_oneline_expr_str(agent %>% rows_distinct()),
     "rows_distinct(columns = everything())"
@@ -814,11 +814,11 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
     get_oneline_expr_str(agent %>% rows_distinct(columns = vars(a, b), label = "my_label")),
     "rows_distinct(columns = vars(a, b),label = \"my_label\")"
   )
-  
+
   #
   # col_is_character()
   #
-  
+
   expect_equal(
     get_oneline_expr_str(agent %>% col_is_character(vars(b))),
     "col_is_character(columns = vars(b))"
@@ -837,11 +837,11 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
     get_oneline_expr_str(agent %>% col_is_character(vars(b), label = "my_label")),
     "col_is_character(columns = vars(b),label = \"my_label\")"
   )
-  
+
   #
   # col_exists()
   #
-  
+
   expect_equal(
     get_oneline_expr_str(agent %>% col_exists(vars(b))),
     "col_exists(columns = vars(b))"
@@ -860,25 +860,25 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
     get_oneline_expr_str(agent %>% col_exists(vars(b), label = "my_label")),
     "col_exists(columns = vars(b),label = \"my_label\")"
   )
-  
+
   #
   # col_schema()
   #
-  
-  tbl_3 <<- 
+
+  tbl_3 <<-
     dplyr::tibble(
       a = 1:5,
       b = letters[1:5]
     )
-  
-  schema_obj <- 
+
+  schema_obj <-
     col_schema(
       a = "integer",
       b = "character"
     )
-  
+
   agent_col_schema <- create_agent(tbl = ~ tbl_3, label = "testthat")
-  
+
   expect_equal(
     get_oneline_expr_str(agent_col_schema %>% col_schema_match(schema_obj)),
     "col_schema_match(schema = col_schema(a = \"integer\",b = \"character\"))"

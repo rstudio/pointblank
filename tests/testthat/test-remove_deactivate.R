@@ -1,6 +1,6 @@
 # Create an agent with 4 validation steps (using 3 validation function calls)
 # where the 3rd step (based on `col_vals_regex()`) is not active
-agent <- 
+agent <-
   create_agent(tbl = ~ small_table) %>%
   col_exists(vars(date, date_time)) %>%
   col_vals_regex(
@@ -16,7 +16,7 @@ test_that("activating validation steps can be done with `activate_steps()`", {
     unlist(agent$validation_set$active),
     c(TRUE, TRUE, FALSE, TRUE)
   )
-  
+
   # Perform several expectations when cycling through values for `i`
   agent_n <- activate_steps(agent)
   expect_equal(
@@ -68,7 +68,7 @@ test_that("deactivating steps is possible with `deactivate_steps()`", {
     unlist(agent$validation_set$active),
     c(TRUE, TRUE, FALSE, TRUE)
   )
-  
+
   # Perform several expectations when cycling through values for `i`
   agent_n <- deactivate_steps(agent)
   expect_equal(
@@ -110,9 +110,9 @@ test_that("deactivating steps is possible with `deactivate_steps()`", {
     unlist(agent_9$validation_set$active),
     c(TRUE, TRUE, FALSE, TRUE)
   )
-  
+
   # Test whether an activated step can be deactivated
-  agent_3_cycle <- 
+  agent_3_cycle <-
     agent %>%
     activate_steps(i = 3) %>%
     deactivate_steps(i = 3)
@@ -123,11 +123,11 @@ test_that("deactivating steps is possible with `deactivate_steps()`", {
 })
 
 test_that("removing steps is possible with `remove_steps()`", {
-  
+
   agent_n <- remove_steps(agent)
   expect_equal(nrow(agent_n$validation_set), 4)
   expect_equal(agent_n$validation_set$i, 1:4)
-  
+
   agent_1 <- remove_steps(agent, i = 1)
   expect_equal(nrow(agent_1$validation_set), 3)
   expect_equal(agent_1$validation_set$i, 1:3)
@@ -135,7 +135,7 @@ test_that("removing steps is possible with `remove_steps()`", {
     agent_1$validation_set$assertion_type,
     c("col_exists", "col_vals_regex", "rows_distinct")
   )
-  
+
   agent_2 <- remove_steps(agent, i = 2)
   expect_equal(nrow(agent_2$validation_set), 3)
   expect_equal(agent_2$validation_set$i, 1:3)
@@ -143,7 +143,7 @@ test_that("removing steps is possible with `remove_steps()`", {
     agent_2$validation_set$assertion_type,
     c("col_exists", "col_vals_regex", "rows_distinct")
   )
-  
+
   agent_3 <- remove_steps(agent, i = 3)
   expect_equal(nrow(agent_3$validation_set), 3)
   expect_equal(agent_3$validation_set$i, 1:3)
@@ -151,7 +151,7 @@ test_that("removing steps is possible with `remove_steps()`", {
     agent_3$validation_set$assertion_type,
     c("col_exists", "col_exists", "rows_distinct")
   )
-  
+
   agent_4 <- remove_steps(agent, i = 4)
   expect_equal(nrow(agent_4$validation_set), 3)
   expect_equal(agent_4$validation_set$i, 1:3)

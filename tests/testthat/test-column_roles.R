@@ -4,23 +4,23 @@ test_that("column roles can be satisfactorily determined", {
     get_column_roles(gt::countrypops),
     c(
       "country:iso3166-1-esn.string.categorical",
-      "country:iso3166-1-a-2.string.categorical", 
+      "country:iso3166-1-a-2.string.categorical",
       "country:iso3166-1-a-3.string.categorical",
-      "integer.discrete", 
+      "integer.discrete",
       "integer.discrete"
     )
   )
-  
+
   expect_equal(
     get_column_roles(gt::sza),
     c(
       "geo:latitude.numeric.discrete",
       "string.categorical",
-      "string.categorical", 
+      "string.categorical",
       "numeric.continuous"
     )
   )
-  
+
   expect_equal(
     get_column_roles(gt::gtcars),
     c(
@@ -41,7 +41,7 @@ test_that("column roles can be satisfactorily determined", {
       "numeric.continuous"
     )
   )
-  
+
   expect_equal(
     get_column_roles(gt::sp500),
     c(
@@ -54,7 +54,7 @@ test_that("column roles can be satisfactorily determined", {
       "numeric.continuous"
     )
   )
-  
+
   expect_equal(
     get_column_roles(gt::pizzaplace),
     c(
@@ -67,7 +67,7 @@ test_that("column roles can be satisfactorily determined", {
       "numeric.continuous"
     )
   )
-  
+
   expect_equal(
     get_column_roles(gt::exibble),
     c(
@@ -82,7 +82,7 @@ test_that("column roles can be satisfactorily determined", {
       "string"
     )
   )
-  
+
   expect_equal(
     get_column_roles(ggplot2::diamonds),
     c(
@@ -98,7 +98,7 @@ test_that("column roles can be satisfactorily determined", {
       "numeric.continuous"
     )
   )
-  
+
   expect_equal(
     get_column_roles(ggplot2::economics),
     c(
@@ -107,10 +107,10 @@ test_that("column roles can be satisfactorily determined", {
       "numeric.continuous",
       "numeric.continuous",
       "numeric.continuous",
-      "numeric.discrete"  
+      "numeric.discrete"
     )
   )
-  
+
   expect_equal(
     get_column_roles(ggplot2::economics_long),
     c(
@@ -120,7 +120,7 @@ test_that("column roles can be satisfactorily determined", {
       "numeric.continuous"
     )
   )
-  
+
   expect_equal(
     get_column_roles(ggplot2::faithfuld),
     c(
@@ -129,7 +129,7 @@ test_that("column roles can be satisfactorily determined", {
       "numeric.continuous"
     )
   )
-  
+
   expect_equal(
     get_column_roles(ggplot2::luv_colours),
     c(
@@ -139,7 +139,7 @@ test_that("column roles can be satisfactorily determined", {
       "string"
     )
   )
-  
+
   expect_equal(
     get_column_roles(ggplot2::midwest),
     c(
@@ -173,7 +173,7 @@ test_that("column roles can be satisfactorily determined", {
       "string.categorical"
     )
   )
-  
+
   expect_equal(
     get_column_roles(ggplot2::mpg),
     c(
@@ -190,7 +190,7 @@ test_that("column roles can be satisfactorily determined", {
       "string.categorical"
     )
   )
-  
+
   expect_equal(
     get_column_roles(ggplot2::msleep),
     c(
@@ -207,7 +207,7 @@ test_that("column roles can be satisfactorily determined", {
       "numeric.continuous"
     )
   )
-  
+
   expect_equal(
     get_column_roles(ggplot2::presidential),
     c(
@@ -217,7 +217,7 @@ test_that("column roles can be satisfactorily determined", {
       "string"
     )
   )
-  
+
   expect_equal(
     get_column_roles(ggplot2::seals),
     c(
@@ -227,7 +227,7 @@ test_that("column roles can be satisfactorily determined", {
       "geo:latitude.numeric.continuous"
     )
   )
-  
+
   expect_equal(
     get_column_roles(ggplot2::txhousing),
     c(
@@ -242,7 +242,7 @@ test_that("column roles can be satisfactorily determined", {
       "numeric.continuous"
     )
   )
-  
+
   expect_equal(
     get_column_roles(dplyr::band_instruments),
     c(
@@ -250,7 +250,7 @@ test_that("column roles can be satisfactorily determined", {
       "string"
     )
   )
-  
+
   expect_equal(
     get_column_roles(dplyr::band_members),
     c(
@@ -258,7 +258,7 @@ test_that("column roles can be satisfactorily determined", {
       "string"
     )
   )
-  
+
   expect_equal(
     get_column_roles(dplyr::starwars),
     c(
@@ -278,7 +278,7 @@ test_that("column roles can be satisfactorily determined", {
       "list_object"
     )
   )
-  
+
   expect_equal(
     get_column_roles(dplyr::storms),
     c(
@@ -297,7 +297,7 @@ test_that("column roles can be satisfactorily determined", {
       "integer.discrete"
     )
   )
-  
+
   expect_equal(
     get_column_roles(tidyr::billboard),
     c(
@@ -381,7 +381,7 @@ test_that("column roles can be satisfactorily determined", {
       "boolean.logical.categorical"
     )
   )
-  
+
   expect_equal(
     get_column_roles(tidyr::construction),
     c(
@@ -396,7 +396,7 @@ test_that("column roles can be satisfactorily determined", {
       "numeric.continuous"
     )
   )
-  
+
   expect_equal(
     get_column_roles(tidyr::fish_encounters),
     c(
@@ -405,7 +405,7 @@ test_that("column roles can be satisfactorily determined", {
       "integer.discrete"
     )
   )
-  
+
   expect_equal(
     get_column_roles(tidyr::population),
     c(
@@ -414,7 +414,7 @@ test_that("column roles can be satisfactorily determined", {
       "numeric.discrete"
     )
   )
-  
+
   expect_equal(
     get_column_roles(tidyr::relig_income),
     c(
@@ -431,7 +431,7 @@ test_that("column roles can be satisfactorily determined", {
       "numeric.continuous"
     )
   )
-  
+
   expect_equal(
     get_column_roles(tidyr::smiths),
     c(
@@ -442,7 +442,7 @@ test_that("column roles can be satisfactorily determined", {
       "numeric.continuous"
     )
   )
-  
+
   expect_equal(
     get_column_roles(tidyr::us_rent_income),
     c(
@@ -453,7 +453,7 @@ test_that("column roles can be satisfactorily determined", {
       "numeric.continuous"
     )
   )
-  
+
   expect_equal(
     get_column_roles(tidyr::who),
     c(
@@ -519,7 +519,7 @@ test_that("column roles can be satisfactorily determined", {
       "numeric.discrete"
     )
   )
-  
+
   expect_equal(
     get_column_roles(tidyr::world_bank_pop),
     c(
@@ -545,7 +545,7 @@ test_that("column roles can be satisfactorily determined", {
       "numeric.continuous"
     )
   )
-  
+
   expect_equal(
     get_column_roles(lubridate::lakers),
     c(
@@ -564,7 +564,7 @@ test_that("column roles can be satisfactorily determined", {
       "integer.discrete"
     )
   )
-  
+
   expect_equal(
     get_column_roles(datasets::airquality),
     c(
@@ -576,7 +576,7 @@ test_that("column roles can be satisfactorily determined", {
       "integer.discrete"
     )
   )
-  
+
   expect_equal(
     get_column_roles(datasets::cars),
     c(
@@ -584,7 +584,7 @@ test_that("column roles can be satisfactorily determined", {
       "numeric.continuous"
     )
   )
-  
+
   expect_equal(
     get_column_roles(datasets::chickwts),
     c(
@@ -592,7 +592,7 @@ test_that("column roles can be satisfactorily determined", {
       "string.categorical"
     )
   )
-  
+
   expect_equal(
     get_column_roles(datasets::faithful),
     c(
@@ -600,7 +600,7 @@ test_that("column roles can be satisfactorily determined", {
       "numeric.discrete"
     )
   )
-  
+
   expect_equal(
     get_column_roles(datasets::iris),
     c(
@@ -611,7 +611,7 @@ test_that("column roles can be satisfactorily determined", {
       "string.categorical"
     )
   )
-  
+
   expect_equal(
     get_column_roles(datasets::LifeCycleSavings),
     c(
@@ -622,7 +622,7 @@ test_that("column roles can be satisfactorily determined", {
       "numeric.continuous"
     )
   )
-  
+
   expect_equal(
     get_column_roles(datasets::longley),
     c(
@@ -635,7 +635,7 @@ test_that("column roles can be satisfactorily determined", {
       "numeric.continuous"
     )
   )
-  
+
   expect_equal(
     get_column_roles(datasets::morley),
     c(
@@ -644,7 +644,7 @@ test_that("column roles can be satisfactorily determined", {
       "integer.discrete"
     )
   )
-  
+
   expect_equal(
     get_column_roles(datasets::mtcars),
     c(
@@ -661,7 +661,7 @@ test_that("column roles can be satisfactorily determined", {
       "numeric.continuous"
     )
   )
-  
+
   expect_equal(
     get_column_roles(datasets::Orange),
     c(
@@ -670,7 +670,7 @@ test_that("column roles can be satisfactorily determined", {
       "numeric.continuous"
     )
   )
-  
+
   expect_equal(
     get_column_roles(datasets::pressure),
     c(
@@ -678,7 +678,7 @@ test_that("column roles can be satisfactorily determined", {
       "numeric.continuous"
     )
   )
-  
+
   expect_equal(
     get_column_roles(datasets::quakes),
     c(
@@ -689,7 +689,7 @@ test_that("column roles can be satisfactorily determined", {
       "integer.discrete"
     )
   )
-  
+
   expect_equal(
     get_column_roles(datasets::rock),
     c(
@@ -699,7 +699,7 @@ test_that("column roles can be satisfactorily determined", {
       "numeric.continuous"
     )
   )
-  
+
   expect_equal(
     get_column_roles(datasets::sleep),
     c(
@@ -708,7 +708,7 @@ test_that("column roles can be satisfactorily determined", {
       "string.categorical"
     )
   )
-  
+
   expect_equal(
     get_column_roles(datasets::swiss),
     c(
@@ -720,7 +720,7 @@ test_that("column roles can be satisfactorily determined", {
       "numeric.continuous"
     )
   )
-  
+
   expect_equal(
     get_column_roles(datasets::USJudgeRatings),
     c(

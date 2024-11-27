@@ -1,4 +1,4 @@
-tbl <- 
+tbl <-
   small_table %>%
   dplyr::mutate(g = as.factor(f))
 
@@ -56,51 +56,51 @@ test_that("pointblank expectation functions produce the correct results", {
   #
   # test_col_vals_lt()
   #
-  
+
   expect_true(test_col_vals_lt(tbl, columns = vars(d), value = 11000))
   expect_false(test_col_vals_lt(tbl, columns = vars(d), value = 9900))
   expect_true(test_col_vals_lt(tbl, columns = vars(d), value = 9900, threshold = 2))
   expect_true(test_col_vals_lt(tbl, columns = vars(d), value = 1, threshold = 1000))
   expect_false(test_col_vals_lt(tbl, columns = vars(d), value = 9900, threshold = 1))
   expect_false(test_col_vals_lt(tbl, columns = vars(d), value = 9900, threshold = 0.01))
-  
+
   #
   # test_col_vals_lte()
   #
-  
+
   expect_true(test_col_vals_lte(tbl, columns = vars(a), value = 8))
   expect_false(test_col_vals_lte(tbl, columns = vars(a), value = 7))
   expect_true(test_col_vals_lte(tbl, columns = vars(a), value = 7, threshold = 2))
   expect_true(test_col_vals_lte(tbl, columns = vars(a), value = 0, threshold = 1000))
   expect_false(test_col_vals_lte(tbl, columns = vars(a), value = 7, threshold = 1))
   expect_false(test_col_vals_lte(tbl, columns = vars(a), value = 7, threshold = 0.01))
-  
+
   #
   # test_col_vals_equal()
   #
-  
+
   expect_true(test_col_vals_equal(tbl_equal_c_3, columns = vars(c), value = 3))
   expect_false(test_col_vals_equal(tbl_equal_c_3, columns = vars(c), value = 7))
   expect_true(test_col_vals_equal(tbl, columns = vars(c), value = 3, threshold = 0.95))
   expect_true(test_col_vals_equal(tbl, columns = vars(c), value = 20, threshold = 1000))
   expect_false(test_col_vals_equal(tbl_equal_c_3, columns = vars(c), value = 7, threshold = 1))
   expect_false(test_col_vals_equal(tbl_equal_c_3, columns = vars(c), value = 7, threshold = 0.01))
-  
+
   #
   # test_col_vals_not_equal()
   #
-  
+
   expect_true(test_col_vals_not_equal(tbl_not_equal_c_3, columns = vars(c), value = 3))
   expect_false(test_col_vals_not_equal(tbl_not_equal_c_3, columns = vars(c), value = 7))
   expect_true(test_col_vals_not_equal(tbl_not_equal_c_3, columns = vars(c), value = 3, threshold = 0.95))
   expect_true(test_col_vals_not_equal(tbl_not_equal_c_3, columns = vars(c), value = 20, threshold = 1000))
   expect_false(test_col_vals_not_equal(tbl_not_equal_c_3, columns = vars(c), value = 7, threshold = 1))
   expect_false(test_col_vals_not_equal(tbl_not_equal_c_3, columns = vars(c), value = 7, threshold = 0.01))
-  
+
   #
   # test_col_vals_gte()
   #
-  
+
   expect_true(test_col_vals_gte(tbl, columns = vars(c), value = 0, na_pass = TRUE))
   expect_false(test_col_vals_gte(tbl, columns = vars(c), value = 0))
   expect_false(test_col_vals_gte(tbl, columns = vars(c), value = NA))
@@ -112,7 +112,7 @@ test_that("pointblank expectation functions produce the correct results", {
   #
   # test_col_vals_gt()
   #
-  
+
   expect_true(test_col_vals_gt(tbl, columns = vars(a), value = 1, threshold = 2))
   expect_false(test_col_vals_gt(tbl, columns = vars(c), value = 0))
   expect_false(test_col_vals_gt(tbl, columns = vars(c), value = NA))
@@ -124,7 +124,7 @@ test_that("pointblank expectation functions produce the correct results", {
   #
   # test_col_vals_between()
   #
-  
+
   expect_true(test_col_vals_between(tbl, columns = vars(d), left = 0, right = 9000, threshold = 2))
   expect_false(test_col_vals_between(tbl, columns = vars(d), left = 0, right = 9000, threshold = 1))
   expect_false(test_col_vals_between(tbl, columns = vars(d), left = 0, right = 500))
@@ -137,7 +137,7 @@ test_that("pointblank expectation functions produce the correct results", {
   #
   # test_col_vals_not_between()
   #
-  
+
   expect_true(test_col_vals_not_between(tbl, columns = vars(d), left = 0, right = 9000, threshold = 100))
   expect_false(test_col_vals_not_between(tbl, columns = vars(c), left = 20, right = 30))
   expect_true(test_col_vals_not_between(tbl, columns = vars(c), left = 20, right = 30, na_pass = TRUE))
@@ -150,7 +150,7 @@ test_that("pointblank expectation functions produce the correct results", {
   #
   # test_col_vals_in_set()
   #
-  
+
   expect_true(test_col_vals_in_set(tbl, columns = vars(b), set = tbl$b))
   expect_true(test_col_vals_in_set(tbl, columns = vars(c), set = c(2, 3, 4, 7, 9, NA), threshold = 3))
   expect_false(test_col_vals_in_set(tbl, columns = vars(c), set = c(2, 3, 4, 7, 9, NA)))
@@ -161,7 +161,7 @@ test_that("pointblank expectation functions produce the correct results", {
   #
   # test_col_vals_not_in_set()
   #
-  
+
   expect_false(test_col_vals_not_in_set(tbl, columns = vars(b), set = tbl$b))
   expect_false(test_col_vals_not_in_set(tbl, columns = vars(c), set = c(2, 3, 4, 7, 9, NA), threshold = 3))
   expect_false(test_col_vals_not_in_set(tbl, columns = vars(c), set = c(2, 3, 4, 7, 9, NA)))
@@ -172,18 +172,18 @@ test_that("pointblank expectation functions produce the correct results", {
   #
   # test_col_vals_make_set()
   #
-  
+
   expect_true(test_col_vals_make_set(tbl, columns = vars(c), set = tbl$c %>% unique()))
   expect_true(test_col_vals_make_set(tbl, columns = vars(c), set = tbl$c))
   expect_true(test_col_vals_make_set(tbl, columns = vars(b), set = tbl$b))
   expect_true(test_col_vals_make_set(tbl, columns = vars(c), set = c(2, 3, 4, 7, 9, NA), threshold = 3))
   expect_false(test_col_vals_make_set(tbl, columns = vars(c), set = c(2, 3, 4, 7, 9, NA)))
   expect_false(test_col_vals_make_set(tbl, columns = vars(e), set = TRUE))
-  
+
   #
   # test_col_vals_make_subset()
   #
-  
+
   expect_true(test_col_vals_make_subset(tbl, columns = vars(c), set = tbl$c %>% unique()))
   expect_true(test_col_vals_make_subset(tbl, columns = vars(c), set = tbl$c))
   expect_true(test_col_vals_make_subset(tbl, columns = vars(b), set = tbl$b))
@@ -191,11 +191,11 @@ test_that("pointblank expectation functions produce the correct results", {
   expect_true(test_col_vals_make_subset(tbl, columns = vars(c), set = c(2, 3, 4, 7, 9, NA), threshold = 3))
   expect_false(test_col_vals_make_subset(tbl, columns = vars(c), set = c(99, 2, 3, 4, 7, 9, NA)))
   expect_false(test_col_vals_make_subset(tbl, columns = vars(e), set = ""))
-  
+
   #
   # test_col_vals_increasing()
   #
-  
+
   expect_true(test_col_vals_increasing(increasing_tbl, vars(a)))
   expect_true(test_col_vals_increasing(increasing_tbl, vars(b), na_pass = TRUE))
   expect_true(test_col_vals_increasing(increasing_tbl, vars(c), allow_stationary = TRUE))
@@ -209,11 +209,11 @@ test_that("pointblank expectation functions produce the correct results", {
   expect_false(test_col_vals_increasing(increasing_tbl, vars(d), decreasing_tol = 0.00001))
   expect_false(test_col_vals_increasing(increasing_tbl, vars(b), threshold = 1))
   expect_false(test_col_vals_increasing(increasing_tbl, vars(b), threshold = 0.01))
-  
+
   #
   # test_col_vals_decreasing()
   #
-  
+
   expect_true(test_col_vals_decreasing(decreasing_tbl, vars(a)))
   expect_true(test_col_vals_decreasing(decreasing_tbl, vars(b), na_pass = TRUE))
   expect_true(test_col_vals_decreasing(decreasing_tbl, vars(c), allow_stationary = TRUE))
@@ -227,11 +227,11 @@ test_that("pointblank expectation functions produce the correct results", {
   expect_false(test_col_vals_decreasing(decreasing_tbl, vars(d), increasing_tol = 0.00001))
   expect_false(test_col_vals_decreasing(decreasing_tbl, vars(b), threshold = 1))
   expect_false(test_col_vals_decreasing(decreasing_tbl, vars(b), threshold = 0.01))
-  
+
   #
   # test_col_vals_null()
   #
-  
+
   expect_true(test_col_vals_null(tbl_c_null, columns = vars(c)))
   expect_false(test_col_vals_null(tbl_c_not_null, columns = vars(c)))
   expect_true(test_col_vals_null(tbl, columns = vars(c), threshold = 0.9))
@@ -242,43 +242,43 @@ test_that("pointblank expectation functions produce the correct results", {
   #
   # test_col_vals_not_null()
   #
-  
+
   expect_true(test_col_vals_not_null(tbl_c_not_null, columns = vars(c)))
   expect_false(test_col_vals_not_null(tbl_c_null, columns = vars(c)))
   expect_true(test_col_vals_not_null(tbl, columns = vars(c), threshold = 0.9))
   expect_true(test_col_vals_not_null(tbl, columns = vars(c), threshold = 1000))
   expect_false(test_col_vals_not_null(tbl_c_null, columns = vars(c), threshold = 1))
   expect_false(test_col_vals_not_null(tbl_c_null, columns = vars(c), threshold = 0.01))
-  
+
   #
   # test_col_vals_regex()
   #
-  
+
   expect_true(test_col_vals_regex(tbl, vars(b), regex = "^[0-9]-[a-z]{3}-[0-9]{3}$"))
   expect_false(test_col_vals_regex(tbl, vars(b), regex = "^[0-9]-[a-z]{4}-[0-9]{3}$"))
   expect_true(test_col_vals_regex(tbl, vars(b), regex = "^[0-9]-[a-z]{4}-[0-9]{3}$", threshold = 1000))
   expect_false(test_col_vals_regex(tbl, vars(b), regex = "^[0-9]-[a-z]{4}-[0-9]{3}$", threshold = 1))
   expect_false(test_col_vals_regex(tbl, vars(b), regex = "^[0-9]-[a-z]{4}-[0-9]{3}$", threshold = 0.01))
-  
+
   #
   # test_col_vals_within_spec()
   #
-  
+
   expect_true(test_col_vals_within_spec(specifications[1:5, ], vars(zip_codes), spec = "zip"))
   expect_false(test_col_vals_within_spec(specifications[1:6, ], vars(zip_codes), spec = "zip"))
   expect_true(test_col_vals_within_spec(specifications, vars(zip_codes), spec = "zip", threshold = 1000))
   expect_false(test_col_vals_within_spec(specifications, vars(zip_codes), spec = "zip", threshold = 1))
   expect_false(test_col_vals_within_spec(specifications, vars(zip_codes), spec = "zip", threshold = 0.01))
-  
+
   #
   # test_col_vals_expr()
   #
-  
+
   expect_true(test_col_vals_expr(tbl, ~ a %% 1 == 0))
   expect_true(test_col_vals_expr(tbl, ~ c %% 1 == 0))
   expect_true(test_col_vals_expr(tbl, expr(a %% 1 == 0)))
   expect_true(test_col_vals_expr(tbl, expr(c %% 1 == 0)))
-              
+
   expect_true(
     test_col_vals_expr(tbl, ~ case_when(
       b == 1 ~ a > 5 & c >= 1
@@ -291,36 +291,36 @@ test_that("pointblank expectation functions produce the correct results", {
       )
     ))
   )
-  
+
   expect_true(test_col_vals_expr(tbl, ~ a < 0, threshold = 1000))
   expect_false(test_col_vals_expr(tbl, expr(a < 5), threshold = 1))
   expect_false(test_col_vals_expr(tbl, expr(a < 5), threshold = 0.01))
   expect_false(test_col_vals_expr(tbl, expr(between(a, 5, 10)), threshold = 0.01))
-  
+
   #
   # test_rows_distinct()
   #
-  
+
   expect_true(test_rows_distinct(tbl %>% dplyr::select(d) %>% dplyr::slice(5)))
   expect_false(test_rows_distinct(tbl))
   expect_false(test_rows_distinct(tbl, columns = vars(date_time, date)))
   expect_false(test_rows_distinct(tbl, threshold = 1))
   expect_false(test_rows_distinct(tbl, threshold = 0.01))
-  
+
   #
   # test_rows_complete()
   #
-  
+
   expect_true(test_rows_complete(tbl_complete_yes))
   expect_false(test_rows_complete(tbl_complete_no))
   expect_false(test_rows_complete(tbl_complete_no, columns = vars(b, c)))
   expect_false(test_rows_complete(tbl_complete_no, columns = "c", threshold = 1))
   expect_false(test_rows_complete(tbl_complete_no, columns = "b", threshold = 0.01))
-  
+
   #
   # test_col_is_character()
   #
-  
+
   expect_false(test_col_is_character(tbl, columns = vars(date_time)))
   expect_false(test_col_is_character(tbl, columns = vars(date)))
   expect_false(test_col_is_character(tbl, columns = vars(a)))
@@ -335,7 +335,7 @@ test_that("pointblank expectation functions produce the correct results", {
   #
   # test_col_is_numeric()
   #
-  
+
   expect_false(test_col_is_numeric(tbl, columns = vars(date_time)))
   expect_false(test_col_is_numeric(tbl, columns = vars(date)))
   expect_false(test_col_is_numeric(tbl, columns = vars(a)))
@@ -380,7 +380,7 @@ test_that("pointblank expectation functions produce the correct results", {
   #
   # test_col_is_logical()
   #
-  
+
   expect_false(test_col_is_logical(tbl, columns = vars(date_time)))
   expect_false(test_col_is_logical(tbl, columns = vars(date)))
   expect_false(test_col_is_logical(tbl, columns = vars(a)))
@@ -410,7 +410,7 @@ test_that("pointblank expectation functions produce the correct results", {
   #
   # test_col_is_factor()
   #
-  
+
   expect_false(test_col_is_factor(tbl, columns = vars(date_time)))
   expect_false(test_col_is_factor(tbl, columns = vars(date)))
   expect_false(test_col_is_factor(tbl, columns = vars(a)))
@@ -425,7 +425,7 @@ test_that("pointblank expectation functions produce the correct results", {
   #
   # test_col_exists()
   #
-  
+
   expect_true(test_col_exists(tbl, columns = vars(date_time)))
   expect_true(test_col_exists(tbl, columns = vars(date)))
   expect_true(test_col_exists(tbl, columns = vars(a)))
@@ -439,14 +439,14 @@ test_that("pointblank expectation functions produce the correct results", {
   expect_false(test_col_exists(tbl, columns = "h"))
   expect_false(test_col_exists(tbl, columns = vars(h), threshold = 1))
   expect_false(test_col_exists(tbl, columns = vars(h), threshold = 0.01))
-  
+
   #
   # test_col_schema_match()
   #
-  
+
   expect_true(
     test_col_schema_match(
-      tbl, 
+      tbl,
       schema = col_schema(
         date_time = c("POSIXct", "POSIXt"),
         date = "Date",
@@ -460,10 +460,10 @@ test_that("pointblank expectation functions produce the correct results", {
       )
     )
   )
-  
+
   expect_false(
     test_col_schema_match(
-      tbl, 
+      tbl,
       schema = col_schema(
         date_time = "POSIXct",
         date = "Date",
@@ -477,10 +477,10 @@ test_that("pointblank expectation functions produce the correct results", {
       )
     )
   )
-  
+
   expect_false(
     test_col_schema_match(
-      tbl, 
+      tbl,
       schema = col_schema(
         date_time = "POSIXct",
         date = "Date",
@@ -493,13 +493,13 @@ test_that("pointblank expectation functions produce the correct results", {
         g = "factor"
       ),
       threshold = 1
-    ), 
+    ),
     failed_beyond_absolute
   )
-  
+
   expect_false(
     test_col_schema_match(
-      tbl, 
+      tbl,
       schema = col_schema(
         date_time = "POSIXct",
         date = "Date",
@@ -514,11 +514,11 @@ test_that("pointblank expectation functions produce the correct results", {
       threshold = 0.01
     )
   )
-  
+
   #
   # test_row_count_match()
   #
-  
+
   expect_true(test_row_count_match(tbl, count = tbl))
   expect_true(test_row_count_match(tbl, count = pointblank::small_table))
   expect_true(test_row_count_match(tbl, count = ~ pointblank::small_table))
@@ -534,11 +534,11 @@ test_that("pointblank expectation functions produce the correct results", {
   expect_true(test_row_count_match(tbl_complete_yes, count = tbl_complete_no))
   expect_true(test_row_count_match(increasing_tbl, count = decreasing_tbl))
   expect_true(test_row_count_match(decreasing_tbl, count = increasing_tbl))
-  
+
   #
   # test_col_count_match()
   #
-  
+
   expect_true(test_col_count_match(tbl, count = tbl))
   expect_true(test_col_count_match(small_table, count = pointblank::small_table))
   expect_true(test_col_count_match(small_table, count = ~ pointblank::small_table))
@@ -554,11 +554,11 @@ test_that("pointblank expectation functions produce the correct results", {
   expect_true(test_col_count_match(tbl_complete_yes, count = tbl_complete_no))
   expect_false(test_col_count_match(tbl_complete_yes, count = decreasing_tbl))
   expect_false(test_col_count_match(tbl_complete_yes, count = increasing_tbl))
-  
+
   #
   # test_tbl_match()
   #
-  
+
   expect_true(test_tbl_match(tbl, tbl_compare = tbl))
   expect_true(test_tbl_match(pointblank::small_table, tbl_compare = pointblank::small_table))
   expect_true(test_tbl_match(pointblank::small_table, tbl_compare = ~ pointblank::small_table))
@@ -574,7 +574,7 @@ test_that("pointblank expectation functions produce the correct results", {
   expect_false(test_tbl_match(tbl_conjointly, tbl_compare = tbl_complete_yes))
   expect_false(test_tbl_match(tbl_complete_yes, tbl_compare = tbl_conjointly))
   expect_false(test_tbl_match(tbl_complete_yes, tbl_compare = tbl_complete_no))
-  
+
   expect_true(test_tbl_match(gt::countrypops, tbl_compare = gt::countrypops))
   expect_true(test_tbl_match(gt::sza, tbl_compare = gt::sza))
   expect_true(test_tbl_match(gt::gtcars, tbl_compare = gt::gtcars))
@@ -618,19 +618,19 @@ test_that("pointblank expectation functions produce the correct results", {
   expect_true(test_tbl_match(datasets::rock, tbl_compare = datasets::rock))
   expect_true(test_tbl_match(datasets::swiss, tbl_compare = datasets::swiss))
   expect_true(test_tbl_match(datasets::USJudgeRatings, tbl_compare = datasets::USJudgeRatings))
-  
+
   expect_false(test_tbl_match(tbl, tbl_compare = tbl %>% dplyr::slice_head(n = 12)))
   expect_false(test_tbl_match(tbl, tbl_compare = tbl %>% dplyr::rename(datetime = date_time)))
   expect_false(test_tbl_match(tbl, tbl_compare = tbl %>% dplyr::select(a, dplyr::everything())))
-  
+
   expect_true(test_tbl_match(tbl, tbl_compare = tbl %>% dplyr::group_by(e, f)))
   expect_true(test_tbl_match(tbl %>% dplyr::group_by(e, g), tbl_compare = tbl %>% dplyr::group_by(e, f)))
   expect_true(test_tbl_match(tbl %>% dplyr::group_by(e, g), tbl_compare = tbl))
-  
+
   #
   # test_conjointly()
   #
-  
+
   expect_true(
     test_conjointly(
       tbl_conjointly,
@@ -640,7 +640,7 @@ test_that("pointblank expectation functions produce the correct results", {
       threshold = 5
     )
   )
-  
+
   expect_false(
     test_conjointly(
       tbl_conjointly,
@@ -649,7 +649,7 @@ test_that("pointblank expectation functions produce the correct results", {
       ~ col_vals_not_null(., vars(c))
     )
   )
-  
+
   expect_false(
     test_conjointly(
       tbl_conjointly,
@@ -657,10 +657,10 @@ test_that("pointblank expectation functions produce the correct results", {
       ~ col_vals_lt(., vars(b), 10),
       ~ col_vals_not_null(., vars(c)),
       threshold = 1
-    ), 
+    ),
     failed_beyond_absolute
   )
-  
+
   expect_false(
     test_conjointly(
       tbl_conjointly,
@@ -668,14 +668,14 @@ test_that("pointblank expectation functions produce the correct results", {
       ~ col_vals_lt(., vars(b), 10),
       ~ col_vals_not_null(., vars(c)),
       threshold = 0.01
-    ), 
+    ),
     failed_beyond_proportional
   )
-  
+
   #
   # test_serially()
   #
-  
+
   expect_true(
     test_serially(
       tbl_serially,
@@ -684,7 +684,7 @@ test_that("pointblank expectation functions produce the correct results", {
       ~ col_vals_gt(., vars(b), vars(a))       # PASS
     )
   )
-  
+
   expect_true(
     test_serially(
       tbl_serially,
@@ -694,7 +694,7 @@ test_that("pointblank expectation functions produce the correct results", {
       threshold = 5
     )
   )
-  
+
   expect_true(
     test_serially(
       tbl_serially,
@@ -704,7 +704,7 @@ test_that("pointblank expectation functions produce the correct results", {
       threshold = 2
     )
   )
-  
+
   expect_false(
     test_serially(
       tbl_serially,
@@ -714,7 +714,7 @@ test_that("pointblank expectation functions produce the correct results", {
       threshold = 1
     )
   )
-  
+
   expect_false(
     test_serially(
       tbl_serially,
@@ -723,7 +723,7 @@ test_that("pointblank expectation functions produce the correct results", {
       ~ col_vals_gt(., vars(b), vars(a)),      # would PASS
     )
   )
-  
+
   expect_false(
     test_serially(
       tbl_serially,
@@ -732,7 +732,7 @@ test_that("pointblank expectation functions produce the correct results", {
       ~ col_vals_gt(., vars(b), vars(a)),        # would PASS
     )
   )
-  
+
   expect_true(
     test_serially(
       tbl_serially,
@@ -741,7 +741,7 @@ test_that("pointblank expectation functions produce the correct results", {
       ~ col_vals_gt(., vars(b), vars(a))                      # PASS
     )
   )
-  
+
   expect_false(
     test_serially(
       tbl_serially,
@@ -751,7 +751,7 @@ test_that("pointblank expectation functions produce the correct results", {
       threshold = 1
     )
   )
-  
+
   expect_true(
     test_serially(
       tbl_serially,
@@ -761,7 +761,7 @@ test_that("pointblank expectation functions produce the correct results", {
       threshold = 2
     )
   )
-  
+
   expect_false(
     test_serially(
       tbl_serially,
@@ -769,10 +769,10 @@ test_that("pointblank expectation functions produce the correct results", {
       ~ test_col_vals_not_null(., vars(a, b)),                # PASS, PASS
       ~ col_vals_gt(., vars(c), 1),                           # FAIL
       threshold = 1
-    ), 
+    ),
     failed_beyond_absolute
   )
-  
+
   expect_false(
     test_serially(
       tbl_serially,
@@ -780,16 +780,16 @@ test_that("pointblank expectation functions produce the correct results", {
       ~ test_col_vals_not_null(., vars(a, b)),                # PASS, PASS
       ~ col_vals_gt(., vars(c), 1),                           # FAIL
       threshold = 0.01
-    ), 
+    ),
     failed_beyond_proportional
   )
 })
 
 test_that("expect errors to be expressed by pointblank under some conditions", {
-  
+
   # no_col_msg <- "The value for `column` doesn't correspond to a column name."
   no_col_msg <- "column"
-  
+
   # Errors caught and expressed when a column doesn't exist
   expect_error(test_col_vals_lt(tbl, columns = vars(z), value = 0), regexp = no_col_msg)
   expect_error(test_col_vals_lte(tbl, columns = vars(z), value = 0), regexp = no_col_msg)

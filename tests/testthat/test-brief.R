@@ -50,6 +50,12 @@ test_that("Batch tests: special validations", {
   validation_fns <- all_validations_fns_vec()
   validation_fns <- setdiff(validation_fns, c("serially", "conjointly", "specially"))
   
+  # Tests sampled from validation fn groups -- test expanded validations (via multi-col, multi-segment)
+  # TODO: col_is*
+  # TODO: col_vals*
+  # TODO: col_vals_expr
+  # TODO: rows*
+  
   # Special: serially
   expect_identical(
     agent %>% 
@@ -61,14 +67,14 @@ test_that("Batch tests: special validations", {
         actions = action_levels(warn_at = 0.1, stop_at = 0.2), 
         label = "The `serially()` step.",
         active = FALSE,
-        brief = "x"
+        brief = "custom brief"
       ) %>% 
       get_briefs()
     ,
-    "x"
+    "custom brief"
   )
   
-  # Special: 
+  # Special: specially
   expect_identical(
     agent %>% 
       specially(
@@ -77,11 +83,11 @@ test_that("Batch tests: special validations", {
         actions = action_levels(warn_at = 0.1, stop_at = 0.2), 
         label = "The `specially()` step.",
         active = FALSE,
-        brief = "x"
+        brief = "custom brief"
       ) %>% 
       get_briefs()
     ,
-    "x"
+    "custom brief"
   )
   
   # Special: conjointly (no segments)
@@ -96,15 +102,26 @@ test_that("Batch tests: special validations", {
         actions = action_levels(warn_at = 0.1, stop_at = 0.2), 
         label = "The `conjointly()` step.",
         active = FALSE,
-        brief = "x"
+        brief = "custom brief"
       ) %>% 
       get_briefs(),
-    "x"
+    "custom brief"
   )
   
-  # Special: conjointly (with segments)
+  # Special: conjointly (expanded with segments)
   expect_identical(
     agent %>% 
+      conjointly(
+        ~ col_vals_lt(., columns = a, value = 8),
+        ~ col_vals_gt(., columns = c, value = vars(a)),
+        ~ col_vals_not_null(., columns = b),
+        preconditions = ~ . %>% dplyr::filter(a < 10),
+        segments = b ~ c("group_1", "group_2"),
+        actions = action_levels(warn_at = 0.1, stop_at = 0.2),
+        label = "The `conjointly()` step.",
+        active = FALSE,
+        brief = "custom brief constant"
+      ) %>%
       conjointly(
         ~ col_vals_lt(., columns = a, value = 8),
         ~ col_vals_gt(., columns = c, value = vars(a)),
@@ -114,10 +131,11 @@ test_that("Batch tests: special validations", {
         actions = action_levels(warn_at = 0.1, stop_at = 0.2), 
         label = "The `conjointly()` step.",
         active = FALSE,
-        brief = "x"
+        brief = c("custom brief multi1", "custom brief multi2")
       ) %>% 
       get_briefs(),
-    c("x", "x")
+    c("custom brief constant", "custom brief constant",
+      "custom brief multi1", "custom brief multi2")
   )
 
 })

@@ -402,7 +402,7 @@ row_count_match <- function(
         actions = covert_actions(actions, agent),
         step_id = step_id,
         label = label[[i]],
-        brief = brief,
+        brief = brief[i],
         active = active
       )
   }

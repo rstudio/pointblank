@@ -682,18 +682,18 @@ pb_write_file <- function(
   on.exit(close(file_connection))
 
   # Obtain the appropriate line ending based on the platform
-  if (.Platform$OS.type == "windows") {
-    line_ending <- "\r\n"
-  } else {
-    line_ending <- "\n"
-  }
+  # if (.Platform$OS.type == "windows") {
+  #   line_ending <- "\r\n"
+  # } else {
+  #   line_ending <- "\n"
+  # }
 
-  lines <- gsub("\r?\n", line_ending, lines)
+  lines <- gsub("\r?\n", "\n", lines)
 
   writeLines(
     text = enc2utf8(lines),
     con = file_connection,
-    sep = line_ending,
+    sep = "\n",
     useBytes = TRUE
   )
 

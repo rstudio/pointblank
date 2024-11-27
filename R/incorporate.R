@@ -166,7 +166,12 @@ incorporate <- function(informant) {
   
   # Get the target table for this informant object
   # TODO: extend the materialize table function to use an agent or informant
-  tbl <- informant$tbl
+  if (rlang::has_name(informant, "tbl")) {
+    # Avoid partial matching
+    tbl <- informant$tbl
+  } else {
+    tbl <- informant$tbl_name
+  }
   tbl_name <- informant$tbl_name
   read_fn <- informant$read_fn
   

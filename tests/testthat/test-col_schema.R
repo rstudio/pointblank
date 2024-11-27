@@ -75,8 +75,7 @@ test_that("`col_schema_match()` works properly", {
   # Case I (Default) (`complete = TRUE`, `in_order = TRUE`)
   #
   
-  # No error
-  expect_error(regexp = NA, tbl %>% col_schema_match(schema_obj_1_1, complete = TRUE, in_order = TRUE))
+  expect_no_error(tbl %>% col_schema_match(schema_obj_1_1, complete = TRUE, in_order = TRUE))
   
   # Error here but not necessarily in other cases
   expect_error(tbl %>% col_schema_match(schema_obj_1_1_i, complete = TRUE, in_order = TRUE))
@@ -118,11 +117,10 @@ test_that("`col_schema_match()` works properly", {
   # Case II (`complete = TRUE`, `in_order = FALSE`)
   #
   
-  # No error
-  expect_error(regexp = NA, tbl %>% col_schema_match(schema_obj_2_1, complete = TRUE, in_order = FALSE))
-  expect_error(regexp = NA, tbl %>% col_schema_match(schema_obj_2_2, complete = TRUE, in_order = FALSE))
+  expect_no_error(tbl %>% col_schema_match(schema_obj_2_1, complete = TRUE, in_order = FALSE))
+  expect_no_error(tbl %>% col_schema_match(schema_obj_2_2, complete = TRUE, in_order = FALSE))
   
-  expect_error(regexp = NA, tbl %>% col_schema_match(schema_obj_1_1, complete = TRUE, in_order = FALSE))
+  expect_no_error(tbl %>% col_schema_match(schema_obj_1_1, complete = TRUE, in_order = FALSE))
   
   
   # Error here but not necessarily in other cases
@@ -163,19 +161,18 @@ test_that("`col_schema_match()` works properly", {
   # Case III (`complete = FALSE`, `in_order = TRUE`)
   #
   
-  # No error
-  expect_error(regexp = NA, tbl %>% col_schema_match(schema_obj_3_1, complete = FALSE, in_order = TRUE))
-  expect_error(regexp = NA, tbl %>% col_schema_match(schema_obj_3_2, complete = FALSE, in_order = TRUE))
-  expect_error(regexp = NA, tbl %>% col_schema_match(schema_obj_3_3, complete = FALSE, in_order = TRUE))
-  expect_error(regexp = NA, tbl %>% col_schema_match(schema_obj_3_4, complete = FALSE, in_order = TRUE))
-  expect_error(regexp = NA, tbl %>% col_schema_match(schema_obj_3_5, complete = FALSE, in_order = TRUE))
-  expect_error(regexp = NA, tbl %>% col_schema_match(schema_obj_3_6, complete = FALSE, in_order = TRUE))
+  expect_no_error(tbl %>% col_schema_match(schema_obj_3_1, complete = FALSE, in_order = TRUE))
+  expect_no_error(tbl %>% col_schema_match(schema_obj_3_2, complete = FALSE, in_order = TRUE))
+  expect_no_error(tbl %>% col_schema_match(schema_obj_3_3, complete = FALSE, in_order = TRUE))
+  expect_no_error(tbl %>% col_schema_match(schema_obj_3_4, complete = FALSE, in_order = TRUE))
+  expect_no_error(tbl %>% col_schema_match(schema_obj_3_5, complete = FALSE, in_order = TRUE))
+  expect_no_error(tbl %>% col_schema_match(schema_obj_3_6, complete = FALSE, in_order = TRUE))
   
-  expect_error(regexp = NA, tbl %>% col_schema_match(schema_obj_1_1, complete = FALSE, in_order = TRUE))
+  expect_no_error(tbl %>% col_schema_match(schema_obj_1_1, complete = FALSE, in_order = TRUE))
   
-  expect_error(regexp = NA, tbl %>% col_schema_match(schema_obj_4_1, complete = FALSE, in_order = TRUE))
-  expect_error(regexp = NA, tbl %>% col_schema_match(schema_obj_4_3, complete = FALSE, in_order = TRUE))
-  expect_error(regexp = NA, tbl %>% col_schema_match(schema_obj_4_5, complete = FALSE, in_order = TRUE))
+  expect_no_error(tbl %>% col_schema_match(schema_obj_4_1, complete = FALSE, in_order = TRUE))
+  expect_no_error(tbl %>% col_schema_match(schema_obj_4_3, complete = FALSE, in_order = TRUE))
+  expect_no_error(tbl %>% col_schema_match(schema_obj_4_5, complete = FALSE, in_order = TRUE))
   
   # Error here but not necessarily in other cases
   expect_error(tbl %>% col_schema_match(schema_obj_3_1_i, complete = FALSE, in_order = TRUE))
@@ -203,25 +200,24 @@ test_that("`col_schema_match()` works properly", {
   
   # Case IV (`complete = FALSE`, `in_order = FALSE`)
   
-  # No error
-  expect_error(regexp = NA, tbl %>% col_schema_match(schema_obj_4_1, complete = FALSE, in_order = FALSE))
-  expect_error(regexp = NA, tbl %>% col_schema_match(schema_obj_4_2, complete = FALSE, in_order = FALSE))
-  expect_error(regexp = NA, tbl %>% col_schema_match(schema_obj_4_3, complete = FALSE, in_order = FALSE))
-  expect_error(regexp = NA, tbl %>% col_schema_match(schema_obj_4_4, complete = FALSE, in_order = FALSE))
-  expect_error(regexp = NA, tbl %>% col_schema_match(schema_obj_4_5, complete = FALSE, in_order = FALSE))
-  expect_error(regexp = NA, tbl %>% col_schema_match(schema_obj_4_6, complete = FALSE, in_order = FALSE))
+  expect_no_error(tbl %>% col_schema_match(schema_obj_4_1, complete = FALSE, in_order = FALSE))
+  expect_no_error(tbl %>% col_schema_match(schema_obj_4_2, complete = FALSE, in_order = FALSE))
+  expect_no_error(tbl %>% col_schema_match(schema_obj_4_3, complete = FALSE, in_order = FALSE))
+  expect_no_error(tbl %>% col_schema_match(schema_obj_4_4, complete = FALSE, in_order = FALSE))
+  expect_no_error(tbl %>% col_schema_match(schema_obj_4_5, complete = FALSE, in_order = FALSE))
+  expect_no_error(tbl %>% col_schema_match(schema_obj_4_6, complete = FALSE, in_order = FALSE))
   
-  expect_error(regexp = NA, tbl %>% col_schema_match(schema_obj_1_1, complete = FALSE, in_order = FALSE))
+  expect_no_error(tbl %>% col_schema_match(schema_obj_1_1, complete = FALSE, in_order = FALSE))
   
-  expect_error(regexp = NA, tbl %>% col_schema_match(schema_obj_2_1, complete = FALSE, in_order = FALSE))
-  expect_error(regexp = NA, tbl %>% col_schema_match(schema_obj_2_2, complete = FALSE, in_order = FALSE))
+  expect_no_error(tbl %>% col_schema_match(schema_obj_2_1, complete = FALSE, in_order = FALSE))
+  expect_no_error(tbl %>% col_schema_match(schema_obj_2_2, complete = FALSE, in_order = FALSE))
   
-  expect_error(regexp = NA, tbl %>% col_schema_match(schema_obj_3_1, complete = FALSE, in_order = FALSE))
-  expect_error(regexp = NA, tbl %>% col_schema_match(schema_obj_3_2, complete = FALSE, in_order = FALSE))
-  expect_error(regexp = NA, tbl %>% col_schema_match(schema_obj_3_3, complete = FALSE, in_order = FALSE))
-  expect_error(regexp = NA, tbl %>% col_schema_match(schema_obj_3_4, complete = FALSE, in_order = FALSE))
-  expect_error(regexp = NA, tbl %>% col_schema_match(schema_obj_3_5, complete = FALSE, in_order = FALSE))
-  expect_error(regexp = NA, tbl %>% col_schema_match(schema_obj_3_6, complete = FALSE, in_order = FALSE))
+  expect_no_error(tbl %>% col_schema_match(schema_obj_3_1, complete = FALSE, in_order = FALSE))
+  expect_no_error(tbl %>% col_schema_match(schema_obj_3_2, complete = FALSE, in_order = FALSE))
+  expect_no_error(tbl %>% col_schema_match(schema_obj_3_3, complete = FALSE, in_order = FALSE))
+  expect_no_error(tbl %>% col_schema_match(schema_obj_3_4, complete = FALSE, in_order = FALSE))
+  expect_no_error(tbl %>% col_schema_match(schema_obj_3_5, complete = FALSE, in_order = FALSE))
+  expect_no_error(tbl %>% col_schema_match(schema_obj_3_6, complete = FALSE, in_order = FALSE))
   
   
   # Error here but not necessarily in other cases

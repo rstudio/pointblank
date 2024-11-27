@@ -809,7 +809,7 @@ get_common_values_gt <- function(
         n = get_lsv("table_scan/tbl_lab_count")[[lang]],
         frequency = get_lsv("table_scan/tbl_lab_frequency")[[lang]],
       ) %>%
-      gt_missing(columns = "value", missing_text = "**NA**") %>%
+      gt::sub_missing(columns = "value", missing_text = "**NA**") %>%
       gt::text_transform(
         locations = gt::cells_body(columns = "value"),
         fn = function(x) {
@@ -847,7 +847,7 @@ get_common_values_gt <- function(
         n = get_lsv("table_scan/tbl_lab_count")[[lang]],
         frequency = get_lsv("table_scan/tbl_lab_frequency")[[lang]],
       ) %>%
-      gt_missing(columns = "value", missing_text = "**NA**") %>%
+      gt::sub_missing(columns = "value", missing_text = "**NA**") %>%
       gt::text_transform(
         locations = gt::cells_body(columns = "value"),
         fn = function(x) ifelse(x == "**NA**", "<code>NA</code>", x)
@@ -1301,7 +1301,7 @@ probe_interactions <- function(data) {
       columns_char, FUN.VALUE = integer(1), USE.NAMES = FALSE,
       FUN = function(x) {
         data %>%
-          dplyr::select(dplyr::one_of(x)) %>%
+          dplyr::select(dplyr::all_of(x)) %>%
           dplyr::distinct() %>%
           dplyr::count() %>%
           dplyr::pull(n)
@@ -1317,7 +1317,7 @@ probe_interactions <- function(data) {
   # Create a ggplot2 plot matrix with the data
   plot_matrix <-
     data %>%
-    dplyr::select(dplyr::one_of(col_names)) %>%
+    dplyr::select(dplyr::all_of(col_names)) %>%
     ggplot2::ggplot(ggplot2::aes(x = .panel_x, y = .panel_y)) + 
     ggplot2::geom_point(alpha = 0.50, shape = 16, size = 1) + 
     ggforce::geom_autodensity() +
@@ -1388,7 +1388,7 @@ probe_correlations <- function(data) {
     )
   }
   
-  data_corr <- dplyr::select(data, dplyr::one_of(columns_numeric))
+  data_corr <- dplyr::select(data, dplyr::all_of(columns_numeric))
   
   corr_pearson <- 
     stats::cor(data_corr, method = "pearson", use = "pairwise.complete.obs")
@@ -1539,7 +1539,7 @@ probe_sample <- function(data) {
   probe_sample <-
     data %>%
     gt::gt_preview(top_n = 5, bottom_n = 5) %>%
-    gt_missing(columns = gt::everything(), missing_text = "**NA**") %>%
+    gt::sub_missing(columns = gt::everything(), missing_text = "**NA**") %>%
     gt::text_transform(
       locations = gt::cells_body(columns = gt::everything()),
       fn = function(x) ifelse(x == "**NA**", "<code>NA</code>", x)

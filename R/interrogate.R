@@ -426,7 +426,7 @@ interrogate <- function(
         
         tbl_checked %>%
           dplyr::mutate(pb_is_good_ = !!rlang::parse_expr(columns_str_add)) %>%
-          dplyr::select(-dplyr::one_of(columns_str_vec)) %>%
+          dplyr::select(-dplyr::all_of(columns_str_vec)) %>%
           dplyr::mutate(pb_is_good_ = dplyr::case_when(
             pb_is_good_ == validation_n ~ TRUE,
             TRUE ~ FALSE
@@ -3331,9 +3331,9 @@ add_table_extract <- function(
   ) {
     
     problem_rows <-
-      dplyr::sample_n(
-        tbl = problem_rows,
-        size = sample_n,
+      dplyr::slice_sample(
+        problem_rows,
+        n = sample_n,
         replace = FALSE) %>%
       dplyr::as_tibble()
     
@@ -3345,9 +3345,9 @@ add_table_extract <- function(
   ) {
     
     problem_rows <-
-      dplyr::sample_frac(
-        tbl = problem_rows,
-        size = sample_frac,
+      dplyr::slice_sample(
+        problem_rows,
+        prop = sample_frac,
         replace = FALSE) %>%
       dplyr::as_tibble() %>%
       utils::head(sample_limit)

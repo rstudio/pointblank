@@ -131,6 +131,9 @@ test_that("sundered data can be generated and retrieved with a `tbl_df`", {
   # input table and the two data pieces
   expect_equal(
     colnames(small_table),
+    colnames(pass_data_tbl)
+  )
+  expect_equal(
     colnames(pass_data_tbl),
     colnames(fail_data_tbl)
   )
@@ -209,7 +212,7 @@ test_that("sundered data can be combined to a single `tbl_df` with a single flag
   expect_equal(unique(c_4$.pb_combined), c(1L, 0L))
   
   # Expect the rows to be in the same order as the input table
-  expect_equivalent(combined_data_tbl %>% dplyr::select(-.pb_combined), small_table)
+  expect_equal(combined_data_tbl %>% dplyr::select(-.pb_combined), small_table)
 })
 
 test_that("sundered data can be generated and retrieved with a `tbl_df` (one step)", {
@@ -252,6 +255,9 @@ test_that("sundered data can be generated and retrieved with a `tbl_df` (one ste
   # input table and the two data pieces
   expect_equal(
     colnames(small_table),
+    colnames(pass_data_tbl)
+  )
+  expect_equal(
     colnames(pass_data_tbl),
     colnames(fail_data_tbl)
   )
@@ -317,6 +323,9 @@ test_that("sundered data can be generated and retrieved with a `tbl_df` (no step
   # input table and the two data pieces
   expect_equal(
     colnames(small_table),
+    colnames(pass_data_tbl)
+  )
+  expect_equal(
     colnames(pass_data_tbl),
     colnames(fail_data_tbl)
   )
@@ -399,10 +408,13 @@ test_that("sundering can occur (with exceptions) when there are preconditions", 
   # input table and the two data pieces
   expect_equal(
     colnames(small_table),
+    colnames(pass_data_tbl)
+  )
+  expect_equal(
     colnames(pass_data_tbl),
     colnames(fail_data_tbl)
   )
-  
+
   # Expect a list of data pieces if `NULL` provided
   # to the `type` argument
   data_tbl_list <- get_sundered_data(agent_p_equal, type = NULL)
@@ -436,10 +448,10 @@ test_that("sundering can occur (with exceptions) when there are preconditions", 
   # Expect no error if there are mixed preconditions across
   # the validations but the validation steps actually used for
   # sundering don't have mixed preconditions
-  expect_error(regexp = NA, agent_p_unused %>% get_sundered_data(type = "pass"))
-  expect_error(regexp = NA, agent_p_unused %>% get_sundered_data(type = "fail"))
-  expect_error(regexp = NA, agent_p_unused %>% get_sundered_data(type = "combined"))
-  expect_error(regexp = NA, agent_p_unused %>% get_sundered_data(type = NULL))
+  expect_no_error(agent_p_unused %>% get_sundered_data(type = "pass"))
+  expect_no_error(agent_p_unused %>% get_sundered_data(type = "fail"))
+  expect_no_error(agent_p_unused %>% get_sundered_data(type = "combined"))
+  expect_no_error(agent_p_unused %>% get_sundered_data(type = NULL))
   
   # Get the 'pass' data piece using `get_sundered_data()` and `agent_p_unused`
   pass_data_tbl_u <- agent_p_unused %>% get_sundered_data(type = "pass")
@@ -494,6 +506,9 @@ test_that("sundered data can be generated and retrieved with a `tbl_dbi` (SQLite
   # input table and the two data pieces
   expect_equal(
     colnames(tbl_sqlite),
+    colnames(pass_data_tbl)
+  )
+  expect_equal(
     colnames(pass_data_tbl),
     colnames(fail_data_tbl)
   )
@@ -508,8 +523,8 @@ test_that("sundered data can be generated and retrieved with a `tbl_dbi` (SQLite
   expect_type(data_tbl_list, "list")
   expect_equal(names(data_tbl_list), c("pass", "fail"))
   expect_equal(length(data_tbl_list), 2)
-  expect_equal(data_tbl_list$pass, pass_data_tbl)
-  expect_equal(data_tbl_list$fail, fail_data_tbl)
+  expect_equal(data_tbl_list$pass, pass_data_tbl, ignore_attr = TRUE)
+  expect_equal(data_tbl_list$fail, fail_data_tbl, ignore_attr = TRUE)
 
   # Expect an error if the agent hasn't performed
   # an interrogation before calling `get_sundered_data()`

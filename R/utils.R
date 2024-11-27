@@ -1643,13 +1643,6 @@ print_time <- function(time_diff_s) {
   )
 }
 
-gt_missing <- 
-  if (packageVersion("gt") >= "0.6.0") {
-    gt::sub_missing 
-  } else {
-    gt::fmt_missing
-  }
-
 pb_get_image_tag <- function(file, dir = "images") {
   
   repo_url <- "https://raw.githubusercontent.com/rstudio/pointblank/main"
@@ -1691,6 +1684,10 @@ pb_get_image_tag <- function(file, dir = "images") {
 deparse_expr <- function(expr, collapse = " ", ...) {
   if (rlang::is_scalar_atomic(expr)) {
     as.character(expr)
+  } else if (rlang::is_quosure(expr)) {
+    expr <- rlang::quo_get_expr(expr)
+    deparsed <- paste(deparse(expr, ...), collapse = collapse)
+    paste("<expr>", deparsed)
   } else {
     deparsed <- paste(deparse(expr, ...), collapse = collapse)
     paste("<expr>", deparsed)

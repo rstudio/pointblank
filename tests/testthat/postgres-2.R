@@ -24,8 +24,8 @@ test_that("scan_data works with dittodb-mocked Postgres database connection", {
     DBI::dbDisconnect(con)
     # stop_db_capturing()
     
-    expect_is(scan_results, "examination_page")
-    expect_is(scan_results, "shiny.tag.list")
-    expect_is(scan_results, "list")
+    expect_s3_class(scan_results, "examination_page")
+    expect_s3_class(scan_results, "shiny.tag.list")
+    expect_type(scan_results, "list")
   })
 })

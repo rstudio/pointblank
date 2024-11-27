@@ -17,7 +17,7 @@ test_that("Getting data extracts is possible", {
   
   # Expect that using `get_data_extracts()` without
   # specifying `i` gives us a list of all data extracts
-  get_data_extracts(agent) %>% expect_is("list")
+  get_data_extracts(agent) %>% expect_type("list")
   get_data_extracts(agent) %>% names() %>% expect_equal(as.character(1:2))
   get_data_extracts(agent) %>% length() %>% expect_equal(2)
   get_data_extracts(agent) %>% 
@@ -29,8 +29,8 @@ test_that("Getting data extracts is possible", {
   
   # Expect that using `get_data_extracts()` when
   # specifying `i` gives us the data extracts as a tbl
-  get_data_extracts(agent, i = 1) %>% expect_is("tbl_df")
-  get_data_extracts(agent, i = 2) %>% expect_is("tbl_df")
+  get_data_extracts(agent, i = 1) %>% expect_s3_class("tbl_df")
+  get_data_extracts(agent, i = 2) %>% expect_s3_class("tbl_df")
   
   # Expect an error if the `i` value isn't valid
   expect_error(get_data_extracts(agent, i = 3))
@@ -51,7 +51,7 @@ test_that("Getting data extracts is possible", {
   
   # Expect that using `get_data_extracts()` without
   # specifying `i` gives us an empty list in this case
-  get_data_extracts(agent) %>% expect_equivalent(list())
+  get_data_extracts(agent) %>% expect_equal(list())
   
   # Expect an error if the `i` value is valid but doesn't
   # have an associated data extract
@@ -85,7 +85,7 @@ test_that("Data extracts of different sizes are possible to create", {
   
   # Expect that using `get_data_extracts()` without
   # specifying `i` gives us a list of all data extracts
-  get_data_extracts(agent) %>% expect_is("list")
+  get_data_extracts(agent) %>% expect_type("list")
   get_data_extracts(agent) %>% names() %>% expect_equal(as.character(1:2))
   get_data_extracts(agent) %>% length() %>% expect_equal(2)
   get_data_extracts(agent) %>% 
@@ -97,8 +97,8 @@ test_that("Data extracts of different sizes are possible to create", {
   
   # Expect that using `get_data_extracts()` when
   # specifying `i` gives us the data extracts as a tbl
-  get_data_extracts(agent, i = 1) %>% expect_is("tbl_df")
-  get_data_extracts(agent, i = 2) %>% expect_is("tbl_df")
+  get_data_extracts(agent, i = 1) %>% expect_s3_class("tbl_df")
+  get_data_extracts(agent, i = 2) %>% expect_s3_class("tbl_df")
   
   # Expect only single rows in each of the extracts
   get_data_extracts(agent, i = 1) %>% nrow() %>% expect_equal(1)
@@ -121,7 +121,7 @@ test_that("Data extracts of different sizes are possible to create", {
   
   # Expect that using `get_data_extracts()` without
   # specifying `i` gives us a list of all data extracts
-  get_data_extracts(agent) %>% expect_is("list")
+  get_data_extracts(agent) %>% expect_type("list")
   get_data_extracts(agent) %>% names() %>% expect_equal(as.character(1:2))
   get_data_extracts(agent) %>% length() %>% expect_equal(2)
   get_data_extracts(agent) %>% 
@@ -133,8 +133,8 @@ test_that("Data extracts of different sizes are possible to create", {
   
   # Expect that using `get_data_extracts()` when
   # specifying `i` gives us the data extracts as a tbl
-  get_data_extracts(agent, i = 1) %>% expect_is("tbl_df")
-  get_data_extracts(agent, i = 2) %>% expect_is("tbl_df")
+  get_data_extracts(agent, i = 1) %>% expect_s3_class("tbl_df")
+  get_data_extracts(agent, i = 2) %>% expect_s3_class("tbl_df")
   
   # Expect seven rows in each of the extracts
   get_data_extracts(agent, i = 1) %>% nrow() %>% expect_equal(7)
@@ -157,7 +157,7 @@ test_that("Data extracts of different sizes are possible to create", {
   
   # Expect that using `get_data_extracts()` without
   # specifying `i` gives us a list of all data extracts
-  get_data_extracts(agent) %>% expect_is("list")
+  get_data_extracts(agent) %>% expect_type("list")
   get_data_extracts(agent) %>% names() %>% expect_equal(as.character(1:2))
   get_data_extracts(agent) %>% length() %>% expect_equal(2)
   get_data_extracts(agent) %>% 
@@ -169,8 +169,8 @@ test_that("Data extracts of different sizes are possible to create", {
   
   # Expect that using `get_data_extracts()` when
   # specifying `i` gives us the data extracts as a tbl
-  get_data_extracts(agent, i = 1) %>% expect_is("tbl_df")
-  get_data_extracts(agent, i = 2) %>% expect_is("tbl_df")
+  get_data_extracts(agent, i = 1) %>% expect_s3_class("tbl_df")
+  get_data_extracts(agent, i = 2) %>% expect_s3_class("tbl_df")
   
   # Expect seven rows in each of the extracts
   get_data_extracts(agent, i = 1) %>% nrow() %>% expect_equal(5)
@@ -193,7 +193,7 @@ test_that("Data extracts of different sizes are possible to create", {
   
   # Expect that using `get_data_extracts()` without
   # specifying `i` gives us a list of all data extracts
-  get_data_extracts(agent) %>% expect_is("list")
+  get_data_extracts(agent) %>% expect_type("list")
   get_data_extracts(agent) %>% names() %>% expect_equal(as.character(1:2))
   get_data_extracts(agent) %>% length() %>% expect_equal(2)
   get_data_extracts(agent) %>% 
@@ -205,8 +205,8 @@ test_that("Data extracts of different sizes are possible to create", {
   
   # Expect that using `get_data_extracts()` when
   # specifying `i` gives us the data extracts as a tbl
-  get_data_extracts(agent, i = 1) %>% expect_is("tbl_df")
-  get_data_extracts(agent, i = 2) %>% expect_is("tbl_df")
+  get_data_extracts(agent, i = 1) %>% expect_s3_class("tbl_df")
+  get_data_extracts(agent, i = 2) %>% expect_s3_class("tbl_df")
   
   # Expect seven rows in each of the extracts
   get_data_extracts(agent, i = 1) %>% nrow() %>% expect_equal(3)
@@ -229,7 +229,7 @@ test_that("Data extracts of different sizes are possible to create", {
   
   # Expect that using `get_data_extracts()` without
   # specifying `i` gives us a list of all data extracts
-  get_data_extracts(agent) %>% expect_is("list")
+  get_data_extracts(agent) %>% expect_type("list")
   get_data_extracts(agent) %>% names() %>% expect_equal(as.character(1:2))
   get_data_extracts(agent) %>% length() %>% expect_equal(2)
   get_data_extracts(agent) %>% 
@@ -241,8 +241,8 @@ test_that("Data extracts of different sizes are possible to create", {
   
   # Expect that using `get_data_extracts()` when
   # specifying `i` gives us the data extracts as a tbl
-  get_data_extracts(agent, i = 1) %>% expect_is("tbl_df")
-  get_data_extracts(agent, i = 2) %>% expect_is("tbl_df")
+  get_data_extracts(agent, i = 1) %>% expect_s3_class("tbl_df")
+  get_data_extracts(agent, i = 2) %>% expect_s3_class("tbl_df")
   
   # Expect seven rows in each of the extracts
   get_data_extracts(agent, i = 1) %>% nrow() %>% expect_equal(5)
@@ -264,7 +264,7 @@ test_that("Data extracts of different sizes are possible to create", {
   
   # Expect that using `get_data_extracts()` without
   # specifying `i` gives us a list of all data extracts
-  get_data_extracts(agent) %>% expect_is("list")
+  get_data_extracts(agent) %>% expect_type("list")
   get_data_extracts(agent) %>% names() %>% expect_null()
   get_data_extracts(agent) %>% length() %>% expect_equal(0)
 })

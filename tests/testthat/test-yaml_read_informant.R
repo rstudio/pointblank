@@ -4,7 +4,7 @@ test_that("Reading an informant from YAML is possible", {
   # add information with some other `info_*()` functions
   informant <- 
     create_informant(
-      tbl = ~ readr::read_csv(file = "test_table.csv", col_types = "TDdcddlc"),
+      tbl = ~ readr::read_csv(file = test_path("test_table.csv"), col_types = "TDdcddlc"),
       tbl_name = "test_table",
       label = "An example."
     ) %>%
@@ -41,27 +41,25 @@ test_that("Reading an informant from YAML is possible", {
   
   # Expect that the original informant and the one read
   # back from YAML are both of the class `ptblank_informant`
-  expect_is(informant, "ptblank_informant")
-  expect_is(informant_from_yaml, "ptblank_informant")
+  expect_s3_class(informant, "ptblank_informant")
+  expect_s3_class(informant_from_yaml, "ptblank_informant")
   
   # Expect both informant objects to successfully produce a report
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     report_1 <- get_informant_report(informant)
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     report_1_from_yaml <- get_informant_report(informant_from_yaml)
   )
-  expect_is(report_1, "gt_tbl")
-  expect_is(report_1_from_yaml, "gt_tbl")
+  expect_s3_class(report_1, "gt_tbl")
+  expect_s3_class(report_1_from_yaml, "gt_tbl")
   
   # Expect that the informant (which never had `incorporate()`
   # run on it) is equivalent to the informant object created
   # via `yaml_read_informant()` (i.e., reading in the YAML file)
   # - *Except* private fields which are note written
   informant$metadata$`_private` <- NULL
-  expect_equivalent(informant, informant_from_yaml)
+  expect_equal(informant, informant_from_yaml, ignore_attr = TRUE)
   
   # Use `incorporate()` on the informant; this creates the list
   # component `metadata_rev` in the `informant` which is for
@@ -79,16 +77,14 @@ test_that("Reading an informant from YAML is possible", {
   expect_null(informant_inc_from_yaml$metadata_rev)
   
   # Expect both informant objects to successfully produce a report
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     report_1_inc <- get_informant_report(informant_inc)
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     report_1_from_yaml_inc <- get_informant_report(informant_inc_from_yaml)
   )
-  expect_is(report_1_inc, "gt_tbl")
-  expect_is(report_1_from_yaml_inc, "gt_tbl")
+  expect_s3_class(report_1_inc, "gt_tbl")
+  expect_s3_class(report_1_from_yaml_inc, "gt_tbl")
 })
 
 fs::file_delete(path = "informant-test_table.yml")

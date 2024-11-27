@@ -1,5 +1,4 @@
 skip_on_os(os = "windows")
-local_edition(3)
 
 work_path <- "./generated_r_files"
 
@@ -140,8 +139,7 @@ test_that("a file created with `draft_validation()` cannot be overwritten by def
     )
   )
   
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     suppressMessages(
       draft_validation(tbl = gt::countrypops, filename = "countrypops_new", path = work_path, overwrite = TRUE)
     )
@@ -154,8 +152,7 @@ test_that("messages emitted by `draft_validation()` can be quieted", {
     draft_validation(tbl = gt::countrypops, filename = "countrypops", path = work_path, overwrite = TRUE)
   )
   
-  expect_message(
-    regexp = NA,
+  expect_no_message(
     draft_validation(tbl = gt::countrypops, filename = "countrypops", path = work_path, overwrite = TRUE, quiet = TRUE)
   )
 })

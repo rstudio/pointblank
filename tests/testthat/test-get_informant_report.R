@@ -5,7 +5,7 @@ test_that("Getting an information report is possible", {
   # `incorporate()` the snippets into the info text
   informant <- 
     create_informant(
-      tbl = ~ readr::read_csv(file = "test_table.csv", col_types = "TDdcddlc"),
+      tbl = ~ readr::read_csv(file = test_path("test_table.csv"), col_types = "TDdcddlc"),
       tbl_name = "test_table",
       label = "An example."
     ) %>%
@@ -43,7 +43,7 @@ test_that("Getting an information report is possible", {
   report <- get_informant_report(informant_inc)
   
   # Expect that the report is a gt table
-  expect_is(report, "gt_tbl")
+  expect_s3_class(report, "gt_tbl")
 })
 
 test_that("Getting a more advanced information report is possible", {
@@ -54,7 +54,7 @@ test_that("Getting a more advanced information report is possible", {
   
   informant <- 
     create_informant(
-      tbl = ~ readr::read_csv(file = "penguins.csv", col_types = "ccddddcd"),
+      tbl = ~ readr::read_csv(file = test_path("penguins.csv"), col_types = "ccddddcd"),
       tbl_name = "penguins",
       label = "The `penguins` dataset from the **palmerpenguins** 📦."
     ) %>% 
@@ -185,7 +185,7 @@ Dimorphism and Environmental Variability within a Community of Antarctic Penguin
   report <- get_informant_report(informant_inc)
   
   # Expect that the report is a gt table
-  expect_is(report, "gt_tbl")
+  expect_s3_class(report, "gt_tbl")
 })
 
 test_that("The correct title is rendered in the informant report", {

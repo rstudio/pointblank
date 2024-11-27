@@ -21,7 +21,7 @@ test_that("Creating a valid `informant` object is possible", {
   )
   
   # Expect an informant object of class `ptblank_informant`
-  expect_is(informant, "ptblank_informant")
+  expect_s3_class(informant, "ptblank_informant")
   expect_true(is_ptblank_informant(informant))
   
   # Expect that the `is_ptblank_informant()` returns FALSE
@@ -31,27 +31,27 @@ test_that("Creating a valid `informant` object is possible", {
   expect_false(is_ptblank_informant(dplyr::tibble(a = 5)))
   
   # Expect certain classes for the different `ptblank_informant` components
-  expect_is(informant$tbl, class(tbl))
+  expect_s3_class(informant$tbl, class(tbl), exact = TRUE)
   expect_null(informant$read_fn)
-  expect_is(informant$tbl_name, "character")
-  expect_is(informant$info_label, "character")
-  expect_is(informant$meta_snippets, "list")
-  expect_is(informant$lang, "character")
-  expect_is(informant$locale, "character")
-  expect_is(informant$metadata, "list")
-  expect_is(informant$metadata$table, "list")
-  expect_is(informant$metadata$table$name, "character")
-  expect_is(informant$metadata$table$`_columns`, "integer")
-  expect_is(informant$metadata$table$`_rows`, "numeric")
-  expect_is(informant$metadata$table$`_type`, "character")
+  expect_type(informant$tbl_name, "character")
+  expect_type(informant$info_label, "character")
+  expect_type(informant$meta_snippets, "list")
+  expect_type(informant$lang, "character")
+  expect_type(informant$locale, "character")
+  expect_type(informant$metadata, "list")
+  expect_type(informant$metadata$table, "list")
+  expect_type(informant$metadata$table$name, "character")
+  expect_type(informant$metadata$table$`_columns`, "integer")
+  expect_type(informant$metadata$table$`_rows`, "double")
+  expect_type(informant$metadata$table$`_type`, "character")
   expect_equal(informant$metadata$table$name, "tbl")
   expect_equal(informant$metadata$table$`_columns`, 2)
   expect_equal(informant$metadata$table$`_rows`, 6)
   expect_equal(informant$metadata$table$`_type`, "tbl_df")
-  expect_is(informant$metadata$columns, "list")
+  expect_type(informant$metadata$columns, "list")
   expect_equal(names(informant$metadata$columns), c("a", "b"))
-  expect_is(informant$metadata$columns$a, "list")
-  expect_is(informant$metadata$columns$b, "list")
+  expect_type(informant$metadata$columns$a, "list")
+  expect_type(informant$metadata$columns$b, "list")
   expect_equal(names(informant$metadata$columns$a), "_type")
   expect_equal(names(informant$metadata$columns$b), "_type")
   expect_equal(informant$metadata$columns$a$`_type`, "numeric")
@@ -90,37 +90,33 @@ test_that("Creating a valid `informant` object is possible", {
   # not specifying `tbl_name` results in an `NA` for `tbl_name`; we
   # also expect a warning
   expect_warning(
-    expect_equal(
-      create_informant(read_fn = ~ pointblank::small_table) %>% .$tbl_name,
-      NA_character_
-    )
+      obj <- create_informant(read_fn = ~ pointblank::small_table) %>% .$tbl_name,
   )
+  expect_equal(obj, NA_character_)
   
   # Expect that there is a preference for reading a table from
   # a `tbl` if the deprecated `read_fn` is also supplied with a
   # target table; also expect a warning and a message
-  informant_2 <- 
-    expect_message(
-      expect_warning(
-        create_informant(
-          tbl = tbl,
-          read_fn = ~ pointblank::small_table
-        )
+  expect_message(
+    expect_warning(
+      informant_2 <- create_informant(
+        tbl = tbl,
+        read_fn = ~ pointblank::small_table
       )
     )
+  )
   
   expect_equal(informant_2$metadata$table$`_columns`, 2)
   expect_equal(informant_2$metadata$table$`_rows`, 6)
   
-  informant_3 <- 
-    expect_message(
-      expect_warning(
-        create_informant(
-          tbl = tbl,
-          read_fn = function() pointblank::small_table
-        )
+  expect_message(
+    expect_warning(
+      informant_3 <- create_informant(
+        tbl = tbl,
+        read_fn = function() pointblank::small_table
       )
     )
+  )
   
   expect_equal(informant_3$metadata$table$`_columns`, 2)
   expect_equal(informant_3$metadata$table$`_rows`, 6)
@@ -139,7 +135,7 @@ test_that("Creating a valid `informant` object is possible", {
       agent = create_agent(tbl = ~ pointblank::small_table)
     )
   
-  expect_is(informant_4$read_fn, "formula")
+  expect_s3_class(informant_4$read_fn, "formula")
   expect_equal(
     as.character(informant_4$read_fn),
     c("~", "pointblank::small_table")
@@ -151,5 +147,5 @@ test_that("Creating a valid `informant` object is possible", {
     )
   
   expect_null(informant_5$read_fn)
-  expect_is(informant_5$tbl, class(pointblank::small_table))
+  expect_s3_class(informant_5$tbl, class(pointblank::small_table), exact = TRUE)
 })

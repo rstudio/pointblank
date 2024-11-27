@@ -4,66 +4,66 @@ test_that("The `action_levels()` helper function works as expected", {
   # all of the elements will be NULL
   al <- action_levels()
   
-  al %>% expect_is("action_levels")
-  al %>% 
-    names() %>% 
-    expect_equal(
-      c(
-        "warn_fraction", "warn_count", "stop_fraction", "stop_count", 
-        "notify_fraction", "notify_count", "fns")
-    )
-  al[[7]] %>% names() %>% expect_equal(c("warn", "stop", "notify"))
-  
-  al[[1]] %>% expect_null()
-  al[[2]] %>% expect_null()
-  al[[3]] %>% expect_null()
-  al[[4]] %>% expect_null()
-  al[[5]] %>% expect_null()
-  al[[6]] %>% expect_null()
-  al[[7]] %>% expect_is("list")
-  al[[7]][[1]] %>% expect_null()
-  al[[7]][[2]] %>% expect_null()
-  al[[7]][[3]] %>% expect_null()
-  al %>% length() %>% expect_equal(7)
-  al[[7]] %>% length() %>% expect_equal(3)
+  expect_s3_class(al, "action_levels")
+  expect_named(
+    al,
+    c(
+      "warn_fraction", "warn_count", "stop_fraction", "stop_count", 
+      "notify_fraction", "notify_count", "fns"
+      )
+  )
+  expect_length(al, 7)
+  expect_null(al[[1]])
+  expect_null(al[[2]])
+  expect_null(al[[3]])
+  expect_null(al[[4]])
+  expect_null(al[[5]])
+  expect_null(al[[6]])
+  expect_named(al[[7]], c("warn", "stop", "notify"))
+  expect_type(al[[7]], "list")
+  expect_null(al[[7]][[1]])
+  expect_null(al[[7]][[2]])
+  expect_null(al[[7]][[3]])
+  expect_length(al[[7]], 3)
   
   # Create an `action_levels()` list with fractional values
   al <- action_levels(warn_at = 0.2, stop_at = 0.8, notify_at = 0.345)
   
-  al %>% expect_is("action_levels")
-  al %>% names() %>% 
-    expect_equal(
-      c(
-        "warn_fraction", "warn_count", "stop_fraction", "stop_count", 
-        "notify_fraction", "notify_count", "fns")
+  expect_s3_class(al, "action_levels")
+  expect_length(al, 7)
+  expect_named(
+    al,
+    c(
+      "warn_fraction", "warn_count", "stop_fraction", "stop_count", 
+      "notify_fraction", "notify_count", "fns"
     )
-  al[[7]] %>% names() %>% expect_equal(c("warn", "stop", "notify"))
+  )
   
-  al$warn_fraction %>% expect_equal(0.2)
-  al$warn_count %>% expect_null()
-  al$stop_fraction %>% expect_equal(0.8)
-  al$stop_count %>% expect_null()
-  al$notify_fraction %>% expect_equal(0.345)
-  al$notify_count %>% expect_null()
-  al[[7]] %>% expect_is("list")
-  al[[7]][[1]] %>% expect_null()
-  al[[7]][[2]] %>% expect_null()
-  al[[7]][[3]] %>% expect_null()
-  al %>% length() %>% expect_equal(7)
-  al[[7]] %>% length() %>% expect_equal(3)
+  expect_equal(al$warn_fraction, 0.2)
+  expect_null(al$warn_count)
+  expect_equal(al$stop_fraction, 0.8)
+  expect_null(al$stop_count)
+  expect_equal(al$notify_fraction, 0.345)
+  expect_null(al$notify_count)
+  
+  expect_length(al[[7]], 3)
+  expect_named(al[[7]], c("warn", "stop", "notify"))
+  expect_type(al[[7]], "list")
+  expect_null(al[[7]][[1]])
+  expect_null(al[[7]][[2]])
+  expect_null(al[[7]][[3]])
   
   # Create an `action_levels()` list with count values
   al <- action_levels(warn_at = 20, stop_at = 80, notify_at = 34.6)
   
-  al %>% expect_is("action_levels")
+  al %>% expect_s3_class("action_levels")
   al %>%
-    names() %>% 
-    expect_equal(
+    expect_named(
       c(
         "warn_fraction", "warn_count", "stop_fraction", "stop_count", 
         "notify_fraction", "notify_count", "fns")
     )
-  al[[7]] %>% names() %>% expect_equal(c("warn", "stop", "notify"))
+  al[[7]] %>% expect_named(c("warn", "stop", "notify"))
   
   al$warn_fraction %>% expect_null()
   al$warn_count %>% expect_equal(20)
@@ -71,7 +71,7 @@ test_that("The `action_levels()` helper function works as expected", {
   al$stop_count %>% expect_equal(80)
   al$notify_fraction %>% expect_null()
   al$notify_count %>% expect_equal(34)
-  al[[7]] %>% expect_is("list")
+  al[[7]] %>% expect_type("list")
   al[[7]][[1]] %>% expect_null()
   al[[7]][[2]] %>% expect_null()
   al[[7]][[3]] %>% expect_null()
@@ -93,7 +93,7 @@ test_that("The `action_levels()` helper function works as expected", {
       fns = list(warn = ~ my_great_function(vl = .vars_list))
     )
   
-  al %>% expect_is("action_levels")
+  al %>% expect_s3_class("action_levels")
   al %>% 
     names() %>% 
     expect_equal(
@@ -101,8 +101,8 @@ test_that("The `action_levels()` helper function works as expected", {
         "warn_fraction", "warn_count", "stop_fraction", "stop_count", 
         "notify_fraction", "notify_count", "fns")
     )
-  al[[7]] %>% names() %>% expect_equal("warn")
-  al[[7]][[1]] %>% expect_is("formula")
+  al[[7]] %>% expect_named("warn")
+  al[[7]][[1]] %>% expect_s3_class("formula")
   al[[7]][[1]] %>%
     as.character() %>%
     expect_equal(c("~", "my_great_function(vl = .vars_list)"))
@@ -113,9 +113,9 @@ test_that("The `action_levels()` helper function works as expected", {
   al$stop_count %>% expect_null()
   al$notify_fraction %>% expect_null()
   al$notify_count %>% expect_null()
-  al[[7]] %>% expect_is("list")
-  al %>% length() %>% expect_equal(7)
-  al[[7]] %>% length() %>% expect_equal(1)
+  al[[7]] %>% expect_type("list")
+  al %>% expect_length(7)
+  al[[7]] %>% expect_length(1)
   
   # Expect an error if not all components
   # of the `fns` list are formulas

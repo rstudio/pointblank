@@ -431,6 +431,12 @@ col_vals_not_between <- function(
   
   agent <- x
   
+  # Avoid rlang (>= 0.3.0) soft deprecation warning
+  # Quosure lists can't be concatenated with objects other than quosures
+
+  left <- as.list(left)
+  right <- as.list(right)
+  
   if (is.null(brief)) {
     
     brief <- 

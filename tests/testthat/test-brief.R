@@ -41,3 +41,83 @@ test_that("`brief` recycles when possible", {
   )
 
 })
+
+test_that("Batch tests: special validations", {
+  
+  agent <- create_agent(small_table)
+  get_briefs <- function(x) x$validation_set$brief
+  
+  validation_fns <- all_validations_fns_vec()
+  validation_fns <- setdiff(validation_fns, c("serially", "conjointly", "specially"))
+  
+  # Special: serially
+  expect_identical(
+    agent %>% 
+      serially(
+        ~ test_col_vals_lt(., columns = a, value = 8),
+        ~ test_col_vals_gt(., columns = c, value = vars(a)),
+        ~ col_vals_not_null(., columns = b),
+        preconditions = ~ . %>% dplyr::filter(a < 10),
+        actions = action_levels(warn_at = 0.1, stop_at = 0.2), 
+        label = "The `serially()` step.",
+        active = FALSE,
+        brief = "x"
+      ) %>% 
+      get_briefs()
+    ,
+    "x"
+  )
+  
+  # Special: 
+  expect_identical(
+    agent %>% 
+      specially(
+        fn = function(x) { ... },
+        preconditions = ~ . %>% dplyr::filter(a < 10),
+        actions = action_levels(warn_at = 0.1, stop_at = 0.2), 
+        label = "The `specially()` step.",
+        active = FALSE,
+        brief = "x"
+      ) %>% 
+      get_briefs()
+    ,
+    "x"
+  )
+  
+  # Special: conjointly (no segments)
+  expect_identical(
+    agent %>% 
+      conjointly(
+        ~ col_vals_lt(., columns = a, value = 8),
+        ~ col_vals_gt(., columns = c, value = vars(a)),
+        ~ col_vals_not_null(., columns = b),
+        preconditions = ~ . %>% dplyr::filter(a < 10),
+        # segments = b ~ c("group_1", "group_2"),
+        actions = action_levels(warn_at = 0.1, stop_at = 0.2), 
+        label = "The `conjointly()` step.",
+        active = FALSE,
+        brief = "x"
+      ) %>% 
+      get_briefs(),
+    "x"
+  )
+  
+  # Special: conjointly (with segments)
+  expect_identical(
+    agent %>% 
+      conjointly(
+        ~ col_vals_lt(., columns = a, value = 8),
+        ~ col_vals_gt(., columns = c, value = vars(a)),
+        ~ col_vals_not_null(., columns = b),
+        preconditions = ~ . %>% dplyr::filter(a < 10),
+        segments = b ~ c("group_1", "group_2"),
+        actions = action_levels(warn_at = 0.1, stop_at = 0.2), 
+        label = "The `conjointly()` step.",
+        active = FALSE,
+        brief = "x"
+      ) %>% 
+      get_briefs(),
+    c("x", "x")
+  )
+
+})

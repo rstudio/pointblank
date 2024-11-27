@@ -1,21 +1,21 @@
 #------------------------------------------------------------------------------#
-# 
-#                 _         _    _      _                _    
-#                (_)       | |  | |    | |              | |   
+#
+#                 _         _    _      _                _
+#                (_)       | |  | |    | |              | |
 #   _ __    ___   _  _ __  | |_ | |__  | |  __ _  _ __  | | __
 #  | '_ \  / _ \ | || '_ \ | __|| '_ \ | | / _` || '_ \ | |/ /
-#  | |_) || (_) || || | | || |_ | |_) || || (_| || | | ||   < 
+#  | |_) || (_) || || | | || |_ | |_) || || (_| || | | ||   <
 #  | .__/  \___/ |_||_| |_| \__||_.__/ |_| \__,_||_| |_||_|\_\
-#  | |                                                        
-#  |_|                                                        
-#  
+#  | |
+#  |_|
+#
 #  This file is part of the 'rstudio/pointblank' project.
-#  
+#
 #  Copyright (c) 2017-2024 pointblank authors
-#  
+#
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
-# 
+#
 #------------------------------------------------------------------------------#
 
 
@@ -52,23 +52,23 @@
 "small_table"
 
 #' An SQLite version of the `small_table` dataset
-#' 
+#'
 #' The `small_table_sqlite()` function creates an SQLite, `tbl_dbi` version of
 #' the `small_table` dataset. A requirement is the availability of the **DBI**
-#' and **RSQLite** packages. These packages can be installed by using 
+#' and **RSQLite** packages. These packages can be installed by using
 #' `install.packages("DBI")` and `install.packages("RSQLite")`.
-#' 
+#'
 #' @examples
 #' # Use `small_table_sqlite()` to
 #' # create an SQLite version of the
 #' # `small_table` table
 #' #
 #' # small_table_sqlite <- small_table_sqlite()
-#' 
+#'
 #' @family Datasets
 #' @section Function ID:
 #' 14-2
-#' 
+#'
 #' @export
 small_table_sqlite <- function() {
 
@@ -77,18 +77,18 @@ small_table_sqlite <- function() {
     c("DBI", "RSQLite"),
     "to create an SQLite table object."
   )
-  
-  con <- 
+
+  con <-
     DBI::dbConnect(
-      RSQLite::SQLite(), 
+      RSQLite::SQLite(),
       dbname = system.file(
         "data_files", "small_table.db",
         package = "pointblank"
       )
     )
-  
+
   dplyr::tbl(con, "small_table")
-  
+
   # nocov end
 }
 

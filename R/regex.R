@@ -1,21 +1,21 @@
 #------------------------------------------------------------------------------#
-# 
-#                 _         _    _      _                _    
-#                (_)       | |  | |    | |              | |   
+#
+#                 _         _    _      _                _
+#                (_)       | |  | |    | |              | |
 #   _ __    ___   _  _ __  | |_ | |__  | |  __ _  _ __  | | __
 #  | '_ \  / _ \ | || '_ \ | __|| '_ \ | | / _` || '_ \ | |/ /
-#  | |_) || (_) || || | | || |_ | |_) || || (_| || | | ||   < 
+#  | |_) || (_) || || | | || |_ | |_) || || (_| || | | ||   <
 #  | .__/  \___/ |_||_| |_| \__||_.__/ |_| \__,_||_| |_||_|\_\
-#  | |                                                        
-#  |_|                                                        
-#  
+#  | |
+#  |_|
+#
 #  This file is part of the 'rstudio/pointblank' project.
-#  
+#
 #  Copyright (c) 2017-2024 pointblank authors
-#  
+#
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
-# 
+#
 #------------------------------------------------------------------------------#
 
 
@@ -51,11 +51,11 @@ regex_mac <- function() {
 
 
 regex_iban <- function(country = NULL) {
-  
+
   if (is.null(country)) {
     country <- "ZZZ"
   }
-  
+
   switch(
     country,
     AL =, ALB = "^AL[0-9]{2}[0-9]{8}[0-9A-Z]{16}$",          # Albania
@@ -130,33 +130,33 @@ regex_iban <- function(country = NULL) {
 }
 
 regex_postal_code <- function(country) {
-  
+
   code_tbl <-
     dplyr::select(countries, alpha_2, alpha_3, postal_code_format)
-  
+
   if (!(country %in% code_tbl$alpha_2 || country %in% code_tbl$alpha_3)) {
     return(NA_character_)
   }
-  
+
   if (country %in% code_tbl$alpha_2) {
     code_tbl <- dplyr::filter(code_tbl, alpha_2 == country)
   } else {
     code_tbl <- dplyr::filter(code_tbl, alpha_3 == country)
   }
-  
+
   postal_code_format <- paste0("^", code_tbl$postal_code_format, "$")
-  
+
   alpha_3 <- code_tbl$alpha_3
-  
+
   if (alpha_3 == "IRL") {
     postal_code_format <- "^[0-9A-Z]{3} ?[0-9dA-Z]{4}$"
   }
   if (alpha_3 == "REU") {
     postal_code_format <- "^9[78]4[0-9]{2}$"
   }
-  
+
   names(postal_code_format) <- alpha_3
-  
+
   postal_code_format
 }
 

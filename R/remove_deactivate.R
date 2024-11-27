@@ -1,28 +1,28 @@
 #------------------------------------------------------------------------------#
-# 
-#                 _         _    _      _                _    
-#                (_)       | |  | |    | |              | |   
+#
+#                 _         _    _      _                _
+#                (_)       | |  | |    | |              | |
 #   _ __    ___   _  _ __  | |_ | |__  | |  __ _  _ __  | | __
 #  | '_ \  / _ \ | || '_ \ | __|| '_ \ | | / _` || '_ \ | |/ /
-#  | |_) || (_) || || | | || |_ | |_) || || (_| || | | ||   < 
+#  | |_) || (_) || || | | || |_ | |_) || || (_| || | | ||   <
 #  | .__/  \___/ |_||_| |_| \__||_.__/ |_| \__,_||_| |_||_|\_\
-#  | |                                                        
-#  |_|                                                        
-#  
+#  | |
+#  |_|
+#
 #  This file is part of the 'rstudio/pointblank' project.
-#  
+#
 #  Copyright (c) 2017-2024 pointblank authors
-#  
+#
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
-# 
+#
 #------------------------------------------------------------------------------#
 
 
 #' Activate one or more of an *agent*'s validation steps
 #'
 #' @description
-#' 
+#'
 #' If certain validation steps need to be activated after the creation of the
 #' validation plan for an *agent*, use the `activate_steps()` function. This is
 #' equivalent to using the `active = TRUE` for the selected validation steps
@@ -31,29 +31,29 @@
 #' of the targeted validation steps.
 #'
 #' @param agent *The pointblank agent object*
-#' 
+#'
 #'   `obj:<ptblank_agent>` // **required**
-#' 
+#'
 #'   A **pointblank** *agent* object that is commonly created through the use of
 #'   the [create_agent()] function.
-#' 
+#'
 #' @param i *A validation step number*
-#'   
+#'
 #'   `scalar<integer>` // *default:* `NULL` (`optional`)
-#' 
+#'
 #'   The validation step number, which is assigned to each validation step in
 #'   the order of definition. If `NULL` (the default) then step activation won't
 #'   occur by index.
 #'
 #' @return A `ptblank_agent` object.
-#' 
-#' @examples 
+#'
+#' @examples
 #' # Create an agent that has the
 #' # `small_table` object as the
 #' # target table, add a few inactive
 #' # validation steps, and then use
 #' # `interrogate()`
-#' agent_1 <- 
+#' agent_1 <-
 #'   create_agent(
 #'     tbl = small_table,
 #'     tbl_name = "small_table",
@@ -69,7 +69,7 @@
 #'     active = FALSE
 #'   ) %>%
 #'   interrogate()
-#' 
+#'
 #' # In the above, the data is
 #' # not actually interrogated
 #' # because the `active` setting
@@ -80,11 +80,11 @@
 #'   agent_1 %>%
 #'   activate_steps(i = 1) %>%
 #'   interrogate()
-#' 
+#'
 #' @family Object Ops
 #' @section Function ID:
 #' 9-5
-#' 
+#'
 #' @seealso For the opposite behavior, use the [deactivate_steps()] function.
 #'
 #' @export
@@ -92,23 +92,23 @@ activate_steps <- function(
     agent,
     i = NULL
 ) {
-  
+
   if (!is.null(i)) {
-    agent$validation_set <- 
+    agent$validation_set <-
       agent$validation_set %>%
       dplyr::mutate(active = ifelse(i %in% {{ i }}, list(TRUE), active))
   }
-  
+
   # Remove any data extracts
   agent$extracts <- NULL
-  
+
   agent
 }
 
 #' Deactivate one or more of an *agent*'s validation steps
 #'
 #' @description
-#' 
+#'
 #' Should the deactivation of one or more validation steps be necessary after
 #' creation of the validation plan for an *agent*, the `deactivate_steps()`
 #' function will be helpful for that. This has the same effect as using the
@@ -118,29 +118,29 @@ activate_steps <- function(
 #' whether the step should be active or not.
 #'
 #' @param agent *The pointblank agent object*
-#' 
+#'
 #'   `obj:<ptblank_agent>` // **required**
-#' 
+#'
 #'   A **pointblank** *agent* object that is commonly created through the use of
 #'   the [create_agent()] function.
-#' 
+#'
 #' @param i *A validation step number*
-#'   
+#'
 #'   `scalar<integer>` // *default:* `NULL` (`optional`)
-#' 
+#'
 #'   The validation step number, which is assigned to each validation step in
 #'   the order of definition. If `NULL` (the default) then step deactivation
 #'   won't occur by index.
 #'
 #' @return A `ptblank_agent` object.
-#' 
-#' @examples 
+#'
+#' @examples
 #' # Create an agent that has the
 #' # `small_table` object as the
 #' # target table, add a few
 #' # validation steps, and then use
 #' # `interrogate()`
-#' agent_1 <- 
+#' agent_1 <-
 #'   create_agent(
 #'     tbl = small_table,
 #'     tbl_name = "small_table",
@@ -152,7 +152,7 @@ activate_steps <- function(
 #'     regex = "[0-9]-[a-z]{3}-[0-9]"
 #'   ) %>%
 #'   interrogate()
-#'   
+#'
 #' # The second validation step is
 #' # now being reconsidered and may
 #' # be either phased out or improved
@@ -175,23 +175,23 @@ deactivate_steps <- function(
     agent,
     i = NULL
 ) {
-  
+
   if (!is.null(i)) {
-    agent$validation_set <- 
+    agent$validation_set <-
       agent$validation_set %>%
       dplyr::mutate(active = ifelse(i %in% {{ i }}, list(FALSE), active))
   }
-  
+
   # Remove any data extracts
   agent$extracts <- NULL
-  
+
   agent
 }
 
 #' Remove one or more of an *agent*'s validation steps
 #'
 #' @description
-#' 
+#'
 #' Validation steps can be removed from an *agent* object through use of the
 #' `remove_steps()` function. This is useful, for instance, when getting an
 #' agent from disk (via the [x_read_disk()] function) and omitting one or more
@@ -199,29 +199,29 @@ deactivate_steps <- function(
 #' validation steps all stored data extracts will be removed from the *agent*.
 #'
 #' @param agent *The pointblank agent object*
-#' 
+#'
 #'   `obj:<ptblank_agent>` // **required**
-#' 
+#'
 #'   A **pointblank** *agent* object that is commonly created through the use of
 #'   the [create_agent()] function.
-#' 
+#'
 #' @param i *A validation step number*
-#'   
+#'
 #'   `scalar<integer>` // *default:* `NULL` (`optional`)
-#' 
+#'
 #'   The validation step number, which is assigned to each validation step in
 #'   the order of definition. If `NULL` (the default) then step removal won't
 #'   occur by index.
-#'   
+#'
 #' @return A `ptblank_agent` object.
-#' 
-#' @examples 
+#'
+#' @examples
 #' # Create an agent that has the
 #' # `small_table` object as the
 #' # target table, add a few
 #' # validation steps, and then use
 #' # `interrogate()`
-#' agent_1 <- 
+#' agent_1 <-
 #'   create_agent(
 #'     tbl = small_table,
 #'     tbl_name = "small_table",
@@ -233,7 +233,7 @@ deactivate_steps <- function(
 #'     regex = "[0-9]-[a-z]{3}-[0-9]"
 #'   ) %>%
 #'   interrogate()
-#'   
+#'
 #' # The second validation step has
 #' # been determined to be unneeded and
 #' # is to be removed; this can be done
@@ -245,11 +245,11 @@ deactivate_steps <- function(
 #'   interrogate()
 #'
 #' @return A `ptblank_agent` object.
-#' 
+#'
 #' @family Object Ops
 #' @section Function ID:
 #' 9-7
-#' 
+#'
 #' @seealso Instead of removal, the [deactivate_steps()] function will simply
 #'   change the `active` status of one or more validation steps to `FALSE` (and
 #'   [activate_steps()] will do the opposite).
@@ -259,20 +259,20 @@ remove_steps <- function(
     agent,
     i = NULL
 ) {
-  
+
   # TODO: Allow for removal of multiple steps (e.g., `i = 1:3`)
   if (!is.null(i)) {
-    agent$validation_set <- 
+    agent$validation_set <-
       agent$validation_set %>%
       dplyr::slice(-{{ i }})
   }
-  
+
   # Renumber steps
-  agent$validation_set$i <- 
+  agent$validation_set$i <-
     as.integer(seq(from = 1, to = nrow(agent$validation_set), by = 1))
-  
+
   # Remove any data extracts
   agent$extracts <- NULL
-  
+
   agent
 }

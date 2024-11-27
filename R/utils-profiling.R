@@ -1,21 +1,21 @@
 #------------------------------------------------------------------------------#
-# 
-#                 _         _    _      _                _    
-#                (_)       | |  | |    | |              | |   
+#
+#                 _         _    _      _                _
+#                (_)       | |  | |    | |              | |
 #   _ __    ___   _  _ __  | |_ | |__  | |  __ _  _ __  | | __
 #  | '_ \  / _ \ | || '_ \ | __|| '_ \ | | / _` || '_ \ | |/ /
-#  | |_) || (_) || || | | || |_ | |_) || || (_| || | | ||   < 
+#  | |_) || (_) || || | | || |_ | |_) || || (_| || | | ||   <
 #  | .__/  \___/ |_||_| |_| \__||_.__/ |_| \__,_||_| |_||_|\_\
-#  | |                                                        
-#  |_|                                                        
-#  
+#  | |
+#  |_|
+#
 #  This file is part of the 'rstudio/pointblank' project.
-#  
+#
 #  Copyright (c) 2017-2024 pointblank authors
-#  
+#
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
-# 
+#
 #------------------------------------------------------------------------------#
 
 
@@ -23,7 +23,7 @@
 # - works across all supported data sources
 # - returns 'character' of length n
 get_table_column_names <- function(data) {
-  
+
   colnames(data)
 }
 
@@ -47,8 +47,8 @@ get_table_total_columns <- function(data) {
 # - works across all supported data sources
 # - returns 'numeric' of length 1
 get_table_total_missing_values <- function(data) {
-  
-  collected <- 
+
+  collected <-
     dplyr::collect(
       dplyr::summarise_all(
         data, ~ sum(ifelse(is.na(.), 1, 0), na.rm = TRUE)
@@ -71,7 +71,7 @@ get_table_total_distinct_rows <- function(data) {
 # - works across all supported data sources
 # - returns 'integer' of length 1
 get_table_column_distinct_rows <- function(data_column) {
-  
+
   as.integer(get_table_total_distinct_rows(data = data_column))
 }
 
@@ -80,7 +80,7 @@ get_table_column_distinct_rows <- function(data_column) {
 # - works across all supported data sources
 # - returns 'numeric' of length 1
 get_table_column_na_values <- function(data_column) {
-  
+
   get_table_total_missing_values(data = data_column)
 }
 
@@ -89,20 +89,20 @@ get_table_column_na_values <- function(data_column) {
 # - works across all supported data sources
 # - returns 'integer' of length 1
 get_table_column_inf_values <- function(data_column) {
-  
+
   if (!inherits(data_column, "tbl_dbi") &&
       !inherits(data_column, "tbl_spark")) {
-    
+
     inf_cells <-
       data_column %>%
       dplyr::pull(1) %>%
       is.infinite() %>%
       sum()
-    
+
   } else {
     inf_cells <- 0L
   }
-  
+
   inf_cells
 }
 
@@ -111,7 +111,7 @@ get_table_column_inf_values <- function(data_column) {
 # - works across all supported data sources
 # - returns 'tibble' of 1 row, 3 columns
 get_table_column_summary <- function(data_column, round = 2) {
-  
+
   data_column %>%
     dplyr::summarize_all(
       .funs = list(
@@ -130,7 +130,7 @@ get_table_column_summary <- function(data_column, round = 2) {
 # - works only with local data frames
 # - returns a 'list' with 9 elements
 get_df_column_qtile_stats <- function(data_column) {
-  
+
   data_column %>%
     dplyr::summarize_all(
       .funs = list(
@@ -153,12 +153,12 @@ get_df_column_qtile_stats <- function(data_column) {
 # - works only with `tbl_dbi` objects
 # - returns 'numeric' of length 1
 get_dbi_column_mean <- function(data_column) {
-  
+
   x <- dplyr::rename(data_column, a = 1)
   x <- dplyr::group_by(x)
   x <- dplyr::summarize(x, "__mean__" = mean(a, na.rm = TRUE))
   x <- dplyr::pull(x, `__mean__`)
-  
+
   x
 }
 
@@ -168,7 +168,7 @@ get_dbi_column_mean <- function(data_column) {
 # - works only with `tbl_spark` objects
 # - returns 'numeric' of length 1
 get_spark_column_mean <- function(data_column) {
-  
+
   get_dbi_column_mean(data_column = data_column)
 }
 
@@ -178,13 +178,13 @@ get_spark_column_mean <- function(data_column) {
 # - works only with `tbl_dbi` objects
 # - returns 'numeric' of length 1
 get_dbi_column_variance <- function(data_column, mean_value) {
-  
+
   x <- dplyr::rename(data_column, a = 1)
   x <- dplyr::mutate(x, "__diff__" = (!!mean_value - a)^2)
   x <- dplyr::group_by(x)
   x <- dplyr::summarize(x, "__var__"  = mean(`__diff__`, na.rm = TRUE))
   x <- dplyr::pull(x, `__var__`)
-  
+
   x
 }
 
@@ -194,7 +194,7 @@ get_dbi_column_variance <- function(data_column, mean_value) {
 # - works only with `tbl_spark` objects
 # - returns 'numeric' of length 1
 get_spark_column_variance <- function(data_column, mean_value) {
-  
+
   get_dbi_column_variance(data_column = data_column, mean_value = mean_value)
 }
 
@@ -203,10 +203,10 @@ get_spark_column_variance <- function(data_column, mean_value) {
 # - works only with Spark DataFrames
 # - returns a 'list' with 9 elements
 get_spark_column_qtile_stats <- function(data_column) {
-  
+
   column_name <- colnames(data_column)
-  
-  quantiles <- 
+
+  quantiles <-
     unname(
       sparklyr::sdf_quantile(
         data_column, column_name,
@@ -224,7 +224,7 @@ get_spark_column_qtile_stats <- function(data_column) {
     max = quantiles[7],
     iqr = quantiles[5] - quantiles[3],
     range = quantiles[7] - quantiles[1]
-  ) %>% 
+  ) %>%
     lapply(FUN = function(x) round(x, 2))
 }
 
@@ -235,39 +235,39 @@ get_spark_column_qtile_stats <- function(data_column) {
 # - works only with `tbl_dbi` objects
 # - returns a 'list' with 9 elements
 get_dbi_column_qtile_stats <- function(data_column) {
-  
-  data_arranged <- 
+
+  data_arranged <-
     data_column %>%
     dplyr::rename(a = 1) %>%
     dplyr::filter(!is.na(a)) %>%
     dplyr::arrange(a) %>%
     utils::head(6E8)
-  
+
   n_rows <- get_table_total_rows(data = data_arranged)
-  
+
   quantile_rows <- floor(c(0.05, 0.25, 0.5, 0.75, 0.95) * n_rows)
-  
+
   # Should there be any rows estimated as `0`, change those to `1`
   quantile_rows[quantile_rows == 0] <- 1
-  
+
   dplyr::tibble(
-    min = data_arranged %>% 
+    min = data_arranged %>%
       dplyr::summarize(a = min(a, na.rm = TRUE)) %>%
       dplyr::pull(a) %>%
       as.numeric(),
-    p05 = data_arranged %>% 
+    p05 = data_arranged %>%
       utils::head(quantile_rows[1]) %>%
       dplyr::arrange(dplyr::desc(a)) %>%
       utils::head(1) %>%
       dplyr::pull(a) %>%
       as.numeric(),
-    q_1 = data_arranged %>% 
+    q_1 = data_arranged %>%
       utils::head(quantile_rows[2]) %>%
       dplyr::arrange(dplyr::desc(a)) %>%
       utils::head(1) %>%
       dplyr::pull(a) %>%
       as.numeric(),
-    med = data_arranged %>% 
+    med = data_arranged %>%
       utils::head(quantile_rows[3]) %>%
       dplyr::arrange(dplyr::desc(a)) %>%
       utils::head(1) %>%
@@ -299,7 +299,7 @@ get_dbi_column_qtile_stats <- function(data_column) {
 }
 
 get_table_column_nchar_stats <- function(data_column) {
-  
+
   data_column %>%
     dplyr::mutate_all(.funs = nchar) %>%
     dplyr::rename(nchar = 1) %>%
@@ -320,12 +320,12 @@ get_table_column_nchar_stats <- function(data_column) {
 # - works across all supported data sources
 # - returns a ggplot object
 get_table_column_histogram <- function(data_column, lang, locale) {
-  
+
   # TODO: Use locale value to get proper settings comma format
-  
+
   x_label <- get_lsv("table_scan/plot_lab_string_length")[[lang]]
   y_label <- get_lsv("table_scan/plot_lab_count")[[lang]]
-  
+
   suppressWarnings(
     data_column %>%
       dplyr::mutate_all(.funs = nchar) %>%
@@ -348,54 +348,54 @@ get_table_column_histogram <- function(data_column, lang, locale) {
 # - works only with `tbl_dbi` objects
 # - returns 'tibble' of 20 bins * y columns rows, 4 columns
 get_tbl_dbi_missing_tbl <- function(data) {
-  
+
   n_rows <- get_table_total_rows(data = data)
   col_names <- get_table_column_names(data = data)
-  
+
   if (n_rows < 20) {
     n_breaks <- n_rows
   } else {
     n_breaks <- 20
   }
-  
+
   cuts <- floor(seq(from = 1, to = n_rows, length.out = n_breaks + 1))[-1]
   bin_size <- cuts[1]
-  
-  frequency_list <- 
+
+  frequency_list <-
     lapply(
       col_names,
       FUN = function(x__) {
-        
+
         col_num <- which(col_names %in% x__)
-        
+
         if (length(cuts) < 20) {
           bin_num <- cuts
         } else {
           bin_num <- 1:20
         }
-        
+
         missing_tally <- 0L
-        
-        missing_freq <- 
+
+        missing_freq <-
           vapply(
             bin_num,
             FUN.VALUE = numeric(1),
             FUN = function(x) {
-              
-              missing_n_span <- 
-                data %>% 
+
+              missing_n_span <-
+                data %>%
                 dplyr::select(1, dplyr::all_of(x__))
-              
+
               if (ncol(missing_n_span) == 1) {
-                
+
                 missing_n_span <- dplyr::rename(missing_n_span, a = 1)
-                
+
               } else {
-                
+
                 missing_n_span <- dplyr::rename(missing_n_span, a = 2)
               }
-              
-              missing_n_span <- 
+
+              missing_n_span <-
                 missing_n_span %>%
                 utils::head(cuts[x]) %>%
                 dplyr::summarize_all(
@@ -403,15 +403,15 @@ get_tbl_dbi_missing_tbl <- function(data) {
                 ) %>%
                 dplyr::pull(a) %>%
                 as.integer()
-              
+
               missing_bin <- missing_n_span - missing_tally
-              
+
               missing_tally <<- missing_tally + missing_bin
-              
+
               as.numeric(missing_bin / bin_size)
             }
           )
-        
+
         dplyr::tibble(
           col_name = x__,
           col_num = col_num,
@@ -420,7 +420,7 @@ get_tbl_dbi_missing_tbl <- function(data) {
         )
       }
     )
-  
+
   frequency_list %>%
     dplyr::bind_rows() %>%
     dplyr::mutate(value = ifelse(value == 0, NA_real_, value)) %>%
@@ -433,7 +433,7 @@ get_tbl_dbi_missing_tbl <- function(data) {
 # - works only with `tbl_spark` objects
 # - returns 'tibble' of 20 bins * y columns rows, 4 columns
 get_tbl_spark_missing_tbl <- function(data) {
-  
+
   get_tbl_dbi_missing_tbl(data = data)
 }
 
@@ -443,26 +443,26 @@ get_tbl_spark_missing_tbl <- function(data) {
 # - works only with data frame objects
 # - returns 'tibble' of 20 bins * y columns rows, 4 columns
 get_tbl_df_missing_tbl <- function(data) {
-  
+
   n_rows <- get_table_total_rows(data = data)
   col_names <- get_table_column_names(data = data)
-  
+
   if (n_rows < 20) {
     n_breaks <- n_rows
   } else {
     n_breaks <- 20
   }
-  
+
   cuts_ <- floor(seq(from = 1, to = n_rows, length.out = n_breaks + 1))[-1]
-  
-  frequency_list <- 
+
+  frequency_list <-
     lapply(
       col_names,
       FUN = function(x__) {
-        
+
         data <- dplyr::select(data, dplyr::all_of(x__))
         data <- tibble::rowid_to_column(data)
-        data <- 
+        data <-
           dplyr::mutate(data, `::cut_group::` = dplyr::case_when(
             rowid < cuts_[1]  ~ 1L,
             rowid < cuts_[2]  ~ 2L,
@@ -495,20 +495,20 @@ get_tbl_df_missing_tbl <- function(data) {
         data <- dplyr::mutate(data, col_name = x__)
         data <- dplyr::rename(data, value = 1)
         data <- dplyr::select(data, col_name, col_num, bin_num, value)
-        
+
         data
       }
     )
-  
+
   missing_tbl <- dplyr::bind_rows(frequency_list)
-  missing_tbl <- 
+  missing_tbl <-
     dplyr::mutate(missing_tbl, value = ifelse(value == 0, NA_real_, value))
-  missing_tbl <- 
+  missing_tbl <-
     dplyr::mutate(
       missing_tbl,
       col_name = factor(col_name, levels = col_names)
     )
-  
+
   missing_tbl
 }
 
@@ -516,17 +516,17 @@ get_tbl_df_missing_tbl <- function(data) {
 # - works across all supported data sources
 # - returns 'tibble' of x columns rows, 3 columns
 get_missing_by_column_tbl <- function(data) {
-  
+
   col_names <- get_table_column_names(data = data)
-  
+
   missing_by_column_list <-
     lapply(
       col_names,
       FUN = function(x__) {
-        
+
         data <- dplyr::select(data, dplyr::all_of(x__))
         data <- dplyr::group_by(data)
-        data <- 
+        data <-
           dplyr::summarize_all(
             data,
             ~ sum(ifelse(is.na(.), 1, 0), na.rm = TRUE) / dplyr::n()
@@ -535,19 +535,19 @@ get_missing_by_column_tbl <- function(data) {
         data <- dplyr::mutate(data, col_num = which(col_names %in% x__))
         data <- dplyr::mutate(data, col_name = x__)
         data <- dplyr::rename(data, value = 1)
-        
+
         data
       })
-  
+
   missing_by_column_tbl <- dplyr::bind_rows(missing_by_column_list)
-  missing_by_column_tbl <- 
+  missing_by_column_tbl <-
     dplyr::mutate(missing_by_column_tbl, value = round(value, 2))
   missing_by_column_tbl <-
     dplyr::mutate(
       missing_by_column_tbl,
       col_name = factor(col_name, levels = colnames(data))
     )
-  
+
   missing_by_column_tbl
 }
 
@@ -558,9 +558,9 @@ get_missing_by_column_tbl <- function(data) {
 # - works across all supported data sources
 # - returns a ggplot object
 get_missing_value_plot <- function(data, frequency_tbl, missing_by_column_tbl) {
-  
+
   n_rows <- get_table_total_rows(data = data)
-  
+
   ggplot2::ggplot(
     frequency_tbl,
     ggplot2::aes(x = col_name, y = bin_num, fill = value)
@@ -586,7 +586,7 @@ get_missing_value_plot <- function(data, frequency_tbl, missing_by_column_tbl) {
       fill = "white",
       show.legend = FALSE
     ) +
-    ggplot2::labs(x = "", y = "") + 
+    ggplot2::labs(x = "", y = "") +
     ggplot2::theme_minimal() +
     ggplot2::theme(
       axis.text.x = ggplot2::element_text(
@@ -613,7 +613,7 @@ get_missing_value_plot <- function(data, frequency_tbl, missing_by_column_tbl) {
 
 get_table_slice_gt <- function(data_column,
                                locale) {
-  
+
   data_column %>%
     gt::gt() %>%
     gt::fmt_percent(columns = 3, locale = locale) %>%
@@ -634,15 +634,15 @@ get_table_slice_gt <- function(data_column,
 # - works only with data frame objects
 # - returns 'character' of length n (NA if label not present or empty)
 get_tbl_df_column_labels <- function(data) {
-  
+
   n_columns <- get_table_total_columns(data = data)
-  
+
   column_labels <- rep(NA_character_, n_columns)
-  
+
   if (!inherits(data, "data.frame")) {
     return(column_labels)
   }
-  
+
   vapply(
     data,
     FUN.VALUE = character(1),

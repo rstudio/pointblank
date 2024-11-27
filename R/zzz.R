@@ -1,21 +1,21 @@
 #------------------------------------------------------------------------------#
-# 
-#                 _         _    _      _                _    
-#                (_)       | |  | |    | |              | |   
+#
+#                 _         _    _      _                _
+#                (_)       | |  | |    | |              | |
 #   _ __    ___   _  _ __  | |_ | |__  | |  __ _  _ __  | | __
 #  | '_ \  / _ \ | || '_ \ | __|| '_ \ | | / _` || '_ \ | |/ /
-#  | |_) || (_) || || | | || |_ | |_) || || (_| || | | ||   < 
+#  | |_) || (_) || || | | || |_ | |_) || || (_| || | | ||   <
 #  | .__/  \___/ |_||_| |_| \__||_.__/ |_| \__,_||_| |_||_|\_\
-#  | |                                                        
-#  |_|                                                        
-#  
+#  | |
+#  |_|
+#
 #  This file is part of the 'rstudio/pointblank' project.
-#  
+#
 #  Copyright (c) 2017-2024 pointblank authors
-#  
+#
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
-# 
+#
 #------------------------------------------------------------------------------#
 
 
@@ -26,17 +26,17 @@ register_s3_method <- function(pkg, generic, class, fun = NULL) {
   stopifnot(is.character(pkg), length(pkg) == 1)
   stopifnot(is.character(generic), length(generic) == 1)
   stopifnot(is.character(class), length(class) == 1)
-  
+
   if (is.null(fun)) {
     fun <- get(paste0(generic, ".", class), envir = parent.frame())
   } else {
     stopifnot(is.function(fun))
   }
-  
+
   if (pkg %in% loadedNamespaces()) {
     registerS3method(generic, class, fun, envir = asNamespace(pkg))
   }
-  
+
   # Always register hook in case package is later unloaded & reloaded
   setHook(
     packageEvent(pkg, "onLoad"),
@@ -202,7 +202,7 @@ utils::globalVariables(
 )
 
 .onLoad <- function(libname, pkgname, ...) {
-  
+
   register_s3_method("knitr", "knit_print", "ptblank_agent")
   register_s3_method("knitr", "knit_print", "ptblank_informant")
   register_s3_method("knitr", "knit_print", "ptblank_multiagent")
@@ -212,7 +212,7 @@ utils::globalVariables(
   register_s3_method("knitr", "knit_print", "x_list_n")
   register_s3_method("knitr", "knit_print", "tbl_store")
   register_s3_method("knitr", "knit_print", "action_levels")
-  
+
   invisible()
 }
 

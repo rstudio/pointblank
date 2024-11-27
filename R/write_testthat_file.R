@@ -681,13 +681,7 @@ pb_write_file <- function(
 
   on.exit(close(file_connection))
 
-  # Obtain the appropriate line ending based on the platform
-  # if (.Platform$OS.type == "windows") {
-  #   line_ending <- "\r\n"
-  # } else {
-  #   line_ending <- "\n"
-  # }
-
+  # We use Unix to write testthat file
   lines <- gsub("\r?\n", "\n", lines)
 
   writeLines(

@@ -1,3 +1,4 @@
+skip_on_cran()
 work_path <- "./generated_r_files"
 
 if (fs::dir_exists(path = work_path)) {
@@ -90,7 +91,7 @@ test_that("draft validations for data tables can be generated", {
 })
 
 test_that("draft validations for data tables can be generated in different languages", {
-
+  skip_if_not_utf8()
   write_draft_snapshot_test(dataset = pointblank::small_table, filename = "st_en", lang = "en")
   write_draft_snapshot_test(dataset = pointblank::small_table, filename = "st_fr", lang = "fr")
   write_draft_snapshot_test(dataset = pointblank::small_table, filename = "st_de", lang = "de")

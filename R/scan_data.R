@@ -455,6 +455,7 @@ probe_columns <- function(
             lang = lang,
             locale = locale
           ),
+          ordered =,
           factor = probe_columns_factor(
             data = data,
             column = col_name,

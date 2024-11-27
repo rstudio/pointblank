@@ -5,7 +5,7 @@ test_that("Incorporating an informant yields the correct results", {
   # `incorporate()` the snippets into the info text
   informant <- 
     create_informant(
-      tbl = ~ readr::read_csv(file = "test_table.csv", col_types = "TDdcddlc"),
+      tbl = ~ readr::read_csv(file = testthat::test_path("test_table.csv"), col_types = "TDdcddlc"),
       tbl_name = "test_table",
       label = "An example."
     ) %>%
@@ -41,14 +41,11 @@ test_that("Incorporating an informant yields the correct results", {
   
   # Expect that names in an informant after using
   # `incorporate()` match a prescribed set of names
-  expect_true(
-    all(
-      names(informant_inc) ==
-        c(
-          "tbl", "read_fn", "tbl_name", "info_label",
-          "meta_snippets",  "lang", "locale",
-          "metadata", "metadata_rev"
-        )
+  expect_named(
+    informant_inc,
+    c(
+      "tbl", "read_fn", "tbl_name", "info_label", "meta_snippets", "lang",
+      "locale", "metadata", "metadata_rev"
     )
   )
   
@@ -74,7 +71,7 @@ test_that("Incorporating an informant yields the correct results", {
   expect_no_error(
     informant %>% 
       set_tbl(
-        tbl = function() readr::read_csv(file = "test_table.csv", col_types = "TDdcddlc")
+        tbl = function() readr::read_csv(file = testthat::test_path("test_table.csv"), col_types = "TDdcddlc")
       ) %>% 
       incorporate()
   )
@@ -87,7 +84,7 @@ test_that("Incorporating an informant yields the correct results", {
   informant_inc_2 <- 
     informant_inc %>%
     set_tbl(
-      tbl = ~ readr::read_csv(file = "test_table_2.csv", col_types = "TDdcddlcd")
+      tbl = ~ readr::read_csv(file = test_path("test_table_2.csv"), col_types = "TDdcddlcd")
     ) %>%
     incorporate()
   
@@ -109,7 +106,7 @@ test_that("Incorporating an informant from YAML yields the correct results", {
   # add information with some other `info_*()` functions
   informant <- 
     create_informant(
-      tbl = ~ readr::read_csv(file = "test_table.csv", col_types = "TDdcddlc"),
+      tbl = ~ readr::read_csv(file = test_path("test_table.csv"), col_types = "TDdcddlc"),
       tbl_name = "test_table",
       label = "An example."
     ) %>%
@@ -182,7 +179,7 @@ test_that("Incorporating an informant from YAML yields the correct results", {
   expect_no_error(
     informant_inc_yaml %>% 
       set_tbl(
-        tbl = function() readr::read_csv(file = "test_table.csv", col_types = "TDdcddlc")
+        tbl = function() readr::read_csv(file = test_path("test_table.csv"), col_types = "TDdcddlc")
       ) %>% 
       incorporate()
   )

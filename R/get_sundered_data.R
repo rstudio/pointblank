@@ -382,13 +382,13 @@ get_sundered_data <- function(
       tbl_check_join <- 
         tbl_check_join %>%
         dplyr::select(
-          dplyr::one_of(by_cols), dplyr::starts_with("pb_is_good_")
+          dplyr::all_of(by_cols), dplyr::starts_with("pb_is_good_")
         ) %>%
         dplyr::left_join(
           tbl_check_join_r %>%
             dplyr::rename(!!new_col_ii := pb_is_good_) %>%
             dplyr::select(
-              dplyr::one_of(by_cols), dplyr::starts_with("pb_is_good_")
+              dplyr::all_of(by_cols), dplyr::starts_with("pb_is_good_")
             ),
           by = by_cols
         ) %>%
@@ -425,7 +425,7 @@ get_sundered_data <- function(
   tbl_check_join <- 
     tbl_check_join %>%
     dplyr::mutate(pb_is_good_ = !!rlang::parse_expr(columns_str_add)) %>%
-    dplyr::select(-dplyr::one_of(columns_str_vec)) %>%
+    dplyr::select(-dplyr::all_of(columns_str_vec)) %>%
     dplyr::mutate(pb_is_good_ = dplyr::case_when(
       pb_is_good_ == validation_n ~ TRUE,
       TRUE ~ FALSE

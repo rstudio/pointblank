@@ -384,7 +384,7 @@ get_tbl_dbi_missing_tbl <- function(data) {
               
               missing_n_span <- 
                 data %>% 
-                dplyr::select(1, dplyr::one_of(x__))
+                dplyr::select(1, dplyr::all_of(x__))
               
               if (ncol(missing_n_span) == 1) {
                 
@@ -460,7 +460,7 @@ get_tbl_df_missing_tbl <- function(data) {
       col_names,
       FUN = function(x__) {
         
-        data <- dplyr::select(data, dplyr::one_of(x__))
+        data <- dplyr::select(data, dplyr::all_of(x__))
         data <- tibble::rowid_to_column(data)
         data <- 
           dplyr::mutate(data, `::cut_group::` = dplyr::case_when(
@@ -524,7 +524,7 @@ get_missing_by_column_tbl <- function(data) {
       col_names,
       FUN = function(x__) {
         
-        data <- dplyr::select(data, dplyr::one_of(x__))
+        data <- dplyr::select(data, dplyr::all_of(x__))
         data <- dplyr::group_by(data)
         data <- 
           dplyr::summarize_all(
@@ -617,7 +617,7 @@ get_table_slice_gt <- function(data_column,
   data_column %>%
     gt::gt() %>%
     gt::fmt_percent(columns = 3, locale = locale) %>%
-    gt_missing(columns = 1, missing_text = "**NA**") %>%
+    gt::sub_missing(columns = 1, missing_text = "**NA**") %>%
     gt::text_transform(
       locations = gt::cells_body(columns = 1),
       fn = function(x) ifelse(x == "**NA**", "<code>NA</code>", x)

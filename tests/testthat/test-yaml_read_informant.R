@@ -4,7 +4,7 @@ test_that("Reading an informant from YAML is possible", {
   # add information with some other `info_*()` functions
   informant <- 
     create_informant(
-      tbl = ~ readr::read_csv(file = "test_table.csv", col_types = "TDdcddlc"),
+      tbl = ~ readr::read_csv(file = test_path("test_table.csv"), col_types = "TDdcddlc"),
       tbl_name = "test_table",
       label = "An example."
     ) %>%
@@ -59,7 +59,7 @@ test_that("Reading an informant from YAML is possible", {
   # via `yaml_read_informant()` (i.e., reading in the YAML file)
   # - *Except* private fields which are note written
   informant$metadata$`_private` <- NULL
-  expect_equal(informant, informant_from_yaml)
+  expect_equal(informant, informant_from_yaml, ignore_attr = TRUE)
   
   # Use `incorporate()` on the informant; this creates the list
   # component `metadata_rev` in the `informant` which is for

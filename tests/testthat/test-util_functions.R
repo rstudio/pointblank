@@ -32,9 +32,9 @@ test_that("Utility functions won't fail us", {
   agent %>% get_assertion_type_at_idx(idx = 1) %>% expect_equal("col_vals_gt")
   agent %>% get_assertion_type_at_idx(idx = 2) %>% expect_equal("col_vals_lt")
 
-  agent %>% get_column_as_sym_at_idx(idx = 1) %>% expect_s3_class("name")
+  agent %>% get_column_as_sym_at_idx(idx = 1) %>% class() %>% expect_equal("name")
   agent %>% get_column_as_sym_at_idx(idx = 1) %>% as.character() %>% expect_equal("c")
-  agent %>% get_column_as_sym_at_idx(idx = 2) %>% expect_s3_class("name")
+  agent %>% get_column_as_sym_at_idx(idx = 2) %>% class() %>% expect_equal("name")
   agent %>% get_column_as_sym_at_idx(idx = 2) %>% as.character() %>% expect_equal("d")
   
   agent %>% get_values_at_idx(idx = 1) %>% expect_type("double")
@@ -101,7 +101,8 @@ test_that("Utility functions won't fail us", {
   expect_type(cs, "list")
   expect_equal(names(cs), col_names)
   expect_equal(unname(cs), col_types)
-  expect_equal(length(cs), length(col_names), length(col_types))
+  expect_equal(length(cs), length(col_names))
+  expect_equal(length(cs), length(col_types))
   
   #
   # normalize_step_id

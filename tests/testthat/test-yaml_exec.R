@@ -91,7 +91,8 @@ test_that("The `yaml_exec()` function effectively processes .yml files", {
   # Copy the YAML files over to the working directory
   fs::file_copy(
     path = c(path_agent, path_informant, path_tbl_store),
-    new_path = getwd()
+    new_path = getwd(),
+    overwrite = TRUE
   )
   
   # Read YAML files from the working directory, write output

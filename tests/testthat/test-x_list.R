@@ -13,18 +13,18 @@ agent <-
   col_vals_in_set(vars(f), c("low", "mid", "high", "higher"))
 
 test_that("An x-list for a step is structurally correct", {
-  
+
   # Get an x-list at step 1 before interrogation
-  x_list_before <- 
+  x_list_before <-
     agent %>%
     get_agent_x_list(i = 1)
-  
+
   # Expect the class names for the object to be `x_list`
   # and `x_list_i`
   expect_s3_class(x_list_before, "x_list")
   expect_s3_class(x_list_before, "x_list_i")
   expect_true(is_ptblank_x_list(x_list_before))
-  
+
   # Expect elements of the object to be equivalent
   # to specific parameters
   expect_s3_class(x_list_before$time_start, "POSIXct")
@@ -45,7 +45,7 @@ test_that("An x-list for a step is structurally correct", {
   expect_type(x_list_before$col_types, "character")
   expect_equal(
     x_list_before$col_types,
-    c("POSIXct", "Date", "integer", "character", "numeric", "numeric", 
+    c("POSIXct", "Date", "integer", "character", "numeric", "numeric",
       "logical", "character")
   )
   expect_type(x_list_before$i, "double")
@@ -90,19 +90,19 @@ test_that("An x-list for a step is structurally correct", {
   expect_equal(x_list_before$notify, NA)
   expect_type(x_list_before$lang, "character")
   expect_equal(x_list_before$lang, "en")
-  
+
   # Get an x-list at step 1 after interrogation
-  x_list_after <- 
+  x_list_after <-
     agent %>%
     interrogate() %>%
     get_agent_x_list(i = 1)
-  
+
   # Expect the class names for the object to be `x_list`
   # and `x_list_i`
   expect_s3_class(x_list_after, "x_list")
   expect_s3_class(x_list_after, "x_list_i")
   expect_true(is_ptblank_x_list(x_list_after))
-  
+
   # Expect elements of the object to be equivalent
   # to specific parameters
   expect_equal(length(x_list_after$time_start), 1)
@@ -123,7 +123,7 @@ test_that("An x-list for a step is structurally correct", {
   expect_type(x_list_after$col_types, "character")
   expect_equal(
     x_list_after$col_types,
-    c("POSIXct", "Date", "integer", "character", "numeric", "numeric", 
+    c("POSIXct", "Date", "integer", "character", "numeric", "numeric",
       "logical", "character")
   )
   expect_type(x_list_after$i, "double")
@@ -139,7 +139,7 @@ test_that("An x-list for a step is structurally correct", {
   expect_type(x_list_after$label, "character")
   expect_type(x_list_after$briefs, "character")
   expect_equal(
-    x_list_after$briefs, 
+    x_list_after$briefs,
     paste0(
       "Expect that values in `g` (computed column) should be > `100`. ",
       "Precondition applied: `. %>% dplyr::mutate(g = a + 95)`."
@@ -180,18 +180,18 @@ test_that("An x-list for a step is structurally correct", {
 
 
 test_that("A complete x-list is structurally correct", {
-  
+
   # Get an x-list at step 1 before interrogation
-  x_list_before <- 
+  x_list_before <-
     agent %>%
     get_agent_x_list()
-  
+
   # Expect the class names for the object to be `x_list`
   # and `x_list_i`
   expect_s3_class(x_list_before, "x_list")
   expect_s3_class(x_list_before, "x_list_n")
   expect_true(is_ptblank_x_list(x_list_before))
-  
+
   # Expect elements of the object to be equivalent
   # to specific parameters
   expect_equal(length(x_list_before$time_start), 0)
@@ -212,7 +212,7 @@ test_that("A complete x-list is structurally correct", {
   expect_type(x_list_before$col_types, "character")
   expect_equal(
     x_list_before$col_types,
-    c("POSIXct", "Date", "integer", "character", "numeric", "numeric", 
+    c("POSIXct", "Date", "integer", "character", "numeric", "numeric",
       "logical", "character")
   )
   expect_type(x_list_before$i, "integer")
@@ -284,18 +284,18 @@ test_that("A complete x-list is structurally correct", {
   expect_null(x_list_before$email_object)
   expect_type(x_list_before$report_html, "character")
   expect_type(x_list_before$report_html_small, "character")
-  
+
   # Get an x-list at step 1 after interrogation
-  x_list_after <- 
+  x_list_after <-
     agent %>%
     interrogate() %>%
     get_agent_x_list()
-  
+
   # Expect the class names for the object to be `x_list`
   # and `x_list_i`
   expect_s3_class(x_list_after, c("x_list_n", "x_list"))
   expect_true(is_ptblank_x_list(x_list_after))
-  
+
   # Expect elements of the object to be equivalent
   # to specific parameters
   expect_equal(length(x_list_after$time_start), 1)
@@ -316,7 +316,7 @@ test_that("A complete x-list is structurally correct", {
   expect_type(x_list_after$col_types, "character")
   expect_equal(
     x_list_after$col_types,
-    c("POSIXct", "Date", "integer", "character", "numeric", "numeric", 
+    c("POSIXct", "Date", "integer", "character", "numeric", "numeric",
       "logical", "character")
   )
   expect_type(x_list_after$i, "integer")

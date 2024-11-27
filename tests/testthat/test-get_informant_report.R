@@ -1,9 +1,9 @@
 test_that("Getting an information report is possible", {
-  
+
   # Generate an informant object, add two snippets with `info_snippet()`,
   # add information with some other `info_*()` functions and then
   # `incorporate()` the snippets into the info text
-  informant <- 
+  informant <-
     create_informant(
       tbl = ~ readr::read_csv(file = test_path("test_table.csv"), col_types = "TDdcddlc"),
       tbl_name = "test_table",
@@ -36,28 +36,28 @@ test_that("Getting an information report is possible", {
       section_name = "rows",
       row_count = "There are {row_count} rows available."
     )
-  
+
   informant_inc <- informant %>% incorporate()
-  
+
   # Get an information report
   report <- get_informant_report(informant_inc)
-  
+
   # Expect that the report is a gt table
   expect_s3_class(report, "gt_tbl")
 })
 
 test_that("Getting a more advanced information report is possible", {
-  
+
   # Generate an informant object, add several snippets with `info_snippet()`,
   # add information with some other `info_*()` functions and then
   # `incorporate()` the snippets into the info text
-  
-  informant <- 
+
+  informant <-
     create_informant(
       tbl = ~ readr::read_csv(file = test_path("penguins.csv"), col_types = "ccddddcd"),
       tbl_name = "penguins",
       label = "The `penguins` dataset from the **palmerpenguins** 📦."
-    ) %>% 
+    ) %>%
     info_columns(
       columns = "species",
       `ℹ️` = "A factor denoting penguin species ({species_snippet})."
@@ -117,12 +117,12 @@ test_that("Getting a more advanced information report is possible", {
       fn = snip_highest(column = "flipper_length_mm")
     ) %>%
     info_columns(
-      columns = vars(body_mass_g), 
+      columns = vars(body_mass_g),
       `ℹ️` = "An integer denoting body mass."
     ) %>%
     info_columns(
       columns = c(ends_with("mm"), ends_with("g")),
-      `ℹ️` = "((measured))"    
+      `ℹ️` = "((measured))"
     ) %>%
     info_section(
       section_name = "additional notes",
@@ -135,14 +135,14 @@ test_that("Getting a more advanced information report is possible", {
     `data collection` = "Data were collected and made available by Dr. Kristen
     Gorman and the [Palmer Station, Antarctica LTER](https://pal.lternet.edu),
     a member of the [Long Term Ecological Research Network](https://lternet.edu).",
-    citation = "Horst AM, Hill AP, Gorman KB (2020). palmerpenguins: Palmer 
+    citation = "Horst AM, Hill AP, Gorman KB (2020). palmerpenguins: Palmer
     Archipelago (Antarctica) penguin data. R package version 0.1.0.
-    <https://allisonhorst.github.io/palmerpenguins/>. 
+    <https://allisonhorst.github.io/palmerpenguins/>.
     doi: 10.5281/zenodo.3960218."
     ) %>%
     info_columns(
-      columns = vars(sex), 
-      `ℹ️` = "A [[factor]]<<text-decoration: underline;>> 
+      columns = vars(sex),
+      `ℹ️` = "A [[factor]]<<text-decoration: underline;>>
     denoting penguin sex (female or male)."
     ) %>%
     info_section(
@@ -156,8 +156,8 @@ test_that("Getting a more advanced information report is possible", {
     info_section(
       section_name = "source",
       "References" = "
-- Adélie penguins: Palmer Station Antarctica LTER and K. Gorman. 2020. Structural 
-size measurements and isotopic signatures of foraging among adult male and female 
+- Adélie penguins: Palmer Station Antarctica LTER and K. Gorman. 2020. Structural
+size measurements and isotopic signatures of foraging among adult male and female
 Adélie penguins (Pygoscelis adeliae) nesting along the Palmer Archipelago near
 Palmer Station, 2007-2009 ver 5. Environmental Data Initiative
 <https://doi.org/10.6073/pasta/98b16d7d563f265cb52372c8ca99e60f>
@@ -172,27 +172,27 @@ and female Chinstrap penguin (Pygoscelis antarcticus) nesting along the Palmer
 Archipelago near Palmer Station, 2007-2009 ver 6. Environmental Data Initiative
 <https://doi.org/10.6073/pasta/c14dfcfada8ea13a17536e73eb6fbe9e>
 ",
-"Note" = 
+"Note" =
   "Originally published in: Gorman KB, Williams TD, Fraser WR (2014) Ecological Sexual
 Dimorphism and Environmental Variability within a Community of Antarctic Penguins
 (Genus Pygoscelis). PLoS ONE 9(3): e90081. doi:10.1371/journal.pone.0090081
 "
     )
-  
+
   informant_inc <- informant %>% incorporate()
-  
+
   # Get an information report
   report <- get_informant_report(informant_inc)
-  
+
   # Expect that the report is a gt table
   expect_s3_class(report, "gt_tbl")
 })
 
 test_that("The correct title is rendered in the informant report", {
-  
+
   the_table_name <- "example_tbl"
-  
-  informant <- 
+
+  informant <-
     dplyr::tibble(
       a = c(5, 7, 6, 5, NA, 7),
       b = c(6, 1, 0, 6,  0, 7)
@@ -202,56 +202,56 @@ test_that("The correct title is rendered in the informant report", {
       tbl_name = "example_tbl"
     ) %>%
     incorporate()
-  
+
   # expect_match(
   #   get_informant_report(informant) %>%
   #     gt::as_raw_html(inline_css = FALSE),
   #   ">Pointblank Information</th>",
   #   fixed = TRUE
   # )
-  # 
+  #
   # expect_match(
   #   get_informant_report(informant, title = ":default:") %>%
   #     gt::as_raw_html(inline_css = FALSE),
   #   ">Pointblank Information</th>",
   #   fixed = TRUE
   # )
-  # 
+  #
   # expect_match(
   #   get_informant_report(informant, title = ":tbl_name:") %>%
   #     gt::as_raw_html(inline_css = FALSE),
   #   "><code>example_tbl</code></th>",
   #   fixed = TRUE
   # )
-  # 
+  #
   # expect_match(
   #   get_informant_report(informant, title = "All the information you need about `example_tbl`") %>%
   #     gt::as_raw_html(inline_css = FALSE),
   #   ">All the information you need about <code>example_tbl</code></th>",
   #   fixed = TRUE
   # )
-  # 
+  #
   # expect_match(
   #   get_informant_report(informant, title = I("All the information you need about `example_tbl`")) %>%
   #     gt::as_raw_html(inline_css = FALSE),
   #   ">All the information you need about `example_tbl`</th>",
   #   fixed = TRUE
   # )
-  # 
+  #
   # expect_match(
   #   get_informant_report(informant, title = glue::glue("Information on `{the_table_name}`")) %>%
   #     gt::as_raw_html(inline_css = FALSE),
   #   ">Information on <code>example_tbl</code></th>",
   #   fixed = TRUE
   # )
-  # 
+  #
   # expect_match(
   #   get_informant_report(informant, title = glue::glue("Information on `{informant$tbl_name}`")) %>%
   #     gt::as_raw_html(inline_css = FALSE),
   #   ">Information on <code>example_tbl</code></th>",
   #   fixed = TRUE
   # )
-  # 
+  #
   # expect_false(
   #   grepl(
   #     ">Pointblank Information</th>",
@@ -313,11 +313,11 @@ test_that("The correct title is rendered in the informant report", {
 test_that("tidyselect integration in info_columns()", {
   informant <- create_informant(small_table)
   informant_lazy <- create_informant(~ small_table)
-  
+
   # Column headers stored in `$_private`
   expect_s3_class(informant$metadata[["_private"]]$col_ptypes, "data.frame")
   expect_s3_class(informant_lazy$metadata[["_private"]]$col_ptypes, "data.frame")
-  
+
   cols_with_info <- function(x) {
     cols_info <- sapply(x$metadata$columns, `[[`, "info")
     names(which(lengths(cols_info) > 0))
@@ -325,38 +325,38 @@ test_that("tidyselect integration in info_columns()", {
   is_timepoint <- function(x) {
     inherits(x, c("POSIXt", "POSIXct", "POSIXlt", "Date"))
   }
-  
+
   # String-based and class-based matches both work
   expect_identical({
-    informant %>% 
+    informant %>%
       info_columns(
         columns = starts_with("date"),
         info = "Time information"
-      ) %>% 
+      ) %>%
       cols_with_info()
   }, {
-    informant %>% 
+    informant %>%
       info_columns(
         columns = where(is_timepoint),
         info = "Time information"
-      ) %>% 
+      ) %>%
       cols_with_info()
   })
   # String-based and class-based matches both work
   expect_identical({
-    informant_lazy %>% 
+    informant_lazy %>%
       info_columns(
         columns = starts_with("date"),
         info = "Time information"
-      ) %>% 
+      ) %>%
       cols_with_info()
   }, {
-    informant_lazy %>% 
+    informant_lazy %>%
       info_columns(
         columns = where(is_timepoint),
         info = "Time information"
-      ) %>% 
+      ) %>%
       cols_with_info()
   })
-  
+
 })

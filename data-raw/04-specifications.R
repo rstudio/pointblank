@@ -1,6 +1,6 @@
 library(tidyverse)
 
-specifications <- 
+specifications <-
   dplyr::tibble(
     isbn_numbers = c(
       "978 1 85715 201 2",

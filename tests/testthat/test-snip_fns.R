@@ -5,7 +5,7 @@ run_snip <- function(snip_call, tbl) {
 }
 
 test_that("the `snip_list()` function works", {
- 
+
   expect_equal(
     run_snip(snip_list(column = "f"), small_table),
     "`\"high\"`, `\"low\"`, and `\"mid\"`"
@@ -253,7 +253,7 @@ test_that("the `snip_list()` function works", {
     ),
     "2016-01-30, 2016-01-28, 2016-01-26, 2016-01-20, 2016-01-17 (+6 more)"
   )
-  
+
   # Tests of the `sorting` options
   expect_equal(
     run_snip(
@@ -315,7 +315,7 @@ test_that("the `snip_list()` function works", {
     ),
     "8, 7, 6, 4, 3 (+2 more)"
   )
-  
+
   expect_equal(
     run_snip(
       snip_list(
@@ -343,7 +343,7 @@ test_that("the `snip_list()` function works", {
     ),
     "`NA`"
   )
-  
+
   expect_equal(
     run_snip(
       snip_list(
@@ -371,7 +371,7 @@ test_that("the `snip_list()` function works", {
     ),
     "---"
   )
-  
+
   expect_equal(
     run_snip(
       snip_list(
@@ -399,7 +399,7 @@ test_that("the `snip_list()` function works", {
     ),
     "`NA`"
   )
-  
+
   for (lang in reporting_languages) {
     expect_match(
       run_snip(
@@ -413,7 +413,7 @@ test_that("the `snip_list()` function works", {
       gsub(" ", "", get_lsv("informant_report/snip_list_and")[[lang]])
     )
   }
-  
+
   for (lang in reporting_languages) {
     expect_match(
       run_snip(
@@ -427,7 +427,7 @@ test_that("the `snip_list()` function works", {
       gsub(" ", "", get_lsv("informant_report/snip_list_or")[[lang]])
     )
   }
-  
+
   for (lang in reporting_languages) {
     expect_match(
       run_snip(
@@ -441,7 +441,7 @@ test_that("the `snip_list()` function works", {
       gsub(" ", "", get_lsv("informant_report/snip_list_or")[[lang]])
     )
   }
-  
+
   for (lang in reporting_languages) {
     expect_match(
       run_snip(
@@ -459,7 +459,7 @@ test_that("the `snip_list()` function works", {
       )
     )
   }
-  
+
   # Expect an error if the `sep` value is not character
   expect_error(
     run_snip(
@@ -470,7 +470,7 @@ test_that("the `snip_list()` function works", {
       small_table[2:4, ]
     )
   )
-  
+
   # Expect an error if `quot_str` isn't TRUE, FALSE, or NULL
   expect_error(
     run_snip(
@@ -481,7 +481,7 @@ test_that("the `snip_list()` function works", {
       small_table[2:4, ]
     )
   )
-  
+
   # Expect an error if `sorting` isn't `"inorder"`, `"infreq"`, or `"inseq"`
   expect_error(
     run_snip(
@@ -491,7 +491,7 @@ test_that("the `snip_list()` function works", {
       small_table
     )
   )
-  
+
   # Expect an error if `sorting` isn't of length 1
   expect_error(
     run_snip(
@@ -501,7 +501,7 @@ test_that("the `snip_list()` function works", {
       small_table
     )
   )
-  
+
   # Expect an error if `lang` isn't one of the supported languages
   expect_error(
     run_snip(
@@ -511,7 +511,7 @@ test_that("the `snip_list()` function works", {
       small_table
     )
   )
-  
+
   # na_rm ignores NA values in list
   expect_match(
     run_snip(
@@ -534,11 +534,11 @@ test_that("the `snip_list()` function works", {
     ),
     "---"
   )
-  
+
 })
 
 test_that("the `snip_stats()` function works", {
-  
+
   expect_match(
     as.character(
       run_snip(snip_stats(column = "a"), small_table)
@@ -552,7 +552,7 @@ test_that("the `snip_stats()` function works", {
       "Maximum.*?&#10126;.*?8.*?"
     )
   )
-  
+
   expect_match(
     as.character(
       run_snip(snip_stats(column = "a", type = "7num"), small_table)
@@ -568,7 +568,7 @@ test_that("the `snip_stats()` function works", {
       "P98.*?&#10128;.*?7.76.*?"
     )
   )
-  
+
   expect_match(
     as.character(
       run_snip(snip_stats(column = "a", type = "bowley"), small_table)
@@ -587,7 +587,7 @@ test_that("the `snip_stats()` function works", {
 })
 
 test_that("the `snip_lowest()` function works", {
-  
+
   expect_equal(
     run_snip(snip_lowest(column = "a"), small_table),
     "1"
@@ -615,7 +615,7 @@ test_that("the `snip_lowest()` function works", {
 })
 
 test_that("the `snip_highest()` function works", {
-  
+
   expect_equal(
     run_snip(snip_highest(column = "a"), small_table),
     "8"

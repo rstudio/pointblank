@@ -8,7 +8,7 @@ small_table <-
     col_types = "TDicddlc"
   )
 
-con <- 
+con <-
   DBI::dbConnect(
     RSQLite::SQLite(),
     dbname = "inst/data_files/small_table.db"

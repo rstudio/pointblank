@@ -45,7 +45,7 @@ test_that("`col_*()`s show expected column selection failure/success behavior", 
   # |n_steps    |1          |1      |1           |2           |2           |1         |1                |
   # |column     |NA         |a      |z           |c("a", "z") |c("a", "z") |a         |NA               |
   # |eval_error |TRUE       |FALSE  |TRUE        |TRUE        |TRUE        |FALSE     |TRUE             |
-  
+
   check_behaviors <- function(agent, expr_name) {
     x <- suppressMessages(interrogate(agent))
     behaviors <- get_behaviors(x$validation_set)
@@ -57,7 +57,7 @@ test_that("`col_*()`s show expected column selection failure/success behavior", 
   for (expr_name in names(select_exprs)) {
 
     select_expr <- select_exprs[[expr_name]]
-    
+
     agent %>% col_vals_lt({{ select_expr }}, value = 5) %>% check_behaviors(expr_name)
     agent %>% col_vals_lte({{ select_expr }}, value = 5) %>% check_behaviors(expr_name)
     agent %>% col_vals_equal({{ select_expr }}, value = 5) %>% check_behaviors(expr_name)
@@ -84,13 +84,13 @@ test_that("`col_*()`s show expected column selection failure/success behavior", 
     agent %>% col_is_posix({{ select_expr }}) %>% check_behaviors(expr_name)
     agent %>% col_is_factor({{ select_expr }}) %>% check_behaviors(expr_name)
   }
-  
+
 })
 
 test_that("`rows_*()`s show expected column selection failure/success behavior", {
-  
+
   all_cols <- toString(colnames(agent$tbl))
-  
+
   expected_behaviors <- matrix(
     c(
       list(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L),
@@ -105,7 +105,7 @@ test_that("`rows_*()`s show expected column selection failure/success behavior",
   # |n_steps    |1          |1      |1           |1     |1         |1         |1                |
   # |column     |a, b, c    |a      |z           |a, z  |a, z      |a         |NA               |
   # |eval_error |FALSE      |FALSE  |TRUE        |TRUE  |TRUE      |FALSE     |TRUE             |
-  
+
   check_behaviors <- function(agent, expr_name) {
     x <- suppressMessages(interrogate(agent))
     behaviors <- get_behaviors(x$validation_set)
@@ -113,20 +113,20 @@ test_that("`rows_*()`s show expected column selection failure/success behavior",
     expect_identical(behaviors[["column"]], expected_behaviors[["column", expr_name]])
     expect_identical(behaviors[["eval_error"]], expected_behaviors[["eval_error", expr_name]])
   }
-  
+
   for (expr_name in names(select_exprs)) {
-    
+
     select_expr <- select_exprs[[expr_name]]
-    
+
     agent %>% rows_distinct({{ select_expr }}) %>% check_behaviors(expr_name)
     agent %>% rows_complete({{ select_expr }}) %>% check_behaviors(expr_name)
-    
+
   }
-  
+
 })
 
 test_that("`col_exists()`s show expected column selection failure/success behavior", {
-  
+
   expected_behaviors <- matrix(
     c(
       list(1L, 1L, 1L, 1L, 2L, 2L, 1L, 1L),
@@ -141,7 +141,7 @@ test_that("`col_exists()`s show expected column selection failure/success behavi
   # |n_steps    |1          |1      |1           |2           |2           |1         |1                |
   # |column     |NA         |a      |z           |c("a", "z") |c("a", "z") |a         |NA               |
   # |eval_error |TRUE       |FALSE  |FALSE       |FALSE       |FALSE       |FALSE     |FALSE            |
-  
+
   check_behaviors <- function(agent, expr_name) {
     x <- suppressMessages(interrogate(agent))
     behaviors <- get_behaviors(x$validation_set)
@@ -149,34 +149,34 @@ test_that("`col_exists()`s show expected column selection failure/success behavi
     expect_identical(behaviors[["column"]], expected_behaviors[["column", expr_name]])
     expect_identical(behaviors[["eval_error"]], expected_behaviors[["eval_error", expr_name]])
   }
-  
+
   for (expr_name in names(select_exprs)) {
-    
+
     select_expr <- select_exprs[[expr_name]]
-    
+
     agent %>% col_exists({{ select_expr }}) %>% check_behaviors(expr_name)
-    
+
   }
-  
+
 })
 
 test_that("Genuine evaluation errors are rethrown immediately (tested on a sample)", {
-  
+
   errs <- rlang::quos(
     "Oh no!" = stop("Oh no!"),
     "not found" = all_of(I_dont_exist)
   )
   simple_err1 <- rlang::quo(stop("Oh no!"))
   simple_err2 <- rlang::quo(all_of(I_dont_exist))
-  
+
   for (err_regex in names(errs)) {
-    
+
     err_expr <- errs[[err_regex]]
-  
+
     expect_error(agent %>% col_vals_between({{ err_expr }}, 2, 5))
     expect_error(agent %>% rows_distinct({{ err_expr }}))
     expect_error(agent %>% col_exists({{ err_expr }}))
-  
+
   }
-  
+
 })

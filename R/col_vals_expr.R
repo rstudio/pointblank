@@ -369,7 +369,7 @@ col_vals_expr <- function(
   
   brief <- resolve_briefs(
     brief = brief, agent = agent,
-    columns = columns, segments_list = segments_list,
+    segments_list = segments_list,
     preconditions = preconditions,
     assertion_type = "col_vals_expr"
   )

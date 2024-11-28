@@ -1,6 +1,4 @@
-skip_on_os(os = "windows")
-local_edition(3)
-
+skip_on_cran()
 work_path <- "./generated_r_files"
 
 if (fs::dir_exists(path = work_path)) {
@@ -20,7 +18,7 @@ write_draft_snapshot_test <- function(
 ) {
 
   tbl <- dataset
-  
+
   suppressMessages(
     expect_true(
       draft_validation(
@@ -35,20 +33,20 @@ write_draft_snapshot_test <- function(
       )
     )
   )
-  
+
   path <- list.files(path = work_path, pattern = filename, full.names = TRUE)
   expect_snapshot(readLines(con = path) %>% paste0(collapse = "\n"))
 }
 
 test_that("draft validations for data tables can be generated", {
-  
+
   #write_draft_snapshot_test(dataset = gt::countrypops, filename = "countrypops")
   write_draft_snapshot_test(dataset = gt::sza, filename = "sza")
   write_draft_snapshot_test(dataset = gt::gtcars, filename = "gtcars")
   write_draft_snapshot_test(dataset = gt::sp500, filename = "sp500")
   write_draft_snapshot_test(dataset = gt::pizzaplace, filename = "pizzaplace")
   write_draft_snapshot_test(dataset = gt::exibble, filename = "exibble")
-  
+
   write_draft_snapshot_test(dataset = ggplot2::diamonds, filename = "diamonds")
   write_draft_snapshot_test(dataset = ggplot2::economics_long, filename = "economics_long")
   write_draft_snapshot_test(dataset = ggplot2::faithfuld, filename = "faithfuld")
@@ -59,12 +57,12 @@ test_that("draft validations for data tables can be generated", {
   write_draft_snapshot_test(dataset = ggplot2::presidential, filename = "presidential")
   write_draft_snapshot_test(dataset = ggplot2::seals, filename = "seals")
   write_draft_snapshot_test(dataset = ggplot2::txhousing, filename = "txhousing")
-  
+
   write_draft_snapshot_test(dataset = dplyr::band_instruments, filename = "band_instruments")
   write_draft_snapshot_test(dataset = dplyr::band_members, filename = "band_members")
   write_draft_snapshot_test(dataset = dplyr::starwars, filename = "starwars")
   # write_draft_snapshot_test(dataset = dplyr::storms, filename = "storms")
-  
+
   write_draft_snapshot_test(dataset = tidyr::billboard, filename = "billboard")
   write_draft_snapshot_test(dataset = tidyr::construction, filename = "construction")
   write_draft_snapshot_test(dataset = tidyr::fish_encounters, filename = "fish_encounters")
@@ -74,9 +72,9 @@ test_that("draft validations for data tables can be generated", {
   write_draft_snapshot_test(dataset = tidyr::us_rent_income, filename = "us_rent_income")
   #write_draft_snapshot_test(dataset = tidyr::who, filename = "who")
   write_draft_snapshot_test(dataset = tidyr::world_bank_pop, filename = "world_bank_pop")
-  
+
   write_draft_snapshot_test(dataset = lubridate::lakers, filename = "lakers")
-  
+
   write_draft_snapshot_test(dataset = datasets::airquality, filename = "airquality")
   write_draft_snapshot_test(dataset = datasets::chickwts, filename = "chickwts")
   write_draft_snapshot_test(dataset = datasets::iris, filename = "iris")
@@ -93,7 +91,7 @@ test_that("draft validations for data tables can be generated", {
 })
 
 test_that("draft validations for data tables can be generated in different languages", {
-
+  skip_if_not_utf8()
   write_draft_snapshot_test(dataset = pointblank::small_table, filename = "st_en", lang = "en")
   write_draft_snapshot_test(dataset = pointblank::small_table, filename = "st_fr", lang = "fr")
   write_draft_snapshot_test(dataset = pointblank::small_table, filename = "st_de", lang = "de")
@@ -110,7 +108,7 @@ test_that("draft validations for data tables can be generated in different langu
 })
 
 test_that("draft validations for data tables can be generated in .Rmd format", {
-  
+
   write_draft_snapshot_test(dataset = gt::countrypops, filename = "countrypops_rmd", output_type = "Rmd")
   write_draft_snapshot_test(dataset = gt::sza, filename = "sza_rmd", output_type = "Rmd")
   write_draft_snapshot_test(dataset = gt::gtcars, filename = "gtcars_rmd", output_type = "Rmd")
@@ -120,7 +118,7 @@ test_that("draft validations for data tables can be generated in .Rmd format", {
 })
 
 test_that("draft validations for data tables can be generated without comments", {
-  
+
   write_draft_snapshot_test(dataset = gt::countrypops, filename = "countrypops_no_comments", add_comments = FALSE)
 })
 
@@ -133,15 +131,14 @@ test_that("a file created with `draft_validation()` cannot be overwritten by def
   suppressMessages(
     draft_validation(tbl = gt::countrypops, filename = "countrypops_new", path = work_path)
   )
-  
+
   expect_error(
     suppressMessages(
       draft_validation(tbl = gt::countrypops, filename = "countrypops_new", path = work_path)
     )
   )
-  
-  expect_error(
-    regexp = NA,
+
+  expect_no_error(
     suppressMessages(
       draft_validation(tbl = gt::countrypops, filename = "countrypops_new", path = work_path, overwrite = TRUE)
     )
@@ -149,13 +146,12 @@ test_that("a file created with `draft_validation()` cannot be overwritten by def
 })
 
 test_that("messages emitted by `draft_validation()` can be quieted", {
-  
+
   expect_message(
     draft_validation(tbl = gt::countrypops, filename = "countrypops", path = work_path, overwrite = TRUE)
   )
-  
-  expect_message(
-    regexp = NA,
+
+  expect_no_message(
     draft_validation(tbl = gt::countrypops, filename = "countrypops", path = work_path, overwrite = TRUE, quiet = TRUE)
   )
 })

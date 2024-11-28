@@ -1,4 +1,4 @@
-tbl <- 
+tbl <-
   small_table %>%
   dplyr::mutate(g = as.factor(f))
 
@@ -32,43 +32,43 @@ decreasing_tbl <-
     d = c(7, 5, 4, 4.0001, 3, 1)
   )
 
-schema_incorrect <- 
+schema_incorrect <-
   col_schema(
-    date_time = "POSIXct", date = "Date", 
-    a = "integer", b = "character", c = "numeric", d = "numeric", 
+    date_time = "POSIXct", date = "Date",
+    a = "integer", b = "character", c = "numeric", d = "numeric",
     e = "logical", f = "character", g = "factor"
   )
 
-schema_correct <- 
-  schema <- 
+schema_correct <-
+  schema <-
   col_schema(
-    date_time = c("POSIXct", "POSIXt"), date = "Date", 
-    a = "integer", b = "character", c = "numeric", d = "numeric", 
+    date_time = c("POSIXct", "POSIXt"), date = "Date",
+    a = "integer", b = "character", c = "numeric", d = "numeric",
     e = "logical", f = "character", g = "factor"
   )
 
 test_that("Interrogating simply returns the expected results", {
-  
+
   #
   # col_vals_lt()
   #
-  
+
   # Use the `col_vals_lt()` function to perform
   # a simple validation step
-  tbl_result <- 
+  tbl_result <-
     tbl %>%
     col_vals_lt(
       columns = vars(a),
       value = 10,
       actions = warn_on_fail()
     )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   # Perform a simple validation that yields a warning
   expect_warning(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_lt(
         columns = vars(a),
@@ -76,15 +76,15 @@ test_that("Interrogating simply returns the expected results", {
         actions = warn_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   rm(tbl_result)
-  
+
   # Perform a simple validation step that results in stopping
   expect_error(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_lt(
         columns = vars(a),
@@ -92,30 +92,30 @@ test_that("Interrogating simply returns the expected results", {
         actions = stop_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
-  
+
   #
   # col_vals_lte()
   #
-  
+
   # Use the `col_vals_lte()` function to perform
   # a simple validation step
-  tbl_result <- 
+  tbl_result <-
     tbl %>%
     col_vals_lte(
       columns = vars(a),
       value = 8,
       actions = warn_on_fail()
     )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   # Perform a simple validation that yields a warning
   expect_warning(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_lte(
         columns = vars(a),
@@ -123,15 +123,15 @@ test_that("Interrogating simply returns the expected results", {
         actions = warn_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   rm(tbl_result)
-  
+
   # Perform a simple validation step that results in stopping
   expect_error(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_lte(
         columns = vars(a),
@@ -139,18 +139,18 @@ test_that("Interrogating simply returns the expected results", {
         actions = stop_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
-  
+
   #
   # col_vals_equal()
   #
-  
+
   # Use the `col_vals_equal()` function to perform
   # a simple validation step
   suppressWarnings(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_equal(
         columns = vars(d),
@@ -158,28 +158,28 @@ test_that("Interrogating simply returns the expected results", {
         actions = warn_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   # Perform a simple validation that yields a warning
   expect_warning(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_equal(
         columns = vars(d), value = 283.94,
         actions = warn_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   rm(tbl_result)
-  
+
   # Perform a simple validation step that results in stopping
   expect_error(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_equal(
         columns = vars(d),
@@ -187,18 +187,18 @@ test_that("Interrogating simply returns the expected results", {
         actions = stop_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
-  
+
   #
   # col_vals_not_equal()
   #
-  
+
   # Use the `col_vals_not_equal()` function to perform
   # a simple validation step
   suppressWarnings(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_not_equal(
         columns = vars(d),
@@ -206,13 +206,13 @@ test_that("Interrogating simply returns the expected results", {
         actions = warn_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   # Perform a simple validation that yields a warning
   expect_warning(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_not_equal(
         columns = vars(d),
@@ -220,15 +220,15 @@ test_that("Interrogating simply returns the expected results", {
         actions = warn_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   rm(tbl_result)
-  
+
   # Perform a simple validation step that results in stopping
   expect_error(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_not_equal(
         columns = vars(d),
@@ -236,30 +236,30 @@ test_that("Interrogating simply returns the expected results", {
         actions = stop_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
-  
+
   #
   # col_vals_gte()
   #
-  
+
   # Use the `col_vals_gte()` function to perform
   # a simple validation step
-  tbl_result <- 
+  tbl_result <-
     tbl %>%
     col_vals_gte(
       columns = vars(a),
       value = 1,
       actions = warn_on_fail()
     )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   # Perform a simple validation that yields a warning
   expect_warning(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_gte(
         columns = vars(a),
@@ -267,15 +267,15 @@ test_that("Interrogating simply returns the expected results", {
         actions = warn_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   rm(tbl_result)
-  
+
   # Perform a simple validation step that results in stopping
   expect_error(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_gte(
         columns = vars(a),
@@ -283,30 +283,30 @@ test_that("Interrogating simply returns the expected results", {
         actions = stop_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
-  
+
   #
   # col_vals_gt()
   #
-  
+
   # Use the `col_vals_gt()` function to perform
   # a simple validation step
-  tbl_result <- 
+  tbl_result <-
     tbl %>%
     col_vals_gt(
       columns = vars(a),
       value = 0,
       actions = warn_on_fail()
     )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   # Perform a simple validation that yields a warning
   expect_warning(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_gt(
         columns = vars(a),
@@ -314,15 +314,15 @@ test_that("Interrogating simply returns the expected results", {
         actions = warn_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   rm(tbl_result)
-  
+
   # Perform a simple validation step that results in stopping
   expect_error(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_gt(
         columns = vars(a),
@@ -330,30 +330,30 @@ test_that("Interrogating simply returns the expected results", {
         actions = stop_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
-  
+
   #
   # col_vals_between()
   #
-  
+
   # Use the `col_vals_between()` function to perform
   # a simple validation step
-  tbl_result <- 
+  tbl_result <-
     tbl %>%
     col_vals_between(
       columns = vars(d),
       left = 0, right = 10000,
       actions = warn_on_fail()
     )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   # Perform a simple validation that yields a warning
   expect_warning(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_between(
         columns = vars(d),
@@ -361,15 +361,15 @@ test_that("Interrogating simply returns the expected results", {
         actions = warn_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   rm(tbl_result)
-  
+
   # Perform a simple validation step that results in stopping
   expect_error(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_between(
         columns = vars(d),
@@ -377,30 +377,30 @@ test_that("Interrogating simply returns the expected results", {
         actions = stop_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
-  
+
   #
   # col_vals_not_between()
   #
-  
+
   # Use the `col_vals_not_between()` function to perform
   # a simple validation step
-  tbl_result <- 
+  tbl_result <-
     tbl %>%
     col_vals_not_between(
       columns = vars(d),
       left = 15000, right = 20000,
       actions = warn_on_fail()
     )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   # Perform a simple validation that yields a warning
   expect_warning(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_not_between(
         columns = vars(d),
@@ -408,15 +408,15 @@ test_that("Interrogating simply returns the expected results", {
         actions = warn_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   rm(tbl_result)
-  
+
   # Perform a simple validation step that results in stopping
   expect_error(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_not_between(
         columns = vars(d),
@@ -424,13 +424,13 @@ test_that("Interrogating simply returns the expected results", {
         actions = stop_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
-  
+
   # Use the `col_vals_not_between()` function to perform
   # a simple validation step (with a precondition)
-  tbl_result <- 
+  tbl_result <-
     tbl %>%
     col_vals_not_between(
       columns = vars(d),
@@ -438,13 +438,13 @@ test_that("Interrogating simply returns the expected results", {
       preconditions = ~ . %>% dplyr::filter(date > "2016-01-20"),
       actions = warn_on_fail()
     )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   # Perform a simple validation that yields a warning
   expect_warning(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_not_between(
         columns = vars(d),
@@ -453,15 +453,15 @@ test_that("Interrogating simply returns the expected results", {
         actions = warn_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   rm(tbl_result)
-  
+
   # Perform a simple validation step that results in stopping
   expect_error(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_not_between(
         columns = vars(d),
@@ -470,30 +470,30 @@ test_that("Interrogating simply returns the expected results", {
         actions = stop_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
-  
+
   #
   # col_vals_in_set()
   #
-  
+
   # Use the `col_vals_in_set()` function to perform
   # a simple validation step
-  tbl_result <- 
+  tbl_result <-
     tbl %>%
     col_vals_in_set(
       columns = vars(f),
       set = c("low", "mid", "high"),
       actions = warn_on_fail()
     )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   # Perform a simple validation that yields a warning
   expect_warning(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_in_set(
         columns = vars(f),
@@ -501,15 +501,15 @@ test_that("Interrogating simply returns the expected results", {
         actions = warn_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   rm(tbl_result)
-  
+
   # Perform a simple validation step that results in stopping
   expect_error(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_in_set(
         columns = vars(f),
@@ -517,30 +517,30 @@ test_that("Interrogating simply returns the expected results", {
         actions = stop_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
-  
+
   #
   # col_vals_not_in_set()
   #
-  
+
   # Use the `col_vals_not_in_set()` function to perform
   # a simple validation step
-  tbl_result <- 
+  tbl_result <-
     tbl %>%
     col_vals_not_in_set(
       columns = vars(f),
       set = c("lower", "higher"),
       actions = warn_on_fail()
     )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   # Perform a simple validation that yields a warning
   expect_warning(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_not_in_set(
         columns = vars(f),
@@ -548,15 +548,15 @@ test_that("Interrogating simply returns the expected results", {
         actions = warn_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   rm(tbl_result)
-  
+
   # Perform a simple validation step that results in stopping
   expect_error(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_not_in_set(
         columns = vars(f),
@@ -564,30 +564,30 @@ test_that("Interrogating simply returns the expected results", {
         actions = stop_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
 
   #
   # col_vals_make_set()
   #
-  
+
   # Use the `col_vals_make_set()` function to perform
   # a simple validation step
-  tbl_result <- 
+  tbl_result <-
     tbl %>%
     col_vals_make_set(
       columns = vars(f),
       set = c("low", "mid", "high"),
       actions = warn_on_fail()
     )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   # Perform a simple validation that yields a warning
   expect_warning(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_make_set(
         columns = vars(f),
@@ -595,15 +595,15 @@ test_that("Interrogating simply returns the expected results", {
         actions = warn_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   rm(tbl_result)
-  
+
   # Perform a simple validation step that results in stopping
   expect_error(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_in_set(
         columns = vars(f),
@@ -611,13 +611,13 @@ test_that("Interrogating simply returns the expected results", {
         actions = stop_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
-  
+
   # Perform another simple validation step that results in stopping
   expect_error(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_in_set(
         columns = vars(f),
@@ -625,43 +625,43 @@ test_that("Interrogating simply returns the expected results", {
         actions = stop_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
-  
+
   #
   # col_vals_make_subset()
   #
-  
+
   # Use the `col_vals_make_subset()` function to perform
   # a simple validation step
-  tbl_result <- 
+  tbl_result <-
     tbl %>%
     col_vals_make_subset(
       columns = vars(f),
       set = c("low", "mid", "high"),
       actions = warn_on_fail()
     )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   # Use the `col_vals_make_subset()` function to perform
   # another simple validation step
-  tbl_result <- 
+  tbl_result <-
     tbl %>%
     col_vals_make_subset(
       columns = vars(f),
       set = c("low", "mid"),
       actions = warn_on_fail()
     )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   # Perform a simple validation that yields a warning
   expect_warning(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_make_subset(
         columns = vars(f),
@@ -669,15 +669,15 @@ test_that("Interrogating simply returns the expected results", {
         actions = warn_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   rm(tbl_result)
-  
+
   # Perform a simple validation step that results in stopping
   expect_error(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_make_subset(
         columns = vars(f),
@@ -685,13 +685,13 @@ test_that("Interrogating simply returns the expected results", {
         actions = stop_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
-  
+
   # Perform another simple validation step that results in stopping
   expect_error(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_make_subset(
         columns = vars(f),
@@ -699,118 +699,118 @@ test_that("Interrogating simply returns the expected results", {
         actions = stop_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
-  
+
   #
   # col_vals_increasing()
   #
-  
+
   # Use the `col_vals_increasing()` function to perform
   # a simple validation step
-  tbl_result <- 
+  tbl_result <-
     increasing_tbl %>%
     col_vals_increasing(
       columns = vars(a),
       actions = warn_on_fail()
     )
-  
+
   # Expect that `tbl_result` is equivalent to `increasing_tbl`
-  expect_equivalent(increasing_tbl, tbl_result)
-  
+  expect_equal(increasing_tbl, tbl_result)
+
   # Perform a simple validation that yields a warning
   expect_warning(
-    tbl_result <- 
+    tbl_result <-
       increasing_tbl %>%
       col_vals_increasing(
         columns = vars(b),
         actions = warn_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is equivalent to `increasing_tbl`
-  expect_equivalent(increasing_tbl, tbl_result)
-  
+  expect_equal(increasing_tbl, tbl_result)
+
   rm(tbl_result)
-  
+
   # Perform a simple validation step that results in stopping
   expect_error(
-    tbl_result <- 
+    tbl_result <-
       increasing_tbl %>%
       col_vals_increasing(
         columns = vars(b),
         actions = stop_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
-  
+
   #
   # col_vals_decreasing()
   #
-  
+
   # Use the `col_vals_decreasing()` function to perform
   # a simple validation step
-  tbl_result <- 
+  tbl_result <-
     decreasing_tbl %>%
     col_vals_decreasing(
       columns = vars(a),
       actions = warn_on_fail()
     )
-  
+
   # Expect that `tbl_result` is equivalent to `decreasing_tbl`
-  expect_equivalent(decreasing_tbl, tbl_result)
-  
+  expect_equal(decreasing_tbl, tbl_result)
+
   # Perform a simple validation that yields a warning
   expect_warning(
-    tbl_result <- 
+    tbl_result <-
       decreasing_tbl %>%
       col_vals_decreasing(
         columns = vars(b),
         actions = warn_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is equivalent to `decreasing_tbl`
-  expect_equivalent(decreasing_tbl, tbl_result)
-  
+  expect_equal(decreasing_tbl, tbl_result)
+
   rm(tbl_result)
-  
+
   # Perform a simple validation step that results in stopping
   expect_error(
-    tbl_result <- 
+    tbl_result <-
       decreasing_tbl %>%
       col_vals_decreasing(
         columns = vars(b),
         actions = stop_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
-  
+
   #
   # col_vals_null()
   #
-  
+
   # Use the `col_vals_null()` function to perform
   # a simple validation step (with a precondition)
-  tbl_result <- 
+  tbl_result <-
     tbl %>%
     col_vals_null(
       columns = vars(c),
       preconditions = ~ . %>% dplyr::filter(date == "2016-01-06"),
       actions = warn_on_fail()
     )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   # Perform a simple validation that yields a warning
   expect_warning(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_null(
         columns = vars(c),
@@ -818,15 +818,15 @@ test_that("Interrogating simply returns the expected results", {
         actions = warn_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   rm(tbl_result)
-  
+
   # Perform a simple validation step that results in stopping
   expect_error(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_null(
         columns = vars(c),
@@ -834,74 +834,74 @@ test_that("Interrogating simply returns the expected results", {
         actions = stop_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
-  
+
   #
   # col_vals_not_null()
   #
-  
+
   # Use the `col_vals_not_null()` function to perform
   # a simple validation step
-  tbl_result <- 
+  tbl_result <-
     tbl %>%
     col_vals_not_null(
       columns = vars(a),
       actions = warn_on_fail()
     )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   # Perform a simple validation that yields a warning
   expect_warning(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_not_null(
         columns = vars(c),
         actions = warn_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   rm(tbl_result)
-  
+
   # Perform a simple validation step that results in stopping
   expect_error(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_not_null(
         columns = vars(c),
         actions = stop_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
-  
+
   #
   # col_vals_regex()
   #
-  
+
   # Use the `col_vals_regex()` function to perform
   # a simple validation step
-  tbl_result <- 
+  tbl_result <-
     tbl %>%
     col_vals_regex(
       columns = vars(b),
-      regex = "[0-9]-[a-z]*?-[0-9]*?", 
+      regex = "[0-9]-[a-z]*?-[0-9]*?",
       actions = warn_on_fail()
     )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   # Perform a simple validation that yields a warning
   expect_warning(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_regex(
         columns = vars(b),
@@ -909,15 +909,15 @@ test_that("Interrogating simply returns the expected results", {
         actions = warn_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   rm(tbl_result)
-  
+
   # Perform a simple validation step that results in stopping
   expect_error(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_regex(
         columns = vars(b),
@@ -925,30 +925,30 @@ test_that("Interrogating simply returns the expected results", {
         actions = stop_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
-  
+
   #
   # col_vals_within_spec()
   #
-  
+
   # Use the `col_vals_within_spec()` function to perform
   # a simple validation step
-  tbl_result <- 
+  tbl_result <-
     specifications[1:5, ] %>%
     col_vals_within_spec(
       columns = vars(isbn_numbers),
       spec = "isbn",
       actions = warn_on_fail()
     )
-  
+
   # Expect that `tbl_result` is equivalent to `specifications[1:5, ]`
-  expect_equivalent(specifications[1:5, ], tbl_result)
-  
+  expect_equal(specifications[1:5, ], tbl_result)
+
   # Perform a simple validation that yields a warning
   expect_warning(
-    tbl_result <- 
+    tbl_result <-
       specifications[1:6, ] %>%
       col_vals_within_spec(
         columns = vars(isbn_numbers),
@@ -956,15 +956,15 @@ test_that("Interrogating simply returns the expected results", {
         actions = warn_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is equivalent to `specifications[1:6, ]`
-  expect_equivalent(specifications[1:6, ], tbl_result)
-  
+  expect_equal(specifications[1:6, ], tbl_result)
+
   rm(tbl_result)
-  
+
   # Perform a simple validation step that results in stopping
   expect_error(
-    tbl_result <- 
+    tbl_result <-
       specifications %>%
       col_vals_within_spec(
         columns = vars(isbn_numbers),
@@ -972,155 +972,155 @@ test_that("Interrogating simply returns the expected results", {
         actions = stop_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
-  
+
   #
   # col_vals_expr()
   #
-  
+
   # Use the `col_vals_expr()` function to perform
   # a simple validation step (with a precondition)
-  tbl_result <- 
+  tbl_result <-
     tbl %>%
     col_vals_expr(
       expr = ~ a %% 1 == 0,
       actions = warn_on_fail()
     )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   # Perform a simple validation that yields a warning
   expect_warning(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_expr(
         expr = ~ a %% 2 == 0,
         actions = warn_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   rm(tbl_result)
-  
+
   # Perform a simple validation step that results in stopping
   expect_error(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_vals_expr(
         expr = ~ a %% 2 == 0,
         actions = stop_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
-  
+
   #
   # rows_distinct()
   #
-  
+
   # Use the `rows_distinct()` function to perform
   # a simple validation step
   tbl_result <- tbl[1:2, ] %>% rows_distinct()
-  
+
   # Expect that `tbl_result` is equivalent to `tbl[1:2, ]`
-  expect_equivalent(tbl[1:2, ], tbl_result)
-  
+  expect_equal(tbl[1:2, ], tbl_result)
+
   # Perform a simple validation that yields a warning
   expect_warning(
     tbl_result <- tbl %>% rows_distinct(actions = warn_on_fail())
   )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   rm(tbl_result)
-  
+
   # Perform a simple validation step that results in stopping
   expect_error(
     tbl_result <- tbl %>% rows_distinct(actions = stop_on_fail())
   )
-  
+
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
-  
+
   #
   # rows_complete()
   #
-  
+
   # Use the `rows_complete()` function to perform
   # a simple validation step
   tbl_result <- tbl_complete_yes %>% rows_complete()
-  
+
   # Expect that `tbl_result` is equivalent to `tbl_complete_yes`
-  expect_equivalent(tbl_complete_yes, tbl_result)
-  
+  expect_equal(tbl_complete_yes, tbl_result)
+
   # Perform a simple validation that yields a warning
   expect_warning(
     tbl_result <- tbl_complete_no %>% rows_complete(actions = warn_on_fail())
   )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl_complete_no, tbl_result)
-  
+  expect_equal(tbl_complete_no, tbl_result)
+
   rm(tbl_result)
-  
+
   # Perform a simple validation step that results in stopping
   expect_error(
     tbl_result <- tbl_complete_no %>% rows_complete(actions = stop_on_fail())
   )
-  
+
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
-  
+
   #
   # col_is_character()
   #
-  
+
   # Use the `col_is_character()` function to perform
   # a simple validation step
   tbl_result <- tbl %>% col_is_character(columns = vars(b))
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   # Perform a simple validation that yields a warning
   expect_warning(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_is_character(
         columns = vars(a),
         actions = warn_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   rm(tbl_result)
-  
+
   # Perform a simple validation step that results in stopping
   expect_error(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_is_character(
         columns = vars(a),
         actions = stop_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
-  
+
   #
   # col_is_numeric()
   #
-  
+
   # Use the `col_is_numeric()` function to perform
   # a simple validation step
   suppressWarnings(
@@ -1131,251 +1131,251 @@ test_that("Interrogating simply returns the expected results", {
         actions = warn_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   # Perform a simple validation that yields a warning
   expect_warning(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_is_numeric(
         columns = vars(b),
         actions = warn_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   rm(tbl_result)
-  
+
   # Perform a simple validation step that results in stopping
   expect_error(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_is_numeric(
         columns = vars(b),
         actions = stop_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
-  
+
   #
   # col_is_integer()
   #
-  
+
   # Use the `col_is_integer()` function to perform
   # a simple validation step
-  tbl_result <- 
+  tbl_result <-
     tbl %>%
     col_is_integer(
       columns = vars(a),
       actions = warn_on_fail()
     )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   # Perform a simple validation that yields a warning
   expect_warning(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_is_integer(
         columns = vars(b),
         actions = warn_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   rm(tbl_result)
-  
+
   # Perform a simple validation step that results in stopping
   expect_error(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_is_integer(
         columns = vars(b),
         actions = stop_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
-  
+
   #
   # col_is_posix()
   #
-  
+
   # Use the `col_is_posix()` function to perform
   # a simple validation step
-  tbl_result <- 
+  tbl_result <-
     tbl %>%
     col_is_posix(
       columns = vars(date_time),
       actions = warn_on_fail()
     )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   # Perform a simple validation that yields a warning
   expect_warning(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_is_posix(
         columns = vars(b),
         actions = warn_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   rm(tbl_result)
-  
+
   # Perform a simple validation step that results in stopping
   expect_error(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_is_posix(
         columns = vars(b),
         actions = stop_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
-  
+
   #
   # col_is_date()
   #
-  
+
   # Use the `col_is_date()` function to perform
   # a simple validation step
-  tbl_result <- 
+  tbl_result <-
     tbl %>%
     col_is_date(
       columns = vars(date),
       actions = warn_on_fail()
     )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   # Perform a simple validation that yields a warning
   expect_warning(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_is_date(
         columns = vars(b),
         actions = warn_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   rm(tbl_result)
-  
+
   # Perform a simple validation step that results in stopping
   expect_error(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_is_date(
         columns = vars(b),
         actions = stop_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
-  
+
   #
   # col_is_logical()
   #
-  
+
   # Use the `col_is_logical()` function to perform
   # a simple validation step
-  tbl_result <- 
+  tbl_result <-
     tbl %>%
     col_is_logical(columns = vars(e), actions = warn_on_fail())
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   # Perform a simple validation that yields a warning
   expect_warning(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_is_logical(columns = vars(b), actions = warn_on_fail())
   )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   rm(tbl_result)
-  
+
   # Perform a simple validation step that results in stopping
   expect_error(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_is_logical(
         columns = vars(b),
         actions = stop_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
-  
+
   #
   # col_is_factor()
   #
-  
+
   # Use the `col_is_factor()` function to perform
   # a simple validation step
   tbl_result <- tbl %>% col_is_factor(columns = vars(g))
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   # Perform a simple validation that yields a warning
   expect_warning(
-    tbl_result <- 
-      tbl %>% 
+    tbl_result <-
+      tbl %>%
       col_is_factor(
         columns = vars(a),
         actions = warn_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   rm(tbl_result)
-  
+
   # Perform a simple validation step that results in stopping
   expect_error(
-    tbl_result <- 
-      tbl %>% 
+    tbl_result <-
+      tbl %>%
       col_is_factor(
         columns = vars(a),
         actions = stop_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
-  
+
   #
   # col_exists()
   #
-  
+
   # Using the `col_exists()` function to perform
   # a simple validation step results in a warning
   expect_warning(
@@ -1390,7 +1390,7 @@ test_that("Interrogating simply returns the expected results", {
   expect_warning(
     tbl %>% col_exists(columns = c("a", "h"), actions = warn_on_fail())
   )
-  
+
   # Using the `col_exists()` function to perform
   # a simple validation step results in an error
   expect_error(
@@ -1405,333 +1405,333 @@ test_that("Interrogating simply returns the expected results", {
   expect_error(
     tbl %>% col_exists(columns = c("a", "h"), actions = stop_on_fail())
   )
-  
+
   # Expect no warning or error if all column names are correct
-  expect_warning(regexp = NA,
+  expect_no_warning(
     tbl %>% col_exists(columns = colnames(tbl), actions = warn_on_fail())
   )
-  expect_error(regexp = NA,
+  expect_no_error(
     tbl %>% col_exists(columns = colnames(tbl), actions = stop_on_fail())
   )
-  
+
   #
   # col_schema_match()
   #
-  
+
   # Use the `col_schema_match()` function to perform
   # a simple validation step
-  tbl_result <- 
+  tbl_result <-
     tbl[1:2, ] %>%
     col_schema_match(
       schema = col_schema(.tbl = tbl),
       actions = warn_on_fail()
     )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl[1:2, ]`
-  expect_equivalent(tbl[1:2, ], tbl_result)
-  
+  expect_equal(tbl[1:2, ], tbl_result)
+
   # Use the `col_schema_match()` function to perform
   # another simple validation step
   tbl_result <- tbl[1:2, ] %>% col_schema_match(schema = schema_correct)
-  
+
   # Expect that `tbl_result` is equivalent to `tbl[1:2, ]`
-  expect_equivalent(tbl[1:2, ], tbl_result)
-  
+  expect_equal(tbl[1:2, ], tbl_result)
+
   # Perform a simple validation that yields a warning
   expect_warning(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       col_schema_match(
         schema = schema_incorrect,
         actions = warn_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   rm(tbl_result)
-  
+
   # Perform a simple validation step that results in stopping
   expect_error(
-    tbl_result <- tbl %>% 
+    tbl_result <- tbl %>%
       col_schema_match(
         schema = schema_incorrect,
         actions = stop_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
-  
+
   #
   # row_count_match()
   #
-  
+
   # Using comparison tables
-  
+
   # Use the `row_count_match()` function to perform
   # a simple validation step
-  tbl_result <- 
+  tbl_result <-
     small_table %>%
     row_count_match(
       count = pointblank::small_table,
       actions = warn_on_fail()
     )
-  
+
   # Expect that `tbl_result` is equivalent to `small_table`
-  expect_equivalent(small_table, tbl_result)
-  
+  expect_equal(small_table, tbl_result)
+
   # Use the `row_count_match()` function to perform
   # another simple validation step
-  tbl_result <- 
+  tbl_result <-
     small_table %>%
     row_count_match(count = ~ pointblank::small_table)
-  
+
   # Expect that `tbl_result` is equivalent to `small_table`
-  expect_equivalent(small_table, tbl_result)
-  
+  expect_equal(small_table, tbl_result)
+
   # Perform a simple validation that yields a warning
   expect_warning(
-    tbl_result <- 
+    tbl_result <-
       tbl_complete_yes %>%
       row_count_match(
         count = pointblank::small_table,
         actions = warn_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl_complete_yes`
-  expect_equivalent(tbl_complete_yes, tbl_result)
-  
+  expect_equal(tbl_complete_yes, tbl_result)
+
   rm(tbl_result)
-  
+
   # Perform a simple validation step that results in stopping
   expect_error(
-    tbl_result <- 
+    tbl_result <-
       tbl_complete_yes %>%
       row_count_match(
         count = pointblank::small_table,
         actions = stop_on_fail()
       )
   )
-  
+
   # Using literal values
-  
+
   # Use the `row_count_match()` function to perform
   # a simple validation step
-  tbl_result <- 
+  tbl_result <-
     small_table %>%
     row_count_match(
       count = 13,
       actions = warn_on_fail()
     )
-  
+
   # Expect that `tbl_result` is equivalent to `small_table`
-  expect_equivalent(small_table, tbl_result)
-  
+  expect_equal(small_table, tbl_result)
+
   # Use the `row_count_match()` function to perform
   # another simple validation step
-  tbl_result <- 
+  tbl_result <-
     small_table %>%
     row_count_match(count = 13L)
-  
+
   # Expect that `tbl_result` is equivalent to `small_table`
-  expect_equivalent(small_table, tbl_result)
-  
+  expect_equal(small_table, tbl_result)
+
   # Perform a simple validation that yields a warning
   expect_warning(
-    tbl_result <- 
+    tbl_result <-
       tbl_complete_yes %>%
       row_count_match(
         count = 15,
         actions = warn_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl_complete_yes`
-  expect_equivalent(tbl_complete_yes, tbl_result)
-  
+  expect_equal(tbl_complete_yes, tbl_result)
+
   rm(tbl_result)
-  
+
   # Perform a simple validation step that results in stopping
   expect_error(
-    tbl_result <- 
+    tbl_result <-
       tbl_complete_yes %>%
       row_count_match(
         count = 15,
         actions = stop_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
-  
+
   #
   # col_count_match()
   #
-  
+
   # Using comparison tables
-  
+
   # Use the `col_count_match()` function to perform
   # a simple validation step
-  tbl_result <- 
+  tbl_result <-
     small_table %>%
     col_count_match(
       count = pointblank::small_table,
       actions = warn_on_fail()
     )
-  
+
   # Expect that `tbl_result` is equivalent to `small_table`
-  expect_equivalent(small_table, tbl_result)
-  
+  expect_equal(small_table, tbl_result)
+
   # Use the `col_count_match()` function to perform
   # another simple validation step
-  tbl_result <- 
+  tbl_result <-
     small_table %>%
     col_count_match(count = ~ pointblank::small_table)
-  
+
   # Expect that `tbl_result` is equivalent to `small_table`
-  expect_equivalent(small_table, tbl_result)
-  
+  expect_equal(small_table, tbl_result)
+
   # Perform a simple validation that yields a warning
   expect_warning(
-    tbl_result <- 
+    tbl_result <-
       tbl_complete_yes %>%
       col_count_match(
         count = pointblank::small_table,
         actions = warn_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl_complete_yes`
-  expect_equivalent(tbl_complete_yes, tbl_result)
-  
+  expect_equal(tbl_complete_yes, tbl_result)
+
   rm(tbl_result)
-  
+
   # Perform a simple validation step that results in stopping
   expect_error(
-    tbl_result <- 
+    tbl_result <-
       tbl_complete_yes %>%
       col_count_match(
         count = pointblank::small_table,
         actions = stop_on_fail()
       )
   )
-  
+
   # Using literal values
-  
+
   # Use the `col_count_match()` function to perform
   # a simple validation step
-  tbl_result <- 
+  tbl_result <-
     small_table %>%
     col_count_match(
       count = 8,
       actions = warn_on_fail()
     )
-  
+
   # Expect that `tbl_result` is equivalent to `small_table`
-  expect_equivalent(small_table, tbl_result)
-  
+  expect_equal(small_table, tbl_result)
+
   # Use the `col_count_match()` function to perform
   # another simple validation step
-  tbl_result <- 
+  tbl_result <-
     small_table %>%
     col_count_match(count = 8L)
-  
+
   # Expect that `tbl_result` is equivalent to `small_table`
-  expect_equivalent(small_table, tbl_result)
-  
+  expect_equal(small_table, tbl_result)
+
   # Perform a simple validation that yields a warning
   expect_warning(
-    tbl_result <- 
+    tbl_result <-
       tbl_complete_yes %>%
       col_count_match(
         count = 15,
         actions = warn_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl_complete_yes`
-  expect_equivalent(tbl_complete_yes, tbl_result)
-  
+  expect_equal(tbl_complete_yes, tbl_result)
+
   rm(tbl_result)
-  
+
   # Perform a simple validation step that results in stopping
   expect_error(
-    tbl_result <- 
+    tbl_result <-
       tbl_complete_yes %>%
       col_count_match(
         count = 15,
         actions = stop_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
-  
+
   #
   # tbl_match()
   #
-  
+
   # Use the `tbl_match()` function to perform
   # a simple validation step
-  tbl_result <- 
+  tbl_result <-
     small_table %>%
     tbl_match(
       tbl_compare = pointblank::small_table,
       actions = warn_on_fail()
     )
-  
+
   # Expect that `tbl_result` is equivalent to `small_table`
-  expect_equivalent(small_table, tbl_result)
-  
+  expect_equal(small_table, tbl_result)
+
   # Use the `tbl_match()` function to perform
   # another simple validation step
-  tbl_result <- 
+  tbl_result <-
     small_table %>%
     tbl_match(tbl_compare = ~ pointblank::small_table)
-  
+
   # Expect that `tbl_result` is equivalent to `small_table`
-  expect_equivalent(small_table, tbl_result)
-  
+  expect_equal(small_table, tbl_result)
+
   # Perform a simple validation that yields a warning
   expect_warning(
-    tbl_result <- 
+    tbl_result <-
       tbl_complete_yes %>%
       tbl_match(
         tbl_compare = pointblank::small_table,
         actions = warn_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl_complete_yes`
-  expect_equivalent(tbl_complete_yes, tbl_result)
-  
+  expect_equal(tbl_complete_yes, tbl_result)
+
   rm(tbl_result)
-  
+
   # Perform a simple validation step that results in stopping
   expect_error(
-    tbl_result <- 
+    tbl_result <-
       tbl_complete_yes %>%
       tbl_match(
         tbl_compare = pointblank::small_table,
         actions = stop_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
-  
+
   #
   # conjointly()
   #
-  
+
   # Use the `conjointly()` function to perform
   # a conjoint validation validation step directly
   # on the `tbl` object
   suppressWarnings(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       conjointly(
         ~ col_vals_gt(., columns = vars(d), value = 200),
@@ -1739,13 +1739,13 @@ test_that("Interrogating simply returns the expected results", {
         actions = warn_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   # Perform a simple validation that yields a warning
   expect_warning(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       conjointly(
         ~ col_vals_gt(., columns = vars(d), value = 200),
@@ -1754,7 +1754,7 @@ test_that("Interrogating simply returns the expected results", {
       )
   )
   expect_warning(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       conjointly(
         ~ col_vals_gt(., columns = vars(d), value = 200),
@@ -1762,15 +1762,15 @@ test_that("Interrogating simply returns the expected results", {
         actions = warn_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
-  
+  expect_equal(tbl, tbl_result)
+
   rm(tbl_result)
-  
+
   # Perform a simple validation step that results in stopping
   expect_error(
-    tbl_result <- 
+    tbl_result <-
       tbl %>%
       conjointly(
         ~ col_vals_gt(., columns = vars(d), value = 200),
@@ -1778,18 +1778,17 @@ test_that("Interrogating simply returns the expected results", {
         actions = stop_on_fail()
       )
   )
-  
+
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
 })
 
 test_that("Interrogating simply incorporates the `na_pass` option", {
-  
+
   # Use the `col_vals_equal()` function to perform
   # simple validation steps with NAs, switching the
   # value of the `na_pass` option
   expect_warning(
-    regexp = NULL,
     dplyr::tibble(a = c(1.5, 1.5, 1.5, NA)) %>%
       col_vals_equal(
         columns = vars(a),
@@ -1798,9 +1797,8 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
         actions = warn_on_fail()
       )
   )
-  
-  expect_warning(
-    regexp = NA,
+
+  expect_no_warning(
     dplyr::tibble(a = c(1.5, 1.5, 1.5, NA)) %>%
       col_vals_equal(
         columns = vars(a),
@@ -1809,12 +1807,11 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
         actions = warn_on_fail()
       )
   )
-  
+
   # Use the `col_vals_not_equal()` function to perform
   # simple validation steps with NAs, switching the
   # value of the `na_pass` option
   expect_warning(
-    regexp = NULL,
     dplyr::tibble(a = c(1.5, 1.5, 1.5, NA)) %>%
       col_vals_not_equal(
         columns = vars(a),
@@ -1823,9 +1820,8 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
         actions = warn_on_fail()
       )
   )
-  
-  expect_warning(
-    regexp = NA,
+
+  expect_no_warning(
     dplyr::tibble(a = c(1.5, 1.5, 1.5, NA)) %>%
       col_vals_not_equal(
         columns = vars(a),
@@ -1834,12 +1830,11 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
         actions = warn_on_fail()
       )
   )
-  
+
   # Use the `col_vals_gt()` function to perform
   # simple validation steps with NAs, switching the
   # value of the `na_pass` option
   expect_warning(
-    regexp = NULL,
     dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
       col_vals_gt(
         columns = vars(a),
@@ -1848,9 +1843,8 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
         actions = warn_on_fail()
       )
   )
-  
-  expect_warning(
-    regexp = NA,
+
+  expect_no_warning(
     dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
       col_vals_gt(
         columns = vars(a),
@@ -1859,12 +1853,11 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
         actions = warn_on_fail()
       )
   )
-  
+
   # Use the `col_vals_gte()` function to perform
   # simple validation steps with NAs, switching the
   # value of the `na_pass` option
   expect_warning(
-    regexp = NULL,
     dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
       col_vals_gte(
         columns = vars(a),
@@ -1873,9 +1866,8 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
         actions = warn_on_fail()
       )
   )
-  
-  expect_warning(
-    regexp = NA,
+
+  expect_no_warning(
     dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
       col_vals_gte(
         columns = vars(a),
@@ -1884,12 +1876,11 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
         actions = warn_on_fail()
       )
   )
-  
+
   # Use the `col_vals_lt()` function to perform
   # simple validation steps with NAs, switching the
   # value of the `na_pass` option
   expect_warning(
-    regexp = NULL,
     dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
       col_vals_lt(
         columns = vars(a),
@@ -1898,9 +1889,8 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
         actions = warn_on_fail()
       )
   )
-  
-  expect_warning(
-    regexp = NA,
+
+  expect_no_warning(
     dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
       col_vals_lt(
         columns = vars(a),
@@ -1909,12 +1899,11 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
         actions = warn_on_fail()
       )
   )
-  
+
   # Use the `col_vals_lte()` function to perform
   # simple validation steps with NAs, switching the
   # value of the `na_pass` option
   expect_warning(
-    regexp = NULL,
     dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
       col_vals_lte(
         columns = vars(a),
@@ -1923,9 +1912,8 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
         actions = warn_on_fail()
       )
   )
-  
-  expect_warning(
-    regexp = NA,
+
+  expect_no_warning(
     dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
       col_vals_lte(
         columns = vars(a),
@@ -1934,12 +1922,11 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
         actions = warn_on_fail()
       )
   )
-  
+
   # Use the `col_vals_between()` function to perform
   # simple validation steps with NAs, switching the
   # value of the `na_pass` option
   expect_warning(
-    regexp = NULL,
     dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
       col_vals_between(
         columns = vars(a),
@@ -1948,9 +1935,8 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
         actions = warn_on_fail()
       )
   )
-  
-  expect_warning(
-    regexp = NA,
+
+  expect_no_warning(
     dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
       col_vals_between(
         columns = vars(a),
@@ -1959,12 +1945,11 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
         actions = warn_on_fail()
       )
   )
-  
+
   # Use the `col_vals_not_between()` function to perform
   # simple validation steps with NAs, switching the
   # value of the `na_pass` option
   expect_warning(
-    regexp = NULL,
     dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
       col_vals_not_between(
         columns = vars(a),
@@ -1973,9 +1958,8 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
         actions = warn_on_fail()
       )
   )
-  
-  expect_warning(
-    regexp = NA,
+
+  expect_no_warning(
     dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
       col_vals_not_between(
         columns = vars(a),
@@ -1984,12 +1968,11 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
         actions = warn_on_fail()
       )
   )
-  
+
   # Use the `col_vals_regex()` function to perform
   # simple validation steps with NAs, switching the
   # value of the `na_pass` option
   expect_warning(
-    regexp = NULL,
     dplyr::tibble(a = c("1-bcd-345", "3-ldm-038", NA)) %>%
       col_vals_regex(
         columns = vars(a),
@@ -1998,9 +1981,8 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
         actions = warn_on_fail()
       )
   )
-  
-  expect_warning(
-    regexp = NA,
+
+  expect_no_warning(
     dplyr::tibble(a = c("1-bcd-345", "3-ldm-038", NA)) %>%
       col_vals_regex(
         columns = vars(a),
@@ -2014,9 +1996,8 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
 test_that("The inclusivity options work well for the range-based validations", {
 
   simple_tbl <- dplyr::tibble(a = 1:10)
-  
-  expect_warning(
-    regexp = NA,
+
+  expect_no_warning(
     simple_tbl %>%
       col_vals_between(
         columns = vars(a), left = 1, right = 10,
@@ -2024,9 +2005,8 @@ test_that("The inclusivity options work well for the range-based validations", {
         actions = warn_on_fail()
       )
   )
-  
+
   expect_warning(
-    regexp = NULL,
     simple_tbl %>%
       col_vals_between(
         columns = vars(a), left = 1, right = 10,
@@ -2034,9 +2014,8 @@ test_that("The inclusivity options work well for the range-based validations", {
         actions = warn_on_fail()
       )
   )
-  
+
   expect_warning(
-    regexp = NULL,
     simple_tbl %>%
       col_vals_between(
         columns = vars(a), left = 1, right = 10,
@@ -2044,9 +2023,8 @@ test_that("The inclusivity options work well for the range-based validations", {
         actions = warn_on_fail()
       )
   )
-  
-  expect_warning(
-    regexp = NA,
+
+  expect_no_warning(
     simple_tbl %>%
       col_vals_between(
         columns = vars(a), left = 1, right = 10,
@@ -2055,7 +2033,6 @@ test_that("The inclusivity options work well for the range-based validations", {
       )
   )
   expect_warning(
-    regexp = NULL,
     simple_tbl %>%
       col_vals_between(
         columns = vars(a), left = 1, right = 10,
@@ -2063,9 +2040,8 @@ test_that("The inclusivity options work well for the range-based validations", {
         actions = action_levels(warn_at = 2)
       )
   )
-  
+
   expect_warning(
-    regexp = NULL,
     simple_tbl %>%
       col_vals_not_between(
         columns = vars(a), left = 10, right = 12,
@@ -2073,9 +2049,8 @@ test_that("The inclusivity options work well for the range-based validations", {
         actions = warn_on_fail()
       )
   )
-  
-  expect_warning(
-    regexp = NA,
+
+  expect_no_warning(
     simple_tbl %>%
       col_vals_not_between(
         columns = vars(a), left = 10, right = 12,
@@ -2083,9 +2058,8 @@ test_that("The inclusivity options work well for the range-based validations", {
         actions = warn_on_fail()
       )
   )
-  
-  expect_warning(
-    regexp = NA,
+
+  expect_no_warning(
     simple_tbl %>%
       col_vals_not_between(
         columns = vars(a), left = 10, right = 12,
@@ -2093,9 +2067,8 @@ test_that("The inclusivity options work well for the range-based validations", {
         actions = warn_on_fail()
       )
   )
-  
+
   expect_warning(
-    regexp = NULL,
     simple_tbl %>%
       col_vals_not_between(
         columns = vars(a), left = -2, right = 1,
@@ -2103,9 +2076,8 @@ test_that("The inclusivity options work well for the range-based validations", {
         actions = warn_on_fail()
       )
   )
-  
-  expect_warning(
-    regexp = NA,
+
+  expect_no_warning(
     simple_tbl %>%
       col_vals_not_between(
         columns = vars(a), left = -2, right = 1,
@@ -2113,9 +2085,8 @@ test_that("The inclusivity options work well for the range-based validations", {
         actions = warn_on_fail()
       )
   )
-  
-  expect_warning(
-    regexp = NA,
+
+  expect_no_warning(
     simple_tbl %>%
       col_vals_not_between(
         columns = vars(a), left = -2, right = 1,
@@ -2126,57 +2097,57 @@ test_that("The inclusivity options work well for the range-based validations", {
 })
 
 test_that("vars(col) and vars('col') both evaluate to tbl column", {
-  
+
   df <- data.frame(x = Sys.Date() + 1, y = Sys.Date())
-  
+
   expect_true(test_col_vals_gt(df, x, vars(y)))
   expect_true(test_col_vals_gt(df, x, vars("y")))
 
 })
 
 test_that("class preserved in `value`", {
-  
+
   # A custom class with a `==` method that simply errors
   custom_val <- structure(1L, class = "pb-test-custom-class")
   registerS3method(
     "==", "pb-test-custom-class", function(x, ...) stop("Bad class for `==`")
   )
-  
+
   # We expect error (class preserved) vs. TRUE (class stripped)
   expect_error(custom_val == 1L)
   expect_true(unclass(custom_val) == 1L)
-  
+
   # Error is correctly thrown and safely caught at interrogate
   expect_no_error({
-    agent <- create_agent(data.frame(col = custom_val)) %>% 
-      col_vals_equal(columns = col, value = 1L) %>% 
+    agent <- create_agent(data.frame(col = custom_val)) %>%
+      col_vals_equal(columns = col, value = 1L) %>%
       interrogate()
   })
   expect_true(agent$validation_set$eval_error)
-  
+
 })
 
 test_that("col_vals_expr extracts used columns lazily", {
-  
-  agent_uninterrogated <- create_agent(tbl = iris) |> 
+
+  agent_uninterrogated <- create_agent(tbl = iris) |>
     col_vals_expr(~ Petal.Length > Petal.Width)
   expect_equal(
     agent_uninterrogated$validation_set$column[[1]],
     NA_character_
   )
-  
-  agent_interrogated <- agent_uninterrogated %>% 
+
+  agent_interrogated <- agent_uninterrogated %>%
     interrogate()
   expect_equal(
     agent_interrogated$validation_set$column[[1]],
     c("Petal.Length", "Petal.Width")
   )
-  
-  agent_inactive <- create_agent(tbl = iris) |> 
+
+  agent_inactive <- create_agent(tbl = iris) |>
     col_vals_expr(~ Petal.Length > Petal.Width, active = FALSE)
   expect_equal(
     agent_inactive$validation_set$column[[1]],
     NA_character_
   )
-  
+
 })

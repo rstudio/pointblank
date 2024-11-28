@@ -1,21 +1,21 @@
 #------------------------------------------------------------------------------#
-# 
-#                 _         _    _      _                _    
-#                (_)       | |  | |    | |              | |   
+#
+#                 _         _    _      _                _
+#                (_)       | |  | |    | |              | |
 #   _ __    ___   _  _ __  | |_ | |__  | |  __ _  _ __  | | __
 #  | '_ \  / _ \ | || '_ \ | __|| '_ \ | | / _` || '_ \ | |/ /
-#  | |_) || (_) || || | | || |_ | |_) || || (_| || | | ||   < 
+#  | |_) || (_) || || | | || |_ | |_) || || (_| || | | ||   <
 #  | .__/  \___/ |_||_| |_| \__||_.__/ |_| \__,_||_| |_||_|\_\
-#  | |                                                        
-#  |_|                                                        
-#  
+#  | |
+#  |_|
+#
 #  This file is part of the 'rstudio/pointblank' project.
-#  
+#
 #  Copyright (c) 2017-2024 pointblank authors
-#  
+#
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
-# 
+#
 #------------------------------------------------------------------------------#
 
 
@@ -24,13 +24,13 @@
 #' Thoroughly scan a table to better understand it
 #'
 #' @description
-#' 
+#'
 #' Generate an HTML report that scours the input table data. Before calling up
 #' an *agent* to validate the data, it's a good idea to understand the data with
-#' some level of precision. Make this the initial step of a well-balanced 
+#' some level of precision. Make this the initial step of a well-balanced
 #' *data quality reporting* workflow. The reporting output contains several
 #' sections to make everything more digestible, and these are:
-#' 
+#'
 #' \describe{
 #' \item{Overview}{Table dimensions, duplicate row counts, column types, and
 #' reproducibility information}
@@ -43,23 +43,23 @@
 #' across variables}
 #' \item{Sample}{A table that provides the head and tail rows of the dataset}
 #' }
-#' 
+#'
 #' The resulting object can be printed to make it viewable in the RStudio
 #' Viewer. It's also a `"shiny.tag.list"` object and so can be integrated in R
 #' Markdown HTML output or in Shiny applications. If you need the output HTML,
 #' it's to export that to a file with the [export_report()] function.
-#' 
+#'
 #' @param tbl *A data table*
-#' 
+#'
 #'   `obj:<tbl_*>` // **required**
-#' 
+#'
 #'   The input table. This can be a data frame, tibble, a `tbl_dbi` object, or a
 #'   `tbl_spark` object.
-#'   
+#'
 #' @param sections *Sections to include*
-#' 
+#'
 #'   `scalar<character>` // *default:* `"OVICMS"`
-#' 
+#'
 #'   The sections to include in the finalized `Table Scan` report. A string with
 #'   key characters representing section names is required here. The default
 #'   string is `"OVICMS"` wherein each letter stands for the following sections
@@ -69,61 +69,61 @@
 #'   can be changed to suit the desired layout of the report. For `tbl_dbi` and
 #'   `tbl_spark` objects supplied to `tbl`, the `"interactions"` and
 #'   `"correlations"` sections are currently excluded.
-#'   
+#'
 #' @param navbar *Include navigation in HTML report*
-#' 
+#'
 #'   `scalar<logical>` // *default:* `TRUE`
-#' 
+#'
 #'   Should there be a navigation bar anchored to the top of the report page?
-#'   
+#'
 #' @param width *Width option for HTML report*
-#' 
+#'
 #'   `scalar<integer>` // *default:* `NULL` (`optional`)
-#' 
+#'
 #'   An optional fixed width (in pixels) for the HTML report. By default, no
 #'   fixed width is applied.
-#'   
+#'
 #' @param lang *Reporting language*
-#' 
+#'
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
-#' 
+#'
 #'   The language to use for label text in the report. By default, `NULL` will
 #'   create English (`"en"`) text. Other options include French (`"fr"`), German
 #'   (`"de"`), Italian (`"it"`), Spanish (`"es"`), Portuguese (`"pt"`), Turkish
 #'   (`"tr"`), Chinese (`"zh"`),  Russian (`"ru"`), Polish (`"pl"`), Danish
 #'   (`"da"`), Swedish (`"sv"`), and Dutch (`"nl"`).
-#'   
+#'
 #' @param locale *Locale for value formatting within reports*
-#' 
+#'
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
-#' 
+#'
 #'   An optional locale ID to use for formatting values in the report according
 #'   the locale's rules. Examples include `"en_US"` for English (United States)
 #'   and `"fr_FR"` for French (France); more simply, this can be a language
 #'   identifier without a country designation, like `"es"` for Spanish (Spain,
 #'   same as `"es_ES"`).
-#' 
+#'
 #' @return A `ptblank_tbl_scan` object.
-#' 
+#'
 #' @section Examples:
-#' 
+#'
 #' Get an HTML document that describes all of the data in the `dplyr::storms`
 #' dataset.
-#' 
+#'
 #' ```r
 #' tbl_scan <- scan_data(tbl = dplyr::storms)
 #' ```
-#' 
+#'
 #' \if{html}{
 #' \out{
 #' `r pb_get_image_tag(file = "man_scan_data_1.png")`
 #' }
 #' }
-#' 
+#'
 #' @family Planning and Prep
 #' @section Function ID:
 #' 1-1
-#' 
+#'
 #' @export
 scan_data <- function(
     tbl,
@@ -136,56 +136,56 @@ scan_data <- function(
 
   # If the document is undergoing knitting then adjust some options
   if (isTRUE(getOption("knitr.in.progress"))) {
-    
+
     navbar <- FALSE
-    
+
     if (is.null(width)) {
       width <- "720px"
     }
   }
-  
+
   if (!is.null(width) && is.numeric(width)) {
     width <- gt::px(width[1])
   }
-  
+
   if (interactive()) {
-    
+
     cli::cli_div(
       theme = list(
         span.time_taken = list(color = "magenta", "font-weight" = "normal")
       )
     )
   }
-  
+
   # Stop function if the length of the `sections` vector is not 1
   if (length(sections) != 1) {
-    
+
     stop(
       "The length of the `section` vector must be 1.",
       call. = FALSE
     )
   }
-  
+
   # Stop function if the `sections` vector is not of the `character` type
   if (!is.character(sections)) {
-    
+
     stop(
       "The `section` vector must be of the `character` class.",
       call. = FALSE
     )
   }
-  
+
   # Stop function if the length of `sections` string is not at least 1
   if (nchar(sections) < 1) {
-    
+
     stop(
       "At least one `section` is required.",
       call. = FALSE
     )
   }
-  
+
   # Stop function if there are unrecognized sections in `sections`
-  if (!all(unique(unlist(strsplit(toupper(sections), ""))) %in% 
+  if (!all(unique(unlist(strsplit(toupper(sections), ""))) %in%
            c("O", "V", "I", "C", "M", "S"))) {
     stop(
       "All key characters provided in `sections` must be valid:\n",
@@ -193,11 +193,11 @@ scan_data <- function(
       call. = FALSE
     )
   }
-  
+
   sections_abbrev <- unique(unlist(strsplit(toupper(sections), "")))
-  
+
   # Transform the `sections` string to a vector of section names
-  sections <- 
+  sections <-
     vapply(
       unique(unlist(strsplit(toupper(sections), ""))),
       FUN.VALUE = character(1),
@@ -214,28 +214,28 @@ scan_data <- function(
         )
       }
     )
-  
+
   # Limit components if a `tbl_dbi` object is supplied as the `tbl`
   if (inherits(tbl, "tbl_dbi") || inherits(tbl, "tbl_spark")) {
     sections <- setdiff(sections, c("interactions", "correlations"))
   }
-  
+
   if (any(c("interactions", "correlations") %in% sections)) {
     rlang::check_installed(
       c("ggforce", "ggplot2"),
       "to use the `interactions` and `correlations` sections."
     )
   }
-  
+
   # Normalize the reporting language identifier and stop if necessary
   lang <- normalize_reporting_language(lang)
-  
+
   # Set the `locale` to the `lang` value if `locale` isn't set
   if (is.null(locale)) locale <- lang
-  
+
   # Attempt to get the table name through `match.call()` and `deparse()`
   tbl_name <- deparse(match.call()$tbl)
-  
+
   # In the case where the table is piped in a `"."` is the
   # result; since it's unknown, we treat it as NA
   if (length(tbl_name) == 1 && tbl_name == ".") {
@@ -243,12 +243,12 @@ scan_data <- function(
   } else if (length(tbl_name) > 1) {
     tbl_name <- NA_character_
   }
-  
+
   # Get the starting time for the table scan
   scan_start_time <- Sys.time()
-  
+
   if (interactive()) {
-    
+
     cli::cli_h1(
       paste0(
         "Data Scan started. Processing ",
@@ -259,8 +259,8 @@ scan_data <- function(
       )
     )
   }
-  
-  table_scan <- 
+
+  table_scan <-
     build_table_scan_page(
       data = tbl,
       tbl_name = tbl_name,
@@ -270,26 +270,26 @@ scan_data <- function(
       locale = locale,
       width = width
     )
-  
+
   # Get the ending time for the table scan
   scan_end_time <- Sys.time()
-  
-  # Get the time duration for the table scan    
-  time_diff_s <- 
+
+  # Get the time duration for the table scan
+  time_diff_s <-
     get_time_duration(
       start_time = scan_start_time,
       end_time = scan_end_time
     )
-  
+
   if (interactive()) {
-    
+
     cli::cli_h1(
       paste0(
         "Data Scan finished. ", print_time(time_diff_s)
       )
     )
   }
-  
+
   table_scan
 }
 
@@ -302,27 +302,27 @@ probe_overview_stats <- function(
     lang,
     locale
 ) {
-  
+
   n_cols <- get_table_total_columns(data = data)
   n_rows <- get_table_total_rows(data = data)
-  
+
   n_rows_distinct <- get_table_total_distinct_rows(data = data)
-  
+
   duplicate_rows <- n_rows - n_rows_distinct
-  
+
   na_cells <- get_table_total_missing_values(data = data)
 
   tbl_info <- get_tbl_information(tbl = data)
-  
+
   tbl_src <- tbl_info$tbl_src
   r_col_types <- tbl_info$r_col_types
-  
+
   data_overview_tbl <-
     dplyr::tibble(
       label = c(
-        get_lsv("table_scan/tbl_lab_columns")[[lang]],      
-        get_lsv("table_scan/tbl_lab_rows")[[lang]],         
-        get_lsv("table_scan/tbl_lab_NAs")[[lang]],          
+        get_lsv("table_scan/tbl_lab_columns")[[lang]],
+        get_lsv("table_scan/tbl_lab_rows")[[lang]],
+        get_lsv("table_scan/tbl_lab_NAs")[[lang]],
         get_lsv("table_scan/tbl_lab_duplicate_rows")[[lang]]
       ),
       value = c(
@@ -335,14 +335,14 @@ probe_overview_stats <- function(
       dplyr::row_number() == 4 ~ duplicate_rows / n_rows,
       TRUE ~ NA_real_
     ))
-  
-  r_col_types_tbl <- 
+
+  r_col_types_tbl <-
     dplyr::tibble(r_col_types = r_col_types) %>%
     dplyr::group_by(r_col_types) %>%
     dplyr::summarize(count = dplyr::n()) %>%
     dplyr::arrange(dplyr::desc(count)) %>%
     utils::head(6E8)
-  
+
   data_overview_gt <-
     gt::gt(data_overview_tbl) %>%
     gt::fmt_markdown(columns = "label") %>%
@@ -367,7 +367,7 @@ probe_overview_stats <- function(
       table.border.top.style = "none",
       table.width = "100%"
     )
-  
+
   r_col_types_gt <-
     gt::gt(r_col_types_tbl) %>%
     gt::fmt_number(columns = "count", decimals = 0, locale = locale) %>%
@@ -404,7 +404,7 @@ probe_overview_stats <- function(
       table.border.top.style = "none",
       table.width = "100%"
     )
-  
+
   list(
     data_overview_gt = data_overview_gt,
     r_col_types_gt = r_col_types_gt,
@@ -417,26 +417,26 @@ probe_columns <- function(
     lang,
     locale
 ) {
-  
+
   n_rows <- get_table_total_rows(data = data)
-  
+
   col_names <- get_table_column_names(data = data)
-  
+
   col_labels <- get_tbl_df_column_labels(data = data)
-  
+
   tbl_info <- get_tbl_information(tbl = data)
-  
+
   col_types <- gsub("integer64", "integer", tbl_info$r_col_types, fixed = TRUE)
-  
-  column_descriptions <- 
+
+  column_descriptions <-
     lapply(
       seq_along(col_names),
       FUN = function(x) {
-        
+
         col_name <- col_names[x]
         col_type <- col_types[x]
         col_label <- col_labels[x]
-        
+
         switch(
           col_type,
           character = probe_columns_character(
@@ -455,6 +455,7 @@ probe_columns <- function(
             lang = lang,
             locale = locale
           ),
+          ordered = ,
           factor = probe_columns_factor(
             data = data,
             column = col_name,
@@ -504,7 +505,7 @@ probe_columns <- function(
         )
       }
     )
-  
+
   column_descriptions
 }
 
@@ -516,11 +517,11 @@ get_column_description_gt <- function(
 ) {
 
   distinct_count <- get_table_column_distinct_rows(data_column = data_column)
-  
+
   na_cells <- get_table_column_na_values(data_column = data_column)
 
   inf_cells <- get_table_column_inf_values(data_column = data_column)
-  
+
   column_description_tbl <-
     dplyr::tibble(
       label = c(
@@ -530,7 +531,7 @@ get_column_description_gt <- function(
       ),
       value = c(distinct_count, na_cells, inf_cells)
     )
-  
+
   column_description_gt <-
     gt::gt(column_description_tbl) %>%
     gt::fmt_markdown(columns = "label") %>%
@@ -540,7 +541,7 @@ get_column_description_gt <- function(
       table.border.top.style = "none",
       table.width = "100%"
     )
-  
+
   column_description_gt
 }
 
@@ -549,13 +550,13 @@ get_numeric_stats_gt <- function(
     lang,
     locale
 ) {
-  
+
   summary_stats <- get_table_column_summary(data_column = data_column)
 
   column_stats_tbl <-
     dplyr::tibble(
       label = c(
-        get_lsv("table_scan/tbl_lab_mean")[[lang]],   
+        get_lsv("table_scan/tbl_lab_mean")[[lang]],
         get_lsv("table_scan/tbl_lab_minimum")[[lang]],
         get_lsv("table_scan/tbl_lab_maximum")[[lang]]
       ),
@@ -580,7 +581,7 @@ get_numeric_stats_gt <- function(
       table.border.top.style = "none",
       table.width = "100%"
     )
-  
+
   column_stats_gt
 }
 
@@ -589,13 +590,13 @@ get_quantile_stats_gt <- function(
     lang,
     locale
 ) {
-  
+
   if (inherits(data_column, "tbl_dbi")) {
-    
+
     data_column <-  dplyr::filter(data_column, !is.na(1))
-    
+
     n_rows <- get_table_total_rows(data = data_column)
-    
+
     if (n_rows <= 1000) {
       data_column <- dplyr::collect(data_column)
       quantile_stats <- get_df_column_qtile_stats(data_column = data_column)
@@ -605,7 +606,7 @@ get_quantile_stats_gt <- function(
   } else {
     quantile_stats <- get_df_column_qtile_stats(data_column = data_column)
   }
-  
+
   quantile_stats_tbl <-
     dplyr::tibble(
       label = c(
@@ -631,7 +632,7 @@ get_quantile_stats_gt <- function(
         quantile_stats$iqr
       )
     )
-    
+
   quantile_stats_gt <-
     gt::gt(quantile_stats_tbl) %>%
     gt::fmt_number(
@@ -644,18 +645,18 @@ get_quantile_stats_gt <- function(
       table.border.top.style = "none",
       table.width = "100%"
     )
-  
+
   quantile_stats_gt
 }
 
 get_df_column_quantile_stats <- function(data_column) {
-  
+
   if (inherits(data_column, "tbl_spark")) {
     quantile_stats <- get_spark_column_qtile_stats(data_column = data_column)
   } else {
     quantile_stats <- get_df_column_qtile_stats(data_column = data_column)
   }
-  
+
   quantile_stats
 }
 
@@ -664,34 +665,34 @@ get_descriptive_stats_gt <- function(
     lang,
     locale
 ) {
-  
+
   if (inherits(data_column, "tbl_dbi") ||
       inherits(data_column, "tbl_spark")) {
-    
+
     data_column <- dplyr::filter(data_column, !is.na(1))
-    
+
     mean <- get_dbi_column_mean(data_column = data_column)
 
-    variance <- 
+    variance <-
       get_dbi_column_variance(
         data_column = data_column,
         mean_value = mean
       )
-    
+
     sd <- variance^0.5
     cv <- sd / mean
-    
-    descriptive_stats <- 
+
+    descriptive_stats <-
       dplyr::tibble(mean = mean, variance = variance, sd = sd, cv = cv)
-    descriptive_stats <- 
+    descriptive_stats <-
       dplyr::summarize_all(descriptive_stats, ~ round(., 2))
     descriptive_stats <- as.list(descriptive_stats)
-    
+
   } else {
-    
+
     # Create simple function to obtain the coefficient of variation
     cv <- function(x) stats::sd(x, na.rm = TRUE) / mean(x, na.rm = TRUE)
-    
+
     descriptive_stats <-
       dplyr::summarize_all(
         data_column,
@@ -702,7 +703,7 @@ get_descriptive_stats_gt <- function(
           cv = ~ cv(.)
         )
       )
-    descriptive_stats <- 
+    descriptive_stats <-
       dplyr::summarize_all(descriptive_stats, ~ round(., 2))
     descriptive_stats <- as.list(descriptive_stats)
   }
@@ -722,7 +723,7 @@ get_descriptive_stats_gt <- function(
         descriptive_stats$cv
       )
     )
-  
+
   gt::gt(descriptive_stats_tbl) %>%
     gt::fmt_number(
       columns = "value",
@@ -742,7 +743,7 @@ get_common_values_gt <- function(
     lang,
     locale
 ) {
-  
+
   n_rows <- get_table_total_rows(data = data_column)
 
   common_values_tbl <- dplyr::group_by_at(data_column, 1)
@@ -750,14 +751,14 @@ get_common_values_gt <- function(
   common_values_tbl <- dplyr::arrange(common_values_tbl, dplyr::desc(n))
   common_values_tbl <- utils::head(common_values_tbl, 6E8)
   common_values_tbl <- dplyr::ungroup(common_values_tbl)
-  
-  n_rows_common_values_tbl <- 
+
+  n_rows_common_values_tbl <-
     dplyr::pull(dplyr::count(common_values_tbl, name = "n", wt = n), n)
-  
+
   if (n_rows_common_values_tbl > 10) {
-    
+
     top_ten_rows <- utils::head(common_values_tbl, 10)
-    
+
     other_values_tbl <-
       dplyr::anti_join(
         common_values_tbl,
@@ -766,20 +767,20 @@ get_common_values_gt <- function(
       )
     other_values_tbl <- dplyr::arrange(other_values_tbl, dplyr::desc(n))
     other_values_tbl <- utils::head(other_values_tbl, 6E8)
-    
-    other_values_distinct <- 
+
+    other_values_distinct <-
       dplyr::pull(dplyr::count(other_values_tbl, name = "n", wt = n), n)
-    
+
     other_values_n <- dplyr::select(other_values_tbl, n)
     other_values_n <- dplyr::group_by(other_values_n)
-    other_values_n <- 
+    other_values_n <-
       dplyr::summarize(other_values_n, sum = sum(n, na.rm = TRUE))
     other_values_n <- dplyr::ungroup(other_values_n)
     other_values_n <- dplyr::pull(other_values_n, sum)
 
     common_values_tbl <-
       dplyr::bind_rows(
-        top_ten_rows %>% 
+        top_ten_rows %>%
           utils::head(9) %>%
           dplyr::collect() %>%
           dplyr::mutate(
@@ -798,9 +799,9 @@ get_common_values_gt <- function(
           frequency = other_values_n / n_rows
         )
       )
-    
+
     n_rows_summary_tbl <- nrow(common_values_tbl)
-    
+
     common_values_gt <-
       common_values_tbl %>%
       gt::gt() %>%
@@ -809,7 +810,7 @@ get_common_values_gt <- function(
         n = get_lsv("table_scan/tbl_lab_count")[[lang]],
         frequency = get_lsv("table_scan/tbl_lab_frequency")[[lang]],
       ) %>%
-      gt_missing(columns = "value", missing_text = "**NA**") %>%
+      gt::sub_missing(columns = "value", missing_text = "**NA**") %>%
       gt::text_transform(
         locations = gt::cells_body(columns = "value"),
         fn = function(x) {
@@ -833,9 +834,9 @@ get_common_values_gt <- function(
         table.border.top.style = "none",
         table.width = "100%"
       )
-    
+
   } else {
-    
+
     common_values_gt <-
       dplyr::collect(common_values_tbl) %>%
       dplyr::mutate(frequency = n / n_rows) %>%
@@ -847,7 +848,7 @@ get_common_values_gt <- function(
         n = get_lsv("table_scan/tbl_lab_count")[[lang]],
         frequency = get_lsv("table_scan/tbl_lab_frequency")[[lang]],
       ) %>%
-      gt_missing(columns = "value", missing_text = "**NA**") %>%
+      gt::sub_missing(columns = "value", missing_text = "**NA**") %>%
       gt::text_transform(
         locations = gt::cells_body(columns = "value"),
         fn = function(x) ifelse(x == "**NA**", "<code>NA</code>", x)
@@ -863,14 +864,14 @@ get_common_values_gt <- function(
         table.width = "100%"
       )
   }
-  
+
   common_values_gt
 }
 
 get_head_tail_slices <- function(data_column) {
-  
+
   head_tail_slices <- probe_sample(data = data_column)
-  
+
   head_tail_slices$probe_sample
 }
 
@@ -879,7 +880,7 @@ get_top_bottom_slice <- function(
     lang,
     locale
 ) {
-  
+
   n_rows <- get_table_total_rows(data = data_column)
 
   data_column_freq <-
@@ -887,44 +888,44 @@ get_top_bottom_slice <- function(
     dplyr::group_by_at(1) %>%
     dplyr::count() %>%
     dplyr::ungroup()
-  
+
   name_1 <- rlang::sym(get_lsv("table_scan/tbl_lab_value")[[lang]])
   name_2 <- rlang::sym(get_lsv("table_scan/tbl_lab_count")[[lang]])
-  
-  data_column_freq <- 
+
+  data_column_freq <-
     dplyr::select(data_column_freq, !!name_1 := 1, !!name_2 := 2)
-  
+
   data_column_top_n <- dplyr::arrange(data_column_freq, dplyr::desc(!!name_2))
   data_column_top_n <- utils::head(data_column_top_n, 10)
   data_column_top_n <- dplyr::collect(data_column_top_n)
-  
+
   data_column_top_n[, 3] <- data_column_top_n[, 2, drop = TRUE] / n_rows
-  
-  colnames(data_column_top_n)[3] <- 
+
+  colnames(data_column_top_n)[3] <-
     get_lsv("table_scan/tbl_lab_frequency")[[lang]]
-  
+
   data_column_bottom_n <- dplyr::arrange(data_column_freq, !!name_2)
   data_column_bottom_n <- utils::head(data_column_bottom_n, 10)
   data_column_bottom_n <- dplyr::collect(data_column_bottom_n)
-  
-  data_column_bottom_n[, 3] <- 
+
+  data_column_bottom_n[, 3] <-
     data_column_bottom_n[, 2, drop = TRUE] / n_rows
-  
-  colnames(data_column_bottom_n)[3] <- 
+
+  colnames(data_column_bottom_n)[3] <-
     get_lsv("table_scan/tbl_lab_frequency")[[lang]]
-  
+
   top_slice <-
     get_table_slice_gt(
       data_column = data_column_top_n,
       locale = locale
     )
-  
+
   bottom_slice <-
     get_table_slice_gt(
       data_column = data_column_bottom_n,
       locale = locale
     )
-  
+
   list(
     top_slice = top_slice,
     bottom_slice = bottom_slice
@@ -936,8 +937,8 @@ get_character_nchar_stats_gt <- function(
     lang,
     locale
 ) {
-  
-  character_nchar_stats <- 
+
+  character_nchar_stats <-
     data_column %>%
     dplyr::mutate_all(.funs = nchar) %>%
     dplyr::rename(nchar = 1) %>%
@@ -951,7 +952,7 @@ get_character_nchar_stats_gt <- function(
     dplyr::collect() %>%
     dplyr::mutate_all(.funs = as.numeric) %>%
     as.list()
-  
+
   dplyr::tribble(
     ~label,                                         ~value,
     get_lsv("table_scan/tbl_lab_mean")[[lang]],     character_nchar_stats$mean,
@@ -976,9 +977,9 @@ get_character_nchar_plot <- function(
     lang,
     locale
 ) {
-  
+
   suppressWarnings(
-    plot_histogram <- 
+    plot_histogram <-
       get_table_column_histogram(
         data_column = data_column,
         lang = lang,
@@ -995,11 +996,11 @@ get_character_nchar_plot <- function(
     width = 5,
     height = 3
   )
-  
+
   # Wait longer for file to be written on async file systems
   Sys.sleep(0.25)
-  
-  image_html <- 
+
+  image_html <-
     htmltools::tags$div(
       style = "text-align: center",
       htmltools::HTML(
@@ -1010,9 +1011,9 @@ get_character_nchar_plot <- function(
           gsub("height:500px", "width: 100%", .)
       )
     )
-  
+
   file.remove("temp_histogram_ggplot.png")
-  
+
   image_html
 }
 
@@ -1024,52 +1025,52 @@ probe_columns_numeric <- function(
     lang,
     locale
 ) {
-  
+
   data_column <- dplyr::select(data, tidyselect::any_of(column))
-  
-  column_description_gt <- 
+
+  column_description_gt <-
     get_column_description_gt(
       data_column = data_column,
       n_rows = n_rows,
       lang = lang,
       locale = locale
     )
-  
+
   column_numeric_stats_gt <-
     get_numeric_stats_gt(
       data_column = data_column,
       lang = lang,
       locale = locale
     )
-  
+
   column_quantile_stats_gt <-
     get_quantile_stats_gt(
       data_column = data_column,
       lang = lang,
       locale = locale
     )
-  
+
   column_descriptive_stats_gt <-
     get_descriptive_stats_gt(
       data_column = data_column,
       lang = lang,
       locale = locale
     )
-  
-  column_common_values_gt <- 
+
+  column_common_values_gt <-
     get_common_values_gt(
       data_column = data_column,
       lang = lang,
       locale = locale
     )
-  
+
   top_bottom_slices_gt <-
     get_top_bottom_slice(
       data_column = data_column,
       lang = lang,
       locale = locale
     )
-  
+
   list(
     column_name = column,
     column_label = col_label,
@@ -1092,8 +1093,8 @@ probe_columns_integer <- function(
     lang,
     locale
 ) {
-  
-  probe_columns_integer_list <- 
+
+  probe_columns_integer_list <-
     probe_columns_numeric(
       data = data,
       column = column,
@@ -1102,9 +1103,9 @@ probe_columns_integer <- function(
       lang = lang,
       locale = locale
     )
-  
+
   probe_columns_integer_list$column_type <- "integer"
-  
+
   probe_columns_integer_list
 }
 
@@ -1116,38 +1117,38 @@ probe_columns_character <- function(
     lang,
     locale
 ) {
-  
+
   data_column <- data %>% dplyr::select(tidyselect::any_of(column))
-  
-  column_description_gt <- 
+
+  column_description_gt <-
     get_column_description_gt(
       data_column = data_column,
       n_rows = n_rows,
       lang = lang,
       locale = locale
     )
-  
-  column_common_values_gt <- 
+
+  column_common_values_gt <-
     get_common_values_gt(
       data_column = data_column,
       lang = lang,
       locale = locale
     )
-  
+
   column_nchar_stats_gt <-
     get_character_nchar_stats_gt(
       data_column = data_column,
       lang = lang,
       locale = locale
     )
-  
-  column_nchar_plot <- 
+
+  column_nchar_plot <-
     get_character_nchar_plot(
       data_column = data_column,
       lang = lang,
       locale = locale
     )
-  
+
   list(
     column_name = column,
     column_label = col_label,
@@ -1167,17 +1168,17 @@ probe_columns_logical <- function(
     lang,
     locale
 ) {
-  
+
   data_column <- data %>% dplyr::select(tidyselect::any_of(column))
-  
-  column_description_gt <- 
+
+  column_description_gt <-
     get_column_description_gt(
       data_column = data_column,
       n_rows = n_rows,
       lang = lang,
       locale = locale
     )
-  
+
   list(
     column_name = column,
     column_label = col_label,
@@ -1194,17 +1195,17 @@ probe_columns_factor <- function(
     lang,
     locale
 ) {
-  
+
   data_column <- data %>% dplyr::select(tidyselect::any_of(column))
-  
-  column_description_gt <- 
+
+  column_description_gt <-
     get_column_description_gt(
       data_column = data_column,
       n_rows = n_rows,
       lang = lang,
       locale = locale
     )
-  
+
   list(
     column_name = column,
     column_label = col_label,
@@ -1221,17 +1222,17 @@ probe_columns_date <- function(
     lang,
     locale
 ) {
-  
+
   data_column <- data %>% dplyr::select(tidyselect::any_of(column))
-  
-  column_description_gt <- 
+
+  column_description_gt <-
     get_column_description_gt(
       data_column = data_column,
       n_rows = n_rows,
       lang = lang,
       locale = locale
     )
-  
+
   list(
     column_name = column,
     column_label = col_label,
@@ -1248,17 +1249,17 @@ probe_columns_posix <- function(
     lang,
     locale
 ) {
-  
+
   data_column <- data %>% dplyr::select(tidyselect::any_of(column))
-  
-  column_description_gt <- 
+
+  column_description_gt <-
     get_column_description_gt(
       data_column = data_column,
       n_rows = n_rows,
       lang = lang,
       locale = locale
     )
-  
+
   list(
     column_name = column,
     column_label = col_label,
@@ -1273,11 +1274,11 @@ probe_columns_other <- function(
     col_label,
     n_rows
 ) {
-  
+
   data_column <- data %>% dplyr::select(tidyselect::any_of(column))
-  
+
   column_classes <- paste(class(data_column), collapse = ", ")
-  
+
   list(
     column_name = column,
     column_label = col_label,
@@ -1286,7 +1287,7 @@ probe_columns_other <- function(
 }
 
 probe_interactions <- function(data) {
-  
+
   category_cutoff <- 5
 
   tbl_info <- get_tbl_information(tbl = data)
@@ -1295,37 +1296,37 @@ probe_interactions <- function(data) {
   columns_char <- col_names[col_types == "character"]
   columns_numeric <- col_names[col_types %in% c("integer", "numeric")]
   col_names <- c(columns_char, columns_numeric)
-  
-  columns_char_distinct_count <- 
+
+  columns_char_distinct_count <-
     vapply(
       columns_char, FUN.VALUE = integer(1), USE.NAMES = FALSE,
       FUN = function(x) {
         data %>%
-          dplyr::select(dplyr::one_of(x)) %>%
+          dplyr::select(dplyr::all_of(x)) %>%
           dplyr::distinct() %>%
           dplyr::count() %>%
           dplyr::pull(n)
       }
     )
-  
+
   # Remove the character-based columns from the vector of
   # `col_names` if there are too many categories
-  col_names <- 
-    col_names %>% 
+  col_names <-
+    col_names %>%
     base::setdiff(columns_char[columns_char_distinct_count > category_cutoff])
-  
+
   # Create a ggplot2 plot matrix with the data
   plot_matrix <-
     data %>%
-    dplyr::select(dplyr::one_of(col_names)) %>%
-    ggplot2::ggplot(ggplot2::aes(x = .panel_x, y = .panel_y)) + 
-    ggplot2::geom_point(alpha = 0.50, shape = 16, size = 1) + 
+    dplyr::select(dplyr::all_of(col_names)) %>%
+    ggplot2::ggplot(ggplot2::aes(x = .panel_x, y = .panel_y)) +
+    ggplot2::geom_point(alpha = 0.50, shape = 16, size = 1) +
     ggforce::geom_autodensity() +
     ggplot2::geom_density2d() +
     ggforce::facet_matrix(
-      rows = ggplot2::vars(gt::everything()), layer.diag = 2, layer.upper = 3, 
+      rows = ggplot2::vars(gt::everything()), layer.diag = 2, layer.upper = 3,
       grid.y.diag = FALSE) +
-    ggplot2::theme_minimal() + 
+    ggplot2::theme_minimal() +
     ggplot2::theme(
       axis.text.x = ggplot2::element_text(
         angle = 90,
@@ -1335,7 +1336,7 @@ probe_interactions <- function(data) {
       ),
       axis.text.y = ggplot2::element_text(size = 8)
     )
-  
+
   # Save PNG file to disk
   ggplot2::ggsave(
     filename = "temp_matrix_ggplot.png",
@@ -1345,11 +1346,11 @@ probe_interactions <- function(data) {
     width = length(col_names),
     height = length(col_names)
   )
-  
+
   # Wait longer for file to be written on async file systems
   Sys.sleep(0.25)
-  
-  image_html <- 
+
+  image_html <-
     htmltools::tags$div(
       style = "text-align: center",
       htmltools::HTML(
@@ -1360,25 +1361,25 @@ probe_interactions <- function(data) {
           gsub("height:500px", "width: 100%", .)
       )
     )
-  
+
   file.remove("temp_matrix_ggplot.png")
-  
+
   list(
     probe_interactions = image_html
   )
 }
 
 probe_correlations <- function(data) {
-  
+
   tbl_info <- get_tbl_information(tbl = data)
-  
+
   col_names <- tbl_info$col_names
   col_types <- tbl_info$r_col_types
-  
+
   columns_numeric <- col_names[col_types %in% c("integer", "numeric")]
-  
+
   if (length(columns_numeric) < 3) {
-    
+
     return(
       list(
         probe_corr_pearson = NULL,
@@ -1387,28 +1388,28 @@ probe_correlations <- function(data) {
       )
     )
   }
-  
-  data_corr <- dplyr::select(data, dplyr::one_of(columns_numeric))
-  
-  corr_pearson <- 
+
+  data_corr <- dplyr::select(data, dplyr::all_of(columns_numeric))
+
+  corr_pearson <-
     stats::cor(data_corr, method = "pearson", use = "pairwise.complete.obs")
-  
-  corr_kendall <- 
+
+  corr_kendall <-
     stats::cor(data_corr, method = "kendall", use = "pairwise.complete.obs")
-  
-  corr_spearman <- 
+
+  corr_spearman <-
     stats::cor(data_corr, method = "spearman", use = "pairwise.complete.obs")
-  
+
   labels_vec <- seq_along(columns_numeric)
   names(labels_vec) <- columns_numeric
-  
+
   pearson_plot <- get_corr_plot(mat = corr_pearson, labels_vec = labels_vec)
   kendall_plot <- get_corr_plot(mat = corr_kendall, labels_vec = labels_vec)
   spearman_plot <- get_corr_plot(mat = corr_spearman, labels_vec = labels_vec)
-  
+
   list(
     probe_corr_pearson  = pearson_plot,
-    probe_corr_kendall  = kendall_plot, 
+    probe_corr_kendall  = kendall_plot,
     probe_corr_spearman = spearman_plot
   )
 }
@@ -1417,14 +1418,14 @@ get_corr_plot <- function(
     mat,
     labels_vec
 ) {
-  
-  corr_df <- 
+
+  corr_df <-
     as.data.frame(as.table(mat)) %>%
     dplyr::mutate(Freq = ifelse(Var1 == Var2, NA_real_, Freq)) %>%
     dplyr::mutate(Var1 = factor(Var1, levels = names(labels_vec))) %>%
     dplyr::mutate(Var2 = factor(Var2, levels = rev(names(labels_vec))))
-  
-  plot_missing <- 
+
+  plot_missing <-
     corr_df %>%
     ggplot2::ggplot(ggplot2::aes(x = Var1, y = Var2, fill = Freq)) +
     ggplot2::geom_tile(color = "white", linejoin = "bevel") +
@@ -1433,7 +1434,7 @@ get_corr_plot <- function(
       na.value = "gray30",
       limits = c(-1, 1)
     ) +
-    ggplot2::labs(x = "", y = "") + 
+    ggplot2::labs(x = "", y = "") +
     ggplot2::theme_minimal() +
     ggplot2::theme(
       axis.text.x = ggplot2::element_text(
@@ -1448,9 +1449,9 @@ get_corr_plot <- function(
       legend.key.width = ggplot2::unit(2.0, "cm"),
       legend.key.height = ggplot2::unit(3.0, "mm")
     )
-  
+
   temp_filename <- paste0("temp_correlation_ggplot-", gt::random_id(), ".png")
-  
+
   # Save PNG file to disk
   ggplot2::ggsave(
     filename = temp_filename,
@@ -1460,11 +1461,11 @@ get_corr_plot <- function(
     width = length(labels_vec),
     height = length(labels_vec)
   )
-  
+
   # Wait longer for file to be written on async file systems
   Sys.sleep(0.25)
-  
-  image_html <- 
+
+  image_html <-
     htmltools::tags$div(
       style = "text-align: center",
       htmltools::HTML(
@@ -1472,21 +1473,21 @@ get_corr_plot <- function(
           gsub("height:500px", "width: 100%", .)
       )
     )
-  
+
   file.remove(temp_filename)
-  
+
   image_html
 }
 
 probe_missing <- function(data) {
-  
+
   n_rows <- get_table_total_rows(data = data)
   col_names <- get_table_column_names(data = data)
 
   if (n_rows <= 1000) {
     data <- dplyr::collect(data)
   }
-  
+
   if (inherits(data, "tbl_dbi")) {
     frequency_tbl <- get_tbl_dbi_missing_tbl(data = data)
   } else if (inherits(data, "tbl_spark")) {
@@ -1494,16 +1495,16 @@ probe_missing <- function(data) {
   } else {
     frequency_tbl <- get_tbl_df_missing_tbl(data = data)
   }
-  
+
   missing_by_column_tbl <- get_missing_by_column_tbl(data = data)
-  
-  missing_value_plot <- 
+
+  missing_value_plot <-
     get_missing_value_plot(
       data = data,
       frequency_tbl = frequency_tbl,
       missing_by_column_tbl = missing_by_column_tbl
     )
-  
+
   # Save PNG file to disk
   ggplot2::ggsave(
     filename = "temp_missing_ggplot.png",
@@ -1513,11 +1514,11 @@ probe_missing <- function(data) {
     width = length(col_names) * 0.8,
     height = 6
   )
-  
+
   # Wait longer for file to be written on async file systems
   Sys.sleep(0.25)
-  
-  image_html <- 
+
+  image_html <-
     htmltools::tags$div(
       style = "text-align: center",
       htmltools::HTML(
@@ -1528,9 +1529,9 @@ probe_missing <- function(data) {
           gsub("height:500px", "width: 100%", .)
       )
     )
-  
+
   file.remove("temp_missing_ggplot.png")
-  
+
   list(probe_missing = image_html)
 }
 
@@ -1539,21 +1540,21 @@ probe_sample <- function(data) {
   probe_sample <-
     data %>%
     gt::gt_preview(top_n = 5, bottom_n = 5) %>%
-    gt_missing(columns = gt::everything(), missing_text = "**NA**") %>%
+    gt::sub_missing(columns = gt::everything(), missing_text = "**NA**") %>%
     gt::text_transform(
       locations = gt::cells_body(columns = gt::everything()),
       fn = function(x) ifelse(x == "**NA**", "<code>NA</code>", x)
     ) %>%
-    gt::tab_options(table.width = "100%") %>% 
+    gt::tab_options(table.width = "100%") %>%
     gt::tab_style(
       style = gt::cell_text(font = "monospace"),
       locations = list(
         gt::cells_column_labels(),
         gt::cells_body()
       )
-    ) %>% 
+    ) %>%
     gt::text_transform(
-      locations = gt::cells_body(), 
+      locations = gt::cells_body(),
       fn = function(x) {
         ifelse(
           x == "<code>NA</code>",
@@ -1562,12 +1563,12 @@ probe_sample <- function(data) {
         )
       }
     )
-  
+
   list(probe_sample = probe_sample)
 }
 
 bootstrap_lib <- function() {
-  
+
   htmltools::htmlDependency(
     name = "bootstrap",
     version = "3.3.2",
@@ -1588,13 +1589,13 @@ build_table_scan_page <- function(
     locale,
     width = NULL
 ) {
-  
+
   if (navbar) {
     navbar <- navbar(sections = sections, lang = lang)
   } else {
     navbar <- NULL
   }
-  
+
   probe_list <-
     sections %>%
     lapply(
@@ -1629,33 +1630,33 @@ build_table_scan_page <- function(
             lang = lang
           )
         )
-      } 
+      }
     )
-  
-  bootstrap_lib <- 
+
+  bootstrap_lib <-
     readr::read_file(
       file = system.file(
         "lib", "bootstrap", "css", "bootstrap.min.css",
         package = "pointblank"
       )
     )
-  
-  jquery_lib <- 
+
+  jquery_lib <-
     readr::read_file(
       file = system.file(
         "lib", "jquery", "jquery-1.12.4.min.js",
         package = "pointblank"
       )
     )
-  
-  extra_js <- 
+
+  extra_js <-
     readr::read_file(
       file = system.file(
         "javascript", "toggle_anchor.js",
         package = "pointblank"
       )
     )
-  
+
   extra_css <-
     readr::read_file(
       file = system.file(
@@ -1663,8 +1664,8 @@ build_table_scan_page <- function(
         package = "pointblank"
       )
     )
-  
-  table_scan <- 
+
+  table_scan <-
     htmltools::tagList(
       htmltools::HTML("<!doctype html>"),
       htmltools::tags$html(
@@ -1693,7 +1694,7 @@ build_table_scan_page <- function(
             htmltools::tags$div(
               class = "container",
               style = if (!is.null(width)) {
-                paste0("width: ", width, ";") 
+                paste0("width: ", width, ";")
               } else {
                 NULL
               },
@@ -1727,9 +1728,9 @@ build_table_scan_page <- function(
         )
       )
     )
-  
+
   class(table_scan) <- c("ptblank_tbl_scan", class(table_scan))
-  
+
   table_scan
 }
 
@@ -1739,7 +1740,7 @@ probe_overview_stats_assemble <- function(
     lang,
     locale
 ) {
-  
+
   cli::cli_div(
     theme = list(
       span.overview = list(color = "red"),
@@ -1750,29 +1751,29 @@ probe_overview_stats_assemble <- function(
       span.sample = list(color = "purple")
     )
   )
-  
+
   if (is.na(tbl_name)) {
-    header <- 
+    header <-
       get_lsv("table_scan/nav_overview_ts")[[lang]]
   } else {
-    header <- 
+    header <-
       glue::glue(get_lsv("table_scan/section_title_overview_of_ts")[[lang]])
   }
-  
+
   row_header <- row_header(id = "overview", header = htmltools::HTML(header))
-  
+
   # Get the starting time for the section
   section_start_time <- Sys.time()
-  
+
   if (interactive()) {
     cli::cli_alert_info(
       "{.overview Starting assembly of 'Overview' section...}"
     )
   }
-  
-  overview_stats <- 
+
+  overview_stats <-
     probe_overview_stats(data = data, lang = lang, locale = locale)
-  
+
   overview_stats_tags <-
     htmltools::tagList(
       row_header,
@@ -1840,23 +1841,23 @@ probe_overview_stats_assemble <- function(
         )
       )
     )
-  
+
   # Get the ending time for the section
   section_end_time <- Sys.time()
-  
-  # Get the time duration for the section    
-  time_diff_s <- 
+
+  # Get the time duration for the section
+  time_diff_s <-
     get_time_duration(
       start_time = section_start_time,
       end_time = section_end_time
     )
-  
+
   if (interactive()) {
     cli::cli_alert_success(
       paste0("{.overview ...Finished!} ", print_time(time_diff_s))
     )
   }
-  
+
   overview_stats_tags
 }
 
@@ -1865,7 +1866,7 @@ probe_columns_assemble <- function(
     lang,
     locale
 ) {
-  
+
   cli::cli_div(
     theme = list(
       span.overview = list(color = "red"),
@@ -1878,29 +1879,29 @@ probe_columns_assemble <- function(
   )
 
   header <- get_lsv("table_scan/nav_variables_ts")[[lang]]
-  
+
   row_header <- row_header(id = "variables", header = header)
-  
+
   # Get the starting time for the section
   section_start_time <- Sys.time()
-  
+
   if (interactive()) {
     cli::cli_alert_info(
       "{.variables Starting assembly of 'Variables' section...}"
     )
   }
-  
+
   columns_data <- probe_columns(data = data, lang = lang, locale = locale)
-  
-  columns_tag_lists <- 
+
+  columns_tag_lists <-
     lapply(
-      columns_data, 
+      columns_data,
       function(x) {
-        
+
         id_val <- gt::random_id()
-        
+
         if (x$column_type %in% c("numeric", "integer")) {
-          
+
           htmltools::tagList(
             htmltools::tags$div(
               class = "row spacing",
@@ -2129,9 +2130,9 @@ probe_columns_assemble <- function(
               )
             )
           )
-          
+
         } else if (x$column_type == "character") {
-          
+
           htmltools::tagList(
             htmltools::tags$div(
               class = "row spacing",
@@ -2251,7 +2252,7 @@ probe_columns_assemble <- function(
                       ),
                       htmltools::tags$div(
                         class = "tab-content",
-                        
+
                         htmltools::tags$div(
                           role = "tabpanel",
                           class = "tab-pane col-sm-12 active",
@@ -2308,10 +2309,10 @@ probe_columns_assemble <- function(
               )
             )
           )
-          
-        } else if (x$column_type %in% 
+
+        } else if (x$column_type %in%
                    c("logical", "factor", "date", "datetime")) {
-          
+
           htmltools::tagList(
             htmltools::tags$div(
               class = "row spacing",
@@ -2367,7 +2368,7 @@ probe_columns_assemble <- function(
             )
           )
         } else {
-          
+
           htmltools::tagList(
             htmltools::tags$div(
               class = "row spacing",
@@ -2398,7 +2399,7 @@ probe_columns_assemble <- function(
         }
       }
     )
-  
+
   columns_tags <-
     htmltools::tagList(
       row_header,
@@ -2407,23 +2408,23 @@ probe_columns_assemble <- function(
         columns_tag_lists
       )
     )
-  
+
   # Get the ending time for the section
   section_end_time <- Sys.time()
-  
-  # Get the time duration for the section    
-  time_diff_s <- 
+
+  # Get the time duration for the section
+  time_diff_s <-
     get_time_duration(
       start_time = section_start_time,
       end_time = section_end_time
     )
-  
+
   if (interactive()) {
     cli::cli_alert_success(
       paste0("{.variables ...Finished!} ", print_time(time_diff_s))
     )
   }
-  
+
   columns_tags
 }
 
@@ -2431,7 +2432,7 @@ probe_interactions_assemble <- function(
     data,
     lang
 ) {
-  
+
   cli::cli_div(
     theme = list(
       span.overview = list(color = "red"),
@@ -2442,22 +2443,22 @@ probe_interactions_assemble <- function(
       span.sample = list(color = "purple")
     )
   )
-  
+
   header <- get_lsv("table_scan/nav_interactions_ts")[[lang]]
-  
+
   row_header <- row_header(id = "interactions", header = header)
-  
+
   # Get the starting time for the section
   section_start_time <- Sys.time()
-  
+
   if (interactive()) {
     cli::cli_alert_info(
       "{.interactions Starting assembly of 'Interactions' section...}"
     )
   }
-  
+
   interactions_data <- suppressWarnings(probe_interactions(data = data))
-  
+
   interactions_tags <-
     htmltools::tagList(
       row_header,
@@ -2473,23 +2474,23 @@ probe_interactions_assemble <- function(
         )
       )
     )
-  
+
   # Get the ending time for the section
   section_end_time <- Sys.time()
-  
-  # Get the time duration for the section    
-  time_diff_s <- 
+
+  # Get the time duration for the section
+  time_diff_s <-
     get_time_duration(
       start_time = section_start_time,
       end_time = section_end_time
     )
-  
+
   if (interactive()) {
     cli::cli_alert_success(
       paste0("{.interactions ...Finished!} ", print_time(time_diff_s))
     )
   }
-  
+
   interactions_tags
 }
 
@@ -2497,7 +2498,7 @@ probe_correlations_assemble <- function(
     data,
     lang
 ) {
-  
+
   cli::cli_div(
     theme = list(
       span.overview = list(color = "red"),
@@ -2508,22 +2509,22 @@ probe_correlations_assemble <- function(
       span.sample = list(color = "purple")
     )
   )
-  
+
   header <- get_lsv("table_scan/nav_correlations_ts")[[lang]]
-  
+
   row_header <- row_header(id = "correlations", header = header)
-  
+
   # Get the starting time for the section
   section_start_time <- Sys.time()
-  
+
   if (interactive()) {
     cli::cli_alert_info(
       "{.correlations Starting assembly of 'Correlations' section...}"
     )
   }
-  
+
   correlations_data <- probe_correlations(data = data)
-  
+
   correlations_tags <-
     htmltools::tagList(
       row_header,
@@ -2590,23 +2591,23 @@ probe_correlations_assemble <- function(
         )
       )
     )
-  
+
   # Get the ending time for the section
   section_end_time <- Sys.time()
-  
-  # Get the time duration for the section    
-  time_diff_s <- 
+
+  # Get the time duration for the section
+  time_diff_s <-
     get_time_duration(
       start_time = section_start_time,
       end_time = section_end_time
     )
-  
+
   if (interactive()) {
     cli::cli_alert_success(
       paste0("{.correlations ...Finished!} ", print_time(time_diff_s))
     )
   }
-  
+
   correlations_tags
 }
 
@@ -2614,7 +2615,7 @@ probe_missing_assemble <- function(
     data,
     lang
 ) {
-  
+
   cli::cli_div(
     theme = list(
       span.overview = list(color = "red"),
@@ -2625,22 +2626,22 @@ probe_missing_assemble <- function(
       span.sample = list(color = "purple")
     )
   )
-  
+
   header <- get_lsv("table_scan/nav_missing_values_ts")[[lang]]
-  
+
   row_header <- row_header(id = "missing", header = header)
-  
+
   # Get the starting time for the section
   section_start_time <- Sys.time()
-  
+
   if (interactive()) {
     cli::cli_alert_info(
       "{.missing_values Starting assembly of 'Missing Values' section...}"
     )
   }
-  
+
   missing_data <- probe_missing(data = data)
-  
+
   missing_tags <-
     htmltools::tagList(
       row_header,
@@ -2656,23 +2657,23 @@ probe_missing_assemble <- function(
         )
       )
     )
-  
+
   # Get the ending time for the section
   section_end_time <- Sys.time()
-  
-  # Get the time duration for the section    
-  time_diff_s <- 
+
+  # Get the time duration for the section
+  time_diff_s <-
     get_time_duration(
       start_time = section_start_time,
       end_time = section_end_time
     )
-  
+
   if (interactive()) {
     cli::cli_alert_success(
       paste0("{.missing_values ...Finished!} ", print_time(time_diff_s))
     )
   }
-  
+
   missing_tags
 }
 
@@ -2691,22 +2692,22 @@ probe_sample_assemble <- function(
       span.sample = list(color = "purple")
     )
   )
-  
+
   header <- get_lsv("table_scan/nav_sample_values_ts")[[lang]]
-  
+
   row_header <- row_header(id = "sample", header = header)
-  
+
   # Get the starting time for the section
   section_start_time <- Sys.time()
-  
+
   if (interactive()) {
     cli::cli_alert_info(
       "{.sample Starting assembly of 'Sample' section...}"
     )
   }
-  
+
   sample_data <- probe_sample(data = data)
-  
+
   sample_tags <-
     htmltools::tagList(
       row_header,
@@ -2722,23 +2723,23 @@ probe_sample_assemble <- function(
         )
       )
     )
-  
+
   # Get the ending time for the section
   section_end_time <- Sys.time()
-  
-  # Get the time duration for the section    
-  time_diff_s <- 
+
+  # Get the time duration for the section
+  time_diff_s <-
     get_time_duration(
       start_time = section_start_time,
       end_time = section_end_time
     )
-  
+
   if (interactive()) {
     cli::cli_alert_success(
       paste0("{.sample ...Finished!} ", print_time(time_diff_s))
     )
   }
-  
+
   sample_tags
 }
 
@@ -2750,13 +2751,13 @@ navbar <- function(
     sections,
     lang
 ) {
-  
+
   # Compose the list of navigational links for the navbar
   item_list <-
     sections %>%
     lapply(
       FUN = function(x) {
-        
+
         label <-
           switch(
             x,
@@ -2767,7 +2768,7 @@ navbar <- function(
             missing = get_lsv("table_scan/nav_missing_values_ts")[[lang]],
             sample = get_lsv("table_scan/nav_sample_values_ts")[[lang]]
           )
-        
+
         htmltools::tags$li(
           htmltools::tags$a(
             class = "anchor",
@@ -2777,7 +2778,7 @@ navbar <- function(
         )
       }
     )
-  
+
   htmltools::tags$nav(
     class = "navbar navbar-default navbar-fixed-top",
     htmltools::tags$div(
@@ -2821,7 +2822,7 @@ tab_panel <- function(
     panel_component_list,
     active = FALSE
 ) {
-  
+
   htmltools::tags$div(
     role = "tabpanel",
     class = if (active) "tab-pane col-sm-12 active" else "tab-pane col-sm-12",
@@ -2834,7 +2835,7 @@ row_header <- function(
     id,
     header
 ) {
-  
+
   htmltools::tags$div(
     class = "row header",
     htmltools::tags$a(
@@ -2855,9 +2856,9 @@ panel_component <- function(
     content,
     title = NULL
 ) {
-  
+
   glue_list <- list(size = size, title = title)
-  
+
   htmltools::tags$div(
     class = pb_glue_data(glue_list, "col-sm-{size}"),
     htmltools::tags$p(
@@ -2872,10 +2873,10 @@ nav_pill_li <- function(
     label,
     id,
     active = FALSE
-) { 
-  
+) {
+
   glue_list <- list(label = label, id = id)
-  
+
   htmltools::tags$li(
     role = "presentation",
     class = if (active) "active" else "",

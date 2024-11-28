@@ -1,21 +1,21 @@
 #------------------------------------------------------------------------------#
-# 
-#                 _         _    _      _                _    
-#                (_)       | |  | |    | |              | |   
+#
+#                 _         _    _      _                _
+#                (_)       | |  | |    | |              | |
 #   _ __    ___   _  _ __  | |_ | |__  | |  __ _  _ __  | | __
 #  | '_ \  / _ \ | || '_ \ | __|| '_ \ | | / _` || '_ \ | |/ /
-#  | |_) || (_) || || | | || |_ | |_) || || (_| || | | ||   < 
+#  | |_) || (_) || || | | || |_ | |_) || || (_| || | | ||   <
 #  | .__/  \___/ |_||_| |_| \__||_.__/ |_| \__,_||_| |_||_|\_\
-#  | |                                                        
-#  |_|                                                        
-#  
+#  | |
+#  |_|
+#
 #  This file is part of the 'rstudio/pointblank' project.
-#  
+#
 #  Copyright (c) 2017-2024 pointblank authors
-#  
+#
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
-# 
+#
 #------------------------------------------------------------------------------#
 
 
@@ -30,11 +30,11 @@
 #'
 #' This function will allow the agent object to print a useful HTML-based
 #' report.
-#' 
+#'
 #' @param x An object of class `ptblank_agent`.
 #' @param view The value for `print()`s `browse` argument.
 #' @param ... Any additional parameters.
-#' 
+#'
 #' @keywords internal
 #' @export
 print.ptblank_agent <- function(x, view = interactive(), ...) {
@@ -53,7 +53,7 @@ print.ptblank_agent <- function(x, view = interactive(), ...) {
 #' @keywords internal
 #' @noRd
 knit_print.ptblank_agent <- function(x, ...) {
-  
+
   # Use `knit_print()` to print in a code chunk
   knitr::knit_print(get_agent_report(x), ...)
 }
@@ -66,15 +66,15 @@ knit_print.ptblank_agent <- function(x, ...) {
 #'
 #' This function will allow the informant object to print a useful HTML-based
 #' report.
-#' 
+#'
 #' @param x An informant object of class `ptblank_informant`.
 #' @param view The value for `print()`s `browse` argument.
 #' @param ... Any additional parameters.
-#' 
+#'
 #' @keywords internal
 #' @export
 print.ptblank_informant <- function(x, view = interactive(), ...) {
-  
+
   print(get_informant_report(x), view = view, ...)
 }
 
@@ -89,7 +89,7 @@ print.ptblank_informant <- function(x, view = interactive(), ...) {
 #' @keywords internal
 #' @noRd
 knit_print.ptblank_informant <- function(x, ...) {
-  
+
   # Use `knit_print()` to print in a code chunk
   knitr::knit_print(get_informant_report(x), ...)
 }
@@ -102,15 +102,15 @@ knit_print.ptblank_informant <- function(x, ...) {
 #'
 #' This function will allow the multiagent object to print a useful HTML-based
 #' report.
-#' 
+#'
 #' @param x An object of class `ptblank_multiagent`.
 #' @param view The value for `print()`s `browse` argument.
 #' @param ... Any additional parameters.
-#' 
+#'
 #' @keywords internal
 #' @export
 print.ptblank_multiagent <- function(x, view = interactive(), ...) {
-  
+
   print(get_multiagent_report(x), view = view, ...)
 }
 
@@ -125,7 +125,7 @@ print.ptblank_multiagent <- function(x, view = interactive(), ...) {
 #' @keywords internal
 #' @noRd
 knit_print.ptblank_multiagent <- function(x, ...) {
-  
+
   # Use `knit_print()` to print in a code chunk
   knitr::knit_print(get_multiagent_report(x), ...)
 }
@@ -138,17 +138,17 @@ knit_print.ptblank_multiagent <- function(x, ...) {
 #'
 #' This function will print the `ptblank_multiagent_report.long` object, which
 #' is an HTML-based report.
-#' 
+#'
 #' @param x An object of class `ptblank_multiagent_report.long`.
 #' @param view The value for `print()`s `browse` argument.
 #' @param ... Any additional parameters.
-#' 
+#'
 #' @keywords internal
 #' @export
 print.ptblank_multiagent_report.long <- function(x, view = interactive(), ...) {
-  
+
   class(x) <- c("shiny.tag.list", "list")
-  
+
   print(x, browse = view, ...)
 }
 
@@ -163,9 +163,9 @@ print.ptblank_multiagent_report.long <- function(x, view = interactive(), ...) {
 #' @keywords internal
 #' @noRd
 knit_print.ptblank_multiagent_report.long <- function(x, ...) {
-  
+
   class(x) <- c("shiny.tag.list", "list")
-  
+
   # Use `knit_print()` to print in a code chunk
   knitr::knit_print(x, ...)
 }
@@ -187,9 +187,9 @@ knit_print.ptblank_multiagent_report.long <- function(x, ...) {
 #'
 #' @export
 print.ptblank_tbl_scan <- function(x, ..., view = interactive()) {
-  
+
   class(x) <- c("shiny.tag.list", "list")
-  
+
   print(x, browse = view, ...)
 }
 
@@ -204,9 +204,9 @@ print.ptblank_tbl_scan <- function(x, ..., view = interactive()) {
 #' @keywords internal
 #' @noRd
 knit_print.ptblank_tbl_scan <- function(x, ...) {
-  
+
   class(x) <- c("shiny.tag.list", "list")
-  
+
   # Use `knit_print()` to print in a code chunk
   knitr::knit_print(x, ...)
 }
@@ -218,14 +218,14 @@ knit_print.ptblank_tbl_scan <- function(x, ...) {
 #' Print a single-step x-list to the console
 #'
 #' This function will print an x-list object, for a single step, to the console.
-#' 
+#'
 #' @param x An x-list object of class `x_list_i`.
 #' @param ... Any additional parameters.
-#' 
+#'
 #' @keywords internal
 #' @export
 print.x_list_i <- function(x, ...) {
-  
+
   cli::cli_div(
     theme = list(
       span.cyan = list(color = "cyan"),
@@ -236,9 +236,9 @@ print.x_list_i <- function(x, ...) {
       span.orange = list(color = "orange")
     )
   )
-  
+
   length_rows <- length(x$warn)
-  
+
   cli::cli_rule(
     left = "The x-list for `{x$tbl_name}`",
     right = "STEP {x$i}"
@@ -291,7 +291,7 @@ print.x_list_i <- function(x, ...) {
 #' @keywords internal
 #' @noRd
 knit_print.x_list_i <- function(x, ...) {
-  
+
   length_rows <- length(x$warn)
 
   tbl_classes <- paste(class(x$tbl), collapse = " ")
@@ -301,7 +301,7 @@ knit_print.x_list_i <- function(x, ...) {
       "-- The x-list for table `", x$tbl_name, "`\n",
       "---- STEP ", x$i, " ----"
   )
-  
+
   if (length(x$time_start) == 0) {
     bottom_rule <- "---- NO INTERROGATION PERFORMED ----"
   } else {
@@ -325,7 +325,7 @@ knit_print.x_list_i <- function(x, ...) {
       "$lang (chr [1])\n",
       "{bottom_rule}\n"
     )
-  
+
   #right = ifelse(length(x$time_start) == 0, "NO INTERROGATION PERFORMED", "")
   # Use `knit_print()` to print in a code chunk
   knitr::knit_print(x_list_str, ...)
@@ -339,14 +339,14 @@ knit_print.x_list_i <- function(x, ...) {
 #'
 #' This function will print a x-list object, with all validation steps included,
 #' to the console.
-#' 
+#'
 #' @param x An x-list object of class `x_list_n`.
 #' @param ... Any additional parameters.
-#' 
+#'
 #' @keywords internal
 #' @export
 print.x_list_n <- function(x, ...) {
-  
+
   cli::cli_div(
     theme = list(
       span.cyan = list(color = "cyan"),
@@ -363,7 +363,7 @@ print.x_list_n <- function(x, ...) {
   length_rows <- length(x$warn)
   validation_set_rows <- nrow(x$validation_set)
   validation_set_cols <- ncol(x$validation_set)
-  
+
   cli::cli_rule(
     left = "The x-list for `{x$tbl_name}`",
     right = "ALL STEPS"
@@ -429,25 +429,25 @@ print.x_list_n <- function(x, ...) {
 #' @keywords internal
 #' @noRd
 knit_print.x_list_n <- function(x, ...) {
-  
+
   tbl_classes <- paste(class(x$tbl), collapse = " ")
-  
+
   length_rows <- length(x$warn)
   validation_set_rows <- nrow(x$validation_set)
   validation_set_cols <- ncol(x$validation_set)
-  
+
   top_rule <-
     paste0(
       "-- The x-list for table `", x$tbl_name, "`\n",
       "---- ALL STEPS ----"
     )
-  
+
   if (length(x$time_start) == 0) {
     bottom_rule <- "---- NO INTERROGATION PERFORMED ----"
   } else {
     bottom_rule <- "----"
   }
-  
+
   x_list_str <-
     glue::glue(
       "{top_rule}\n",
@@ -469,7 +469,7 @@ knit_print.x_list_n <- function(x, ...) {
       "$report_html $report_html_small (chr [1])\n",
       "{bottom_rule}\n"
     )
-  
+
   # Use `knit_print()` to print in a code chunk
   knitr::knit_print(x_list_str, ...)
 }
@@ -481,10 +481,10 @@ knit_print.x_list_n <- function(x, ...) {
 #' Print the `action_levels` object
 #'
 #' This function will allow the `action_levels` to be nicely printed.
-#' 
+#'
 #' @param x An object of class `action_levels`.
 #' @param ... Any additional parameters.
-#' 
+#'
 #' @keywords internal
 #' @export
 print.action_levels <- function(x, ...) {
@@ -492,7 +492,7 @@ print.action_levels <- function(x, ...) {
   has_warn_fns <- !is.null(x$fns$warn)
   has_stop_fns <- !is.null(x$fns$stop)
   has_notify_fns <- !is.null(x$fns$notify)
-  
+
   cli::cli_div(
     theme = list(
       span.yellow = list(color = "yellow"),
@@ -500,11 +500,11 @@ print.action_levels <- function(x, ...) {
       span.blue = list(color = "blue")
     )
   )
-  
+
   cli::cli_rule(
     left = "The `action_levels` settings",
   )
-  
+
   if (!is.null(x$warn_fraction)) {
     cli::cli_text(
       "{.yellow WARN} failure threshold of {x$warn_fraction} of all test units."
@@ -531,7 +531,7 @@ print.action_levels <- function(x, ...) {
       )
     }
   }
-  
+
   if (!is.null(x$stop_fraction)) {
     cli::cli_text(
       "{.red STOP} failure threshold of {x$stop_fraction} of all test units."
@@ -558,7 +558,7 @@ print.action_levels <- function(x, ...) {
       )
     }
   }
-  
+
   if (!is.null(x$notify_fraction)) {
     cli::cli_text(
       "{.blue NOTIFY} failure threshold of {x$notify_fraction} of all test units."
@@ -585,7 +585,7 @@ print.action_levels <- function(x, ...) {
       )
     }
   }
-  
+
   cli::cli_rule()
 }
 
@@ -600,16 +600,16 @@ print.action_levels <- function(x, ...) {
 #' @keywords internal
 #' @noRd
 knit_print.action_levels <- function(x, ...) {
-  
+
   has_warn_fns <- !is.null(x$fns$warn)
   has_stop_fns <- !is.null(x$fns$stop)
   has_notify_fns <- !is.null(x$fns$notify)
-  
+
   top_rule <- "-- The `action_levels` settings"
   bottom_rule <- "----"
-  
+
   action_levels_lines <- c()
-  
+
   if (!is.null(x$warn_fraction)) {
     action_levels_lines <-
       c(action_levels_lines,
@@ -646,7 +646,7 @@ knit_print.action_levels <- function(x, ...) {
         )
     }
   }
-  
+
   if (!is.null(x$stop_fraction)) {
     action_levels_lines <-
       c(action_levels_lines,
@@ -683,7 +683,7 @@ knit_print.action_levels <- function(x, ...) {
         )
     }
   }
-  
+
   if (!is.null(x$notify_fraction)) {
     action_levels_lines <-
       c(action_levels_lines,
@@ -720,16 +720,16 @@ knit_print.action_levels <- function(x, ...) {
         )
     }
   }
-  
+
   action_levels_lines <- paste(action_levels_lines, collapse = "\n")
-  
+
   action_levels_str <-
     glue::glue(
       "{top_rule}\n",
       "{action_levels_lines}\n",
       "{bottom_rule}\n"
     )
-  
+
   # Use `knit_print()` to print in a code chunk
   knitr::knit_print(action_levels_str, ...)
 }
@@ -741,28 +741,28 @@ knit_print.action_levels <- function(x, ...) {
 #' Print the `tbl_store` object
 #'
 #' This function will allow the `tbl_store` to be nicely printed.
-#' 
+#'
 #' @param x An object of class `tbl_store`.
 #' @param ... Any additional parameters.
-#' 
+#'
 #' @keywords internal
 #' @export
 print.tbl_store <- function(x, ...) {
-  
+
   tbl_names <- names(x)
-  
+
   n_tbls <- length(tbl_names)
-  
+
   has_init_stmt <- !is.null(attr(x, which = "pb_init", exact = TRUE))
-  
-  has_given_name <- 
+
+  has_given_name <-
     vapply(
       x,
       FUN.VALUE = logical(1),
       USE.NAMES = FALSE,
       FUN = function(x) inherits(x, "with_tbl_name")
     )
-  
+
   tbl_formulas <-
     vapply(
       x,
@@ -778,12 +778,12 @@ print.tbl_store <- function(x, ...) {
       span.blue = list(color = "blue")
     )
   )
-  
+
   cli::cli_rule(
     left = "The `table_store` table-prep formulas",
     right = paste0("n = ", n_tbls)
   )
-  
+
   for (i in seq_len(n_tbls)) {
     cli::cli_text(
       paste0(
@@ -792,19 +792,19 @@ print.tbl_store <- function(x, ...) {
       )
     )
   }
-  
+
   if (has_init_stmt) {
-    
+
     cli::cli_rule()
-    
+
     init_stmt <- attr(x, which = "pb_init", exact = TRUE)
     init_stmt <- capture_formula(init_stmt)[2]
-    
+
     Sys.sleep(0.1)
-    
+
     cli::cli_text(paste0("{.blue INIT} // ", init_stmt))
   }
-  
+
   cli::cli_rule()
 }
 
@@ -819,21 +819,21 @@ print.tbl_store <- function(x, ...) {
 #' @keywords internal
 #' @noRd
 knit_print.tbl_store <- function(x, ...) {
-  
+
   tbl_names <- names(x)
-  
+
   n_tbls <- length(tbl_names)
-  
+
   has_init_stmt <- !is.null(attr(x, which = "pb_init", exact = TRUE))
-  
-  has_given_name <- 
+
+  has_given_name <-
     vapply(
       x,
       FUN.VALUE = logical(1),
       USE.NAMES = FALSE,
       FUN = function(x) inherits(x, "with_tbl_name")
     )
-  
+
   tbl_formulas <-
     vapply(
       x,
@@ -841,11 +841,11 @@ knit_print.tbl_store <- function(x, ...) {
       USE.NAMES = FALSE,
       FUN = function(x) capture_formula(x)[2]
     )
-  
+
   tbl_store_lines <- c()
-  
+
   for (i in seq_len(n_tbls)) {
-    
+
     tbl_store_lines <-
       c(tbl_store_lines,
         paste0(
@@ -854,33 +854,33 @@ knit_print.tbl_store <- function(x, ...) {
         )
       )
   }
-  
+
   tbl_store_lines <- paste(tbl_store_lines, collapse = "\n")
-  
+
   top_rule <- "-- The `table_store` table-prep formulas"
   bottom_rule <- "----"
-  
+
   if (has_init_stmt) {
-    
+
     init_stmt <- attr(x, which = "pb_init", exact = TRUE)
     init_stmt <- capture_formula(init_stmt)[2]
-    
+
     Sys.sleep(0.1)
-    
-    tbl_store_lines <- 
+
+    tbl_store_lines <-
       paste(
         tbl_store_lines,
         paste0("\n", bottom_rule, "\nINIT // ", init_stmt)
       )
   }
-  
+
   tbl_store_str <-
     glue::glue(
       "{top_rule}\n",
       "{tbl_store_lines}\n",
       "{bottom_rule}\n"
     )
-  
+
   # Use `knit_print()` to print in a code chunk
   knitr::knit_print(tbl_store_str, ...)
 }
@@ -888,26 +888,26 @@ knit_print.tbl_store <- function(x, ...) {
 #' Print the a table-prep formula
 #'
 #' This function will allow a table-prep formula to be nicely printed.
-#' 
+#'
 #' @param x An object of class `read_fn`.
 #' @param ... Any additional parameters.
-#' 
+#'
 #' @keywords internal
 #' @export
 print.read_fn <- function(x, ...) {
-  
+
   tbl_name <- capture_formula(x)[1]
   tbl_formula <- capture_formula(x)[2]
-  
+
   has_given_name <- inherits(x, "with_tbl_name")
-  
+
   cli::cli_div(
     theme = list(
       span.red = list(color = "red"),
       span.blue = list(color = "blue")
     )
   )
-  
+
   cli::cli_text(
     paste0(
       "{.blue {ifelse(is.na(tbl_name), '', tbl_name)}}",

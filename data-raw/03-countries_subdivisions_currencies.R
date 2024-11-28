@@ -24,18 +24,18 @@ country_tbl <-
   )
 
 for (i in seq_along(file_list_countries)) {
-  
+
   y <-
     yaml::read_yaml(
       file = file_list_countries[i]
     )[[1]]
-  
+
   if (y$postal_code) {
     postal_code_format <- y$postal_code_format
   } else {
     postal_code_format <- NA_character_
   }
-    
+
   country_tbl <-
     dplyr::bind_rows(
       country_tbl,
@@ -55,7 +55,7 @@ for (i in seq_along(file_list_countries)) {
     )
 }
 
-currency_tbl <- 
+currency_tbl <-
   readr::read_csv(file = "data-raw/currency_codes.csv", col_types = "cccccc") %>%
   dplyr::select(AlphabeticCode, NumericCode) %>%
   dplyr::distinct() %>%
@@ -93,40 +93,40 @@ subdivision_tbl <-
   )
 
 for (i in seq_along(file_list_countries)) {
-  
+
   y <-
     try(
       yaml::read_yaml(
         file = file_list_subdivisions[i]
       ), silent = TRUE
     )
-  
+
   if (!inherits(y, "try-error")) {
-    
+
     sub_names <- names(y)
-    
+
     for (j in seq_along(sub_names)) {
-      
+
       z <- y[[sub_names[j]]]
-      
+
       if (!is.null(z$translations$en)) {
         name_en <- z$translations$en[1]
       } else {
         name_en <- NA_character_
       }
-      
+
       if (!is.null(z$geo$latitude)) {
         lat_dec <- z$geo$latitude[1]
       } else {
         lat_dec <- NA_real_
       }
-      
+
       if (!is.null(z$geo$longitude)) {
         lon_dec <- z$geo$longitude[1]
       } else {
         lon_dec <- NA_real_
       }
-      
+
       subdivision_tbl <-
         dplyr::bind_rows(
           subdivision_tbl,
@@ -160,28 +160,28 @@ subdivisions <- subdivision_tbl
 currencies <- currency_tbl
 
 get_subdivision_list <- function(subdivisions, countries) {
-  
+
   subd_list <- list()
-  
+
   for (co in countries) {
-    
-    subd_country <- 
+
+    subd_country <-
       subdivisions %>%
       dplyr::filter(country_alpha_3 == {{ co }}) %>%
       dplyr::filter(!(subd_name %in% c("FALSE"))) %>%
       dplyr::filter(!(grepl("[0-9]", subd_name))) %>%
       dplyr::pull(subd_name)
-    
+
     subd_country_list <- list(subd_country)
     names(subd_country_list) <- co
-    
+
     subd_list <- append(subd_list, subd_country_list)
   }
-  
+
   subd_list
 }
 
-subd_list_main <- 
+subd_list_main <-
   get_subdivision_list(
     subdivisions = subdivisions,
     countries = c(

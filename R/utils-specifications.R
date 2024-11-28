@@ -1,43 +1,43 @@
 #------------------------------------------------------------------------------#
-# 
-#                 _         _    _      _                _    
-#                (_)       | |  | |    | |              | |   
+#
+#                 _         _    _      _                _
+#                (_)       | |  | |    | |              | |
 #   _ __    ___   _  _ __  | |_ | |__  | |  __ _  _ __  | | __
 #  | '_ \  / _ \ | || '_ \ | __|| '_ \ | | / _` || '_ \ | |/ /
-#  | |_) || (_) || || | | || |_ | |_) || || (_| || | | ||   < 
+#  | |_) || (_) || || | | || |_ | |_) || || (_| || | | ||   <
 #  | .__/  \___/ |_||_| |_| \__||_.__/ |_| \__,_||_| |_||_|\_\
-#  | |                                                        
-#  |_|                                                        
-#  
+#  | |
+#  |_|
+#
 #  This file is part of the 'rstudio/pointblank' project.
-#  
+#
 #  Copyright (c) 2017-2024 pointblank authors
-#  
+#
 #  For full copyright and license information, please look at
 #  https://rstudio.github.io/pointblank/LICENSE.html
-# 
+#
 #------------------------------------------------------------------------------#
 
 
 is_isbn_10 <- function(x) {
-  
+
   x <- remove_hyphens(x)
   x <- remove_punctuation(x)
   x <- tolower(x)
   x <- remove_spaces(x)
-  
+
   if (!grepl("\\d{9}[0-9x]", x)) {
     return(FALSE)
   }
 
   x <- unlist(strsplit(x, ""))
-  
+
   # If the check digit is "x" then substitute that for "10"
   if (x[10] == "x") x[10] <- "10"
-  
+
   # Recast as integer values
   x <- as.integer(x)
-  
+
   # The sum of vector multiplication of `x` by the digit
   # weights (10 to 1 across the `x` digits) should be
   # divided evenly by 11 for this to be a valid ISBN-10
@@ -45,17 +45,17 @@ is_isbn_10 <- function(x) {
 }
 
 is_isbn_13 <- function(x) {
-  
+
   x <- remove_hyphens(x)
-  
+
   if (!grepl("\\d{13}", x)) {
     return(FALSE)
   }
-  
+
   x <- as.integer(unlist(strsplit(x, "")))
-  
+
   check <- x[13]
-  
+
   remainder <- sum(x[1:12] * rep(c(1, 3), 6)) %% 10
 
   remainder == 0 && check == 0 || 10 - remainder == check
@@ -78,12 +78,12 @@ remove_punctuation <- function(x, replacement = " ") {
 }
 
 check_vin <- function(x) {
-  
+
   x <- remove_hyphens(x)
   x <- remove_punctuation(x)
   x <- tolower(x)
   x <- remove_spaces(x)
-  
+
   vapply(
     seq_along(x),
     FUN.VALUE = logical(1),
@@ -98,15 +98,15 @@ check_vin <- function(x) {
 }
 
 is_vin <- function(x) {
-  
+
   if (!grepl(regex_vin(), tolower(x))) {
     return(FALSE)
   }
-  
+
   x <- unlist(strsplit(x, ""))
-  
+
   weights <- c(8, 7, 6, 5, 4, 3, 2, 10, 0, 9, 8, 7, 6, 5, 4, 3, 2)
-  
+
   letter_vals <-
     c(
       "a" = 1, "b" = 2, "c" = 3, "d" = 4,
@@ -122,9 +122,9 @@ is_vin <- function(x) {
       "T" = 3, "U" = 4, "V" = 5, "W" = 6,
       "X" = 7, "Y" = 8, "Z" = 9
     )
-  
+
   sum <- 0
-  
+
   for (i in 1:17) {
     if (!grepl("[0-9]", x[i])) {
       sum <- sum + letter_vals[x[i]] * weights[i]
@@ -132,53 +132,53 @@ is_vin <- function(x) {
       sum <- sum + as.integer(x[i]) * weights[i]
     }
   }
-  
+
   check <- unname(sum) %% 11
-  
+
   if (check == 10) {
     check <- "x"
   }
-  
+
   check == x[9]
 }
 
 is_credit_card <- function(x) {
-  
+
   if (!grepl(regex_credit_card_1(), x)) {
     return(FALSE)
   }
-  
+
   if (!grepl(regex_credit_card_2(), x)) {
     return(FALSE)
   }
-  
+
   x <- remove_hyphens(x)
   x <- remove_punctuation(x)
   x <- remove_spaces(x)
-  
+
   luhn(x)
 }
 
 luhn <- function(x) {
-  
+
   x <- rev(as.integer(unlist(strsplit(x, ""))))
-  
+
   idx_odd  <- seq_along(x) %% 2 == 1
   idx_even <- seq_along(x) %% 2 == 0
-  
+
   x[idx_even] <- x[idx_even] * 2
   x[idx_even] <- ifelse(x[idx_even] > 9, x[idx_even] - 9, x[idx_even])
-  
+
   sum_odd  <- sum(x[idx_odd])
   sum_even <- sum(x[idx_even])
-  
+
   sum_x <- sum_odd + sum_even
-  
+
   sum_x %% 10 == 0
 }
 
 check_credit_card <- function(x) {
-  
+
   vapply(
     seq_along(x),
     FUN.VALUE = logical(1),
@@ -190,14 +190,14 @@ check_credit_card <- function(x) {
 }
 
 check_isbn <- function(x) {
-  
+
   x <- remove_hyphens(x)
   x <- remove_punctuation(x)
   x <- tolower(x)
   x <- remove_spaces(x)
-  
+
   isbn_str_length <- as.character(nchar(x))
-  
+
   vapply(
     seq_along(x),
     FUN.VALUE = logical(1),
@@ -221,9 +221,9 @@ check_iban <- function(x, country = NULL) {
 }
 
 check_postal_code <- function(x, country) {
-  
+
   if (length(country) == length(x)) {
-    res <- 
+    res <-
       vapply(
         seq_along(country),
         FUN.VALUE = logical(1),
@@ -235,7 +235,7 @@ check_postal_code <- function(x, country) {
   } else {
     res <- grepl(regex_postal_code(country = country), toupper(x))
   }
-  
+
   res
 }
 
@@ -271,10 +271,10 @@ check_swift_bic <- function(x) {
 
 check_vin_db <- function(table,
                          column) {
-  
+
   tbl_colnames <- get_table_column_names(data = table)
-  
-  table <- 
+
+  table <-
     table %>%
     dplyr::mutate(pb_vin_all_ = {{ column }}) %>%
     dplyr::mutate(pb_vin_all_ = tolower(as.character((pb_vin_all_)))) %>%
@@ -335,19 +335,19 @@ check_vin_db <- function(table,
     dplyr::mutate(pb_vin_016_w = pb_vin_016_ * 3L) %>%
     dplyr::mutate(pb_vin_017_w = pb_vin_017_ * 2L) %>%
     dplyr::mutate(
-      pb_vin_sum_uw = 
-        pb_vin_001_ + pb_vin_002_ + pb_vin_003_ + pb_vin_004_ + 
+      pb_vin_sum_uw =
+        pb_vin_001_ + pb_vin_002_ + pb_vin_003_ + pb_vin_004_ +
         pb_vin_005_ + pb_vin_006_ + pb_vin_007_ + pb_vin_008_ +
         pb_vin_009_ + pb_vin_010_ + pb_vin_011_ + pb_vin_012_ +
-        pb_vin_013_ + pb_vin_014_ + pb_vin_015_ + pb_vin_016_ + 
+        pb_vin_013_ + pb_vin_014_ + pb_vin_015_ + pb_vin_016_ +
         pb_vin_017_
     ) %>%
     dplyr::mutate(
-      pb_vin_sum_ = 
-        pb_vin_001_w + pb_vin_002_w + pb_vin_003_w + pb_vin_004_w + 
+      pb_vin_sum_ =
+        pb_vin_001_w + pb_vin_002_w + pb_vin_003_w + pb_vin_004_w +
         pb_vin_005_w + pb_vin_006_w + pb_vin_007_w + pb_vin_008_w +
         pb_vin_009_w + pb_vin_010_w + pb_vin_011_w + pb_vin_012_w +
-        pb_vin_013_w + pb_vin_014_w + pb_vin_015_w + pb_vin_016_w + 
+        pb_vin_013_w + pb_vin_014_w + pb_vin_015_w + pb_vin_016_w +
         pb_vin_017_w
     ) %>%
     dplyr::mutate(pb_vin_mod_ = as.character(pb_vin_sum_ %% 11L)) %>%
@@ -355,10 +355,10 @@ check_vin_db <- function(table,
     dplyr::mutate(pb_is_good_ = pb_vin_mod_ == pb_vin_chk_) %>%
     dplyr::mutate(pb_is_good_ = ifelse(!pb_vin_nch_, FALSE, pb_vin_nch_)) %>%
     dplyr::mutate(pb_is_good_ = ifelse(pb_vin_sum_uw >= 100000, FALSE, pb_is_good_))
-  
+
   table <-
     table %>% dplyr::select(c(tbl_colnames, "pb_is_good_"))
-  
+
   table
 }
 

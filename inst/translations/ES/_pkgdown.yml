@@ -5,7 +5,7 @@ lang: es
 home:
   strip_header: true
 
-url: https://rich-iannone.github.io/pointblank/es
+url: https://rstudio.github.io/pointblank/es
 
 template:
   bootstrap: 5
@@ -87,7 +87,7 @@ reference:
     - conjointly
     - serially
     - specially
-    
+
   - title: Funciones de información
     desc: >
       Podemos añadir progresivamente información a un objeto *informant*
@@ -112,7 +112,7 @@ reference:
     - snip_stats
     - snip_lowest
     - snip_highest
-    
+
   - title: Creación de correo electrónico
     desc: >
       A veces queremos enviar por correo electrónico un informe de una
@@ -125,7 +125,7 @@ reference:
     - email_create
     - stock_msg_body
     - stock_msg_footer
-    
+
   - title: Registro
     desc: >
       El registro de las condiciones de fallo de validación es una buena
@@ -149,7 +149,7 @@ reference:
     contents:
     - interrogate
     - get_agent_report
-    
+
   - title: "El informante: incorporar e informar"
     desc: >
       Si tenemos un objeto *informante* que ha sido cargado con información
@@ -161,7 +161,7 @@ reference:
     contents:
     - incorporate
     - get_informant_report
-    
+
   - title: Después del interrogatorio
     desc: >
       El objeto `agente` siempre tiene una lista especial llamada 'x-list'.
@@ -180,7 +180,7 @@ reference:
     - get_sundered_data
     - all_passed
     - write_testthat_file
-    
+
   - title: Operaciones con objetos
     desc: >
       Tenemos opciones para escribir un agente o informante en el disco con
@@ -201,7 +201,7 @@ reference:
     - activate_steps
     - deactivate_steps
     - remove_steps
-    
+
   - title: El Multiagente
     desc: >
       El objeto `multiagente` es un grupo de agentes, cada uno de los
@@ -218,7 +218,7 @@ reference:
     - create_multiagent
     - read_disk_multiagent
     - get_multiagent_report
-  
+
   - title: pointblank YAML
     desc: >
       Los archivos YAML pueden ser utilizados en **pointblank** para dos
@@ -238,7 +238,7 @@ reference:
     - yaml_agent_show_exprs
     - yaml_informant_incorporate
     - yaml_exec
-    
+
   - title: Table Transformers
     desc: >
       Las funciones del **Table Transformers** pueden transformar
@@ -259,7 +259,7 @@ reference:
     - tt_time_shift
     - tt_time_slice
     - get_tt_param
-    
+
   - title: Funciones de utilidad y ayuda
     contents:
     - col_schema
@@ -268,7 +268,7 @@ reference:
     - affix_datetime
     - stop_if_not
     - from_github
-    
+
   - title: Conjuntos de datos
     contents:
     - small_table
@@ -276,7 +276,7 @@ reference:
     - specifications
     - game_revenue
     - game_revenue_info
-    
+
 navbar:
   type: default
   left:
@@ -307,7 +307,7 @@ navbar:
   - text: News
     href: news/index.html
   - text: In English
-    href: https://rich-iannone.github.io/pointblank
+    href: https://rstudio.github.io/pointblank
 
 development:
   version_tooltip: "Development version"

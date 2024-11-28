@@ -2,7 +2,7 @@ file_name <- "the_file"
 file_name_ext <- "the_file.txt"
 
 test_that("affixing a date to a filename works well", {
-  
+
   expect_match(
     affix_date(
       filename = file_name_ext, position = "end", format = "%Y-%m-%d",
@@ -160,7 +160,7 @@ test_that("affixing a datetime to a filename works well", {
       delimiter = "_", utc_time = TRUE, add_tz = TRUE
     ),
     "the_file_20[0-9]{2}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z.txt"
-  )  
+  )
   expect_match(
     affix_datetime(
       filename = file_name_ext, position = "end", format = "%Y-%m-%d",
@@ -188,7 +188,7 @@ test_that("affixing a datetime to a filename works well", {
       delimiter = "_", utc_time = FALSE, add_tz = TRUE
     ),
     "the_file_20[0-9]{2}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}((+|-)[0-9]{4}|Z).txt"
-  )  
+  )
   expect_match(
     affix_datetime(
       filename = file_name_ext, position = "end", format = "%Y-%m-%d",
@@ -272,7 +272,7 @@ test_that("affixing a datetime to a filename works well", {
       delimiter = "_", utc_time = TRUE, add_tz = FALSE
     ),
     "the_file_20[0-9]{2}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}.txt"
-  )  
+  )
   expect_match(
     affix_datetime(
       filename = file_name_ext, position = "end", format = "%Y-%m-%d",
@@ -300,7 +300,7 @@ test_that("affixing a datetime to a filename works well", {
       delimiter = "_", utc_time = FALSE, add_tz = FALSE
     ),
     "the_file_20[0-9]{2}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}.txt"
-  )  
+  )
   expect_match(
     affix_datetime(
       filename = file_name_ext, position = "end", format = "%Y-%m-%d",

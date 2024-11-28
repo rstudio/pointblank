@@ -575,33 +575,15 @@ download_remote_file <- function(url, ...) {
 
   if (grepl("^https?://", url)) {
 
-    is_r32 <- getRversion() >= "3.2"
-
     if (.Platform$OS.type == "windows") {
 
-      if (is_r32) {
-
-        method <- "wininet"
-
-      } else {
-
-        seti2 <- utils::"setInternet2"
-        internet2_start <- seti2(NA)
-
-        if (!internet2_start) {
-
-          on.exit(suppressWarnings(seti2(internet2_start)))
-          suppressWarnings(seti2(TRUE))
-        }
-
-        method <- "internal"
-      }
+      method <- "wininet"
 
       suppressWarnings(utils::download.file(url, method = method, ...))
 
     } else {
 
-      if (is_r32 && capabilities("libcurl")) {
+      if (capabilities("libcurl")) {
 
         method <- "libcurl"
 

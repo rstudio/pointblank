@@ -1612,7 +1612,7 @@ get_agent_report <- function(
       n_pass, f_pass, n_fail, f_fail, W, S, N, extract,
       W_val, S_val, N_val, eval, active
     ) %>%
-    gt::gt(id = "pb_agent") %>%
+    gt::gt(id = "pb_agent", locale = locale) %>%
     gt::tab_header(
       title = title_text,
       subtitle = gt::md(combined_subtitle)
@@ -1666,15 +1666,13 @@ get_agent_report <- function(
       align = "right",
       columns = "i"
     ) %>%
-    gt::fmt_number(
+    gt::fmt_integer(
       columns = c("units", "n_pass", "n_fail", "f_pass", "f_fail"),
-      decimals = 0, drop_trailing_zeros = TRUE, suffixing = TRUE,
-      locale = locale
+      drop_trailing_zeros = TRUE, suffixing = TRUE
     ) %>%
     gt::fmt_number(
       columns = c("f_pass", "f_fail"),
-      decimals = 2,
-      locale = locale
+      decimals = 2
     ) %>%
     gt::fmt_markdown(
       columns = c(

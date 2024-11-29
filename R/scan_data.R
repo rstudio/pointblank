@@ -1421,9 +1421,11 @@ get_corr_plot <- function(
 
   corr_df <-
     as.data.frame(as.table(mat)) %>%
-    dplyr::mutate(Freq = ifelse(Var1 == Var2, NA_real_, Freq)) %>%
-    dplyr::mutate(Var1 = factor(Var1, levels = names(labels_vec))) %>%
-    dplyr::mutate(Var2 = factor(Var2, levels = rev(names(labels_vec))))
+    dplyr::mutate(
+      Freq = ifelse(Var1 == Var2, NA_real_, Freq),
+      Var1 = factor(Var1, levels = names(labels_vec)),
+      Var2 = factor(Var2, levels = rev(names(labels_vec)))
+    )
 
   plot_missing <-
     corr_df %>%

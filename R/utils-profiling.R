@@ -423,8 +423,10 @@ get_tbl_dbi_missing_tbl <- function(data) {
 
   frequency_list %>%
     dplyr::bind_rows() %>%
-    dplyr::mutate(value = ifelse(value == 0, NA_real_, value)) %>%
-    dplyr::mutate(col_name = factor(col_name, levels = colnames(data)))
+    dplyr::mutate(
+      value = ifelse(value == 0, NA_real_, value),
+      col_name = factor(col_name, levels = colnames(data))
+    )
 }
 
 # nocov start
@@ -484,7 +486,7 @@ get_tbl_df_missing_tbl <- function(data) {
             rowid < cuts_[18] ~ 18L,
             rowid < cuts_[19] ~ 19L,
             rowid < cuts_[20] ~ 20L,
-            TRUE ~ 20L
+            .default = 20L
           ))
         data <- dplyr::select(data, -rowid)
         data <- dplyr::group_by(data, `::cut_group::`)

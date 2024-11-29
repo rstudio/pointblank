@@ -1073,23 +1073,20 @@ pb_fmt_number <- function(
       (!inherits(x, "numeric") && !inherits(x, "integer"))) {
     return(x)
   }
-
-  ((dplyr::tibble(a = x) %>%
-      gt::gt() %>%
-      gt::fmt_number(
-        columns = "a",
-        decimals = decimals,
-        n_sigfig = n_sigfig,
-        drop_trailing_zeros = drop_trailing_zeros,
-        drop_trailing_dec_mark = drop_trailing_dec_mark,
-        use_seps = use_seps,
-        scale_by = scale_by,
-        suffixing = suffixing,
-        pattern = pattern,
-        sep_mark = sep_mark,
-        dec_mark = dec_mark,
-        locale = locale
-      ))$`_formats`[[1]][[1]][[1]])(x)
+  gt::vec_fmt_number(
+    x,
+    decimals = decimals,
+    n_sigfig = n_sigfig,
+    drop_trailing_zeros = drop_trailing_zeros,
+    drop_trailing_dec_mark = drop_trailing_dec_mark,
+    use_seps = use_seps,
+    scale_by = scale_by,
+    suffixing = suffixing,
+    pattern = pattern,
+    sep_mark = sep_mark,
+    dec_mark = dec_mark,
+    locale = locale
+  )
 }
 
 add_icon_img <- function(

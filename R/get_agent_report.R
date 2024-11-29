@@ -1668,7 +1668,7 @@ get_agent_report <- function(
     ) %>%
     gt::fmt_integer(
       columns = c("units", "n_pass", "n_fail", "f_pass", "f_fail"),
-      drop_trailing_zeros = TRUE, suffixing = TRUE
+      suffixing = TRUE
     ) %>%
     gt::fmt_number(
       columns = c("f_pass", "f_fail"),

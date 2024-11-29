@@ -339,7 +339,7 @@ get_table_column_histogram <- function(data_column, lang, locale) {
       ggplot2::geom_col(fill = "steelblue", width = 0.5) +
       ggplot2::geom_hline(yintercept = 0, color = "#B2B2B2") +
       ggplot2::labs(x = x_label, y = y_label) +
-      ggplot2::scale_y_continuous(labels = scales::comma_format()) +
+      ggplot2::scale_y_continuous(labels = scales::label_comma()) +
       ggplot2::theme_minimal()
   )
 }
@@ -606,7 +606,8 @@ get_missing_value_plot <- function(data, frequency_tbl, missing_by_column_tbl) {
       panel.grid = ggplot2::element_blank(),
       legend.direction = "horizontal",
       legend.title = ggplot2::element_blank(),
-      legend.position = c(0.5, 1.0),
+      legend.position = "inside",
+      legend.position.inside = c(0.5, 1.0),
       plot.margin = ggplot2::unit(c(1, 0.5, 0, 0), "cm"),
       legend.key.width = ggplot2::unit(2.0, "cm"),
       legend.key.height = ggplot2::unit(3.0, "mm")

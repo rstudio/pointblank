@@ -54,7 +54,7 @@ Suggests:
     data.table,
     duckdb,
     ggforce,
-    ggplot2,
+    ggplot2 (>= 3.5.0),
     jsonlite,
     log4r,
     lubridate,

@@ -1446,7 +1446,8 @@ get_corr_plot <- function(
       panel.grid = ggplot2::element_blank(),
       legend.direction = "horizontal",
       legend.title = ggplot2::element_blank(),
-      legend.position = c(0.5, 1.03),
+      legend.position = "inside",
+      legend.position.inside = c(0.5, 1.03),
       plot.margin = ggplot2::unit(c(1, 0.5, 0, 0), "cm"),
       legend.key.width = ggplot2::unit(2.0, "cm"),
       legend.key.height = ggplot2::unit(3.0, "mm")

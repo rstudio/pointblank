@@ -300,7 +300,7 @@ col_count_match <- function(
 
   agent <- x
 
-  brief <- resolve_briefs(
+  brief <- resolve_brief(
     brief = brief, agent = agent,
     preconditions = preconditions, values = count,
     assertion_type = "col_count_match"

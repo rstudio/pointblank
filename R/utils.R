@@ -238,10 +238,10 @@ is_secret_agent <- function(x) {
   is_ptblank_agent(x) && (x$label == "::QUIET::")
 }
 
-resolve_briefs <- function(brief, agent,
-                           columns = list(NULL), segments_list = list(NULL),
-                           preconditions = NULL, values = NULL,
-                           assertion_type) {
+resolve_brief <- function(brief, agent,
+                          columns = list(NULL), segments_list = list(NULL),
+                          preconditions = NULL, values = NULL,
+                          assertion_type) {
 
   n_columns <- length(columns)
   n_segments <- length(segments_list)

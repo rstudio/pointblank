@@ -367,7 +367,7 @@ col_vals_expr <- function(
 
   agent <- x
 
-  brief <- resolve_briefs(
+  brief <- resolve_brief(
     brief = brief, agent = agent,
     segments_list = segments_list,
     preconditions = preconditions,

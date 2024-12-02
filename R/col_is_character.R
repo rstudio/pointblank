@@ -269,7 +269,7 @@ col_is_character <- function(
 
   agent <- x
 
-  brief <- resolve_briefs(
+  brief <- resolve_brief(
     brief = brief, agent = agent,
     columns = columns,
     preconditions = preconditions, values = value,

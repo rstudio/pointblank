@@ -433,7 +433,7 @@ col_vals_between <- function(
   left <- as.list(left)
   right <- as.list(right)
 
-  brief <- resolve_briefs(
+  brief <- resolve_brief(
     brief = brief, agent = agent,
     columns = columns, segments_list = segments_list,
     preconditions = preconditions, values = c(left, right),

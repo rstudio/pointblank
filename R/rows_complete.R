@@ -333,7 +333,7 @@ rows_complete <- function(
     columns <- paste(columns, collapse = ", ")
   }
 
-  brief <- resolve_briefs(
+  brief <- resolve_brief(
     brief = brief, agent = agent,
     columns = columns, segments_list = segments_list,
     preconditions = preconditions,

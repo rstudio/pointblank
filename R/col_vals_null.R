@@ -342,7 +342,7 @@ col_vals_null <- function(
 
   agent <- x
 
-  brief <- resolve_briefs(
+  brief <- resolve_brief(
     brief = brief, agent = agent,
     columns = columns, segments_list = segments_list,
     preconditions = preconditions, values = values,

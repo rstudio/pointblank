@@ -222,7 +222,7 @@ scan_data <- function(
 
   if (any(c("interactions", "correlations") %in% sections)) {
     rlang::check_installed(
-      c("ggforce", "ggplot2"),
+      c("ggforce", "ggplot2 (>= 3.5.0)"),
       "to use the `interactions` and `correlations` sections."
     )
   }

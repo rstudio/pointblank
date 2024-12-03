@@ -51,7 +51,10 @@ get_table_total_missing_values <- function(data) {
   collected <-
     dplyr::collect(
       dplyr::summarise(
-        data, dplyr::across(dplyr::everything(), function(x) sum(ifelse(is.na(x), 1, 0), na.rm = TRUE))
+        data, dplyr::across(
+          dplyr::everything(),
+          function(x) sum(ifelse(is.na(x), 1, 0), na.rm = TRUE)
+        )
       )
     )
 

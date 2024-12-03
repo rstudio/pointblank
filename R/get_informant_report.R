@@ -359,7 +359,7 @@ get_informant_report <- function(
             gsub("(\\(|\\)|\\[|\\]|\\||\\.|\\^|\\?|\\+|\\$|\\*)", "\\\\\\1", .)
 
           row_idx <-
-            which(grepl(paste0("^<code.*?>", column_escaped, "<.*?"), tbl$item))
+            grep(paste0("^<code.*?>", column_escaped, "<.*?"), tbl$item)
 
           if (length(miniheader_vec) > 0) {
             tbl$item[[row_idx]] <-

@@ -276,88 +276,84 @@ check_vin_db <- function(table,
 
   table <-
     table %>%
-    dplyr::mutate(pb_vin_all_ = {{ column }}) %>%
-    dplyr::mutate(pb_vin_all_ = tolower(as.character((pb_vin_all_)))) %>%
-    dplyr::mutate(pb_vin_nch_ = ifelse(nchar(pb_vin_all_) == 17, TRUE, FALSE)) %>%
-    dplyr::mutate(pb_vin_001_ = ifelse(pb_vin_nch_, substr(pb_vin_all_, 1, 1), "8")) %>%
-    dplyr::mutate(pb_vin_002_ = ifelse(pb_vin_nch_, substr(pb_vin_all_, 2, 2), "8")) %>%
-    dplyr::mutate(pb_vin_003_ = ifelse(pb_vin_nch_, substr(pb_vin_all_, 3, 3), "8")) %>%
-    dplyr::mutate(pb_vin_004_ = ifelse(pb_vin_nch_, substr(pb_vin_all_, 4, 4), "8")) %>%
-    dplyr::mutate(pb_vin_005_ = ifelse(pb_vin_nch_, substr(pb_vin_all_, 5, 5), "8")) %>%
-    dplyr::mutate(pb_vin_006_ = ifelse(pb_vin_nch_, substr(pb_vin_all_, 6, 6), "8")) %>%
-    dplyr::mutate(pb_vin_007_ = ifelse(pb_vin_nch_, substr(pb_vin_all_, 7, 7), "8")) %>%
-    dplyr::mutate(pb_vin_008_ = ifelse(pb_vin_nch_, substr(pb_vin_all_, 8, 8), "8")) %>%
-    dplyr::mutate(pb_vin_009_ = ifelse(pb_vin_nch_, substr(pb_vin_all_, 9, 9), "8")) %>%
-    dplyr::mutate(pb_vin_010_ = ifelse(pb_vin_nch_, substr(pb_vin_all_, 10, 10), "8")) %>%
-    dplyr::mutate(pb_vin_011_ = ifelse(pb_vin_nch_, substr(pb_vin_all_, 11, 11), "8")) %>%
-    dplyr::mutate(pb_vin_012_ = ifelse(pb_vin_nch_, substr(pb_vin_all_, 12, 12), "8")) %>%
-    dplyr::mutate(pb_vin_013_ = ifelse(pb_vin_nch_, substr(pb_vin_all_, 13, 13), "8")) %>%
-    dplyr::mutate(pb_vin_014_ = ifelse(pb_vin_nch_, substr(pb_vin_all_, 14, 14), "8")) %>%
-    dplyr::mutate(pb_vin_015_ = ifelse(pb_vin_nch_, substr(pb_vin_all_, 15, 15), "8")) %>%
-    dplyr::mutate(pb_vin_016_ = ifelse(pb_vin_nch_, substr(pb_vin_all_, 16, 16), "8")) %>%
-    dplyr::mutate(pb_vin_017_ = ifelse(pb_vin_nch_, substr(pb_vin_all_, 17, 17), "8")) %>%
-    dplyr::mutate_at(
-      dplyr::vars(dplyr::matches("pb_vin_[0-9]{3}_")),
-      .funs = list(~ case_when(
-        . %in% c("a", "j") ~ "1",
-        . %in% c("b", "k", "s") ~ "2",
-        . %in% c("c", "l", "t") ~ "3",
-        . %in% c("d", "m", "u") ~ "4",
-        . %in% c("e", "n", "v") ~ "5",
-        . %in% c("f", "w") ~ "6",
-        . %in% c("g", "p", "x") ~ "7",
-        . %in% c("h", "y") ~ "8",
-        . %in% c("r", "z") ~ "9",
-        !(. %in% c("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")) ~ "100000",
-        TRUE ~ .
-      )
-      )) %>%
-    dplyr::mutate(pb_vin_chk_ = pb_vin_009_) %>%
-    dplyr::mutate_at(
-      dplyr::vars(dplyr::matches("pb_vin_[0-9]{3}_")),
-      .funs = as.integer
-    ) %>%
-    dplyr::mutate(pb_vin_001_w = pb_vin_001_ * 8L) %>%
-    dplyr::mutate(pb_vin_002_w = pb_vin_002_ * 7L) %>%
-    dplyr::mutate(pb_vin_003_w = pb_vin_003_ * 6L) %>%
-    dplyr::mutate(pb_vin_004_w = pb_vin_004_ * 5L) %>%
-    dplyr::mutate(pb_vin_005_w = pb_vin_005_ * 4L) %>%
-    dplyr::mutate(pb_vin_006_w = pb_vin_006_ * 3L) %>%
-    dplyr::mutate(pb_vin_007_w = pb_vin_007_ * 2L) %>%
-    dplyr::mutate(pb_vin_008_w = pb_vin_008_ * 10L) %>%
-    dplyr::mutate(pb_vin_009_w = pb_vin_009_ * 0L) %>%
-    dplyr::mutate(pb_vin_010_w = pb_vin_010_ * 9L) %>%
-    dplyr::mutate(pb_vin_011_w = pb_vin_011_ * 8L) %>%
-    dplyr::mutate(pb_vin_012_w = pb_vin_012_ * 7L) %>%
-    dplyr::mutate(pb_vin_013_w = pb_vin_013_ * 6L) %>%
-    dplyr::mutate(pb_vin_014_w = pb_vin_014_ * 5L) %>%
-    dplyr::mutate(pb_vin_015_w = pb_vin_015_ * 4L) %>%
-    dplyr::mutate(pb_vin_016_w = pb_vin_016_ * 3L) %>%
-    dplyr::mutate(pb_vin_017_w = pb_vin_017_ * 2L) %>%
     dplyr::mutate(
+      pb_vin_all_ = {{ column }},
+      pb_vin_all_ = tolower(as.character((pb_vin_all_))),
+      pb_vin_nch_ = nchar(pb_vin_all_) == 17,
+      pb_vin_001_ = ifelse(pb_vin_nch_, substr(pb_vin_all_, 1, 1), "8"),
+      pb_vin_002_ = ifelse(pb_vin_nch_, substr(pb_vin_all_, 2, 2), "8"),
+      pb_vin_003_ = ifelse(pb_vin_nch_, substr(pb_vin_all_, 3, 3), "8"),
+      pb_vin_004_ = ifelse(pb_vin_nch_, substr(pb_vin_all_, 4, 4), "8"),
+      pb_vin_005_ = ifelse(pb_vin_nch_, substr(pb_vin_all_, 5, 5), "8"),
+      pb_vin_006_ = ifelse(pb_vin_nch_, substr(pb_vin_all_, 6, 6), "8"),
+      pb_vin_007_ = ifelse(pb_vin_nch_, substr(pb_vin_all_, 7, 7), "8"),
+      pb_vin_008_ = ifelse(pb_vin_nch_, substr(pb_vin_all_, 8, 8), "8"),
+      pb_vin_009_ = ifelse(pb_vin_nch_, substr(pb_vin_all_, 9, 9), "8"),
+      pb_vin_010_ = ifelse(pb_vin_nch_, substr(pb_vin_all_, 10, 10), "8"),
+      pb_vin_011_ = ifelse(pb_vin_nch_, substr(pb_vin_all_, 11, 11), "8"),
+      pb_vin_012_ = ifelse(pb_vin_nch_, substr(pb_vin_all_, 12, 12), "8"),
+      pb_vin_013_ = ifelse(pb_vin_nch_, substr(pb_vin_all_, 13, 13), "8"),
+      pb_vin_014_ = ifelse(pb_vin_nch_, substr(pb_vin_all_, 14, 14), "8"),
+      pb_vin_015_ = ifelse(pb_vin_nch_, substr(pb_vin_all_, 15, 15), "8"),
+      pb_vin_016_ = ifelse(pb_vin_nch_, substr(pb_vin_all_, 16, 16), "8"),
+      pb_vin_017_ = ifelse(pb_vin_nch_, substr(pb_vin_all_, 17, 17), "8"),
+      dplyr::across(
+        .cols = dplyr::matches("pb_vin_[0-9]{3}_"),
+        function(x) {
+          dplyr::case_match(x,
+            c("a", "j") ~ "1",
+            c("b", "k", "s") ~ "2",
+            c("c", "l", "t") ~ "3",
+            c("d", "m", "u") ~ "4",
+            c("e", "n", "v") ~ "5",
+            c("f", "w") ~ "6",
+            c("g", "p", "x") ~ "7",
+            c("h", "y") ~ "8",
+            c("r", "z") ~ "9",
+            c("0", "1", "2", "3", "4", "5", "6", "7", "8", "9") ~ "100000",
+            .default = x
+          )
+      }),
+      pb_vin_chk_ = pb_vin_009_,
+      dplyr::across(dplyr::matches("pb_vin_[0-9]{3}_"), as.integer),
+      pb_vin_001_w = pb_vin_001_ * 8L,
+      pb_vin_002_w = pb_vin_002_ * 7L,
+      pb_vin_003_w = pb_vin_003_ * 6L,
+      pb_vin_004_w = pb_vin_004_ * 5L,
+      pb_vin_005_w = pb_vin_005_ * 4L,
+      pb_vin_006_w = pb_vin_006_ * 3L,
+      pb_vin_007_w = pb_vin_007_ * 2L,
+      pb_vin_008_w = pb_vin_008_ * 10L,
+      pb_vin_009_w = pb_vin_009_ * 0L,
+      pb_vin_010_w = pb_vin_010_ * 9L,
+      pb_vin_011_w = pb_vin_011_ * 8L,
+      pb_vin_012_w = pb_vin_012_ * 7L,
+      pb_vin_013_w = pb_vin_013_ * 6L,
+      pb_vin_014_w = pb_vin_014_ * 5L,
+      pb_vin_015_w = pb_vin_015_ * 4L,
+      pb_vin_016_w = pb_vin_016_ * 3L,
+      pb_vin_017_w = pb_vin_017_ * 2L,
       pb_vin_sum_uw =
         pb_vin_001_ + pb_vin_002_ + pb_vin_003_ + pb_vin_004_ +
         pb_vin_005_ + pb_vin_006_ + pb_vin_007_ + pb_vin_008_ +
         pb_vin_009_ + pb_vin_010_ + pb_vin_011_ + pb_vin_012_ +
         pb_vin_013_ + pb_vin_014_ + pb_vin_015_ + pb_vin_016_ +
-        pb_vin_017_
-    ) %>%
-    dplyr::mutate(
+        pb_vin_017_,
       pb_vin_sum_ =
         pb_vin_001_w + pb_vin_002_w + pb_vin_003_w + pb_vin_004_w +
         pb_vin_005_w + pb_vin_006_w + pb_vin_007_w + pb_vin_008_w +
         pb_vin_009_w + pb_vin_010_w + pb_vin_011_w + pb_vin_012_w +
         pb_vin_013_w + pb_vin_014_w + pb_vin_015_w + pb_vin_016_w +
-        pb_vin_017_w
-    ) %>%
-    dplyr::mutate(pb_vin_mod_ = as.character(pb_vin_sum_ %% 11L)) %>%
-    dplyr::mutate(pb_vin_mod_ = ifelse(pb_vin_mod_ == "10", "x", pb_vin_mod_)) %>%
-    dplyr::mutate(pb_is_good_ = pb_vin_mod_ == pb_vin_chk_) %>%
-    dplyr::mutate(pb_is_good_ = ifelse(!pb_vin_nch_, FALSE, pb_vin_nch_)) %>%
-    dplyr::mutate(pb_is_good_ = ifelse(pb_vin_sum_uw >= 100000, FALSE, pb_is_good_))
+        pb_vin_017_w,
+      pb_vin_mod_ = as.character(pb_vin_sum_ %% 11L),
+      pb_vin_mod_ = ifelse(pb_vin_mod_ == "10", "x", pb_vin_mod_),
+      pb_is_good_ = pb_vin_mod_ == pb_vin_chk_,
+      pb_is_good_ = ifelse(!pb_vin_nch_, FALSE, pb_vin_nch_),
+      pb_is_good_ = ifelse(pb_vin_sum_uw >= 100000, FALSE, pb_is_good_)
+    )
 
   table <-
-    table %>% dplyr::select(c(tbl_colnames, "pb_is_good_"))
+    table %>% dplyr::select(dplyr::all_of(c(tbl_colnames, "pb_is_good_")))
 
   table
 }

@@ -283,10 +283,10 @@ incorporate <- function(informant) {
       # of the `lang` value (from `NULL` to the informant `lang`)
 
       select_call_idx <-
-        which(grepl("select", snippet_f_rhs_str))
+        grep("select", snippet_f_rhs_str)
 
       pb_str_catalog_call_idx <-
-        which(grepl("pb_str_catalog", snippet_f_rhs_str))
+        grep("pb_str_catalog", snippet_f_rhs_str)
 
       snippet_f_rhs_str[pb_str_catalog_call_idx] <-
         gsub(

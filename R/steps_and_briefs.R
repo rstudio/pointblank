@@ -159,6 +159,7 @@ hash_validation_step <- function(assertion_type,
     seg_val = as.character(seg_val %||% NA_character_)
   )
 
+  # Maybe consider replacing with rlang::hash?
   step_hash <- digest::sha1(step_chr)
 
   paste(step_hash, hash_version, sep = "-")

@@ -269,7 +269,7 @@ remove_steps <- function(
 
   # Renumber steps
   agent$validation_set$i <-
-    as.integer(seq(from = 1, to = nrow(agent$validation_set), by = 1))
+    seq.int(from = 1L, to = nrow(agent$validation_set), by = 1L)
 
   # Remove any data extracts
   agent$extracts <- NULL

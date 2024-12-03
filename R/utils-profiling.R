@@ -339,7 +339,7 @@ get_table_column_histogram <- function(data_column, lang, locale) {
       ggplot2::geom_col(fill = "steelblue", width = 0.5) +
       ggplot2::geom_hline(yintercept = 0, color = "#B2B2B2") +
       ggplot2::labs(x = x_label, y = y_label) +
-      ggplot2::scale_y_continuous(labels = scales::comma_format()) +
+      ggplot2::scale_y_continuous(labels = scales::label_comma()) +
       ggplot2::theme_minimal()
   )
 }
@@ -423,8 +423,10 @@ get_tbl_dbi_missing_tbl <- function(data) {
 
   frequency_list %>%
     dplyr::bind_rows() %>%
-    dplyr::mutate(value = ifelse(value == 0, NA_real_, value)) %>%
-    dplyr::mutate(col_name = factor(col_name, levels = colnames(data)))
+    dplyr::mutate(
+      value = ifelse(value == 0, NA_real_, value),
+      col_name = factor(col_name, levels = colnames(data))
+    )
 }
 
 # nocov start
@@ -484,7 +486,7 @@ get_tbl_df_missing_tbl <- function(data) {
             rowid < cuts_[18] ~ 18L,
             rowid < cuts_[19] ~ 19L,
             rowid < cuts_[20] ~ 20L,
-            TRUE ~ 20L
+            .default = 20L
           ))
         data <- dplyr::select(data, -rowid)
         data <- dplyr::group_by(data, `::cut_group::`)
@@ -604,7 +606,8 @@ get_missing_value_plot <- function(data, frequency_tbl, missing_by_column_tbl) {
       panel.grid = ggplot2::element_blank(),
       legend.direction = "horizontal",
       legend.title = ggplot2::element_blank(),
-      legend.position = c(0.5, 1.0),
+      legend.position = "inside",
+      legend.position.inside = c(0.5, 1.0),
       plot.margin = ggplot2::unit(c(1, 0.5, 0, 0), "cm"),
       legend.key.width = ggplot2::unit(2.0, "cm"),
       legend.key.height = ggplot2::unit(3.0, "mm")

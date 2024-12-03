@@ -191,7 +191,7 @@ test_that("Incorporating an informant from YAML yields the correct results", {
   # Modify the `read_fn` in the YAML file to read in a slightly altered table
   yaml_file_lines <- readLines("informant-test_table.yml")
 
-  read_fn_line <- which(grepl("tbl:", yaml_file_lines))
+  read_fn_line <- grep("tbl:", yaml_file_lines)
 
   yaml_file_lines[read_fn_line] <-
     yaml_file_lines[read_fn_line] %>%

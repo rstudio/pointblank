@@ -339,8 +339,8 @@ interrogate <- function(
 
       if (any_1_unit && any_n_unit) {
 
-        col_is_idx <- which(grepl("col_is|col_exists", validation_fns))
-        col_vals_idx <- which(grepl("col_vals", validation_fns))
+        col_is_idx <- grep("col_is|col_exists", validation_fns)
+        col_vals_idx <- grep("col_vals", validation_fns)
 
         validation_formulas <-
           c(
@@ -427,10 +427,7 @@ interrogate <- function(
         tbl_checked %>%
           dplyr::mutate(pb_is_good_ = !!rlang::parse_expr(columns_str_add)) %>%
           dplyr::select(-dplyr::all_of(columns_str_vec)) %>%
-          dplyr::mutate(pb_is_good_ = dplyr::case_when(
-            pb_is_good_ == validation_n ~ TRUE,
-            TRUE ~ FALSE
-          ))
+          dplyr::mutate(pb_is_good_ = pb_is_good_ == validation_n)
       }
 
       # Perform rowwise validations for the column
@@ -1158,7 +1155,7 @@ tbl_val_comparison <- function(
     table %>%
       dplyr::mutate(pb_is_good_ = dplyr::case_when(
         !!expression ~ 1,
-        TRUE ~ 0
+        .default = 0
       ))
 
   } else {
@@ -1167,7 +1164,7 @@ tbl_val_comparison <- function(
       dplyr::mutate(pb_is_good_ = !!expression) %>%
       dplyr::mutate(pb_is_good_ = dplyr::case_when(
         is.na(pb_is_good_) ~ na_pass,
-        TRUE ~ pb_is_good_
+        .default = pb_is_good_
       ))
   }
 }
@@ -1363,7 +1360,7 @@ tbl_vals_between <- function(
   table %>%
     dplyr::mutate(pb_is_good_ = dplyr::case_when(
       is.na({{ column }}) ~ na_pass_bool,
-      TRUE ~ pb_is_good_
+      .default = pb_is_good_
     ))
 }
 
@@ -2031,7 +2028,7 @@ interrogate_within_spec <- function(
           check_vin_db(table, column = {{ column }}) %>%
           dplyr::mutate(pb_is_good_ = dplyr::case_when(
             is.na(pb_is_good_) ~ na_pass,
-            TRUE ~ pb_is_good_
+            .default = pb_is_good_
           ))
       }
 

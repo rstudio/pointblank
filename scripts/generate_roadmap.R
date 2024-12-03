@@ -7,7 +7,7 @@ myrepo <- create_repo_ref("rstudio", "pointblank")
 issues <- get_issues(myrepo, state = "open")
 issues_df <- dplyr::as_tibble(parse_issues(issues))
 
-tbl <- 
+tbl <-
   issues_df %>%
   dplyr::filter(!is.na(milestone_title)) %>%
   dplyr::select(number, title, labels_name, milestone_title) %>%
@@ -32,14 +32,14 @@ tbl <-
   dplyr::select(
     number, title, milestone_title, major, minor, patch, type, difficulty, effort, priority
   ) %>%
-  dplyr::mutate(major = gsub("v", "", major)) %>% 
-  dplyr::mutate_at(.vars = vars(major, minor, patch), .funs = as.integer) %>%
+  dplyr::mutate(major = gsub("v", "", major)) %>%
+  dplyr::mutate(dplyr::across(c(major, minor, patch), .fns = as.integer)) %>%
   dplyr::mutate(difficulty = gsub(".*?([1-3]).*", "\\1", difficulty)) %>%
   dplyr::mutate(effort = gsub(".*?([1-3]).*", "\\1", effort)) %>%
   dplyr::mutate(priority = gsub(".*?([1-3]).*", "\\1", priority)) %>%
   dplyr::mutate(priority = ifelse(grepl("[^1-3]", priority), 4, priority)) %>%
   dplyr::mutate(type = gsub(".*?Type: (.*?)\\\"\\)", "\\1", type)) %>%
-  dplyr::mutate_at(.vars = vars(priority, difficulty, effort), .funs = as.numeric) %>%
+  dplyr::mutate(dplyr::across(c(priority, difficulty, effort), .fns = as.numeric)) %>%
   dplyr::arrange(
     major,
     minor,
@@ -51,7 +51,7 @@ tbl <-
   dplyr::mutate(number = paste0("#", number)) %>%
   dplyr::select(-c(major, minor, patch))
 
-gt_tbl <- 
+gt_tbl <-
   tbl %>%
   gt(
     rowname_col = "number",
@@ -109,13 +109,13 @@ gt_tbl <-
     locations = cells_body(columns = priority),
     fn = function(x) {
       ifelse(x == "4", "♨︎", x)
-    } 
+    }
   ) %>%
   text_transform(
     locations = cells_body(columns = priority),
     fn = function(x) {
       ifelse(x == "4", "♨︎", x)
-    } 
+    }
   ) %>%
   tab_style(
     style = "height: 50px",
@@ -175,8 +175,8 @@ svg_object <-
   gsub("style>", ">", ., fixed = TRUE) %>%
   gsub("<p>", "<p style='margin:0'>", ., fixed = TRUE) %>%
   gsub(
-    "; width: 0px\">", 
-"; width: 0px; 
+    "; width: 0px\">",
+"; width: 0px;
 @-webkit-keyframes AnimationName {0% {background-position:50% 0%} 50% {background-position:51% 100%} 100% {background-position:50% 0%}}
 @-moz-keyframes AnimationName {0% {background-position:50% 0%} 50% {background-position:51% 100%} 100% {background-position:50% 0%}}
 @-o-keyframes AnimationName {0% {background-position:50% 0%} 50% {background-position:51% 100%} 100% {background-position:50% 0%}}

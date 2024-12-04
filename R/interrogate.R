@@ -2414,9 +2414,7 @@ interrogate_distinct <- function(
     unduplicated <-
       table %>%
       dplyr::select({{ column_names }}) %>%
-      dplyr::group_by(!!!col_syms) %>%
-      dplyr::summarize(`pb_is_good_` = dplyr::n()) %>%
-      dplyr::ungroup() %>%
+      dplyr::count(!!!col_syms, name = "pb_is_good_") %>%
       dplyr::mutate(`pb_is_good_` = ifelse(`pb_is_good_` == 1, TRUE, FALSE)) %>%
       dplyr::filter(`pb_is_good_` == TRUE)
 
@@ -3001,7 +2999,7 @@ add_reporting_data <- function(
   # Get total count of rows
   row_count <-
     tbl_checked %>%
-    dplyr::summarize(n = dplyr::n()) %>%
+    dplyr::count() %>%
     dplyr::pull(n) %>%
     as.numeric()
 
@@ -3016,7 +3014,7 @@ add_reporting_data <- function(
     n_passed <-
       tbl_checked %>%
       dplyr::filter(pb_is_good_ == 1) %>%
-      dplyr::summarize(n = dplyr::n()) %>%
+      dplyr::count() %>%
       dplyr::pull(n) %>%
       as.numeric()
 
@@ -3027,7 +3025,7 @@ add_reporting_data <- function(
     n_passed <-
       tbl_checked %>%
       dplyr::filter(pb_is_good_ == TRUE) %>%
-      dplyr::summarize(n = dplyr::n()) %>%
+      dplyr::count() %>%
       dplyr::pull(n) %>%
       as.numeric()
   }
@@ -3043,7 +3041,7 @@ add_reporting_data <- function(
     n_failed <-
       tbl_checked %>%
       dplyr::filter(pb_is_good_ == 0) %>%
-      dplyr::summarize(n = dplyr::n()) %>%
+      dplyr::count() %>%
       dplyr::pull(n) %>%
       as.numeric()
 
@@ -3054,7 +3052,7 @@ add_reporting_data <- function(
     n_failed <-
       tbl_checked %>%
       dplyr::filter(pb_is_good_ == FALSE) %>%
-      dplyr::summarize(n = dplyr::n()) %>%
+      dplyr::count() %>%
       dplyr::pull(n) %>%
       as.numeric()
   }

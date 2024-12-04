@@ -146,8 +146,8 @@ test_that("The `yaml_exec()` function effectively processes .yml files", {
   )
 
   # Expect that neither the agent nor the informant were saved
-  expect_equal(length(fs::path_abs(fs::dir_ls(path = work_path, regexp = "agent.*?rds$"))), 0)
-  expect_equal(length(fs::path_abs(fs::dir_ls(path = work_path, regexp = "informant.*?rds$"))), 0)
+  expect_length(fs::path_abs(fs::dir_ls(path = work_path, regexp = "agent.*?rds$")), 0)
+  expect_length(fs::path_abs(fs::dir_ls(path = work_path, regexp = "informant.*?rds$")), 0)
 
   # Read just one of the YAML files (the agent) from the specified path,
   # write output to a path relative to the working directory; we will
@@ -171,7 +171,7 @@ test_that("The `yaml_exec()` function effectively processes .yml files", {
   # not all units passed, let's check for that as well) and no
   # table to be present (would be in `agent_1$tbl`)
   expect_false(all_passed(agent_1))
-  expect_equal(length(agent_1$extracts), 0)
+  expect_length(agent_1$extracts, 0)
   expect_null(agent_1$tbl)
 
   # Delete the written agent file

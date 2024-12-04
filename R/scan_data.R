@@ -338,16 +338,14 @@ probe_overview_stats <- function(
 
   r_col_types_tbl <-
     dplyr::tibble(r_col_types = r_col_types) %>%
-    dplyr::group_by(r_col_types) %>%
-    dplyr::summarize(count = dplyr::n()) %>%
-    dplyr::arrange(dplyr::desc(count)) %>%
+    dplyr::count(r_col_types, name = "count", sort = TRUE) %>%
     utils::head(6E8)
 
   data_overview_gt <-
-    gt::gt(data_overview_tbl) %>%
+    gt::gt(data_overview_tbl, locale = locale) %>%
     gt::fmt_markdown(columns = "label") %>%
-    gt::fmt_number(columns = "value", decimals = 0, locale = locale) %>%
-    gt::fmt_percent(columns = "pct", decimals = 2, locale = locale) %>%
+    gt::fmt_integer(columns = "value") %>%
+    gt::fmt_percent(columns = "pct", decimals = 2) %>%
     gt::cols_merge(columns = c("value", "pct"), pattern = "{1} ({2})") %>%
     gt::cols_align(align = "right", columns = "value") %>%
     gt::text_transform(
@@ -684,8 +682,7 @@ get_descriptive_stats_gt <- function(
 
     descriptive_stats <-
       dplyr::tibble(mean = mean, variance = variance, sd = sd, cv = cv)
-    descriptive_stats <-
-      dplyr::summarize_all(descriptive_stats, ~ round(., 2))
+    descriptive_stats <- round(descriptive_stats, 2)
     descriptive_stats <- as.list(descriptive_stats)
 
   } else {
@@ -703,8 +700,7 @@ get_descriptive_stats_gt <- function(
           cv = ~ cv(.)
         )
       )
-    descriptive_stats <-
-      dplyr::summarize_all(descriptive_stats, ~ round(., 2))
+    descriptive_stats <- round(descriptive_stats, 2)
     descriptive_stats <- as.list(descriptive_stats)
   }
 
@@ -746,11 +742,8 @@ get_common_values_gt <- function(
 
   n_rows <- get_table_total_rows(data = data_column)
 
-  common_values_tbl <- dplyr::group_by_at(data_column, 1)
-  common_values_tbl <- dplyr::count(common_values_tbl)
-  common_values_tbl <- dplyr::arrange(common_values_tbl, dplyr::desc(n))
+  common_values_tbl <- dplyr::count(data_column, dplyr::pick(1), sort = TRUE)
   common_values_tbl <- utils::head(common_values_tbl, 6E8)
-  common_values_tbl <- dplyr::ungroup(common_values_tbl)
 
   n_rows_common_values_tbl <-
     dplyr::pull(dplyr::count(common_values_tbl, name = "n", wt = n), n)
@@ -885,9 +878,7 @@ get_top_bottom_slice <- function(
 
   data_column_freq <-
     data_column %>%
-    dplyr::group_by_at(1) %>%
-    dplyr::count() %>%
-    dplyr::ungroup()
+    dplyr::count(dplyr::pick(1))
 
   name_1 <- rlang::sym(get_lsv("table_scan/tbl_lab_value")[[lang]])
   name_2 <- rlang::sym(get_lsv("table_scan/tbl_lab_count")[[lang]])

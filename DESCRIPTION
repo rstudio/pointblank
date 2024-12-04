@@ -16,7 +16,8 @@ Authors@R: c(
     person("Mauricio", "Vargas", , "mavargas11@uc.cl", c("aut"),
            comment = c(ORCID = "0000-0003-1017-7574")),
     person("June", "Choe", , "jchoe001@gmail.com", c("aut"),
-           comment = c(ORCID = "0000-0002-0701-921X"))
+           comment = c(ORCID = "0000-0002-0701-921X")),
+    person("Olivier", "Roy", role = c("ctb"))
     )
 License: MIT + file LICENSE
 URL: https://rstudio.github.io/pointblank/, https://github.com/rstudio/pointblank

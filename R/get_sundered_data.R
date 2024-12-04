@@ -279,7 +279,7 @@ get_sundered_data <- function(
   # Get the row count of the input table
   row_count_input_tbl <-
     input_tbl %>%
-    dplyr::summarize(n = dplyr::n()) %>%
+    dplyr::count() %>%
     dplyr::pull(n) %>%
     as.numeric()
 
@@ -289,15 +289,15 @@ get_sundered_data <- function(
   # - are `active`
   validation_set_prefiltered <-
     agent$validation_set %>%
-    dplyr::filter(eval_error == FALSE) %>%
     dplyr::filter(
+      !eval_error,
       assertion_type %in%
         base::setdiff(
           row_based_validation_fns_vec(),
           c("rows_distinct", "col_vals_make_set", "col_vals_make_subset")
-        )
-    ) %>%
-    dplyr::filter(active == TRUE)
+        ),
+      active == TRUE
+    )
 
   # Get a character vector of preconditions
   preconditions_vec <-

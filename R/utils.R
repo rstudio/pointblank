@@ -238,7 +238,43 @@ is_secret_agent <- function(x) {
   is_ptblank_agent(x) && (x$label == "::QUIET::")
 }
 
-resolve_label <- function(label, columns = "", segments = "") {
+resolve_brief <- function(brief, agent,
+                          columns = list(NULL), segments_list = list(NULL),
+                          preconditions = NULL, values = NULL,
+                          assertion_type) {
+
+  n_columns <- length(columns)
+  n_segments <- length(segments_list)
+  n_combinations <- n_columns * n_segments
+
+  # If missing, apply auto-brief
+  if (is.null(brief)) {
+    brief <- generate_autobriefs(
+      agent = agent, columns = columns,
+      preconditions = preconditions, values = values,
+      assertion_type = assertion_type
+    )
+    # auto-brief is generated once per column - need to recycle by segment
+    brief <- rep(brief, each = n_segments)
+  }
+
+  # Brief must be a single string or matched in length
+  if (!length(brief) %in% c(1L, n_combinations)) {
+    cli::cli_abort(paste0(
+      "`brief` must be length 1",
+      if (n_combinations != 1L) " or {n_combinations}",
+      ", not {length(brief)}."
+    ))
+  }
+
+  # Recycle the string
+  brief <- rep_len(brief, n_combinations)
+  # Return packed vector/matrix for iteration over steps
+  pack_by_col_seg(brief, n_columns, n_segments,  c(columns, segments))
+
+}
+
+resolve_label <- function(label, columns = list(NULL), segments = list(NULL)) {
   n_columns <- length(columns)
   n_segments <- length(segments)
   n_combinations <- n_columns * n_segments
@@ -246,23 +282,29 @@ resolve_label <- function(label, columns = "", segments = "") {
   if (is.null(label)) {
     label <- NA_character_
   }
-  # If length-1, match length of col-x-seg combination
-  if (length(label) == 1) {
-    label <- rep_len(label, n_combinations)
+  # Label must be a single string or matched in length
+  if (!length(label) %in% c(1L, n_combinations)) {
+    cli::cli_abort(paste0(
+      "`label` must be length 1",
+      if (n_combinations != 1L) " or {n_combinations}",
+      ", not {length(label)}."
+    ))
   }
-  # Check for length match
-  if (length(label) != n_combinations) {
-    rlang::abort(paste0("`label` must be length 1 or ", n_combinations,
-                        ", not ", length(label)))
-  }
-  # Create a columns * segments matrix of the (recycled) label vector
-  # - Fill by row to preserve order (for loops iterate the j before the i)
-  out <- matrix(label, nrow = n_columns, ncol = n_segments, byrow = TRUE)
+  # Recycle the string
+  label <- rep_len(label, n_combinations)
+  # Return packed vector/matrix for iteration over steps
+  pack_by_col_seg(label, n_columns, n_segments, c(columns, segments))
+}
+
+# Create a columns * segments matrix/vector for an input (ex: `brief`, `label`)
+# - Subsettable via `out[col]`, `out[seg]`, or `out[col,seg]`
+pack_by_col_seg <- function(x, n_columns, n_segments, packed_dim) {
+  # Fill by row to preserve order (for loops iterate the j before the i)
+  out <- matrix(x, nrow = n_columns, ncol = n_segments, byrow = TRUE)
   # If missing columns and/or segments, collapse to vector/scalar
-  if (missing(columns) || missing(segments)) {
+  if (any(lengths(packed_dim) == 0)) {
     out <- as.vector(out)
   }
-  # A matrix/vector subsettable via `out[col]`, `out[seg]`, or `out[col,seg]`
   out
 }
 

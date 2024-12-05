@@ -432,22 +432,16 @@ col_vals_not_between <- function(
   agent <- x
 
   # Avoid rlang (>= 0.3.0) soft deprecation warning
-  # Quosure lists can't be concatenated with objects other than quosures
-
+  # Quosure lists can't be concatenated with objects other than quosures.
   left <- as.list(left)
   right <- as.list(right)
 
-  if (is.null(brief)) {
-
-    brief <-
-      generate_autobriefs(
-        agent = agent,
-        columns = columns,
-        preconditions = preconditions,
-        values = c(left, right),
-        assertion_type = "col_vals_not_between"
-      )
-  }
+  brief <- resolve_brief(
+    brief = brief, agent = agent,
+    columns = columns, segments_list = segments_list,
+    preconditions = preconditions, values = c(left, right),
+    assertion_type = "col_vals_not_between"
+  )
 
   # Normalize any provided `step_id` value(s)
   step_id <- normalize_step_id(step_id, columns, agent)

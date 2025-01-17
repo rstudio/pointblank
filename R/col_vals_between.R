@@ -475,7 +475,7 @@ col_vals_between <- function(
           actions = covert_actions(actions, agent),
           step_id = step_id[i],
           label = label[[i, j]],
-          brief = brief[i],
+          brief = brief[[i, j]],
           active = active
         )
     }

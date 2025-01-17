@@ -79,39 +79,50 @@ test_that("Briefs batch tests", {
           f(columns = c("a", "b"), segments = vars(f), ..., brief = segs) # 3-steps
       }
     )
+    if (rlang::is_interactive()) print(interrogate(x, progress = FALSE))
     expect_identical(out, x$validation_set$brief)
   }
 
-  # TODO: The rest of this + fix iteration over `brief = brief` in validation functions
+  table(validation_fn_args)
+
+  # columns
+  test_multi_briefs("col_is_character")
+  test_multi_briefs("col_is_numeric")
+  test_multi_briefs("col_is_integer")
+  test_multi_briefs("col_is_logical")
+  test_multi_briefs("col_is_date")
+  test_multi_briefs("col_is_posix")
+  test_multi_briefs("col_is_factor")
+  test_multi_briefs("col_exists")
+
+  # columns + segments
   test_multi_briefs("col_vals_lt", value = 5)
-  # agent %>% col_vals_lt({{ select_expr }}, value = 5) %>% check_behaviors(expr_name)
-  # agent %>% col_vals_lte({{ select_expr }}, value = 5) %>% check_behaviors(expr_name)
-  # agent %>% col_vals_equal({{ select_expr }}, value = 5) %>% check_behaviors(expr_name)
-  # agent %>% col_vals_not_equal({{ select_expr }}, value = 5) %>% check_behaviors(expr_name)
-  # agent %>% col_vals_gte({{ select_expr }}, value = 5) %>% check_behaviors(expr_name)
-  # agent %>% col_vals_gt({{ select_expr }}, value = 5) %>% check_behaviors(expr_name)
-  # agent %>% col_vals_between({{ select_expr }}, 2, 5) %>% check_behaviors(expr_name)
-  # agent %>% col_vals_not_between({{ select_expr }}, 2, 5) %>% check_behaviors(expr_name)
-  # agent %>% col_vals_in_set({{ select_expr }}, c(2, 5)) %>% check_behaviors(expr_name)
-  # agent %>% col_vals_not_in_set({{ select_expr }}, c(2, 5)) %>% check_behaviors(expr_name)
-  # agent %>% col_vals_make_set({{ select_expr }}, c(2, 5)) %>% check_behaviors(expr_name)
-  # agent %>% col_vals_make_subset({{ select_expr }}, c(2, 5)) %>% check_behaviors(expr_name)
-  # agent %>% col_vals_null({{ select_expr }}) %>% check_behaviors(expr_name)
-  # agent %>% col_vals_not_null({{ select_expr }}) %>% check_behaviors(expr_name)
-  # agent %>% col_vals_increasing({{ select_expr }}) %>% check_behaviors(expr_name)
-  # agent %>% col_vals_decreasing({{ select_expr }}) %>% check_behaviors(expr_name)
-  # agent %>% col_vals_regex({{ select_expr }}, regex = "abc") %>% check_behaviors(expr_name)
-  # agent %>% col_vals_within_spec({{ select_expr }}, spec = "email") %>% check_behaviors(expr_name)
-  # agent %>% col_is_character({{ select_expr }}) %>% check_behaviors(expr_name)
-  # agent %>% col_is_numeric({{ select_expr }}) %>% check_behaviors(expr_name)
-  # agent %>% col_is_integer({{ select_expr }}) %>% check_behaviors(expr_name)
-  # agent %>% col_is_logical({{ select_expr }}) %>% check_behaviors(expr_name)
-  # agent %>% col_is_date({{ select_expr }}) %>% check_behaviors(expr_name)
-  # agent %>% col_is_posix({{ select_expr }}) %>% check_behaviors(expr_name)
-  # agent %>% col_is_factor({{ select_expr }}) %>% check_behaviors(expr_name)
-  # agent %>% rows_distinct({{ select_expr }}) %>% check_behaviors(expr_name)
-  # agent %>% rows_complete({{ select_expr }}) %>% check_behaviors(expr_name)
-  # agent %>% col_exists({{ select_expr }}) %>% check_behaviors(expr_name)
+  test_multi_briefs("col_vals_lte", value = 5)
+  test_multi_briefs("col_vals_equal", value = 5)
+  test_multi_briefs("col_vals_not_equal", value = 5)
+  test_multi_briefs("col_vals_gte", value = 5)
+  test_multi_briefs("col_vals_gt", value = 5)
+  test_multi_briefs("col_vals_between", left = 2, right = 5)
+  test_multi_briefs("col_vals_not_between", left = 2, right = 5)
+  test_multi_briefs("col_vals_in_set", set = c(2, 5))
+  test_multi_briefs("col_vals_not_in_set", set = c(2, 5))
+  test_multi_briefs("col_vals_make_set", set = c(2, 5))
+  test_multi_briefs("col_vals_make_subset", set = c(2, 5))
+  test_multi_briefs("col_vals_null")
+  test_multi_briefs("col_vals_not_null")
+  test_multi_briefs("col_vals_increasing")
+  test_multi_briefs("col_vals_decreasing")
+  test_multi_briefs("col_vals_regex", regex = "abc")
+  test_multi_briefs("col_vals_within_spec", spec = "email")
+
+  # segments
+  test_multi_briefs("col_vals_expr", expr = expr(a %% 1 == 0))
+  test_multi_briefs("row_count_match", count = small_table)
+  test_multi_briefs("tbl_match", tbl_compare = small_table)
+
+  # rows_*
+  test_multi_briefs("rows_distinct")
+  test_multi_briefs("rows_complete")
 
 })
 

@@ -50,8 +50,11 @@ get_table_total_missing_values <- function(data) {
 
   collected <-
     dplyr::collect(
-      dplyr::summarise_all(
-        data, ~ sum(ifelse(is.na(.), 1, 0), na.rm = TRUE)
+      dplyr::summarise(
+        data, dplyr::across(
+          dplyr::everything(),
+          function(x) sum(ifelse(is.na(x), 1, 0), na.rm = TRUE)
+        )
       )
     )
 
@@ -145,7 +148,7 @@ get_df_column_qtile_stats <- function(data_column) {
       )
     ) %>%
     dplyr::mutate(range = max - min) %>%
-    dplyr::summarize_all(~ round(., 2)) %>%
+    round(2) %>%
     as.list()
 }
 
@@ -294,7 +297,7 @@ get_dbi_column_qtile_stats <- function(data_column) {
       iqr = q_3 - q_1,
       range = max - min
     ) %>%
-    dplyr::summarize_all(~ round(., 2)) %>%
+    round(2) %>%
     as.list()
 }
 
@@ -330,8 +333,7 @@ get_table_column_histogram <- function(data_column, lang, locale) {
     data_column %>%
       dplyr::mutate_all(.funs = nchar) %>%
       dplyr::rename(nchar = 1) %>%
-      dplyr::group_by(nchar) %>%
-      dplyr::summarize(n = dplyr::n()) %>%
+      dplyr::count(nchar) %>%
       dplyr::collect() %>%
       dplyr::filter(!is.na(nchar)) %>%
       dplyr::mutate_all(.funs = as.numeric) %>%

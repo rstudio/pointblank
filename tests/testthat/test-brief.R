@@ -44,8 +44,6 @@ test_that("`brief` recycles when possible", {
 
 test_that("Briefs batch tests", {
 
-  get_briefs <- function(x) x$validation_set$brief
-
   validation_fns <- all_validations_fns_vec()
   validation_fns <- setdiff(validation_fns, c("serially", "conjointly", "specially"))
   validation_fns <- mget(validation_fns, asNamespace("pointblank"))
@@ -53,6 +51,7 @@ test_that("Briefs batch tests", {
     paste(intersect(names(formals(x)), c("segments", "columns")), collapse = "+")
   })
   validation_fn_args <- validation_fn_args[validation_fn_args != ""]
+  validation_fn_args[grepl(x = names(validation_fn_args), "^rows_")] <- "rows_*"
 
   test_multi_briefs <- function(f, ...) {
     x <- create_agent(small_table)
@@ -69,11 +68,15 @@ test_that("Briefs batch tests", {
       "segments" = {
         out <- segs
         x <- x %>%
-          f(segments = "f", ..., brief = segs) # 3-steps
+          f(segments = vars(f), ..., brief = segs) # 3-steps
       }, "columns+segments" = {
-        out <- as.vector(outer(cols, segs, function(x, y) paste0(x, ":", y)))
+        out <- as.vector(outer(segs, cols, function(s, c) paste0(c, ":", s)))
         x <- x %>%
           f(columns = c("a", "b"), segments = vars(f), ..., brief = out) # 6-steps
+      }, "rows_*" = {
+        out <- segs
+        x <- x %>%
+          f(columns = c("a", "b"), segments = vars(f), ..., brief = segs) # 3-steps
       }
     )
     expect_identical(out, x$validation_set$brief)

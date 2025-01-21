@@ -66,38 +66,37 @@ test_that("Briefs batch tests", {
   })
   validation_fn_args <- validation_fn_args[validation_fn_args != ""]
   validation_fn_args[grepl(x = names(validation_fn_args), "^rows_")] <- "rows_*"
+  table(validation_fn_args)
 
+  agent <- create_agent(small_table)
   test_multi_briefs <- function(f, ...) {
-    x <- create_agent(small_table)
     test <- validation_fn_args[[f]]
-    f <- get(f, asNamespace("pointblank"))
+    f <- validation_fns[[f]]
     cols <- c("a", "b")
     segs <- c("high", "low", "mid")
     switch(test,
       "columns" = {
         out <- cols
-        x <- x %>%
+        agent <- agent %>%
           f(columns = c("a", "b"), ..., brief = cols) # 2-steps
       },
       "segments" = {
         out <- segs
-        x <- x %>%
+        agent <- agent %>%
           f(segments = vars(f), ..., brief = segs) # 3-steps
       }, "columns+segments" = {
         out <- as.vector(outer(segs, cols, function(s, c) paste0(c, ":", s)))
-        x <- x %>%
+        agent <- agent %>%
           f(columns = c("a", "b"), segments = vars(f), ..., brief = out) # 6-steps
       }, "rows_*" = {
         out <- segs
-        x <- x %>%
+        agent <- agent %>%
           f(columns = c("a", "b"), segments = vars(f), ..., brief = segs) # 3-steps
       }
     )
-    if (rlang::is_interactive()) print(interrogate(x, progress = FALSE))
-    expect_identical(out, x$validation_set$brief)
+    if (rlang::is_interactive()) print(agent)
+    expect_identical(out, agent$validation_set$brief)
   }
-
-  table(validation_fn_args)
 
   # columns
   test_multi_briefs("col_is_character")

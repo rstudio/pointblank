@@ -10,6 +10,20 @@ test_that("`brief` recycles when possible", {
     2L
   )
 
+  expect_identical(
+    agent %>%
+      col_exists(c("a", "b"), brief = NA) %>%
+      get_briefs(),
+    c(NA_character_, NA_character_)
+  )
+
+  expect_identical(
+    agent %>%
+      col_exists(c("a", "b"), brief = c("x", NA)) %>%
+      get_briefs(),
+    c("x", NA_character_)
+  )
+
   expect_equal(
     agent %>%
       col_exists(c("a", "b"), brief = "one") %>%

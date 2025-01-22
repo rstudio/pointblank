@@ -356,17 +356,12 @@ col_vals_make_subset <- function(
 
   agent <- x
 
-  if (is.null(brief)) {
-
-    brief <-
-      generate_autobriefs(
-        agent = agent,
-        columns = columns,
-        preconditions = preconditions,
-        values = set,
-        assertion_type = "col_vals_make_subset"
-      )
-  }
+  brief <- resolve_brief(
+    brief = brief, agent = agent,
+    columns = columns, segments_list = segments_list,
+    preconditions = preconditions, values = set,
+    assertion_type = "col_vals_make_subset"
+  )
 
   # Normalize any provided `step_id` value(s)
   step_id <- normalize_step_id(step_id, columns, agent)
@@ -402,7 +397,7 @@ col_vals_make_subset <- function(
           actions = covert_actions(actions, agent),
           step_id = step_id[i],
           label = label[[i, j]],
-          brief = brief[i],
+          brief = brief[[i, j]],
           active = active
         )
     }

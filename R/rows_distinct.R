@@ -334,15 +334,12 @@ rows_distinct <- function(
     columns <- paste(columns, collapse = ", ")
   }
 
-  if (is.null(brief)) {
-
-    brief <-
-      create_autobrief(
-        agent = agent,
-        assertion_type = "rows_distinct",
-        column = columns
-      )
-  }
+  brief <- resolve_brief(
+    brief = brief, agent = agent,
+    columns = columns, segments_list = segments_list,
+    preconditions = preconditions,
+    assertion_type = "rows_distinct"
+  )
 
   # Normalize any provided `step_id` value(s)
   step_id <- normalize_step_id(step_id, columns = "column", agent)
@@ -377,7 +374,7 @@ rows_distinct <- function(
         actions = covert_actions(actions, agent),
         step_id = step_id,
         label = label[[i]],
-        brief = brief,
+        brief = brief[[i]],
         active = active
       )
   }

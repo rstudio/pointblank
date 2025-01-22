@@ -433,17 +433,12 @@ col_vals_between <- function(
   left <- as.list(left)
   right <- as.list(right)
 
-  if (is.null(brief)) {
-
-    brief <-
-      generate_autobriefs(
-        agent = agent,
-        columns = columns,
-        preconditions = preconditions,
-        values = c(left, right),
-        assertion_type = "col_vals_between"
-      )
-  }
+  brief <- resolve_brief(
+    brief = brief, agent = agent,
+    columns = columns, segments_list = segments_list,
+    preconditions = preconditions, values = c(left, right),
+    assertion_type = "col_vals_between"
+  )
 
   # Normalize any provided `step_id` value(s)
   step_id <- normalize_step_id(step_id, columns, agent)
@@ -480,7 +475,7 @@ col_vals_between <- function(
           actions = covert_actions(actions, agent),
           step_id = step_id[i],
           label = label[[i, j]],
-          brief = brief[i],
+          brief = brief[[i, j]],
           active = active
         )
     }

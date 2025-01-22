@@ -267,12 +267,12 @@ col_is_factor <- function(
 
   agent <- x
 
-  if (is.null(brief)) {
-    brief <-
-      generate_autobriefs(
-        agent, columns, preconditions, values, "col_is_factor"
-      )
-  }
+  brief <- resolve_brief(
+    brief = brief, agent = agent,
+    columns = columns,
+    preconditions = preconditions, values = value,
+    assertion_type = "col_is_factor"
+  )
 
   # Normalize any provided `step_id` value(s)
   step_id <- normalize_step_id(step_id, columns, agent)
@@ -300,7 +300,7 @@ col_is_factor <- function(
         actions = covert_actions(actions, agent),
         step_id = step_id[i],
         label = label[[i]],
-        brief = brief[i],
+        brief = brief[[i]],
         active = active
       )
   }

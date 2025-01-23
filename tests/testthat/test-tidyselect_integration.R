@@ -253,4 +253,19 @@ test_that("tidyselect integration in `info_columns`", {
     "nomatch"
   )
 
+  # `where()` works (#503)
+  informant <- create_informant(small_table) %>%
+    info_columns(
+      columns = where(lubridate::is.timepoint),
+      info = "Data about a time point"
+    )
+  cols_info <- sapply(informant$metadata$columns, `[[`, "info")
+  expect_identical(
+    Filter(Negate(is.null), cols_info),
+    list(
+      date_time = "Data about a time point",
+      date = "Data about a time point"
+    )
+  )
+
 })

@@ -1,5 +1,7 @@
 # pointblank (development version)
 
+- Data extracts for `rows_distinct()` preserves columns other than the ones tested (#588)
+
 # pointblank 0.12.2
 
 This release provides a few minor improvements along with many bug fixes.

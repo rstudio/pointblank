@@ -242,3 +242,15 @@ test_that("c()-expr works for serially", {
   )
 
 })
+
+test_that("tidyselect integration in `info_columns`", {
+
+  # Informative warnings on no-match (#344)
+  expect_warning(
+    mtcars %>%
+      create_informant() %>%
+      info_columns(matches("nomatch"), info = "hi"),
+    "nomatch"
+  )
+
+})

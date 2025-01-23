@@ -241,3 +241,43 @@ test_that("glue syntax works for custom vector of labels", {
   )
 
 })
+
+test_that("glue works for brief too", {
+
+  # Basic usage (recycled)
+  agent <- create_agent(~ small_table) |>
+    col_vals_lt(
+      c(a, c), 5, segments = vars(f),
+      label = "{.col} {.seg_val}",
+      brief = "{.col} {.seg_val}"
+    )
+  expect_identical(
+    agent$validation_set$label,
+    agent$validation_set$brief
+  )
+
+  # NAs (recycled)
+  agent_NA <- create_agent(~ small_table) |>
+    col_vals_lt(
+      c(a, c), 5, segments = vars(f),
+      label = NA,
+      brief = NA
+    )
+  expect_identical(
+    agent_NA$validation_set$label,
+    agent_NA$validation_set$brief
+  )
+
+  # Mix (non-recycled)
+  agent_mix <- create_agent(~ small_table) |>
+    col_vals_lt(
+      c(a, c), 5, segments = vars(f),
+      label = replace(rep("{.col} {.seg_val}", 6), 3, NA),
+      brief = replace(rep("{.col} {.seg_val}", 6), 3, NA)
+    )
+  expect_identical(
+    agent_mix$validation_set$label,
+    agent_mix$validation_set$brief
+  )
+
+})

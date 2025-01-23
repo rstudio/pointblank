@@ -1,5 +1,7 @@
 # pointblank (development version)
 
+- `info_columns()` warn more informatively when no columns are selected.
+
 # pointblank 0.12.2
 
 This release provides a few minor improvements along with many bug fixes.

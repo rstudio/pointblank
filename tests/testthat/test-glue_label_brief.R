@@ -245,7 +245,7 @@ test_that("glue syntax works for custom vector of labels", {
 test_that("glue works for brief too", {
 
   # Basic usage (recycled)
-  agent <- create_agent(~ small_table) |>
+  agent <- create_agent(~ small_table) %>%
     col_vals_lt(
       c(a, c), 5, segments = vars(f),
       label = "{.col} {.seg_val}",
@@ -257,7 +257,7 @@ test_that("glue works for brief too", {
   )
 
   # NAs (recycled)
-  agent_NA <- create_agent(~ small_table) |>
+  agent_NA <- create_agent(~ small_table) %>%
     col_vals_lt(
       c(a, c), 5, segments = vars(f),
       label = NA,
@@ -269,7 +269,7 @@ test_that("glue works for brief too", {
   )
 
   # Mix (non-recycled)
-  agent_mix <- create_agent(~ small_table) |>
+  agent_mix <- create_agent(~ small_table) %>%
     col_vals_lt(
       c(a, c), 5, segments = vars(f),
       label = replace(rep("{.col} {.seg_val}", 6), 3, NA),

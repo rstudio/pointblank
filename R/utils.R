@@ -272,7 +272,7 @@ resolve_brief <- function(brief, agent,
   # Recycle the string
   brief <- rep_len(brief, n_combinations)
   # Return packed vector/matrix for iteration over steps
-  brief <- pack_by_col_seg(brief, n_columns, n_segments,  c(columns, segments))
+  brief <- pack_by_col_seg(brief, n_columns, n_segments,  c(columns, segments_list))
 
   if (use_autobrief) {
     class(brief) <- "autobrief"

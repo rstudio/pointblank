@@ -95,26 +95,29 @@ create_validation_step <- function(
       f_failed = NA_real_
     )
 
-  # glue-powered labels
-  if (!is.na(validation_step_df$label)) {
-    glue_mask <- rlang::new_environment(
-      data = list(
-        .step = assertion_type,
-        .col = column,
-        .seg_col = seg_col,
-        .seg_val = seg_val
-      ),
-      parent = .call
-    )
-    label <- glue::glue_data(glue_mask, validation_step_df$label, .envir = NULL)
-    validation_step_df$label <- as.character(label)
-  }
+  # glue-powered labels/briefs
+  glue_mask <- rlang::new_environment(
+    data = list(
+      .step = assertion_type,
+      .col = column,
+      .seg_col = seg_col,
+      .seg_val = seg_val
+    ),
+    parent = .call
+  )
+  validation_step_df$label <- glue_chr(validation_step_df$label, glue_mask)
+  validation_step_df$brief <- glue_chr(validation_step_df$brief, glue_mask)
 
   # Append `validation_step` to `validation_set`
   agent$validation_set <-
     dplyr::bind_rows(agent$validation_set, validation_step_df)
 
   agent
+}
+
+glue_chr <- function(x, glue_mask) {
+  if (is.na(x)) return(x)
+  as.character(glue::glue_data(glue_mask, x, .envir = NULL))
 }
 
 get_hash_version <- function() {

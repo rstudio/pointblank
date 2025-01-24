@@ -1,10 +1,12 @@
 # pointblank (development version)
 
-* `info_columns()` warn more informatively when no columns are selected.
+- `info_columns()` warn more informatively when no columns are selected (#589).
 
-* The `brief` argument of validation functions now also supports `{glue}` syntax (#587)
+- Data extracts for `rows_distinct()` preserves columns other than the ones tested (#588)
 
-* Validation step `brief`s correctly recycle to match expanded steps (#564)
+- The `brief` argument of validation functions now also supports `{glue}` syntax (#587)
+
+- Validation step `brief`s correctly recycle to match expanded steps (#564)
 
 # pointblank 0.12.2
 

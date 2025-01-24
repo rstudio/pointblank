@@ -230,28 +230,31 @@ test_that("Briefs batch tests: special validations", {
 
 test_that("brief_cls hosts information about class", {
 
-  chr <- "chr"
-
-  autobrief <- NULL
-
-  foobar <- structure("foobar", class = "foobar")
-
-  verbatim_yaml <- structure(
-    yaml::as.yaml(list(author = "June", id = 123)),
-    class = "verbatim"
-  )
-
-  get_brief_cls <- function(brief1, brief2) {
+  get_brief_cls <- function(brief) {
     create_agent(~ small_table) %>%
-      col_vals_gt(c(a, c), 5, brief = brief1) %>%
-      col_vals_gt(c(a, c), 5, brief = brief2) %>%
+      col_vals_gt(c(a, c), 5, brief = brief) %>%
       el("validation_set") %>%
       el("brief_cls")
   }
 
-  get_brief_cls(chr, chr)
-  get_brief_cls(chr, autobrief)
-  get_brief_cls(chr, foobar)
+  expect_identical(
+    get_brief_cls("chr"),
+    rep("character", 2)
+  )
 
+  expect_identical(
+    get_brief_cls(NULL),
+    rep("autobrief", 2)
+  )
+
+  yml <- yaml::as.yaml(list(author = "June", id = 123))
+  expect_identical(
+    get_brief_cls(I(yml)),
+    rep("AsIs", 2)
+  )
+  expect_identical(
+    get_brief_cls(structure(yml, class = "verbatim")),
+    rep("AsIs", 2)
+  )
 
 })

@@ -1,8 +1,11 @@
 # pointblank (development version)
 
-* The `brief` argument of validation functions now also supports `{glue}` syntax (#587)
 
-* Validation step `brief`s correctly recycle to match expanded steps (#564)
+- Data extracts for `rows_distinct()` preserves columns other than the ones tested (#588)
+
+- The `brief` argument of validation functions now also supports `{glue}` syntax (#587)
+
+- Validation step `brief`s correctly recycle to match expanded steps (#564)
 
 # pointblank 0.12.2
 

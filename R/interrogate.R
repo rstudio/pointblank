@@ -2392,9 +2392,8 @@ interrogate_distinct <- function(
     column_validity_has_columns(columns = column_names)
 
     table %>%
-      dplyr::select({{ column_names }}) %>%
       dplyr::group_by(!!!col_syms) %>%
-      dplyr::mutate(`pb_is_good_` = ifelse(dplyr::n() == 1, TRUE, FALSE)) %>%
+      dplyr::mutate(`pb_is_good_` = dplyr::n() == 1L) %>%
       dplyr::ungroup()
   }
 
@@ -2413,15 +2412,13 @@ interrogate_distinct <- function(
 
     unduplicated <-
       table %>%
-      dplyr::select({{ column_names }}) %>%
       dplyr::count(!!!col_syms, name = "pb_is_good_") %>%
-      dplyr::mutate(`pb_is_good_` = ifelse(`pb_is_good_` == 1, TRUE, FALSE)) %>%
-      dplyr::filter(`pb_is_good_` == TRUE)
+      dplyr::mutate(`pb_is_good_` = `pb_is_good_` == 1L) %>%
+      dplyr::filter(`pb_is_good_`)
 
     table %>%
-      dplyr::select({{ column_names }}) %>%
       dplyr::left_join(unduplicated, by = column_names) %>%
-      dplyr::mutate(`pb_is_good_` = ifelse(is.na(`pb_is_good_`), FALSE, TRUE))
+      dplyr::mutate(`pb_is_good_` = is.na(`pb_is_good_`))
   }
 
   # Perform the validation of the table

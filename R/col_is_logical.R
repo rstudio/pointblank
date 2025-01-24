@@ -295,7 +295,7 @@ col_is_logical <- function(
         actions = covert_actions(actions, agent),
         step_id = step_id[i],
         label = label[[i]],
-        brief = brief[[i]],
+        brief = brief[i],
         active = active
       )
   }

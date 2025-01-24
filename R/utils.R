@@ -274,15 +274,20 @@ resolve_brief <- function(brief, agent,
   # Return packed vector/matrix for iteration over steps
   brief <- pack_by_col_seg(brief, n_columns, n_segments,  c(columns, segments_list))
 
+  # Track brief type: one of autobrief, AsIs/verbatim, character
   if (use_autobrief) {
     class(brief) <- "autobrief"
+  } else if (any(c("AsIs", "verbatim") %in% brief_cls)) {
+    brief <- I(brief)
   } else {
-    class(brief) <- brief_cls
+    brief <- unclass(brief)
   }
 
   brief
 
 }
+
+`[.autobrief` <- function(x, i, ...) structure(NextMethod("["), class = "autobrief")
 
 resolve_label <- function(label, columns = list(NULL), segments = list(NULL)) {
   n_columns <- length(columns)

@@ -1,5 +1,6 @@
 # pointblank (development version)
 
+- `info_columns()` warn more informatively when no columns are selected (#589).
 
 - Data extracts for `rows_distinct()` preserves columns other than the ones tested (#588)
 

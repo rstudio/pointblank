@@ -242,3 +242,30 @@ test_that("c()-expr works for serially", {
   )
 
 })
+
+test_that("tidyselect integration in `info_columns`", {
+
+  # Informative warnings on no-match (#344)
+  expect_warning(
+    mtcars %>%
+      create_informant() %>%
+      info_columns(matches("nomatch"), info = "hi"),
+    "nomatch"
+  )
+
+  # `where()` works (#503)
+  informant <- create_informant(small_table) %>%
+    info_columns(
+      columns = where(lubridate::is.timepoint),
+      info = "Data about a time point"
+    )
+  cols_info <- sapply(informant$metadata$columns, `[[`, "info")
+  expect_identical(
+    Filter(Negate(is.null), cols_info),
+    list(
+      date_time = "Data about a time point",
+      date = "Data about a time point"
+    )
+  )
+
+})

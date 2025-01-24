@@ -440,7 +440,7 @@ info_columns <- function(
 ) {
 
   # Capture the `columns` expression
-  columns <- rlang::enquo(columns)
+  columns_expr <- rlang::enquo(columns)
 
   metadata_items <- rlang::list2(...)
 
@@ -456,15 +456,15 @@ info_columns <- function(
   }
 
   # Resolve the columns based on the expression
-  columns <- resolve_columns(x = tbl, var_expr = columns)
+  columns <- resolve_columns(x = tbl, var_expr = columns_expr)
 
   if (length(columns) == 1 && is.na(columns)) {
 
-    warning(
-      "No columns were matched with the expression used, so, no ",
-      "info was added.",
-      call. = FALSE
-    )
+    columns_expr <- rlang::expr_deparse(rlang::quo_get_expr(columns_expr))
+    cli::cli_warn(c(
+      "No columns were matched, so no info was added.",
+      i = "Problem in: {.code {columns_expr}}"
+    ))
 
     return(metadata)
   }

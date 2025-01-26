@@ -2492,7 +2492,9 @@ interrogate_complete <- function(
 
       table_check <-
         table %>%
-        dplyr::mutate(pb_is_good_ = stats::complete.cases(dplyr::pick({{ column_names }})))
+        dplyr::mutate(
+          pb_is_good_ = stats::complete.cases(dplyr::pick({{ column_names }}))
+        )
     }
 
     table_check

@@ -2,7 +2,7 @@
 
 - `info_columns()` warn more informatively when no columns are selected (#589).
 
-- Data extracts for `rows_distinct()` preserves columns other than the ones tested (#588)
+- Data extracts for `rows_distinct()`/`rows_complete()` preserves all columns, not just the ones tested (#588, #591)
 
 - The `brief` argument of validation functions now also supports `{glue}` syntax (#587)
 

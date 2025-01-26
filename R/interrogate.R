@@ -2418,7 +2418,7 @@ interrogate_distinct <- function(
 
     table %>%
       dplyr::left_join(unduplicated, by = column_names) %>%
-      dplyr::mutate(`pb_is_good_` = is.na(`pb_is_good_`))
+      dplyr::mutate(`pb_is_good_` = !is.na(`pb_is_good_`))
   }
 
   # Perform the validation of the table

@@ -269,14 +269,22 @@ test_that("Data extracts of different sizes are possible to create", {
   get_data_extracts(agent) %>% length() %>% expect_equal(0)
 })
 
-test_that("`rows_distinct()` extracts all columns", {
+test_that("`rows_*()` functions extract all columns", {
 
   agent <- create_agent(small_table) %>%
     rows_distinct(c(date, date_time)) %>%
+    rows_complete(c(a, b, c)) %>%
     interrogate()
 
+  # rows_distinct step
   expect_identical(
-    colnames(get_data_extracts(agent)[[1]]),
+    colnames(get_data_extracts(agent, 1)),
+    colnames(small_table)
+  )
+
+  # rows_complete step
+  expect_identical(
+    colnames(get_data_extracts(agent, 2)),
     colnames(small_table)
   )
 

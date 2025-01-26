@@ -2486,7 +2486,7 @@ interrogate_complete <- function(
 
       table_check <-
         table %>%
-        dplyr::mutate(pb_is_good_ = col_expr)
+        dplyr::mutate(pb_is_good_ = !!col_expr)
 
     } else {
 

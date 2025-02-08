@@ -171,7 +171,7 @@ Each of these functions can be used directly as a `fn` value and we don't have t
 
 ## The `snip_list()` Function
 
-When describing some aspect of the target table, we may want to extract some values from a column and include them as a piece of info text. We'd want the values to be nicely formatted as a list (with commas) and we'd probably prefer that this be constrained to a certain size (so as to not potentially generate massive amounts of text). This can be efficiently done with `snip_list()`. Let's experiment with the combination of `snip_list()` and `info_snippet()`, extending the **palmerpenguins** example from the [*Intro to Information Management*](../articles/INFO-I.html) article.
+When describing some aspect of the target table, we may want to extract some values from a column and include them as a piece of info text. We'd want the values to be nicely formatted as a list (with commas) and we'd probably prefer that this be constrained to a certain size (so as to not potentially generate massive amounts of text). This can be efficiently done with `snip_list()`. Let's experiment with the combination of `snip_list()` and `info_snippet()`, extending the **palmerpenguins** example from the [*Intro to Information Management*](../articles/INFO-1.html) article.
 
 ```{r eval=FALSE}
 informant_pp <- 

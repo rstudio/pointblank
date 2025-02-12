@@ -101,7 +101,7 @@ Tables can change with time. Whether that data source is a public dataset, an or
 
 2. Updating of table row and column counts in the header of the report.
 
-We really are incorporating aspects of the table into the report with `incorporate()` but might might also think of it as regenerating, refreshing, or renewing the table. It gives **pointblank** license to access the table the same way that `interrogate()` does in the [**VALID-I**]((../articles/VALID-I.html)) validation workflow. On the first use of `incorporate()`, all text snippets will be put in their places; subsequent uses of `incorporate()` will replace the appropriate text as necessary. Every use of `incorporate()` will update the row and column counts in the header.
+We really are incorporating aspects of the table into the report with `incorporate()` but might might also think of it as regenerating, refreshing, or renewing the table. It gives **pointblank** license to access the table the same way that `interrogate()` does in the [**VALID-I**](../articles/VALID-I.html) validation workflow. On the first use of `incorporate()`, all text snippets will be put in their places; subsequent uses of `incorporate()` will replace the appropriate text as necessary. Every use of `incorporate()` will update the row and column counts in the header.
 
 Here's a short demo of the header changing, because it's pretty instructive. Let's use our `small_table` object as `target_table`. With `dim()` we can be totally sure of the table dimensions. 
 
@@ -171,7 +171,7 @@ Each of these functions can be used directly as a `fn` value and we don't have t
 
 ## The `snip_list()` Function
 
-When describing some aspect of the target table, we may want to extract some values from a column and include them as a piece of info text. We'd want the values to be nicely formatted as a list (with commas) and we'd probably prefer that this be constrained to a certain size (so as to not potentially generate massive amounts of text). This can be efficiently done with `snip_list()`. Let's experiment with the combination of `snip_list()` and `info_snippet()`, extending the **palmerpenguins** example from the [*Intro to Information Management*](../articles/INFO-I.html) article.
+When describing some aspect of the target table, we may want to extract some values from a column and include them as a piece of info text. We'd want the values to be nicely formatted as a list (with commas) and we'd probably prefer that this be constrained to a certain size (so as to not potentially generate massive amounts of text). This can be efficiently done with `snip_list()`. Let's experiment with the combination of `snip_list()` and `info_snippet()`, extending the **palmerpenguins** example from the [*Intro to Information Management*](../articles/INFO-1.html) article.
 
 ```{r eval=FALSE}
 informant_pp <- 

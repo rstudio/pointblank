@@ -101,7 +101,7 @@ Tables can change with time. Whether that data source is a public dataset, an or
 
 2. Updating of table row and column counts in the header of the report.
 
-We really are incorporating aspects of the table into the report with `incorporate()` but might might also think of it as regenerating, refreshing, or renewing the table. It gives **pointblank** license to access the table the same way that `interrogate()` does in the [**VALID-I**]((../articles/VALID-I.html)) validation workflow. On the first use of `incorporate()`, all text snippets will be put in their places; subsequent uses of `incorporate()` will replace the appropriate text as necessary. Every use of `incorporate()` will update the row and column counts in the header.
+We really are incorporating aspects of the table into the report with `incorporate()` but might might also think of it as regenerating, refreshing, or renewing the table. It gives **pointblank** license to access the table the same way that `interrogate()` does in the [**VALID-I**](../articles/VALID-I.html) validation workflow. On the first use of `incorporate()`, all text snippets will be put in their places; subsequent uses of `incorporate()` will replace the appropriate text as necessary. Every use of `incorporate()` will update the row and column counts in the header.
 
 Here's a short demo of the header changing, because it's pretty instructive. Let's use our `small_table` object as `target_table`. With `dim()` we can be totally sure of the table dimensions. 
 

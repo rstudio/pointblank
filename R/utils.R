@@ -1732,3 +1732,8 @@ deparse_expr <- function(expr, collapse = " ", ...) {
     paste("<expr>", deparsed)
   }
 }
+
+string_is_valid_symbol <- function(x) {
+  rlang::is_scalar_character(x) &&
+    identical(make.names(x), x)
+}

@@ -1664,7 +1664,7 @@ check_lazy_tbl <- function(x, type = c("agent", "informant")) {
       "i" = if (string_is_valid_symbol(tbl_name)) {
         paste(
           "Did you mean to pass the table lazily?",
-          "{.code create_{type}(tbl = ~ {tbl_name})}"
+          "Ex: {.code create_{type}(tbl = ~ {tbl_name})}"
         )
       } else {
         "See {.code ?yaml_write} for details."

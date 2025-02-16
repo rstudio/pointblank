@@ -201,13 +201,10 @@ materialize_table <- function(tbl, check = TRUE) {
   } else if (inherits(tbl, "function")) {
     tbl <- rlang::exec(tbl)
   } else if (rlang::is_formula(tbl)) {
-
-    tbl <- tbl %>% rlang::f_rhs() %>% rlang::eval_tidy()
-
+    tbl <- eval_f_rhs(tbl)
     if (inherits(tbl, "read_fn")) {
-      tbl <- tbl %>% rlang::f_rhs() %>% rlang::eval_tidy()
+      tbl <- eval_f_rhs(tbl)
     }
-
   } else {
 
     stop(
@@ -223,6 +220,10 @@ materialize_table <- function(tbl, check = TRUE) {
   }
 
   tbl
+}
+
+eval_f_rhs <- function(f) {
+  eval(rlang::f_rhs(f), rlang::f_env(f))
 }
 
 as_columns_expr <- function(columns) {

@@ -186,15 +186,13 @@ interrogate <- function(
     if (inherits(agent$read_fn, "function")) {
       agent$tbl <- rlang::exec(agent$read_fn)
     } else if (rlang::is_formula(agent$read_fn)) {
-      agent$tbl <- agent$read_fn %>% rlang::f_rhs() %>% rlang::eval_tidy()
+      agent$tbl <- eval_f_rhs(agent$read_fn)
 
       if (inherits(agent$tbl, "read_fn")) {
-
         if (inherits(agent$tbl, "with_tbl_name")) {
           agent$tbl_name <- agent$tbl %>% rlang::f_lhs() %>% as.character()
         }
-
-        agent$tbl <- materialize_table(agent$tbl)
+        agent$tbl <- eval_f_rhs(agent$tbl)
       }
 
     } else {

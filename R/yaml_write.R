@@ -1672,4 +1672,3 @@ check_lazy_tbl <- function(x, type = c("agent", "informant")) {
     ), call = NULL)
   }
 }
-

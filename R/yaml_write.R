@@ -966,12 +966,7 @@ prune_lst_step <- function(lst_step) {
 
 as_agent_yaml_list <- function(agent, expanded) {
 
-  if (is.null(agent$read_fn)) {
-    stop(
-      "The agent must have a `tbl` value that can be put into YAML.",
-       call. = FALSE
-    )
-  }
+  check_lazy_tbl(agent, "agent")
 
   action_levels_default <- as_action_levels(agent$actions)
   end_fns <- agent$end_fns %>% unlist()
@@ -1574,12 +1569,7 @@ get_column_text <- function(step_list, expanded) {
 
 as_informant_yaml_list <- function(informant) {
 
-  if (is.null(informant$read_fn)) {
-    stop(
-      "The informant must have a `tbl` value that can be put into YAML.",
-      call. = FALSE
-    )
-  }
+  check_lazy_tbl(informant, "informant")
 
   lst_tbl_name <- to_list_tbl_name(informant$tbl_name)
   lst_read_fn <- to_list_read_fn(informant$read_fn)
@@ -1663,4 +1653,22 @@ as_tbl_store_yaml_list <- function(tbl_store) {
     lst_tbls,                     # table store list of table-prep formulas
     lst_init                      # initialization statement
   )
+}
+
+check_lazy_tbl <- function(x, type = c("agent", "informant")) {
+  type <- match.arg(type)
+  tbl_name <- x$tbl_name
+  if (is.null(x$read_fn)) {
+    cli::cli_abort(c(
+      "x" = "The {type} must have a `tbl` value that can be put into YAML.",
+      "i" = if (string_is_valid_symbol(tbl_name)) {
+        paste(
+          "Did you mean to pass the table lazily?",
+          "Ex: {.code create_{type}(tbl = ~ {tbl_name})}"
+        )
+      } else {
+        "See {.code ?yaml_write} for details."
+      }
+    ), call = NULL)
+  }
 }

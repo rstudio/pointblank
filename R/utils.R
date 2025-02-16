@@ -206,20 +206,22 @@ materialize_table <- function(tbl, check = TRUE) {
       tbl <- eval_f_rhs(tbl)
     }
   } else {
-
-    stop(
-      "The `tbl` object must either be a table, a function, or a formula.\n",
-      "* A table-prep formula can be used (with the expression on the RHS).\n",
-      "* A function can be made with `function()` {<tbl reading code>}.",
-      call. = FALSE
-    )
+    err_not_table_object()
   }
 
-  if (check) {
-    is_a_table_object(tbl)
+  if (check && !is_a_table_object(tbl)) {
+    err_not_table_object()
   }
 
   tbl
+}
+
+err_not_table_object <- function() {
+  cli::cli_abort(c(
+    "x" = "The agent `tbl` must either be a table, a function, or a formula",
+    "i" = "A table-prep formula can be made with expression on the RHS",
+    "i" = "A function can be made with `function() {{<tbl reading code>}}`"
+  ), call = NULL)
 }
 
 eval_f_rhs <- function(f) {

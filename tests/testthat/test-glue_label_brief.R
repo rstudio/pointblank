@@ -281,3 +281,18 @@ test_that("glue works for brief too", {
   )
 
 })
+
+test_that("safe fallback when glue fails (#598)", {
+
+  expect_no_error({
+    agent <- create_agent(small_table) %>%
+      col_vals_regex(b, "^\\d{1,2}") %>%
+      interrogate()
+  })
+
+  expect_identical(
+    agent$validation_set$brief,
+    generate_autobriefs(agent, "b", NULL, "^\\d{1,2}", "col_vals_regex"),
+  )
+
+})

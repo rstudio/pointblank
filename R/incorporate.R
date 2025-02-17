@@ -190,32 +190,17 @@ incorporate <- function(informant) {
 
     } else if (rlang::is_formula(read_fn)) {
 
-      tbl <-
-        read_fn %>%
-        rlang::f_rhs() %>%
-        rlang::eval_tidy(env = caller_env(n = 1))
+      tbl <- eval_f_rhs(read_fn)
 
       if (inherits(tbl, "read_fn")) {
-
         if (inherits(tbl, "with_tbl_name") && is.na(tbl_name)) {
           tbl_name <- tbl %>% rlang::f_lhs() %>% as.character()
         }
-
-        tbl <-
-          tbl %>%
-          rlang::f_rhs() %>%
-          rlang::eval_tidy(env = caller_env(n = 1))
+        tbl <- eval_f_rhs(tbl)
       }
 
     } else {
-
-      # TODO: Improve the `stop()` message here
-      stop(
-        "The `read_fn` object must be a function or an R formula.\n",
-        "* A function can be made with `function()` {<tbl reading code>}.\n",
-        "* An R formula can also be used, with the expression on the RHS.",
-        call. = FALSE
-      )
+      err_not_table_object()
     }
   }
 

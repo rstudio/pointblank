@@ -67,9 +67,19 @@ test_that("label supports glue syntax for {.seg_val} {.seg_col} {.step} {.col}",
 test_that("glue scope doesn't expose internal variables", {
 
   # Ex: should not be able to access `columns` local variable in `col_vals_lt()`
-  expect_error(create_agent(small_table) %>% col_vals_lt(c, 8, label = "{columns}"))
+  expect_identical(
+    create_agent(small_table) %>%
+      col_vals_lt(c, 8, label = "{columns}") %>%
+      {.$validation_set$label},
+    "{columns}"
+  )
   # Ex: should not be able to access `i` local variable in `create_validation_step()`
-  expect_error(create_agent(small_table) %>% col_vals_lt(c, 8, label = "{i}"))
+  expect_identical(
+    create_agent(small_table) %>%
+      col_vals_lt(c, 8, label = "{i}") %>%
+      {.$validation_set$label},
+    "{i}"
+  )
 
   # Should be able to access global vars/fns
   expect_equal(
@@ -83,23 +93,23 @@ test_that("glue scope doesn't expose internal variables", {
 
 test_that("glue env searches from the caller env of the validation function", {
 
-  to_upper <- function(x) stop("Oh no!")
+  to_upper <- function(x) "global"
 
-  expect_error(
+  expect_identical(
     create_agent(small_table) %>%
       col_vals_lt(c, 8, label = "{to_upper(.col)}") %>%
       {.$validation_set$label},
-    "Oh no!"
+    "global"
   )
 
-  expect_equal(
+  expect_identical(
     local({
-      to_upper <- function(x) toupper(x)
+      to_upper <- function(x) "local"
       create_agent(small_table) %>%
         col_vals_lt(c, 8, label = "{to_upper(.col)}") %>%
         {.$validation_set$label}
     }),
-    "C"
+    "local"
   )
 
 })
@@ -278,6 +288,21 @@ test_that("glue works for brief too", {
   expect_identical(
     agent_mix$validation_set$label,
     agent_mix$validation_set$brief
+  )
+
+})
+
+test_that("safe fallback when glue fails (#598)", {
+
+  expect_no_error({
+    agent <- create_agent(small_table) %>%
+      col_vals_regex(b, "^\\d{1,2}") %>%
+      interrogate()
+  })
+
+  expect_identical(
+    agent$validation_set$brief,
+    generate_autobriefs(agent, "b", NULL, "^\\d{1,2}", "col_vals_regex"),
   )
 
 })

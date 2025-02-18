@@ -116,8 +116,16 @@ create_validation_step <- function(
 }
 
 glue_chr <- function(x, glue_mask) {
-  if (is.na(x)) return(x)
-  as.character(glue::glue_data(glue_mask, x, .envir = NULL))
+  # TODO: also skip autobriefs (#273)
+  if (is.na(x) || !grepl("{", x, fixed = TRUE)) {
+    return(x)
+  }
+  # Try glue and fallback to original string if failed
+  out <- tryCatch(
+    expr = as.character(glue::glue_data(glue_mask, x, .envir = NULL)),
+    error = function(e) x
+  )
+  out
 }
 
 get_hash_version <- function() {

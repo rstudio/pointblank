@@ -217,3 +217,19 @@ test_that("Incorporating an informant from YAML yields the correct results", {
 })
 
 fs::file_delete(path = "informant-test_table.yml")
+
+test_that("`informant` can materialize table from formula environment (#602)", {
+
+  informant <- local({
+    df <- data.frame(x = 1)
+    create_informant(tbl = ~ df)
+  })
+
+  expect_null(informant$tbl)
+
+  expect_no_error({
+    informant <- informant %>%
+      incorporate()
+  })
+
+})

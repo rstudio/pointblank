@@ -186,26 +186,17 @@ interrogate <- function(
     if (inherits(agent$read_fn, "function")) {
       agent$tbl <- rlang::exec(agent$read_fn)
     } else if (rlang::is_formula(agent$read_fn)) {
-      agent$tbl <- agent$read_fn %>% rlang::f_rhs() %>% rlang::eval_tidy()
+      agent$tbl <- eval_f_rhs(agent$read_fn)
 
       if (inherits(agent$tbl, "read_fn")) {
-
         if (inherits(agent$tbl, "with_tbl_name")) {
           agent$tbl_name <- agent$tbl %>% rlang::f_lhs() %>% as.character()
         }
-
-        agent$tbl <- materialize_table(agent$tbl)
+        agent$tbl <- eval_f_rhs(agent$tbl)
       }
 
     } else {
-
-      # TODO: create a better `stop()` message
-      stop(
-        "The `read_fn` object must be a function or an R formula.\n",
-        "* A function can be made with `function()` {<tbl reading code>}.\n",
-        "* An R formula can also be used, with the expression on the RHS.",
-        call. = FALSE
-      )
+      err_not_table_object()
     }
 
     # Obtain basic information on the table and

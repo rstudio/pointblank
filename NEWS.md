@@ -1,5 +1,7 @@
 # pointblank (development version)
 
+- Bugfix agents not searching the formula environment when materializing `~ tbl` (#599)
+
 - `info_columns()` warn more informatively when no columns are selected (#589).
 
 - `write_yaml()` errors more informatively when `tbl` value is incompatible for yaml-writing (#597)

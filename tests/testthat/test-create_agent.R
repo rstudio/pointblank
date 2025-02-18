@@ -149,3 +149,23 @@ test_that("Creating a valid `agent` object is possible", {
 
   expect_true(agent_4$embed_report)
 })
+
+test_that("`agent` can materialize table from formula environment", {
+
+  agent <- local({
+    df <- data.frame(x = 1)
+    create_agent(tbl = ~ df)
+  })
+
+  expect_null(agent$tbl)
+
+  expect_no_error({
+    agent <- agent %>%
+      rows_distinct(x) %>%
+      interrogate()
+
+  })
+
+  expect_identical(agent$tbl, data.frame(x = 1))
+
+})

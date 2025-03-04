@@ -71,3 +71,4 @@ Roxygen: list(markdown = TRUE)
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Config/testthat/start-first: expectation_fns, scan_data,tidyselect_fails_safely_batch,test_fns
+VignetteBuilder: knitr

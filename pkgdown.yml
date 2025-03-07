@@ -4,6 +4,7 @@ pkgdown_sha: ~
 articles:
   INFO-1: INFO-1.html
   INFO-2: INFO-2.html
+  pointblank: pointblank.html
   VALID-I: VALID-I.html
   VALID-II: VALID-II.html
   VALID-III: VALID-III.html
@@ -11,7 +12,7 @@ articles:
   VALID-V: VALID-V.html
   VALID-VI: VALID-VI.html
   validation_workflows: validation_workflows.html
-last_built: 2025-02-18T01:15Z
+last_built: 2025-03-07T13:18Z
 urls:
   reference: https://rstudio.github.io/pointblank/reference
   article: https://rstudio.github.io/pointblank/articles

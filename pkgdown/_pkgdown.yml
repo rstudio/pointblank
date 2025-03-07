@@ -267,6 +267,8 @@ reference:
 navbar:
   type: default
   left:
+  - text: Get Started
+    href: articles/pointblank.html
   - text: Articles
     menu:
     - text: Validation Workflows

@@ -12,6 +12,8 @@
 
 - Validation step `brief`s correctly recycle to match expanded steps (#564)
 
+- A new Get Started vignette (#605).
+
 # pointblank 0.12.2
 
 This release provides a few minor improvements along with many bug fixes.

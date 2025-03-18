@@ -929,6 +929,15 @@ test_that("Interrogating simply returns the expected results", {
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
 
+  # `perl=TRUE` for R dataframes (#606)
+  expect_no_error(
+    data.frame(x = c("ab", "ac")) %>%
+      col_vals_regex(
+        columns = "x",
+        regex = "a(?!d)"
+      )
+  )
+
   #
   # col_vals_within_spec()
   #

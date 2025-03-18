@@ -1849,7 +1849,7 @@ interrogate_regex <- function(
       tbl <-
         table %>%
         dplyr::mutate(pb_is_good_ = ifelse(
-          !is.na({{ column }}), grepl(regex, {{ column }}), NA)
+          !is.na({{ column }}), grepl(regex, {{ column }}, perl = TRUE), NA)
         ) %>%
         dplyr::mutate(pb_is_good_ = dplyr::case_when(
           is.na(pb_is_good_) ~ na_pass,

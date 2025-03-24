@@ -75,8 +75,8 @@ test_that("YAML writing and reading works as expected", {
   # Expect that the file was written to the temp directory
   expect_true("test.yaml" %in% list.files(path = work_path))
 
-  # Expect that `yaml_agent_string()` shows a YAML string in the
-  # console and returns nothing (when reading from a YAML file)
+  # Expect that `yaml_agent_string` shows a YAML string in the
+  # console and returns the string itself
   expect_type(
     suppressMessages(yaml_agent_string(filename = file.path(work_path, "test.yaml"))),
     "character"

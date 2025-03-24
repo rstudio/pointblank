@@ -640,6 +640,8 @@ yaml_write <- function(
 #' @section Function ID:
 #' 11-5
 #'
+#' @return The yaml string, invisibly
+#'
 #' @export
 yaml_agent_string <- function(
     agent = NULL,
@@ -648,27 +650,25 @@ yaml_agent_string <- function(
     expanded = FALSE
 ) {
 
-  switch(
+  yaml_string <- switch(
     rlang::check_exclusive(agent, filename),
     agent = {
       # Display the agent's YAML as a nicely formatted string by
       # generating the YAML (`as_agent_yaml_list() %>% as.yaml()`) and
       # then emitting it to the console via `message()`
-      message(
-        as_agent_yaml_list(
-          agent = agent,
-          expanded = expanded
-        ) %>%
-          yaml::as.yaml(
-            handlers = list(
-              logical = function(x) {
-                result <- ifelse(x, "true", "false")
-                class(result) <- "verbatim"
-                result
-              }
-            )
+      as_agent_yaml_list(
+        agent = agent,
+        expanded = expanded
+      ) %>%
+        yaml::as.yaml(
+          handlers = list(
+            logical = function(x) {
+              result <- ifelse(x, "true", "false")
+              class(result) <- "verbatim"
+              result
+            }
           )
-      )
+        )
     },
     filename = {
       # Display the agent's YAML as a nicely formatted string by
@@ -677,12 +677,13 @@ yaml_agent_string <- function(
       if (!is.null(path)) {
         filename <- file.path(path, filename)
       }
-      message(
-        readLines(filename) %>%
-          paste(collapse = "\n")
-      )
+      readLines(filename) %>%
+        paste(collapse = "\n")
     }
   )
+
+  message(yaml_string)
+  invisible(yaml_string)
 
 }
 

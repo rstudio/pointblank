@@ -580,7 +580,7 @@ yaml_write <- function(
 #'   yielding a validation function per column? By default, this is `FALSE`
 #'   so expressions as written will be retained in the YAML representation.
 #'
-#' @return Nothing is returned. Instead, text is printed to the console.
+#' @return The yaml string is printed to the console and returned invisibly.
 #'
 #' @section Examples:
 #'
@@ -639,8 +639,6 @@ yaml_write <- function(
 #' @family pointblank YAML
 #' @section Function ID:
 #' 11-5
-#'
-#' @return The yaml string, invisibly
 #'
 #' @export
 yaml_agent_string <- function(

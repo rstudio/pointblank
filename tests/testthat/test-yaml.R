@@ -59,8 +59,11 @@ test_that("YAML writing and reading works as expected", {
   expect_false(inherits(agent, "has_intel"))
 
   # Expect that `yaml_agent_string` shows a YAML string in the
-  # console and returns nothing (when reading from an agent)
-  expect_null(suppressMessages(yaml_agent_string(agent = agent)))
+  # console and returns the string itself
+  expect_type(
+    suppressMessages(yaml_agent_string(agent = agent)),
+    "character"
+  )
   expect_match(
     as.character(testthat::capture_messages(yaml_agent_string(agent = agent))),
     "tbl: ~small_table.*?tbl_name: .*?label: .*?actions:.*?warn_fraction: 0.1.*?stop_fraction: 0.2.*?steps:.*"
@@ -74,7 +77,10 @@ test_that("YAML writing and reading works as expected", {
 
   # Expect that `yaml_agent_string()` shows a YAML string in the
   # console and returns nothing (when reading from a YAML file)
-  expect_null(suppressMessages(yaml_agent_string(filename = file.path(work_path, "test.yaml"))))
+  expect_type(
+    suppressMessages(yaml_agent_string(filename = file.path(work_path, "test.yaml"))),
+    "character"
+  )
   expect_match(
     as.character(testthat::capture_messages(yaml_agent_string(filename = file.path(work_path, "test.yaml")))),
     "tbl: ~small_table.*?tbl_name: .*?label: .*?actions:.*?warn_fraction: 0.1.*?stop_fraction: 0.2.*?steps:.*"

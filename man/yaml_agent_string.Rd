@@ -22,7 +22,7 @@ yielding a validation function per column? By default, this is \code{FALSE}
 so expressions as written will be retained in the YAML representation.}
 }
 \value{
-Nothing is returned. Instead, text is printed to the console.
+The yaml string is printed to the console and returned invisibly.
 }
 \description{
 With \strong{pointblank} YAML, we can serialize an agent's validation plan (with
@@ -42,7 +42,7 @@ There's a YAML file available in the \strong{pointblank} package that's called
 \code{"agent-small_table.yml"}. The path for it can be accessed through
 \code{system.file()}:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{yml_file_path <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{yml_file_path <-
   system.file(
     "yaml", "agent-small_table.yml",
     package = "pointblank"

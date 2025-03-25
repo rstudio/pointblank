@@ -72,21 +72,21 @@
 #' on the entire interrogation, allowing for finer control on side effects and
 #' reducing potential for duplicating any side effects.
 #'
-#' @param warn_at *Threshold value for the 'warn' failure state*
+#' @param warn *Threshold value for the 'warn' failure state*
 #'
 #'   `scalar<integer|numeric>(val>=0)` // *default:* `NULL` (`optional`)
 #'
 #'   Either the threshold number or the threshold fraction of *failing* test
 #'   units that result in entering the `warn` failure state.
 #'
-#' @param stop_at *Threshold value for the 'stop' failure state*
+#' @param error *Threshold value for the 'stop' failure state*
 #'
 #'   `scalar<integer|numeric>(val>=0)` // *default:* `NULL` (`optional`)
 #'
 #'   Either the threshold number or the threshold fraction of *failing* test
 #'   units that result in entering the `stop` failure state.
 #'
-#' @param notify_at *Threshold value for the 'notify' failure state*
+#' @param critical *Threshold value for the 'notify' failure state*
 #'
 #'   `scalar<integer|numeric>(val>=0)` // *default:* `NULL` (`optional`)
 #'
@@ -105,6 +105,10 @@
 #'   each named state can be used by enclosing the set of statements with `{ }`.
 #'
 #' @inheritParams rlang::args_dots_empty
+#'
+#' @param warn_at `r lifecycle::badge("deprecated")`
+#' @param stop_at `r lifecycle::badge("deprecated")`
+#' @param notify_at `r lifecycle::badge("deprecated")`
 #'
 #' @return An `action_levels` object.
 #'

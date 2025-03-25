@@ -495,7 +495,7 @@ expect_col_vals_within_spec <- function(
       spec = {{ spec }},
       na_pass = na_pass,
       preconditions = {{ preconditions }},
-      actions = action_levels(notify_at = threshold)
+      actions = action_levels(critical = threshold)
     ) %>%
     interrogate() %>%
     .$validation_set
@@ -575,7 +575,7 @@ test_col_vals_within_spec <- function(
       spec = {{ spec }},
       na_pass = na_pass,
       preconditions = {{ preconditions }},
-      actions = action_levels(notify_at = threshold)
+      actions = action_levels(critical = threshold)
     ) %>%
     interrogate() %>%
     .$validation_set

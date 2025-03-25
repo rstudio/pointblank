@@ -422,7 +422,7 @@ expect_specially <- function(
     specially(
       fn = fn,
       preconditions = {{ preconditions }},
-      actions = action_levels(notify_at = threshold)
+      actions = action_levels(critical = threshold)
     ) %>%
     interrogate() %>%
     .$validation_set
@@ -470,7 +470,7 @@ test_specially <- function(
     specially(
       fn = fn,
       preconditions = {{ preconditions }},
-      actions = action_levels(notify_at = threshold)
+      actions = action_levels(critical = threshold)
     ) %>%
     interrogate() %>%
     .$validation_set

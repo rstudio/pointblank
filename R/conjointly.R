@@ -468,7 +468,7 @@ expect_conjointly <- function(
     conjointly(
       .list = .list,
       preconditions = {{ preconditions }},
-      actions = action_levels(notify_at = threshold)
+      actions = action_levels(critical = threshold)
     ) %>%
     interrogate() %>%
     .$validation_set
@@ -519,7 +519,7 @@ test_conjointly <- function(
     conjointly(
       .list = .list,
       preconditions = {{ preconditions }},
-      actions = action_levels(notify_at = threshold)
+      actions = action_levels(critical = threshold)
     ) %>%
     interrogate() %>%
     .$validation_set

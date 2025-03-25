@@ -18,7 +18,7 @@ test_that("pointblank agent works with dittodb-mocked Postgres database connecti
 
     # Set failure thresholds and functions that are
     # actioned from exceeding certain error levels
-    al <- action_levels(warn_at = 0.02, stop_at = 0.05, notify_at = 0.10)
+    al <- action_levels(warn = 0.02, error = 0.05, critical = 0.10)
 
     # Validate the `assembly` table in the `aedes_aegypti_core_55_1d` DB
     # the expect_warning is used to suppres the message

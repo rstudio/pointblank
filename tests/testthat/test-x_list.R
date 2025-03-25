@@ -1,4 +1,4 @@
-al <- action_levels(warn_at = 0.1, stop_at = 0.2)
+al <- action_levels(warn = 0.1, error = 0.2)
 
 agent <-
   create_agent(tbl = small_table, actions = al) %>%

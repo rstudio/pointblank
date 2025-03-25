@@ -322,7 +322,7 @@ test_that("report shows informative error tooltips", {
 test_that("rows of report can be shuffled or dropped", {
 
   agent <- iris %>%
-    create_agent(actions = action_levels(warn_at = 1)) %>%
+    create_agent(actions = action_levels(warn = 1)) %>%
     col_exists("Petal.Length",
                active = has_columns(iris, Petal.Length)) %>%
     col_exists("skip",

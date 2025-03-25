@@ -27,7 +27,7 @@ test_that("The `action_levels()` helper function works as expected", {
   expect_length(al[[7]], 3)
 
   # Create an `action_levels()` list with fractional values
-  al <- action_levels(warn_at = 0.2, stop_at = 0.8, notify_at = 0.345)
+  al <- action_levels(warn = 0.2, error = 0.8, critical = 0.345)
 
   expect_s3_class(al, "action_levels")
   expect_length(al, 7)
@@ -54,7 +54,7 @@ test_that("The `action_levels()` helper function works as expected", {
   expect_null(al[[7]][[3]])
 
   # Create an `action_levels()` list with count values
-  al <- action_levels(warn_at = 20, stop_at = 80, notify_at = 34.6)
+  al <- action_levels(warn = 20, error = 80, critical = 34.6)
 
   al %>% expect_s3_class("action_levels")
   al %>%
@@ -79,17 +79,17 @@ test_that("The `action_levels()` helper function works as expected", {
   al[[7]] %>% length() %>% expect_equal(3)
 
   # Expect an error if non-numeric values provided
-  expect_error(action_levels(warn_at = "20"))
+  expect_error(action_levels(warn = "20"))
 
   # Expect an error if any value less than or
   # equal to zero is provided
-  expect_error(action_levels(warn_at = 0))
-  expect_error(action_levels(warn_at = -1.5))
+  expect_error(action_levels(warn = 0))
+  expect_error(action_levels(warn = -1.5))
 
   # Add functions to the `fns` arg
   al <-
     action_levels(
-      warn_at = 3,
+      warn = 3,
       fns = list(warn = ~ my_great_function(vl = .vars_list))
     )
 
@@ -119,13 +119,13 @@ test_that("The `action_levels()` helper function works as expected", {
 
   # Expect an error if not all components
   # of the `fns` list are formulas
-  expect_error(action_levels(warn_at = 3, fns = list(warn = "text")))
+  expect_error(action_levels(warn = 3, fns = list(warn = "text")))
 
   # Expect an error if not all components
   # of the `fns` list are named
   expect_error(
     action_levels(
-      warn_at = 3,
+      warn = 3,
       fns = list(
         warn = ~ my_great_function(vl = .vars_list),
         ~ another_function()
@@ -138,7 +138,7 @@ test_that("The `action_levels()` helper function works as expected", {
   # or `notify`
   expect_error(
     action_levels(
-      warn_at = 3,
+      warn = 3,
       fns = list(
         warn = ~ my_great_function(vl = .vars_list),
         notable =  ~ another_function()
@@ -153,12 +153,12 @@ test_that("The appropriate actions occur when using `action_levels()`", {
     create_agent(tbl = small_table, label = "small_table_tests") %>%
     col_vals_gt(
       vars(d), 1000,
-      actions = action_levels(warn_at = 3, fns = list(warn = ~"warning")
+      actions = action_levels(warn = 3, fns = list(warn = ~"warning")
       )
     ) %>%
     col_vals_in_set(
       vars(f), c("low", "high"),
-      actions = action_levels(warn_at = 0.1, fns = list(warn = ~"warning")
+      actions = action_levels(warn = 0.1, fns = list(warn = ~"warning")
       )
     ) %>%
     interrogate()
@@ -170,12 +170,12 @@ test_that("The appropriate actions occur when using `action_levels()`", {
     create_agent(tbl = small_table, label = "small_table_tests") %>%
     col_vals_gt(
       vars(d), 1000,
-      actions = action_levels(notify_at = 3, fns = list(notify = ~"notify")
+      actions = action_levels(critical = 3, fns = list(notify = ~"notify")
       )
     ) %>%
     col_vals_in_set(
       vars(f), c("low", "high"),
-      actions = action_levels(notify_at = 0.1, fns = list(notify = ~"notify")
+      actions = action_levels(critical = 0.1, fns = list(notify = ~"notify")
       )
     ) %>%
     interrogate()
@@ -187,12 +187,12 @@ test_that("The appropriate actions occur when using `action_levels()`", {
     create_agent(tbl = small_table, label = "small_table_tests") %>%
     col_vals_gt(
       vars(d), 1000,
-      actions = action_levels(stop_at = 3, fns = list(stop = ~"stop")
+      actions = action_levels(error = 3, fns = list(stop = ~"stop")
       )
     ) %>%
     col_vals_in_set(
       vars(f), c("low", "high"),
-      actions = action_levels(stop_at = 0.1, fns = list(stop = ~"stop")
+      actions = action_levels(error = 0.1, fns = list(stop = ~"stop")
       )
     ) %>%
     interrogate()

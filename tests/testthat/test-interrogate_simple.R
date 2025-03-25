@@ -2038,7 +2038,7 @@ test_that("The inclusivity options work well for the range-based validations", {
       col_vals_between(
         columns = vars(a), left = 1, right = 10,
         inclusive = c(FALSE, FALSE),
-        actions = action_levels(warn_at = 3)
+        actions = action_levels(warn = 3)
       )
   )
   expect_warning(
@@ -2046,7 +2046,7 @@ test_that("The inclusivity options work well for the range-based validations", {
       col_vals_between(
         columns = vars(a), left = 1, right = 10,
         inclusive = c(FALSE, FALSE),
-        actions = action_levels(warn_at = 2)
+        actions = action_levels(warn = 2)
       )
   )
 

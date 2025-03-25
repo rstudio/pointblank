@@ -368,21 +368,27 @@ warn_on_fail <- function(warn = 1, warn_at = NULL) {
   }
   warn <- warn_at %||% warn
 
-  action_levels(warn = warn, fns = list(warn = ~stock_warning(x = x)))
+  action_levels(
+    warn = warn,
+    fns = action_fns(warn = ~stock_warning(x = x))
+  )
 }
 
 #' @rdname action_levels
 #' @export
 error_on_fail <- function(error = 1) {
-  action_levels(error = error, fns = list(stop = ~stock_stoppage(x = x)))
+  action_levels(
+    error = error,
+    fns = action_fns(error = ~stock_stoppage(x = x))
+  )
 }
 
 #' @rdname action_levels
 #' @export
 stop_on_fail <- function(stop_at = 1) {
   cli::cli_warn(c(
-    "!" = "`stop_on_fail(stop_at)` is deprecated.",
-    " " = "Please use `error_on_fail(error)` instead."
+    "!" = "`stop_on_fail()` is deprecated.",
+    " " = "Please use `error_on_fail()` instead."
   ))
   error_on_fail(error = stop_at)
 }

@@ -100,8 +100,8 @@
 #'
 #'   A named list of functions that is to be paired with the appropriate failure
 #'   states. The syntax for this list involves using failure state names from
-#'   the set of `warn`, `error`, and `critical`. The functions corresponding to the
-#'   failure states are provided as formulas (e.g.,
+#'   the set of `warn`, `error`, and `critical`. The functions corresponding to
+#'   the failure states are provided as formulas (e.g.,
 #'   `list(warn = ~ warning("Too many failures."))`. A series of expressions for
 #'   each named state can be used by enclosing the set of statements with `{ }`.
 #'
@@ -336,17 +336,17 @@ action_levels <- function(
   fns <- normalize_fns_list(fns = fns)
 
   warn_list <- normalize_fraction_count(warn)
-  stop_list <- normalize_fraction_count(error)
-  notify_list <- normalize_fraction_count(critical)
+  error_list <- normalize_fraction_count(error)
+  critical_list <- normalize_fraction_count(critical)
 
   action_levels <-
     list(
       warn_fraction = warn_list$fraction,
       warn_count = warn_list$count,
-      stop_fraction = stop_list$fraction,
-      stop_count = stop_list$count,
-      notify_fraction = notify_list$fraction,
-      notify_count = notify_list$count,
+      stop_fraction = error_list$fraction,
+      stop_count = error_list$count,
+      notify_fraction = critical_list$fraction,
+      notify_count = critical_list$count,
       fns = fns
     )
 

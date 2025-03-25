@@ -270,7 +270,7 @@ print.x_list_i <- function(x, ...) {
     "({.green num [{length_rows}]})"
   )
   cli::cli_text(
-    "{.cyan $warn $stop $notify} ({.yellow lgl [{length_rows}]})"
+    "{.cyan $warn $error $critical} ({.yellow lgl [{length_rows}]})"
   )
   cli::cli_text(
     "{.cyan $lang} ({.red chr [1]})"
@@ -321,7 +321,7 @@ knit_print.x_list_i <- function(x, ...) {
       "$capture_stack (list [{length(x$capture_stack)}])\n",
       "$n $n_passed $n_failed $f_passed $f_failed ",
       "(num [{length_rows}])\n",
-      "$warn $stop $notify (lgl [{length_rows}])\n",
+      "$warn $error $critical (lgl [{length_rows}])\n",
       "$lang (chr [1])\n",
       "{bottom_rule}\n"
     )
@@ -395,7 +395,7 @@ print.x_list_n <- function(x, ...) {
     "({.green num [{length_rows}]})"
   )
   cli::cli_text(
-    "{.cyan $warn $stop $notify} ({.yellow lgl [{length_rows}]})"
+    "{.cyan $warn $error $critical} ({.yellow lgl [{length_rows}]})"
   )
   cli::cli_text(
     "{.cyan $validation_set} ",
@@ -461,7 +461,7 @@ knit_print.x_list_n <- function(x, ...) {
       "$capture_stack (list [{length(x$capture_stack)}])\n",
       "$n $n_passed $n_failed $f_passed $f_failed ",
       "(num [{length_rows}])\n",
-      "$warn $stop $notify (lgl [{length_rows}])\n",
+      "$warn $error $critical (lgl [{length_rows}])\n",
       "$validation_set (tbl_df [{validation_set_rows}, ",
       "{validation_set_cols}])\n",
       "$lang (chr [1])\n",

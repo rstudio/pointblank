@@ -1,31 +1,29 @@
 Type: Package
 Package: pointblank
+Title: Data Validation and Organization of Metadata for Local and Remote
+    Tables
 Version: 0.12.2.9000
-Title: Data Validation and Organization of Metadata for Local and Remote Tables
-Description: Validate data in data frames, 'tibble' objects, 'Spark'
-    'DataFrames', and database tables. Validation pipelines can be made using
-    easily-readable, consecutive validation steps. Upon execution of the
-    validation plan, several reporting options are available. User-defined
-    thresholds for failure rates allow for the determination of appropriate
-    reporting actions. Many other workflows are available including an
-    information management workflow, where the aim is to record, collect, and
-    generate useful information on data tables.
 Authors@R: c(
-    person("Richard", "Iannone", , "rich@posit.co", c("aut", "cre"),
+    person("Richard", "Iannone", , "rich@posit.co", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-3925-190X")),
-    person("Mauricio", "Vargas", , "mavargas11@uc.cl", c("aut"),
+    person("Mauricio", "Vargas", , "mavargas11@uc.cl", role = "aut",
            comment = c(ORCID = "0000-0003-1017-7574")),
-    person("June", "Choe", , "jchoe001@gmail.com", c("aut"),
+    person("June", "Choe", , "jchoe001@gmail.com", role = "aut",
            comment = c(ORCID = "0000-0002-0701-921X")),
-    person("Olivier", "Roy", role = c("ctb"))
-    )
+    person("Olivier", "Roy", role = "ctb")
+  )
+Description: Validate data in data frames, 'tibble' objects, 'Spark'
+    'DataFrames', and database tables. Validation pipelines can be made
+    using easily-readable, consecutive validation steps. Upon execution of
+    the validation plan, several reporting options are available.
+    User-defined thresholds for failure rates allow for the determination
+    of appropriate reporting actions. Many other workflows are available
+    including an information management workflow, where the aim is to
+    record, collect, and generate useful information on data tables.
 License: MIT + file LICENSE
-URL: https://rstudio.github.io/pointblank/, https://github.com/rstudio/pointblank
+URL: https://rstudio.github.io/pointblank/,
+    https://github.com/rstudio/pointblank
 BugReports: https://github.com/rstudio/pointblank/issues
-Encoding: UTF-8
-LazyData: true
-ByteCompile: true
-RoxygenNote: 7.3.2
 Depends: 
     R (>= 3.5.0)
 Imports:
@@ -33,16 +31,16 @@ Imports:
     blastula (>= 0.3.3),
     cli (>= 3.6.0),
     DBI (>= 1.1.0),
+    dbplyr (>= 2.3.0),
     digest (>= 0.6.27),
     dplyr (>= 1.1.0),
-    dbplyr (>= 2.3.0),
     fs (>= 1.6.0),
     glue (>= 1.6.2),
     gt (>= 0.9.0),
     htmltools (>= 0.5.4),
     knitr (>= 1.42),
-    rlang (>= 1.0.3),
     magrittr,
+    rlang (>= 1.0.3),
     scales (>= 1.2.1),
     testthat (>= 3.2.0),
     tibble (>= 3.1.8),
@@ -53,22 +51,27 @@ Suggests:
     arrow,
     bigrquery,
     data.table,
+    dittodb,
     duckdb,
     ggforce,
     ggplot2 (>= 3.5.0),
     jsonlite,
+    lifecycle,
     log4r,
     lubridate,
-    RSQLite,
-    RMySQL,
-    RPostgres,
+    odbc,
     readr,
     rmarkdown,
-    sparklyr,
-    dittodb,
-    odbc,
-    lifecycle
-Roxygen: list(markdown = TRUE)
+    RMySQL,
+    RPostgres,
+    RSQLite,
+    sparklyr
+ByteCompile: true
 Config/testthat/edition: 3
 Config/testthat/parallel: true
-Config/testthat/start-first: expectation_fns, scan_data,tidyselect_fails_safely_batch,test_fns
+Config/testthat/start-first: expectation_fns,
+    scan_data,tidyselect_fails_safely_batch,test_fns
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2

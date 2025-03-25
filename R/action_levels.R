@@ -469,7 +469,7 @@ prime_actions <- function(actions) {
   } else {
     actions <-
       action_levels(
-        stop_at = 1,
+        error = 1,
         fns = list(stop = ~stock_stoppage(x = x))
       )
   }

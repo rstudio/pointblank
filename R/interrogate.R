@@ -526,7 +526,7 @@ interrogate <- function(
                   tidy_gsub(
                     "threshold\\s+?=\\s+?[0-9\\.]+?",
                     paste0(
-                      "actions = action_levels(stop_at = ",
+                      "actions = action_levels(error = ",
                       threshold_value, ")"
                     )
                   )
@@ -550,7 +550,7 @@ interrogate <- function(
                   tidy_gsub(
                     "\\)$",
                     paste0(
-                      ", actions = action_levels(stop_at = ",
+                      ", actions = action_levels(error = ",
                       threshold_value, "))"
                     )
                   )

@@ -320,13 +320,7 @@ action_levels <- function(
   # Gradual argument name deprecation
   ## Deprecation message
   if (!missing(warn_at) || !missing(stop_at) || !missing(notify_at)) {
-    cli::cli_warn(
-      c("!" = "`warn_at`, `stop_at`, and `notify_at` are deprecated.",
-        " " = "Action levels are now `warn`, `error`, and `critical`."),
-      class = "deprecatedWarning",
-      .frequency = "regularly",
-      .frequency_id = "pointblank-action-levels-args-deprecation"
-    )
+    warn_deprecated_action_levels()
   }
   ## Guard partial matching and redundant args
   rlang::check_dots_empty()
@@ -364,13 +358,25 @@ action_levels <- function(
 
 #' @rdname action_levels
 #' @export
-warn_on_fail <- function(warn = 1) {
+warn_on_fail <- function(warn = 1, warn_at = NULL) {
+  rlang::check_exclusive(warn, warn_at, .require = FALSE)
+  if (!missing(warn_at)) {
+    warn_deprecated_action_levels()
+  }
+  warn <- warn_at %||% warn
+
   action_levels(warn = warn, fns = list(warn = ~stock_warning(x = x)))
 }
 
 #' @rdname action_levels
 #' @export
-stop_on_fail <- function(error = 1) {
+stop_on_fail <- function(error = 1, stop_at = NULL) {
+  rlang::check_exclusive(error, stop_at, .require = FALSE)
+  if (!missing(stop_at)) {
+    warn_deprecated_action_levels()
+  }
+  error <- stop_at %||% error
+
   action_levels(error = error, fns = list(stop = ~stock_stoppage(x = x)))
 }
 
@@ -537,4 +543,14 @@ stock_warning <- function(x) {
     glue::glue(failure_message_gluestring(fn_name = fn_name, lang = "en"))
 
   warning(failure_message, call. = FALSE)
+}
+
+warn_deprecated_action_levels <- function() {
+  cli::cli_warn(
+    c("!" = "`warn_at`, `stop_at`, and `notify_at` are deprecated.",
+      " " = "Action levels are now `warn`, `error`, and `critical`."),
+    class = "deprecatedWarning",
+    .frequency = "regularly",
+    .frequency_id = "pointblank-action-levels-args-deprecation"
+  )
 }

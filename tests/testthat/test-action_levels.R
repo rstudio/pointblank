@@ -90,7 +90,7 @@ test_that("The `action_levels()` helper function works as expected", {
   al <-
     action_levels(
       warn = 3,
-      fns = list(warn = ~ my_great_function(vl = .vars_list))
+      fns = action_fns(warn = ~ my_great_function(vl = .vars_list))
     )
 
   al %>% expect_s3_class("action_levels")
@@ -118,7 +118,7 @@ test_that("The `action_levels()` helper function works as expected", {
 
   # Expect an error if not all components
   # of the `fns` list are formulas
-  expect_error(action_levels(warn = 3, fns = list(warn = "text")))
+  expect_error(action_levels(warn = 3, fns = action_fns(warn = "text")))
 
   # Expect an error if not all components
   # of the `fns` list are named
@@ -138,7 +138,7 @@ test_that("The `action_levels()` helper function works as expected", {
   expect_error(
     action_levels(
       warn = 3,
-      fns = list(
+      fns = action_fns(
         warn = ~ my_great_function(vl = .vars_list),
         notable =  ~ another_function()
       )
@@ -152,12 +152,12 @@ test_that("The appropriate actions occur when using `action_levels()`", {
     create_agent(tbl = small_table, label = "small_table_tests") %>%
     col_vals_gt(
       vars(d), 1000,
-      actions = action_levels(warn = 3, fns = list(warn = ~"warning")
+      actions = action_levels(warn = 3, fns = action_fns(warn = ~"warning")
       )
     ) %>%
     col_vals_in_set(
       vars(f), c("low", "high"),
-      actions = action_levels(warn = 0.1, fns = list(warn = ~"warning")
+      actions = action_levels(warn = 0.1, fns = action_fns(warn = ~"warning")
       )
     ) %>%
     interrogate()
@@ -169,12 +169,12 @@ test_that("The appropriate actions occur when using `action_levels()`", {
     create_agent(tbl = small_table, label = "small_table_tests") %>%
     col_vals_gt(
       vars(d), 1000,
-      actions = action_levels(critical = 3, fns = list(notify = ~"notify")
+      actions = action_levels(critical = 3, fns = action_fns(critical = ~"critical")
       )
     ) %>%
     col_vals_in_set(
       vars(f), c("low", "high"),
-      actions = action_levels(critical = 0.1, fns = list(notify = ~"notify")
+      actions = action_levels(critical = 0.1, fns = action_fns(critical = ~"critical")
       )
     ) %>%
     interrogate()
@@ -186,12 +186,12 @@ test_that("The appropriate actions occur when using `action_levels()`", {
     create_agent(tbl = small_table, label = "small_table_tests") %>%
     col_vals_gt(
       vars(d), 1000,
-      actions = action_levels(error = 3, fns = list(stop = ~"stop")
+      actions = action_levels(error = 3, fns = action_fns(error = ~"error")
       )
     ) %>%
     col_vals_in_set(
       vars(f), c("low", "high"),
-      actions = action_levels(error = 0.1, fns = list(stop = ~"stop")
+      actions = action_levels(error = 0.1, fns = action_fns(error = ~"error")
       )
     ) %>%
     interrogate()

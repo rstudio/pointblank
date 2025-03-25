@@ -301,10 +301,14 @@ NULL
 #' @rdname action_levels
 #' @export
 action_levels <- function(
+    warn = NULL,
+    error = NULL,
+    critical = NULL,
+    fns = NULL,
+    ...,
     warn_at = NULL,
     stop_at = NULL,
-    notify_at = NULL,
-    fns = NULL
+    notify_at = NULL
 ) {
 
   fns <- normalize_fns_list(fns = fns)

@@ -895,7 +895,7 @@ create_post_step_cli_output_a <- function(
     if (validation_condition == "STOP") {
       cli::cli_alert_danger(
         c(
-          "Step {.field {i}}: {.red STOP} condition met.",
+          "Step {.field {i}}: {.red ERROR} condition met.",
           print_time(time_diff_s),
           step_label
         )
@@ -913,8 +913,8 @@ create_post_step_cli_output_a <- function(
     if (validation_condition == "STOP") {
       cli::cli_alert_danger(
         c(
-          "Step {.field {i}}: {.red STOP} and ",
-          "{.blue NOTIFY} conditions met.",
+          "Step {.field {i}}: {.red ERROR} and ",
+          "{.blue CRITICAL} conditions met.",
           print_time(time_diff_s),
           step_label
         )
@@ -923,7 +923,7 @@ create_post_step_cli_output_a <- function(
       cli::cli_alert_warning(
         c(
           "Step {.field {i}}: {.yellow WARNING} and ",
-          "{.blue NOTIFY} conditions met.",
+          "{.blue CRITICAL} conditions met.",
           print_time(time_diff_s),
           step_label
         )
@@ -932,7 +932,7 @@ create_post_step_cli_output_a <- function(
   } else if (validation_condition == "NONE" && notify_condition != "NONE") {
     cli::cli_alert_warning(
       c(
-        "Step {.field {i}}: {.blue NOTIFY} condition met.",
+        "Step {.field {i}}: {.blue CRITICAL} condition met.",
         print_time(time_diff_s),
         step_label
       )

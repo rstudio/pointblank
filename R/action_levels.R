@@ -370,14 +370,18 @@ warn_on_fail <- function(warn = 1, warn_at = NULL) {
 
 #' @rdname action_levels
 #' @export
-stop_on_fail <- function(error = 1, stop_at = NULL) {
-  rlang::check_exclusive(error, stop_at, .require = FALSE)
-  if (!missing(stop_at)) {
-    warn_deprecated_action_levels()
-  }
-  error <- stop_at %||% error
-
+error_on_fail <- function(error = 1) {
   action_levels(error = error, fns = list(stop = ~stock_stoppage(x = x)))
+}
+
+#' @rdname action_levels
+#' @export
+stop_on_fail <- function(stop_at = 1) {
+  cli::cli_warn(c(
+    "!" = "`stop_on_fail(stop_at)` is deprecated.",
+    " " = "Please use `error_on_fail(error)` instead."
+  ))
+  error_on_fail(error = stop_at)
 }
 
 normalize_fns_list <- function(fns) {

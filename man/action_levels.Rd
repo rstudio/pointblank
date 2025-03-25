@@ -6,28 +6,37 @@
 \alias{stop_on_fail}
 \title{Set action levels: failure thresholds and functions to invoke}
 \usage{
-action_levels(warn_at = NULL, stop_at = NULL, notify_at = NULL, fns = NULL)
+action_levels(
+  warn = NULL,
+  error = NULL,
+  critical = NULL,
+  fns = NULL,
+  ...,
+  warn_at = NULL,
+  stop_at = NULL,
+  notify_at = NULL
+)
 
-warn_on_fail(warn_at = 1)
+warn_on_fail(warn = 1)
 
-stop_on_fail(stop_at = 1)
+stop_on_fail(error = 1)
 }
 \arguments{
-\item{warn_at}{\emph{Threshold value for the 'warn' failure state}
+\item{warn}{\emph{Threshold value for the 'warn' failure state}
 
 \code{scalar<integer|numeric>(val>=0)} // \emph{default:} \code{NULL} (\code{optional})
 
 Either the threshold number or the threshold fraction of \emph{failing} test
 units that result in entering the \code{warn} failure state.}
 
-\item{stop_at}{\emph{Threshold value for the 'stop' failure state}
+\item{error}{\emph{Threshold value for the 'stop' failure state}
 
 \code{scalar<integer|numeric>(val>=0)} // \emph{default:} \code{NULL} (\code{optional})
 
 Either the threshold number or the threshold fraction of \emph{failing} test
 units that result in entering the \code{stop} failure state.}
 
-\item{notify_at}{\emph{Threshold value for the 'notify' failure state}
+\item{critical}{\emph{Threshold value for the 'notify' failure state}
 
 \code{scalar<integer|numeric>(val>=0)} // \emph{default:} \code{NULL} (\code{optional})
 
@@ -44,6 +53,14 @@ the set of \code{warn}, \code{stop}, and \code{notify}. The functions correspond
 failure states are provided as formulas (e.g.,
 \code{list(warn = ~ warning("Too many failures."))}. A series of expressions for
 each named state can be used by enclosing the set of statements with \code{{ }}.}
+
+\item{...}{These dots are for future extensions and must be empty.}
+
+\item{warn_at}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
+
+\item{stop_at}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
+
+\item{notify_at}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
 }
 \value{
 An \code{action_levels} object.
@@ -142,7 +159,7 @@ For these examples, we will use the included \code{small_table} dataset.
 Create an \code{action_levels} object with fractional values for the \code{warn},
 \code{stop}, and \code{notify} states.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <-
   action_levels(
     warn_at = 0.2,
     stop_at = 0.8,
@@ -227,21 +244,21 @@ data).
 }\if{html}{\out{</div>}}
 
 \preformatted{## # A tibble: 13 × 8
-##    date_time           date           a b           c      d e    
+##    date_time           date           a b           c      d e
 ##    <dttm>              <date>     <int> <chr>   <dbl>  <dbl> <lgl>
-##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-…     3  3423. TRUE 
-##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-…     8 10000. TRUE 
-##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-…     3  2343. TRUE 
+##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-…     3  3423. TRUE
+##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-…     8 10000. TRUE
+##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-…     3  2343. TRUE
 ##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-…    NA  3892. FALSE
-##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-…     7   284. TRUE 
-##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-…     4  3291. TRUE 
-##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-…     3   843. TRUE 
+##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-…     7   284. TRUE
+##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-…     4  3291. TRUE
+##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-…     3   843. TRUE
 ##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-…     2  1036. FALSE
 ##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-…     9   838. FALSE
 ## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-…     9   838. FALSE
-## 11 2016-01-26 20:07:00 2016-01-26     4 2-dmx-…     7   834. TRUE 
+## 11 2016-01-26 20:07:00 2016-01-26     4 2-dmx-…     7   834. TRUE
 ## 12 2016-01-28 02:51:00 2016-01-28     2 7-dmx-…     8   108. FALSE
-## 13 2016-01-30 11:23:00 2016-01-30     1 3-dka-…    NA  2230. TRUE 
+## 13 2016-01-30 11:23:00 2016-01-30     1 3-dka-…    NA  2230. TRUE
 ## # … with 1 more variable: f <chr>
 ## Warning message:
 ## Exceedance of failed test units where values in `a` should have been >

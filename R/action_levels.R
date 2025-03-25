@@ -396,7 +396,8 @@ stop_on_fail <- function(stop_at = 1) {
 action_fns <- function(warn = NULL, error = NULL, critical = NULL) {
   fns <- structure(
     list(warn = warn, error = error, critical = critical,
-         stop = error, notify = critical), # temp compatibility with rest of internals
+         # temp compatibility with rest of internals
+         stop = error, notify = critical),
     class = "action_fns"
   )
   if (!all(vapply(fns, function(x) is.null(x) || is_formula(x), logical(1)))) {
@@ -435,37 +436,26 @@ normalize_fns_list <- function(fns) {
 
 normalize_fraction_count <- function(x) {
 
-  if (!is.null(x) && !any(c(inherits(x, "numeric"), inherits(x, "integer")))) {
+  fraction_count <- list(fraction = NULL, count = NULL)
 
-    stop(
-      "All values provided to `action_levels()` must be either ",
-      "`numeric` or `integer` types.",
-      call. = FALSE
-    )
+  if (is.null(x)) {
+    return(fraction_count)
   }
 
-  if (!is.null(x) && x <= 0) {
+  stopifnot(
+    "Action level thresholds must be a single number." =
+      length(x) == 1 || is.numeric(x),
+    "Action level threshold values must be positive." = x > 0
+  )
 
-    stop(
-      "All values provided to `action_levels()` must be `>=0`.",
-      call. = FALSE
-    )
-  }
-
-  if (!is.null(x)) {
-    if (x < 1) {
-      fraction <- x
-      count <- NULL
-    } else if (x >= 1) {
-      count <- floor(x) %>% as.numeric()
-      fraction <- NULL
-    }
+  if (x < 1) {
+    fraction_count$fraction <- x
   } else {
-    fraction <- NULL
-    count <- NULL
+    fraction_count$count <- floor(x)
   }
 
-  list(fraction = fraction, count = count)
+  fraction_count
+
 }
 
 prime_actions <- function(actions) {

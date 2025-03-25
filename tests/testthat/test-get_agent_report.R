@@ -14,7 +14,7 @@ test_that("Getting an agent report is possible", {
   expect_equal(
     colnames(report),
     c("i", "type", "columns", "values", "precon", "active", "eval",
-      "units", "n_pass", "f_pass", "W", "S", "N", "extract")
+      "units", "n_pass", "f_pass", "W", "E", "C", "extract")
   )
 
   # Expect a single row in this report
@@ -29,8 +29,8 @@ test_that("Getting an agent report is possible", {
   expect_type(report$n_pass, "double")
   expect_type(report$f_pass, "double")
   expect_type(report$W, "logical")
-  expect_type(report$S, "logical")
-  expect_type(report$N, "logical")
+  expect_type(report$E, "logical")
+  expect_type(report$C, "logical")
   expect_type(report$extract, "integer")
 
   # Use `col_is_character()` function to create
@@ -49,8 +49,8 @@ test_that("Getting an agent report is possible", {
   expect_equal(agent_report_empty$n_pass, NA_integer_)
   expect_equal(agent_report_empty$f_pass, NA_real_)
   expect_equal(agent_report_empty$W, NA)
-  expect_equal(agent_report_empty$S, NA)
-  expect_equal(agent_report_empty$N, NA)
+  expect_equal(agent_report_empty$E, NA)
+  expect_equal(agent_report_empty$C, NA)
   expect_equal(agent_report_empty$extract, NA)
 })
 

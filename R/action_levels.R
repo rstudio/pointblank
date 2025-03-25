@@ -465,17 +465,17 @@ normalize_fraction_count <- function(x) {
 prime_actions <- function(actions) {
 
   if (!is.null(actions)) {
-    if (is.null(actions$fns$warn)) {
-      actions$fns$warn <- ~stock_warning(x = x)
-    }
-    if (is.null(actions$fns$stop)) {
-      actions$fns$stop <- ~stock_stoppage(x = x)
-    }
+    actions$fns <-
+      action_fns(
+        warn = actions$fns$warn %||% ~stock_warning(x = x),
+        error = actions$fns$stop %||% ~stock_stoppage(x = x),
+        critical = actions$fns$critical
+      )
   } else {
     actions <-
       action_levels(
         error = 1,
-        fns = list(stop = ~stock_stoppage(x = x))
+        fns = action_fns(error = ~stock_stoppage(x = x))
       )
   }
 

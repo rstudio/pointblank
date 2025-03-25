@@ -104,6 +104,8 @@
 #'   `list(warn = ~ warning("Too many failures."))`. A series of expressions for
 #'   each named state can be used by enclosing the set of statements with `{ }`.
 #'
+#' @inheritParams rlang::args_dots_empty
+#'
 #' @return An `action_levels` object.
 #'
 #' @section Defining threshold values:
@@ -311,11 +313,32 @@ action_levels <- function(
     notify_at = NULL
 ) {
 
+  # Gradual argument name deprecation
+  ## Deprecation message
+  if (!missing(warn_at) || !missing(stop_at) || !missing(notify_at)) {
+    cli::cli_warn(
+      c("!" = "`warn_at`, `stop_at`, and `notify_at` are deprecated.",
+        " " = "Action levels are now `warn`, `error`, and `critical`."),
+      class = "deprecatedWarning",
+      .frequency = "regularly",
+      .frequency_id = "pointblank-action-levels-args-deprecation"
+    )
+  }
+  ## Guard partial matching and redundant args
+  rlang::check_dots_empty()
+  rlang::check_exclusive(warn, warn_at, .require = FALSE)
+  rlang::check_exclusive(error, stop_at, .require = FALSE)
+  rlang::check_exclusive(critical, notify_at, .require = FALSE)
+  ## Resolve names
+  warn <- warn %||% warn_at
+  error <- error %||% stop_at
+  critical <- critical %||% notify_at
+
   fns <- normalize_fns_list(fns = fns)
 
-  warn_list <- normalize_fraction_count(warn_at)
-  stop_list <- normalize_fraction_count(stop_at)
-  notify_list <- normalize_fraction_count(notify_at)
+  warn_list <- normalize_fraction_count(warn)
+  stop_list <- normalize_fraction_count(error)
+  notify_list <- normalize_fraction_count(critical)
 
   action_levels <-
     list(
@@ -337,14 +360,14 @@ action_levels <- function(
 
 #' @rdname action_levels
 #' @export
-warn_on_fail <- function(warn_at = 1) {
-  action_levels(warn_at = warn_at, fns = list(warn = ~stock_warning(x = x)))
+warn_on_fail <- function(warn = 1) {
+  action_levels(warn = warn, fns = list(warn = ~stock_warning(x = x)))
 }
 
 #' @rdname action_levels
 #' @export
-stop_on_fail <- function(stop_at = 1) {
-  action_levels(stop_at = stop_at, fns = list(stop = ~stock_stoppage(x = x)))
+stop_on_fail <- function(error = 1) {
+  action_levels(error = error, fns = list(stop = ~stock_stoppage(x = x)))
 }
 
 normalize_fns_list <- function(fns) {

@@ -180,7 +180,7 @@ test_that("The appropriate actions occur when using `action_levels()`", {
     interrogate()
 
   agent_report <- get_agent_report(agent, display_table = FALSE)
-  agent_report$N %>% expect_equal(rep(TRUE, 2))
+  agent_report$C %>% expect_equal(rep(TRUE, 2))
 
   agent <-
     create_agent(tbl = small_table, label = "small_table_tests") %>%
@@ -197,5 +197,5 @@ test_that("The appropriate actions occur when using `action_levels()`", {
     interrogate()
 
   agent_report <- get_agent_report(agent, display_table = FALSE)
-  agent_report$S %>% expect_equal(rep(TRUE, 2))
+  agent_report$E %>% expect_equal(rep(TRUE, 2))
 })

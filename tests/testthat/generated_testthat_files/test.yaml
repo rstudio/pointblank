@@ -1,0 +1,71 @@
+type: agent
+tbl: ~small_table
+tbl_name: ~small_table
+label: '[2025-03-25|16:16:29]'
+lang: en
+locale: en
+actions:
+  warn_fraction: 0.1
+  stop_fraction: 0.2
+steps:
+- col_vals_in_set:
+    columns: vars(f)
+    set:
+    - low
+    - mid
+    - high
+- col_vals_between:
+    columns: c("a")
+    left: 2.0
+    right: 8.0
+- col_vals_lt:
+    columns: vars(a)
+    value: vars(d)
+    na_pass: true
+    preconditions: ~. %>% dplyr::filter(a > 3)
+- col_vals_gt:
+    columns: vars(d)
+    value: 100.0
+- col_vals_equal:
+    columns: vars(d)
+    value: vars(d)
+    na_pass: true
+- col_vals_null:
+    columns: vars(c)
+- col_vals_not_null:
+    columns: matches("^.$")
+- col_vals_regex:
+    columns: c("b")
+    regex: '[0-9]-[a-z]{3}-[0-9]{3}'
+- col_is_character:
+    columns: vars(b)
+- col_exists:
+    columns: vars(a, b)
+- col_vals_expr:
+    expr: ~a%%1 == 0
+- rows_distinct:
+    columns: vars(a, b, c)
+- rows_distinct:
+    columns: everything()
+- col_schema_match:
+    schema:
+      date_time:
+      - POSIXct
+      - POSIXt
+      date: Date
+      a: integer
+      b: character
+      c: numeric
+      d: numeric
+      e: logical
+      f: character
+- conjointly:
+    fns:
+    - ~col_vals_lt(., vars(a), 8)
+    - ~col_vals_gt(., vars(c), vars(a))
+    - ~col_vals_not_null(., vars(b))
+- col_vals_between:
+    columns: vars(c)
+    left: 2.03
+    right: vars(d)
+    na_pass: true

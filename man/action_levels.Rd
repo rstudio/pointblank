@@ -3,6 +3,7 @@
 \name{action_levels}
 \alias{action_levels}
 \alias{warn_on_fail}
+\alias{error_on_fail}
 \alias{stop_on_fail}
 \title{Set action levels: failure thresholds and functions to invoke}
 \usage{
@@ -17,9 +18,11 @@ action_levels(
   notify_at = NULL
 )
 
-warn_on_fail(warn = 1)
+warn_on_fail(warn = 1, warn_at = NULL)
 
-stop_on_fail(error = 1)
+error_on_fail(error = 1)
+
+stop_on_fail(stop_at = 1)
 }
 \arguments{
 \item{warn}{\emph{Threshold value for the 'warn' failure state}

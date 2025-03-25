@@ -580,7 +580,7 @@ yaml_write <- function(
 #'   yielding a validation function per column? By default, this is `FALSE`
 #'   so expressions as written will be retained in the YAML representation.
 #'
-#' @return Nothing is returned. Instead, text is printed to the console.
+#' @return The yaml string is printed to the console and returned invisibly.
 #'
 #' @section Examples:
 #'
@@ -648,27 +648,25 @@ yaml_agent_string <- function(
     expanded = FALSE
 ) {
 
-  switch(
+  yaml_string <- switch(
     rlang::check_exclusive(agent, filename),
     agent = {
       # Display the agent's YAML as a nicely formatted string by
       # generating the YAML (`as_agent_yaml_list() %>% as.yaml()`) and
       # then emitting it to the console via `message()`
-      message(
-        as_agent_yaml_list(
-          agent = agent,
-          expanded = expanded
-        ) %>%
-          yaml::as.yaml(
-            handlers = list(
-              logical = function(x) {
-                result <- ifelse(x, "true", "false")
-                class(result) <- "verbatim"
-                result
-              }
-            )
+      as_agent_yaml_list(
+        agent = agent,
+        expanded = expanded
+      ) %>%
+        yaml::as.yaml(
+          handlers = list(
+            logical = function(x) {
+              result <- ifelse(x, "true", "false")
+              class(result) <- "verbatim"
+              result
+            }
           )
-      )
+        )
     },
     filename = {
       # Display the agent's YAML as a nicely formatted string by
@@ -677,12 +675,13 @@ yaml_agent_string <- function(
       if (!is.null(path)) {
         filename <- file.path(path, filename)
       }
-      message(
-        readLines(filename) %>%
-          paste(collapse = "\n")
-      )
+      readLines(filename) %>%
+        paste(collapse = "\n")
     }
   )
+
+  message(yaml_string)
+  invisible(yaml_string)
 
 }
 

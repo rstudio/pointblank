@@ -432,7 +432,7 @@ expect_col_vals_expr <- function(
     col_vals_expr(
       expr = {{ expr }},
       preconditions = {{ preconditions }},
-      actions = action_levels(notify_at = threshold)
+      actions = action_levels(critical = threshold)
     ) %>%
     interrogate() %>%
     .$validation_set
@@ -485,7 +485,7 @@ test_col_vals_expr <- function(
     col_vals_expr(
       expr = {{ expr }},
       preconditions = {{ preconditions }},
-      actions = action_levels(notify_at = threshold)
+      actions = action_levels(critical = threshold)
     ) %>%
     interrogate() %>%
     .$validation_set

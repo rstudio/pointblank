@@ -68,8 +68,8 @@
 #' `n_passed` / `n` (`num [1]`)
 #' \item `f_failed`: the fraction of failing test units for the validation step,
 #' `n_failed` / `n` (`num [1]`)
-#' \item `warn`, `stop`, `notify`: a logical value indicating whether the level
-#' of failing test units caused the corresponding conditions to be entered
+#' \item `warn`, `error`, `critical`: a logical value indicating whether the
+#' level of failing test units caused the corresponding conditions to be entered
 #' (`lgl [1]`)
 #' \item `lang`: the two-letter language code that indicates which
 #' language should be used for all briefs, the agent report, and the reporting
@@ -80,8 +80,8 @@
 #' then certain length-one components in the **x-list** will be expanded to the
 #' total number of validation steps (these are: `i`, `type`, `columns`,
 #' `values`, `briefs`, `eval_error`, `eval_warning`, `capture_stack`, `n`,
-#' `n_passed`, `n_failed`, `f_passed`, `f_failed`, `warn`, `stop`, and
-#' `notify`). The **x-list** will also have additional components when `i` is
+#' `n_passed`, `n_failed`, `f_passed`, `f_failed`, `warn`, `error`, and
+#' `critical`). The **x-list** will also have additional components when `i` is
 #' `NULL`, which are:
 #' \itemize{
 #' \item `report_object`: a **gt** table object, which is also presented as the
@@ -125,14 +125,14 @@
 #' ```
 #'
 #' Create an `action_levels()` list with fractional values for the `warn`,
-#' `stop`, and `notify` states.
+#' `error`, and `critical` states.
 #'
 #' ```r
 #' al <-
 #'   action_levels(
-#'     warn_at = 0.2,
-#'     stop_at = 0.8,
-#'     notify_at = 0.345
+#'     warn = 0.2,
+#'     error = 0.8,
+#'     critical = 0.345
 #'   )
 #' ```
 #'
@@ -175,8 +175,8 @@ get_agent_x_list <- function(
   if (!is.null(i)) {
 
     .warn <- agent$validation_set[[i, "warn"]]
-    .notify <- agent$validation_set[[i, "notify"]]
-    .stop <- agent$validation_set[[i, "stop"]]
+    .error <- agent$validation_set[[i, "stop"]]
+    .critical <- agent$validation_set[[i, "notify"]]
 
     .agent_label <- agent$label
     .time_start <- agent$time_start
@@ -232,8 +232,8 @@ get_agent_x_list <- function(
         f_passed = .f_passed,
         f_failed = .f_failed,
         warn = .warn,
-        stop = .stop,
-        notify = .notify,
+        error = .error,
+        critical = .critical,
         lang = .lang
       )
 
@@ -243,8 +243,8 @@ get_agent_x_list <- function(
   if (is.null(i)) {
 
     .warn <- agent$validation_set$warn
-    .notify <- agent$validation_set$notify
-    .stop <- agent$validation_set$stop
+    .error <- agent$validation_set$stop
+    .critical <- agent$validation_set$notify
 
     .agent_label <- agent$label
     .time_start <- agent$time_start
@@ -343,8 +343,8 @@ get_agent_x_list <- function(
         f_passed = .f_passed,
         f_failed = .f_failed,
         warn = .warn,
-        stop = .stop,
-        notify = .notify,
+        error = .error,
+        critical = .critical,
         lang = .lang,
         validation_set = .validation_set,
         report_object = .report_object,

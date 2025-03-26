@@ -399,7 +399,7 @@ expect_rows_distinct <- function(
     rows_distinct(
       columns = {{ columns }},
       preconditions = {{ preconditions }},
-      actions = action_levels(notify_at = threshold)
+      actions = action_levels(critical = threshold)
     ) %>%
     interrogate() %>%
     .$validation_set
@@ -452,7 +452,7 @@ test_rows_distinct <- function(
     rows_distinct(
       columns = {{ columns }},
       preconditions = {{ preconditions }},
-      actions = action_levels(notify_at = threshold)
+      actions = action_levels(critical = threshold)
     ) %>%
     interrogate() %>%
     .$validation_set

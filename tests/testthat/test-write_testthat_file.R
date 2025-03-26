@@ -2,7 +2,7 @@
 agent <-
   create_agent(
     tbl = ~ small_table,
-    actions = action_levels(stop_at = 0.1)
+    actions = action_levels(error = 0.1)
   ) %>%
   col_vals_gt(
     vars(date_time), vars(date),

@@ -478,17 +478,17 @@ make_action_levels_str <- function(al) {
 
   if (!is.null(al$warn_fraction) || !is.null(al$warn_count)) {
     top_args <-
-      c(top_args, paste0("warn_at = ", c(al$warn_fraction, al$warn_count)))
+      c(top_args, paste0("warn = ", c(al$warn_fraction, al$warn_count)))
   }
   if (!is.null(al$stop_fraction) || !is.null(al$stop_count)) {
     top_args <-
-      c(top_args, paste0("stop_at = ", c(al$stop_fraction, al$stop_count)))
+      c(top_args, paste0("error = ", c(al$stop_fraction, al$stop_count)))
   }
   if (!is.null(al$notify_fraction) || !is.null(al$notify_count)) {
     top_args <-
       c(
         top_args,
-        paste0("notify_at = ", c(al$notify_fraction, al$notify_count))
+        paste0("critical = ", c(al$notify_fraction, al$notify_count))
       )
   }
 
@@ -498,15 +498,15 @@ make_action_levels_str <- function(al) {
     fns_args <- c(fns_args, paste0("warn = ", al$fns$warn))
   }
   if (!is.null(al$fns$stop)) {
-    fns_args <- c(fns_args, paste0("stop = ", al$fns$stop))
+    fns_args <- c(fns_args, paste0("error = ", al$fns$stop))
   }
   if (!is.null(al$fns$notify)) {
-    fns_args <- c(fns_args, paste0("notify = ", al$fns$notify))
+    fns_args <- c(fns_args, paste0("critical = ", al$fns$notify))
   }
 
   if (length(fns_args) > 0) {
     fns_args <-
-      paste0("    fns = list(\n", paste0("      ", fns_args), "\n    )")
+      paste0("    fns = action_fns(\n", paste0("      ", fns_args), "\n    )")
   }
 
   paste0(

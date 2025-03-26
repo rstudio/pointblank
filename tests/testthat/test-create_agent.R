@@ -101,7 +101,7 @@ test_that("Creating a valid `agent` object is possible", {
   # RHS for `tbl_name`
   expect_equal(
     create_agent(tbl = ~ pointblank::small_table) %>% .$tbl_name,
-    "~pointblank::small_table"
+    "~ pointblank::small_table"
   )
 
   # Expect that using a `read_fn` to read in a table but

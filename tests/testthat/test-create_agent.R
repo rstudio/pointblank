@@ -186,4 +186,12 @@ test_that("auto generation of `tbl_name` edgecases", {
     "data.frame(a = c(1, 2, 3), b = 4:6)"
   )
 
+  expect_equal(
+    create_agent(~ data.frame(
+      a = c(1, 2, 3), b = c(1, 2, 3), c = c(1, 2, 3), d = c(1, 2, 3)
+    )) %>%
+      el("tbl_name"),
+    "~..."
+  )
+
 })

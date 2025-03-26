@@ -1,5 +1,7 @@
 # pointblank (development version)
 
+- Bugfix agents auto-generating a table label that was too long. They now get truncated (#614)
+
 - Bugfix agents not searching the formula environment when materializing `~ tbl` (#599)
 
 - `info_columns()` warn more informatively when no columns are selected (#589).

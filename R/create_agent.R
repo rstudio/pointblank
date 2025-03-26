@@ -512,8 +512,7 @@ create_agent <- function(
     tbl_name <- rlang::expr_deparse(tbl_expr)
     # truncate tbl expr that exceeds `deparse()` width (#613)
     if (nchar(tbl_name) > 60) {
-      tbl_expr_truncated <- rlang::call2(tbl_expr[[1]], quote(...))
-      tbl_name <- rlang::expr_deparse(tbl_expr_truncated)
+      tbl_name <- truncate_expr(tbl_expr)
     }
   }
   # ignore empty or magrittr pipe

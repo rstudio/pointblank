@@ -1740,3 +1740,12 @@ string_is_valid_symbol <- function(x) {
   rlang::is_scalar_character(x) &&
     identical(make.names(x), x)
 }
+
+truncate_expr <- function(x) {
+  if (rlang::is_symbol(x)) {
+    rlang::expr_deparse(x)
+  } else {
+    truncated <- rlang::call2(x[[1]], quote(...))
+    rlang::expr_deparse(truncated)
+  }
+}

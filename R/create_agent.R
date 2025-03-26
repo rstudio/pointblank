@@ -507,13 +507,16 @@ create_agent <- function(
 
   # Try to infer the table name if one isn't
   # explicitly given in `tbl_name`
-  if (!is.null(tbl) && is.null(tbl_name)) {
-    tbl_name <- deparse(match.call()$tbl)
-    if (tbl_name[1] == ".") {
-      tbl_name <- NA_character_
+  if (is.null(tbl_name) && !missing(tbl)) {
+    tbl_expr <- rlang::enexpr(tbl)
+    tbl_name <- paste0(deparse(tbl_expr), collapse = " ")
+    # truncate tbl expr that exceeds `deparse()` width (#613)
+    if (nchar(tbl_name) > 60) {
+      tbl_name <- truncate_expr(tbl_expr)
     }
   }
-  if (is.null(tbl_name)) {
+  # ignore empty or magrittr pipe
+  if (is.null(tbl) || tbl_name == ".") {
     tbl_name <- NA_character_
   }
 

@@ -509,7 +509,7 @@ create_agent <- function(
   # explicitly given in `tbl_name`
   if (is.null(tbl_name) && !missing(tbl)) {
     tbl_expr <- rlang::enexpr(tbl)
-    tbl_name <- rlang::expr_deparse(tbl_expr)
+    tbl_name <- paste0(deparse(tbl_expr), collapse = " ")
     # truncate tbl expr that exceeds `deparse()` width (#613)
     if (nchar(tbl_name) > 60) {
       tbl_name <- truncate_expr(tbl_expr)

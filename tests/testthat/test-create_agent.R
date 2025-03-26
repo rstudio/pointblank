@@ -101,7 +101,7 @@ test_that("Creating a valid `agent` object is possible", {
   # RHS for `tbl_name`
   expect_equal(
     create_agent(tbl = ~ pointblank::small_table) %>% .$tbl_name,
-    "~ pointblank::small_table"
+    "~pointblank::small_table"
   )
 
   # Expect that using a `read_fn` to read in a table but
@@ -197,7 +197,7 @@ test_that("truncate long auto-generated `tbl_name`s", {
   expect_identical(
     create_agent(~ data.frame(a = c(1, 2, 3), b = 4:6)) %>%
       el("tbl_name"),
-    "~ data.frame(a = c(1, 2, 3), b = 4:6)"
+    "~data.frame(a = c(1, 2, 3), b = 4:6)"
   )
 
 })

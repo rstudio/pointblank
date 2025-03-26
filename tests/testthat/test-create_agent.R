@@ -170,7 +170,7 @@ test_that("`agent` can materialize table from formula environment", {
 
 })
 
-test_that("auto generation of `tbl_name` edgecases", {
+test_that("truncate long auto-generated `tbl_name`s", {
 
   # Isue #613 (can't use base pipe in test but this is equivalent)
   expect_identical(
@@ -186,12 +186,18 @@ test_that("auto generation of `tbl_name` edgecases", {
     "data.frame(a = c(1, 2, 3), b = 4:6)"
   )
 
+  # Same treatment for formulas
   expect_identical(
     create_agent(~ data.frame(
       a = c(1, 2, 3), b = c(1, 2, 3), c = c(1, 2, 3), d = c(1, 2, 3)
     )) %>%
       el("tbl_name"),
     "~..."
+  )
+  expect_identical(
+    create_agent(~ data.frame(a = c(1, 2, 3), b = 4:6)) %>%
+      el("tbl_name"),
+    "~ data.frame(a = c(1, 2, 3), b = 4:6)"
   )
 
 })

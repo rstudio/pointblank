@@ -2100,10 +2100,14 @@ interrogate_expr <- function(
   # Get the expression
   expr <- get_values_at_idx(agent = agent, idx = idx)
 
+  # Determine whether NAs should be allowed
+  na_pass <- get_column_na_pass_at_idx(agent = agent, idx = idx)
+
   # Create function for validating the `col_vals_expr()` step function
   tbl_val_expr <- function(
     table,
-    expr
+    expr,
+    na_pass
   ) {
 
     # Ensure that the input `table` is actually a table object
@@ -2112,12 +2116,20 @@ interrogate_expr <- function(
     expr <- expr[[1]]
 
     table %>%
-      dplyr::mutate(pb_is_good_ = !!expr) %>%
-      dplyr::filter(!is.na(pb_is_good_))
+      dplyr::mutate(
+        pb_is_good_ = !!expr,
+        pb_is_good_ = replace(pb_is_good_, is.na(pb_is_good_), !!na_pass)
+      )
   }
 
   # Perform rowwise validations for the column
-  pointblank_try_catch(tbl_val_expr(table = table, expr = expr))
+  pointblank_try_catch(
+    tbl_val_expr(
+      table = table,
+      expr = expr,
+      na_pass = na_pass
+    )
+  )
 }
 
 interrogate_specially <- function(

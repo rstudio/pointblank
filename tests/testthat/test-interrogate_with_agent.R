@@ -2016,3 +2016,29 @@ test_that("Select validation steps can be `active` or not", {
       )
   )
 })
+
+test_that("col_vals_expr(na_pass) works as expected #616", {
+
+  agent <- small_table %>%
+    create_agent() %>%
+    col_vals_equal(c, 3) %>%
+    col_vals_expr(expr(c == 3)) %>%
+    interrogate()
+
+  expect_identical(
+    agent$validation_set$tbl_checked[[1]][[1]],
+    agent$validation_set$tbl_checked[[2]][[1]]
+  )
+
+  agent <- small_table %>%
+    create_agent() %>%
+    col_vals_equal(c, 3, na_pass = TRUE) %>%
+    col_vals_expr(expr(c == 3), na_pass = TRUE) %>%
+    interrogate()
+
+  expect_identical(
+    agent$validation_set$tbl_checked[[1]][[1]],
+    agent$validation_set$tbl_checked[[2]][[1]]
+  )
+
+})

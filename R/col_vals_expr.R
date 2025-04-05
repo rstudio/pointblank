@@ -68,6 +68,13 @@
 #' formally tested (so be mindful of this when using unsupported backends with
 #' **pointblank**).
 #'
+#' @section Missing Values:
+#'
+#' This validation function supports special handling of `NA` values. The
+#' `na_pass` argument will determine whether an `NA` value appearing in a test
+#' unit should be counted as a *pass* or a *fail*. The default of `na_pass =
+#' FALSE` means that any `NA`s encountered will accumulate failing test units.
+#'
 #' @section Preconditions:
 #'
 #' Providing expressions as `preconditions` means **pointblank** will preprocess
@@ -313,6 +320,7 @@ NULL
 col_vals_expr <- function(
     x,
     expr,
+    na_pass = FALSE,
     preconditions = NULL,
     segments = NULL,
     actions = NULL,
@@ -353,6 +361,7 @@ col_vals_expr <- function(
       create_agent(x, label = "::QUIET::") %>%
       col_vals_expr(
         expr = expr,
+        na_pass = na_pass,
         preconditions = preconditions,
         segments = segments,
         label = label,
@@ -400,6 +409,7 @@ col_vals_expr <- function(
         columns_expr = NA_character_,
         column = NA_character_,
         values = expr,
+        na_pass = na_pass,
         preconditions = preconditions,
         seg_expr = segments,
         seg_col = seg_col,
@@ -421,6 +431,7 @@ col_vals_expr <- function(
 expect_col_vals_expr <- function(
     object,
     expr,
+    na_pass = FALSE,
     preconditions = NULL,
     threshold = 1
 ) {
@@ -431,6 +442,7 @@ expect_col_vals_expr <- function(
     create_agent(tbl = object, label = "::QUIET::") %>%
     col_vals_expr(
       expr = {{ expr }},
+      na_pass = na_pass,
       preconditions = {{ preconditions }},
       actions = action_levels(notify_at = threshold)
     ) %>%
@@ -476,6 +488,7 @@ expect_col_vals_expr <- function(
 test_col_vals_expr <- function(
     object,
     expr,
+    na_pass = FALSE,
     preconditions = NULL,
     threshold = 1
 ) {
@@ -484,6 +497,7 @@ test_col_vals_expr <- function(
     create_agent(tbl = object, label = "::QUIET::") %>%
     col_vals_expr(
       expr = {{ expr }},
+      na_pass = na_pass,
       preconditions = {{ preconditions }},
       actions = action_levels(notify_at = threshold)
     ) %>%

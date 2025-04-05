@@ -1,5 +1,7 @@
 # pointblank (development version)
 
+- Add `na_pass` to `col_vals_expr()` for finer control of `NA` values (#617)
+
 - Bugfix agents auto-generating a table label that was too long. They now get truncated (#614)
 
 - Bugfix agents not searching the formula environment when materializing `~ tbl` (#599)

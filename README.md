@@ -14,6 +14,7 @@
 [![Monthly Downloads](https://cranlogs.r-pkg.org/badges/pointblank)](https://CRAN.R-project.org/package=pointblank)
 [![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/pointblank)](https://CRAN.R-project.org/package=pointblank)
 [![Posit Cloud](https://img.shields.io/badge/Posit%20Cloud-pointblank%20Test%20Drive-blue?style=social&logo=rstudio&logoColor=75AADB)](https://rstudio.cloud/project/3411822)
+[![Discord](https://img.shields.io/discord/1345877328982446110?color=%237289da&label=Discord)](https://discord.com/invite/YH7CybCNCQ)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.1%20adopted-ff69b4.svg)](https://www.contributor-covenant.org/version/2/1/code_of_conduct.html)
 <!-- badges: end -->
 

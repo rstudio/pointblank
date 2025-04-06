@@ -2017,12 +2017,12 @@ test_that("Select validation steps can be `active` or not", {
   )
 })
 
-test_that("col_vals_expr(na_pass) works as expected #616", {
+test_that("col_vals_expr(na_pass) works as expected (#616)", {
 
   agent <- small_table %>%
     create_agent() %>%
     col_vals_equal(c, 3) %>%
-    col_vals_expr(expr(c == 3)) %>%
+    col_vals_expr(expr(c == 3), na_pass = FALSE) %>%
     interrogate()
 
   expect_identical(
@@ -2039,6 +2039,41 @@ test_that("col_vals_expr(na_pass) works as expected #616", {
   expect_identical(
     agent$validation_set$tbl_checked[[1]][[1]],
     agent$validation_set$tbl_checked[[2]][[1]]
+  )
+
+})
+
+test_that("col_vals_expr(na_pass) NA value handling (#617)", {
+
+  agent1 <- small_table %>%
+    create_agent() %>%
+    col_vals_expr(expr(c == 3)) %>%
+    interrogate()
+  expect_true(agent1$validation_set$eval_warning)
+
+  agent2 <- small_table %>%
+    create_agent() %>%
+    col_vals_expr(expr(c == 3), na_pass = FALSE) %>%
+    interrogate()
+  expect_false(agent2$validation_set$eval_warning)
+  expect_identical(
+    agent1$validation_set$tbl_checked,
+    agent2$validation_set$tbl_checked
+  )
+
+  # Warnings trickle up for test/expect functions
+  tbl <- data.frame(x = c(NA, 1))
+  expect_warning(
+    expect_false(
+      tbl %>%
+        test_col_vals_expr(expr(x == 1))
+    )
+  )
+  expect_warning(
+    expect_error(
+      tbl %>%
+        expect_col_vals_expr(expr(x == 1))
+    )
   )
 
 })

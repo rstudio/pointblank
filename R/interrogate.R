@@ -2119,19 +2119,23 @@ interrogate_expr <- function(
       dplyr::mutate(pb_is_good_ = !!expr)
 
     if (anyNA(tbl$pb_is_good_)) {
+
+      # Throw warning if `expr` results in `NA` values but `na_pass` was unset
       if (is.na(na_pass)) {
         warn(
           paste(
             "Expression generated `NA` value(s).",
             "Edit the `expr` or specify `na_pass` (default is `FALSE`)."
           ),
-          # "simpleWarning" lets it trickle up to test/expect functions
+          # "simpleWarning" lets it trickle up to the test/expect functions
           class = "simpleWarning"
         )
-        # Re-apply default `na_pass = FALSE`
+        # Re-apply user-facing default of `na_pass = FALSE`
         na_pass <- FALSE
       }
+
       tbl$pb_is_good_[is.na(tbl$pb_is_good_)] <- na_pass
+
     }
 
     tbl

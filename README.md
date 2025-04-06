@@ -349,13 +349,6 @@ a *Test Drive* in the [Posit Cloud project](https://rstudio.cloud/project/341182
 
 <hr>
 
-## DISCUSSIONS
-
-Let's talk about data validation and data documentation in
-[**pointblank** Discussions](https://github.com/rstudio/pointblank/discussions)!
-It's a great place to ask questions about how to use the package, discuss
-some ideas, engage with others, and much more!
-
 ## INSTALLATION
 
 Want to try this out? The **pointblank** package is available on **CRAN**:
@@ -371,9 +364,17 @@ You can also install the development version of **pointblank** from **GitHub**:
 pak::pak("rstudio/pointblank")
 ```
 
+## Getting in Touch
+
 If you encounter a bug, have usage questions, or want to share ideas to
 make this package better, feel free to file an
 [issue](https://github.com/rstudio/pointblank/issues).
+
+Wanna talk about data validation in a more relaxed setting? Join our
+[_Discord server_](https://discord.com/invite/YH7CybCNCQ)! This is a great option for asking about
+the development of Pointblank, pitching ideas that may become features, and just sharing your ideas!
+
+[![Discord Server](https://img.shields.io/badge/Discord-Chat%20with%20us-blue?style=social&logo=discord&logoColor=purple)](https://discord.com/invite/YH7CybCNCQ)
 
 -----
 

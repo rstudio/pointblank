@@ -275,21 +275,21 @@ test_that("pointblank expectation functions produce the correct results", {
   #
 
   expect_true(test_col_vals_expr(tbl, ~ a %% 1 == 0))
-  expect_true(test_col_vals_expr(tbl, ~ c %% 1 == 0))
+  expect_true(test_col_vals_expr(tbl, ~ c %% 1 == 0, na_pass = TRUE))
   expect_true(test_col_vals_expr(tbl, expr(a %% 1 == 0)))
-  expect_true(test_col_vals_expr(tbl, expr(c %% 1 == 0)))
+  expect_true(test_col_vals_expr(tbl, expr(c %% 1 == 0), na_pass = TRUE))
 
   expect_true(
     test_col_vals_expr(tbl, ~ case_when(
       b == 1 ~ a > 5 & c >= 1
-    ))
+    ), na_pass = TRUE)
   )
   expect_true(
     test_col_vals_expr(tbl, expr(
       case_when(
         b == 1 ~ a > 5 & c >= 1
       )
-    ))
+    ), na_pass = TRUE)
   )
 
   expect_true(test_col_vals_expr(tbl, ~ a < 0, threshold = 1000))

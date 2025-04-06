@@ -152,7 +152,7 @@ dplyr::tibble(
     value = 12,
     preconditions = ~ . %>% dplyr::mutate(c = a + b)
   ) %>%
-  col_is_numeric(c(a, b))
+  col_is_numeric(columns = c(a, b))
 ```
 
     Error: Exceedance of failed test units where values in `c` should have been < `12`.

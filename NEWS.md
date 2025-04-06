@@ -1,6 +1,6 @@
 # pointblank (development version)
 
-- Add `na_pass` to `col_vals_expr()` for finer control of `NA` values. Additionally, a good practice safeguard: if an expression generates `NA` values, a warning is thrown to set `na_pass` explicitly. (#617)
+- Add `na_pass` to `col_vals_expr()` for finer control of `NA` values. Previously, `NA`s were ignored, but now they caught as failures with the default `na_pass = FALSE`. As a safeguard, if an expression generates `NA` values while `na_pass` is unset, a warning is thrown. (#617)
 
 - Bugfix agents auto-generating a table label that was too long. They now get truncated (#614)
 

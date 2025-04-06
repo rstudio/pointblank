@@ -78,14 +78,16 @@ agent <-
     actions = al
   ) %>%
   col_vals_between(
-    vars(a), 1, 9,
+    columns = a,
+    left = 1,
+    right = 9,
     na_pass = TRUE
   ) %>%
   col_vals_lt(
-    vars(c), 12,
+    columns = c, 12,
     preconditions = ~ . %>% dplyr::mutate(c = a + b)
   ) %>%
-  col_is_numeric(vars(a, b)) %>%
+  col_is_numeric(columns = c(a, b)) %>%
   interrogate()
 ```
 
@@ -139,11 +141,14 @@ dplyr::tibble(
     b = c(6, 1, 0, 6,  0, 7)
   ) %>%
   col_vals_between(
-    a, 1, 9,
+    columns = a,
+    left = 1,
+    right = 9,
     na_pass = TRUE
   ) %>%
   col_vals_lt(
-    c, 12,
+    columns = c,
+    value = 12,
     preconditions = ~ . %>% dplyr::mutate(c = a + b)
   ) %>%
   col_is_numeric(c(a, b))
@@ -167,17 +172,20 @@ dplyr::tibble(
     b = c(6, 1, 0, 6,  0, 7)
   ) %>%
   col_vals_between(
-    a, 1, 9,
+    columns = a,
+    left = 1,
+    right = 9,
     na_pass = TRUE,
     actions = warn_on_fail()
   ) %>%
   col_vals_lt(
-    c, 12,
+    columns = c,
+    value = 12,
     preconditions = ~ . %>% dplyr::mutate(c = a + b),
     actions = warn_on_fail()
   ) %>%
   col_is_numeric(
-    c(a, b),
+    columns = c(a, b),
     actions = warn_on_fail()
   )
 ```

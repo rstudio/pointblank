@@ -330,6 +330,11 @@ col_vals_expr <- function(
     active = TRUE
 ) {
 
+  # Mark if unspecified and resolve the default behavior at interrogate
+  if (missing(na_pass)) {
+    na_pass <- NA
+  }
+
   if (!inherits(expr, "call")) {
 
     if (rlang::is_formula(expr)) {
@@ -436,6 +441,11 @@ expect_col_vals_expr <- function(
     threshold = 1
 ) {
 
+  # Mark if unspecified and resolve the default behavior at interrogate
+  if (missing(na_pass)) {
+    na_pass <- NA
+  }
+
   fn_name <- "expect_col_vals_expr"
 
   vs <-
@@ -492,6 +502,11 @@ test_col_vals_expr <- function(
     preconditions = NULL,
     threshold = 1
 ) {
+
+  # Mark if unspecified and resolve the default behavior at interrogate
+  if (missing(na_pass)) {
+    na_pass <- NA
+  }
 
   vs <-
     create_agent(tbl = object, label = "::QUIET::") %>%

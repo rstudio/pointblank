@@ -2115,11 +2115,27 @@ interrogate_expr <- function(
 
     expr <- expr[[1]]
 
-    table %>%
-      dplyr::mutate(
-        pb_is_good_ = !!expr,
-        pb_is_good_ = replace(pb_is_good_, is.na(pb_is_good_), !!na_pass)
-      )
+    tbl <- table %>%
+      dplyr::mutate(pb_is_good_ = !!expr)
+
+    if (anyNA(tbl$pb_is_good_)) {
+      if (is.na(na_pass)) {
+        warn(
+          paste(
+            "Expression generated `NA` value(s).",
+            "Edit the `expr` or specify `na_pass` (default is `FALSE`)."
+          ),
+          # "simpleWarning" lets it trickle up to test/expect functions
+          class = "simpleWarning"
+        )
+        # Re-apply default `na_pass = FALSE`
+        na_pass <- FALSE
+      }
+      tbl$pb_is_good_[is.na(tbl$pb_is_good_)] <- na_pass
+    }
+
+    tbl
+
   }
 
   # Perform rowwise validations for the column

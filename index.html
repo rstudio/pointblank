@@ -117,14 +117,16 @@
 <span>    actions <span class="op">=</span> <span class="va">al</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, <span class="fl">1</span>, <span class="fl">9</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">a</span>,</span>
+<span>    left <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    right <span class="op">=</span> <span class="fl">9</span>,</span>
 <span>    na_pass <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, <span class="fl">12</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">c</span>, <span class="fl">12</span>,</span>
 <span>    preconditions <span class="op">=</span> <span class="op">~</span> <span class="va">.</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>c <span class="op">=</span> <span class="va">a</span> <span class="op">+</span> <span class="va">b</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="reference/col_is_numeric.html">col_is_numeric</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="reference/col_is_numeric.html">col_is_numeric</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>The reporting’s pretty sweet. We can get a <strong>gt</strong>-based report by printing an <em>agent</em>.</p>
 <p><img src="reference/figures/agent_report.png"></p>
@@ -146,14 +148,17 @@
 <span>    b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">6</span>,  <span class="fl">0</span>, <span class="fl">7</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span></span>
-<span>    <span class="va">a</span>, <span class="fl">1</span>, <span class="fl">9</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">a</span>,</span>
+<span>    left <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    right <span class="op">=</span> <span class="fl">9</span>,</span>
 <span>    na_pass <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span></span>
-<span>    <span class="va">c</span>, <span class="fl">12</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">c</span>,</span>
+<span>    value <span class="op">=</span> <span class="fl">12</span>,</span>
 <span>    preconditions <span class="op">=</span> <span class="op">~</span> <span class="va">.</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>c <span class="op">=</span> <span class="va">a</span> <span class="op">+</span> <span class="va">b</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="reference/col_is_numeric.html">col_is_numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="reference/col_is_numeric.html">col_is_numeric</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>Error<span class="sc">:</span> Exceedance of failed test units where values <span class="cf">in</span> <span class="st">`</span><span class="at">c</span><span class="st">`</span> should have been <span class="sc">&lt;</span> <span class="st">`</span><span class="at">12</span><span class="st">`</span>.</span>
 <span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>The <span class="st">`</span><span class="at">col_vals_lt()</span><span class="st">`</span> validation failed beyond the absolute threshold <span class="fu">level</span> (<span class="dv">1</span>).</span>
 <span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="sc">*</span> failure <span class="fu">level</span> (<span class="dv">2</span>) <span class="sc">&gt;=</span> failure <span class="fu">threshold</span> (<span class="dv">1</span>) </span></code></pre></div>
@@ -168,17 +173,20 @@
 <span>    b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">6</span>,  <span class="fl">0</span>, <span class="fl">7</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span></span>
-<span>    <span class="va">a</span>, <span class="fl">1</span>, <span class="fl">9</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">a</span>,</span>
+<span>    left <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    right <span class="op">=</span> <span class="fl">9</span>,</span>
 <span>    na_pass <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    actions <span class="op">=</span> <span class="fu"><a href="reference/action_levels.html">warn_on_fail</a></span><span class="op">(</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span></span>
-<span>    <span class="va">c</span>, <span class="fl">12</span>,</span>
+<span>    columns <span class="op">=</span> <span class="va">c</span>,</span>
+<span>    value <span class="op">=</span> <span class="fl">12</span>,</span>
 <span>    preconditions <span class="op">=</span> <span class="op">~</span> <span class="va">.</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>c <span class="op">=</span> <span class="va">a</span> <span class="op">+</span> <span class="va">b</span><span class="op">)</span>,</span>
 <span>    actions <span class="op">=</span> <span class="fu"><a href="reference/action_levels.html">warn_on_fail</a></span><span class="op">(</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/col_is_numeric.html">col_is_numeric</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span>,</span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span>,</span>
 <span>    actions <span class="op">=</span> <span class="fu"><a href="reference/action_levels.html">warn_on_fail</a></span><span class="op">(</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 x 2</span></span>
@@ -290,11 +298,6 @@
 <hr>
 </div>
 <div class="section level2">
-<h2 id="discussions">DISCUSSIONS<a class="anchor" aria-label="anchor" href="#discussions"></a>
-</h2>
-<p>Let’s talk about data validation and data documentation in <a href="https://github.com/rstudio/pointblank/discussions" class="external-link"><strong>pointblank</strong> Discussions</a>! It’s a great place to ask questions about how to use the package, discuss some ideas, engage with others, and much more!</p>
-</div>
-<div class="section level2">
 <h2 id="installation">INSTALLATION<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>Want to try this out? The <strong>pointblank</strong> package is available on <strong>CRAN</strong>:</p>
@@ -304,7 +307,13 @@
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"rstudio/pointblank"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="getting-in-touch">Getting in Touch<a class="anchor" aria-label="anchor" href="#getting-in-touch"></a>
+</h2>
 <p>If you encounter a bug, have usage questions, or want to share ideas to make this package better, feel free to file an <a href="https://github.com/rstudio/pointblank/issues" class="external-link">issue</a>.</p>
+<p>Wanna talk about data validation in a more relaxed setting? Join our <a href="https://discord.com/invite/YH7CybCNCQ" class="external-link"><em>Discord server</em></a>! This is a great option for asking about the development of Pointblank, pitching ideas that may become features, and just sharing your ideas!</p>
+<p><a href="https://discord.com/invite/YH7CybCNCQ" class="external-link"><img src="https://img.shields.io/badge/Discord-Chat%20with%20us-blue?style=social&amp;logo=discord&amp;logoColor=purple" alt="Discord Server"></a></p>
 <hr>
 </div>
 <div class="section level2">

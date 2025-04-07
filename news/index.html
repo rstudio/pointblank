@@ -54,7 +54,8 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="pointblank-development-version">pointblank (development version)<a class="anchor" aria-label="anchor" href="#pointblank-development-version"></a></h2>
-<ul><li><p>Bugfix agents auto-generating a table label that was too long. They now get truncated (<a href="https://github.com/rstudio/pointblank/issues/614" class="external-link">#614</a>)</p></li>
+<ul><li><p>Add <code>na_pass</code> to <code><a href="../reference/col_vals_expr.html">col_vals_expr()</a></code> for finer control of <code>NA</code> values. Previously, <code>NA</code>s were ignored, but now they are caught as failures with the default <code>na_pass = FALSE</code>. As a safeguard, if an expression generates <code>NA</code> values while <code>na_pass</code> is not explicitly supplied, a warning is thrown. (<a href="https://github.com/rstudio/pointblank/issues/617" class="external-link">#617</a>)</p></li>
+<li><p>Bugfix agents auto-generating a table label that was too long. They now get truncated (<a href="https://github.com/rstudio/pointblank/issues/614" class="external-link">#614</a>)</p></li>
 <li><p>Bugfix agents not searching the formula environment when materializing <code>~ tbl</code> (<a href="https://github.com/rstudio/pointblank/issues/599" class="external-link">#599</a>)</p></li>
 <li><p><code><a href="../reference/info_columns.html">info_columns()</a></code> warn more informatively when no columns are selected (<a href="https://github.com/rstudio/pointblank/issues/589" class="external-link">#589</a>).</p></li>
 <li><p><code>write_yaml()</code> errors more informatively when <code>tbl</code> value is incompatible for yaml-writing (<a href="https://github.com/rstudio/pointblank/issues/597" class="external-link">#597</a>)</p></li>

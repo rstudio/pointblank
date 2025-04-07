@@ -86,6 +86,7 @@ have been applied).</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">col_vals_expr</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
 <span>  <span class="va">expr</span>,</span>
+<span>  na_pass <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  preconditions <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  segments <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  actions <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -95,9 +96,21 @@ have been applied).</p>
 <span>  active <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">expect_col_vals_expr</span><span class="op">(</span><span class="va">object</span>, <span class="va">expr</span>, preconditions <span class="op">=</span> <span class="cn">NULL</span>, threshold <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu">expect_col_vals_expr</span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  <span class="va">expr</span>,</span>
+<span>  na_pass <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  preconditions <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  threshold <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">test_col_vals_expr</span><span class="op">(</span><span class="va">object</span>, <span class="va">expr</span>, preconditions <span class="op">=</span> <span class="cn">NULL</span>, threshold <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">test_col_vals_expr</span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  <span class="va">expr</span>,</span>
+<span>  na_pass <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  preconditions <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  threshold <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -118,6 +131,13 @@ commonly created with <code><a href="create_agent.html">create_agent()</a></code
 <p>A predicate expression to use for this validation. This can either be in
 the form of a call made with the <code><a href="https://rlang.r-lib.org/reference/expr.html" class="external-link">expr()</a></code> function or as a one-sided <strong>R</strong>
 formula (using a leading <code>~</code>).</p></dd>
+
+
+<dt id="arg-na-pass">na_pass<a class="anchor" aria-label="anchor" href="#arg-na-pass"></a></dt>
+<dd><p><em>Allow missing values to pass validation</em></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
+<p>Should any encountered <code>NA</code> values be considered as passing test units? By
+default, this is <code>FALSE</code>. Set to <code>TRUE</code> to give <code>NA</code>s a pass.</p></dd>
 
 
 <dt id="arg-preconditions">preconditions<a class="anchor" aria-label="anchor" href="#arg-preconditions"></a></dt>
@@ -247,6 +267,15 @@ The test function returns a logical value.</p>
 </ul><p>Other database tables may work to varying degrees but they haven't been
 formally tested (so be mindful of this when using unsupported backends with
 <strong>pointblank</strong>).</p>
+    </div>
+    <div class="section level2">
+    <h2 id="missing-values">Missing Values<a class="anchor" aria-label="anchor" href="#missing-values"></a></h2>
+
+
+
+<p>This validation function supports special handling of <code>NA</code> values. The
+<code>na_pass</code> argument will determine whether an <code>NA</code> value appearing in a test
+unit should be counted as a <em>pass</em> or a <em>fail</em>. The default of <code>na_pass = FALSE</code> means that any <code>NA</code>s encountered will accumulate failing test units.</p>
     </div>
     <div class="section level2">
     <h2 id="preconditions">Preconditions<a class="anchor" aria-label="anchor" href="#preconditions"></a></h2>

@@ -2100,10 +2100,14 @@ interrogate_expr <- function(
   # Get the expression
   expr <- get_values_at_idx(agent = agent, idx = idx)
 
+  # Determine whether NAs should be allowed
+  na_pass <- get_column_na_pass_at_idx(agent = agent, idx = idx)
+
   # Create function for validating the `col_vals_expr()` step function
   tbl_val_expr <- function(
     table,
-    expr
+    expr,
+    na_pass
   ) {
 
     # Ensure that the input `table` is actually a table object
@@ -2111,13 +2115,41 @@ interrogate_expr <- function(
 
     expr <- expr[[1]]
 
-    table %>%
-      dplyr::mutate(pb_is_good_ = !!expr) %>%
-      dplyr::filter(!is.na(pb_is_good_))
+    tbl <- table %>%
+      dplyr::mutate(pb_is_good_ = !!expr)
+
+    if (anyNA(tbl$pb_is_good_)) {
+
+      # Throw warning if `expr` results in `NA` values but `na_pass` was unset
+      if (is.na(na_pass)) {
+        warn(
+          paste(
+            "Expression generated `NA` value(s).",
+            "Edit the `expr` or specify `na_pass` (default is `FALSE`)."
+          ),
+          # "simpleWarning" lets it trickle up to the test/expect functions
+          class = "simpleWarning"
+        )
+        # Re-apply user-facing default of `na_pass = FALSE`
+        na_pass <- FALSE
+      }
+
+      tbl$pb_is_good_[is.na(tbl$pb_is_good_)] <- na_pass
+
+    }
+
+    tbl
+
   }
 
   # Perform rowwise validations for the column
-  pointblank_try_catch(tbl_val_expr(table = table, expr = expr))
+  pointblank_try_catch(
+    tbl_val_expr(
+      table = table,
+      expr = expr,
+      na_pass = na_pass
+    )
+  )
 }
 
 interrogate_specially <- function(

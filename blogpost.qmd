@@ -1,6 +1,9 @@
 ---
 title: "Using Pointblank to Streamline Clinical Data Validation Workflows"
 date: today
+format: 
+  html:
+    html-table-processing: none
 ---
 
 In clinical research and healthcare settings, having a robust data validation system is a must.

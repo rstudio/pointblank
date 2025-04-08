@@ -16,11 +16,19 @@ If not properly detected and addressed, they can introduce subtle errors that co
 There are many possible sources of schema drifts for clinical data.
 To give a few scenarios:
 
-- Organizations may update or migrate their **electronic health record (EHR) systems**. This can change how the data for a field gets encoded. For example, stages of cancer previously recorded as character (I, II, III, IV) may one day become numeric (1, 2, 3, 4) upon exporting the data. Moreover, a field can also change its name, split into two, or disappear entirely. These often break later analyses, so it's important to catch them early and do so gracefully.
+- Organizations may update or migrate their **electronic health record (EHR) systems**.
+This can change how the data for a field gets encoded.
+For example, stages of cancer previously recorded as character (I, II, III, IV) may one day become numeric (1, 2, 3, 4) upon exporting the data.
+Moreover, a field can also change its name, split into two, or disappear entirely.
+These often break later analyses, so it's important to catch them early and do so gracefully.
 
-- Some fields are **semi-structured** and formatted only by implicit convention. For example, prescription orders are typically free-response entries, and may follow a format like "{drug} {dosage} {frequency} {duration}" such as in "Ibuprofen 200mg q12h x7 days". It is the job of the data validation system to ensure that these values adhere to their expected format.
+- Some fields are **semi-structured** and formatted only by implicit convention.
+For example, prescription orders are typically free-response entries, and may follow a format like "{drug} {dosage} {frequency} {duration}" such as in "Ibuprofen 200mg q12h x7 days".
+It is the job of the data validation system to ensure that these values adhere to their expected format.
 
-- There may be **differing standards** across data sources. For example, in a recent project, I helped to build a data validation system that collects and standardizes data from several clinical sites, each with their own data standards. For such systems designed to handle different data sources, possible variations in the data must be identified and addressed up front for the solution to scale.
+- There may be **differing standards** across data sources.
+For example, in a recent project, I helped to build a data validation system that collects and standardizes data from several clinical sites, each with their own data standards.
+For such systems designed to handle different data sources, possible variations in the data must be identified and addressed up front for the solution to scale.
 
 All of this goes to say: for analytics teams in clinical organizations, validating your data means more than just monitoring it for changes.
 An effective data validation system should isolate and address specific inconsistencies in the data and quantify their impact in ways that can also translate to concrete recommendations for upstream data personnel.
@@ -33,7 +41,8 @@ This blog post will demonstrate some of the design features and unique strengths
 
 ### The data
 
-I will be using a toy dataset of cancer surgery records. Below is the **data dictionary** that documents this dataset.
+I will be using a toy dataset of cancer surgery records.
+Below is the **data dictionary** that documents this dataset.
 
 | Field | Description | Expected Format |
 |-------|-------------|--------|
@@ -67,19 +76,24 @@ tbl <- tribble(
 tbl
 ```
 
-The goal here is two-fold: 1) identify problems with our data, and 2) derive a filtered/corrected data that addresses the problems. Let's use pointblank to find out whether our data is what we think it is!
+The goal here is two-fold: 1) identify problems with our data, and 2) derive a filtered/corrected data that addresses the problems.
+
+Let's use pointblank to find out whether our data is what we think it is!
 
 ### The validation plan
 
-Data validation in pointblank centers around an object called an **agent**, which stores the target table and a list of validations to perform on the table. With the code below, we initialize an agent with `create_agent()` and add a couple [validation steps](https://rstudio.github.io/pointblank/reference/index.html#validation-expectation-and-test-functions) to test for the following:
+Data validation in pointblank centers around an object called an **agent**, which stores the target table and a list of validations to perform on the table.
+With the code below, we initialize an agent with `create_agent()` and add a couple [validation steps](https://rstudio.github.io/pointblank/reference/index.html#validation-expectation-and-test-functions) to test for the following:
 
 1. Patient IDs must be an 8-digit sequence.
 
-2. Surgery date must be non-missing. If it's missing, the patient hasn't had their surgery yet, so they should be excluded from analysis.
+2. Surgery date must be non-missing.
+If it's missing, the patient hasn't had their surgery yet, so they should be excluded from analysis.
 
 3. Values for cancer stages must be one of I, II, III, IV.
 
-4. Check for any minors at the time of surgery. We'll filter them out anyways, but it might be important to know if there's a big uptick in minors undergoing this surgical procedure (say, >25% of all patients).
+4. Check for any minors at the time of surgery.
+We'll filter them out anyways, but it might be important to know if there's a big uptick in minors undergoing this surgical procedure (say, >25% of all patients).
 
 ```{r}
 #| message: false
@@ -112,11 +126,13 @@ agent_0 <- create_agent(~ tbl) |>
   )
 ```
 
-In addition to spelling out the validation logic, we've also added human-readable `label` and specified `actions` to signal severity. These information will help us interpret the validation results later.
+In addition to spelling out the validation logic, we've also added human-readable `label` and specified `actions` to signal severity.
+These information will help us interpret the validation results later.
 
 ### The validation report
 
-To actually execute the validations, you need to call the `interrogate()` function on the agent. The interrogated agent, when printed, displays an HTML report of the results.
+To actually execute the validations, you need to call the `interrogate()` function on the agent.
+The interrogated agent, when printed, displays an HTML report of the results.
 
 ```{r}
 agent_1 <- agent_0 |>
@@ -124,7 +140,10 @@ agent_1 <- agent_0 |>
 agent_1
 ```
 
-The validation report correctly identifies the issues with our data. One observation is missing the date of surgery, meaning that the surgery hasn't happened yet — this data point should be excluded. Additionally, some values for the stages of cancer are unexpected, perhaps due to formatting issues that we need to manually correct. Lastly, we find that there are more minors in the data than we might have typically expected for this type of surgery; maybe we should contact the data provider to let them know of this fact, in case they weren't already aware.
+The validation report correctly identifies the issues with our data.
+One observation is missing the date of surgery, meaning that the surgery hasn't happened yet — this data point should be excluded.
+Additionally, some values for the stages of cancer are unexpected, perhaps due to formatting issues that we need to manually correct.
+Lastly, we find that there are more minors in the data than we might have typically expected for this type of surgery; maybe we should contact the data provider to let them know of this fact, in case they weren't already aware.
 
 ### The validation results
 
@@ -159,7 +178,8 @@ So given these results, we now have two tasks at hand to reach the final goal of
 
 Let's build up our desired passing data step by step.
 
-First, we selectively filter our data by de-activating steps before sundering. In our case, we use `deactivate_steps(i = 3)` to allow rows to pass if they only fail the third validation step (having to do with `cancer_stage`).
+First, we selectively filter our data by de-activating steps before sundering.
+In our case, we use `deactivate_steps(i = 3)` to allow rows to pass if they only fail the third validation step.
 
 ```{r}
 tbl_passing <- agent_1 |>
@@ -168,7 +188,8 @@ tbl_passing <- agent_1 |>
 tbl_passing
 ```
 
-Then, we correct the problematic cases where `cancer_stage` is encoded as digits. Inside a call to `mutate()`, we can use the `as.roman()` function from base R to apply the conversion to Roman numerals.
+Then, we correct the problematic cases where `cancer_stage` is encoded as digits.
+Inside a call to `mutate()`, we can use the `as.roman()` function from base R to apply the conversion to Roman numerals.
 
 ```{r}
 tbl_passing <- tbl_passing |>
@@ -176,7 +197,8 @@ tbl_passing <- tbl_passing |>
 tbl_passing
 ```
 
-Finally, we want to ensure that our new data indeed passes the set of validations that we specified earlier. To do that, we can take our initial pointblank agent use a combination of `set_tbl()` + `interrogate()` to replace the target table and re-execute the validations.
+Finally, we want to ensure that our new data indeed passes the set of validations that we specified earlier.
+To do that, we can take our initial pointblank agent use a combination of `set_tbl()` + `interrogate()` to replace the target table and re-execute the validations.
 
 ```{r}
 agent_2 <- agent_1 |>
@@ -189,11 +211,15 @@ All rows pass, so the data is now ready to be handed off to further analyses!
 
 ## Strengths of pointblank
 
-At a high-level, pointblank is built on top of several design principles that make it ideal for data validation. To list a few:
+At a high-level, pointblank is built on top of several design principles that make it ideal for data validation.
+To list a few:
 
-1) **Declarative syntax**. As we just saw, validation functions are modular and composable in a pipeline, much like the design of `{dplyr}`, `{ggplot2}`, and `{recipes}`. This makes the code highly readable for analysts and ensures that the logic remains clear even when revisiting the code months later.
+1) **Declarative syntax**.
+As we just saw, validation functions are modular and composable in a pipeline, much like the design of `{dplyr}`, `{ggplot2}`, and `{recipes}`.
+This makes the code highly readable for analysts and ensures that the logic remains clear even when revisiting the code months later.
 
-2) **Serialization to YAML**. The ability to write validation plans to YAML makes it easy to store them and share them with others. This is particularly valuable when collaborating with non-programming colleagues, giving them a chance to provide valuable input on the validation strategy.
+2) **Serialization to YAML**. The ability to write validation plans to YAML makes it easy to store them and share them with others.
+This is particularly valuable when collaborating with non-programming colleagues, giving them a chance to provide valuable input on the validation strategy.
 
     ```r
     yaml_agent_string(agent_1)
@@ -230,7 +256,9 @@ At a high-level, pointblank is built on top of several design principles that ma
     #>     label: Adults at time of surgery
     ```
 
-3) **Extendability**: Pointblank offers a comprehensive set of validation steps for primitive operations like checks on equality, type, missingness, and so on. This makes it easy for users to write wrapper functions that implement their own specific validation logic.
+3) **Extendability**.
+Pointblank offers a comprehensive set of validation steps for primitive operations like checks on equality, type, missingness, and so on.
+This makes it easy for users to write wrapper functions that implement their own specific validation logic.
     
     ```r
     # Defining a custom validation function
@@ -243,7 +271,10 @@ At a high-level, pointblank is built on top of several design principles that ma
       col_vals_proportion(columns = ends_with("_prop"))
     ```
 
-4) **Laziness**: In the pointblank workflow, validation steps accumulate inside an agent until they are executed simultaneously, with each validation step running against the entire data. This differs from an eager approach which removes invalid rows as they are encountered, before downstream validations can detect additional issues. Pointblank's lazy execution design ensures that all sources of data problems are identified comprehensively.
+4) **Laziness**.
+In the pointblank workflow, validation steps accumulate inside an agent until they are executed simultaneously, with each validation step running against the entire data.
+This differs from an eager approach which removes invalid rows as they are encountered, before downstream validations can detect additional issues.
+Pointblank's lazy execution design ensures that all sources of data problems are identified comprehensively.
 
     ![](https://i.imgur.com/j9tJFiO.png)
 
@@ -252,7 +283,8 @@ At a high-level, pointblank is built on top of several design principles that ma
 
 ...Actually, r-pointblank has a longer history...
 
-Before closing, let's explore some of the new and exciting features in pointblank. For a full list of changes, please see the [NEWS](https://rstudio.github.io/pointblank/news/index.html) document.
+Before closing, let's explore some of the new and exciting features in pointblank.
+For a full list of changes, please see the [NEWS](https://rstudio.github.io/pointblank/news/index.html) document.
 
 
 ### 1) Compact CLI display of validation results
@@ -269,9 +301,11 @@ We will continue to use `show_step_label = TRUE` in the subsequent examples, to 
 
 ### 2) Support for glue syntax
 
-In the `label` and `brief` arguments of validation functions, you can now use `{glue}` syntax to reference dynamic contexts. For example, let's say your data could contain multiple primary keys, and you want to test the uniqueness of rows across their combinations (ex: hospital ID + patient ID + surgery ID).
+In the `label` and `brief` arguments of validation functions, you can now use `{glue}` syntax to reference dynamic contexts.
+For example, let's say your data could contain multiple primary keys, and you want to test the uniqueness of rows across their combinations (ex: hospital ID + patient ID + surgery ID).
 
-For our toy data, `ends_with("_id")` is the generic pattern that picks out `patient_id`. To have the label reference the column(s) we picked out, we can use `{.col}` in the label string.
+For our toy data, `ends_with("_id")` is the generic pattern that picks out `patient_id`.
+To have the label reference the column(s) we picked out, we can use `{.col}` in the label string.
 
 ```{r}
 #| collapse: true
@@ -303,7 +337,8 @@ agent_5 <- create_agent(~ tbl) |>
   interrogate(show_step_label = TRUE, progress = TRUE)
 ```
 
-Another exciting addition is the support for `all_of()` and `any_of()`. These can be particularly powerful when paired with the `{glue}` feature, to programmatically generate human-readable labels.
+Another exciting addition is the support for `all_of()` and `any_of()`.
+These can be particularly powerful when paired with the `{glue}` feature, to programmatically generate human-readable labels.
 
 ```{r}
 #| collapse: true
@@ -311,7 +346,7 @@ date_column_dictionary <- c(
   "dob" = "Patient's date of birth",
   "surgery_date" = "Date of surgery"
 )
-agent_5 <- create_agent(~ tbl) |>
+agent_6 <- create_agent(~ tbl) |>
   col_vals_not_null(
     columns = all_of(names(date_column_dictionary)),
     label = "{date_column_dictionary[.col]} is present",

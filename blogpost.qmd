@@ -1,0 +1,325 @@
+---
+title: "Using Pointblank to Streamline Clinical Data Validation Workflows"
+date: today
+---
+
+In clinical research and healthcare settings, having a robust data validation system is a must.
+While working as a consultant in data quality assurance solutions, I have encountered some unique challenges when working with clinical data.
+Not only is clinical data subject to constantly evolving standards, but also the data scientists are rarely the ones involved in the data collection process.
+
+This creates fertile ground for **schema drifts** - the gradual and often unannounced changes to how the incoming data is structured.
+If not properly detected and addressed, they can introduce subtle errors that compromise the rest of the analytical pipeline.
+
+There are many possible sources of schema drifts for clinical data.
+To give a few scenarios:
+
+- Organizations may update or migrate their **electronic health record (EHR) systems**. This can change how the data for a field gets encoded. For example, stages of cancer previously recorded as character (I, II, III, IV) may one day become numeric (1, 2, 3, 4) upon exporting the data. Moreover, a field can also change its name, split into two, or disappear entirely. These often break later analyses, so it's important to catch them early and do so gracefully.
+
+- Some fields are **semi-structured** and formatted only by implicit convention. For example, prescription orders are typically free-response entries, and may follow a format like "{drug} {dosage} {frequency} {duration}" such as in "Ibuprofen 200mg q12h x7 days". It is the job of the data validation system to ensure that these values adhere to their expected format.
+
+- There may be **differing standards** across data sources. For example, in a recent project, I helped to build a data validation system that collects and standardizes data from several clinical sites, each with their own data standards. For such systems designed to handle different data sources, possible variations in the data must be identified and addressed up front for the solution to scale.
+
+All of this goes to say: for analytics teams in clinical organizations, validating your data means more than just monitoring it for changes.
+An effective data validation system should isolate and address specific inconsistencies in the data and quantify their impact in ways that can also translate to concrete recommendations for upstream data personnel.
+
+In experimenting with open-source solutions to tackling this problem, the [pointblank](https://rstudio.github.io/pointblank/) package in R stood out as a powerful data validation tool that is not only feature-rich, but also easy to learn, quick to prototype, and excel at scaling up.
+
+This blog post will demonstrate some of the design features and unique strengths of pointblank.
+
+## Validating data with pointblank
+
+### The data
+
+I will be using a toy dataset of cancer surgery records. Below is the **data dictionary** that documents this dataset.
+
+| Field | Description | Expected Format |
+|-------|-------------|--------|
+| patient_id | Unique patient identifier | 8-digit string |
+| dob | Date of birth | YYYY-MM-DD |
+| surgery_date | Date of surgical procedure | YYYY-MM-DD |
+| cancer_stage | Cancer progression classification | Roman numeral (I-IV) |
+
+And below is the code that generates the sample data.
+
+```{r}
+#| message: false
+library(dplyr)
+library(lubridate)
+
+tbl <- tribble(
+  ~patient_id, ~dob, ~surgery_date, ~cancer_stage,
+  "23123456", "1965-04-12", "2023-07-15", "II",
+  "17232457", "1972-09-23", "2023-08-02", "1",
+  "67345678", "2001-06-28", NA_character_, "I",
+  "73456789", "2010-02-17", "2022-09-10", "I",
+  "10567890", "2004-05-08", "2021-07-22", "II",
+  "00678901", "1990-12-03", "2021-08-15", "III",
+  "01789012", "2005-06-19", "2019-09-01", "3",
+  "45692301", "1978-10-05", "2022-03-17", "II",
+  "89234567", "1963-07-29", "2018-11-12", "IV",
+  "36781245", "1982-04-03", "2023-01-08", "2"
+) |>
+  mutate(across(c("dob", "surgery_date"), ymd))
+
+tbl
+```
+
+The goal here is two-fold: 1) identify problems with our data, and 2) derive a filtered/corrected data that addresses the problems. Let's use pointblank to find out whether our data is what we think it is!
+
+### The validation plan
+
+Data validation in pointblank centers around an object called an **agent**, which stores the target table and a list of validations to perform on the table. With the code below, we initialize an agent with `create_agent()` and add a couple [validation steps](https://rstudio.github.io/pointblank/reference/index.html#validation-expectation-and-test-functions) to test for the following:
+
+1. Patient IDs must be an 8-digit sequence.
+
+2. Surgery date must be non-missing. If it's missing, the patient hasn't had their surgery yet, so they should be excluded from analysis.
+
+3. Values for cancer stages must be one of I, II, III, IV.
+
+4. Check for any minors at the time of surgery. We'll filter them out anyways, but it might be important to know if there's a big uptick in minors undergoing this surgical procedure (say, >25% of all patients).
+
+```{r}
+#| message: false
+# Ensure that you are using the latest CRAN version xxxx
+# install.packages("pointblank")
+library(pointblank)
+
+agent_0 <- create_agent(~ tbl) |>
+  col_vals_regex(
+    columns = patient_id,
+    regex = "^\\d{8}$",
+    actions = action_levels(stop_at = 1),
+    label = "Patient ID must be an 8-digit string"
+  ) |>
+  col_vals_not_null(
+    columns = surgery_date,
+    label = "Patient underwent surgery"
+  ) |>
+  col_vals_in_set(
+    columns = cancer_stage,
+    set = c("I", "II", "III", "IV"),
+    actions = action_levels(warn_at = 1),
+    label = "Cancer stages are Roman numerals"
+  ) |>
+  col_vals_expr(
+    expr = expr(interval(dob, surgery_date) >= years(18)),
+    na_pass = TRUE,
+    actions = action_levels(warn_at = 0.25),
+    label = "Adults at time of surgery"
+  )
+```
+
+In addition to spelling out the validation logic, we've also added human-readable `label` and specified `actions` to signal severity. These information will help us interpret the validation results later.
+
+### The validation report
+
+To actually execute the validations, you need to call the `interrogate()` function on the agent. The interrogated agent, when printed, displays an HTML report of the results.
+
+```{r}
+agent_1 <- agent_0 |>
+  interrogate()
+agent_1
+```
+
+The validation report correctly identifies the issues with our data. One observation is missing the date of surgery, meaning that the surgery hasn't happened yet — this data point should be excluded. Additionally, some values for the stages of cancer are unexpected, perhaps due to formatting issues that we need to manually correct. Lastly, we find that there are more minors in the data than we might have typically expected for this type of surgery; maybe we should contact the data provider to let them know of this fact, in case they weren't already aware.
+
+### The validation results
+
+Pointblank also provides several functions to access validation results as R objects for further analyses.
+
+For example, `get_sundered_data()` returns a subset of rows from the table that pass all validations.
+
+```{r}
+agent_1 |>
+  get_sundered_data()
+```
+
+Relatedly, `get_data_extracts()` returns the failing rows associated with each validation step.
+
+```{r}
+agent_1 |>
+  get_data_extracts()
+```
+
+One interesting finding from this inspection is that the unexpected cancer stage values (from step #3) are all just trivial formatting errors, as we suspected.
+
+```{r}
+agent_1 |>
+  get_data_extracts(i = 3)
+```
+
+So given these results, we now have two tasks at hand to reach the final goal of preparing an analysis-ready data:
+
+1) **Filter** out rows that we can't use (patients who are minors and patients who haven't had their surgery yet)
+
+2) **Replace** values that can be trivially corrected (standardizing cancer stages to Roman numerals)
+
+Let's build up our desired passing data step by step.
+
+First, we selectively filter our data by de-activating steps before sundering. In our case, we use `deactivate_steps(i = 3)` to allow rows to pass if they only fail the third validation step (having to do with `cancer_stage`).
+
+```{r}
+tbl_passing <- agent_1 |>
+  deactivate_steps(i = 3) |>
+  get_sundered_data()
+tbl_passing
+```
+
+Then, we correct the problematic cases where `cancer_stage` is encoded as digits. Inside a call to `mutate()`, we can use the `as.roman()` function from base R to apply the conversion to Roman numerals.
+
+```{r}
+tbl_passing <- tbl_passing |>
+  mutate(cancer_stage = as.character(as.roman(cancer_stage)))
+tbl_passing
+```
+
+Finally, we want to ensure that our new data indeed passes the set of validations that we specified earlier. To do that, we can take our initial pointblank agent use a combination of `set_tbl()` + `interrogate()` to replace the target table and re-execute the validations.
+
+```{r}
+agent_2 <- agent_1 |>
+  set_tbl(tbl_passing) |>
+  interrogate()
+agent_2
+```
+
+All rows pass, so the data is now ready to be handed off to further analyses!
+
+## Strengths of pointblank
+
+At a high-level, pointblank is built on top of several design principles that make it ideal for data validation. To list a few:
+
+1) **Declarative syntax**. As we just saw, validation functions are modular and composable in a pipeline, much like the design of `{dplyr}`, `{ggplot2}`, and `{recipes}`. This makes the code highly readable for analysts and ensures that the logic remains clear even when revisiting the code months later.
+
+2) **Serialization to YAML**. The ability to write validation plans to YAML makes it easy to store them and share them with others. This is particularly valuable when collaborating with non-programming colleagues, giving them a chance to provide valuable input on the validation strategy.
+
+    ```r
+    yaml_agent_string(agent_1)
+    #> type: agent
+    #> tbl: ~tbl
+    #> tbl_name: ~tbl
+    #> label: '[2025-04-08|13:20:30]'
+    #> lang: en
+    #> locale: en
+    #> steps:
+    #> - col_vals_regex:
+    #>     columns: c("patient_id")
+    #>     regex: ^\d{8}$
+    #>     actions:
+    #>       stop_count: 1.0
+    #>     label: Patient ID must be an 8-digit string
+    #> - col_vals_not_null:
+    #>     columns: c("surgery_date")
+    #>     label: Patient underwent surgery
+    #> - col_vals_in_set:
+    #>     columns: c("cancer_stage")
+    #>     set:
+    #>     - I
+    #>     - II
+    #>     - III
+    #>     - IV
+    #>     actions:
+    #>       warn_count: 1.0
+    #>     label: Cancer stages are Roman numerals
+    #> - col_vals_expr:
+    #>     expr: ~interval(dob, surgery_date) >= years(18)
+    #>     actions:
+    #>       warn_fraction: 0.25
+    #>     label: Adults at time of surgery
+    ```
+
+3) **Extendability**: Pointblank offers a comprehensive set of validation steps for primitive operations like checks on equality, type, missingness, and so on. This makes it easy for users to write wrapper functions that implement their own specific validation logic.
+    
+    ```r
+    # Defining a custom validation function
+    col_vals_proportion <- function(x, columns, ...) {
+      col_vals_between(x, columns = columns, left = 0, right = 1, ...)
+    }
+    
+    # Using the custom validation function
+    agent |>
+      col_vals_proportion(columns = ends_with("_prop"))
+    ```
+
+4) **Laziness**: In the pointblank workflow, validation steps accumulate inside an agent until they are executed simultaneously, with each validation step running against the entire data. This differs from an eager approach which removes invalid rows as they are encountered, before downstream validations can detect additional issues. Pointblank's lazy execution design ensures that all sources of data problems are identified comprehensively.
+
+    ![](https://i.imgur.com/j9tJFiO.png)
+
+
+## New features
+
+...Actually, r-pointblank has a longer history...
+
+Before closing, let's explore some of the new and exciting features in pointblank. For a full list of changes, please see the [NEWS](https://rstudio.github.io/pointblank/news/index.html) document.
+
+
+### 1) Compact CLI display of validation results
+
+A new argument `show_step_label` lets you quickly skim the validation results from the console without needing to generate an HTML report.
+
+```{r}
+#| collapse: true
+agent_3 <- agent_0 |>
+  interrogate(show_step_label = TRUE, progress = TRUE)
+```
+
+We will continue to use `show_step_label = TRUE` in the subsequent examples, to save space.
+
+### 2) Support for glue syntax
+
+In the `label` and `brief` arguments of validation functions, you can now use `{glue}` syntax to reference dynamic contexts. For example, let's say your data could contain multiple primary keys, and you want to test the uniqueness of rows across their combinations (ex: hospital ID + patient ID + surgery ID).
+
+For our toy data, `ends_with("_id")` is the generic pattern that picks out `patient_id`. To have the label reference the column(s) we picked out, we can use `{.col}` in the label string.
+
+```{r}
+#| collapse: true
+agent_4 <- create_agent(~ tbl) |> 
+  rows_distinct(
+    columns = ends_with("_id"),
+    label = "Unique combination of ID(s): {.col}",
+    actions = action_levels(stop_at = 1)
+  ) |>
+  interrogate(show_step_label = TRUE, progress = TRUE)
+```
+
+Different validation functions expose different variables, so be sure to check out the documentation!
+
+### 3) A complete tidyselect integration
+
+Thanks to a major re-factoring of pointblank internals, validation functions now get a complete tidyselect integration, bringing it in line with `dplyr::select()`.
+
+This expands the set of supported column selectors to include `where()`, allowing columns to be selected based on their type.
+
+```{r}
+#| collapse: true
+agent_5 <- create_agent(~ tbl) |>
+  col_vals_not_null(
+    columns = where(lubridate::is.timepoint),
+    label = "Date values in `{.col}` are present",
+    actions = action_levels(warn_at = 1)
+  ) |>
+  interrogate(show_step_label = TRUE, progress = TRUE)
+```
+
+Another exciting addition is the support for `all_of()` and `any_of()`. These can be particularly powerful when paired with the `{glue}` feature, to programmatically generate human-readable labels.
+
+```{r}
+#| collapse: true
+date_column_dictionary <- c(
+  "dob" = "Patient's date of birth",
+  "surgery_date" = "Date of surgery"
+)
+agent_5 <- create_agent(~ tbl) |>
+  col_vals_not_null(
+    columns = all_of(names(date_column_dictionary)),
+    label = "{date_column_dictionary[.col]} is present",
+    actions = action_levels(warn_at = 1)
+  ) |>
+  interrogate(show_step_label = TRUE, progress = TRUE)
+```
+
+
+### In closing
+
+...
+
+Join the [Discord](https://discord.com/invite/YH7CybCNCQ) server for pointblank!

@@ -6,12 +6,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Introduction to the R Markdown Document Validation Workflow (VALID-VI) • pointblank</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
 <script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
@@ -90,7 +89,7 @@
 
     
     
-<p><img src="images%2FVALID-VI.svg" width="100%"></p>
+<p><img src="images/VALID-VI.svg" width="100%"></p>
 <p>The <em>R Markdown Document Validation</em> workflow involves
 interspersing bits of different workflows in the larger R Markdown
 workflow. It’s great to use when doing data analysis work in the
@@ -128,7 +127,7 @@ validation functions: <code><a href="../reference/col_is_date.html">col_is_date(
 validation passes whereas the <code><a href="../reference/col_vals_in_set.html">col_vals_in_set()</a></code> validation
 fails (because the set of values in column <code>f</code> also has the
 <code>"high"</code> value.</p>
-<p><img src="images%2Fcode_block_1.png"></p>
+<p><img src="images/code_block_1.png"></p>
 
 <div class="pointblank-badge-container-inner" style="text-align: center; padding-bottom: 12px; font-size: 16px;">
   <span class="pointblank-badge label label-danger" data-toggle="collapse" data-target="#chunk-7227951" aria-expanded="false" aria-controls="chunk-7227951" style="cursor: pointer;">1 validation failed.</span>
@@ -154,7 +153,7 @@ down these validations to single steps. That way, each expression is a
 single validation that either passes or fails and is reported
 accordingly. Let’s rewrite the above example as two expressions, one per
 validation.</p>
-<p><img src="images%2Fcode_block_2.png"></p>
+<p><img src="images/code_block_2.png"></p>
 
 <div class="pointblank-badge-container-inner" style="text-align: center; padding-bottom: 12px; font-size: 16px;">
   <span class="pointblank-badge label label-danger" data-toggle="collapse" data-target="#chunk-5115981" aria-expanded="false" aria-controls="chunk-5115981" style="cursor: pointer;">1 validation failed.</span>
@@ -174,7 +173,7 @@ the risk of not evaluating validations because a validation failed
 earlier in a pipeline.</p>
 <p>Here’s an example where all validations in individual expressions
 pass, showing us a green status button.</p>
-<p><img src="images%2Fcode_block_3.png"></p>
+<p><img src="images/code_block_3.png"></p>
 
 <div class="pointblank-badge-container-inner" style="text-align: center; padding-bottom: 12px; font-size: 16px;">
   <span class="pointblank-badge label label-success" data-toggle="collapse" data-target="#chunk-8518078" aria-expanded="false" aria-controls="chunk-8518078" style="cursor: pointer;">All validations passed.</span>
@@ -216,7 +215,7 @@ does not.</p>
 <p>Here’s a code chunk that uses <code><a href="../reference/stop_if_not.html">stop_if_not()</a></code> twice to
 check two different assertions on the <code>small_table</code> object.
 The first one passes whereas the second one fails.</p>
-<p><img src="images%2Fcode_block_4.png"></p>
+<p><img src="images/code_block_4.png"></p>
 
 <div class="pointblank-badge-container-inner" style="text-align: center; padding-bottom: 12px; font-size: 16px;">
   <span class="pointblank-badge label label-danger" data-toggle="collapse" data-target="#chunk-3583403" aria-expanded="false" aria-controls="chunk-3583403" style="cursor: pointer;">1 validation failed.</span>
@@ -247,7 +246,7 @@ button (in this case, a light blue one) then
 <code>validate = TRUE</code> should be used.</p>
 <p>Here’s an example of a data quality validation workflow being
 executed in a single code chunk.</p>
-<p><img src="images%2Fcode_block_5.png"></p>
+<p><img src="images/code_block_5.png"></p>
 
 <div class="pointblank-badge-container-inner" style="text-align: center; padding-bottom: 12px; font-size: 16px;">
   <span class="pointblank-badge label label-info" data-toggle="collapse" data-target="#chunk-3400748" aria-expanded="false" aria-controls="chunk-3400748" style="cursor: pointer;">Agent Report</span>
@@ -309,7 +308,7 @@ logging and specify the name of the file, include a path to a log file
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>

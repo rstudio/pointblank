@@ -1,5 +1,5 @@
 pandoc: 3.1.11
-pkgdown: 2.1.1
+pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
   INFO-1: INFO-1.html
@@ -12,7 +12,7 @@ articles:
   VALID-V: VALID-V.html
   VALID-VI: VALID-VI.html
   validation_workflows: validation_workflows.html
-last_built: 2025-04-07T14:34Z
+last_built: 2025-06-12T18:03Z
 urls:
   reference: https://rstudio.github.io/pointblank/reference
   article: https://rstudio.github.io/pointblank/articles

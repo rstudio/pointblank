@@ -409,7 +409,7 @@ expect_col_vals_not_null <- function(
     col_vals_not_null(
       columns = {{ columns }},
       preconditions = {{ preconditions }},
-      actions = action_levels(notify_at = threshold)
+      actions = action_levels(critical = threshold)
     ) %>%
     interrogate() %>%
     .$validation_set
@@ -483,7 +483,7 @@ test_col_vals_not_null <- function(
     col_vals_not_null(
       columns = {{ columns }},
       preconditions = {{ preconditions }},
-      actions = action_levels(notify_at = threshold)
+      actions = action_levels(critical = threshold)
     ) %>%
     interrogate() %>%
     .$validation_set

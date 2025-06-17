@@ -410,7 +410,7 @@ expect_col_schema_match <- function(
       complete = complete,
       in_order = in_order,
       is_exact = is_exact,
-      actions = action_levels(notify_at = threshold)
+      actions = action_levels(critical = threshold)
     ) %>%
     interrogate() %>%
     .$validation_set
@@ -467,7 +467,7 @@ test_col_schema_match <- function(
       complete = complete,
       in_order = in_order,
       is_exact = is_exact,
-      actions = action_levels(notify_at = threshold)
+      actions = action_levels(critical = threshold)
     ) %>%
     interrogate() %>%
     .$validation_set

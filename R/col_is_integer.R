@@ -321,7 +321,7 @@ expect_col_is_integer <- function(
     create_agent(tbl = object, label = "::QUIET::") %>%
     col_is_integer(
       columns = {{ columns }},
-      actions = action_levels(notify_at = threshold)
+      actions = action_levels(critical = threshold)
     ) %>%
     interrogate() %>%
     .$validation_set
@@ -394,7 +394,7 @@ test_col_is_integer <- function(
     create_agent(tbl = object, label = "::QUIET::") %>%
     col_is_integer(
       columns = {{ columns }},
-      actions = action_levels(notify_at = threshold)
+      actions = action_levels(critical = threshold)
     ) %>%
     interrogate() %>%
     .$validation_set

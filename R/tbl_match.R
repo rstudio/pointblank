@@ -398,7 +398,7 @@ expect_tbl_match <- function(
     tbl_match(
       tbl_compare = {{ tbl_compare }},
       preconditions = {{ preconditions }},
-      actions = action_levels(notify_at = threshold)
+      actions = action_levels(critical = threshold)
     ) %>%
     interrogate() %>%
     .$validation_set
@@ -451,7 +451,7 @@ test_tbl_match <- function(
     tbl_match(
       tbl_compare = {{ tbl_compare }},
       preconditions = {{ preconditions }},
-      actions = action_levels(notify_at = threshold)
+      actions = action_levels(critical = threshold)
     ) %>%
     interrogate() %>%
     .$validation_set

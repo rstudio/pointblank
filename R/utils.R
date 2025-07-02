@@ -251,7 +251,9 @@ resolve_brief <- function(brief, agent,
   n_combinations <- n_columns * n_segments
 
   # If missing, apply auto-brief
-  if (is.null(brief)) {
+  brief_cls <- class(brief)
+  use_autobrief <- is.null(brief)
+  if (use_autobrief) {
     brief <- generate_autobriefs(
       agent = agent, columns = columns,
       preconditions = preconditions, values = values,
@@ -273,9 +275,22 @@ resolve_brief <- function(brief, agent,
   # Recycle the string
   brief <- rep_len(brief, n_combinations)
   # Return packed vector/matrix for iteration over steps
-  pack_by_col_seg(brief, n_columns, n_segments,  c(columns, segments))
+  brief <- pack_by_col_seg(brief, n_columns, n_segments,  c(columns, segments_list))
+
+  # Track brief type: one of autobrief, AsIs/verbatim, character
+  if (use_autobrief) {
+    class(brief) <- "autobrief"
+  } else if (any(c("AsIs", "verbatim") %in% brief_cls)) {
+    brief <- I(brief)
+  } else {
+    brief <- unclass(brief)
+  }
+
+  brief
 
 }
+
+`[.autobrief` <- function(x, i, ...) structure(NextMethod("["), class = "autobrief")
 
 resolve_label <- function(label, columns = list(NULL), segments = list(NULL)) {
   n_columns <- length(columns)

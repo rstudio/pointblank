@@ -374,7 +374,7 @@ rows_distinct <- function(
         actions = covert_actions(actions, agent),
         step_id = step_id,
         label = label[[i]],
-        brief = brief[[i]],
+        brief = brief[i],
         active = active
       )
   }

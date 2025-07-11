@@ -206,17 +206,6 @@
 <hr>
 </div>
 <div class="section level2">
-<h2 id="validations-in-r-markdown-documents">VALIDATIONS IN R MARKDOWN DOCUMENTS<a class="anchor" aria-label="anchor" href="#validations-in-r-markdown-documents"></a>
-</h2>
-<p>Using <strong>pointblank</strong> in an R Markdown workflow is enabled by default once the <strong>pointblank</strong> library is loaded. The framework allows for validation testing within specialized validation code chunks where the <code>validate = TRUE</code> option is set. Using <strong>pointblank</strong> validation functions on data in these marked code chunks will flag overall failure if the stop threshold is exceeded anywhere. All errors are reported in the validation code chunk after rendering the document to HTML, where green or red status buttons indicate whether all validations succeeded or failures occurred. Click them to reveal the otherwise hidden validation statements and any associated error messages.</p>
-<p align="center">
-</p>
-<p><img src="reference/figures/pointblank_rmarkdown.png" width="100%" style="border:2px solid #021a40;"></p>
-
-<p>The above R Markdown document is available as a template in the RStudio IDE; it’s called <code>Pointblank Validation</code>.</p>
-<hr>
-</div>
-<div class="section level2">
 <h2 id="table-information">TABLE INFORMATION<a class="anchor" aria-label="anchor" href="#table-information"></a>
 </h2>
 <p>Table information can be synthesized in an <em>information management</em> workflow, giving us a snapshot of a data table we care to collect information on. The <strong>pointblank</strong> <em>informant</em> is fed a series of <code>info_*()</code> functions to define bits of information about a table. This info text can pertain to individual columns, the table as a whole, and whatever additional information makes sense for your organization. We can even glean little snippets of information (like column stats or sample values) from the target table with <code><a href="reference/info_snippet.html">info_snippet()</a></code> and the <code>snip_*()</code> functions and mix them into the data dictionary wherever they’re needed.</p>
@@ -313,6 +302,11 @@
 <p>If you encounter a bug, have usage questions, or want to share ideas to make this package better, feel free to file an <a href="https://github.com/rstudio/pointblank/issues" class="external-link">issue</a>.</p>
 <p>Wanna talk about data validation in a more relaxed setting? Join our <a href="https://discord.com/invite/YH7CybCNCQ" class="external-link"><em>Discord server</em></a>! This is a great option for asking about the development of Pointblank, pitching ideas that may become features, and just sharing your ideas!</p>
 <p><a href="https://discord.com/invite/YH7CybCNCQ" class="external-link"><img src="https://img.shields.io/badge/Discord-Chat%20with%20us-blue?style=social&amp;logo=discord&amp;logoColor=purple" alt="Discord Server"></a></p>
+</div>
+<div class="section level2">
+<h2 id="pointblank-for-python">Pointblank for Python<a class="anchor" aria-label="anchor" href="#pointblank-for-python"></a>
+</h2>
+<p>There’s also a version of Pointblank for Python, a project that got off the ground in late 2024 and is gaining traction in the Python community. You can find it at <a href="https://github.com/posit-dev/pointblank" class="external-link uri">https://github.com/posit-dev/pointblank</a>.</p>
 <hr>
 </div>
 <div class="section level2">

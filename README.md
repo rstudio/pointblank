@@ -215,30 +215,6 @@ workflow.
 
 <hr>
 
-## VALIDATIONS IN R MARKDOWN DOCUMENTS
-
-Using **pointblank** in an R Markdown workflow is enabled by default
-once the **pointblank** library is loaded. The framework allows for
-validation testing within specialized validation code chunks where the
-`validate = TRUE` option is set. Using **pointblank** validation
-functions on data in these marked code chunks will flag overall failure
-if the stop threshold is exceeded anywhere. All errors are reported in
-the validation code chunk after rendering the document to HTML, where
-green or red status buttons indicate whether all validations succeeded
-or failures occurred. Click them to reveal the otherwise hidden
-validation statements and any associated error messages.
-
-<p align="center">
-
-<img src="man/figures/pointblank_rmarkdown.png" width="100%" style="border:2px solid #021a40;">
-
-</p>
-
-The above R Markdown document is available as a template in the RStudio
-IDE; it’s called `Pointblank Validation`.
-
-<hr>
-
 ## TABLE INFORMATION
 
 Table information can be synthesized in an *information management* workflow,
@@ -375,6 +351,10 @@ Wanna talk about data validation in a more relaxed setting? Join our
 the development of Pointblank, pitching ideas that may become features, and just sharing your ideas!
 
 [![Discord Server](https://img.shields.io/badge/Discord-Chat%20with%20us-blue?style=social&logo=discord&logoColor=purple)](https://discord.com/invite/YH7CybCNCQ)
+
+## Pointblank for Python
+
+There's also a version of Pointblank for Python, a project that got off the ground in late 2024 and is gaining traction in the Python community. You can find it at https://github.com/posit-dev/pointblank.
 
 -----
 

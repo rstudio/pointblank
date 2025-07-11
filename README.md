@@ -348,13 +348,13 @@ make this package better, feel free to file an
 
 Wanna talk about data validation in a more relaxed setting? Join our
 [_Discord server_](https://discord.com/invite/YH7CybCNCQ)! This is a great option for asking about
-the development of Pointblank, pitching ideas that may become features, and just sharing your ideas!
+the development of **pointblank**, pitching ideas that may become features, and just sharing your ideas!
 
 [![Discord Server](https://img.shields.io/badge/Discord-Chat%20with%20us-blue?style=social&logo=discord&logoColor=purple)](https://discord.com/invite/YH7CybCNCQ)
 
 ## Pointblank for Python
 
-There's also a version of Pointblank for Python, a project that got off the ground in late 2024 and is gaining traction in the Python community. You can find it at https://github.com/posit-dev/pointblank.
+There's also a version of **pointblank** for Python, a project that got off the ground in late 2024 and is gaining traction in the Python community. You can find it at https://github.com/posit-dev/pointblank.
 
 -----
 

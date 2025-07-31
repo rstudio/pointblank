@@ -1,0 +1,162 @@
+---
+title: "Custom Validation"
+output: html_document
+---
+
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+#| include: false
+library(pointblank)
+```
+
+
+This article provides a overview of the core data validation features in pointblank. 
+It introduces the key concepts and shows examples of the main functionality, giving you a foundation for using the package effectively.
+
+## Validation Rules
+
+pointblank's core functionality revolves around validation steps, which are individual checks that verify different aspects of your data. 
+These steps are created by calling validation functions. 
+When combined with `create_agent()` they create a comprehensive validation plan for your data.
+
+Here's an example of a validation that incorporates three different validation methods:
+
+```{r}
+agent <- create_agent(tbl = small_table) %>%
+  col_vals_gt(columns = a, value = 0) %>%
+  rows_distinct() %>%
+  col_exists(columns = date) %>%
+  interrogate()
+
+agent
+```
+
+This example showcases how you can combine different types of validations in a single validation
+plan:
+
+- a column value validation with `col_vals_gt()`
+- a row-based validation with `rows_distinct()`
+- a table structure validation with `col_exists()`
+
+Most validation methods share common parameters that enhance their flexibility and power. 
+These shared parameters create a consistent interface across all validation steps while allowing you to customize validation behavior for specific needs. 
+
+The next few sections take you through the most important ways in which you can customize your validation plans.
+
+## Column Selection Patterns
+
+You can apply the same validation logic to multiple columns at once through use of column selection patterns (used in the `columns` argument). 
+This reduces repetitive code and makes your validation plans more maintainable.
+
+```{r}
+agent <- create_agent(tbl = small_table) %>%
+  col_vals_gte(columns = c(c, d), value = 0) %>%
+  col_vals_not_null(columns = starts_with("d")) %>%
+  interrogate()
+
+agent
+```
+
+This technique is particularly valuable when working with wide datasets containing many similarly-structured columns or when applying standard quality checks across an entire table. 
+Details about the column selection helpers can be found in the [tidyselect](https://tidyselect.r-lib.org/reference/language.html) package.
+Making use of column selection patterns also ensures consistency in how validation rules are applied across related data columns.
+
+To validate row-wise relationships between columns, you can use the `vars()` function to reference columns. 
+With this you can, for example, validate that values in one column are greater (or less) than values in another column.
+
+```{r}
+agent <- create_agent(tbl = small_table) %>%
+  col_vals_gte(columns = c(c, d), value = vars(a)) %>%
+  col_vals_between(columns = a, left = 0, right = vars(c)) %>%
+  interrogate()
+
+agent
+```
+
+## Preprocessing
+
+Preprocessing (with the `preconditions` argument) allows you to transform or modify your data before applying validation checks, enabling you to validate derived or modified data without altering the original dataset.
+There is no need to create multiple validation plans for differnt transformations of the original data.
+
+```{r}
+agent <- create_agent(tbl = small_table) %>%
+  col_vals_gt(
+    columns = a_transformed,
+    value = 5,
+    preconditions = ~ . %>% dplyr::mutate(a_transformed = a * 2)
+  ) %>%
+  col_vals_lt(
+    columns = d,
+    value = 1000,
+    preconditions = ~ . %>% dplyr::filter(date > "2016-01-15")
+  ) %>%
+  interrogate()
+
+agent
+```
+
+Preprocessing enables validation of transformed data without modifying your original dataset, making it ideal for checking derived metrics, or validating normalized values. 
+This approach keeps your validation code clean while allowing for sophisticated data quality checks on calculated results.
+
+More complex preprocessing can be applied through custom functions, rather than inlined via ananymous functions as shown above.
+You can also use the `preconditions` argument to subset your data to specific rows before applying validation checks.
+However, a consise way of doing this is illustrated in the next section.
+
+## Segmentation
+
+Segmentation (through the `segments` argument) allows you to validate data across different groups, enabling you to identify segment-specific quality issues that might be hidden in aggregate analyses.
+
+You can segment 
+
+- by all unique values in a column, e.g., `segments = vars(f)`
+- by only specific values in a column, e.g., `segments = f ~ c("low", "high")`
+- by multiple columns, e.g., `segments = list(vars(f), a ~ c(1, 2))`
+
+You can also segment in conjunction with preprocessing, allowing you to segment based on derived or modified data.
+
+```{r}
+agent <- create_agent(tbl = small_table) %>%
+  col_vals_gt(
+    columns = d,
+    value = 100,
+    preconditions = . %>%
+      dplyr::mutate(a_category = dplyr::if_else(a > 5, "high", "low")),
+    segments = vars(a_category)
+  ) %>%
+  interrogate()
+
+agent
+```
+
+## Thresholds
+
+Thresholds (set through the `actions` argument) provide a nuanced way to monitor data quality, allowing you to set different severity levels based on the importance of each validation and your organization's tolerance for specific types of data issues.
+
+Thresholds can be set for three different levels: warnings, errors, and critical notifications. 
+They can be specified as either relative proportions of failing test units or absolute numbers of failing test units.
+
+```{r}
+agent <- create_agent(tbl = small_table) %>%
+  col_vals_gt(
+    columns = vars(a),
+    value = 1,
+    actions = action_levels(warn_at = 0.1, stop_at = 0.2, notify_at = 0.3)
+  ) %>%
+  col_vals_lt(
+    columns = vars(c),
+    value = 10,
+    actions = action_levels(warn_at = 1, stop_at = 2)
+  ) %>%
+  interrogate()
+
+agent
+```
+
+## Conclusion
+
+The features covered in this vignette—column selection patterns, preprocessing, segmentation, and thresholds—form the foundation of pointblank's flexible validation system. 
+By combining these capabilities, you can create sophisticated validation workflows that adapt to your specific data quality requirements. 
+Whether you're validating simple column constraints or complex multi-step transformations across different data segments, pointblank provides the tools to build robust, maintainable validation pipelines that scale with your data and organizational needs. 
+These patterns enable you to catch data quality issues early and implement systematic approaches to data validation across your projects.

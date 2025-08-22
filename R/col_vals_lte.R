@@ -439,7 +439,7 @@ expect_col_vals_lte <- function(
       value = {{ value }},
       na_pass = na_pass,
       preconditions = {{ preconditions }},
-      actions = action_levels(notify_at = threshold)
+      actions = action_levels(critical = threshold)
     ) %>%
     interrogate() %>%
     .$validation_set
@@ -520,7 +520,7 @@ test_col_vals_lte <- function(
       value = {{ value }},
       na_pass = na_pass,
       preconditions = {{ preconditions }},
-      actions = action_levels(notify_at = threshold)
+      actions = action_levels(critical = threshold)
     ) %>%
     interrogate() %>%
     .$validation_set

@@ -3,36 +3,48 @@
 \name{action_levels}
 \alias{action_levels}
 \alias{warn_on_fail}
+\alias{error_on_fail}
 \alias{stop_on_fail}
 \title{Set action levels: failure thresholds and functions to invoke}
 \usage{
-action_levels(warn_at = NULL, stop_at = NULL, notify_at = NULL, fns = NULL)
+action_levels(
+  warn = NULL,
+  error = NULL,
+  critical = NULL,
+  fns = NULL,
+  ...,
+  warn_at = NULL,
+  stop_at = NULL,
+  notify_at = NULL
+)
 
-warn_on_fail(warn_at = 1)
+warn_on_fail(warn = 1, warn_at = NULL)
+
+error_on_fail(error = 1)
 
 stop_on_fail(stop_at = 1)
 }
 \arguments{
-\item{warn_at}{\emph{Threshold value for the 'warn' failure state}
+\item{warn}{\emph{Threshold value for the 'warn' failure state}
 
 \code{scalar<integer|numeric>(val>=0)} // \emph{default:} \code{NULL} (\code{optional})
 
 Either the threshold number or the threshold fraction of \emph{failing} test
 units that result in entering the \code{warn} failure state.}
 
-\item{stop_at}{\emph{Threshold value for the 'stop' failure state}
+\item{error}{\emph{Threshold value for the 'stop' failure state}
 
 \code{scalar<integer|numeric>(val>=0)} // \emph{default:} \code{NULL} (\code{optional})
 
 Either the threshold number or the threshold fraction of \emph{failing} test
-units that result in entering the \code{stop} failure state.}
+units that result in entering the \code{error} failure state.}
 
-\item{notify_at}{\emph{Threshold value for the 'notify' failure state}
+\item{critical}{\emph{Threshold value for the 'notify' failure state}
 
 \code{scalar<integer|numeric>(val>=0)} // \emph{default:} \code{NULL} (\code{optional})
 
 Either the threshold number or the threshold fraction of \emph{failing} test
-units that result in entering the \code{notify} failure state.}
+units that result in entering the \code{critical} failure state.}
 
 \item{fns}{\emph{Functions to execute when entering failure states}
 
@@ -40,10 +52,18 @@ units that result in entering the \code{notify} failure state.}
 
 A named list of functions that is to be paired with the appropriate failure
 states. The syntax for this list involves using failure state names from
-the set of \code{warn}, \code{stop}, and \code{notify}. The functions corresponding to the
+the set of \code{warn}, \code{error}, and \code{critical}. The functions corresponding to the
 failure states are provided as formulas (e.g.,
 \code{list(warn = ~ warning("Too many failures."))}. A series of expressions for
 each named state can be used by enclosing the set of statements with \code{{ }}.}
+
+\item{...}{These dots are for future extensions and must be empty.}
+
+\item{warn_at}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
+
+\item{stop_at}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
+
+\item{notify_at}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
 }
 \value{
 An \code{action_levels} object.
@@ -52,8 +72,8 @@ An \code{action_levels} object.
 The \code{action_levels()} function works with the \code{actions} argument that is
 present in the \code{\link[=create_agent]{create_agent()}} function and in every validation step
 function (which also has an \code{actions} argument). With it, we can provide
-threshold \emph{failure} values for any combination of \code{warn}, \code{stop}, or \code{notify}
-failure states.
+threshold \emph{failure} values for any combination of \code{warn}, \code{error}, or
+\code{critical} failure states.
 
 We can react to any entering of a state by supplying corresponding functions
 to the \code{fns} argument. They will undergo evaluation at the time when the
@@ -67,31 +87,32 @@ of \code{action_levels()} is required to have any useful side effects (i.e.,
 warnings, throwing errors) in the case of validation functions operating
 directly on data (e.g., \code{mtcars \%>\% col_vals_lt("mpg", 35)}). There are two
 helper functions that are convenient when using validation functions directly
-on data (the \code{agent}-less workflow): \code{warn_on_fail()} and \code{stop_on_fail()}.
+on data (the \code{agent}-less workflow): \code{warn_on_fail()} and \code{error_on_fail()}.
 These helpers either warn or stop (default failure threshold for each is set
 to \code{1}), and, they do so with informative warning or error messages. The
-\code{stop_on_fail()} helper is applied by default when using validation functions
-directly on data (more information on this is provided in \emph{Details}).
+\code{error_on_fail()} helper is applied by default when using validation
+functions directly on data (more information on this is provided in
+\emph{Details}).
 }
 \details{
 The output of the \code{action_levels()} call in \code{actions} will be interpreted
 slightly differently if using an \emph{agent} or using validation functions
 directly on a data table. For convenience, when working directly on data, any
-values supplied to \code{warn_at} or \code{stop_at} will be automatically given a stock
+values supplied to \code{warn} or \code{error} will be automatically given a stock
 \code{warning()} or \code{stop()} function. For example using
 \code{small_table \%>\% col_is_integer("date")} will provide a detailed stop message
 by default, indicating the reason for the failure. If you were to supply the
-\code{fns} for \code{stop} or \code{warn} manually then the stock functions would be
+\code{fns} for \code{warn} or \code{error} manually then the stock functions would be
 overridden. Furthermore, if \code{actions} is NULL in this workflow (the default),
-\strong{pointblank} will use a \code{stop_at} value of \code{1} (providing a detailed,
+\strong{pointblank} will use a \code{error} value of \code{1} (providing a detailed,
 context-specific error message if there are any \emph{failing} units). We can
 absolutely suppress this automatic stopping behavior at each validation
 step by setting \code{active = FALSE}. In this interactive data case, there is no
-stock function given for \code{notify_at}. The \code{notify} failure state is less
+stock function given for \code{critical}. The \code{critical} failure state is less
 commonly used in this workflow as it is in the \emph{agent}-based one.
 
 When using an \emph{agent}, we often opt to not use any functions in \code{fns} as the
-\code{warn}, \code{stop}, and \code{notify} failure states will be reported on when using
+\code{warn}, \code{error}, and \code{critical} failure states will be reported on when using
 \code{create_agent_report()} (and, usually that's sufficient). Instead, using the
 \code{end_fns} argument is a better choice since that scheme provides useful data
 on the entire interrogation, allowing for finer control on side effects and
@@ -100,12 +121,12 @@ reducing potential for duplicating any side effects.
 \section{Defining threshold values}{
 
 
-Any threshold values supplied for the \code{warn_at}, \code{stop_at}, or \code{notify_at}
-arguments correspond to the \code{warn}, \code{stop}, and \code{notify} failure states,
-respectively. A threshold value can either relates to an absolute number of
-test units or a fraction-of-total test units that are \emph{failing}. Exceeding
-the threshold means entering one or more of the \code{warn}, \code{stop}, or \code{notify}
-failure states.
+Any threshold values supplied for the \code{warn}, \code{error}, or \code{critical}
+arguments correspond to the failure states of the same name.
+A threshold value can either relates to an absolute number of
+test units or a fraction-of-total test units that are \emph{failing}.
+Exceeding the threshold means entering one or more of the \code{warn}, \code{error},
+or \code{critical} failure states.
 
 If a threshold value is a decimal value between \code{0} and \code{1} then it's a
 proportional failure threshold (e.g., \code{0.15} indicates that if 15 percent of
@@ -140,13 +161,13 @@ For these examples, we will use the included \code{small_table} dataset.
 }\if{html}{\out{</div>}}
 
 Create an \code{action_levels} object with fractional values for the \code{warn},
-\code{stop}, and \code{notify} states.
+\code{error}, and \code{critical} states.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <-
   action_levels(
-    warn_at = 0.2,
-    stop_at = 0.8,
-    notify_at = 0.5
+    warn = 0.2,
+    error = 0.8,
+    critical = 0.5
   )
 }\if{html}{\out{</div>}}
 
@@ -193,7 +214,7 @@ another such object to the validation step instead (this time using the
   ) \%>\%
   col_vals_gt(
     columns = a, value = 2,
-    actions = warn_on_fail(warn_at = 0.5)
+    actions = warn_on_fail(warn = 0.5)
   ) \%>\%
   col_vals_lt(
     columns = d, value = 20000
@@ -222,26 +243,26 @@ data).
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   col_vals_gt(
     columns = a, value = 2,
-    actions = warn_on_fail(warn_at = 2)
+    actions = warn_on_fail(warn = 2)
   )
 }\if{html}{\out{</div>}}
 
 \preformatted{## # A tibble: 13 × 8
-##    date_time           date           a b           c      d e    
+##    date_time           date           a b           c      d e
 ##    <dttm>              <date>     <int> <chr>   <dbl>  <dbl> <lgl>
-##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-…     3  3423. TRUE 
-##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-…     8 10000. TRUE 
-##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-…     3  2343. TRUE 
+##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-…     3  3423. TRUE
+##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-…     8 10000. TRUE
+##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-…     3  2343. TRUE
 ##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-…    NA  3892. FALSE
-##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-…     7   284. TRUE 
-##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-…     4  3291. TRUE 
-##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-…     3   843. TRUE 
+##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-…     7   284. TRUE
+##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-…     4  3291. TRUE
+##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-…     3   843. TRUE
 ##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-…     2  1036. FALSE
 ##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-…     9   838. FALSE
 ## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-…     9   838. FALSE
-## 11 2016-01-26 20:07:00 2016-01-26     4 2-dmx-…     7   834. TRUE 
+## 11 2016-01-26 20:07:00 2016-01-26     4 2-dmx-…     7   834. TRUE
 ## 12 2016-01-28 02:51:00 2016-01-28     2 7-dmx-…     8   108. FALSE
-## 13 2016-01-30 11:23:00 2016-01-30     1 3-dka-…    NA  2230. TRUE 
+## 13 2016-01-30 11:23:00 2016-01-30     1 3-dka-…    NA  2230. TRUE
 ## # … with 1 more variable: f <chr>
 ## Warning message:
 ## Exceedance of failed test units where values in `a` should have been >
@@ -253,7 +274,7 @@ data).
 
 
 With the same pipeline, not supplying anything for \code{actions} (it's \code{NULL} by
-default) will have the same effect as using \code{stop_on_fail(stop_at = 1)}.
+default) will have the same effect as using \code{error_on_fail(error = 1)}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   col_vals_gt(columns = a, value = 2)
@@ -271,7 +292,7 @@ Here's the equivalent set of statements:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
   col_vals_gt(
     columns = a, value = 2,
-    actions = stop_on_fail(stop_at = 1)
+    actions = error_on_fail(error = 1)
   )
 }\if{html}{\out{</div>}}
 
@@ -282,7 +303,7 @@ Here's the equivalent set of statements:
 ## * failure level (4) >= failure threshold (1)
 }\if{html}{\out{</div>}}
 
-This is because the \code{stop_on_fail()} call is auto-injected in the default
+This is because the \code{error_on_fail()} call is auto-injected in the default
 case (when operating on data) for your convenience. Behind the scenes a
 'secret agent' uses 'covert actions': all so you can type less.
 }

@@ -428,18 +428,53 @@ db_tbl <- function(
 
   } else {
 
+    # Handle user and password properly - accept both literal values and env var names
+    actual_user <- if (inherits(user, "AsIs")) {
+      user
+    } else if (is.null(user)) {
+      NULL
+    } else {
+      # Check if it's an environment variable name
+      env_value <- Sys.getenv(user, unset = NA)
+      if (is.na(env_value)) {
+        # Not found as env var, treat as literal value
+        user
+      } else {
+        # Found as env var, use the env var value
+        env_value
+      }
+    }
+
+    actual_password <- if (inherits(password, "AsIs")) {
+      password
+    } else if (is.null(password)) {
+      NULL
+    } else {
+      # If it's already a resolved value (not just an env var name), use it directly
+      # Otherwise try to get it as an environment variable
+      if (is.character(password) && length(password) == 1) {
+        # Check if this looks like an env var name (all caps with underscores)
+        # or if it exists as an env var
+        env_value <- Sys.getenv(password, unset = NA)
+        if (is.na(env_value) || grepl("^[a-z]", password)) {
+          # Not found as env var or starts with lowercase, treat as literal
+          password
+        } else {
+          # Found as env var, use the env var value
+          env_value
+        }
+      } else {
+        password
+      }
+    }
+
     connection <-
       DBI::dbConnect(
         drv = driver_function,
-        user = ifelse(
-          inherits(user, "AsIs"),
-          user, Sys.getenv(user)
-        ),
-        password = ifelse(
-          inherits(password, "AsIs"),
-          password, Sys.getenv(password)
-        ),
+        user = actual_user,
+        password = actual_password,
         host = host,
+        port = port,
         dbname = dbname
       )
   }

@@ -428,7 +428,8 @@ db_tbl <- function(
 
   } else {
 
-    # Handle user and password properly - accept both literal values and env var names
+    # Handle user and password properly
+    # accept both literal values and env var names
     actual_user <- if (inherits(user, "AsIs")) {
       user
     } else if (is.null(user)) {
@@ -450,7 +451,8 @@ db_tbl <- function(
     } else if (is.null(password)) {
       NULL
     } else {
-      # If it's already a resolved value (not just an env var name), use it directly
+      # If it's already a resolved value (not just an env var name)
+      # use it directly
       # Otherwise try to get it as an environment variable
       if (is.character(password) && length(password) == 1) {
         # Check if this looks like an env var name (all caps with underscores)

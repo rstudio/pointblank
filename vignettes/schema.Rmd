@@ -62,7 +62,7 @@ agent <- create_agent(game_revenue) %>%
 agent
 ```
 
-The default is to define the schema in R types like `"numeric"` or `"character"` and you can use it to validate any of the tables pointblank supports, so not just data frames in R but also tables in databases such as `tbl_dbi` objects. While it may be convienent to define the schema in R types, note that this requires the data to be pulled into R first, which may not be efficient for large datasets. Alternatively, you can define the schema in SQL types and validate directly against the SQL table without pulling data into R.
+The default is to define the schema in R types like `"numeric"` or `"character"` and you can use it to validate any of the tables pointblank supports, so not just data frames in R but also tables in databases such as `tbl_dbi` objects. While it may be convienent to define the schema in R types, note that this requires the data to be pulled into R first, which may not be efficient for large datasets. Alternatively, you can define the schema in SQL types (like `BIGINT` and `VARCHAR`) and validate directly against the SQL table without pulling data into R.
 
 ```{r}
 #| label: types-sql

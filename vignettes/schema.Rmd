@@ -144,11 +144,12 @@ agent <- create_agent(sales, actions = action_levels(stop_at = 1)) %>%
 agent
 ```
 
-You can relax the validation further by allowing `NULL` types in the schema, which means that the column can be of any type or even missing from the table. 
+<!-- You can relax the validation further by allowing `NULL` types in the schema, which means that the column can be of any type or even missing from the table.  -->
 <!-- This is useful when you want to validate the presence of a column without enforcing a specific type or the column -->
 
 ```{r}
 #| label: type-matching-null
+#| include: false
 
 schema <- col_schema(
   amount = "numeric",

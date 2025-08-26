@@ -67,7 +67,9 @@ The default is to define the schema in R types like `"numeric"` or `"character"`
 ```{r}
 #| label: types-sql
 
-library(RSQLite)
+library("duckdb")
+
+con <- dbConnect(duckdb())
 
 sales <- dplyr::tibble(
   amount = c(100, 200, 300),
@@ -75,16 +77,14 @@ sales <- dplyr::tibble(
   sale_date = as.POSIXct(c("2023-01-01", "2023-01-02", "2023-01-03"))
 )
 
-con <- dbConnect(RSQLite::SQLite(), ":memory:")
-
-dbWriteTable(con, "sales_data", sales, overwrite = TRUE)
+dbWriteTable(con, "sales_data", sales)
 
 sales_db <- dplyr::tbl(con, "sales_data")
 
 schema_sql <- col_schema(
   amount = "REAL",
   customer_name = "TEXT",
-  sale_date = "REAL",
+  sale_date = "DATE",
   .db_col_types = "sql"
 )
 
@@ -93,6 +93,8 @@ agent <- create_agent(sales_db) %>%
   interrogate()
 
 dbDisconnect(con)
+
+agent
 ```
 
 

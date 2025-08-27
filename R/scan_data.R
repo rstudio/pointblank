@@ -1280,6 +1280,7 @@ probe_columns_other <- function(
 probe_interactions <- function(data) {
 
   category_cutoff <- 5
+  max_variables <- 20  # Limit to prevent plot size issues
 
   tbl_info <- get_tbl_information(tbl = data)
   col_names <- tbl_info$col_names
@@ -1306,6 +1307,11 @@ probe_interactions <- function(data) {
     col_names %>%
     base::setdiff(columns_char[columns_char_distinct_count > category_cutoff])
 
+  # Limit the number of variables to prevent plot size issues
+  if (length(col_names) > max_variables) {
+    col_names <- col_names[1:max_variables]
+  }
+
   # Create a ggplot2 plot matrix with the data
   plot_matrix <-
     data %>%
@@ -1315,8 +1321,8 @@ probe_interactions <- function(data) {
     ggforce::geom_autodensity() +
     ggplot2::geom_density2d() +
     ggforce::facet_matrix(
-      rows = ggplot2::vars(gt::everything()), layer.diag = 2, layer.upper = 3,
-      grid.y.diag = FALSE) +
+      rows = ggplot2::vars(dplyr::everything()), layer.diag = 2,
+      layer.upper = 3, grid.y.diag = FALSE, labeller = ggplot2::label_value) +
     ggplot2::theme_minimal() +
     ggplot2::theme(
       axis.text.x = ggplot2::element_text(
@@ -1334,8 +1340,9 @@ probe_interactions <- function(data) {
     plot = plot_matrix,
     device = "png",
     dpi = 300,
-    width = length(col_names),
-    height = length(col_names)
+    width = min(length(col_names), 20),
+    height = min(length(col_names), 20),
+    limitsize = FALSE
   )
 
   # Wait longer for file to be written on async file systems

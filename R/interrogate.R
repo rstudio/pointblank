@@ -1230,8 +1230,8 @@ tbl_vals_between <- function(
     right = {{ right }}
   )
 
-  true <- if (is_tbl_mssql(table)) 1 else TRUE
-  false <- if (is_tbl_mssql(table)) 0 else FALSE
+  true <- if (uses_numeric_logical(table)) 1 else TRUE
+  false <- if (uses_numeric_logical(table)) 0 else FALSE
   na_pass_bool <- if (na_pass) true else false
 
   #
@@ -1386,8 +1386,8 @@ interrogate_set <- function(
       # Ensure that the `column` provided is valid
       column_validity_checks_column(table = table, column = {{ column }})
 
-      true <- if (is_tbl_mssql(table)) 1 else TRUE
-      false <- if (is_tbl_mssql(table)) 0 else FALSE
+      true <- if (uses_numeric_logical(table)) 1 else TRUE
+      false <- if (uses_numeric_logical(table)) 0 else FALSE
       na_pass_bool <- if (na_pass) true else false
 
       table %>%

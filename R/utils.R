@@ -109,7 +109,7 @@ is_tbl_sqlite <- function(x) {
 }
 
 # Check if table type requires numeric logical values (1/0) instead of
-# TRUE/FALSE
+# logicals
 uses_numeric_logical <- function(x) {
   is_tbl_mssql(x) || is_tbl_duckdb(x) || is_tbl_sqlite(x)
 }

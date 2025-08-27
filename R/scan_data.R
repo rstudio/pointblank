@@ -1315,8 +1315,8 @@ probe_interactions <- function(data) {
     ggforce::geom_autodensity() +
     ggplot2::geom_density2d() +
     ggforce::facet_matrix(
-      rows = ggplot2::vars(dplyr::everything()), layer.diag = 2, layer.upper = 3,
-      grid.y.diag = FALSE, labeller = ggplot2::label_value) +
+      rows = ggplot2::vars(dplyr::everything()), layer.diag = 2,
+      layer.upper = 3, grid.y.diag = FALSE, labeller = ggplot2::label_value) +
     ggplot2::theme_minimal() +
     ggplot2::theme(
       axis.text.x = ggplot2::element_text(

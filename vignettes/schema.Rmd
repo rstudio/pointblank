@@ -42,7 +42,7 @@ agent <- create_agent(tbl) %>%
   col_schema_match(schema) %>%
   interrogate()
 
-# agent
+agent
 ```
 
 
@@ -62,7 +62,7 @@ agent <- create_agent(game_revenue) %>%
 agent
 ```
 
-The default is to define the schema in R types like `"numeric"` or `"character"` and you can use it to validate any of the tables pointblank supports, so not just data frames in R but also tables in databases such as `tbl_dbi` objects. While it may be convienent to define the schema in R types, note that this requires the data to be pulled into R first, which may not be efficient for large datasets. Alternatively, you can define the schema in SQL types (like `BIGINT` and `VARCHAR`) and validate directly against the SQL table without pulling data into R.
+The default is to define the schema in R types like `"numeric"` or `"character"` and you can use it to validate any of the tables pointblank supports, so not just data frames in R but also tables in databases such as `tbl_dbi` objects. While it may be convienent to define the schema in R types, note that this requires the data to be pulled into R first, which may not be efficient for large datasets. Alternatively, you can use the `.db_col_types` argument to define the schema in SQL types (like `BIGINT` and `VARCHAR`) and validate directly against the SQL table without pulling data into R.
 
 ```{r}
 #| label: types-sql
@@ -193,5 +193,6 @@ To wrap up, here are some best practices for schema validation with pointblank:
 - Check schemas early: check schemas early to catch structural issues before they propagate.
 - Choose your schema creation method: do you have a reference table or do you want to define the schema manually?
 - Be deliberate about strictness: use strict validation for critical data components and flexible validation for additional or evolving data components.
-- Reuse schemas: create schema definitions that can be reused across multiple validation contexts.
-- Version control schemas: as your data evolves, maintain versions of your schemas to track changes.
+- Reuse schemas: create schema definitions that can be reused across multiple validation contexts. The schema can be written into the agent and the agent saved as a YAML file, making it easier to share. See the [YAML](https://rstudio.github.io/pointblank/reference/col_schema_match.html#yaml) section of `col_schema_match` for an example.
+- Version control schemas: as your data evolves, maintain versions of your schemas to track changes. When `col_schema_match` is saved as a YAML file (see point above), it can easily be managed with a version control system.
+- Make use of `action_levels` to set thresholds for actions. If the schema validation fails, trigger a `stop` action, which can then be used to trigger other downstream effects (e.g., an email notification, termination of a data processing pipeline).

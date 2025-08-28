@@ -78,7 +78,7 @@ agent
 ## Preprocessing
 
 Preprocessing (with the `preconditions` argument) allows you to transform or modify your data before applying validation checks, enabling you to validate derived or modified data without altering the original dataset.
-There is no need to create multiple validation plans for differnt transformations of the original data.
+There is no need to create multiple validation plans for different transformations of the original data.
 
 ```{r}
 agent <- create_agent(tbl = small_table) %>%

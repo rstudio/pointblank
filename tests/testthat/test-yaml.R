@@ -17,7 +17,7 @@ get_oneline_expr_str <- function(agent, expanded = FALSE) {
 
 test_that("YAML writing and reading works as expected", {
 
-  al <- action_levels(warn_at = 0.1, stop_at = 0.2)
+  al <- action_levels(warn = 0.1, error = 0.2)
 
   agent <-
     create_agent(tbl = ~ small_table, actions = al) %>%
@@ -279,10 +279,10 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
       agent %>%
         col_vals_lt(
           vars(a, c), 1,
-          actions = action_levels(warn_at = 0.1, stop_at = 0.2)
+          actions = action_levels(warn = 0.1, error = 0.2)
         )
     ),
-    "col_vals_lt(columns = vars(a, c),value = 1,actions = action_levels(warn_at = 0.1,stop_at = 0.2))"
+    "col_vals_lt(columns = vars(a, c),value = 1,actions = action_levels(warn = 0.1,error = 0.2))"
   )
   expect_equal(
     get_oneline_expr_str(agent %>% col_vals_lt(vars(a, c), 1, label = "my_label")),
@@ -348,10 +348,10 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
       agent %>%
         col_vals_between(
           vars(c), left = vars(a), right = vars(d),
-          actions = action_levels(warn_at = 0.1, stop_at = 0.2)
+          actions = action_levels(warn = 0.1, error = 0.2)
         )
     ),
-    "col_vals_between(columns = vars(c),left = vars(a),right = vars(d),actions = action_levels(warn_at = 0.1,stop_at = 0.2))"
+    "col_vals_between(columns = vars(c),left = vars(a),right = vars(d),actions = action_levels(warn = 0.1,error = 0.2))"
   )
   expect_equal(
     get_oneline_expr_str(agent %>% col_vals_between(vars(c), left = -5, right = 15, label = "my_label")),
@@ -409,10 +409,10 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
       agent %>%
         col_vals_not_between(
           vars(c), left = vars(a), right = vars(d),
-          actions = action_levels(warn_at = 0.1, stop_at = 0.2)
+          actions = action_levels(warn = 0.1, error = 0.2)
         )
     ),
-    "col_vals_not_between(columns = vars(c),left = vars(a),right = vars(d),actions = action_levels(warn_at = 0.1,stop_at = 0.2))"
+    "col_vals_not_between(columns = vars(c),left = vars(a),right = vars(d),actions = action_levels(warn = 0.1,error = 0.2))"
   )
   expect_equal(
     get_oneline_expr_str(agent %>% col_vals_not_between(vars(a), left = -5, right = 15, label = "my_label")),
@@ -454,10 +454,10 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
       agent %>%
         col_vals_in_set(
           vars(c), set = c(1:10),
-          actions = action_levels(warn_at = 0.1, stop_at = 0.2)
+          actions = action_levels(warn = 0.1, error = 0.2)
         )
     ),
-    "col_vals_in_set(columns = vars(c),set = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),actions = action_levels(warn_at = 0.1,stop_at = 0.2))"
+    "col_vals_in_set(columns = vars(c),set = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),actions = action_levels(warn = 0.1,error = 0.2))"
   )
   expect_equal(
     get_oneline_expr_str(agent %>% col_vals_in_set(vars(f), set = c("low", "high"), label = "my_label")),
@@ -499,10 +499,10 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
       agent %>%
         col_vals_not_in_set(
           vars(c), set = c(1:10),
-          actions = action_levels(warn_at = 0.1, stop_at = 0.2)
+          actions = action_levels(warn = 0.1, error = 0.2)
         )
     ),
-    "col_vals_not_in_set(columns = vars(c),set = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),actions = action_levels(warn_at = 0.1,stop_at = 0.2))"
+    "col_vals_not_in_set(columns = vars(c),set = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),actions = action_levels(warn = 0.1,error = 0.2))"
   )
   expect_equal(
     get_oneline_expr_str(agent %>% col_vals_not_in_set(vars(f), set = c("low", "high"), label = "my_label")),
@@ -544,10 +544,10 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
       agent %>%
         col_vals_make_set(
           vars(c), set = c(1:10),
-          actions = action_levels(warn_at = 0.1, stop_at = 0.2)
+          actions = action_levels(warn = 0.1, error = 0.2)
         )
     ),
-    "col_vals_make_set(columns = vars(c),set = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),actions = action_levels(warn_at = 0.1,stop_at = 0.2))"
+    "col_vals_make_set(columns = vars(c),set = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),actions = action_levels(warn = 0.1,error = 0.2))"
   )
   expect_equal(
     get_oneline_expr_str(agent %>% col_vals_make_set(vars(f), set = c("low", "high"), label = "my_label")),
@@ -589,10 +589,10 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
       agent %>%
         col_vals_make_subset(
           vars(c), set = c(1:10),
-          actions = action_levels(warn_at = 0.1, stop_at = 0.2)
+          actions = action_levels(warn = 0.1, error = 0.2)
         )
     ),
-    "col_vals_make_subset(columns = vars(c),set = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),actions = action_levels(warn_at = 0.1,stop_at = 0.2))"
+    "col_vals_make_subset(columns = vars(c),set = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),actions = action_levels(warn = 0.1,error = 0.2))"
   )
   expect_equal(
     get_oneline_expr_str(agent %>% col_vals_make_subset(vars(f), set = c("low", "high"), label = "my_label")),
@@ -835,9 +835,9 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   )
   expect_equal(
     get_oneline_expr_str(
-      agent %>% col_is_character(vars(b, f), actions = action_levels(warn_at = 0.1, stop_at = 0.2))
+      agent %>% col_is_character(vars(b, f), actions = action_levels(warn = 0.1, error = 0.2))
     ),
-    "col_is_character(columns = vars(b, f),actions = action_levels(warn_at = 0.1,stop_at = 0.2))"
+    "col_is_character(columns = vars(b, f),actions = action_levels(warn = 0.1,error = 0.2))"
   )
   expect_equal(
     get_oneline_expr_str(agent %>% col_is_character(vars(b), label = "my_label")),
@@ -858,9 +858,9 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   )
   expect_equal(
     get_oneline_expr_str(
-      agent %>% col_exists(vars(b, f), actions = action_levels(warn_at = 0.1, stop_at = 0.2))
+      agent %>% col_exists(vars(b, f), actions = action_levels(warn = 0.1, error = 0.2))
     ),
-    "col_exists(columns = vars(b, f),actions = action_levels(warn_at = 0.1,stop_at = 0.2))"
+    "col_exists(columns = vars(b, f),actions = action_levels(warn = 0.1,error = 0.2))"
   )
   expect_equal(
     get_oneline_expr_str(agent %>% col_exists(vars(b), label = "my_label")),

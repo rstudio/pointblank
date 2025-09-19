@@ -444,7 +444,7 @@ expect_row_count_match <- function(
     row_count_match(
       count = {{ count }},
       preconditions = {{ preconditions }},
-      actions = action_levels(notify_at = threshold)
+      actions = action_levels(critical = threshold)
     ) %>%
     interrogate() %>%
     .$validation_set
@@ -514,7 +514,7 @@ test_row_count_match <- function(
     row_count_match(
       count = {{ count }},
       preconditions = {{ preconditions }},
-      actions = action_levels(notify_at = threshold)
+      actions = action_levels(critical = threshold)
     ) %>%
     interrogate() %>%
     .$validation_set

@@ -26,8 +26,8 @@
 #' The `action_levels()` function works with the `actions` argument that is
 #' present in the [create_agent()] function and in every validation step
 #' function (which also has an `actions` argument). With it, we can provide
-#' threshold *failure* values for any combination of `warn`, `stop`, or `notify`
-#' failure states.
+#' threshold *failure* values for any combination of `warn`, `error`, or
+#' `critical` failure states.
 #'
 #' We can react to any entering of a state by supplying corresponding functions
 #' to the `fns` argument. They will undergo evaluation at the time when the
@@ -41,57 +41,58 @@
 #' warnings, throwing errors) in the case of validation functions operating
 #' directly on data (e.g., `mtcars %>% col_vals_lt("mpg", 35)`). There are two
 #' helper functions that are convenient when using validation functions directly
-#' on data (the `agent`-less workflow): `warn_on_fail()` and `stop_on_fail()`.
+#' on data (the `agent`-less workflow): `warn_on_fail()` and `error_on_fail()`.
 #' These helpers either warn or stop (default failure threshold for each is set
 #' to `1`), and, they do so with informative warning or error messages. The
-#' `stop_on_fail()` helper is applied by default when using validation functions
-#' directly on data (more information on this is provided in *Details*).
+#' `error_on_fail()` helper is applied by default when using validation
+#' functions directly on data (more information on this is provided in
+#' *Details*).
 #'
 #' @details
 #'
 #' The output of the `action_levels()` call in `actions` will be interpreted
 #' slightly differently if using an *agent* or using validation functions
 #' directly on a data table. For convenience, when working directly on data, any
-#' values supplied to `warn_at` or `stop_at` will be automatically given a stock
+#' values supplied to `warn` or `error` will be automatically given a stock
 #' `warning()` or `stop()` function. For example using
 #' `small_table %>% col_is_integer("date")` will provide a detailed stop message
 #' by default, indicating the reason for the failure. If you were to supply the
-#' `fns` for `stop` or `warn` manually then the stock functions would be
+#' `fns` for `warn` or `error` manually then the stock functions would be
 #' overridden. Furthermore, if `actions` is NULL in this workflow (the default),
-#' **pointblank** will use a `stop_at` value of `1` (providing a detailed,
+#' **pointblank** will use a `error` value of `1` (providing a detailed,
 #' context-specific error message if there are any *failing* units). We can
 #' absolutely suppress this automatic stopping behavior at each validation
 #' step by setting `active = FALSE`. In this interactive data case, there is no
-#' stock function given for `notify_at`. The `notify` failure state is less
+#' stock function given for `critical`. The `critical` failure state is less
 #' commonly used in this workflow as it is in the *agent*-based one.
 #'
 #' When using an *agent*, we often opt to not use any functions in `fns` as the
-#' `warn`, `stop`, and `notify` failure states will be reported on when using
+#' `warn`, `error`, and `critical` failure states will be reported on when using
 #' `create_agent_report()` (and, usually that's sufficient). Instead, using the
 #' `end_fns` argument is a better choice since that scheme provides useful data
 #' on the entire interrogation, allowing for finer control on side effects and
 #' reducing potential for duplicating any side effects.
 #'
-#' @param warn_at *Threshold value for the 'warn' failure state*
+#' @param warn *Threshold value for the 'warn' failure state*
 #'
 #'   `scalar<integer|numeric>(val>=0)` // *default:* `NULL` (`optional`)
 #'
 #'   Either the threshold number or the threshold fraction of *failing* test
 #'   units that result in entering the `warn` failure state.
 #'
-#' @param stop_at *Threshold value for the 'stop' failure state*
+#' @param error *Threshold value for the 'stop' failure state*
 #'
 #'   `scalar<integer|numeric>(val>=0)` // *default:* `NULL` (`optional`)
 #'
 #'   Either the threshold number or the threshold fraction of *failing* test
-#'   units that result in entering the `stop` failure state.
+#'   units that result in entering the `error` failure state.
 #'
-#' @param notify_at *Threshold value for the 'notify' failure state*
+#' @param critical *Threshold value for the 'notify' failure state*
 #'
 #'   `scalar<integer|numeric>(val>=0)` // *default:* `NULL` (`optional`)
 #'
 #'   Either the threshold number or the threshold fraction of *failing* test
-#'   units that result in entering the `notify` failure state.
+#'   units that result in entering the `critical` failure state.
 #'
 #' @param fns *Functions to execute when entering failure states*
 #'
@@ -99,21 +100,27 @@
 #'
 #'   A named list of functions that is to be paired with the appropriate failure
 #'   states. The syntax for this list involves using failure state names from
-#'   the set of `warn`, `stop`, and `notify`. The functions corresponding to the
-#'   failure states are provided as formulas (e.g.,
+#'   the set of `warn`, `error`, and `critical`. The functions corresponding to
+#'   the failure states are provided as formulas (e.g.,
 #'   `list(warn = ~ warning("Too many failures."))`. A series of expressions for
 #'   each named state can be used by enclosing the set of statements with `{ }`.
+#'
+#' @inheritParams rlang::args_dots_empty
+#'
+#' @param warn_at `r lifecycle::badge("deprecated")`
+#' @param stop_at `r lifecycle::badge("deprecated")`
+#' @param notify_at `r lifecycle::badge("deprecated")`
 #'
 #' @return An `action_levels` object.
 #'
 #' @section Defining threshold values:
 #'
-#' Any threshold values supplied for the `warn_at`, `stop_at`, or `notify_at`
-#' arguments correspond to the `warn`, `stop`, and `notify` failure states,
-#' respectively. A threshold value can either relates to an absolute number of
-#' test units or a fraction-of-total test units that are *failing*. Exceeding
-#' the threshold means entering one or more of the `warn`, `stop`, or `notify`
-#' failure states.
+#' Any threshold values supplied for the `warn`, `error`, or `critical`
+#' arguments correspond to the failure states of the same name.
+#' A threshold value can either relates to an absolute number of
+#' test units or a fraction-of-total test units that are *failing*.
+#' Exceeding the threshold means entering one or more of the `warn`, `error`,
+#' or `critical` failure states.
 #'
 #' If a threshold value is a decimal value between `0` and `1` then it's a
 #' proportional failure threshold (e.g., `0.15` indicates that if 15 percent of
@@ -131,14 +138,14 @@
 #' ```
 #'
 #' Create an `action_levels` object with fractional values for the `warn`,
-#' `stop`, and `notify` states.
+#' `error`, and `critical` states.
 #'
 #' ```r
 #' al <-
 #'   action_levels(
-#'     warn_at = 0.2,
-#'     stop_at = 0.8,
-#'     notify_at = 0.5
+#'     warn = 0.2,
+#'     error = 0.8,
+#'     critical = 0.5
 #'   )
 #' ```
 #'
@@ -189,7 +196,7 @@
 #'   ) %>%
 #'   col_vals_gt(
 #'     columns = a, value = 2,
-#'     actions = warn_on_fail(warn_at = 0.5)
+#'     actions = warn_on_fail(warn = 0.5)
 #'   ) %>%
 #'   col_vals_lt(
 #'     columns = d, value = 20000
@@ -221,7 +228,7 @@
 #' small_table %>%
 #'   col_vals_gt(
 #'     columns = a, value = 2,
-#'     actions = warn_on_fail(warn_at = 2)
+#'     actions = warn_on_fail(warn = 2)
 #'   )
 #' ```
 #'
@@ -252,7 +259,7 @@
 #'
 #'
 #' With the same pipeline, not supplying anything for `actions` (it's `NULL` by
-#' default) will have the same effect as using `stop_on_fail(stop_at = 1)`.
+#' default) will have the same effect as using `error_on_fail(error = 1)`.
 #'
 #' ```r
 #' small_table %>%
@@ -274,7 +281,7 @@
 #' small_table %>%
 #'   col_vals_gt(
 #'     columns = a, value = 2,
-#'     actions = stop_on_fail(stop_at = 1)
+#'     actions = error_on_fail(error = 1)
 #'   )
 #' ```
 #'
@@ -287,7 +294,7 @@
 #' ```
 #'
 #'
-#' This is because the `stop_on_fail()` call is auto-injected in the default
+#' This is because the `error_on_fail()` call is auto-injected in the default
 #' case (when operating on data) for your convenience. Behind the scenes a
 #' 'secret agent' uses 'covert actions': all so you can type less.
 #'
@@ -301,26 +308,47 @@ NULL
 #' @rdname action_levels
 #' @export
 action_levels <- function(
+    warn = NULL,
+    error = NULL,
+    critical = NULL,
+    fns = NULL,
+    ...,
     warn_at = NULL,
     stop_at = NULL,
-    notify_at = NULL,
-    fns = NULL
+    notify_at = NULL
 ) {
 
-  fns <- normalize_fns_list(fns = fns)
+  # Gradual argument name deprecation
+  ## Deprecation message
+  if (!missing(warn_at) || !missing(stop_at) || !missing(notify_at)) {
+    warn_deprecated_action_levels()
+  }
+  ## Guard partial matching and redundant args
+  rlang::check_dots_empty()
+  rlang::check_exclusive(warn, warn_at, .require = FALSE)
+  rlang::check_exclusive(error, stop_at, .require = FALSE)
+  rlang::check_exclusive(critical, notify_at, .require = FALSE)
+  ## Resolve names
+  warn <- warn %||% warn_at
+  error <- error %||% stop_at
+  critical <- critical %||% notify_at
 
-  warn_list <- normalize_fraction_count(warn_at)
-  stop_list <- normalize_fraction_count(stop_at)
-  notify_list <- normalize_fraction_count(notify_at)
+  if (!inherits(fns, "action_fns")) {
+    fns <- normalize_fns_list(fns = fns)
+  }
+
+  warn_list <- normalize_fraction_count(warn)
+  error_list <- normalize_fraction_count(error)
+  critical_list <- normalize_fraction_count(critical)
 
   action_levels <-
     list(
       warn_fraction = warn_list$fraction,
       warn_count = warn_list$count,
-      stop_fraction = stop_list$fraction,
-      stop_count = stop_list$count,
-      notify_fraction = notify_list$fraction,
-      notify_count = notify_list$count,
+      stop_fraction = error_list$fraction,
+      stop_count = error_list$count,
+      notify_fraction = critical_list$fraction,
+      notify_count = critical_list$count,
       fns = fns
     )
 
@@ -333,102 +361,117 @@ action_levels <- function(
 
 #' @rdname action_levels
 #' @export
-warn_on_fail <- function(warn_at = 1) {
-  action_levels(warn_at = warn_at, fns = list(warn = ~stock_warning(x = x)))
+warn_on_fail <- function(warn = 1, warn_at = NULL) {
+  rlang::check_exclusive(warn, warn_at, .require = FALSE)
+  if (!missing(warn_at)) {
+    warn_deprecated_action_levels()
+  }
+  warn <- warn_at %||% warn
+
+  action_levels(
+    warn = warn,
+    fns = action_fns(warn = ~stock_warning(x = x))
+  )
+}
+
+#' @rdname action_levels
+#' @export
+error_on_fail <- function(error = 1) {
+  action_levels(
+    error = error,
+    fns = action_fns(error = ~stock_stoppage(x = x))
+  )
 }
 
 #' @rdname action_levels
 #' @export
 stop_on_fail <- function(stop_at = 1) {
-  action_levels(stop_at = stop_at, fns = list(stop = ~stock_stoppage(x = x)))
+  cli::cli_warn(c(
+    "!" = "`stop_on_fail()` is deprecated.",
+    " " = "Please use `error_on_fail()` instead."
+  ))
+  error_on_fail(error = stop_at)
+}
+
+action_fns <- function(warn = NULL, error = NULL, critical = NULL) {
+  fns <- structure(
+    list(warn = warn, error = error, critical = critical,
+         # temp compatibility with rest of internals
+         stop = error, notify = critical),
+    class = "action_fns"
+  )
+  if (!all(vapply(fns, function(x) is.null(x) || is_formula(x), logical(1)))) {
+    cli::cli_abort("Action functions must be supplied as formulas.")
+  }
+  fns
 }
 
 normalize_fns_list <- function(fns) {
 
-  if (is.null(fns) || (is.list(fns) && length(fns) == 0)) {
-    return(list(warn = NULL, stop = NULL, notify = NULL))
+  if (is.null(fns)) {
+    return(action_fns())
   }
 
-  are_formulas <-
-    fns %>%
-    vapply(
-      FUN.VALUE = logical(1), USE.NAMES = FALSE,
-      FUN = function(x) rlang::is_formula(x)
-    )
+  nms <- c("warn", "error", "critical",
+                   "stop",  "notify")
 
-  if (!all(are_formulas)) {
+  stopifnot(
+    "`fns` must be a `action_fns()` object" = is.list(fns),
+    "The `fns` list must be fully named." = !("" %in% rlang::names2(fns)),
+    "`fns` must contain valid action levels" = all(names(fns) %in% nms)
+  )
 
-    stop(
-      "All components of the `fns` list must be formulas.",
-      call. = FALSE
-    )
-  }
+  cli::cli_warn(c(
+    "!" = "Passing a list to `fns` is deprecated.",
+    " " = "Please use `action_fns()` instead."
+  ))
 
-  if ("" %in% names(fns)) {
+  warn <- fns$warn %||% fns$warn_at
+  error <- fns$error %||% fns$error_at
+  critical <- fns$critical %||% fns$notify_at
 
-    stop("The `fns` list must be fully named.", call. = FALSE)
-  }
+  action_fns(warn, error, critical)
 
-  if (!all(names(fns) %in% c("warn", "stop", "notify"))) {
-
-    stop(
-      "All names in the `fns` list must be one of `warn`, `stop`, or `notify`.",
-      call. = FALSE
-    )
-  }
-
-  fns
 }
 
 normalize_fraction_count <- function(x) {
 
-  if (!is.null(x) && !any(c(inherits(x, "numeric"), inherits(x, "integer")))) {
+  fraction_count <- list(fraction = NULL, count = NULL)
 
-    stop(
-      "All values provided to `action_levels()` must be either ",
-      "`numeric` or `integer` types.",
-      call. = FALSE
-    )
+  if (is.null(x)) {
+    return(fraction_count)
   }
 
-  if (!is.null(x) && x <= 0) {
+  stopifnot(
+    "Action level thresholds must be a single number." =
+      length(x) == 1 || is.numeric(x),
+    "Action level threshold values must be positive." = x > 0
+  )
 
-    stop(
-      "All values provided to `action_levels()` must be `>=0`.",
-      call. = FALSE
-    )
-  }
-
-  if (!is.null(x)) {
-    if (x < 1) {
-      fraction <- x
-      count <- NULL
-    } else if (x >= 1) {
-      count <- floor(x) %>% as.numeric()
-      fraction <- NULL
-    }
+  if (x < 1) {
+    fraction_count$fraction <- x
   } else {
-    fraction <- NULL
-    count <- NULL
+    fraction_count$count <- floor(x)
   }
 
-  list(fraction = fraction, count = count)
+  fraction_count
+
 }
 
 prime_actions <- function(actions) {
 
   if (!is.null(actions)) {
-    if (is.null(actions$fns$warn)) {
-      actions$fns$warn <- ~stock_warning(x = x)
-    }
-    if (is.null(actions$fns$stop)) {
-      actions$fns$stop <- ~stock_stoppage(x = x)
-    }
+    actions$fns <-
+      action_fns(
+        warn = actions$fns$warn %||% ~stock_warning(x = x),
+        error = actions$fns$stop %||% ~stock_stoppage(x = x),
+        critical = actions$fns$critical
+      )
   } else {
     actions <-
       action_levels(
-        stop_at = 1,
-        fns = list(stop = ~stock_stoppage(x = x))
+        error = 1,
+        fns = action_fns(error = ~stock_stoppage(x = x))
       )
   }
 
@@ -506,4 +549,14 @@ stock_warning <- function(x) {
     glue::glue(failure_message_gluestring(fn_name = fn_name, lang = "en"))
 
   warning(failure_message, call. = FALSE)
+}
+
+warn_deprecated_action_levels <- function() {
+  cli::cli_warn(
+    c("!" = "`warn_at`, `stop_at`, and `notify_at` are deprecated.",
+      " " = "Action levels are now `warn`, `error`, and `critical`."),
+    class = "deprecatedWarning",
+    .frequency = "regularly",
+    .frequency_id = "pointblank-action-levels-args-deprecation"
+  )
 }

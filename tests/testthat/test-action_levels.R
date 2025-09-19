@@ -19,15 +19,15 @@ test_that("The `action_levels()` helper function works as expected", {
   expect_null(al[[4]])
   expect_null(al[[5]])
   expect_null(al[[6]])
-  expect_named(al[[7]], c("warn", "stop", "notify"))
+  expect_true(all(c("warn", "stop", "notify") %in% names(al[[7]])))
   expect_type(al[[7]], "list")
   expect_null(al[[7]][[1]])
   expect_null(al[[7]][[2]])
   expect_null(al[[7]][[3]])
-  expect_length(al[[7]], 3)
+  expect_length(al[[7]], 5)
 
   # Create an `action_levels()` list with fractional values
-  al <- action_levels(warn_at = 0.2, stop_at = 0.8, notify_at = 0.345)
+  al <- action_levels(warn = 0.2, error = 0.8, critical = 0.345)
 
   expect_s3_class(al, "action_levels")
   expect_length(al, 7)
@@ -46,15 +46,15 @@ test_that("The `action_levels()` helper function works as expected", {
   expect_equal(al$notify_fraction, 0.345)
   expect_null(al$notify_count)
 
-  expect_length(al[[7]], 3)
-  expect_named(al[[7]], c("warn", "stop", "notify"))
+  expect_length(al[[7]], 5)
+  expect_true(all(c("warn", "stop", "notify") %in% names(al[[7]])))
   expect_type(al[[7]], "list")
   expect_null(al[[7]][[1]])
   expect_null(al[[7]][[2]])
   expect_null(al[[7]][[3]])
 
   # Create an `action_levels()` list with count values
-  al <- action_levels(warn_at = 20, stop_at = 80, notify_at = 34.6)
+  al <- action_levels(warn = 20, error = 80, critical = 34.6)
 
   al %>% expect_s3_class("action_levels")
   al %>%
@@ -63,7 +63,7 @@ test_that("The `action_levels()` helper function works as expected", {
         "warn_fraction", "warn_count", "stop_fraction", "stop_count",
         "notify_fraction", "notify_count", "fns")
     )
-  al[[7]] %>% expect_named(c("warn", "stop", "notify"))
+  expect_true(all(c("warn", "stop", "notify") %in% names(al[[7]])))
 
   al$warn_fraction %>% expect_null()
   al$warn_count %>% expect_equal(20)
@@ -76,21 +76,21 @@ test_that("The `action_levels()` helper function works as expected", {
   al[[7]][[2]] %>% expect_null()
   al[[7]][[3]] %>% expect_null()
   al %>% length() %>% expect_equal(7)
-  al[[7]] %>% length() %>% expect_equal(3)
+  expect_length(al[[7]], 5)
 
   # Expect an error if non-numeric values provided
-  expect_error(action_levels(warn_at = "20"))
+  expect_error(action_levels(warn = "20"))
 
   # Expect an error if any value less than or
   # equal to zero is provided
-  expect_error(action_levels(warn_at = 0))
-  expect_error(action_levels(warn_at = -1.5))
+  expect_error(action_levels(warn = 0))
+  expect_error(action_levels(warn = -1.5))
 
   # Add functions to the `fns` arg
   al <-
     action_levels(
-      warn_at = 3,
-      fns = list(warn = ~ my_great_function(vl = .vars_list))
+      warn = 3,
+      fns = action_fns(warn = ~ my_great_function(vl = .vars_list))
     )
 
   al %>% expect_s3_class("action_levels")
@@ -101,7 +101,7 @@ test_that("The `action_levels()` helper function works as expected", {
         "warn_fraction", "warn_count", "stop_fraction", "stop_count",
         "notify_fraction", "notify_count", "fns")
     )
-  al[[7]] %>% expect_named("warn")
+  expect_true(all(c("warn", "stop", "notify") %in% names(al[[7]])))
   al[[7]][[1]] %>% expect_s3_class("formula")
   al[[7]][[1]] %>%
     as.character() %>%
@@ -115,17 +115,16 @@ test_that("The `action_levels()` helper function works as expected", {
   al$notify_count %>% expect_null()
   al[[7]] %>% expect_type("list")
   al %>% expect_length(7)
-  al[[7]] %>% expect_length(1)
 
   # Expect an error if not all components
   # of the `fns` list are formulas
-  expect_error(action_levels(warn_at = 3, fns = list(warn = "text")))
+  expect_error(action_levels(warn = 3, fns = action_fns(warn = "text")))
 
   # Expect an error if not all components
   # of the `fns` list are named
   expect_error(
     action_levels(
-      warn_at = 3,
+      warn = 3,
       fns = list(
         warn = ~ my_great_function(vl = .vars_list),
         ~ another_function()
@@ -138,8 +137,8 @@ test_that("The `action_levels()` helper function works as expected", {
   # or `notify`
   expect_error(
     action_levels(
-      warn_at = 3,
-      fns = list(
+      warn = 3,
+      fns = action_fns(
         warn = ~ my_great_function(vl = .vars_list),
         notable =  ~ another_function()
       )
@@ -153,12 +152,12 @@ test_that("The appropriate actions occur when using `action_levels()`", {
     create_agent(tbl = small_table, label = "small_table_tests") %>%
     col_vals_gt(
       vars(d), 1000,
-      actions = action_levels(warn_at = 3, fns = list(warn = ~"warning")
+      actions = action_levels(warn = 3, fns = action_fns(warn = ~"warning")
       )
     ) %>%
     col_vals_in_set(
       vars(f), c("low", "high"),
-      actions = action_levels(warn_at = 0.1, fns = list(warn = ~"warning")
+      actions = action_levels(warn = 0.1, fns = action_fns(warn = ~"warning")
       )
     ) %>%
     interrogate()
@@ -170,33 +169,33 @@ test_that("The appropriate actions occur when using `action_levels()`", {
     create_agent(tbl = small_table, label = "small_table_tests") %>%
     col_vals_gt(
       vars(d), 1000,
-      actions = action_levels(notify_at = 3, fns = list(notify = ~"notify")
+      actions = action_levels(critical = 3, fns = action_fns(critical = ~"critical")
       )
     ) %>%
     col_vals_in_set(
       vars(f), c("low", "high"),
-      actions = action_levels(notify_at = 0.1, fns = list(notify = ~"notify")
+      actions = action_levels(critical = 0.1, fns = action_fns(critical = ~"critical")
       )
     ) %>%
     interrogate()
 
   agent_report <- get_agent_report(agent, display_table = FALSE)
-  agent_report$N %>% expect_equal(rep(TRUE, 2))
+  agent_report$C %>% expect_equal(rep(TRUE, 2))
 
   agent <-
     create_agent(tbl = small_table, label = "small_table_tests") %>%
     col_vals_gt(
       vars(d), 1000,
-      actions = action_levels(stop_at = 3, fns = list(stop = ~"stop")
+      actions = action_levels(error = 3, fns = action_fns(error = ~"error")
       )
     ) %>%
     col_vals_in_set(
       vars(f), c("low", "high"),
-      actions = action_levels(stop_at = 0.1, fns = list(stop = ~"stop")
+      actions = action_levels(error = 0.1, fns = action_fns(error = ~"error")
       )
     ) %>%
     interrogate()
 
   agent_report <- get_agent_report(agent, display_table = FALSE)
-  agent_report$S %>% expect_equal(rep(TRUE, 2))
+  agent_report$E %>% expect_equal(rep(TRUE, 2))
 })

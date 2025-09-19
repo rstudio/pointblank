@@ -409,8 +409,8 @@ get_agent_report <- function(
       n_pass = validation_set$n_passed,
       f_pass = validation_set$f_passed,
       W = validation_set$warn,
-      S = validation_set$stop,
-      N = validation_set$notify,
+      E = validation_set$stop,
+      C = validation_set$notify,
       extract = extract_count
     )
 
@@ -418,10 +418,10 @@ get_agent_report <- function(
     report_tbl %>%
     dplyr::mutate(
       eval_pts = ifelse(eval != "OK", 10, 0),
-      N_pts = ifelse(!is.na(N) & N, 3, 0),
-      S_pts = ifelse(!is.na(S) & S, 2, 0),
+      C_pts = ifelse(!is.na(C) & C, 3, 0),
+      E_pts = ifelse(!is.na(E) & E, 2, 0),
       W_pts = ifelse(!is.na(W) & W, 1, 0),
-      total_pts = eval_pts + N_pts + S_pts + W_pts
+      total_pts = eval_pts + C_pts + E_pts + W_pts
     )
 
   if (arrange_by == "severity") {
@@ -1538,7 +1538,7 @@ get_agent_report <- function(
       }
     )
 
-  s_upd <-
+  e_upd <-
     validation_set$stop %>%
     vapply(
       FUN.VALUE = character(1),
@@ -1555,7 +1555,7 @@ get_agent_report <- function(
       }
     )
 
-  n_upd <-
+  c_upd <-
     validation_set$notify %>%
     vapply(
       FUN.VALUE = character(1),
@@ -1600,17 +1600,17 @@ get_agent_report <- function(
       f_pass = f_pass_val,
       f_fail = f_fail_val,
       W_val = W,
-      S_val = S,
-      N_val = N,
+      E_val = E,
+      C_val = C,
       W = w_upd,
-      S = s_upd,
-      N = n_upd,
+      E = e_upd,
+      C = c_upd,
       extract = extract_upd
     ) %>%
     dplyr::select(
       status_color, i, type, columns, values, precon, eval_sym, units,
-      n_pass, f_pass, n_fail, f_fail, W, S, N, extract,
-      W_val, S_val, N_val, eval, active
+      n_pass, f_pass, n_fail, f_fail, W, E, C, extract,
+      W_val, E_val, C_val, eval, active
     ) %>%
     gt::gt(id = "pb_agent", locale = locale) %>%
     gt::tab_header(
@@ -1656,7 +1656,7 @@ get_agent_report <- function(
     ) %>%
     gt::cols_align(
       align = "center",
-      columns = c("precon", "eval_sym", "W", "S", "N", "extract")
+      columns = c("precon", "eval_sym", "W", "E", "C", "extract")
     ) %>%
     gt::cols_align(
       align = "center",
@@ -1677,12 +1677,12 @@ get_agent_report <- function(
     gt::fmt_markdown(
       columns = c(
         "type", "columns", "values", "precon",
-        "eval_sym", "W", "S", "N", "extract"
+        "eval_sym", "W", "E", "C", "extract"
       )
     ) %>%
     gt::sub_missing(columns = c("columns", "values", "units", "extract")) %>%
     gt::sub_missing(columns = "status_color", missing_text = "") %>%
-    gt::cols_hide(columns = c("W_val", "S_val", "N_val", "active", "eval")) %>%
+    gt::cols_hide(columns = c("W_val", "E_val", "C_val", "active", "eval")) %>%
     gt::text_transform(
       locations = gt::cells_body(columns = "units"),
       fn = function(x) {
@@ -1741,7 +1741,7 @@ get_agent_report <- function(
       style = gt::cell_fill(color = "#CF142B"),
       locations = gt::cells_body(
         columns = "status_color",
-        rows = S_val
+        rows = E_val
       )
     ) %>%
     gt::tab_style(
@@ -1764,11 +1764,11 @@ get_agent_report <- function(
         gt::cell_borders(sides = "right", color = "#D3D3D3"),
         gt::cell_fill(color = "#FCFCFC")
       ),
-      locations = gt::cells_body(columns = c("eval_sym", "N"))
+      locations = gt::cells_body(columns = c("eval_sym", "C"))
     ) %>%
     gt::tab_style(
       style = gt::cell_fill(color = "#FCFCFC"),
-      locations = gt::cells_body(columns = "S")
+      locations = gt::cells_body(columns = "E")
     ) %>%
     gt::tab_style(
       style = gt::cell_borders(
@@ -1812,7 +1812,7 @@ get_agent_report <- function(
         locations = gt::cells_body(
           columns = c(
             "precon", "eval_sym", "units", "f_pass", "f_fail",
-            "n_pass", "n_fail", "W", "S", "N", "extract"
+            "n_pass", "n_fail", "W", "E", "C", "extract"
           )
         ),
         fn = function(x) {
@@ -1831,7 +1831,7 @@ get_agent_report <- function(
         locations = gt::cells_body(
           columns = c(
             "precon", "eval_sym", "units", "f_pass", "f_fail",
-            "n_pass", "n_fail", "W", "S", "N", "extract"
+            "n_pass", "n_fail", "W", "E", "C", "extract"
           )
         )
       ) %>%
@@ -1873,8 +1873,8 @@ get_agent_report <- function(
         "n_pass" ~ gt::px(50),
         "n_fail" ~ gt::px(50),
         "W" ~ gt::px(30),
-        "S" ~ gt::px(30),
-        "N" ~ gt::px(30),
+        "E" ~ gt::px(30),
+        "C" ~ gt::px(30),
         gt::everything() ~ gt::px(20)
       ) %>%
       gt::tab_style(
@@ -1931,8 +1931,8 @@ get_agent_report <- function(
         "precon" ~ gt::px(50),
         "eval_sym" ~ gt::px(50),
         "W" ~ gt::px(30),
-        "S" ~ gt::px(30),
-        "N" ~ gt::px(30),
+        "E" ~ gt::px(30),
+        "C" ~ gt::px(30),
         "extract" ~ gt::px(65),
         gt::everything() ~ gt::px(50)
       ) %>%
@@ -2263,14 +2263,14 @@ make_action_levels_html <- function(
       pb_fmt_number(actions$warn_count, decimals = 0, locale = locale)
     ) %||% "&mdash;"
 
-  stop <-
+  error <-
     c(
       pb_fmt_number(actions$stop_fraction, decimals = 2, locale = locale),
       pb_fmt_number(actions$stop_count, decimals = 0, locale = locale)
     ) %||% "&mdash;"
 
 
-  notify <-
+  critical <-
     c(
       pb_fmt_number(actions$notify_fraction, decimals = 2, locale = locale),
       pb_fmt_number(actions$notify_count, decimals = 0, locale = locale)
@@ -2308,7 +2308,7 @@ make_action_levels_html <- function(
         )
       ),
       htmltools::tags$span(
-        "STOP",
+        "ERROR",
         style = htmltools::css(
           `background-color` = "#D0182F",
           color = "white",
@@ -2323,7 +2323,7 @@ make_action_levels_html <- function(
         )
       ),
       htmltools::tags$span(
-        htmltools::HTML(stop),
+        htmltools::HTML(error),
         style = htmltools::css(
           `background-color` = "none",
           color = "#333333",
@@ -2337,7 +2337,7 @@ make_action_levels_html <- function(
         )
       ),
       htmltools::tags$span(
-        "NOTIFY",
+        "CRITICAL",
         style = htmltools::css(
           `background-color` = "#499FFE",
           color = "white",
@@ -2352,7 +2352,7 @@ make_action_levels_html <- function(
         )
       ),
       htmltools::tags$span(
-        htmltools::HTML(notify),
+        htmltools::HTML(critical),
         style = htmltools::css(
           `background-color` = "none",
           color = "#333333",

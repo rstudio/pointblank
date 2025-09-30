@@ -70,10 +70,10 @@ test_that("Full range of tidyselect features available in column selection", {
 
   # Supplying a character vector variable still works, but signals deprecation:
   rlang::local_options(lifecycle_verbosity = "warning")
-  expect_success(expect_warning(
-    expect_rows_distinct(tbl, exist_col),
+  expect_warning(
+    expect_success(expect_rows_distinct(tbl, exist_col)),
     "Using an external vector in selections was deprecated in tidyselect 1.1.0."
-  ))
+  )
 
 })
 

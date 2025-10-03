@@ -773,6 +773,15 @@ export_report <- function(
       htmltools::as.tags() %>%
       htmltools::save_html(file = filename)
 
+  } else if (inherits(x, "ptblank_multiagent")) {
+
+    object_type <- "multiagent"
+
+    x %>%
+      get_multiagent_report() %>%
+      htmltools::as.tags() %>%
+      htmltools::save_html(file = filename)
+
   } else if (inherits(x, "ptblank_tbl_scan")) {
 
     object_type <- "table scan"

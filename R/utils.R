@@ -765,7 +765,7 @@ get_tbl_dbi_src_info <- function(tbl) {
 }
 
 get_tbl_dbi_src_details <- function(tbl) {
-  tbl_src_info <- get_tbl_dbi_src_info(tbl)
+  tbl_src_info <- trimws(get_tbl_dbi_src_info(tbl))
   tbl_src_info[grepl("^src:", tbl_src_info)] %>% gsub("src:\\s*", "", .)
 }
 

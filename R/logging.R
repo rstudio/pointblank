@@ -18,7 +18,6 @@
 #
 #------------------------------------------------------------------------------#
 
-
 # nocov start
 
 #' Enable logging of failure conditions at the validation step level
@@ -179,11 +178,10 @@
 #'
 #' @export
 log4r_step <- function(
-    x,
-    message = NULL,
-    append_to = "pb_log_file"
+  x,
+  message = NULL,
+  append_to = "pb_log_file"
 ) {
-
   rlang::check_installed("log4r", "to use the `log4r_step()` function.")
 
   type <- x$this_type
@@ -222,9 +220,15 @@ log4r_step <- function(
   # condition is present for this validation step *and*
   # there is a `log4r_step()` function ready for
   # evaluation at those higher severities
-  if (warn_val   && log4r_fn_present[1]) highest_level <- 3
-  if (stop_val   && log4r_fn_present[2]) highest_level <- 4
-  if (notify_val && log4r_fn_present[3]) highest_level <- 5
+  if (warn_val && log4r_fn_present[1]) {
+    highest_level <- 3
+  }
+  if (stop_val && log4r_fn_present[2]) {
+    highest_level <- 4
+  }
+  if (notify_val && log4r_fn_present[3]) {
+    highest_level <- 5
+  }
 
   if (highest_level > level_val) {
     return(invisible(NULL))
@@ -236,12 +240,15 @@ log4r_step <- function(
 
   logger <- log4r::logger(appenders = appenders)
 
+  message <- message %||%
+    "Step {x$i} exceeded the {level} failure threshold \\
+      (f_failed = {x$f_failed}) ['{x$type}']"
+
   log4r::levellog(
     logger = logger,
     level = level_val,
     message = glue::glue(
-      "Step {x$i} exceeded the {level} failure threshold \\
-      (f_failed = {x$f_failed}) ['{x$type}']"
+      message
     )
   )
 }

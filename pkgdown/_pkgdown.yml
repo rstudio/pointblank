@@ -8,6 +8,9 @@ home:
 template:
   bootstrap: 5
   light-switch: true
+  includes:
+    in_header: |
+      <script src="https://cdn.jsdelivr.net/gh/posit-dev/supported-by-posit/js/badge.min.js"></script>
 
 development:
   mode: release
@@ -89,7 +92,7 @@ reference:
     - conjointly
     - serially
     - specially
-    
+
   - title: Information Functions
     desc: >
       We can progressively add information to an *informant* object by using the
@@ -112,7 +115,7 @@ reference:
     - snip_stats
     - snip_lowest
     - snip_highest
-    
+
   - title: Emailing
     desc: >
       Sometimes we want to email a report of a validation because of the
@@ -125,7 +128,7 @@ reference:
     - email_create
     - stock_msg_body
     - stock_msg_footer
-    
+
   - title: Logging
     desc: >
       Logging validation failure conditions makes for a good practice during
@@ -146,7 +149,7 @@ reference:
     contents:
     - interrogate
     - get_agent_report
-    
+
   - title: "Informant: Incorporate and Report"
     desc: >
       If we have an *informant* object that has been loaded with information
@@ -157,7 +160,7 @@ reference:
     contents:
     - incorporate
     - get_informant_report
-    
+
   - title: Post-interrogation
     desc: >
       The agent always has a special list called an x-list. Access that by
@@ -175,10 +178,10 @@ reference:
     - get_sundered_data
     - all_passed
     - write_testthat_file
-    
+
   - title: Object Ops
     desc: >
-      We have options for writing an agent or informant to disk with the 
+      We have options for writing an agent or informant to disk with the
       `x_write_disk()` function. The on-disk object can be retrieved with the
       `x_read_disk()` function. You can export a report as an HTML file with
       `export_report()`. A set of functions are also available for
@@ -192,7 +195,7 @@ reference:
     - activate_steps
     - deactivate_steps
     - remove_steps
-    
+
   - title: The Multiagent
     desc: >
       The *multiagent* is a group of agents, all bundled together into a single
@@ -206,7 +209,7 @@ reference:
     - create_multiagent
     - read_disk_multiagent
     - get_multiagent_report
-  
+
   - title: pointblank YAML
     desc: >
       YAML files can be used in **pointblank** for two distinct purposes: (1)
@@ -227,7 +230,7 @@ reference:
     - yaml_agent_show_exprs
     - yaml_informant_incorporate
     - yaml_exec
-    
+
   - title: Table Transformers
     desc: >
       **Table Transformer** functions can radically transform a data table and
@@ -246,7 +249,7 @@ reference:
     - tt_time_shift
     - tt_time_slice
     - get_tt_param
-    
+
   - title: Utility and Helper Functions
     contents:
     - col_schema
@@ -255,7 +258,7 @@ reference:
     - affix_datetime
     - stop_if_not
     - from_github
-    
+
   - title: Datasets
     contents:
     - small_table
@@ -263,7 +266,7 @@ reference:
     - specifications
     - game_revenue
     - game_revenue_info
-    
+
 navbar:
   type: default
   left:

@@ -59,15 +59,16 @@ schema_gr <- col_schema(mock_reference)
 agent <- create_agent(game_revenue) %>%
   col_schema_match(schema_gr) %>%
   interrogate()
+
 agent
 ```
 
-The default is to define the schema in R types like `"numeric"` or `"character"` and you can use it to validate any of the tables pointblank supports, so not just data frames in R but also tables in databases such as `tbl_dbi` objects. While it may be convienent to define the schema in R types, note that this requires the data to be pulled into R first, which may not be efficient for large datasets. Alternatively, you can use the `.db_col_types` argument to define the schema in SQL types (like `BIGINT` and `VARCHAR`) and validate directly against the SQL table without pulling data into R.
+The default is to define the schema in R types like `"numeric"` or `"character"` and you can use it to validate any of the tables pointblank supports, so not just data frames in R but also tables in databases. While it may be convienent to define the schema in R types, note that this requires the data to be pulled into R first, which may not be efficient for large datasets. Alternatively, you can use the `.db_col_types` argument to define the schema in SQL types (like `BIGINT` and `VARCHAR`) and validate directly against the SQL table without pulling data into R.
 
 ```{r}
 #| label: types-sql
 
-library("duckdb")
+library(duckdb)
 
 con <- dbConnect(duckdb())
 
@@ -106,7 +107,7 @@ By default, pointblank is strict in the validations it performs, ensuring that t
 - With `in_order = FALSE` you can allow the column order to differ between the schema and the target table.
 - With `is_exact = FALSE` you can allow partial type matching and even skip type matching if you only want to validate the column names.
 
-Let's look at an example for the partial type matching. If we write the schema for the `sales` data frame from above as follow, the default strict validation fails.
+Let's look at an example for the partial type matching. If we write the schema for the `sales` data frame from above as follows, the default strict validation fails. To make that very obvious, we set `stop_at = 1` in the agent's `actions`. Actions are commonly a way to trigger downstream effects (like sending an email notification) but here we simply use them to turn the color on the lefthand side of the validation report red.
 
 ```{r}
 #| label: type-matching-strict

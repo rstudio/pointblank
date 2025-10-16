@@ -1,5 +1,5 @@
 ---
-title: "Custom Validation"
+title: "Fundamentals of Data Validation with Pointblank"
 output: html_document
 ---
 
@@ -153,6 +153,15 @@ agent <- create_agent(tbl = small_table) %>%
 
 agent
 ```
+
+Apart from using the agent's results table to visually inspect the outcomes of your validation steps, you can also programmatically access infomation about the results through the so-called x-list, e.g., which validation steps crossed the stop threshold.
+
+```{r}
+x_list <- get_agent_x_list(agent)
+
+x_list$stop
+```
+
 
 ## Conclusion
 

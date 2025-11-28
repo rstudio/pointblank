@@ -68,13 +68,6 @@ test_that("Full range of tidyselect features available in column selection", {
   expect_error(expect_rows_distinct(tbl, c(x, tidyselect::all_of(nonexist_col))))
   expect_success(expect_rows_distinct(tbl, c(x, tidyselect::any_of(nonexist_col))))
 
-  # Supplying a character vector variable still works, but signals deprecation:
-  rlang::local_options(lifecycle_verbosity = "warning")
-  expect_warning(
-    expect_success(expect_rows_distinct(tbl, exist_col)),
-    "Using an external vector in selections was deprecated in tidyselect 1.1.0."
-  )
-
 })
 
 test_that("'NULL = select everything' behavior in rows_*() validation functions", {

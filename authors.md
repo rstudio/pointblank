@@ -14,7 +14,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/rstudio/pointblank/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/rstudio/pointblank/blob/v0.12.3/DESCRIPTION)
 
 Iannone R, Vargas M, Choe J (2025). *pointblank: Data Validation and
 Organization of Metadata for Local and Remote Tables*. R package version

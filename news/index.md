@@ -1,45 +1,109 @@
 # Changelog
 
-## pointblank (development version)
+## pointblank 0.12.3
 
-- Add `na_pass` to
+- We now support validation checks of Oracle tables via ODBC
+  ([\#462](https://github.com/rstudio/pointblank/issues/462)).
+  ([\#644](https://github.com/rstudio/pointblank/issues/644),
+  [@pachadotdev](https://github.com/pachadotdev))
+
+- Redshift table support has now been fixed
+  ([\#538](https://github.com/rstudio/pointblank/issues/538)).
+  ([\#623](https://github.com/rstudio/pointblank/issues/623),
+  [\#643](https://github.com/rstudio/pointblank/issues/643),
+  [@pachadotdev](https://github.com/pachadotdev) and
+  [@hfrick](https://github.com/hfrick))
+
+- Added the `na_pass` argument to
   [`col_vals_expr()`](https://rstudio.github.io/pointblank/reference/col_vals_expr.md)
   for finer control of `NA` values. Previously, `NA`s were ignored, but
   now they are caught as failures with the default `na_pass = FALSE`. As
   a safeguard, if an expression generates `NA` values while `na_pass` is
-  not explicitly supplied, a warning is thrown.
+  not explicitly supplied, a warning is thrown
+  ([\#616](https://github.com/rstudio/pointblank/issues/616)).
   ([\#617](https://github.com/rstudio/pointblank/issues/617))
 
-- Bugfix agents auto-generating a table label that was too long. They
-  now get truncated
+- Added an infix resolution for
+  [`log4r_step()`](https://rstudio.github.io/pointblank/reference/log4r_step.md)’s
+  `message` argument
+  ([\#654](https://github.com/rstudio/pointblank/issues/654)).
+  ([\#656](https://github.com/rstudio/pointblank/issues/656),
+  [@alexpaynter](https://github.com/alexpaynter))
+
+- Fixed the issue where an agent would auto-generating a table label
+  that was too long (truncation occurs now)
+  ([\#613](https://github.com/rstudio/pointblank/issues/613)).
   ([\#614](https://github.com/rstudio/pointblank/issues/614))
 
-- Bugfix agents not searching the formula environment when materializing
-  `~ tbl` ([\#599](https://github.com/rstudio/pointblank/issues/599))
+- Fixed problem where agents would not search the formula environment
+  when materializing `~ tbl`
+  ([\#598](https://github.com/rstudio/pointblank/issues/598)).
+  ([\#599](https://github.com/rstudio/pointblank/issues/599))
 
 - [`info_columns()`](https://rstudio.github.io/pointblank/reference/info_columns.md)
-  warn more informatively when no columns are selected
+  now warns more informatively when no columns are selected
+  ([\#344](https://github.com/rstudio/pointblank/issues/344)).
   ([\#589](https://github.com/rstudio/pointblank/issues/589)).
 
-- `write_yaml()` errors more informatively when `tbl` value is
-  incompatible for yaml-writing
+- `write_yaml()` errors more informatively now when a `tbl` value is
+  incompatible for YAML-writing
+  ([\#596](https://github.com/rstudio/pointblank/issues/596)).
   ([\#597](https://github.com/rstudio/pointblank/issues/597))
+
+- The
+  [`yaml_agent_string()`](https://rstudio.github.io/pointblank/reference/yaml_agent_string.md)
+  function now returns the yaml string
+  ([\#609](https://github.com/rstudio/pointblank/issues/609)).
+  ([\#610](https://github.com/rstudio/pointblank/issues/610))
+
+- The
+  [`col_vals_regex()`](https://rstudio.github.io/pointblank/reference/col_vals_regex.md)
+  function now supports Perl regexes
+  ([\#606](https://github.com/rstudio/pointblank/issues/606)).
+  ([\#608](https://github.com/rstudio/pointblank/issues/608))
+
+- We now use a safeguard to fall back to the original string as-is if
+  glue interpolation fails (useful in cases where a user-provided regex
+  like `{1,2}` is to be preservedin in autobrief but triggers an error
+  by {glue})
+  ([\#600](https://github.com/rstudio/pointblank/issues/600)).
+  ([\#601](https://github.com/rstudio/pointblank/issues/601))
 
 - Data extracts for
   [`rows_distinct()`](https://rstudio.github.io/pointblank/reference/rows_distinct.md)/[`rows_complete()`](https://rstudio.github.io/pointblank/reference/rows_complete.md)
-  preserves all columns, not just the ones tested
+  now preserve all columns, not just the ones tested
+  ([\#475](https://github.com/rstudio/pointblank/issues/475)).
   ([\#588](https://github.com/rstudio/pointblank/issues/588),
   [\#591](https://github.com/rstudio/pointblank/issues/591))
 
 - The `brief` argument of validation functions now also supports
-  [glue](https://glue.tidyverse.org/) syntax
+  [glue](https://glue.tidyverse.org/) syntax.
   ([\#587](https://github.com/rstudio/pointblank/issues/587))
 
-- Validation step `brief`s correctly recycle to match expanded steps
+- Validation step `brief`s correctly recycle to match expanded steps.
   ([\#564](https://github.com/rstudio/pointblank/issues/564))
 
-- A new Get Started vignette
-  ([\#605](https://github.com/rstudio/pointblank/issues/605)).
+- Performed extensive refactoring of internal dplyr and ggplot2 code.
+  ([\#579](https://github.com/rstudio/pointblank/issues/579),
+  [\#582](https://github.com/rstudio/pointblank/issues/582),
+  [\#583](https://github.com/rstudio/pointblank/issues/583),
+  [@olivroy](https://github.com/olivroy))
+
+- Rebuilt translation table and added support for ordered factors in
+  [`scan_data()`](https://rstudio.github.io/pointblank/reference/scan_data.md).
+  ([\#580](https://github.com/rstudio/pointblank/issues/580),
+  [@olivroy](https://github.com/olivroy))
+
+- Modernized test infrastructure and removed deprecated testthat
+  features. ([\#577](https://github.com/rstudio/pointblank/issues/577),
+  [@olivroy](https://github.com/olivroy))
+
+- Added a new Get Started vignette.
+  ([\#605](https://github.com/rstudio/pointblank/issues/605),
+  [@hfrick](https://github.com/hfrick))
+
+- The README.md has undergone some refinements.
+  ([\#618](https://github.com/rstudio/pointblank/issues/618))
 
 ## pointblank 0.12.2
 

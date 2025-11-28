@@ -56,8 +56,7 @@
 
       <div class="section-desc"><p>Should you need to understand your data a bit more, use the <code><a href="../reference/scan_data.html">scan_data()</a></code> function. It provides a comprehensive report on the data you might be planning on validating. If going down the road of preparing a data quality analysis, call on an <em>agent</em> to carry out that eventual plan with <code><a href="../reference/create_agent.html">create_agent()</a></code>. The agent here is to be told which table is the target, and, we devise a stepwise validation plan with validation functions. If collecting and publishing table information is your goal, then begin with the <code><a href="../reference/create_informant.html">create_informant()</a></code> function.</p></div>
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -68,61 +67,71 @@
 
         </dt>
         <dd>Thoroughly scan a table to better understand it</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="create_agent.html"><img src="icons/create_agent.png" alt=""></a>
           <code><a href="create_agent.html">create_agent()</a></code>
 
         </dt>
         <dd>Create a <strong>pointblank</strong> <em>agent</em> object</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="create_informant.html"><img src="icons/create_informant.png" alt=""></a>
           <code><a href="create_informant.html">create_informant()</a></code>
 
         </dt>
         <dd>Create a <strong>pointblank</strong> <em>informant</em> object</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="validate_rmd.html"><img src="icons/validate_rmd.png" alt=""></a>
           <code><a href="validate_rmd.html">validate_rmd()</a></code>
 
         </dt>
         <dd>Perform <strong>pointblank</strong> validation testing within R Markdown documents</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="action_levels.html"><img src="icons/action_levels.png" alt=""></a>
           <code><a href="action_levels.html">action_levels()</a></code> <code><a href="action_levels.html">warn_on_fail()</a></code> <code><a href="action_levels.html">stop_on_fail()</a></code>
 
         </dt>
         <dd>Set action levels: failure thresholds and functions to invoke</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="db_tbl.html"><img src="icons/db_tbl.png" alt=""></a>
           <code><a href="db_tbl.html">db_tbl()</a></code>
 
         </dt>
         <dd>Get a table from a database</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="file_tbl.html"><img src="icons/file_tbl.png" alt=""></a>
           <code><a href="file_tbl.html">file_tbl()</a></code>
 
         </dt>
         <dd>Get a table from a local or remote file</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="tbl_store.html"><img src="icons/tbl_store.png" alt=""></a>
           <code><a href="tbl_store.html">tbl_store()</a></code>
 
         </dt>
         <dd>Define a store of tables with table-prep formulas: a table store</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="tbl_source.html"><img src="icons/tbl_source.png" alt=""></a>
           <code><a href="tbl_source.html">tbl_source()</a></code>
 
         </dt>
         <dd>Obtain a table-prep formula from a table store</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="tbl_get.html"><img src="icons/tbl_get.png" alt=""></a>
           <code><a href="tbl_get.html">tbl_get()</a></code>
 
         </dt>
         <dd>Obtain a materialized table via a table store</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="draft_validation.html"><img src="icons/draft_validation.png" alt=""></a>
           <code><a href="draft_validation.html">draft_validation()</a></code>
 
@@ -133,8 +142,7 @@
 
       <div class="section-desc"><p>Validation functions are either used with an <em>agent</em> object or, more simply, just with the table of interest. When used with an <em>agent</em>, each validation works to build up a validation plan (which is executed with the <code><a href="../reference/interrogate.html">interrogate()</a></code> function). If one or more validation functions are used directly on data (that is, no agent is involved whatsoever), then the data is checked and passed through if there are no problems. We can fine tune the <code>warn_*</code> and/or <code>stop_*</code> thresholds and so that if the level of failed validation units exceeds those set levels, then we’ll get either a warning or an error. Each validation function is associated with an expectation function (of the form <code>expect_*()</code>). These expectation functions are equivalent in usage and behavior to those in the <strong>testthat</strong> package. Finally, each validation function has an associated test function (of the form <code>test_*()</code>) that always returns a logical value.</p></div>
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -145,211 +153,246 @@
 
         </dt>
         <dd>Are column data less than a fixed value or data in another column?</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="col_vals_lte.html"><img src="icons/col_vals_lte.png" alt=""></a>
           <code><a href="col_vals_lte.html">col_vals_lte()</a></code> <code><a href="col_vals_lte.html">expect_col_vals_lte()</a></code> <code><a href="col_vals_lte.html">test_col_vals_lte()</a></code>
 
         </dt>
         <dd>Are column data less than or equal to a fixed value or data in another column?</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="col_vals_equal.html"><img src="icons/col_vals_equal.png" alt=""></a>
           <code><a href="col_vals_equal.html">col_vals_equal()</a></code> <code><a href="col_vals_equal.html">expect_col_vals_equal()</a></code> <code><a href="col_vals_equal.html">test_col_vals_equal()</a></code>
 
         </dt>
         <dd>Are column data equal to a fixed value or data in another column?</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="col_vals_not_equal.html"><img src="icons/col_vals_not_equal.png" alt=""></a>
           <code><a href="col_vals_not_equal.html">col_vals_not_equal()</a></code> <code><a href="col_vals_not_equal.html">expect_col_vals_not_equal()</a></code> <code><a href="col_vals_not_equal.html">test_col_vals_not_equal()</a></code>
 
         </dt>
         <dd>Are column data not equal to a fixed value or data in another column?</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="col_vals_gte.html"><img src="icons/col_vals_gte.png" alt=""></a>
           <code><a href="col_vals_gte.html">col_vals_gte()</a></code> <code><a href="col_vals_gte.html">expect_col_vals_gte()</a></code> <code><a href="col_vals_gte.html">test_col_vals_gte()</a></code>
 
         </dt>
         <dd>Are column data greater than or equal to a fixed value or data in another column?</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="col_vals_gt.html"><img src="icons/col_vals_gt.png" alt=""></a>
           <code><a href="col_vals_gt.html">col_vals_gt()</a></code> <code><a href="col_vals_gt.html">expect_col_vals_gt()</a></code> <code><a href="col_vals_gt.html">test_col_vals_gt()</a></code>
 
         </dt>
         <dd>Are column data greater than a fixed value or data in another column?</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="col_vals_between.html"><img src="icons/col_vals_between.png" alt=""></a>
           <code><a href="col_vals_between.html">col_vals_between()</a></code> <code><a href="col_vals_between.html">expect_col_vals_between()</a></code> <code><a href="col_vals_between.html">test_col_vals_between()</a></code>
 
         </dt>
         <dd>Do column data lie between two specified values or data in other columns?</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="col_vals_not_between.html"><img src="icons/col_vals_not_between.png" alt=""></a>
           <code><a href="col_vals_not_between.html">col_vals_not_between()</a></code> <code><a href="col_vals_not_between.html">expect_col_vals_not_between()</a></code> <code><a href="col_vals_not_between.html">test_col_vals_not_between()</a></code>
 
         </dt>
         <dd>Do column data lie outside of two specified values or data in other columns?</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="col_vals_in_set.html"><img src="icons/col_vals_in_set.png" alt=""></a>
           <code><a href="col_vals_in_set.html">col_vals_in_set()</a></code> <code><a href="col_vals_in_set.html">expect_col_vals_in_set()</a></code> <code><a href="col_vals_in_set.html">test_col_vals_in_set()</a></code>
 
         </dt>
         <dd>Are column data part of a specified set of values?</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="col_vals_not_in_set.html"><img src="icons/col_vals_not_in_set.png" alt=""></a>
           <code><a href="col_vals_not_in_set.html">col_vals_not_in_set()</a></code> <code><a href="col_vals_not_in_set.html">expect_col_vals_not_in_set()</a></code> <code><a href="col_vals_not_in_set.html">test_col_vals_not_in_set()</a></code>
 
         </dt>
         <dd>Are data not part of a specified set of values?</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="col_vals_make_set.html"><img src="icons/col_vals_make_set.png" alt=""></a>
           <code><a href="col_vals_make_set.html">col_vals_make_set()</a></code> <code><a href="col_vals_make_set.html">expect_col_vals_make_set()</a></code> <code><a href="col_vals_make_set.html">test_col_vals_make_set()</a></code>
 
         </dt>
         <dd>Is a set of values entirely accounted for in a column of values?</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="col_vals_make_subset.html"><img src="icons/col_vals_make_subset.png" alt=""></a>
           <code><a href="col_vals_make_subset.html">col_vals_make_subset()</a></code> <code><a href="col_vals_make_subset.html">expect_col_vals_make_subset()</a></code> <code><a href="col_vals_make_subset.html">test_col_vals_make_subset()</a></code>
 
         </dt>
         <dd>Is a set of values a subset of a column of values?</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="col_vals_increasing.html"><img src="icons/col_vals_increasing.png" alt=""></a>
           <code><a href="col_vals_increasing.html">col_vals_increasing()</a></code> <code><a href="col_vals_increasing.html">expect_col_vals_increasing()</a></code> <code><a href="col_vals_increasing.html">test_col_vals_increasing()</a></code>
 
         </dt>
         <dd>Are column data increasing by row?</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="col_vals_decreasing.html"><img src="icons/col_vals_decreasing.png" alt=""></a>
           <code><a href="col_vals_decreasing.html">col_vals_decreasing()</a></code> <code><a href="col_vals_decreasing.html">expect_col_vals_decreasing()</a></code> <code><a href="col_vals_decreasing.html">test_col_vals_decreasing()</a></code>
 
         </dt>
         <dd>Are column data decreasing by row?</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="col_vals_null.html"><img src="icons/col_vals_null.png" alt=""></a>
           <code><a href="col_vals_null.html">col_vals_null()</a></code> <code><a href="col_vals_null.html">expect_col_vals_null()</a></code> <code><a href="col_vals_null.html">test_col_vals_null()</a></code>
 
         </dt>
         <dd>Are column data <code>NULL</code>/<code>NA</code>?</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="col_vals_not_null.html"><img src="icons/col_vals_not_null.png" alt=""></a>
           <code><a href="col_vals_not_null.html">col_vals_not_null()</a></code> <code><a href="col_vals_not_null.html">expect_col_vals_not_null()</a></code> <code><a href="col_vals_not_null.html">test_col_vals_not_null()</a></code>
 
         </dt>
         <dd>Are column data not <code>NULL</code>/<code>NA</code>?</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="col_vals_regex.html"><img src="icons/col_vals_regex.png" alt=""></a>
           <code><a href="col_vals_regex.html">col_vals_regex()</a></code> <code><a href="col_vals_regex.html">expect_col_vals_regex()</a></code> <code><a href="col_vals_regex.html">test_col_vals_regex()</a></code>
 
         </dt>
         <dd>Do strings in column data match a regex pattern?</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="col_vals_within_spec.html"><img src="icons/col_vals_within_spec.png" alt=""></a>
           <code><a href="col_vals_within_spec.html">col_vals_within_spec()</a></code> <code><a href="col_vals_within_spec.html">expect_col_vals_within_spec()</a></code> <code><a href="col_vals_within_spec.html">test_col_vals_within_spec()</a></code>
 
         </dt>
         <dd>Do values in column data fit within a specification?</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="col_vals_expr.html"><img src="icons/col_vals_expr.png" alt=""></a>
           <code><a href="col_vals_expr.html">col_vals_expr()</a></code> <code><a href="col_vals_expr.html">expect_col_vals_expr()</a></code> <code><a href="col_vals_expr.html">test_col_vals_expr()</a></code>
 
         </dt>
         <dd>Do column data agree with a predicate expression?</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="rows_distinct.html"><img src="icons/rows_distinct.png" alt=""></a>
           <code><a href="rows_distinct.html">rows_distinct()</a></code> <code><a href="rows_distinct.html">expect_rows_distinct()</a></code> <code><a href="rows_distinct.html">test_rows_distinct()</a></code>
 
         </dt>
         <dd>Are row data distinct?</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="rows_complete.html"><img src="icons/rows_complete.png" alt=""></a>
           <code><a href="rows_complete.html">rows_complete()</a></code> <code><a href="rows_complete.html">expect_rows_complete()</a></code> <code><a href="rows_complete.html">test_rows_complete()</a></code>
 
         </dt>
         <dd>Are row data complete?</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="col_is_character.html"><img src="icons/col_is_character.png" alt=""></a>
           <code><a href="col_is_character.html">col_is_character()</a></code> <code><a href="col_is_character.html">expect_col_is_character()</a></code> <code><a href="col_is_character.html">test_col_is_character()</a></code>
 
         </dt>
         <dd>Do the columns contain character/string data?</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="col_is_numeric.html"><img src="icons/col_is_numeric.png" alt=""></a>
           <code><a href="col_is_numeric.html">col_is_numeric()</a></code> <code><a href="col_is_numeric.html">expect_col_is_numeric()</a></code> <code><a href="col_is_numeric.html">test_col_is_numeric()</a></code>
 
         </dt>
         <dd>Do the columns contain numeric values?</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="col_is_integer.html"><img src="icons/col_is_integer.png" alt=""></a>
           <code><a href="col_is_integer.html">col_is_integer()</a></code> <code><a href="col_is_integer.html">expect_col_is_integer()</a></code> <code><a href="col_is_integer.html">test_col_is_integer()</a></code>
 
         </dt>
         <dd>Do the columns contain integer values?</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="col_is_logical.html"><img src="icons/col_is_logical.png" alt=""></a>
           <code><a href="col_is_logical.html">col_is_logical()</a></code> <code><a href="col_is_logical.html">expect_col_is_logical()</a></code> <code><a href="col_is_logical.html">test_col_is_logical()</a></code>
 
         </dt>
         <dd>Do the columns contain logical values?</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="col_is_date.html"><img src="icons/col_is_date.png" alt=""></a>
           <code><a href="col_is_date.html">col_is_date()</a></code> <code><a href="col_is_date.html">expect_col_is_date()</a></code> <code><a href="col_is_date.html">test_col_is_date()</a></code>
 
         </dt>
         <dd>Do the columns contain R <code>Date</code> objects?</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="col_is_posix.html"><img src="icons/col_is_posix.png" alt=""></a>
           <code><a href="col_is_posix.html">col_is_posix()</a></code> <code><a href="col_is_posix.html">expect_col_is_posix()</a></code> <code><a href="col_is_posix.html">test_col_is_posix()</a></code>
 
         </dt>
         <dd>Do the columns contain <code>POSIXct</code> dates?</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="col_is_factor.html"><img src="icons/col_is_factor.png" alt=""></a>
           <code><a href="col_is_factor.html">col_is_factor()</a></code> <code><a href="col_is_factor.html">expect_col_is_factor()</a></code> <code><a href="col_is_factor.html">test_col_is_factor()</a></code>
 
         </dt>
         <dd>Do the columns contain R <code>factor</code> objects?</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="col_exists.html"><img src="icons/col_exists.png" alt=""></a>
           <code><a href="col_exists.html">col_exists()</a></code> <code><a href="col_exists.html">expect_col_exists()</a></code> <code><a href="col_exists.html">test_col_exists()</a></code>
 
         </dt>
         <dd>Do one or more columns actually exist?</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="col_schema_match.html"><img src="icons/col_schema_match.png" alt=""></a>
           <code><a href="col_schema_match.html">col_schema_match()</a></code> <code><a href="col_schema_match.html">expect_col_schema_match()</a></code> <code><a href="col_schema_match.html">test_col_schema_match()</a></code>
 
         </dt>
         <dd>Do columns in the table (and their types) match a predefined schema?</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="row_count_match.html"><img src="icons/row_count_match.png" alt=""></a>
           <code><a href="row_count_match.html">row_count_match()</a></code> <code><a href="row_count_match.html">expect_row_count_match()</a></code> <code><a href="row_count_match.html">test_row_count_match()</a></code>
 
         </dt>
         <dd>Does the row count match that of a different table?</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="col_count_match.html"><img src="icons/col_count_match.png" alt=""></a>
           <code><a href="col_count_match.html">col_count_match()</a></code> <code><a href="col_count_match.html">expect_col_count_match()</a></code> <code><a href="col_count_match.html">test_col_count_match()</a></code>
 
         </dt>
         <dd>Does the column count match that of a different table?</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="tbl_match.html"><img src="icons/tbl_match.png" alt=""></a>
           <code><a href="tbl_match.html">tbl_match()</a></code> <code><a href="tbl_match.html">expect_tbl_match()</a></code> <code><a href="tbl_match.html">test_tbl_match()</a></code>
 
         </dt>
         <dd>Does the target table match a comparison table?</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="conjointly.html"><img src="icons/conjointly.png" alt=""></a>
           <code><a href="conjointly.html">conjointly()</a></code> <code><a href="conjointly.html">expect_conjointly()</a></code> <code><a href="conjointly.html">test_conjointly()</a></code>
 
         </dt>
         <dd>Perform multiple rowwise validations for joint validity</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="serially.html"><img src="icons/serially.png" alt=""></a>
           <code><a href="serially.html">serially()</a></code> <code><a href="serially.html">expect_serially()</a></code> <code><a href="serially.html">test_serially()</a></code>
 
         </dt>
         <dd>Run several tests and a final validation in a serial manner</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="specially.html"><img src="icons/specially.png" alt=""></a>
           <code><a href="specially.html">specially()</a></code> <code><a href="specially.html">expect_specially()</a></code> <code><a href="specially.html">test_specially()</a></code>
 
@@ -360,8 +403,7 @@
 
       <div class="section-desc"><p>We can progressively add information to an <em>informant</em> object by using the collection of <code>info_*()</code> functions. We can add more table-based properties with the <code><a href="../reference/info_tabular.html">info_tabular()</a></code> function, details about the nature of each column with the <code><a href="../reference/info_columns.html">info_columns()</a></code> function, and add sections of our own choosing (and the info that make sense for those sections) with the <code><a href="../reference/info_section.html">info_section()</a></code> function. Snippets of information can be gleaned from the target table by using the <code><a href="../reference/info_snippet.html">info_snippet()</a></code> function. These bits of information can be incorporated in text defined by the other <code>info_*()</code> functions via <code><a href="https://rdrr.io/r/base/Paren.html" class="external-link">{ }</a></code>. Some great <code>snip_*()</code> functions are included to make info-snipping as easy (and useful!) as can be.</p></div>
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -372,49 +414,57 @@
 
         </dt>
         <dd>Add information that focuses on aspects of the data table as a whole</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="info_columns.html"><img src="icons/info_columns.png" alt=""></a>
           <code><a href="info_columns.html">info_columns()</a></code>
 
         </dt>
         <dd>Add information that focuses on aspects of a data table's columns</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="info_columns_from_tbl.html"><img src="icons/info_columns_from_tbl.png" alt=""></a>
           <code><a href="info_columns_from_tbl.html">info_columns_from_tbl()</a></code>
 
         </dt>
         <dd>Add column information from another data table</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="info_section.html"><img src="icons/info_section.png" alt=""></a>
           <code><a href="info_section.html">info_section()</a></code>
 
         </dt>
         <dd>Add information that focuses on some key aspect of the data table</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="info_snippet.html"><img src="icons/info_snippet.png" alt=""></a>
           <code><a href="info_snippet.html">info_snippet()</a></code>
 
         </dt>
         <dd>Generate a useful text 'snippet' from the target table</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="snip_list.html">snip_list()</a></code>
 
         </dt>
         <dd>A <code>fn</code> for <code><a href="../reference/info_snippet.html">info_snippet()</a></code>: get a list of column categories</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="snip_stats.html">snip_stats()</a></code>
 
         </dt>
         <dd>A <code>fn</code> for <code><a href="../reference/info_snippet.html">info_snippet()</a></code>: get an inline statistical summary</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="snip_lowest.html">snip_lowest()</a></code>
 
         </dt>
         <dd>A <code>fn</code> for <code><a href="../reference/info_snippet.html">info_snippet()</a></code>: get the lowest value from a column</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="snip_highest.html">snip_highest()</a></code>
 
@@ -425,8 +475,7 @@
 
       <div class="section-desc"><p>Sometimes we want to email a report of a validation because of the importance of the information contained therein. The <code><a href="../reference/email_blast.html">email_blast()</a></code> function can be used within the <code>end_fns</code> argument of <code><a href="../reference/create_agent.html">create_agent()</a></code>, giving us options to send a customizable message only if specified conditions are met.</p></div>
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -437,19 +486,22 @@
 
         </dt>
         <dd>Conditionally send email during interrogation</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="email_create.html"><img src="icons/email_create.png" alt=""></a>
           <code><a href="email_create.html">email_create()</a></code>
 
         </dt>
         <dd>Create an email object from a <strong>pointblank</strong> <em>agent</em></dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="stock_msg_body.html"><img src="icons/stock_msg_body.png" alt=""></a>
           <code><a href="stock_msg_body.html">stock_msg_body()</a></code>
 
         </dt>
         <dd>Provide simple email message body components: body</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="stock_msg_footer.html"><img src="icons/stock_msg_footer.png" alt=""></a>
           <code><a href="stock_msg_footer.html">stock_msg_footer()</a></code>
 
@@ -460,8 +512,7 @@
 
       <div class="section-desc"><p>Logging validation failure conditions makes for a good practice during data quality analysis. The <code><a href="../reference/log4r_step.html">log4r_step()</a></code> function allows for simple generation of log entries and specification of logging destinations.</p></div>
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -477,8 +528,7 @@
 
       <div class="section-desc"><p>If we have an <em>agent</em> object that has a plan (i.e., validation steps), the <code><a href="../reference/interrogate.html">interrogate()</a></code> function instructs the <em>agent</em> to interrogate the target table. The agent will go to work and also perform specified side-effect functions at the step level and upon completion (if those are functions are defined). After interrogation, we can get a report through printing, however, we can take advantage of more options by using the <code><a href="../reference/get_agent_report.html">get_agent_report()</a></code> function.</p></div>
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -489,7 +539,8 @@
 
         </dt>
         <dd>Given an agent that has a validation plan, perform an interrogation</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="get_agent_report.html"><img src="icons/get_agent_report.png" alt=""></a>
           <code><a href="get_agent_report.html">get_agent_report()</a></code>
 
@@ -500,8 +551,7 @@
 
       <div class="section-desc"><p>If we have an <em>informant</em> object that has been loaded with information from using the <code>info_*()</code> functions, the <code><a href="../reference/incorporate.html">incorporate()</a></code> function works to regenerate snippets and integrate those into the info text. After refreshing the table information, we can get an information report through printing, or, by using <code><a href="../reference/get_informant_report.html">get_informant_report()</a></code> function.</p></div>
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -512,7 +562,8 @@
 
         </dt>
         <dd>Given an <em>informant</em> object, update and incorporate table snippets</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="get_informant_report.html"><img src="icons/get_informant_report.png" alt=""></a>
           <code><a href="get_informant_report.html">get_informant_report()</a></code>
 
@@ -523,8 +574,7 @@
 
       <div class="section-desc"><p>The agent always has a special list called an x-list. Access that by invoking the <code><a href="../reference/get_agent_x_list.html">get_agent_x_list()</a></code> and you’ll then have a smorgasbord of information about how the validation went down. Table extracts are collected by default for failed rows (up to a limit) and we can access those with <code><a href="../reference/get_data_extracts.html">get_data_extracts()</a></code>. Table rows can be sundered into ‘pass’ and ‘fail’ pieces. Access those table fragments with the <code><a href="../reference/get_sundered_data.html">get_sundered_data()</a></code> function. Want to know if all validation steps have passed with flying colors? Sometimes that could happen; use the <code><a href="../reference/all_passed.html">all_passed()</a></code> function to find out.</p></div>
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -535,25 +585,29 @@
 
         </dt>
         <dd>Get the agent's <strong>x-list</strong></dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="get_data_extracts.html"><img src="icons/get_data_extracts.png" alt=""></a>
           <code><a href="get_data_extracts.html">get_data_extracts()</a></code>
 
         </dt>
         <dd>Collect data extracts from a validation step</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="get_sundered_data.html"><img src="icons/get_sundered_data.png" alt=""></a>
           <code><a href="get_sundered_data.html">get_sundered_data()</a></code>
 
         </dt>
         <dd>Sunder the data, splitting it into 'pass' and 'fail' pieces</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="all_passed.html"><img src="icons/all_passed.png" alt=""></a>
           <code><a href="all_passed.html">all_passed()</a></code>
 
         </dt>
         <dd>Did all of the validations fully <em>pass</em>?</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="write_testthat_file.html"><img src="icons/write_testthat_file.png" alt=""></a>
           <code><a href="write_testthat_file.html">write_testthat_file()</a></code>
 
@@ -564,8 +618,7 @@
 
       <div class="section-desc"><p>We have options for writing an agent or informant to disk with the <code><a href="../reference/x_write_disk.html">x_write_disk()</a></code> function. The on-disk object can be retrieved with the <code><a href="../reference/x_read_disk.html">x_read_disk()</a></code> function. You can export a report as an HTML file with <code><a href="../reference/export_report.html">export_report()</a></code>. A set of functions are also available for setting a data table to an existing object, and, for editing an agent’s validation steps.</p></div>
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -576,37 +629,43 @@
 
         </dt>
         <dd>Write an <em>agent</em>, <em>informant</em>, <em>multiagent</em>, or table scan to disk</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="x_read_disk.html"><img src="icons/x_read_disk.png" alt=""></a>
           <code><a href="x_read_disk.html">x_read_disk()</a></code>
 
         </dt>
         <dd>Read an <em>agent</em>, <em>informant</em>, <em>multiagent</em>, or table scan from disk</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="export_report.html"><img src="icons/export_report.png" alt=""></a>
           <code><a href="export_report.html">export_report()</a></code>
 
         </dt>
         <dd>Export an <em>agent</em>, <em>informant</em>, <em>multiagent</em>, or table scan to HTML</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="set_tbl.html"><img src="icons/set_tbl.png" alt=""></a>
           <code><a href="set_tbl.html">set_tbl()</a></code>
 
         </dt>
         <dd>Set a data table to an <em>agent</em> or an <em>informant</em></dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="activate_steps.html"><img src="icons/activate_steps.png" alt=""></a>
           <code><a href="activate_steps.html">activate_steps()</a></code>
 
         </dt>
         <dd>Activate one or more of an <em>agent</em>'s validation steps</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="deactivate_steps.html"><img src="icons/deactivate_steps.png" alt=""></a>
           <code><a href="deactivate_steps.html">deactivate_steps()</a></code>
 
         </dt>
         <dd>Deactivate one or more of an <em>agent</em>'s validation steps</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="remove_steps.html"><img src="icons/remove_steps.png" alt=""></a>
           <code><a href="remove_steps.html">remove_steps()</a></code>
 
@@ -617,8 +676,7 @@
 
       <div class="section-desc"><p>The <em>multiagent</em> is a group of agents, all bundled together into a single object. With this grouping, we can generate unified reporting across the component agents with the <code><a href="../reference/get_multiagent_report.html">get_multiagent_report()</a></code> function. One style of reporting (<code>"long"</code>) provides a serial listing of agent reports. The other option (<code>"wide"</code>) is useful for tracking the evolution of data quality checks over time since common steps across all interrogations will form individual rows (and each interrogation will form a column).</p></div>
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -629,13 +687,15 @@
 
         </dt>
         <dd>Create a <strong>pointblank</strong> <em>multiagent</em> object</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="read_disk_multiagent.html"><img src="icons/read_disk_multiagent.png" alt=""></a>
           <code><a href="read_disk_multiagent.html">read_disk_multiagent()</a></code>
 
         </dt>
         <dd>Read <strong>pointblank</strong> <em>agents</em> stored on disk as a <em>multiagent</em></dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="get_multiagent_report.html"><img src="icons/get_multiagent_report.png" alt=""></a>
           <code><a href="get_multiagent_report.html">get_multiagent_report()</a></code>
 
@@ -646,8 +706,7 @@
 
       <div class="section-desc"><p>YAML files can be used in <strong>pointblank</strong> for two distinct purposes: (1) to define agents and their validation plans, and (2) to define information for tables. The <code><a href="../reference/yaml_write.html">yaml_write()</a></code> function allows us write agent or informant YAML from the namesake objects. We can read them back from disk by using the <code><a href="../reference/yaml_read_agent.html">yaml_read_agent()</a></code> and <code><a href="../reference/yaml_read_informant.html">yaml_read_informant()</a></code> functions. As a nice shortcut, we read <em>agent</em> YAML and interrogate immediately with <code><a href="../reference/yaml_agent_interrogate.html">yaml_agent_interrogate()</a></code>; in a similar manner, we can read <em>informant</em> YAML and incorporate table information with <code><a href="../reference/yaml_informant_incorporate.html">yaml_informant_incorporate()</a></code>.</p></div>
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -658,43 +717,50 @@
 
         </dt>
         <dd>Write <strong>pointblank</strong> objects to YAML files</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="yaml_read_agent.html"><img src="icons/yaml_read_agent.png" alt=""></a>
           <code><a href="yaml_read_agent.html">yaml_read_agent()</a></code>
 
         </dt>
         <dd>Read a <strong>pointblank</strong> YAML file to create an <em>agent</em> object</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="yaml_read_informant.html"><img src="icons/yaml_read_informant.png" alt=""></a>
           <code><a href="yaml_read_informant.html">yaml_read_informant()</a></code>
 
         </dt>
         <dd>Read a <strong>pointblank</strong> YAML file to create an <em>informant</em> object</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="yaml_agent_interrogate.html"><img src="icons/yaml_agent_interrogate.png" alt=""></a>
           <code><a href="yaml_agent_interrogate.html">yaml_agent_interrogate()</a></code>
 
         </dt>
         <dd>Get an <em>agent</em> from <strong>pointblank</strong> YAML and <code><a href="../reference/interrogate.html">interrogate()</a></code></dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="yaml_agent_string.html"><img src="icons/yaml_agent_string.png" alt=""></a>
           <code><a href="yaml_agent_string.html">yaml_agent_string()</a></code>
 
         </dt>
         <dd>Display <strong>pointblank</strong> YAML using an agent or a YAML file</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="yaml_agent_show_exprs.html"><img src="icons/yaml_agent_show_exprs.png" alt=""></a>
           <code><a href="yaml_agent_show_exprs.html">yaml_agent_show_exprs()</a></code>
 
         </dt>
         <dd>Display validation expressions using <strong>pointblank</strong> YAML</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="yaml_informant_incorporate.html"><img src="icons/yaml_informant_incorporate.png" alt=""></a>
           <code><a href="yaml_informant_incorporate.html">yaml_informant_incorporate()</a></code>
 
         </dt>
         <dd>Get an <em>informant</em> from <strong>pointblank</strong> YAML and <code><a href="../reference/incorporate.html">incorporate()</a></code></dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="yaml_exec.html"><img src="icons/yaml_exec.png" alt=""></a>
           <code><a href="yaml_exec.html">yaml_exec()</a></code>
 
@@ -705,8 +771,7 @@
 
       <div class="section-desc"><p><strong>Table Transformer</strong> functions can radically transform a data table and either provide a wholly different table (like a summary table or table properties table) or do some useful filtering in a single step. This can be useful for preparing the target table for validation, creating a temporary table for a few validation steps, or even as something used outside of the <strong>pointblank</strong> workflows. As a nice bonus these transformer functions will work equally well with data frames, database tables, and Spark tables.</p></div>
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -717,37 +782,43 @@
 
         </dt>
         <dd>Table Transformer: obtain a summary stats table for numeric columns</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="tt_string_info.html"><img src="icons/tt_string_info.png" alt=""></a>
           <code><a href="tt_string_info.html">tt_string_info()</a></code>
 
         </dt>
         <dd>Table Transformer: obtain a summary table for string columns</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="tt_tbl_dims.html"><img src="icons/tt_tbl_dims.png" alt=""></a>
           <code><a href="tt_tbl_dims.html">tt_tbl_dims()</a></code>
 
         </dt>
         <dd>Table Transformer: get the dimensions of a table</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="tt_tbl_colnames.html"><img src="icons/tt_tbl_colnames.png" alt=""></a>
           <code><a href="tt_tbl_colnames.html">tt_tbl_colnames()</a></code>
 
         </dt>
         <dd>Table Transformer: get a table's column names</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="tt_time_shift.html"><img src="icons/tt_time_shift.png" alt=""></a>
           <code><a href="tt_time_shift.html">tt_time_shift()</a></code>
 
         </dt>
         <dd>Table Transformer: shift the times of a table</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="tt_time_slice.html"><img src="icons/tt_time_slice.png" alt=""></a>
           <code><a href="tt_time_slice.html">tt_time_slice()</a></code>
 
         </dt>
         <dd>Table Transformer: slice a table with a slice point on a time column</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="get_tt_param.html"><img src="icons/get_tt_param.png" alt=""></a>
           <code><a href="get_tt_param.html">get_tt_param()</a></code>
 
@@ -758,8 +829,7 @@
 
 
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -770,31 +840,36 @@
 
         </dt>
         <dd>Generate a table column schema manually or with a reference table</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="has_columns.html"><img src="icons/has_columns.png" alt=""></a>
           <code><a href="has_columns.html">has_columns()</a></code>
 
         </dt>
         <dd>Determine if one or more columns exist in a table</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="affix_date.html"><img src="icons/affix_date.png" alt=""></a>
           <code><a href="affix_date.html">affix_date()</a></code>
 
         </dt>
         <dd>Put the current date into a file name</dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="affix_datetime.html"><img src="icons/affix_datetime.png" alt=""></a>
           <code><a href="affix_datetime.html">affix_datetime()</a></code>
 
         </dt>
         <dd>Put the current datetime into a file name</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="stop_if_not.html">stop_if_not()</a></code>
 
         </dt>
         <dd>A specialized version of <code><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot()</a></code> for <strong>pointblank</strong>: <code><a href="../reference/stop_if_not.html">stop_if_not()</a></code></dd>
-      </dl><dl><dt>
+
+        <dt>
           <a class="icon" href="from_github.html"><img src="icons/from_github.png" alt=""></a>
           <code><a href="from_github.html">from_github()</a></code>
 
@@ -805,8 +880,7 @@
 
 
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -817,25 +891,29 @@
 
         </dt>
         <dd>A small table that is useful for testing</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="small_table_sqlite.html">small_table_sqlite()</a></code>
 
         </dt>
         <dd>An SQLite version of the <code>small_table</code> dataset</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="specifications.html">specifications</a></code>
 
         </dt>
         <dd>A table containing data pertaining to various specifications</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="game_revenue.html">game_revenue</a></code>
 
         </dt>
         <dd>A table with game revenue data</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="game_revenue_info.html">game_revenue_info</a></code>
 
@@ -851,7 +929,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>

@@ -1,0 +1,505 @@
+# Do columns in the table (and their types) match a predefined schema?
+
+The `col_schema_match()` validation function, the
+`expect_col_schema_match()` expectation function, and the
+`test_col_schema_match()` test function all work in conjunction with a
+`col_schema` object (generated through the
+[`col_schema()`](https://rstudio.github.io/pointblank/reference/col_schema.md)
+function) to determine whether the expected schema matches that of the
+target table. The validation function can be used directly on a data
+table or with an *agent* object (technically, a `ptblank_agent` object)
+whereas the expectation and test functions can only be used with a data
+table.
+
+The validation step or expectation operates over a single test unit,
+which is whether the schema matches that of the table (within the
+constraints enforced by the `complete`, `in_order`, and `is_exact`
+options). If the target table is a `tbl_dbi` or a `tbl_spark` object, we
+can choose to validate the column schema that is based on R column types
+(e.g., `"numeric"`, `"character"`, etc.), SQL column types (e.g.,
+`"double"`, `"varchar"`, etc.), or Spark SQL types (e.g,.
+`"DoubleType"`, `"StringType"`, etc.). That option is defined in the
+[`col_schema()`](https://rstudio.github.io/pointblank/reference/col_schema.md)
+function (it is the `.db_col_types` argument).
+
+There are options to make schema checking less stringent (by default,
+this validation operates with highest level of strictness). With the
+`complete` option set to `FALSE`, we can supply a `col_schema` object
+with a partial inclusion of columns. Using `in_order` set to `FALSE`
+means that there is no requirement for the columns defined in the
+`schema` object to be in the same order as in the target table. Finally,
+the `is_exact` option set to `FALSE` means that all column classes/types
+don't have to be provided for a particular column. It can even be
+`NULL`, skipping the check of the column type.
+
+## Usage
+
+``` r
+col_schema_match(
+  x,
+  schema,
+  complete = TRUE,
+  in_order = TRUE,
+  is_exact = TRUE,
+  actions = NULL,
+  step_id = NULL,
+  label = NULL,
+  brief = NULL,
+  active = TRUE
+)
+
+expect_col_schema_match(
+  object,
+  schema,
+  complete = TRUE,
+  in_order = TRUE,
+  is_exact = TRUE,
+  threshold = 1
+)
+
+test_col_schema_match(
+  object,
+  schema,
+  complete = TRUE,
+  in_order = TRUE,
+  is_exact = TRUE,
+  threshold = 1
+)
+```
+
+## Arguments
+
+- x:
+
+  *A pointblank agent or a data table*
+
+  `obj:<ptblank_agent>|obj:<tbl_*>` // **required**
+
+  A data frame, tibble (`tbl_df` or `tbl_dbi`), Spark DataFrame
+  (`tbl_spark`), or, an *agent* object of class `ptblank_agent` that is
+  commonly created with
+  [`create_agent()`](https://rstudio.github.io/pointblank/reference/create_agent.md).
+
+- schema:
+
+  *The table schema*
+
+  `obj:<col_schema>` // **required**
+
+  A table schema of type `col_schema` which can be generated using the
+  [`col_schema()`](https://rstudio.github.io/pointblank/reference/col_schema.md)
+  function.
+
+- complete:
+
+  *Requirement for columns specified to exist*
+
+  `scalar<logical>` // *default:* `TRUE`
+
+  A requirement to account for all table columns in the provided
+  `schema`. By default, this is `TRUE` and so that all column names in
+  the target table must be present in the schema object. This
+  restriction can be relaxed by using `FALSE`, where we can provide a
+  subset of table columns in the schema.
+
+- in_order:
+
+  *Requirement for columns in a specific order*
+
+  `scalar<logical>` // *default:* `TRUE`
+
+  A stringent requirement for enforcing the order of columns in the
+  provided `schema`. By default, this is `TRUE` and the order of columns
+  in both the schema and the target table must match. By setting to
+  `FALSE`, this strict order requirement is removed.
+
+- is_exact:
+
+  *Requirement for column types to be exactly specified*
+
+  `scalar<logical>` // *default:* `TRUE`
+
+  Determines whether the check for column types should be exact or even
+  performed at all. For example, columns in R data frames may have
+  multiple classes (e.g., a date-time column can have both the
+  `"POSIXct"` and the `"POSIXt"` classes). If using `is_exact == FALSE`,
+  the column type in the user-defined schema for a date-time value can
+  be set as either `"POSIXct"` *or* `"POSIXt"` and pass validation (with
+  this column, at least). This can be taken a step further and using
+  `NULL` for a column type in the user-defined schema will skip the
+  validation check of a column type. By default, `is_exact` is set to
+  `TRUE`.
+
+- actions:
+
+  *Thresholds and actions for different states*
+
+  `obj:<action_levels>` // *default:* `NULL` (`optional`)
+
+  A list containing threshold levels so that the validation step can
+  react accordingly when exceeding the set levels for different states.
+  This is to be created with the
+  [`action_levels()`](https://rstudio.github.io/pointblank/reference/action_levels.md)
+  helper function.
+
+- step_id:
+
+  *Manual setting of the step ID value*
+
+  `scalar<character>` // *default:* `NULL` (`optional`)
+
+  One or more optional identifiers for the single or multiple validation
+  steps generated from calling a validation function. The use of step
+  IDs serves to distinguish validation steps from each other and provide
+  an opportunity for supplying a more meaningful label compared to the
+  step index. By default this is `NULL`, and **pointblank** will
+  automatically generate the step ID value (based on the step index) in
+  this case. One or more values can be provided, and the exact number of
+  ID values should (1) match the number of validation steps that the
+  validation function call will produce (influenced by the number of
+  `columns` provided), (2) be an ID string not used in any previous
+  validation step, and (3) be a vector with unique values.
+
+- label:
+
+  *Optional label for the validation step*
+
+  `vector<character>` // *default:* `NULL` (`optional`)
+
+  Optional label for the validation step. This label appears in the
+  *agent* report and, for the best appearance, it should be kept quite
+  short. See the *Labels* section for more information.
+
+- brief:
+
+  *Brief description for the validation step*
+
+  `scalar<character>` // *default:* `NULL` (`optional`)
+
+  A *brief* is a short, text-based description for the validation step.
+  If nothing is provided here then an *autobrief* is generated by the
+  *agent*, using the language provided in
+  [`create_agent()`](https://rstudio.github.io/pointblank/reference/create_agent.md)'s
+  `lang` argument (which defaults to `"en"` or English). The *autobrief*
+  incorporates details of the validation step so it's often the
+  preferred option in most cases (where a `label` might be better suited
+  to succinctly describe the validation).
+
+- active:
+
+  *Is the validation step active?*
+
+  `scalar<logical>` // *default:* `TRUE`
+
+  A logical value indicating whether the validation step should be
+  active. If the validation function is working with an *agent*, `FALSE`
+  will make the validation step inactive (still reporting its presence
+  and keeping indexes for the steps unchanged). If the validation
+  function will be operating directly on data (no *agent* involvement),
+  then any step with `active = FALSE` will simply pass the data through
+  with no validation whatsoever. Aside from a logical vector, a
+  one-sided R formula using a leading `~` can be used with `.` (serving
+  as the input data table) to evaluate to a single logical value. With
+  this approach, the **pointblank** function
+  [`has_columns()`](https://rstudio.github.io/pointblank/reference/has_columns.md)
+  can be used to determine whether to make a validation step active on
+  the basis of one or more columns existing in the table (e.g.,
+  `~ . %>% has_columns(c(d, e))`).
+
+- object:
+
+  *A data table for expectations or tests*
+
+  `obj:<tbl_*>` // **required**
+
+  A data frame, tibble (`tbl_df` or `tbl_dbi`), or Spark DataFrame
+  (`tbl_spark`) that serves as the target table for the expectation
+  function or the test function.
+
+- threshold:
+
+  *The failure threshold*
+
+  `scalar<integer|numeric>(val>=0)` // *default:* `1`
+
+  A simple failure threshold value for use with the expectation
+  (`expect_`) and the test (`test_`) function variants. By default, this
+  is set to `1` meaning that any single unit of failure in data
+  validation results in an overall test failure. Whole numbers beyond
+  `1` indicate that any failing units up to that absolute threshold
+  value will result in a succeeding **testthat** test or evaluate to
+  `TRUE`. Likewise, fractional values (between `0` and `1`) act as a
+  proportional failure threshold, where `0.15` means that 15 percent of
+  failing test units results in an overall test failure.
+
+## Value
+
+For the validation function, the return value is either a
+`ptblank_agent` object or a table object (depending on whether an agent
+object or a table was passed to `x`). The expectation function invisibly
+returns its input but, in the context of testing data, the function is
+called primarily for its potential side-effects (e.g., signaling
+failure). The test function returns a logical value.
+
+## Supported Input Tables
+
+The types of data tables that are officially supported are:
+
+- data frames (`data.frame`) and tibbles (`tbl_df`)
+
+- Spark DataFrames (`tbl_spark`)
+
+- the following database tables (`tbl_dbi`):
+
+  - *PostgreSQL* tables (using the
+    [`RPostgres::Postgres()`](https://rpostgres.r-dbi.org/reference/Postgres.html)
+    as driver)
+
+  - *MySQL* tables (with
+    [`RMySQL::MySQL()`](https://r-dbi.r-universe.dev/RMySQL/reference/MySQLDriver-class.html))
+
+  - *Microsoft SQL Server* tables (via **odbc**)
+
+  - *BigQuery* tables (using
+    [`bigrquery::bigquery()`](https://bigrquery.r-dbi.org/reference/bigquery.html))
+
+  - *DuckDB* tables (through
+    [`duckdb::duckdb()`](https://r.duckdb.org/reference/duckdb.html))
+
+  - *SQLite* (with
+    [`RSQLite::SQLite()`](https://rsqlite.r-dbi.org/reference/SQLite.html))
+
+Other database tables may work to varying degrees but they haven't been
+formally tested (so be mindful of this when using unsupported backends
+with **pointblank**).
+
+## Actions
+
+Often, we will want to specify `actions` for the validation. This
+argument, present in every validation function, takes a
+specially-crafted list object that is best produced by the
+[`action_levels()`](https://rstudio.github.io/pointblank/reference/action_levels.md)
+function. Read that function's documentation for the lowdown on how to
+create reactions to above-threshold failure levels in validation. The
+basic gist is that you'll want at least a single threshold level
+(specified as either the fraction of test units failed, or, an absolute
+value), often using the `warn_at` argument. Using
+`action_levels(warn_at = 1)` or `action_levels(stop_at = 1)` are good
+choices depending on the situation (the first produces a warning, the
+other [`stop()`](https://rdrr.io/r/base/stop.html)s).
+
+## Labels
+
+`label` may be a single string or a character vector that matches the
+number of expanded steps. `label` also supports `{glue}` syntax and
+exposes the following dynamic variables contextualized to the current
+step:
+
+- `"{.step}"`: The validation step name
+
+The glue context also supports ordinary expressions for further
+flexibility (e.g., `"{toupper(.step)}"`) as long as they return a
+length-1 string.
+
+## Briefs
+
+Want to describe this validation step in some detail? Keep in mind that
+this is only useful if `x` is an *agent*. If that's the case, `brief`
+the agent with some text that fits. Don't worry if you don't want to do
+it. The *autobrief* protocol is kicked in when `brief = NULL` and a
+simple brief will then be automatically generated.
+
+## YAML
+
+A **pointblank** agent can be written to YAML with
+[`yaml_write()`](https://rstudio.github.io/pointblank/reference/yaml_write.md)
+and the resulting YAML can be used to regenerate an agent (with
+[`yaml_read_agent()`](https://rstudio.github.io/pointblank/reference/yaml_read_agent.md))
+or interrogate the target table (via
+[`yaml_agent_interrogate()`](https://rstudio.github.io/pointblank/reference/yaml_agent_interrogate.md)).
+When `col_schema_match()` is represented in YAML (under the top-level
+`steps` key as a list member), the syntax closely follows the signature
+of the validation function. Here is an example of how a complex call of
+`col_schema_match()` as a validation step is expressed in R code and in
+the corresponding YAML representation.
+
+R statement:
+
+    agent %>%
+      col_schema_match(
+        schema = col_schema(
+          a = "integer",
+          b = "character"
+        ),
+        complete = FALSE,
+        in_order = FALSE,
+        is_exact = FALSE,
+        actions = action_levels(stop_at = 1),
+        label = "The `col_schema_match()` step.",
+        active = FALSE
+      )
+
+YAML representation:
+
+    steps:
+    - col_schema_match:
+        schema:
+          a: integer
+          b: character
+        complete: false
+        in_order: false
+        is_exact: false
+        actions:
+          stop_count: 1.0
+        label: The `col_schema_match()` step.
+        active: false
+
+In practice, both of these will often be shorter as only the `schema`
+argument requires a value. Arguments with default values won't be
+written to YAML when using
+[`yaml_write()`](https://rstudio.github.io/pointblank/reference/yaml_write.md)
+(though it is acceptable to include them with their default when
+generating the YAML by other means). It is also possible to preview the
+transformation of an agent to YAML without any writing to disk by using
+the
+[`yaml_agent_string()`](https://rstudio.github.io/pointblank/reference/yaml_agent_string.md)
+function.
+
+## Examples
+
+For all examples here, we'll use a simple table with two columns: one
+`integer` (`a`) and the other `character` (`b`). The following examples
+will validate that the table columns abides match a schema object as
+created by
+[`col_schema()`](https://rstudio.github.io/pointblank/reference/col_schema.md).
+
+    tbl <-
+      dplyr::tibble(
+        a = 1:5,
+        b = letters[1:5]
+      )
+
+    tbl
+    #> # A tibble: 5 x 2
+    #>       a b
+    #>   <int> <chr>
+    #> 1     1 a
+    #> 2     2 b
+    #> 3     3 c
+    #> 4     4 d
+    #> 5     5 e
+
+Create a column schema object with the helper function
+[`col_schema()`](https://rstudio.github.io/pointblank/reference/col_schema.md)
+that describes the columns and their types (in the expected order).
+
+    schema_obj <-
+      col_schema(
+        a = "integer",
+        b = "character"
+      )
+
+    schema_obj
+    #> $a
+    #> [1] "integer"
+    #>
+    #> $b
+    #> [1] "character"
+    #>
+    #> attr(,"class")
+    #> [1] "r_type"     "col_schema"
+
+### A: Using an `agent` with validation functions and then [`interrogate()`](https://rstudio.github.io/pointblank/reference/interrogate.md)
+
+Validate that the schema object `schema_obj` exactly defines the column
+names and column types. We'll determine if this validation has a failing
+test unit (there is a single test unit governed by whether there is a
+match).
+
+    agent <-
+      create_agent(tbl = tbl) %>%
+      col_schema_match(schema = schema_obj) %>%
+      interrogate()
+
+Printing the `agent` in the console shows the validation report in the
+Viewer. Here is an excerpt of validation report, showing the single
+entry that corresponds to the validation step demonstrated here.
+
+![This image was generated from the first code example in the
+\`col_schema_match()\` help
+file.](https://raw.githubusercontent.com/rstudio/pointblank/main/images/man_col_schema_match_1.png)
+
+### B: Using the validation function directly on the data (no `agent`)
+
+This way of using validation functions acts as a data filter. Data is
+passed through but should [`stop()`](https://rdrr.io/r/base/stop.html)
+if there is a single test unit failing. The behavior of side effects can
+be customized with the `actions` option.
+
+    tbl %>% col_schema_match(schema = schema_obj)
+    #> # A tibble: 5 x 2
+    #>       a b
+    #>   <int> <chr>
+    #> 1     1 a
+    #> 2     2 b
+    #> 3     3 c
+    #> 4     4 d
+    #> 5     5 e
+
+### C: Using the expectation function
+
+With the `expect_*()` form, we would typically perform one validation at
+a time. This is primarily used in **testthat** tests.
+
+    expect_col_schema_match(tbl, scheam = schema_obj)
+
+### D: Using the test function
+
+With the `test_*()` form, we should get a single logical value returned
+to us.
+
+    tbl %>% test_col_schema_match(schema = schema_obj)
+    #> [1] TRUE
+
+## Function ID
+
+2-30
+
+## See also
+
+Other validation functions:
+[`col_count_match()`](https://rstudio.github.io/pointblank/reference/col_count_match.md),
+[`col_exists()`](https://rstudio.github.io/pointblank/reference/col_exists.md),
+[`col_is_character()`](https://rstudio.github.io/pointblank/reference/col_is_character.md),
+[`col_is_date()`](https://rstudio.github.io/pointblank/reference/col_is_date.md),
+[`col_is_factor()`](https://rstudio.github.io/pointblank/reference/col_is_factor.md),
+[`col_is_integer()`](https://rstudio.github.io/pointblank/reference/col_is_integer.md),
+[`col_is_logical()`](https://rstudio.github.io/pointblank/reference/col_is_logical.md),
+[`col_is_numeric()`](https://rstudio.github.io/pointblank/reference/col_is_numeric.md),
+[`col_is_posix()`](https://rstudio.github.io/pointblank/reference/col_is_posix.md),
+[`col_vals_between()`](https://rstudio.github.io/pointblank/reference/col_vals_between.md),
+[`col_vals_decreasing()`](https://rstudio.github.io/pointblank/reference/col_vals_decreasing.md),
+[`col_vals_equal()`](https://rstudio.github.io/pointblank/reference/col_vals_equal.md),
+[`col_vals_expr()`](https://rstudio.github.io/pointblank/reference/col_vals_expr.md),
+[`col_vals_gt()`](https://rstudio.github.io/pointblank/reference/col_vals_gt.md),
+[`col_vals_gte()`](https://rstudio.github.io/pointblank/reference/col_vals_gte.md),
+[`col_vals_in_set()`](https://rstudio.github.io/pointblank/reference/col_vals_in_set.md),
+[`col_vals_increasing()`](https://rstudio.github.io/pointblank/reference/col_vals_increasing.md),
+[`col_vals_lt()`](https://rstudio.github.io/pointblank/reference/col_vals_lt.md),
+[`col_vals_lte()`](https://rstudio.github.io/pointblank/reference/col_vals_lte.md),
+[`col_vals_make_set()`](https://rstudio.github.io/pointblank/reference/col_vals_make_set.md),
+[`col_vals_make_subset()`](https://rstudio.github.io/pointblank/reference/col_vals_make_subset.md),
+[`col_vals_not_between()`](https://rstudio.github.io/pointblank/reference/col_vals_not_between.md),
+[`col_vals_not_equal()`](https://rstudio.github.io/pointblank/reference/col_vals_not_equal.md),
+[`col_vals_not_in_set()`](https://rstudio.github.io/pointblank/reference/col_vals_not_in_set.md),
+[`col_vals_not_null()`](https://rstudio.github.io/pointblank/reference/col_vals_not_null.md),
+[`col_vals_null()`](https://rstudio.github.io/pointblank/reference/col_vals_null.md),
+[`col_vals_regex()`](https://rstudio.github.io/pointblank/reference/col_vals_regex.md),
+[`col_vals_within_spec()`](https://rstudio.github.io/pointblank/reference/col_vals_within_spec.md),
+[`conjointly()`](https://rstudio.github.io/pointblank/reference/conjointly.md),
+[`row_count_match()`](https://rstudio.github.io/pointblank/reference/row_count_match.md),
+[`rows_complete()`](https://rstudio.github.io/pointblank/reference/rows_complete.md),
+[`rows_distinct()`](https://rstudio.github.io/pointblank/reference/rows_distinct.md),
+[`serially()`](https://rstudio.github.io/pointblank/reference/serially.md),
+[`specially()`](https://rstudio.github.io/pointblank/reference/specially.md),
+[`tbl_match()`](https://rstudio.github.io/pointblank/reference/tbl_match.md)

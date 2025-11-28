@@ -1,0 +1,407 @@
+# Write **pointblank** objects to YAML files
+
+With `yaml_write()` we can take different **pointblank** objects (these
+are the `ptblank_agent`, `ptblank_informant`, and `tbl_store`) and write
+them to YAML. With an *agent*, for example, `yaml_write()` will write
+that everything that is needed to specify an *agent* and it's validation
+plan to a YAML file. With YAML, we can modify the YAML markup if so
+desired, or, use as is to create a new agent with the
+[`yaml_read_agent()`](https://rstudio.github.io/pointblank/reference/yaml_read_agent.md)
+function. That *agent* will have a validation plan and is ready to
+[`interrogate()`](https://rstudio.github.io/pointblank/reference/interrogate.md)
+the data. We can go a step further and perform an interrogation directly
+from the YAML file with the
+[`yaml_agent_interrogate()`](https://rstudio.github.io/pointblank/reference/yaml_agent_interrogate.md)
+function. That returns an agent with intel (having already interrogated
+the target data table). An *informant* object can also be written to
+YAML with `yaml_write()`.
+
+One requirement for writing an *agent* or an *informant* to YAML is that
+we need to have a table-prep formula specified (it's an R formula that
+is used to read the target table when
+[`interrogate()`](https://rstudio.github.io/pointblank/reference/interrogate.md)
+or
+[`incorporate()`](https://rstudio.github.io/pointblank/reference/incorporate.md)
+is called). This option can be set when using
+[`create_agent()`](https://rstudio.github.io/pointblank/reference/create_agent.md)/[`create_informant()`](https://rstudio.github.io/pointblank/reference/create_informant.md)
+or with
+[`set_tbl()`](https://rstudio.github.io/pointblank/reference/set_tbl.md)
+(useful with an existing agent or informant object).
+
+## Usage
+
+``` r
+yaml_write(
+  ...,
+  .list = list2(...),
+  filename = NULL,
+  path = NULL,
+  expanded = FALSE,
+  quiet = FALSE
+)
+```
+
+## Arguments
+
+- ...:
+
+  *Pointblank agents, informants, table stores*
+
+  `<series of obj:<ptblank_agent|ptblank_informant|tbl_store>>` //
+  **required**
+
+  Any mix of **pointblank** objects such as the *agent*
+  (`ptblank_agent`), the *informant* (`ptblank_informant`), or the table
+  store (`tbl_store`). The agent and informant can be combined into a
+  single YAML file (so long as both objects refer to the same table). A
+  table store cannot be combined with either an agent or an informant so
+  it must undergo conversion alone.
+
+- .list:
+
+  *Alternative to `...`*
+
+  `<list of multiple expressions>` // **required** (or, use `...`)
+
+  Allows for the use of a list as an input alternative to `...`.
+
+- filename:
+
+  *File name*
+
+  `scalar<character>` // *default:* `NULL` (`optional`)
+
+  The name of the YAML file to create on disk. It is recommended that
+  either the `.yaml` or `.yml` extension be used for this file. If not
+  provided then default names will be used (`"tbl_store.yml"`) for a
+  table store and the other objects will get default naming to the
+  effect of `"<object>-<tbl_name>.yml"`.
+
+- path:
+
+  *File path*
+
+  `scalar<character>` // *default:* `NULL` (`optional`)
+
+  An optional path to which the YAML file should be saved (combined with
+  `filename`).
+
+- expanded:
+
+  *Expand validation when repeating across multiple columns*
+
+  `scalar<logical>` // *default:* `FALSE`
+
+  Should the written validation expressions for an *agent* be expanded
+  such that **tidyselect** expressions for columns are evaluated,
+  yielding a validation function per column? By default, this is `FALSE`
+  so expressions as written will be retained in the YAML representation.
+
+- quiet:
+
+  *Inform (or not) upon file writing*
+
+  `scalar<logical>` // *default:* `FALSE`
+
+  . Should the function *not* inform when the file is written?
+
+## Value
+
+Invisibly returns `TRUE` if the YAML file has been written.
+
+## Examples
+
+### Writing an `agent` object to a YAML file
+
+Let's go through the process of developing an agent with a validation
+plan. We'll use the `small_table` dataset in the following examples,
+which will eventually offload the developed validation plan to a YAML
+file.
+
+    small_table
+    #> # A tibble: 13 x 8
+    #>    date_time           date           a b             c      d e     f
+    #>    <dttm>              <date>     <int> <chr>     <dbl>  <dbl> <lgl> <chr>
+    #>  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high
+    #>  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-163     8 10000. TRUE  low
+    #>  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3  2343. TRUE  high
+    #>  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-903    NA  3892. FALSE mid
+    #>  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-038     7   284. TRUE  low
+    #>  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-923     4  3291. TRUE  mid
+    #>  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3   843. TRUE  high
+    #>  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-639     2  1036. FALSE low
+    #>  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high
+    #> 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high
+    #> 11 2016-01-26 20:07:00 2016-01-26     4 2-dmx-010     7   834. TRUE  low
+    #> 12 2016-01-28 02:51:00 2016-01-28     2 7-dmx-010     8   108. FALSE low
+    #> 13 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA  2230. TRUE  high
+
+Creating an `action_levels` object is a common workflow step when
+creating a **pointblank** agent. We designate failure thresholds to the
+`warn`, `stop`, and `notify` states using
+[`action_levels()`](https://rstudio.github.io/pointblank/reference/action_levels.md).
+
+    al <-
+      action_levels(
+        warn_at = 0.10,
+        stop_at = 0.25,
+        notify_at = 0.35
+      )
+
+Now let's create the `agent` and pass it the `al` object (which serves
+as a default for all validation steps which can be overridden). The data
+will be referenced in `tbl` with a leading `~` and this is a requirement
+for writing to YAML since the preparation of the target table must be
+self contained.
+
+    agent <-
+      create_agent(
+        tbl = ~ small_table,
+        tbl_name = "small_table",
+        label = "A simple example with the `small_table`.",
+        actions = al
+      )
+
+Then, as with any `agent` object, we can add steps to the validation
+plan by using as many validation functions as we want.
+
+    agent <-
+      agent %>%
+      col_exists(columns = c(date, date_time)) %>%
+      col_vals_regex(
+        columns = b,
+        regex = "[0-9]-[a-z]{3}-[0-9]{3}"
+      ) %>%
+      rows_distinct() %>%
+      col_vals_gt(columns = d, value = 100) %>%
+      col_vals_lte(columns = c, value = 5)
+
+The agent can be written to a **pointblank**-readable YAML file with the
+`yaml_write()` function. Here, we'll use the filename
+`"agent-small_table.yml"` and, after writing, the YAML file will be in
+the working directory:
+
+    yaml_write(agent, filename = "agent-small_table.yml")
+
+We can view the YAML file in the console with the
+[`yaml_agent_string()`](https://rstudio.github.io/pointblank/reference/yaml_agent_string.md)
+function.
+
+    yaml_agent_string(filename = "agent-small_table.yml")
+
+    type: agent
+    tbl: ~small_table
+    tbl_name: small_table
+    label: A simple example with the `small_table`.
+    lang: en
+    locale: en
+    actions:
+      warn_fraction: 0.1
+      stop_fraction: 0.25
+      notify_fraction: 0.35
+    steps:
+    - col_exists:
+        columns: c(date, date_time)
+    - col_vals_regex:
+        columns: c(b)
+        regex: '[0-9]-[a-z]{3}-[0-9]{3}'
+    - rows_distinct:
+        columns: ~
+    - col_vals_gt:
+        columns: c(d)
+        value: 100.0
+    - col_vals_lte:
+        columns: c(c)
+        value: 5.0
+
+Incidentally, we can also use
+[`yaml_agent_string()`](https://rstudio.github.io/pointblank/reference/yaml_agent_string.md)
+to print YAML in the console when supplying an agent as the input. This
+can be useful for previewing YAML output just before writing it to disk
+with `yaml_write()`.
+
+### Reading an `agent` object from a YAML file
+
+There's a YAML file available in the **pointblank** package that's also
+called `"agent-small_table.yml"`. The path for it can be accessed
+through [`system.file()`](https://rdrr.io/r/base/system.file.html):
+
+    yml_file_path <-
+      system.file(
+        "yaml", "agent-small_table.yml",
+        package = "pointblank"
+      )
+
+The YAML file can be read as an agent with a pre-existing validation
+plan by using the
+[`yaml_read_agent()`](https://rstudio.github.io/pointblank/reference/yaml_read_agent.md)
+function.
+
+    agent <- yaml_read_agent(filename = yml_file_path)
+
+    agent
+
+![This image was generated from the first code example in the
+\`yaml_write()\` help
+file.](https://raw.githubusercontent.com/rstudio/pointblank/main/images/man_yaml_write_1.png)
+
+This particular agent is using
+`~ tbl_source("small_table", "tbl_store.yml")` to source the table-prep
+from a YAML file that holds a table store (can be seen using
+`yaml_agent_string(agent = agent)`). Let's put that file in the working
+directory (the **pointblank** package has the corresponding YAML file):
+
+    yml_tbl_store_path <-
+      system.file(
+        "yaml", "tbl_store.yml",
+        package = "pointblank"
+      )
+
+    file.copy(from = yml_tbl_store_path, to = ".")
+
+As can be seen from the validation report, no interrogation was yet
+performed. Saving an agent to YAML will remove any traces of
+interrogation data and serve as a plan for a new interrogation on the
+same target table. We can either follow this up with with
+[`interrogate()`](https://rstudio.github.io/pointblank/reference/interrogate.md)
+and get an agent with intel, or, we can interrogate directly from the
+YAML file with
+[`yaml_agent_interrogate()`](https://rstudio.github.io/pointblank/reference/yaml_agent_interrogate.md):
+
+    agent <- yaml_agent_interrogate(filename = yml_file_path)
+
+    agent
+
+![This image was generated from the second code example in the
+\`yaml_write()\` help
+file.](https://raw.githubusercontent.com/rstudio/pointblank/main/images/man_yaml_write_2.png)
+
+### Writing an `informant` object to a YAML file
+
+Let's walk through how we can generate some useful information for a
+really small table. We can create an `informant` object with
+[`create_informant()`](https://rstudio.github.io/pointblank/reference/create_informant.md)
+and we'll again use the `small_table` dataset.
+
+    informant <-
+      create_informant(
+        tbl = ~ small_table,
+        tbl_name = "small_table",
+        label = "A simple example with the `small_table`."
+      )
+
+Then, as with any `informant` object, we can add info text to the using
+as many `info_*()` functions as we want.
+
+    informant <-
+      informant %>%
+      info_columns(
+        columns = a,
+        info = "In the range of 1 to 10. (SIMPLE)"
+      ) %>%
+      info_columns(
+        columns = starts_with("date"),
+        info = "Time-based values (e.g., `Sys.time()`)."
+      ) %>%
+      info_columns(
+        columns = date,
+        info = "The date part of `date_time`. (CALC)"
+      )
+
+The informant can be written to a **pointblank**-readable YAML file with
+the `yaml_write()` function. Here, we'll use the filename
+`"informant-small_table.yml"` and, after writing, the YAML file will be
+in the working directory:
+
+    yaml_write(informant, filename = "informant-small_table.yml")
+
+We can inspect the YAML file in the working directory and expect to see
+the following:
+
+    type: informant
+    tbl: ~small_table
+    tbl_name: small_table
+    info_label: A simple example with the `small_table`.
+    lang: en
+    locale: en
+    table:
+      name: small_table
+      _columns: 8
+      _rows: 13.0
+      _type: tbl_df
+    columns:
+      date_time:
+      _type: POSIXct, POSIXt
+    info: Time-based values (e.g., `Sys.time()`).
+    date:
+      _type: Date
+      info: Time-based values (e.g., `Sys.time()`). The date part of `date_time`.
+    a:
+      _type: integer
+      info: In the range of 1 to 10. (SIMPLE)
+    b:
+      _type: character
+    c:
+      _type: numeric
+    d:
+      _type: numeric
+    e:
+      _type: logical
+    f:
+      _type: character
+
+### Reading an `informant` object from a YAML file
+
+There's a YAML file available in the **pointblank** package that's also
+called `"informant-small_table.yml"`. The path for it can be accessed
+through [`system.file()`](https://rdrr.io/r/base/system.file.html):
+
+    yml_file_path <-
+      system.file(
+        "yaml", "informant-small_table.yml",
+        package = "pointblank"
+      )
+
+The YAML file can be read as an informant by using the
+[`yaml_read_informant()`](https://rstudio.github.io/pointblank/reference/yaml_read_informant.md)
+function.
+
+    informant <- yaml_read_informant(filename = yml_file_path)
+
+    informant
+
+![This image was generated from the third code example in the
+\`yaml_write()\` help
+file.](https://raw.githubusercontent.com/rstudio/pointblank/main/images/man_yaml_write_3.png)
+
+As can be seen from the information report, the available table metadata
+was restored and reported. If you expect metadata to change with time,
+it might be beneficial to use
+[`incorporate()`](https://rstudio.github.io/pointblank/reference/incorporate.md)
+to query the target table. Or, we can perform this querying directly
+from the YAML file with
+[`yaml_informant_incorporate()`](https://rstudio.github.io/pointblank/reference/yaml_informant_incorporate.md):
+
+    informant <- yaml_informant_incorporate(filename = yml_file_path)
+
+There will be no apparent difference in this particular case since
+`small_data` is a static table with no alterations over time. However,
+using
+[`yaml_informant_incorporate()`](https://rstudio.github.io/pointblank/reference/yaml_informant_incorporate.md)
+is good practice since this refreshing of data will be important with
+real-world datasets.
+
+## Function ID
+
+11-1
+
+## See also
+
+Other pointblank YAML:
+[`yaml_agent_interrogate()`](https://rstudio.github.io/pointblank/reference/yaml_agent_interrogate.md),
+[`yaml_agent_show_exprs()`](https://rstudio.github.io/pointblank/reference/yaml_agent_show_exprs.md),
+[`yaml_agent_string()`](https://rstudio.github.io/pointblank/reference/yaml_agent_string.md),
+[`yaml_exec()`](https://rstudio.github.io/pointblank/reference/yaml_exec.md),
+[`yaml_informant_incorporate()`](https://rstudio.github.io/pointblank/reference/yaml_informant_incorporate.md),
+[`yaml_read_agent()`](https://rstudio.github.io/pointblank/reference/yaml_read_agent.md),
+[`yaml_read_informant()`](https://rstudio.github.io/pointblank/reference/yaml_read_informant.md)

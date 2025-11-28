@@ -1,6 +1,10 @@
 # Changelog
 
+## pointblank (development version)
+
 ## pointblank 0.12.3
+
+CRAN release: 2025-11-28
 
 - We now support validation checks of Oracle tables via ODBC
   ([\#462](https://github.com/rstudio/pointblank/issues/462)).

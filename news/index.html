@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">pointblank</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.12.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.12.3.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,11 +49,14 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/rstudio/pointblank/blob/v0.12.3/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/rstudio/pointblank/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.12.3" id="pointblank-0123">pointblank 0.12.3<a class="anchor" aria-label="anchor" href="#pointblank-0123"></a></h2>
+<h2 class="pkg-version" data-toc-text="development version" id="pointblank-development-version">pointblank (development version)<a class="anchor" aria-label="anchor" href="#pointblank-development-version"></a></h2>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.12.3" id="pointblank-0123">pointblank 0.12.3<a class="anchor" aria-label="anchor" href="#pointblank-0123"></a></h2><p class="text-muted">CRAN release: 2025-11-28</p>
 <ul><li><p>We now support validation checks of Oracle tables via ODBC (<a href="https://github.com/rstudio/pointblank/issues/462" class="external-link">#462</a>). (<a href="https://github.com/rstudio/pointblank/issues/644" class="external-link">#644</a>, <a href="https://github.com/pachadotdev" class="external-link">@pachadotdev</a>)</p></li>
 <li><p>Redshift table support has now been fixed (<a href="https://github.com/rstudio/pointblank/issues/538" class="external-link">#538</a>). (<a href="https://github.com/rstudio/pointblank/issues/623" class="external-link">#623</a>, <a href="https://github.com/rstudio/pointblank/issues/643" class="external-link">#643</a>, <a href="https://github.com/pachadotdev" class="external-link">@pachadotdev</a> and <a href="https://github.com/hfrick" class="external-link">@hfrick</a>)</p></li>
 <li><p>Added the <code>na_pass</code> argument to <code><a href="../reference/col_vals_expr.html">col_vals_expr()</a></code> for finer control of <code>NA</code> values. Previously, <code>NA</code>s were ignored, but now they are caught as failures with the default <code>na_pass = FALSE</code>. As a safeguard, if an expression generates <code>NA</code> values while <code>na_pass</code> is not explicitly supplied, a warning is thrown (<a href="https://github.com/rstudio/pointblank/issues/616" class="external-link">#616</a>). (<a href="https://github.com/rstudio/pointblank/issues/617" class="external-link">#617</a>)</p></li>

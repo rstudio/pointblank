@@ -434,20 +434,34 @@ get_sundered_data <- function(
 
   if (!is.null(type) && type == "pass") {
 
-    sundered_tbl_pass <-
-      tbl_check_join %>%
-      dplyr::filter(pb_is_good_ == 1) %>%
-      dplyr::select(-pb_is_good_)
+    if (uses_numeric_logical(input_tbl)) {
+      sundered_tbl_pass <-
+        tbl_check_join %>%
+        dplyr::filter(pb_is_good_ == 1) %>%
+        dplyr::select(-pb_is_good_)
+    } else {
+      sundered_tbl_pass <-
+        tbl_check_join %>%
+        dplyr::filter(pb_is_good_ == TRUE) %>%
+        dplyr::select(-pb_is_good_)
+    }
 
     return(sundered_tbl_pass)
   }
 
   if (!is.null(type) && type == "fail") {
 
-    sundered_tbl_fail <-
-      tbl_check_join %>%
-      dplyr::filter(pb_is_good_ == 0) %>%
-      dplyr::select(-pb_is_good_)
+    if (uses_numeric_logical(input_tbl)) {
+      sundered_tbl_fail <-
+        tbl_check_join %>%
+        dplyr::filter(pb_is_good_ == 0) %>%
+        dplyr::select(-pb_is_good_)
+    } else {
+      sundered_tbl_fail <-
+        tbl_check_join %>%
+        dplyr::filter(pb_is_good_ == FALSE) %>%
+        dplyr::select(-pb_is_good_)
+    }
 
     return(sundered_tbl_fail)
   }
@@ -468,15 +482,27 @@ get_sundered_data <- function(
 
   if (is.null(type)) {
 
-    sundered_tbl_list <-
-      list(
-        pass = tbl_check_join %>%
-          dplyr::filter(pb_is_good_ == 1) %>%
-          dplyr::select(-pb_is_good_),
-        fail = tbl_check_join %>%
-          dplyr::filter(pb_is_good_ == 0) %>%
-          dplyr::select(-pb_is_good_)
-      )
+    if (uses_numeric_logical(input_tbl)) {
+      sundered_tbl_list <-
+        list(
+          pass = tbl_check_join %>%
+            dplyr::filter(pb_is_good_ == 1) %>%
+            dplyr::select(-pb_is_good_),
+          fail = tbl_check_join %>%
+            dplyr::filter(pb_is_good_ == 0) %>%
+            dplyr::select(-pb_is_good_)
+        )
+    } else {
+      sundered_tbl_list <-
+        list(
+          pass = tbl_check_join %>%
+            dplyr::filter(pb_is_good_ == TRUE) %>%
+            dplyr::select(-pb_is_good_),
+          fail = tbl_check_join %>%
+            dplyr::filter(pb_is_good_ == FALSE) %>%
+            dplyr::select(-pb_is_good_)
+        )
+    }
 
     return(sundered_tbl_list)
   }

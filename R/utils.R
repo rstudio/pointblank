@@ -88,6 +88,32 @@ is_tbl_mssql <- function(x) {
   grepl("sql server|sqlserver", tbl_src_details)
 }
 
+is_tbl_duckdb <- function(x) {
+
+  if (!is_tbl_dbi(x)) {
+    return(FALSE)
+  }
+
+  tbl_src_details <- tolower(get_tbl_dbi_src_details(x))
+  grepl("duckdb", tbl_src_details)
+}
+
+is_tbl_sqlite <- function(x) {
+
+  if (!is_tbl_dbi(x)) {
+    return(FALSE)
+  }
+
+  tbl_src_details <- tolower(get_tbl_dbi_src_details(x))
+  grepl("sqlite", tbl_src_details)
+}
+
+# Check if table type requires numeric logical values (1/0) instead of
+# logicals
+uses_numeric_logical <- function(x) {
+  is_tbl_mssql(x) || is_tbl_duckdb(x) || is_tbl_sqlite(x)
+}
+
 # nocov end
 
 # Generate a label for the `agent` or `informant` object

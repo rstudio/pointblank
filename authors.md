@@ -16,14 +16,14 @@
 Source:
 [`DESCRIPTION`](https://github.com/rstudio/pointblank/blob/main/DESCRIPTION)
 
-Iannone R, Vargas M, Choe J (2025). *pointblank: Data Validation and
+Iannone R, Vargas M, Choe J (2026). *pointblank: Data Validation and
 Organization of Metadata for Local and Remote Tables*. R package version
 0.12.3.9000, <https://rstudio.github.io/pointblank/>.
 
     @Manual{,
       title = {pointblank: Data Validation and Organization of Metadata for Local and Remote Tables},
       author = {Richard Iannone and Mauricio Vargas and June Choe},
-      year = {2025},
+      year = {2026},
       note = {R package version 0.12.3.9000},
       url = {https://rstudio.github.io/pointblank/},
     }

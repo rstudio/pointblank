@@ -49,7 +49,8 @@ small_table %>%
   col_vals_between(d, left = 0, right = 5000) %>% 
   col_vals_in_set(f, set = c("low", "mid", "high")) %>%
   col_vals_regex(b, regex = "^[0-9]-[a-z]{3}-[0-9]{3}$")
-#> Error: Exceedance of failed test units where values in `d` should have been between `0` and `5000`.
+#> Error:
+#> ! Exceedance of failed test units where values in `d` should have been between `0` and `5000`.
 #> The `col_vals_between()` validation failed beyond the absolute threshold level (1).
 #> * failure level (1) >= failure threshold (1)
 ```

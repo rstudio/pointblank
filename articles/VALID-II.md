@@ -38,7 +38,8 @@ small_table %>%
   col_vals_between(d, left = 0, right = 5000)
 ```
 
-    ## Error: Exceedance of failed test units where values in `d` should have been between `0` and `5000`.
+    ## Error:
+    ## ! Exceedance of failed test units where values in `d` should have been between `0` and `5000`.
     ## The `col_vals_between()` validation failed beyond the absolute threshold level (1).
     ## * failure level (1) >= failure threshold (1)
 
@@ -123,7 +124,8 @@ small_table %>%
   )
 ```
 
-    ## Error: Exceedance of failed test units where values in `d` should have been between `0` and `5000`.
+    ## Error:
+    ## ! Exceedance of failed test units where values in `d` should have been between `0` and `5000`.
     ## The `col_vals_between()` validation failed beyond the absolute threshold level (1).
     ## * failure level (1) >= failure threshold (1)
 
@@ -269,7 +271,8 @@ small_table %>%
 
     ## Warning in rlang::eval_tidy(.): WARN threshold exceeded.
 
-    ## Error in rlang::eval_tidy(.): STOP threshold exceeded.
+    ## Error:
+    ## ! STOP threshold exceeded.
 
 In addition to an error and a warning, the
 [`log4r_step()`](https://rstudio.github.io/pointblank/reference/log4r_step.md)

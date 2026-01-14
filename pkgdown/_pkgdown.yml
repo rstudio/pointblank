@@ -11,6 +11,11 @@ template:
   includes:
     in_header: |
       <script src="https://cdn.jsdelivr.net/gh/posit-dev/supported-by-posit/js/badge.min.js"></script>
+      <script async src="https://plausible.io/js/pa-dgdEdNz4kbZN4oOl6_5dX.js"></script>
+      <script>
+        window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+        plausible.init()
+      </script>
 
 development:
   mode: release

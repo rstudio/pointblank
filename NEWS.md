@@ -1,3 +1,5 @@
+# pointblank (development version)
+
 # pointblank 0.12.4
 
 * Deprecated `log4r_step()` and logging support in `validate_rmd()` following the removal of {log4r} from CRAN (#672).

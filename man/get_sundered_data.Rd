@@ -100,12 +100,12 @@ validation steps (the default piece). This yields 5 of 13 total rows.
 }\if{html}{\out{</div>}}
 
 \preformatted{## # A tibble: 5 × 6
-##       a b             c      d e     f    
+##       a b             c      d e     f
 ##   <int> <chr>     <dbl>  <dbl> <lgl> <chr>
-## 1     2 1-bcd-345     3  3423. TRUE  high 
-## 2     3 5-egh-163     8 10000. TRUE  low  
-## 3     2 5-jdo-903    NA  3892. FALSE mid  
-## 4     4 2-dhe-923     4  3291. TRUE  mid  
+## 1     2 1-bcd-345     3  3423. TRUE  high
+## 2     3 5-egh-163     8 10000. TRUE  low
+## 3     2 5-jdo-903    NA  3892. FALSE mid
+## 4     4 2-dhe-923     4  3291. TRUE  mid
 ## 5     1 3-dka-303    NA  2230. TRUE  high}
 
 
@@ -116,15 +116,15 @@ two validation steps. This yields 8 of 13 total rows.
 }\if{html}{\out{</div>}}
 
 \preformatted{## # A tibble: 8 × 6
-##       a b             c     d e     f    
+##       a b             c     d e     f
 ##   <int> <chr>     <dbl> <dbl> <lgl> <chr>
-## 1     6 8-kdg-938     3 2343. TRUE  high 
-## 2     8 3-ldm-038     7  284. TRUE  low  
-## 3     7 1-knw-093     3  843. TRUE  high 
-## 4     4 5-boe-639     2 1036. FALSE low  
-## 5     3 5-bce-642     9  838. FALSE high 
-## 6     3 5-bce-642     9  838. FALSE high 
-## 7     4 2-dmx-010     7  834. TRUE  low  
+## 1     6 8-kdg-938     3 2343. TRUE  high
+## 2     8 3-ldm-038     7  284. TRUE  low
+## 3     7 1-knw-093     3  843. TRUE  high
+## 4     4 5-boe-639     2 1036. FALSE low
+## 5     3 5-bce-642     9  838. FALSE high
+## 6     3 5-bce-642     9  838. FALSE high
+## 7     4 2-dmx-010     7  834. TRUE  low
 ## 8     2 7-dmx-010     8  108. FALSE low}
 
 

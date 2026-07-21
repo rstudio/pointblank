@@ -25,7 +25,7 @@ BugReports: https://github.com/rstudio/pointblank/issues
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Depends: 
     R (>= 3.5.0)
 Imports:

@@ -222,11 +222,13 @@ apply_preconditions <- function(tbl, preconditions) {
 
   } else if (rlang::is_formula(preconditions)) {
 
-    # Take the RHS of `preconditions` and eval with `eval_tidy()`
+    # Eval in the formula's environment so captured variables (e.g. via `{{
+    # var }}` quasiquotation) remain accessible.
     preconditions <-
-      preconditions %>%
-      rlang::f_rhs() %>%
-      rlang::eval_tidy()
+      rlang::eval_tidy(
+        rlang::f_rhs(preconditions),
+        env = rlang::f_env(preconditions)
+      )
 
     if (inherits(preconditions, "fseq")) {
 

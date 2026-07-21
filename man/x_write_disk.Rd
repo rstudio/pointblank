@@ -95,7 +95,7 @@ Creating an \code{action_levels} object is a common workflow step when creating 
 pointblank agent. We designate failure thresholds to the \code{warn}, \code{stop}, and
 \code{notify} states using \code{\link[=action_levels]{action_levels()}}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <-
   action_levels(
     warn_at = 0.10,
     stop_at = 0.25,
@@ -107,7 +107,7 @@ Now, let's create a pointblank \code{agent} object and give it the \code{al} obj
 (which serves as a default for all validation steps which can be overridden).
 The data will be referenced in the \code{tbl} argument with a leading \code{~}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(
     tbl = ~ small_table,
     tbl_name = "small_table",
@@ -121,7 +121,7 @@ using as many validation functions as we want. After that, use
 \code{\link[=interrogate]{interrogate()}}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
-  agent \%>\% 
+  agent \%>\%
   col_exists(columns = c(date, date_time)) \%>\%
   col_vals_regex(
     columns = b,
@@ -169,7 +169,7 @@ Create a pointblank \code{informant} object with \code{\link[=create_informant]{
 \code{\link{small_table}} dataset. Use \code{\link[=incorporate]{incorporate()}} so that info snippets are
 integrated into the text.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <-
   create_informant(
     tbl = ~ small_table,
     tbl_name = "small_table",
@@ -233,7 +233,7 @@ validation steps, and \code{\link[=interrogate]{interrogate()}}.
   ) \%>\%
   col_is_character(
     columns = c(b, f),
-    label = "Verifying character-type columns" 
+    label = "Verifying character-type columns"
   ) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}

@@ -42,13 +42,11 @@ time. The date can be affixed either to the end of the filename (before the
 file extension) or at the beginning with a customizable delimiter.
 
 The \code{\link[=x_write_disk]{x_write_disk()}}, \code{\link[=yaml_write]{yaml_write()}} functions allow for the writing of
-\strong{pointblank} objects to disk. Furthermore the \code{\link[=log4r_step]{log4r_step()}} function has
-the \code{append_to} argument that accepts filenames, and, it's reasonable that a
-series of log files could be differentiated by a date component in the naming
-scheme. The modification of the filename string takes effect immediately but
-not at the time of writing a file to disk. In most cases, especially when
-using \code{affix_date()} with the aforementioned file-writing functions, the file
-timestamps should approximate the time components affixed to the filenames.
+\strong{pointblank} objects to disk. The modification of the filename
+string takes effect immediately but not at the time of writing a
+file to disk. In most cases, especially when using \code{affix_date()}
+with the aforementioned file-writing functions, the file timestamps
+should approximate the time components affixed to the filenames.
 }
 \section{Examples}{
 
@@ -108,7 +106,7 @@ process.
     "yaml", "agent-small_table.yml",
     package = "pointblank"
   )
-) \%>\% 
+) \%>\%
   x_write_disk(
     filename = affix_date(
       filename = "small_table_agent.rds",

@@ -350,7 +350,7 @@ representation.
 
 R statement:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
   col_vals_gte(
     columns = a,
     value = 1,
@@ -402,7 +402,7 @@ columns (\code{a}, \code{b}, and \code{c}) and three character columns (\code{d}
       e = LETTERS[b],
       f = LETTERS[c]
   )
-  
+
 tbl
 #> # A tibble: 6 x 6
 #>       a     b     c d     e     f    

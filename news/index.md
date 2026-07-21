@@ -2,6 +2,62 @@
 
 ## pointblank (development version)
 
+- Deprecated
+  [`log4r_step()`](https://rstudio.github.io/pointblank/reference/log4r_step.md)
+  and logging support in
+  [`validate_rmd()`](https://rstudio.github.io/pointblank/reference/validate_rmd.md)
+  following the removal of {log4r} from CRAN
+  ([\#672](https://github.com/rstudio/pointblank/issues/672)).
+
+- Fixed rendering of ampersands in
+  [`specially()`](https://rstudio.github.io/pointblank/reference/specially.md)
+  assertions within the agent report
+  ([\#661](https://github.com/rstudio/pointblank/issues/661)).
+  ([\#673](https://github.com/rstudio/pointblank/issues/673))
+
+- Fixed
+  [`get_sundered_data()`](https://rstudio.github.io/pointblank/reference/get_sundered_data.md)
+  failing on DB tables when using `type = "combined"`
+  ([\#637](https://github.com/rstudio/pointblank/issues/637)).
+  ([\#649](https://github.com/rstudio/pointblank/issues/649),
+  [@pachadotdev](https://github.com/pachadotdev))
+
+- Fixed
+  [`export_report()`](https://rstudio.github.io/pointblank/reference/export_report.md)
+  not working for multiagent objects
+  ([\#449](https://github.com/rstudio/pointblank/issues/449)).
+  ([\#647](https://github.com/rstudio/pointblank/issues/647),
+  [@pachadotdev](https://github.com/pachadotdev))
+
+- Fixed
+  [`scan_data()`](https://rstudio.github.io/pointblank/reference/scan_data.md)
+  error caused by incorrect access to dplyr/ggplot2 namespace
+  ([\#628](https://github.com/rstudio/pointblank/issues/628)).
+  ([\#646](https://github.com/rstudio/pointblank/issues/646),
+  [@pachadotdev](https://github.com/pachadotdev))
+
+- Fixed plot error when dimensions exceed 50 inches
+  ([\#365](https://github.com/rstudio/pointblank/issues/365)).
+  ([\#648](https://github.com/rstudio/pointblank/issues/648),
+  [@pachadotdev](https://github.com/pachadotdev))
+
+- Fixed DuckDB tables throwing an error when passed to
+  [`create_agent()`](https://rstudio.github.io/pointblank/reference/create_agent.md)
+  due to newline handling in identifier strings
+  ([\#635](https://github.com/rstudio/pointblank/issues/635)).
+  ([\#639](https://github.com/rstudio/pointblank/issues/639),
+  [@petrbouchal](https://github.com/petrbouchal))
+
+- Fixed passing of variable names to the `preconditions` argument
+  ([\#315](https://github.com/rstudio/pointblank/issues/315)).
+  ([\#671](https://github.com/rstudio/pointblank/issues/671),
+  [@pachadotdev](https://github.com/pachadotdev))
+
+- Avoided use of deprecated
+  [`dplyr::case_match()`](https://dplyr.tidyverse.org/reference/case_match.html).
+  ([\#669](https://github.com/rstudio/pointblank/issues/669),
+  [@olivroy](https://github.com/olivroy))
+
 ## pointblank 0.12.3
 
 CRAN release: 2025-11-28

@@ -367,7 +367,7 @@ the corresponding YAML representation.
 
 R statement:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
   col_vals_increasing(
     columns = a,
     allow_stationary = TRUE,

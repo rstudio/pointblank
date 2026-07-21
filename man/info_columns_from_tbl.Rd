@@ -55,7 +55,7 @@ Create a pointblank \code{informant} object with \code{\link[=create_informant]{
 specify a \code{tbl} with the \code{~} followed by a statement that gets the
 \code{game_revenue} dataset.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <-
   create_informant(
     tbl = ~ game_revenue,
     tbl_name = "game_revenue",

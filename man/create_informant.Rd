@@ -152,7 +152,7 @@ R statement:
   tbl = ~ small_table,
   tbl_name = "small_table",
   label = "An example.",
-  lang = "fr", 
+  lang = "fr",
   locale = "fr_CA"
 )
 }\if{html}{\out{</div>}}
@@ -244,7 +244,7 @@ dataset in this package.
 Create a pointblank \code{informant} object with \code{create_informant()} and the
 \code{small_table} dataset.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <-
   create_informant(
     tbl = pointblank::small_table,
     tbl_name = "small_table",
@@ -272,12 +272,12 @@ Viewer.
 If we want to make use of more report display options, we can alternatively
 use the \code{\link[=get_informant_report]{get_informant_report()}} function.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{report <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{report <-
   get_informant_report(
     informant,
     title = "Data Dictionary for `small_table`"
   )
-  
+
 report
 }\if{html}{\out{</div>}}
 

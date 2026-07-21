@@ -115,7 +115,7 @@ because all columns checked for in the expressions are present. The third
 step becomes inactive because column \code{j} isn't there (without the \code{active}
 statement there we would get an evaluation failure in the agent report).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(
     tbl = small_table,
     tbl_name = "small_table"

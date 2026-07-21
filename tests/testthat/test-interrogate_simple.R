@@ -2128,7 +2128,7 @@ test_that("class preserved in `value`", {
 
   # Error is correctly thrown and safely caught at interrogate
   expect_no_error({
-    agent <- create_agent(data.frame(col = custom_val)) %>%
+    agent <- create_agent(tibble::tibble(col = custom_val)) %>%
       col_vals_equal(columns = col, value = 1L) %>%
       interrogate()
   })

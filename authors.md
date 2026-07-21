@@ -18,12 +18,12 @@ Source:
 
 Iannone R, Vargas M, Choe J (2026). *pointblank: Data Validation and
 Organization of Metadata for Local and Remote Tables*. R package version
-0.12.4, <https://rstudio.github.io/pointblank/>.
+0.12.4.9000, <https://rstudio.github.io/pointblank/>.
 
     @Manual{,
       title = {pointblank: Data Validation and Organization of Metadata for Local and Remote Tables},
       author = {Richard Iannone and Mauricio Vargas and June Choe},
       year = {2026},
-      note = {R package version 0.12.4},
+      note = {R package version 0.12.4.9000},
       url = {https://rstudio.github.io/pointblank/},
     }

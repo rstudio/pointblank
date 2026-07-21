@@ -116,22 +116,17 @@ validate_rmd <- function(
 
   if (test_options$perform_logging) {
 
-    rlang::check_installed("log4r", "to use the `log4r_step()` function.")
-
-    # Create a log4r `logger` object and store it in `test_options`
-    test_options$logger <-
-      log4r::logger(
-        threshold = "ERROR",
-        appenders = log4r::file_appender(test_options$log_to_file)
-      )
+    warning(
+      "File logging via log4r is no longer supported (log4r was removed ",
+      "from CRAN). The `log_to_file` argument is now ignored.",
+      call. = FALSE
+    )
+    test_options$perform_logging <- FALSE
   }
 }
 
 log4r_error <- function(message) {
-
-  if (test_options$perform_logging) {
-    log4r::error(logger = test_options$logger, message = message)
-  }
+  invisible(NULL)
 }
 
 increment_count <- function(type) {

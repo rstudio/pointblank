@@ -182,75 +182,15 @@ log4r_step <- function(
   message = NULL,
   append_to = "pb_log_file"
 ) {
-  rlang::check_installed("log4r", "to use the `log4r_step()` function.")
 
-  type <- x$this_type
-  warn_val <- x$warn
-  stop_val <- x$stop
-  notify_val <- x$notify
-
-  log4r_fn_present <-
-    vapply(
-      c("warn", "stop", "notify"),
-      FUN.VALUE = logical(1),
-      USE.NAMES = FALSE,
-      FUN = function(y) {
-        grepl(
-          "log4r_step(x",
-          paste(
-            as.character(x$actions[[paste0("fns.", y)]]),
-            collapse = ""
-          ),
-          fixed = TRUE
-        )
-      }
-    )
-  level <- toupper(type)
-
-  level_val <-
-    switch(
-      level,
-      "WARN" = 3,
-      "STOP" = 4,
-      "NOTIFY" = 5,
-      3
-    )
-
-  # Skip logging at this level if a higher severity
-  # condition is present for this validation step *and*
-  # there is a `log4r_step()` function ready for
-  # evaluation at those higher severities
-  if (warn_val && log4r_fn_present[1]) {
-    highest_level <- 3
-  }
-  if (stop_val && log4r_fn_present[2]) {
-    highest_level <- 4
-  }
-  if (notify_val && log4r_fn_present[3]) {
-    highest_level <- 5
-  }
-
-  if (highest_level > level_val) {
-    return(invisible(NULL))
-  }
-
-  if (is.character(append_to)) {
-    appenders <- log4r::file_appender(file = append_to[1])
-  }
-
-  logger <- log4r::logger(appenders = appenders)
-
-  message <- message %||%
-    "Step {x$i} exceeded the {level} failure threshold \\
-      (f_failed = {x$f_failed}) ['{x$type}']"
-
-  log4r::levellog(
-    logger = logger,
-    level = level_val,
-    message = glue::glue(
-      message
+  .Deprecated(
+    msg = paste(
+      "'log4r_step()' is deprecated.",
+      "The log4r package has been removed from CRAN."
     )
   )
+
+  invisible(NULL)
 }
 
 # nocov end

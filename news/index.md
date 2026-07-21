@@ -1,6 +1,6 @@
 # Changelog
 
-## pointblank (development version)
+## pointblank 0.12.4
 
 - Deprecated
   [`log4r_step()`](https://rstudio.github.io/pointblank/reference/log4r_step.md)

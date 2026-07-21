@@ -165,7 +165,7 @@ yaml_exec(
 # of them are automatically time-stamped
 # so that periodic execution can be
 # safely carried out without risk of
-# overwriting 
+# overwriting
 
 }
 ```

@@ -30,6 +30,7 @@ Workflow*](https://rstudio.github.io/pointblank/articles/VALID-I.md)
 article to the pipeline data validation workflow:
 
 ``` r
+
 small_table %>%
   col_is_posix(date_time) %>%
   col_vals_in_set(f, set = c("low", "mid", "high")) %>%
@@ -101,6 +102,7 @@ functions in the *VALID-II* workflow. So, the previous example is
 exactly the same as this expanded form:
 
 ``` r
+
 small_table %>%
   col_is_posix(
     date_time,
@@ -135,6 +137,7 @@ failure thresholds in certain steps, the
 function provides a simple way to express this.
 
 ``` r
+
 small_table %>%
   col_is_posix(
     date_time,
@@ -228,6 +231,7 @@ with
 [`action_levels()`](https://rstudio.github.io/pointblank/reference/action_levels.md):
 
 ``` r
+
 al <- 
   action_levels(
     warn_at = 0.1,
@@ -245,6 +249,7 @@ Once we assigned the `action_levels` to an object (in this case, as
 `al`) we can print it to get a summary of the settings.
 
 ``` r
+
 al
 ```
 
@@ -261,6 +266,7 @@ Finally, we will apply this object to every validation function call in
 the expression (changed slightly to result in more test units failing).
 
 ``` r
+
 small_table %>%
   col_is_posix(date_time, actions = al) %>%
   col_vals_in_set(f, set = c("low", "mid"), actions = al) %>%
@@ -270,6 +276,9 @@ small_table %>%
 ```
 
     ## Warning in rlang::eval_tidy(.): WARN threshold exceeded.
+
+    ## Warning in log4r_step(x): 'log4r_step()' is deprecated. The log4r package has
+    ## been removed from CRAN.
 
     ## Error:
     ## ! STOP threshold exceeded.
@@ -284,6 +293,7 @@ entry that relates to `Step 1` (the
 step):
 
 ``` r
+
 readLines("pb_log_file")
 ```
 

@@ -75,8 +75,8 @@ Other Utility and Helper Functions:
 # `file_tbl()` and `create_agent()`; this
 # supplies a table-prep formula that gets
 # a CSV file from the GitHub repository for the
-# pointblank package 
-# agent <- 
+# pointblank package
+# agent <-
 #   create_agent(
 #     tbl = ~ file_tbl(
 #       file = from_github(

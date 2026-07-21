@@ -1162,7 +1162,7 @@ CRAN release: 2020-06-22
   *validation*, *expectation*, and *test* functions, making it easier
   for DIY validations. The **dplyr**
   [`expr()`](https://rlang.r-lib.org/reference/expr.html),
-  [`case_when()`](https://dplyr.tidyverse.org/reference/case_when.html),
+  [`case_when()`](https://dplyr.tidyverse.org/reference/case-and-replace-when.html),
   and [`between()`](https://dplyr.tidyverse.org/reference/between.html)
   functions were re-exported for easier accessibility here since they
   work exceedingly well with the new functions.

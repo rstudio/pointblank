@@ -129,6 +129,7 @@ It’s included in the **pointblank** package. It isn’t very large, which
 makes it great for simple examples. Here it is in its entirety:
 
 ``` r
+
 small_table
 ```
 
@@ -164,6 +165,7 @@ carried out interactively, you’ll get status messages that describe how
 the interrogation is going.
 
 ``` r
+
 agent <- 
   create_agent(
     tbl = small_table,
@@ -196,6 +198,7 @@ table). Printing the `agent` object gives a step-by-step breakdown of
 the interrogation process.
 
 ``` r
+
 agent
 ```
 
@@ -236,6 +239,7 @@ can either download the CSV from the report or examine that extract in
 function:
 
 ``` r
+
 get_data_extracts(agent, i = 5)
 ```
 
@@ -268,12 +272,14 @@ following, we use relative values (as real numbers between `0` and `1`)
 to define thresholds for the `WARN` and `STOP` conditions.
 
 ``` r
+
 al <- action_levels(warn_at = 0.1, stop_at = 0.2)
 ```
 
 Printing the `al` object gives us a summary of the settings.
 
 ``` r
+
 al
 ```
 
@@ -288,6 +294,7 @@ will result in more failing test units. We’ll see that the interrogation
 messages show mention of `STOP` and `WARNING` conditions being met.
 
 ``` r
+
 agent <- 
   create_agent(
     tbl = small_table,
@@ -317,6 +324,7 @@ previously, one that’s rife with yellow and red color strips to the left
 and matching colors in the far right columns.
 
 ``` r
+
 agent
 ```
 
@@ -334,6 +342,7 @@ the `WARN` and `STOP` failure conditions. Note that the function calls
 must be written as one-sided **R** formulas.
 
 ``` r
+
 al <- 
   action_levels(
     warn_at = 0.1,
@@ -349,6 +358,7 @@ Printing this new `al` object will show us the failure threshold
 settings and the associated actions for the failure conditions.
 
 ``` r
+
 al
 ```
 
@@ -367,6 +377,7 @@ function is flexible for allowing any **log4r** *appender* to be used.
 Running the following data validation code
 
 ``` r
+
 agent <- 
   create_agent(
     tbl = small_table,
@@ -398,6 +409,7 @@ and the file `"pb_log_file"` can be looked at with
 entries (one for each validation step with at least a `WARN` condition).
 
 ``` r
+
 readLines("pb_log_file")
 ```
 
@@ -427,6 +439,7 @@ step 2 (the `col_vals_in_set` validation step) by using the
 function:
 
 ``` r
+
 x <- get_agent_x_list(agent, i = 2)
 x
 ```
@@ -451,6 +464,7 @@ condition was entered, we can access those and even put them into a
 character string (along with other info from the x-list).
 
 ``` r
+
 glue::glue(
   "In Step {x$i}, there were {x$n} test units and {x$f_failed * 100}% \\
   failed. STOP condition met: {tolower(x$stop)}."

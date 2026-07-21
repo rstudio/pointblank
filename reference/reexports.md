@@ -13,7 +13,7 @@ to see their documentation.
 - dplyr:
 
   [`between`](https://dplyr.tidyverse.org/reference/between.html),
-  [`case_when`](https://dplyr.tidyverse.org/reference/case_when.html),
+  [`case_when`](https://dplyr.tidyverse.org/reference/case-and-replace-when.html),
   [`vars`](https://dplyr.tidyverse.org/reference/vars.html)
 
 - rlang:

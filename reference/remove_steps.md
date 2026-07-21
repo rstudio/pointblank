@@ -72,7 +72,7 @@ Other Object Ops:
 # target table, add a few
 # validation steps, and then use
 # `interrogate()`
-agent_1 <- 
+agent_1 <-
   create_agent(
     tbl = small_table,
     tbl_name = "small_table",
@@ -84,7 +84,7 @@ agent_1 <-
     regex = "[0-9]-[a-z]{3}-[0-9]"
   ) %>%
   interrogate()
-  
+
 # The second validation step has
 # been determined to be unneeded and
 # is to be removed; this can be done

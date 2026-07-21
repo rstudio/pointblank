@@ -66,7 +66,7 @@ Other Object Ops:
 # target table, add a few inactive
 # validation steps, and then use
 # `interrogate()`
-agent_1 <- 
+agent_1 <-
   create_agent(
     tbl = small_table,
     tbl_name = "small_table",

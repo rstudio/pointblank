@@ -23,6 +23,7 @@ Let’s do this for the `small_table` dataset available in **pointblank**.
 This is what that table looks like:
 
 ``` r
+
 small_table
 ```
 
@@ -47,6 +48,7 @@ If you wanted the mean value of data in column `d` rounded to one
 decimal place, one such way we could do it is with this expression:
 
 ``` r
+
 small_table %>% .$d %>% mean() %>% round(1)
 ```
 
@@ -58,6 +60,7 @@ call, which is used after creating the *informant* object, the
 expression would look like this:
 
 ``` r
+
 informant <- 
   create_informant(
     tbl = small_table,
@@ -84,6 +87,7 @@ package does text interpolation, and here’s the continuation of the
 above example:
 
 ``` r
+
 informant <- 
   informant %>%
   info_columns(
@@ -106,6 +110,7 @@ functions). Let’s take a look at the report by printing the `informant`
 object
 
 ``` r
+
 informant
 ```
 
@@ -136,6 +141,7 @@ call to
 [`incorporate()`](https://rstudio.github.io/pointblank/reference/incorporate.md).
 
 ``` r
+
 informant <- 
   create_informant(
     tbl = small_table,
@@ -215,6 +221,7 @@ instructive. Let’s use our `small_table` object as `target_table`. With
 table dimensions.
 
 ``` r
+
 target_table <- small_table
 
 dim(target_table)
@@ -229,6 +236,7 @@ simply gets the table from the global workspace). After using
 and printing the `informant_tt` object, let’s just examine the header.
 
 ``` r
+
 informant_tt <- 
   create_informant(
     tbl = ~ target_table,
@@ -257,6 +265,7 @@ Now, let’s manually enlarge the `target_table` and print the new row and
 column counts.
 
 ``` r
+
 target_table <- 
   dplyr::bind_rows(small_table, small_table) %>%
   dplyr::mutate(g = a + c)
@@ -271,6 +280,7 @@ We’ve got our informant object, let’s see how
 keeps pace with the change.
 
 ``` r
+
 informant_tt %>% incorporate()
 ```
 
@@ -341,6 +351,7 @@ Management*](https://rstudio.github.io/pointblank/articles/INFO-1.md)
 article.
 
 ``` r
+
 informant_pp <- 
   create_informant(
     tbl = ~ palmerpenguins::penguins,
@@ -397,6 +408,7 @@ to provide a text snippet based on values in the `year` column (which is
 an `integer` column):
 
 ``` r
+
 informant_pp <-
   informant_pp %>%
   info_columns(
@@ -442,6 +454,7 @@ and
 [`snip_highest()`](https://rstudio.github.io/pointblank/reference/snip_highest.md).
 
 ``` r
+
 informant_pp <-
   informant_pp %>%
   info_columns(
@@ -546,6 +559,7 @@ Here’s how we might use these features while otherwise adding more
 information to the **palmerpenguins** reporting:
 
 ``` r
+
 informant_pp <-
   informant_pp %>%
   info_tabular(
@@ -595,6 +609,7 @@ we have two options,
     label: `(((label text)))`
 
 ``` r
+
 informant_pp <-
   informant_pp %>%
   info_columns(
@@ -674,6 +689,7 @@ Continuing with our **palmerpenguins** reporting, we’ll add some more
 `[[ ]]<< >>` syntax.
 
 ``` r
+
 informant_pp <-
   informant_pp %>%
   info_columns(

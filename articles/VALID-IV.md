@@ -134,6 +134,7 @@ Let’s have some examples before leaving this article. They will all use
 our `small_table`:
 
 ``` r
+
 small_table
 ```
 

@@ -12,8 +12,8 @@
 <link rel="icon" sizes="any" href="../favicon.ico">
 <link rel="manifest" href="../site.webmanifest">
 <script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <meta property="og:title" content="Introduction to the Pipeline Data Validation Workflow (VALID-II)">
@@ -333,6 +333,8 @@ failing).</p>
 <span>  <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span><span class="va">b</span>, regex <span class="op">=</span> <span class="st">"^[0-9]-[a-w]{3}-[2-9]{3}$"</span>, actions <span class="op">=</span> <span class="va">al</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span><span class="va">d</span>, left <span class="op">=</span> <span class="fl">0</span>, right <span class="op">=</span> <span class="fl">4000</span>, actions <span class="op">=</span> <span class="va">al</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Warning in rlang::eval_tidy(.): WARN threshold exceeded.</span></span></code></pre>
+<pre><code><span><span class="co">## Warning in log4r_step(x): 'log4r_step()' is deprecated. The log4r package has</span></span>
+<span><span class="co">## been removed from CRAN.</span></span></code></pre>
 <pre><code><span><span class="co">## <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;">:</span></span></span>
 <span><span class="co">## <span style="color: #BBBB00;">!</span> STOP threshold exceeded.</span></span></code></pre>
 <p>In addition to an error and a warning, the <code><a href="../reference/log4r_step.html">log4r_step()</a></code>
@@ -341,7 +343,7 @@ case, a new <code>"pb_log_file"</code> text file for logs. We can
 examine it with <code><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines()</a></code>; it has a single entry that
 relates to <code>Step 1</code> (the <code><a href="../reference/col_vals_in_set.html">col_vals_in_set()</a></code>
 step):</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="st">"pb_log_file"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>FATAL [2020-11-09 00:23:48] Step 1 exceeded the NOTIFY failure threshold (f_failed = 0.46154) ['col_vals_in_set']</code></pre>
 <p>The <code><a href="../reference/log4r_step.html">log4r_step()</a></code> function offered by
@@ -361,7 +363,7 @@ Quality Reporting Workflow</em></a> article.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

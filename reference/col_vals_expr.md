@@ -477,7 +477,7 @@ to us.
 ### Variations
 
 We can do more complex things by taking advantage of the
-[`case_when()`](https://dplyr.tidyverse.org/reference/case_when.html)
+[`case_when()`](https://dplyr.tidyverse.org/reference/case-and-replace-when.html)
 and [`between()`](https://dplyr.tidyverse.org/reference/between.html)
 functions (available for use in the **pointblank** package).
 
@@ -489,7 +489,7 @@ functions (available for use in the **pointblank** package).
     #> [1] TRUE
 
 If you only want to test a subset of rows, then the
-[`case_when()`](https://dplyr.tidyverse.org/reference/case_when.html)
+[`case_when()`](https://dplyr.tidyverse.org/reference/case-and-replace-when.html)
 statement doesn't need to be exhaustive. Any rows that don't fall into
 the cases will be pruned (giving us less test units overall).
 
@@ -497,7 +497,10 @@ the cases will be pruned (giving us less test units overall).
       test_col_vals_expr(expr = ~ case_when(
         b == 1 ~ a > 5 & c >= 1
       ))
-    #> [1] TRUE
+    #> Warning in test_col_vals_expr(., expr = ~case_when(b == 1 ~ a > 5 & c >= :
+    #> Expression generated `NA` value(s). Edit the `expr` or specify `na_pass`
+    #> (default is `FALSE`).
+    #> [1] FALSE
 
 ## Function ID
 
@@ -510,7 +513,7 @@ within `col_vals_expr()` and its variants:
 [`rlang::expr()`](https://rlang.r-lib.org/reference/expr.html),
 [`dplyr::between()`](https://dplyr.tidyverse.org/reference/between.html),
 and
-[`dplyr::case_when()`](https://dplyr.tidyverse.org/reference/case_when.html).
+[`dplyr::case_when()`](https://dplyr.tidyverse.org/reference/case-and-replace-when.html).
 
 Other validation functions:
 [`col_count_match()`](https://rstudio.github.io/pointblank/reference/col_count_match.md),

@@ -46,6 +46,7 @@ Here is an example of how to use **pointblank** to validate a local
 table with an *agent*.
 
 ``` r
+
 # Generate a simple `action_levels` object to
 # set the `warn` state if a validation step
 # has a single 'fail' test unit
@@ -125,6 +126,7 @@ workflow, by default, an error will occur if there is a single ‘fail’
 test unit in any validation step:
 
 ``` r
+
 dplyr::tibble(
     a = c(5, 7, 6, 5, NA, 7),
     b = c(6, 1, 0, 6,  0, 7)
@@ -155,6 +157,7 @@ helper function (assigning it to `actions`). In this way, the data will
 always be returned, but warnings will appear.
 
 ``` r
+
 # The `warn_on_fail()` function is a nice
 # shortcut for `action_levels(warn_at = 1)`;
 # it works great in this data checking workflow
@@ -229,6 +232,7 @@ Here is an example of how to use **pointblank** to incorporate pieces of
 info text into an *informant* object.
 
 ``` r
+
 # Create a pointblank `informant` object, with the
 # tibble as the target table. Use a few information
 # functions and end with `incorporate()`. The informant
@@ -341,6 +345,7 @@ Want to try this out? The **pointblank** package is available on
 **CRAN**:
 
 ``` r
+
 install.packages("pointblank")
 ```
 
@@ -348,6 +353,7 @@ You can also install the development version of **pointblank** from
 **GitHub**:
 
 ``` r
+
 # install.packages("pak")
 pak::pak("rstudio/pointblank")
 ```

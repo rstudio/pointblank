@@ -1,6 +1,7 @@
 # pointblank
 
 ``` r
+
 library(pointblank)
 ```
 
@@ -18,6 +19,7 @@ We use a `small_table` for our example. We expect the values in column
 [`col_vals_lt()`](https://rstudio.github.io/pointblank/reference/col_vals_lt.md).
 
 ``` r
+
 data(small_table)
 
 small_table %>%
@@ -44,6 +46,7 @@ If the table fulfills the validation rule, it just return the input
 table - so we can directly pass that to further validation rules.
 
 ``` r
+
 small_table %>%
   col_vals_lt(a, value = 10) %>%
   col_vals_between(d, left = 0, right = 5000) %>% 
@@ -99,6 +102,7 @@ be interpretable by data stakeholders.
 Here’s the code that performs the validation on the data frame.
 
 ``` r
+
 agent <- small_table %>%
   create_agent() %>% 
   col_vals_lt(a, value = 10) %>%
@@ -160,6 +164,7 @@ signal ‘warn_at’, ‘stop_at’, and ‘notify_at’ flags) based on either 
 relative proportion or absolute number of failing test units.
 
 ``` r
+
 al <- action_levels(warn_at = 2, stop_at = 4)
 
 small_table %>%
@@ -191,6 +196,7 @@ the `actions` argument. If you set it while creating the agent, it
 applies to all rules in a validation plan.
 
 ``` r
+
 small_table %>%
   create_agent(actions = al) %>% 
   col_vals_lt(a, value = 7) %>%

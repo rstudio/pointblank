@@ -10,16 +10,12 @@ customizable delimiter.
 The
 [`x_write_disk()`](https://rstudio.github.io/pointblank/reference/x_write_disk.md),
 [`yaml_write()`](https://rstudio.github.io/pointblank/reference/yaml_write.md)
-functions allow for the writing of **pointblank** objects to disk.
-Furthermore the
-[`log4r_step()`](https://rstudio.github.io/pointblank/reference/log4r_step.md)
-function has the `append_to` argument that accepts filenames, and, it's
-reasonable that a series of log files could be differentiated by a date
-component in the naming scheme. The modification of the filename string
-takes effect immediately but not at the time of writing a file to disk.
-In most cases, especially when using `affix_date()` with the
-aforementioned file-writing functions, the file timestamps should
-approximate the time components affixed to the filenames.
+functions allow for the writing of **pointblank** objects to disk. The
+modification of the filename string takes effect immediately but not at
+the time of writing a file to disk. In most cases, especially when using
+`affix_date()` with the aforementioned file-writing functions, the file
+timestamps should approximate the time components affixed to the
+filenames.
 
 ## Usage
 

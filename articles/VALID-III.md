@@ -115,6 +115,7 @@ dataset, let’s write expectations that show that non-NA values in column
 `c` are between `2` and `9`.
 
 ``` r
+
 testthat::expect_true(all(na.omit(small_table$c) >= 2))
 testthat::expect_true(all(na.omit(small_table$c) <= 9))
 ```
@@ -131,6 +132,7 @@ The **pointblank** version of this task makes for a more succinct and
 understandable expectation expression:
 
 ``` r
+
 expect_col_vals_between(small_table, c, 2, 9, na_pass = TRUE)
 ```
 

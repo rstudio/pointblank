@@ -25,6 +25,7 @@ It’s a small, uninteresting dataset but it’s useful for simple examples.
 This is what it looks like:
 
 ``` r
+
 small_table
 ```
 
@@ -49,6 +50,7 @@ Let’s use the `small_table` object and see what results from introducing
 it to the *informant*.
 
 ``` r
+
 informant <- 
   create_informant(
     tbl = small_table,
@@ -61,6 +63,7 @@ Printing the *informant* will show us the automatically-generated
 information on the `small_table` dataset, adding the *Columns* section.
 
 ``` r
+
 informant
 ```
 
@@ -83,6 +86,7 @@ and have access to additional output options, like producing a narrower
 version of the output.
 
 ``` r
+
 get_informant_report(informant, size = "small")
 ```
 
@@ -110,6 +114,7 @@ Let’s try adding some information with each of these functions and then
 look at the resulting report.
 
 ``` r
+
 informant <-
   create_informant(
     tbl = small_table,
@@ -177,6 +182,7 @@ subsection names than a single word, then we can enclose that text in
 back ticks. For example, why not put some emoji in your subsection name?
 
 ``` r
+
 informant %>% 
   info_tabular("🔄 updates" = "This table is not regularly updated.")
 ```
@@ -231,6 +237,7 @@ in information for each column by adapting
 from the **palmerpenguins** package.
 
 ``` r
+
 informant_pp <- 
   create_informant(
     tbl = palmerpenguins::penguins,
@@ -324,6 +331,7 @@ order of creation. Let’s put together some extra sections that further
 describe the `palmerpenguins::penguins` dataset.
 
 ``` r
+
 informant_pp <- 
   informant_pp %>%
   info_section(

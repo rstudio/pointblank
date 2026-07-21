@@ -1,5 +1,23 @@
 # pointblank (development version)
 
+* Deprecated `log4r_step()` and logging support in `validate_rmd()` following the removal of {log4r} from CRAN (#672).
+
+* Fixed rendering of ampersands in `specially()` assertions within the agent report (#661). (#673)
+
+* Fixed `get_sundered_data()` failing on DB tables when using `type = "combined"` (#637). (#649, @pachadotdev)
+
+* Fixed `export_report()` not working for multiagent objects (#449). (#647, @pachadotdev)
+
+* Fixed `scan_data()` error caused by incorrect access to dplyr/ggplot2 namespace (#628). (#646, @pachadotdev)
+
+* Fixed plot error when dimensions exceed 50 inches (#365). (#648, @pachadotdev)
+
+* Fixed DuckDB tables throwing an error when passed to `create_agent()` due to newline handling in identifier strings (#635). (#639, @petrbouchal)
+
+* Fixed passing of variable names to the `preconditions` argument (#315). (#671, @pachadotdev)
+
+* Avoided use of deprecated `dplyr::case_match()`. (#669, @olivroy)
+
 # pointblank 0.12.3
 
 * We now support validation checks of Oracle tables via ODBC (#462). (#644, @pachadotdev)

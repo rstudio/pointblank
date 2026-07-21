@@ -78,7 +78,7 @@ the YAML output (showing both the \code{meta_snippets} and \code{columns} keys t
 demonstrate their relationship here).
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{# R statement
-informant \%>\% 
+informant \%>\%
   info_columns(
     columns = date_time,
     `Latest Date` = "The latest date is \{latest_date\}."
@@ -120,7 +120,7 @@ expression \code{~ . \%>\% nrow()} (giving us the number of rows in the dataset)
 the second uses the \code{\link[=snip_highest]{snip_highest()}} function with column \code{a} (giving us
 the highest value in that column).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <-
   create_informant(
     tbl = ~ test_table,
     tbl_name = "test_table",
@@ -167,7 +167,7 @@ We can print the \code{informant} object to see the information report.
 Let's modify \code{test_table} with some \strong{dplyr} to give it more rows and an
 extra column.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{test_table <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{test_table <-
   dplyr::bind_rows(test_table, test_table) \%>\%
   dplyr::mutate(h = a + c)
 }\if{html}{\out{</div>}}

@@ -74,7 +74,7 @@ You can use an in-memory database table and by supplying it with an in-memory
 table. This works with the DuckDB database and the key thing is to use
 \code{dbname = ":memory"} in the \code{db_tbl()} call.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table_duckdb <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table_duckdb <-
   db_tbl(
     table = small_table,
     dbtype = "duckdb",
@@ -86,18 +86,18 @@ small_table_duckdb
 
 \preformatted{## # Source:   table<small_table> [?? x 8]
 ## # Database: duckdb_connection
-##    date_time           date           a b         c      d e     f    
+##    date_time           date           a b         c      d e     f
 ##    <dttm>              <date>     <int> <chr> <dbl>  <dbl> <lgl> <chr>
-##  1 2016-01-04 11:00:00 2016-01-04     2 1-bc…     3  3423. TRUE  high 
-##  2 2016-01-04 00:32:00 2016-01-04     3 5-eg…     8 10000. TRUE  low  
-##  3 2016-01-05 13:32:00 2016-01-05     6 8-kd…     3  2343. TRUE  high 
-##  4 2016-01-06 17:23:00 2016-01-06     2 5-jd…    NA  3892. FALSE mid  
-##  5 2016-01-09 12:36:00 2016-01-09     8 3-ld…     7   284. TRUE  low  
-##  6 2016-01-11 06:15:00 2016-01-11     4 2-dh…     4  3291. TRUE  mid  
-##  7 2016-01-15 18:46:00 2016-01-15     7 1-kn…     3   843. TRUE  high 
-##  8 2016-01-17 11:27:00 2016-01-17     4 5-bo…     2  1036. FALSE low  
-##  9 2016-01-20 04:30:00 2016-01-20     3 5-bc…     9   838. FALSE high 
-## 10 2016-01-20 04:30:00 2016-01-20     3 5-bc…     9   838. FALSE high 
+##  1 2016-01-04 11:00:00 2016-01-04     2 1-bc…     3  3423. TRUE  high
+##  2 2016-01-04 00:32:00 2016-01-04     3 5-eg…     8 10000. TRUE  low
+##  3 2016-01-05 13:32:00 2016-01-05     6 8-kd…     3  2343. TRUE  high
+##  4 2016-01-06 17:23:00 2016-01-06     2 5-jd…    NA  3892. FALSE mid
+##  5 2016-01-09 12:36:00 2016-01-09     8 3-ld…     7   284. TRUE  low
+##  6 2016-01-11 06:15:00 2016-01-11     4 2-dh…     4  3291. TRUE  mid
+##  7 2016-01-15 18:46:00 2016-01-15     7 1-kn…     3   843. TRUE  high
+##  8 2016-01-17 11:27:00 2016-01-17     4 5-bo…     2  1036. FALSE low
+##  9 2016-01-20 04:30:00 2016-01-20     3 5-bc…     9   838. FALSE high
+## 10 2016-01-20 04:30:00 2016-01-20     3 5-bc…     9   838. FALSE high
 ## # … with more rows}
 
 
@@ -105,7 +105,7 @@ small_table_duckdb
 The in-memory option also works using the SQLite database. The only change
 required is setting the \code{dbtype} to \code{"sqlite"}:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table_sqlite <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table_sqlite <-
   db_tbl(
     table = small_table,
     dbtype = "sqlite",
@@ -117,18 +117,18 @@ small_table_sqlite
 
 \preformatted{## # Source:   table<small_table> [?? x 8]
 ## # Database: sqlite 3.37.0 [:memory:]
-##     date_time  date     a b             c      d     e f    
+##     date_time  date     a b             c      d     e f
 ##         <dbl> <dbl> <int> <chr>     <dbl>  <dbl> <int> <chr>
-##  1 1451905200 16804     2 1-bcd-345     3  3423.     1 high 
-##  2 1451867520 16804     3 5-egh-163     8 10000.     1 low  
-##  3 1452000720 16805     6 8-kdg-938     3  2343.     1 high 
-##  4 1452100980 16806     2 5-jdo-903    NA  3892.     0 mid  
-##  5 1452342960 16809     8 3-ldm-038     7   284.     1 low  
-##  6 1452492900 16811     4 2-dhe-923     4  3291.     1 mid  
-##  7 1452883560 16815     7 1-knw-093     3   843.     1 high 
-##  8 1453030020 16817     4 5-boe-639     2  1036.     0 low  
-##  9 1453264200 16820     3 5-bce-642     9   838.     0 high 
-## 10 1453264200 16820     3 5-bce-642     9   838.     0 high 
+##  1 1451905200 16804     2 1-bcd-345     3  3423.     1 high
+##  2 1451867520 16804     3 5-egh-163     8 10000.     1 low
+##  3 1452000720 16805     6 8-kdg-938     3  2343.     1 high
+##  4 1452100980 16806     2 5-jdo-903    NA  3892.     0 mid
+##  5 1452342960 16809     8 3-ldm-038     7   284.     1 low
+##  6 1452492900 16811     4 2-dhe-923     4  3291.     1 mid
+##  7 1452883560 16815     7 1-knw-093     3   843.     1 high
+##  8 1453030020 16817     4 5-boe-639     2  1036.     0 low
+##  9 1453264200 16820     3 5-bce-642     9   838.     0 high
+## 10 1453264200 16820     3 5-bce-642     9   838.     0 high
 ## # … with more rows}
 
 
@@ -149,14 +149,14 @@ in-memory database. For this, we can use the all-powerful \code{\link[=file_tbl]
     dbtype = "duckdb",
     dbname = ":memory:"
   )
-  
+
 all_revenue_large_duckdb
 }\if{html}{\out{</div>}}
 
 \preformatted{## # Source:   table<sj_all_revenue_large.rds> [?? x 11]
 ## # Database: duckdb_connection
-##    player_id       session_id   session_start       time               
-##    <chr>           <chr>        <dttm>              <dttm>             
+##    player_id       session_id   session_start       time
+##    <chr>           <chr>        <dttm>              <dttm>
 ##  1 IRZKSAOYUJME796 IRZKSAOYUJM… 2015-01-01 00:18:41 2015-01-01 00:18:53
 ##  2 CJVYRASDZTXO674 CJVYRASDZTX… 2015-01-01 01:13:01 2015-01-01 01:13:07
 ##  3 CJVYRASDZTXO674 CJVYRASDZTX… 2015-01-01 01:13:01 2015-01-01 01:23:37
@@ -184,7 +184,7 @@ and \code{password} entries we are using the literal username and password value
 (publicly available when visiting the \emph{RNA Central} website) by enclosing the
 values in \code{I()}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{rna_db_tbl <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{rna_db_tbl <-
   db_tbl(
     table = "rna",
     dbtype = "postgres",
@@ -202,7 +202,7 @@ rna_db_tbl
 ## # Database: postgres
 ## #   [reader@hh-pgsql-public.ebi.ac.uk:5432/pfmegrnargs]
 ##          id upi    timestamp           userstamp crc64   len seq_short
-##     <int64> <chr>  <dttm>              <chr>     <chr> <int> <chr>    
+##     <int64> <chr>  <dttm>              <chr>     <chr> <int> <chr>
 ##  1 25222431 URS00… 2019-12-02 13:26:46 rnacen    E65C…   521 AGAGTTTG…
 ##  2 25222432 URS00… 2019-12-02 13:26:46 rnacen    6B91…   520 AGAGTTCG…
 ##  3 25222433 URS00… 2019-12-02 13:26:46 rnacen    03B8…   257 TACGTAGG…
@@ -221,7 +221,7 @@ You'd normally want to use the names of environment variables (envvars) to
 more securely access the appropriate username and password values when
 connecting to a DB. Here are all the necessary inputs:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{example_db_tbl <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{example_db_tbl <-
   db_tbl(
     table = "<table_name>",
     dbtype = "<database_type_shortname>",
@@ -264,15 +264,15 @@ reference the table in the store by its name (given to the left of the \code{~})
 
 \preformatted{## # Source:   table<pointblank::small_table> [?? x 8]
 ## # Database: duckdb_connection
-##    date_time           date           a b           c      d e    
+##    date_time           date           a b           c      d e
 ##    <dttm>              <date>     <int> <chr>   <dbl>  <dbl> <lgl>
-##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-…     3  3423. TRUE 
-##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-…     8 10000. TRUE 
-##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-…     3  2343. TRUE 
+##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-…     3  3423. TRUE
+##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-…     8 10000. TRUE
+##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-…     3  2343. TRUE
 ##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-…    NA  3892. FALSE
-##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-…     7   284. TRUE 
-##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-…     4  3291. TRUE 
-##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-…     3   843. TRUE 
+##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-…     7   284. TRUE
+##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-…     4  3291. TRUE
+##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-…     3   843. TRUE
 ##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-…     2  1036. FALSE
 ##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-…     9   838. FALSE
 ## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-…     9   838. FALSE
@@ -288,14 +288,14 @@ version of the first. It's just as easily obtainable via \code{\link[=tbl_get]{t
 
 \preformatted{## # Source:   lazy query [?? x 8]
 ## # Database: duckdb_connection
-##   date_time           date           a b             c     d e    
+##   date_time           date           a b             c     d e
 ##   <dttm>              <date>     <int> <chr>     <dbl> <dbl> <lgl>
-## 1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3 3423. TRUE 
-## 2 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3 2343. TRUE 
-## 3 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3  843. TRUE 
+## 1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3 3423. TRUE
+## 2 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3 2343. TRUE
+## 3 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3  843. TRUE
 ## 4 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE
 ## 5 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE
-## 6 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA 2230. TRUE 
+## 6 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA 2230. TRUE
 ## # … with more rows, and 1 more variable: f <chr>}
 
 
@@ -304,7 +304,7 @@ The table-prep formulas in the \code{store} object could also be used in functio
 with a \code{tbl} argument (like \code{\link[=create_agent]{create_agent()}} and \code{\link[=create_informant]{create_informant()}}). This
 is accomplished most easily with the \code{\link[=tbl_source]{tbl_source()}} function.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(
     tbl = ~ tbl_source(
       tbl = "small_table_duck",
@@ -313,7 +313,7 @@ is accomplished most easily with the \code{\link[=tbl_source]{tbl_source()}} fun
   )
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <-
   create_informant(
     tbl = ~ tbl_source(
       tbl = "small_high_duck",

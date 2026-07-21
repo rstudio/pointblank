@@ -367,7 +367,7 @@ the corresponding YAML representation.
 
 R statement:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
   col_vals_decreasing(
     columns = a,
     allow_stationary = TRUE,
@@ -417,7 +417,7 @@ session start.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{game_revenue_2 <-
   game_revenue \%>\%
   dplyr::mutate(
-    time_left = 
+    time_left =
       lubridate::ymd_hms(
         "2015-02-01 00:00:00"
       ) - session_start

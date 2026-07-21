@@ -40,7 +40,7 @@ There's a YAML file available in the \strong{pointblank} package that's called
 \code{"informant-small_table.yml"}. The path for it can be accessed through
 \code{system.file()}:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{yml_file_path <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{yml_file_path <-
   system.file(
     "yaml", "informant-small_table.yml",
     package = "pointblank"

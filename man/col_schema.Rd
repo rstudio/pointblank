@@ -54,7 +54,7 @@ is collected and loaded into R.
 Create a simple table with two columns: one \code{integer} and the other
 \code{character}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <-
   dplyr::tibble(
     a = 1:5,
     b = letters[1:5]
@@ -74,7 +74,7 @@ tbl
 Create a column schema object that describes the columns and their types (in
 the expected order).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{schema_obj <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{schema_obj <-
   col_schema(
     a = "integer",
     b = "character"

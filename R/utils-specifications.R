@@ -300,7 +300,7 @@ check_vin_db <- function(table,
       dplyr::across(
         .cols = dplyr::matches("pb_vin_[0-9]{3}_"),
         function(x) {
-          dplyr::case_match(x,
+          dplyr::replace_values(x,
             c("a", "j") ~ "1",
             c("b", "k", "s") ~ "2",
             c("c", "l", "t") ~ "3",
@@ -310,8 +310,7 @@ check_vin_db <- function(table,
             c("g", "p", "x") ~ "7",
             c("h", "y") ~ "8",
             c("r", "z") ~ "9",
-            c("0", "1", "2", "3", "4", "5", "6", "7", "8", "9") ~ "100000",
-            .default = x
+            c("0", "1", "2", "3", "4", "5", "6", "7", "8", "9") ~ "100000"
           )
       }),
       pb_vin_chk_ = pb_vin_009_,

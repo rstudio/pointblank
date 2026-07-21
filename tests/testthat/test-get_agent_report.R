@@ -263,6 +263,31 @@ test_that("The correct title is rendered in the agent report", {
   # )
 })
 
+test_that("specially() report handles ampersands and special chars", {
+
+  agent <-
+    create_agent(tbl = small_table) %>%
+    specially(fn = function(x) x$a > 1 & x$d < 10000) %>%
+    interrogate()
+
+  # The gt report should render without KaTeX parse errors
+  expect_no_error(
+    report_html <- get_agent_report(agent) %>%
+      gt::as_raw_html(inline_css = FALSE)
+  )
+
+  # The display_table = FALSE path should also work
+  report_tbl <- get_agent_report(agent, display_table = FALSE)
+  expect_equal(nrow(report_tbl), 1)
+  expect_equal(report_tbl$type, "specially")
+
+  # The small size variant should also render without error
+  expect_no_error(
+    get_agent_report(agent, size = "small") %>%
+      gt::as_raw_html(inline_css = FALSE)
+  )
+})
+
 test_that("col_vals_expr() shows used columns", {
 
   tbl <-

@@ -20,7 +20,7 @@ below to see their documentation.
 \describe{
   \item{blastula}{\code{\link[blastula:credential_helpers]{creds}}, \code{\link[blastula:credential_helpers]{creds_anonymous}}, \code{\link[blastula:credential_helpers]{creds_file}}, \code{\link[blastula:credential_helpers]{creds_key}}}
 
-  \item{dplyr}{\code{\link[dplyr]{between}}, \code{\link[dplyr]{case_when}}, \code{\link[dplyr]{vars}}}
+  \item{dplyr}{\code{\link[dplyr]{between}}, \code{\link[dplyr:case-and-replace-when]{case_when}}, \code{\link[dplyr]{vars}}}
 
   \item{rlang}{\code{\link[rlang]{expr}}}
 }}

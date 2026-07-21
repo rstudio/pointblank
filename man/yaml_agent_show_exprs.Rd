@@ -35,7 +35,7 @@ Let's create a validation plan for the data quality analysis of the
 \code{small_table} dataset. We need an agent and its table-prep formula enables
 retrieval of the target table.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(
     tbl = ~ small_table,
     tbl_name = "small_table",
@@ -109,7 +109,7 @@ we can use \code{yaml_agent_show_exprs()}.
   col_vals_lte(
     columns = c,
     value = 5
-  ) 
+  )
 }\if{html}{\out{</div>}}
 }
 

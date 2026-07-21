@@ -61,11 +61,11 @@ supplied to the \code{column} argument in \code{get_tt_param()}.
 Get summary statistics for the first quarter of the \code{game_revenue} dataset
 that's included in the \strong{pointblank} package.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{stats_tbl <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{stats_tbl <-
   game_revenue \%>\%
   tt_time_slice(slice_point = 0.25) \%>\%
   tt_summary_stats()
-  
+
 stats_tbl
 #> # A tibble: 9 x 3
 #>   .param. item_revenue session_duration
@@ -94,7 +94,7 @@ the first quarter of the year, we can supply a value from \code{stats_tbl} to
     keep = "right"
   ) \%>\%
   test_col_vals_lte(
-    columns = session_duration, 
+    columns = session_duration,
     value = get_tt_param(
       tbl = stats_tbl,
       param = "max",

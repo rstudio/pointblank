@@ -256,12 +256,12 @@ The agent report as a \strong{gt} display table comes in two sizes: \code{"stand
 (the default, 875px wide) and \code{"small"} (575px wide). Let's take a look at
 the smaller-sized version of the report.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_report <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_report <-
   get_agent_report(
     agent = agent,
     size = "small"
   )
-  
+
 small_report
 }\if{html}{\out{</div>}}
 

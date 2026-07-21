@@ -920,6 +920,12 @@ get_tbl_information_dbi <- function(tbl) {
     tbl_src <- "bigquery"
     # nocov end
 
+  } else if (grepl("oracle", tbl_src_details)) {
+
+    # nocov start
+    tbl_src <- "oracle"
+    # nocov end
+
   } else {
     tbl_src <- gsub("^([a-z]*).*", "\\1", tbl_src_details)
   }
@@ -995,6 +1001,21 @@ get_tbl_information_dbi <- function(tbl) {
 
       # nocov end
 
+    } else if (tbl_src == "oracle") {
+
+      # nocov start
+
+      q_types <-
+        as.character(
+          glue::glue(
+            "SELECT DATA_TYPE FROM \\
+          USER_TAB_COLUMNS WHERE \\
+          table_name = '{toupper(db_tbl_name)}' AND ROWNUM <= {n_cols}"
+          )
+        )
+
+      # nocov end
+
     } else {
 
         q_types <-
@@ -1022,6 +1043,18 @@ get_tbl_information_dbi <- function(tbl) {
     # nocov end
   }
 
+  if (tbl_src == "oracle") {
+
+    # nocov start
+
+    db_col_types <-
+      DBI::dbGetQuery(tbl_connection, q_types) %>%
+      dplyr::pull(DATA_TYPE) %>%
+      tolower()
+
+    # nocov end
+  }
+
   if (tbl_src %in% c("duckdb", "sqlite")) {
 
     db_col_types <-
@@ -1044,7 +1077,7 @@ get_tbl_information_dbi <- function(tbl) {
       tolower()
   }
 
-  if (!(tbl_src %in% c("duckdb", "sqlite", "postgres"))) {
+  if (!(tbl_src %in% c("duckdb", "sqlite", "postgres", "oracle"))) {
 
     # nocov start
 

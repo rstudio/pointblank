@@ -82,6 +82,7 @@ create_validation_step <- function(
       actions = ifelse(is.null(actions), list(NULL), list(actions)),
       label = ifelse(is.null(label), NA_character_, as.character(label)),
       brief = ifelse(is.null(brief), NA_character_, as.character(brief)),
+      brief_cls = as.character(class(.env$brief)[1]),
       active = ifelse(is.null(active), list(NULL), list(active)),
       eval_active = NA,
       eval_error = NA,

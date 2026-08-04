@@ -264,6 +264,13 @@ reference:
     - stop_if_not
     - from_github
 
+  - title: CDISC Conformance
+    desc: >
+      Validate SDTM datasets against the CDISC SDTMIG rule catalog using the
+      built-in conformance engine. No external tools or API calls needed.
+    contents:
+    - validate_sdtmig
+
   - title: Datasets
     contents:
     - small_table

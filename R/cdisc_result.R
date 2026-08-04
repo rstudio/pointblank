@@ -91,7 +91,29 @@ cdisc_conformance_result <- function(
   )
 }
 
-# Did all rules pass?
+
+#' Did all conformance rules pass?
+#'
+#' @description
+#'
+#' Given a `cdisc_conformance_result` object produced by [validate_sdtmig()],
+#' determine whether every rule passed without any findings. Returns `TRUE` only
+#' when no rule has a `"fail"` status.
+#'
+#' @param x *A CDISC conformance result*
+#'
+#'   `obj:<cdisc_conformance_result>` // **required**
+#'
+#'   A conformance result object returned by [validate_sdtmig()].
+#'
+#' @return A single logical value.
+#'
+#' @section Function ID:
+#' 13-2
+#'
+#' @family CDISC
+#'
+#' @export
 cdisc_all_passed <- function(x) {
   !any(
     vapply(

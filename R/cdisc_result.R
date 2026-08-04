@@ -124,7 +124,29 @@ cdisc_all_passed <- function(x) {
   )
 }
 
-# Total issue count across all rules
+
+#' Get the total number of conformance issues
+#'
+#' @description
+#'
+#' Returns the total count of issues across all rules in a conformance result.
+#' This sums the `n_issues` field from every rule result, regardless of rule
+#' type or status.
+#'
+#' @param x *A CDISC conformance result*
+#'
+#'   `obj:<cdisc_conformance_result>` // **required**
+#'
+#'   A conformance result object returned by [validate_sdtmig()].
+#'
+#' @return A single integer.
+#'
+#' @section Function ID:
+#' 13-3
+#'
+#' @family CDISC
+#'
+#' @export
 cdisc_n_total_issues <- function(x) {
   sum(vapply(x$rule_results, function(r) r$n_issues, integer(1)))
 }

@@ -309,7 +309,34 @@ cdisc_issues <- function(x) {
   do.call(rbind, rows)
 }
 
-# Return a data frame of all row-level findings
+
+#' Get a data frame of row-level conformance findings
+#'
+#' @description
+#'
+#' Returns a tidy data frame with one row per row-level finding from the
+#' conformance result. Each row identifies the rule that fired, the domain and
+#' row where the violation occurred, the subject (`USUBJID`), and the specific
+#' column and value that triggered the finding.
+#'
+#' For a rule-level summary instead, use [cdisc_issues()].
+#'
+#' @param x *A CDISC conformance result*
+#'
+#'   `obj:<cdisc_conformance_result>` // **required**
+#'
+#'   A conformance result object returned by [validate_sdtmig()].
+#'
+#' @return A data frame with columns `rule_id`, `dataset`, `row` (1-based
+#'   index), `usubjid`, `checked_column`, `checked_value`, and `message`.
+#'   Returns an empty data frame (zero rows) when there are no findings.
+#'
+#' @section Function ID:
+#' 13-8
+#'
+#' @family CDISC
+#'
+#' @export
 cdisc_findings_df <- function(x) {
   findings <- cdisc_findings(x)
   if (length(findings) == 0L) {

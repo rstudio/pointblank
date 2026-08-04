@@ -368,6 +368,7 @@ cdisc_findings_df <- function(x) {
   do.call(rbind, rows)
 }
 
+
 #' @export
 print.cdisc_conformance_result <- function(x, ...) {
 

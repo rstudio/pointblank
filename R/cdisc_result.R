@@ -151,7 +151,29 @@ cdisc_n_total_issues <- function(x) {
   sum(vapply(x$rule_results, function(r) r$n_issues, integer(1)))
 }
 
-# Table of status counts
+
+#' Get a table of conformance status counts
+#'
+#' @description
+#'
+#' Returns a frequency table of rule statuses from a conformance result. The
+#' possible statuses are `"pass"`, `"fail"`, `"error"`, `"not_applicable"`, and
+#' `"not_supported"`.
+#'
+#' @param x *A CDISC conformance result*
+#'
+#'   `obj:<cdisc_conformance_result>` // **required**
+#'
+#'   A conformance result object returned by [validate_sdtmig()].
+#'
+#' @return A named integer vector (a `table` object) with counts per status.
+#'
+#' @section Function ID:
+#' 13-4
+#'
+#' @family CDISC
+#'
+#' @export
 cdisc_status_counts <- function(x) {
   statuses <- vapply(x$rule_results, function(r) r$status, character(1))
   table(statuses)

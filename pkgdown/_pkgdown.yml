@@ -270,6 +270,13 @@ reference:
       built-in conformance engine. No external tools or API calls needed.
     contents:
     - validate_sdtmig
+    - cdisc_all_passed
+    - cdisc_n_total_issues
+    - cdisc_status_counts
+    - cdisc_rules
+    - cdisc_issues
+    - cdisc_findings
+    - cdisc_findings_df
 
   - title: Datasets
     contents:

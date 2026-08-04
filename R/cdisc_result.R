@@ -217,7 +217,31 @@ cdisc_rules <- function(x, status = NULL) {
   Filter(function(r) r$status == status, x$rule_results)
 }
 
-# Flatten all row findings across rule results
+
+#' Get all row-level findings as a list
+#'
+#' @description
+#'
+#' Flattens and returns all row-level findings across every rule result. Each
+#' finding is a named list containing `rule_id`, `dataset`, `row` (1-based),
+#' `usubjid`, `checked_column`, `checked_value`, `context`, and `message`.
+#'
+#' For a tabular version, use [cdisc_findings_df()] instead.
+#'
+#' @param x *A CDISC conformance result*
+#'
+#'   `obj:<cdisc_conformance_result>` // **required**
+#'
+#'   A conformance result object returned by [validate_sdtmig()].
+#'
+#' @return A list of row-level finding objects.
+#'
+#' @section Function ID:
+#' 13-6
+#'
+#' @family CDISC
+#'
+#' @export
 cdisc_findings <- function(x) {
   out <- list()
   for (r in x$rule_results) {

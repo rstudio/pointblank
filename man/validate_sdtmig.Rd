@@ -57,4 +57,14 @@ Define-XML importer is available in R).
 13-1
 }
 
+\seealso{
+Other CDISC: 
+\code{\link{cdisc_all_passed}()},
+\code{\link{cdisc_findings}()},
+\code{\link{cdisc_findings_df}()},
+\code{\link{cdisc_issues}()},
+\code{\link{cdisc_n_total_issues}()},
+\code{\link{cdisc_rules}()},
+\code{\link{cdisc_status_counts}()}
+}
 \concept{CDISC}

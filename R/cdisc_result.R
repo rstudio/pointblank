@@ -179,7 +179,37 @@ cdisc_status_counts <- function(x) {
   table(statuses)
 }
 
-# Filter rule results by status
+
+#' Get conformance rule results, optionally filtered by status
+#'
+#' @description
+#'
+#' Returns the list of individual rule results from a conformance result. Each
+#' element is a named list containing `rule_id`, `rule_type`, `dataset`,
+#' `status`, `sensitivity`, `description`, `message`, `n_issues`, and
+#' `row_findings`. Optionally filter to only rules with a specific status.
+#'
+#' @param x *A CDISC conformance result*
+#'
+#'   `obj:<cdisc_conformance_result>` // **required**
+#'
+#'   A conformance result object returned by [validate_sdtmig()].
+#'
+#' @param status *Filter by status*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   A status string to filter by (e.g., `"fail"`, `"pass"`). When `NULL`, all
+#'   rule results are returned.
+#'
+#' @return A list of rule result objects.
+#'
+#' @section Function ID:
+#' 13-5
+#'
+#' @family CDISC
+#'
+#' @export
 cdisc_rules <- function(x, status = NULL) {
   if (is.null(status)) {
     return(x$rule_results)

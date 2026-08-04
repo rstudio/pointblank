@@ -250,7 +250,32 @@ cdisc_findings <- function(x) {
   out
 }
 
-# Return a data frame of issues (rules with n_issues > 0)
+
+#' Get a data frame of conformance issues
+#'
+#' @description
+#'
+#' Returns a data frame containing one row per failing rule. This is a
+#' rule-level summary (not row-level); use [cdisc_findings_df()] for per-row
+#' detail. Each row includes the rule ID, affected dataset, issue count,
+#' message, sensitivity, and status.
+#'
+#' @param x *A CDISC conformance result*
+#'
+#'   `obj:<cdisc_conformance_result>` // **required**
+#'
+#'   A conformance result object returned by [validate_sdtmig()].
+#'
+#' @return A data frame with columns `dataset`, `rule_id`, `rule_type`,
+#'   `message`, `n_issues`, `sensitivity`, and `status`. Returns an empty data
+#'   frame (zero rows) when there are no issues.
+#'
+#' @section Function ID:
+#' 13-7
+#'
+#' @family CDISC
+#'
+#' @export
 cdisc_issues <- function(x) {
   rows <- lapply(x$rule_results, function(r) {
     if (r$n_issues > 0L) {

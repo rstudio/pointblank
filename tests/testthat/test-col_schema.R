@@ -241,3 +241,18 @@ test_that("`col_schema_match()` works properly", {
   expect_error(tbl %>% col_schema_match(schema_obj_cnc_2, complete = FALSE, in_order = FALSE))
   expect_error(tbl %>% col_schema_match(schema_obj_cnc_3, complete = FALSE, in_order = FALSE))
 })
+
+test_that("col_schema() with positional table arg works in pipeline (#657)", {
+
+  schema_from_tbl <- col_schema(tbl)
+
+  # Should pass when validating the same table
+
+  expect_identical(tbl %>% col_schema_match(schema_from_tbl), tbl)
+
+  # Should also work with is_exact = FALSE
+  expect_identical(
+    tbl %>% col_schema_match(schema_from_tbl, is_exact = FALSE),
+    tbl
+  )
+})

@@ -716,3 +716,86 @@ test_that("The `test_cols_schema_match()` function works", {
       )
   )
 })
+
+test_that("col_schema() accepts a table as a positional argument (#657)", {
+
+  # A schema generated from a table via positional arg should
+  # be identical to one created with .tbl
+  schema_positional <- col_schema(small_table)
+  schema_tbl_arg <- col_schema(.tbl = small_table)
+
+  expect_identical(schema_positional, schema_tbl_arg)
+  expect_s3_class(schema_positional, "col_schema")
+  expect_s3_class(schema_positional, "r_type")
+  expect_equal(names(schema_positional), colnames(small_table))
+
+  # Validating a table against a schema from itself should pass
+  # (agent workflow)
+  agent <-
+    create_agent(
+      tbl = small_table,
+      actions = action_levels(stop_at = 1)
+    ) %>%
+    col_schema_match(schema = col_schema(small_table)) %>%
+    interrogate()
+
+  expect_true(all_passed(agent))
+
+  # (test workflow)
+  expect_true(
+    small_table %>%
+      test_col_schema_match(schema = col_schema(small_table))
+  )
+
+  # (expect workflow)
+  expect_success(
+    small_table %>%
+      expect_col_schema_match(schema = col_schema(small_table))
+  )
+
+  # Named args should still work as before
+  schema_named <- col_schema(a = "integer", b = "character")
+  expect_equal(names(schema_named), c("a", "b"))
+  expect_equal(schema_named[["a"]], "integer")
+})
+
+test_that("is_exact = FALSE validates all columns, not just the first (#657)", {
+
+  tbl <- dplyr::tibble(a = 1L, b = "x", c = 3.0)
+
+  # Wrong type on second column should fail
+  expect_false(
+    tbl %>%
+      test_col_schema_match(
+        schema = col_schema(a = "integer", b = "integer", c = "numeric"),
+        is_exact = FALSE
+      )
+  )
+
+  # Wrong type on third column should fail
+  expect_false(
+    tbl %>%
+      test_col_schema_match(
+        schema = col_schema(a = "integer", b = "character", c = "logical"),
+        is_exact = FALSE
+      )
+  )
+
+  # Correct types should pass
+  expect_true(
+    tbl %>%
+      test_col_schema_match(
+        schema = col_schema(a = "integer", b = "character", c = "numeric"),
+        is_exact = FALSE
+      )
+  )
+
+  # Wrong column name on second column should fail
+  expect_false(
+    tbl %>%
+      test_col_schema_match(
+        schema = col_schema(a = "integer", z = "character", c = "numeric"),
+        is_exact = FALSE
+      )
+  )
+})

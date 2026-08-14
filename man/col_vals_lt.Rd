@@ -351,7 +351,7 @@ representation.
 
 R statement:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
   col_vals_lt(
     columns = a,
     value = 1,
@@ -403,7 +403,7 @@ columns (\code{a}, \code{b}, and \code{c}) and three character columns (\code{d}
       e = LETTERS[b],
       f = LETTERS[c]
   )
-  
+
 tbl
 #> # A tibble: 6 x 6
 #>       a     b     c d     e     f    
@@ -444,7 +444,7 @@ This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
 behavior of side effects can be customized with the \code{actions} option.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   col_vals_lt(columns = c, value = 5) \%>\%
   dplyr::pull(c)
 #> [1] 1 1 1 2 3 4

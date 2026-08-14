@@ -352,7 +352,7 @@ representation.
 
 R statement:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
   col_vals_lte(
     columns = a,
     value = 1,
@@ -445,7 +445,7 @@ This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
 behavior of side effects can be customized with the \code{actions} option.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   col_vals_lte(columns = c, value = 4) \%>\%
   dplyr::pull(c)
 #> [1] 1 1 1 2 3 4

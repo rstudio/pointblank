@@ -455,7 +455,10 @@ be pruned (giving us less test units overall).
   test_col_vals_expr(expr = ~ case_when(
     b == 1 ~ a > 5 & c >= 1
   ))
-#> [1] TRUE
+#> Warning in test_col_vals_expr(., expr = ~case_when(b == 1 ~ a > 5 & c >= :
+#> Expression generated `NA` value(s). Edit the `expr` or specify `na_pass`
+#> (default is `FALSE`).
+#> [1] FALSE
 }\if{html}{\out{</div>}}
 }
 }
@@ -468,7 +471,7 @@ be pruned (giving us less test units overall).
 \seealso{
 These reexported functions (from \strong{rlang} and \strong{dplyr}) work
 nicely within \code{col_vals_expr()} and its variants: \code{\link[rlang:expr]{rlang::expr()}},
-\code{\link[dplyr:between]{dplyr::between()}}, and \code{\link[dplyr:case_when]{dplyr::case_when()}}.
+\code{\link[dplyr:between]{dplyr::between()}}, and \code{\link[dplyr:case-and-replace-when]{dplyr::case_when()}}.
 
 Other validation functions: 
 \code{\link{col_count_match}()},

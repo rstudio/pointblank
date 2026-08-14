@@ -341,14 +341,14 @@ representation.
 
 R statement:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
   conjointly(
     ~ col_vals_lt(., columns = a, value = 8),
     ~ col_vals_gt(., columns = c, value = vars(a)),
     ~ col_vals_not_null(., columns = b),
     preconditions = ~ . \%>\% dplyr::filter(a < 10),
     segments = b ~ c("group_1", "group_2"),
-    actions = action_levels(warn_at = 0.1, stop_at = 0.2), 
+    actions = action_levels(warn_at = 0.1, stop_at = 0.2),
     label = "The `conjointly()` step.",
     active = FALSE
   )
@@ -392,7 +392,7 @@ explaining things later.
     b = c(3, 4, 6),
     c = c(9, 8, 7)
   )
-  
+
 tbl
 #> # A tibble: 3 x 3
 #>       a     b     c

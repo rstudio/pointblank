@@ -61,7 +61,7 @@ stored in the object). We'll add two snippets with \code{\link[=info_snippet]{in
 information with the \code{\link[=info_columns]{info_columns()}} and \code{\link[=info_section]{info_section()}} functions and then
 use \code{incorporate()} to work the snippets into the info text.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <-
   create_informant(
     tbl = ~ changing_table,
     tbl_name = "changing_table",
@@ -108,7 +108,7 @@ We can print the resulting object to see the information report.
 
 Let's modify \code{test_table} to give it more rows and an extra column.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{changing_table <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{changing_table <-
   dplyr::bind_rows(changing_table, changing_table) \%>\%
   dplyr::mutate(h = a + c)
 }\if{html}{\out{</div>}}

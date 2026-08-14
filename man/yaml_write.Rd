@@ -117,7 +117,7 @@ Creating an \code{action_levels} object is a common workflow step when creating 
 \strong{pointblank} agent. We designate failure thresholds to the \code{warn}, \code{stop},
 and \code{notify} states using \code{\link[=action_levels]{action_levels()}}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <-
   action_levels(
     warn_at = 0.10,
     stop_at = 0.25,
@@ -130,7 +130,7 @@ default for all validation steps which can be overridden). The data will be
 referenced in \code{tbl} with a leading \code{~} and this is a requirement for writing
 to YAML since the preparation of the target table must be self contained.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(
     tbl = ~ small_table,
     tbl_name = "small_table",
@@ -143,7 +143,7 @@ Then, as with any \code{agent} object, we can add steps to the validation plan b
 using as many validation functions as we want.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
-  agent \%>\% 
+  agent \%>\%
   col_exists(columns = c(date, date_time)) \%>\%
   col_vals_regex(
     columns = b,
@@ -205,7 +205,7 @@ There's a YAML file available in the \strong{pointblank} package that's also
 called \code{"agent-small_table.yml"}. The path for it can be accessed through
 \code{system.file()}:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{yml_file_path <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{yml_file_path <-
   system.file(
     "yaml", "agent-small_table.yml",
     package = "pointblank"
@@ -266,7 +266,7 @@ Let's walk through how we can generate some useful information for a really
 small table. We can create an \code{informant} object with \code{\link[=create_informant]{create_informant()}}
 and we'll again use the \code{small_table} dataset.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <-
   create_informant(
     tbl = ~ small_table,
     tbl_name = "small_table",
@@ -277,7 +277,7 @@ and we'll again use the \code{small_table} dataset.
 Then, as with any \code{informant} object, we can add info text to the
 using as many \verb{info_*()} functions as we want.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <-
   informant \%>\%
   info_columns(
     columns = a,
@@ -344,7 +344,7 @@ There's a YAML file available in the \strong{pointblank} package that's also
 called \code{"informant-small_table.yml"}. The path for it can be accessed through
 \code{system.file()}:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{yml_file_path <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{yml_file_path <-
   system.file(
     "yaml", "informant-small_table.yml",
     package = "pointblank"

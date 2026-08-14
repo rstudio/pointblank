@@ -231,7 +231,7 @@ representation.
 
 R statement:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
   col_is_numeric(
     columns = a,
     actions = action_levels(warn_at = 0.1, stop_at = 0.2),

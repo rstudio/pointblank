@@ -273,13 +273,13 @@ R statement:
         id = "smtp2go"
       )
     ))
-  ), 
+  ),
   end_fns = list(
     ~ beepr::beep(2),
     ~ Sys.sleep(1)
-  ), 
+  ),
   embed_report = TRUE,
-  lang = "fr", 
+  lang = "fr",
   locale = "fr_CA"
 )
 }\if{html}{\out{</div>}}
@@ -384,7 +384,7 @@ We ought to think about what's tolerable in terms of data quality so let's
 designate proportional failure thresholds to the \code{warn}, \code{stop}, and \code{notify}
 states using \code{\link[=action_levels]{action_levels()}}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <-
   action_levels(
       warn_at = 0.10,
       stop_at = 0.25,
@@ -397,7 +397,7 @@ serves as a default for all validation steps which can be overridden). The
 static thresholds provided by \code{al} will make the reporting a bit more useful.
 We also provide a target table and we'll use \code{pointblank::small_table}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(
     tbl = pointblank::small_table,
     tbl_name = "small_table",
@@ -411,7 +411,7 @@ using as many validation functions as we want. then, we use \code{\link[=interro
 to actually perform the validations and gather intel.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
-  agent \%>\% 
+  agent \%>\%
   col_exists(columns = c(date, date_time)) \%>\%
   col_vals_regex(
     columns = b,
@@ -476,9 +476,9 @@ duplicated rows, that failed. We can see those rows with
 }\if{html}{\out{</div>}}
 
 \preformatted{## # A tibble: 2 × 8
-##   date_time           date           a b            c     d e     f    
+##   date_time           date           a b            c     d e     f
 ##   <dttm>              <date>     <int> <chr>    <dbl> <dbl> <lgl> <chr>
-## 1 2016-01-20 04:30:00 2016-01-20     3 5-bce-6…     9  838. FALSE high 
+## 1 2016-01-20 04:30:00 2016-01-20     3 5-bce-6…     9  838. FALSE high
 ## 2 2016-01-20 04:30:00 2016-01-20     3 5-bce-6…     9  838. FALSE high}
 
 

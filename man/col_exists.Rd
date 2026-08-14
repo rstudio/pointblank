@@ -229,7 +229,7 @@ representation.
 
 R statement:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
   col_exists(
     columns = a,
     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
@@ -269,7 +269,7 @@ For all examples here, we'll use a simple table with two columns: \code{a} and
     a = c(5, 7, 6, 5, 8, 7),
     b = c(7, 1, 0, 0, 0, 3)
   )
-  
+
 tbl
 #> # A tibble: 6 x 2
 #>       a     b

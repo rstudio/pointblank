@@ -286,7 +286,7 @@ representation.
 
 R statement:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
   tbl_match(
     tbl_compare = ~ file_tbl(
       file = from_github(

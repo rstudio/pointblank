@@ -36,7 +36,7 @@ a look at the \code{\link[=tbl_source]{tbl_source()}} function.
 Define a \code{tbl_store} object by adding several table-prep formulas in
 \code{\link[=tbl_store]{tbl_store()}}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{store <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{store <-
   tbl_store(
     small_table_duck ~ db_tbl(
       table = small_table,
@@ -69,7 +69,7 @@ Once this object is available, we can access the tables named:
 \preformatted{## # Source:   table<rna> [?? x 9]
 ## # Database: postgres [reader@hh-pgsql-public.ebi.ac.uk:5432/pfmegrnargs]
 ##          id upi        timestamp           userstamp crc64   len seq_short
-##     <int64> <chr>      <dttm>              <chr>     <chr> <int> <chr>    
+##     <int64> <chr>      <dttm>              <chr>     <chr> <int> <chr>
 ##  1 24583872 URS000177… 2019-12-02 13:26:08 rnacen    C380…   511 ATTGAACG…
 ##  2 24583873 URS000177… 2019-12-02 13:26:08 rnacen    BC42…   390 ATGGGCGA…
 ##  3 24583874 URS000177… 2019-12-02 13:26:08 rnacen    19A5…   422 CTACGGGA…
@@ -93,18 +93,18 @@ in the table store (i.e., appears after typing the \code{$}).
 
 \preformatted{## # Source:   table<small_table> [?? x 8]
 ## # Database: duckdb_connection
-##    date_time           date           a b             c      d e     f    
+##    date_time           date           a b             c      d e     f
 ##    <dttm>              <date>     <int> <chr>     <dbl>  <dbl> <lgl> <chr>
-##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high 
-##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-163     8 10000. TRUE  low  
-##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3  2343. TRUE  high 
-##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-903    NA  3892. FALSE mid  
-##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-038     7   284. TRUE  low  
-##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-923     4  3291. TRUE  mid  
-##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3   843. TRUE  high 
-##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-639     2  1036. FALSE low  
-##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
-## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
+##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high
+##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-163     8 10000. TRUE  low
+##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3  2343. TRUE  high
+##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-903    NA  3892. FALSE mid
+##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-038     7   284. TRUE  low
+##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-923     4  3291. TRUE  mid
+##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3   843. TRUE  high
+##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-639     2  1036. FALSE low
+##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high
+## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high
 ## # … with more rows}
 }
 

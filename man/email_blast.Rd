@@ -89,7 +89,7 @@ R statement:
   )
 ) \%>\%
   col_vals_gt(a, 1) \%>\%
-  col_vals_lt(a, 7) 
+  col_vals_lt(a, 7)
 }\if{html}{\out{</div>}}
 
 YAML representation:
@@ -103,7 +103,7 @@ locale: en
 actions:
   warn_count: 1.0
   notify_count: 2.0
-end_fns: ~email_blast(x, to = "joe_public@example.com", 
+end_fns: ~email_blast(x, to = "joe_public@example.com",
   from = "pb_notif@example.com", msg_subject = "Table Validation",
   credentials = blastula::creds_key(id = "smtp2go"),
   )
@@ -127,7 +127,7 @@ useful for demonstrating an emailing scenario. It will have absolute values
 for the \code{warn} and \code{notify} states (with thresholds of \code{1} and \code{2} 'fail'
 units, respectively, for the two states).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <-
   action_levels(
     warn_at = 1,
     notify_at = 2

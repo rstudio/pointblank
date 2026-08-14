@@ -139,7 +139,7 @@ To set failure limits and signal conditions, we designate proportional
 failure thresholds to the \code{warn}, \code{stop}, and \code{notify} states using
 \code{action_levels()}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <-
   action_levels(
     warn_at = 0.05,
     stop_at = 0.10,
@@ -163,18 +163,18 @@ steps are created and the agent will interrogate the \code{small_table}.
     na_pass = TRUE
   ) \%>\%
   col_vals_gt(
-    columns = b, 
+    columns = b,
     value = vars(g),
     na_pass = TRUE
   ) \%>\%
   rows_distinct() \%>\%
   col_vals_equal(
-    columns = d, 
+    columns = d,
     value = vars(d),
     na_pass = TRUE
   ) \%>\%
   col_vals_between(
-    columns = c, 
+    columns = c,
     left = vars(a), right = vars(d)
   ) \%>\%
   col_vals_not_between(
@@ -190,11 +190,11 @@ steps are created and the agent will interrogate the \code{small_table}.
 The second agent, \code{agent_2}, retains all of the steps of \code{agent_1} and adds
 two more (the last of which is inactive).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_2 <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_2 <-
   agent_1 \%>\%
   col_exists(columns = date, date_time) \%>\%
   col_vals_regex(
-    columns = b, 
+    columns = b,
     regex = "[0-9]-[a-z]\{3\}-[0-9]\{3\}",
     active = FALSE
   ) \%>\%
@@ -204,7 +204,7 @@ two more (the last of which is inactive).
 The third agent, \code{agent_3}, adds a single validation step, removes the fifth
 one, and deactivates the first.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_3 <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_3 <-
   agent_2 \%>\%
   col_vals_in_set(
     columns = f,
@@ -247,12 +247,12 @@ table over time, the wide view may be preferable. In this way we can see
 whether the results of common validation steps improved or worsened over
 consecutive interrogations of the data.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{report_wide <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{report_wide <-
   get_multiagent_report(
     multiagent,
     display_mode = "wide"
   )
-  
+
 report_wide
 }\if{html}{\out{</div>}}
 

@@ -35,7 +35,7 @@ table-prep formula), then the \code{\link[=tbl_get]{tbl_get()}} function should 
 Let's create a \code{tbl_store} object by giving two table-prep formulas to
 \code{\link[=tbl_store]{tbl_store()}}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{store <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{store <-
   tbl_store(
     small_table_duck ~ db_tbl(
       table = small_table,
@@ -49,12 +49,12 @@ Let's create a \code{tbl_store} object by giving two table-prep formulas to
 We can pass a table-prep formula to \code{\link[=create_agent]{create_agent()}} via \code{\link[=tbl_source]{tbl_source()}}, add
 some validation steps, and interrogate the table shortly thereafter.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_1 <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_1 <-
   create_agent(
     tbl = ~ tbl_source("sml_table", store),
     label = "`tbl_source()` example",
     actions = action_levels(warn_at = 0.10)
-  ) \%>\% 
+  ) \%>\%
   col_exists(columns = c(date, date_time)) \%>\%
   interrogate()
 }\if{html}{\out{</div>}}
@@ -83,7 +83,7 @@ Let's modify the agent's target to point to the table labeled as
 \code{"sml_table"} in the YAML representation of the \code{tbl_store}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_2 <-
-  agent_1 \%>\% 
+  agent_1 \%>\%
   set_tbl(
     ~ tbl_source(
         tbl = "sml_table",

@@ -348,7 +348,7 @@ representation.
 
 R statement:
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{agent \%>\% 
+\if{html}{\out{<div class="sourceCode">}}\preformatted{agent \%>\%
   col_vals_regex(
     columns = a,
     regex = "[0-9]-[a-z]\{3\}-[0-9]\{3\}",

@@ -280,12 +280,12 @@ representation.
 
 R statement:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
   col_schema_match(
     schema = col_schema(
       a = "integer",
       b = "character"
-    ), 
+    ),
     complete = FALSE,
     in_order = FALSE,
     is_exact = FALSE,
@@ -327,12 +327,12 @@ For all examples here, we'll use a simple table with two columns: one
 validate that the table columns abides match a schema object as created by
 \code{\link[=col_schema]{col_schema()}}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <-
   dplyr::tibble(
     a = 1:5,
     b = letters[1:5]
   )
-  
+
 tbl
 #> # A tibble: 5 x 2
 #>       a b    
@@ -347,7 +347,7 @@ tbl
 Create a column schema object with the helper function \code{col_schema()} that
 describes the columns and their types (in the expected order).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{schema_obj <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{schema_obj <-
   col_schema(
     a = "integer",
     b = "character"

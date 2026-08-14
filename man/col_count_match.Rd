@@ -248,7 +248,7 @@ representation.
 
 R statement:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
   col_count_match(
     count = ~ file_tbl(
       file = from_github(
@@ -302,7 +302,7 @@ Create a simple table with three columns and three rows of values:
     b = c(7, 1, 0),
     c = c(1, 1, 1)
   )
-  
+
 tbl
 #> # A tibble: 3 x 3
 #>       a     b     c
@@ -321,7 +321,7 @@ columns as \code{tbl}.
     f = c(2.6, 1.2, 0, NA),
     g = c("f", "g", "h", "i")
   )
-  
+
 tbl_2
 #> # A tibble: 4 x 3
 #>   e         f g    

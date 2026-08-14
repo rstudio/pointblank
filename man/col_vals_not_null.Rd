@@ -311,7 +311,7 @@ representation.
 
 R statement:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
   col_vals_not_null(
     columns = a,
     preconditions = ~ . \%>\% dplyr::filter(a < 10),
@@ -357,7 +357,7 @@ For all examples here, we'll use a simple table with four columns: \code{a}, \co
     c = c(NA, NA, NA, NA, NA),
     d = c(35, 23, NA, NA, NA)
   )
-  
+
 tbl
 #> # A tibble: 5 x 4
 #>       a     b c         d

@@ -231,7 +231,7 @@ representation.
 
 R statement:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
   col_is_character(
     columns = a,
     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
@@ -312,7 +312,7 @@ This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
 behavior of side effects can be customized with the \code{actions} option.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   col_is_character(columns = b) \%>\%
   dplyr::slice(1:5)
 #> # A tibble: 5 x 2

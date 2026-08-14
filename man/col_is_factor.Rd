@@ -231,7 +231,7 @@ representation.
 
 R statement:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
   col_is_factor(
     columns = a,
     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
@@ -268,10 +268,10 @@ are factors instead of having the \code{character} class. The following examples
 will validate that the \code{f} column was successfully mutated and now consists
 of factors.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <-
   small_table \%>\%
   dplyr::mutate(f = factor(f))
-  
+
 tbl
 #> # A tibble: 13 x 8
 #>    date_time           date           a b             c      d e     f    

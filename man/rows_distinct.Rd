@@ -300,7 +300,7 @@ representation.
 
 R statement:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
   rows_distinct(
     columns = c(a, b),
     preconditions = ~ . \%>\% dplyr::filter(a < 10),

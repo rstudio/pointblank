@@ -248,11 +248,11 @@ representation.
 
 R statement:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
   specially(
     fn = function(x) \{ ... \},
     preconditions = ~ . \%>\% dplyr::filter(a < 10),
-    actions = action_levels(warn_at = 0.1, stop_at = 0.2), 
+    actions = action_levels(warn_at = 0.1, stop_at = 0.2),
     label = "The `specially()` step.",
     active = FALSE
   )
@@ -292,7 +292,7 @@ explaining things later.
     b = c(3, 4, 6),
     c = c(9, 8, 7)
   )
-  
+
 tbl
 #> # A tibble: 3 x 3
 #>       a     b     c
@@ -366,7 +366,7 @@ We can do more complex things with \code{specially()} and its variants.
 
 Check the class of the target table.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   test_specially(
     fn = function(x) \{
       inherits(x, "data.frame")
@@ -377,7 +377,7 @@ Check the class of the target table.
 
 Check that the number of rows in the target table is less than \code{small_table}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   test_specially(
     fn = function(x) \{
       nrow(x) < nrow(small_table)
@@ -388,10 +388,10 @@ Check that the number of rows in the target table is less than \code{small_table
 
 Check that all numbers across all numeric column are less than \code{10}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   test_specially(
     fn = function(x) \{
-      (x \%>\% 
+      (x \%>\%
          dplyr::select(where(is.numeric)) \%>\%
          unlist()
       ) < 10
@@ -405,7 +405,7 @@ Check that all values in column \code{c} are greater than b and greater than \co
 column \code{d} which is a logical column (that is used as the evaluation of test
 units).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   test_specially(
     fn = function(x) \{
       x \%>\%
@@ -420,7 +420,7 @@ units).
 Check that the \code{game_revenue} table (which is not the target table) has
 exactly 2000 rows.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   test_specially(
     fn = function(x) \{
       nrow(game_revenue) == 2000

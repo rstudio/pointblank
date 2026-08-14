@@ -122,7 +122,7 @@ Let's create an agent with \code{small_table} as the target table. We'll apply t
 \code{action_levels} object created above as \code{al}, add two validation steps, and
 then \code{\link[=interrogate]{interrogate()}} the data.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(
     tbl = ~ small_table,
     tbl_name = "small_table",

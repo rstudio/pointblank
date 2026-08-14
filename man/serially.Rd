@@ -324,13 +324,13 @@ representation.
 
 R statement:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
   serially(
     ~ test_col_vals_lt(., columns = a, value = 8),
     ~ test_col_vals_gt(., columns = c, value = vars(a)),
     ~ col_vals_not_null(., columns = b),
     preconditions = ~ . \%>\% dplyr::filter(a < 10),
-    actions = action_levels(warn_at = 0.1, stop_at = 0.2), 
+    actions = action_levels(warn_at = 0.1, stop_at = 0.2),
     label = "The `serially()` step.",
     active = FALSE
   )
@@ -373,7 +373,7 @@ explaining things later.
     b = c(6, 4, 9),
     c = c(1, 2, 3)
   )
-  
+
 tbl
 #> # A tibble: 3 x 3
 #>       a     b     c

@@ -223,16 +223,14 @@ The functions to invoke at each condition can be whatever makes sense
 for the workflow (i.e., we don’t have to issue warnings in the `WARN`
 condition if we want something else). Here, we will use a
 [`warning()`](https://rdrr.io/r/base/warning.html) for `WARN`, a
-[`stop()`](https://rdrr.io/r/base/stop.html) for `STOP`, and a logging
-function
-([`log4r_step()`](https://rstudio.github.io/pointblank/reference/log4r_step.md))
-for `NOTIFY`. Here’s how we might create such an `action_levels` object
-with
+[`stop()`](https://rdrr.io/r/base/stop.html) for `STOP`, and a
+[`message()`](https://rdrr.io/r/base/message.html) for `NOTIFY`. Here’s
+how we might create such an `action_levels` object with
 [`action_levels()`](https://rstudio.github.io/pointblank/reference/action_levels.md):
 
 ``` r
 
-al <- 
+al <-
   action_levels(
     warn_at = 0.1,
     stop_at = 0.2,
@@ -240,7 +238,7 @@ al <-
     fns = list(
       warn = ~ warning("WARN threshold exceeded."),
       stop = ~ stop("STOP threshold exceeded."),
-      notify = ~ log4r_step(x)
+      notify = ~ message("Step ", x$i, " exceeded the NOTIFY threshold.")
     )
   )
 ```
@@ -259,7 +257,7 @@ al
     ## STOP failure threshold of 0.2 of all test units.
     ## \fns\ ~ stop("STOP threshold exceeded.")
     ## NOTIFY failure threshold of 0.3 of all test units.
-    ## \fns\ ~ log4r_step(x)
+    ## \fns\ ~ message("Step ", x$i, " exceeded the NOTIFY threshold.")
     ## ----
 
 Finally, we will apply this object to every validation function call in
@@ -277,31 +275,15 @@ small_table %>%
 
     ## Warning in rlang::eval_tidy(.): WARN threshold exceeded.
 
-    ## Warning in log4r_step(x): 'log4r_step()' is deprecated. The log4r package has
-    ## been removed from CRAN.
+    ## Step 1 exceeded the NOTIFY threshold.
 
     ## Error:
     ## ! STOP threshold exceeded.
 
-In addition to an error and a warning, the
-[`log4r_step()`](https://rstudio.github.io/pointblank/reference/log4r_step.md)
-function used for the `NOTIFY` condition generates, in this case, a new
-`"pb_log_file"` text file for logs. We can examine it with
-[`readLines()`](https://rdrr.io/r/base/readLines.html); it has a single
-entry that relates to `Step 1` (the
-[`col_vals_in_set()`](https://rstudio.github.io/pointblank/reference/col_vals_in_set.md)
-step):
-
-``` r
-
-readLines("pb_log_file")
-```
-
-    FATAL [2020-11-09 00:23:48] Step 1 exceeded the NOTIFY failure threshold (f_failed = 0.46154) ['col_vals_in_set']
-
-The
-[`log4r_step()`](https://rstudio.github.io/pointblank/reference/log4r_step.md)
-function offered by **pointblank** is shown in examples and explained in
-more detail in the [*VALID-I: Data Quality Reporting
+In addition to an error and a warning, the custom function used for the
+`NOTIFY` condition will emit a message for any validation step that
+exceeds the `NOTIFY` threshold. Custom action functions have access to
+the x-list for each validation step through the `x` variable (as
+described in the [*VALID-I: Data Quality Reporting
 Workflow*](https://rstudio.github.io/pointblank/articles/VALID-I.md)
-article.
+article).

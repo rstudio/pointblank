@@ -330,26 +330,24 @@ agent
 
 ![](images/agent_report_2.png)
 
-It’s possible to invoke a function when a particular failure condition
-is met and this can be set in the
+It’s possible to invoke a custom function when a particular failure
+condition is met and this can be set in the
 [`action_levels()`](https://rstudio.github.io/pointblank/reference/action_levels.md)
-function and made part of the `action_levels` object. One example of a
-function that can be used is the included
-[`log4r_step()`](https://rstudio.github.io/pointblank/reference/log4r_step.md)
-function for logging failure conditions across validation steps. Let’s
-make a new `action_levels` object and include the logging function in
-the `WARN` and `STOP` failure conditions. Note that the function calls
-must be written as one-sided **R** formulas.
+function and made part of the `action_levels` object. Let’s make a new
+`action_levels` object and include a custom logging function in the
+`WARN` and `STOP` failure conditions. Note that the function calls must
+be written as one-sided **R** formulas, and the `x` variable provides
+access to the x-list for each validation step.
 
 ``` r
 
-al <- 
+al <-
   action_levels(
     warn_at = 0.1,
     stop_at = 0.2,
     fns = list(
-      warn = ~ log4r_step(x),
-      stop = ~ log4r_step(x)
+      warn = ~ message("Step ", x$i, " exceeded the WARN threshold."),
+      stop = ~ message("Step ", x$i, " exceeded the STOP threshold.")
     )
   )
 ```
@@ -364,21 +362,18 @@ al
 
     ## -- The `action_levels` settings
     ## WARN failure threshold of 0.1 of all test units.
-    ## \fns\ ~ log4r_step(x)
+    ## \fns\ ~ message("Step ", x$i, " exceeded the WARN threshold.")
     ## STOP failure threshold of 0.2 of all test units.
-    ## \fns\ ~ log4r_step(x)
+    ## \fns\ ~ message("Step ", x$i, " exceeded the STOP threshold.")
     ## ----
 
 Using this new `al` object with our validation workflow will result in
-failures at certain validation steps to be logged. By default, this is
-to a file named `"pb_log_file"` in the working directory but the
-[`log4r_step()`](https://rstudio.github.io/pointblank/reference/log4r_step.md)
-function is flexible for allowing any **log4r** *appender* to be used.
-Running the following data validation code
+our custom functions being called at certain validation steps. Running
+the following data validation code
 
 ``` r
 
-agent <- 
+agent <-
   create_agent(
     tbl = small_table,
     tbl_name = "small_table",
@@ -404,35 +399,7 @@ will show us the same messages as before in the **R** console
 
     ── Interrogation Completed ─────────────────────────────────────────────────
 
-and the file `"pb_log_file"` can be looked at with
-[`readLines()`](https://rdrr.io/r/base/readLines.html), showing us four
-entries (one for each validation step with at least a `WARN` condition).
-
-``` r
-
-readLines("pb_log_file")
-```
-
-    [1] "ERROR [2020-11-06 01:26:07] Step 2 exceeded the STOP failure threshold (f_failed = 0.46154) ['col_vals_in_set']" 
-    [2] "WARN  [2020-11-06 01:26:07] Step 3 exceeded the WARN failure threshold (f_failed = 0.15385) ['col_vals_lt']"     
-    [3] "ERROR [2020-11-06 01:26:07] Step 4 exceeded the STOP failure threshold (f_failed = 0.53846) ['col_vals_regex']"  
-    [4] "WARN  [2020-11-06 01:26:07] Step 5 exceeded the WARN failure threshold (f_failed = 0.07692) ['col_vals_between']"
-
-The
-[`log4r_step()`](https://rstudio.github.io/pointblank/reference/log4r_step.md)
-function is a bit special in that it only provides the most severe
-condition in a given validation step, so long as the function call is
-present in multiple conditions of the
-[`list()`](https://rdrr.io/r/base/list.html) given to
-[`action_levels()`](https://rstudio.github.io/pointblank/reference/action_levels.md)’s
-`fns` argument.
-
-It’s possible to provide any custom-made function that generates some
-side effect in the same way as
-[`log4r_step()`](https://rstudio.github.io/pointblank/reference/log4r_step.md)
-is used. Just like
-[`log4r_step()`](https://rstudio.github.io/pointblank/reference/log4r_step.md),
-the custom function can take advantage of the `x` variable, which is the
+Any custom function can take advantage of the `x` variable, which is the
 x-list for the validation step. Let’s take a look at what that is for
 step 2 (the `col_vals_in_set` validation step) by using the
 [`get_agent_x_list()`](https://rstudio.github.io/pointblank/reference/get_agent_x_list.md)

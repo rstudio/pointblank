@@ -295,12 +295,11 @@ The functions to invoke at each condition can be whatever makes sense
 for the workflow (i.e., we don’t have to issue warnings in the
 <code>WARN</code> condition if we want something else). Here, we will
 use a <code><a href="https://rdrr.io/r/base/warning.html" class="external-link">warning()</a></code> for <code>WARN</code>, a
-<code><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop()</a></code> for <code>STOP</code>, and a logging function
-(<code><a href="../reference/log4r_step.html">log4r_step()</a></code>) for <code>NOTIFY</code>. Here’s how we might
-create such an <code>action_levels</code> object with
-<code><a href="../reference/action_levels.html">action_levels()</a></code>:</p>
+<code><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop()</a></code> for <code>STOP</code>, and a <code><a href="https://rdrr.io/r/base/message.html" class="external-link">message()</a></code>
+for <code>NOTIFY</code>. Here’s how we might create such an
+<code>action_levels</code> object with <code><a href="../reference/action_levels.html">action_levels()</a></code>:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">al</span> <span class="op">&lt;-</span> </span>
+<code class="sourceCode R"><span><span class="va">al</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span></span>
 <span>    warn_at <span class="op">=</span> <span class="fl">0.1</span>,</span>
 <span>    stop_at <span class="op">=</span> <span class="fl">0.2</span>,</span>
@@ -308,7 +307,7 @@ create such an <code>action_levels</code> object with
 <span>    fns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>      warn <span class="op">=</span> <span class="op">~</span> <span class="kw"><a href="https://rdrr.io/r/base/warning.html" class="external-link">warning</a></span><span class="op">(</span><span class="st">"WARN threshold exceeded."</span><span class="op">)</span>,</span>
 <span>      stop <span class="op">=</span> <span class="op">~</span> <span class="kw"><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop</a></span><span class="op">(</span><span class="st">"STOP threshold exceeded."</span><span class="op">)</span>,</span>
-<span>      notify <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="../reference/log4r_step.html">log4r_step</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>      notify <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="st">"Step "</span>, <span class="va">x</span><span class="op">$</span><span class="va">i</span>, <span class="st">" exceeded the NOTIFY threshold."</span><span class="op">)</span></span>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <p>Once we assigned the <code>action_levels</code> to an object (in this
@@ -322,7 +321,7 @@ settings.</p>
 <span><span class="co">## STOP failure threshold of 0.2 of all test units.</span></span>
 <span><span class="co">## \fns\ ~ stop("STOP threshold exceeded.")</span></span>
 <span><span class="co">## NOTIFY failure threshold of 0.3 of all test units.</span></span>
-<span><span class="co">## \fns\ ~ log4r_step(x)</span></span>
+<span><span class="co">## \fns\ ~ message("Step ", x$i, " exceeded the NOTIFY threshold.")</span></span>
 <span><span class="co">## ----</span></span></code></pre>
 <p>Finally, we will apply this object to every validation function call
 in the expression (changed slightly to result in more test units
@@ -335,23 +334,15 @@ failing).</p>
 <span>  <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span><span class="va">b</span>, regex <span class="op">=</span> <span class="st">"^[0-9]-[a-w]{3}-[2-9]{3}$"</span>, actions <span class="op">=</span> <span class="va">al</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span><span class="va">d</span>, left <span class="op">=</span> <span class="fl">0</span>, right <span class="op">=</span> <span class="fl">4000</span>, actions <span class="op">=</span> <span class="va">al</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Warning in rlang::eval_tidy(.): WARN threshold exceeded.</span></span></code></pre>
-<pre><code><span><span class="co">## Warning in log4r_step(x): 'log4r_step()' is deprecated. The log4r package has</span></span>
-<span><span class="co">## been removed from CRAN.</span></span></code></pre>
+<pre><code><span><span class="co">## Step 1 exceeded the NOTIFY threshold.</span></span></code></pre>
 <pre><code><span><span class="co">## <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;">:</span></span></span>
 <span><span class="co">## <span style="color: #BBBB00;">!</span> STOP threshold exceeded.</span></span></code></pre>
-<p>In addition to an error and a warning, the <code><a href="../reference/log4r_step.html">log4r_step()</a></code>
-function used for the <code>NOTIFY</code> condition generates, in this
-case, a new <code>"pb_log_file"</code> text file for logs. We can
-examine it with <code><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines()</a></code>; it has a single entry that
-relates to <code>Step 1</code> (the <code><a href="../reference/col_vals_in_set.html">col_vals_in_set()</a></code>
-step):</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="st">"pb_log_file"</span><span class="op">)</span></span></code></pre></div>
-<pre><code>FATAL [2020-11-09 00:23:48] Step 1 exceeded the NOTIFY failure threshold (f_failed = 0.46154) ['col_vals_in_set']</code></pre>
-<p>The <code><a href="../reference/log4r_step.html">log4r_step()</a></code> function offered by
-<strong>pointblank</strong> is shown in examples and explained in more
-detail in the <a href="../articles/VALID-I.html"><em>VALID-I: Data
-Quality Reporting Workflow</em></a> article.</p>
+<p>In addition to an error and a warning, the custom function used for
+the <code>NOTIFY</code> condition will emit a message for any validation
+step that exceeds the <code>NOTIFY</code> threshold. Custom action
+functions have access to the x-list for each validation step through the
+<code>x</code> variable (as described in the <a href="../articles/VALID-I.html"><em>VALID-I: Data Quality Reporting
+Workflow</em></a> article).</p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

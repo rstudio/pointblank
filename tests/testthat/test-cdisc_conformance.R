@@ -333,10 +333,10 @@ test_that("column_presence operation works", {
   expect_false(result2[["_pb_NONEXISTENT_present"]])
 })
 
-test_that("has_required_variables operation works", {
+test_that("has_req_vars operation works", {
 
   df <- data.frame(STUDYID = "S1", DOMAIN = "DM", stringsAsFactors = FALSE)
-  result <- .cdisc_op_has_required_variables(
+  result <- .cdisc_op_has_req_vars(
     df, list(variables = list("STUDYID", "DOMAIN", "MISSING")), NULL, list()
   )
   expect_true(result[["_pb_STUDYID_present"]])
@@ -393,12 +393,12 @@ test_that("define-XML stub operations always return TRUE", {
   )
   expect_true(all(r1[["_pb_SEX_in_define"]]))
 
-  r2 <- .cdisc_op_define_required_check(
+  r2 <- .cdisc_op_define_req_check(
     df, list(column = "SEX"), NULL, list()
   )
   expect_true(all(r2[["_pb_SEX_mandatory_ok"]]))
 
-  r3 <- .cdisc_op_define_codelist_check(
+  r3 <- .cdisc_op_define_cl_check(
     df, list(column = "SEX"), NULL, list()
   )
   expect_true(all(r3[["_pb_SEX_define_valid"]]))
@@ -417,7 +417,7 @@ test_that("cdisc_conformance_result has correct class", {
     standard = "sdtmig", version = "3-4",
     ct_packages = "test",
     rule_results = list(
-      cdisc_rule_result("R1", "RECORD_CHECK", "DM", CDISC_STATUS_PASS)
+      cdisc_rule_result("R1", "RECORD_CHECK", "DM", cdisc_status_pass)
     )
   )
   expect_s3_class(result, "cdisc_conformance_result")
@@ -428,8 +428,8 @@ test_that("cdisc_all_passed works", {
   result_pass <- cdisc_conformance_result(
     "sdtmig", "3-4", "test",
     list(
-      cdisc_rule_result("R1", "RECORD_CHECK", "DM", CDISC_STATUS_PASS),
-      cdisc_rule_result("R2", "RECORD_CHECK", "AE", CDISC_STATUS_PASS)
+      cdisc_rule_result("R1", "RECORD_CHECK", "DM", cdisc_status_pass),
+      cdisc_rule_result("R2", "RECORD_CHECK", "AE", cdisc_status_pass)
     )
   )
   expect_true(cdisc_all_passed(result_pass))
@@ -437,8 +437,8 @@ test_that("cdisc_all_passed works", {
   result_fail <- cdisc_conformance_result(
     "sdtmig", "3-4", "test",
     list(
-      cdisc_rule_result("R1", "RECORD_CHECK", "DM", CDISC_STATUS_PASS),
-      cdisc_rule_result("R2", "RECORD_CHECK", "AE", CDISC_STATUS_FAIL,
+      cdisc_rule_result("R1", "RECORD_CHECK", "DM", cdisc_status_pass),
+      cdisc_rule_result("R2", "RECORD_CHECK", "AE", cdisc_status_fail,
                         n_issues = 1L)
     )
   )
@@ -450,9 +450,9 @@ test_that("cdisc_status_counts works", {
   result <- cdisc_conformance_result(
     "sdtmig", "3-4", "test",
     list(
-      cdisc_rule_result("R1", "RECORD_CHECK", "DM", CDISC_STATUS_PASS),
-      cdisc_rule_result("R2", "RECORD_CHECK", "AE", CDISC_STATUS_FAIL),
-      cdisc_rule_result("R3", "RECORD_CHECK", "LB", CDISC_STATUS_PASS)
+      cdisc_rule_result("R1", "RECORD_CHECK", "DM", cdisc_status_pass),
+      cdisc_rule_result("R2", "RECORD_CHECK", "AE", cdisc_status_fail),
+      cdisc_rule_result("R3", "RECORD_CHECK", "LB", cdisc_status_pass)
     )
   )
   counts <- cdisc_status_counts(result)
@@ -465,8 +465,8 @@ test_that("cdisc_issues returns data frame", {
   result <- cdisc_conformance_result(
     "sdtmig", "3-4", "test",
     list(
-      cdisc_rule_result("R1", "RECORD_CHECK", "DM", CDISC_STATUS_PASS),
-      cdisc_rule_result("R2", "RECORD_CHECK", "AE", CDISC_STATUS_FAIL,
+      cdisc_rule_result("R1", "RECORD_CHECK", "DM", cdisc_status_pass),
+      cdisc_rule_result("R2", "RECORD_CHECK", "AE", cdisc_status_fail,
                         n_issues = 3L, message = "Bad values")
     )
   )
@@ -481,7 +481,7 @@ test_that("cdisc_findings_df returns empty data frame when no findings", {
 
   result <- cdisc_conformance_result(
     "sdtmig", "3-4", "test",
-    list(cdisc_rule_result("R1", "RECORD_CHECK", "DM", CDISC_STATUS_PASS))
+    list(cdisc_rule_result("R1", "RECORD_CHECK", "DM", cdisc_status_pass))
   )
   df <- cdisc_findings_df(result)
   expect_s3_class(df, "data.frame")
@@ -493,8 +493,8 @@ test_that("print.cdisc_conformance_result works", {
   result <- cdisc_conformance_result(
     "sdtmig", "3-4", "test",
     list(
-      cdisc_rule_result("R1", "RECORD_CHECK", "DM", CDISC_STATUS_PASS),
-      cdisc_rule_result("R2", "RECORD_CHECK", "AE", CDISC_STATUS_FAIL,
+      cdisc_rule_result("R1", "RECORD_CHECK", "DM", cdisc_status_pass),
+      cdisc_rule_result("R2", "RECORD_CHECK", "AE", cdisc_status_fail,
                         n_issues = 2L)
     )
   )
@@ -536,7 +536,7 @@ test_that("engine dispatches RECORD_CHECK correctly", {
   )
 
   result <- .cdisc_evaluate_rule(rule, engine, datasets)
-  expect_equal(result$status, CDISC_STATUS_FAIL)
+  expect_equal(result$status, cdisc_status_fail)
   expect_equal(result$n_issues, 1L)
   expect_equal(length(result$row_findings), 1L)
   expect_equal(result$row_findings[[1]]$usubjid, "S002")
@@ -560,7 +560,7 @@ test_that("engine dispatches DOMAIN_PRESENCE_CHECK correctly", {
   datasets <- list(DM = data.frame(X = 1))
 
   result <- .cdisc_evaluate_rule(rule, engine, datasets)
-  expect_equal(result$status, CDISC_STATUS_FAIL)
+  expect_equal(result$status, cdisc_status_fail)
   expect_equal(result$n_issues, 1L)
   expect_true(grepl("AE", result$message))
 })
@@ -588,7 +588,7 @@ test_that("engine handles VARIABLE_METADATA_CHECK", {
   # DM without RFSTDTC -> violation
   datasets <- list(DM = data.frame(USUBJID = "S001", stringsAsFactors = FALSE))
   result <- .cdisc_evaluate_rule(rule, engine, datasets)
-  expect_equal(result$status, CDISC_STATUS_FAIL)
+  expect_equal(result$status, cdisc_status_fail)
 
   # DM with RFSTDTC -> pass
   datasets2 <- list(
@@ -596,7 +596,7 @@ test_that("engine handles VARIABLE_METADATA_CHECK", {
                     stringsAsFactors = FALSE)
   )
   result2 <- .cdisc_evaluate_rule(rule, engine, datasets2)
-  expect_equal(result2$status, CDISC_STATUS_PASS)
+  expect_equal(result2$status, cdisc_status_pass)
 })
 
 test_that("engine returns NOT_SUPPORTED for unknown rule types", {
@@ -613,7 +613,7 @@ test_that("engine returns NOT_SUPPORTED for unknown rule types", {
   ))
 
   result <- .cdisc_evaluate_rule(rule, engine, list())
-  expect_equal(result$status, CDISC_STATUS_NOT_SUPPORTED)
+  expect_equal(result$status, cdisc_status_unsupported)
 })
 
 test_that("engine handles Partially Executable rules with missing inputs", {
@@ -634,7 +634,7 @@ test_that("engine handles Partially Executable rules with missing inputs", {
 
   datasets <- list(DM = data.frame(X = 1))
   result <- .cdisc_evaluate_rule(rule, engine, datasets)
-  expect_equal(result$status, CDISC_STATUS_NOT_APPLICABLE)
+  expect_equal(result$status, cdisc_status_na)
   expect_true(grepl("DEFINE", result$message))
 })
 

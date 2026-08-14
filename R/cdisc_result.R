@@ -19,11 +19,11 @@
 #------------------------------------------------------------------------------#
 
 # Rule execution statuses
-CDISC_STATUS_PASS <- "pass"
-CDISC_STATUS_FAIL <- "fail"
-CDISC_STATUS_ERROR <- "error"
-CDISC_STATUS_NOT_APPLICABLE <- "not_applicable"
-CDISC_STATUS_NOT_SUPPORTED <- "not_supported"
+cdisc_status_pass <- "pass"
+cdisc_status_fail <- "fail"
+cdisc_status_error <- "error"
+cdisc_status_na <- "not_applicable"
+cdisc_status_unsupported <- "not_supported"
 
 # Internal: construct a row-level finding
 cdisc_row_finding <- function(
@@ -118,7 +118,7 @@ cdisc_all_passed <- function(x) {
   !any(
     vapply(
       x$rule_results,
-      function(r) identical(r$status, CDISC_STATUS_FAIL),
+      function(r) identical(r$status, cdisc_status_fail),
       logical(1)
     )
   )

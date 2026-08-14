@@ -36,7 +36,10 @@ cdisc_ct_available <- function() {
 # Internal: load one or more bundled CT packages
 cdisc_ct_load <- function(packages) {
 
-  rlang::check_installed("jsonlite", "to load bundled CDISC controlled terminology.")
+  rlang::check_installed(
+    "jsonlite",
+    "to load bundled CDISC controlled terminology."
+  )
 
   codelists <- list()
 
@@ -46,7 +49,11 @@ cdisc_ct_load <- function(packages) {
       rlang::abort(
         c(
           paste0("No bundled CT package '", pkg, "'."),
-          i = paste0("Available: ", paste(cdisc_ct_available(), collapse = ", "), ".")
+          i = paste0(
+            "Available: ",
+            paste(cdisc_ct_available(), collapse = ", "),
+            "."
+          )
         )
       )
     }

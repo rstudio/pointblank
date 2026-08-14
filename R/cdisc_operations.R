@@ -137,8 +137,8 @@ cdisc_apply_operations <- function(df, operations, ct, datasets,
 }
 
 # Batch column_presence for a list of variables
-.cdisc_op_has_required_variables <- function(df, params, ct, datasets,
-                                             define_meta = NULL) {
+.cdisc_op_has_req_vars <- function(df, params, ct, datasets,
+                                  define_meta = NULL) {
   variables <- params$variables %||% list()
   for (col in variables) {
     result_col <- paste0("_pb_", col, "_present")
@@ -211,14 +211,14 @@ cdisc_apply_operations <- function(df, operations, ct, datasets,
   df
 }
 
-.cdisc_op_define_required_check <- function(df, params, ct, datasets,
-                                            define_meta = NULL) {
+.cdisc_op_define_req_check <- function(df, params, ct, datasets,
+                                      define_meta = NULL) {
   df[[paste0("_pb_", params$column, "_mandatory_ok")]] <- TRUE
   df
 }
 
-.cdisc_op_define_codelist_check <- function(df, params, ct, datasets,
-                                            define_meta = NULL) {
+.cdisc_op_define_cl_check <- function(df, params, ct, datasets,
+                                     define_meta = NULL) {
   df[[paste0("_pb_", params$column, "_define_valid")]] <- TRUE
   df
 }
@@ -237,11 +237,11 @@ cdisc_apply_operations <- function(df, operations, ct, datasets,
   iso8601_check          = .cdisc_op_iso8601_check,
   unique_per_subject     = .cdisc_op_unique_per_subject,
   column_presence        = .cdisc_op_column_presence,
-  has_required_variables = .cdisc_op_has_required_variables,
+  has_required_variables = .cdisc_op_has_req_vars,
   valid_variable_order   = .cdisc_op_valid_variable_order,
   variable_type_check    = .cdisc_op_variable_type_check,
   define_var_declared    = .cdisc_op_define_var_declared,
-  define_required_check  = .cdisc_op_define_required_check,
-  define_codelist_check  = .cdisc_op_define_codelist_check,
+  define_required_check  = .cdisc_op_define_req_check,
+  define_codelist_check  = .cdisc_op_define_cl_check,
   define_type_check      = .cdisc_op_define_type_check
 )

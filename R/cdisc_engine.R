@@ -83,7 +83,7 @@ cdisc_engine_run <- function(engine, datasets) {
         rule_id = rule$core_id,
         rule_type = rule$rule_type,
         dataset = "",
-        status = CDISC_STATUS_NOT_SUPPORTED,
+        status = cdisc_status_unsupported,
         sensitivity = rule$sensitivity,
         description = rule$description
       )
@@ -108,7 +108,7 @@ cdisc_engine_run <- function(engine, datasets) {
           rule_id = rule$core_id,
           rule_type = rule$rule_type,
           dataset = paste(rule_datasets, collapse = ", "),
-          status = CDISC_STATUS_NOT_APPLICABLE,
+          status = cdisc_status_na,
           sensitivity = rule$sensitivity,
           description = rule$description,
           message = paste0(
@@ -143,7 +143,7 @@ cdisc_engine_run <- function(engine, datasets) {
         rule_id = rule$core_id,
         rule_type = rule$rule_type,
         dataset = domain,
-        status = CDISC_STATUS_ERROR,
+        status = cdisc_status_error,
         sensitivity = rule$sensitivity,
         description = rule$description,
         message = conditionMessage(e)
@@ -154,7 +154,8 @@ cdisc_engine_run <- function(engine, datasets) {
 
 # ── Rule type handlers ───────────────────────────────────────────────────────
 
-# Per-row check: find rows where the condition tree evaluates to TRUE (= violation)
+# Per-row check: find rows where the condition tree
+# evaluates to TRUE (= violation)
 .cdisc_record_check <- function(rule, engine, datasets) {
 
   rule_domains <- as.character(unlist(rule$domains, use.names = FALSE))
@@ -212,7 +213,7 @@ cdisc_engine_run <- function(engine, datasets) {
     rule_id = rule$core_id,
     rule_type = rule$rule_type,
     dataset = domain_label,
-    status = if (n_issues > 0L) CDISC_STATUS_FAIL else CDISC_STATUS_PASS,
+    status = if (n_issues > 0L) cdisc_status_fail else cdisc_status_pass,
     sensitivity = rule$sensitivity,
     description = rule$description,
     message = if (n_issues > 0L) cdisc_rule_message(rule) else NULL,
@@ -272,7 +273,7 @@ cdisc_engine_run <- function(engine, datasets) {
     rule_id = rule$core_id,
     rule_type = rule$rule_type,
     dataset = dataset_label,
-    status = if (n_issues > 0L) CDISC_STATUS_FAIL else CDISC_STATUS_PASS,
+    status = if (n_issues > 0L) cdisc_status_fail else cdisc_status_pass,
     sensitivity = rule$sensitivity,
     description = rule$description,
     message = if (n_issues > 0L) cdisc_rule_message(rule) else NULL,
@@ -311,13 +312,16 @@ cdisc_engine_run <- function(engine, datasets) {
     NULL
   }
 
-  domain_label <- paste(c(required_domains, prohibited_domains), collapse = ", ")
+  domain_label <- paste(
+    c(required_domains, prohibited_domains),
+    collapse = ", "
+  )
 
   cdisc_rule_result(
     rule_id = rule$core_id,
     rule_type = rule$rule_type,
     dataset = domain_label,
-    status = if (n_issues > 0L) CDISC_STATUS_FAIL else CDISC_STATUS_PASS,
+    status = if (n_issues > 0L) cdisc_status_fail else cdisc_status_pass,
     sensitivity = rule$sensitivity,
     description = rule$description,
     message = message,

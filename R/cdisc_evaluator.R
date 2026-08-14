@@ -87,12 +87,16 @@ cdisc_evaluate_conditions <- function(df, conditions) {
     "less_than" = col < value,
     "less_than_or_equal_to" = col <= value,
     "contains" = grepl(as.character(value), as.character(col), fixed = TRUE),
-    "not_contains" = !grepl(as.character(value), as.character(col), fixed = TRUE),
+    "not_contains" = !grepl(
+      as.character(value), as.character(col), fixed = TRUE
+    ),
     "starts_with" = startsWith(as.character(col), as.character(value)),
     "ends_with" = endsWith(as.character(col), as.character(value)),
     "is_in" = col %in% unlist(value, use.names = FALSE),
     "not_in" = !(col %in% unlist(value, use.names = FALSE)),
-    "matches_regex" = grepl(as.character(value), as.character(col), perl = TRUE),
+    "matches_regex" = grepl(
+      as.character(value), as.character(col), perl = TRUE
+    ),
     "equal_to_column" = .cdisc_safe_eq(col, df[[as.character(value)]]),
     "not_equal_to_column" = .cdisc_safe_neq(col, df[[as.character(value)]]),
     rlang::abort(sprintf("Unknown operator: %s", op))

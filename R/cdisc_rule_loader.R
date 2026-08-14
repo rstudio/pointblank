@@ -73,7 +73,11 @@ cdisc_load_rules <- function(standard, version, rule_types = NULL) {
     available <- cdisc_rules_available()
     avail_str <- if (length(available) > 0) {
       paste(
-        vapply(available, function(p) paste(p$standard, p$version), character(1)),
+        vapply(
+          available,
+          function(p) paste(p$standard, p$version),
+          character(1)
+        ),
         collapse = ", "
       )
     } else {
@@ -98,7 +102,8 @@ cdisc_load_rules <- function(standard, version, rule_types = NULL) {
   rules
 }
 
-# Internal: fill defaults for one rule entry (mirrors Python's NativeRule.from_dict)
+# Internal: fill defaults for one rule entry
+# (mirrors Python's NativeRule.from_dict)
 cdisc_rule_from_list <- function(d) {
   list(
     core_id       = d$core_id,

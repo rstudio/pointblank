@@ -2644,7 +2644,7 @@ interrogate_col_schema_match <- function(
 
       unit_results <- c()
 
-      for (i in seq_along(length(table_schema_y))) {
+      for (i in seq_along(table_schema_y)) {
 
         unit_results <-
           c(

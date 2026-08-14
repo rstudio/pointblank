@@ -172,15 +172,15 @@ test_that("the `tt_time_shift()` function works", {
   # Expect that time values in the revised table are all
   # six years (2192 days in this case) ahead of the input table
   expect_equal(
-    unique(game_revenue_1$session_start - game_revenue$session_start),
+    as.numeric(unique(game_revenue_1$session_start - game_revenue$session_start)),
     2192
   )
   expect_equal(
-    unique(game_revenue_1$time - game_revenue$time),
+    as.numeric(unique(game_revenue_1$time - game_revenue$time)),
     2192
   )
   expect_equal(
-    unique(game_revenue_1$start_day - game_revenue$start_day),
+    as.numeric(unique(game_revenue_1$start_day - game_revenue$start_day)),
     2192
   )
 
@@ -202,15 +202,15 @@ test_that("the `tt_time_shift()` function works", {
   # Expect that time values in the revised table are all
   # six years (2191 days in this case) behind the input table
   expect_equal(
-    unique(game_revenue$session_start - game_revenue_2$session_start),
+    as.numeric(unique(game_revenue$session_start - game_revenue_2$session_start)),
     2191
   )
   expect_equal(
-    unique(game_revenue$time - game_revenue_2$time),
+    as.numeric(unique(game_revenue$time - game_revenue_2$time)),
     2191
   )
   expect_equal(
-    unique(game_revenue$start_day - game_revenue_2$start_day),
+    as.numeric(unique(game_revenue$start_day - game_revenue_2$start_day)),
     2191
   )
 
@@ -286,7 +286,7 @@ test_that("the `tt_time_shift()` function works", {
   # columns by virtue of the date-based column (`start_day`) not being present;
   # there is a "-6H" difference compared to using "-6y"
   expect_equal(
-    unique(game_revenue_dttm_only_1$session_start - game_revenue_2$session_start),
+    as.numeric(unique(game_revenue_dttm_only_1$session_start - game_revenue_2$session_start)),
     -6
   )
 

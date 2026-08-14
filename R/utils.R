@@ -805,15 +805,14 @@ get_tbl_dbi_src_info <- function(tbl) {
 }
 
 get_tbl_dbi_src_details <- function(tbl) {
-  tbl_src_info <- get_tbl_dbi_src_info(tbl)
-  # filter lines that start with "src:" and remove leading/trailing whitespace
-  src_lines <- tbl_src_info[grepl("^\\s*src:", tbl_src_info)]
+  tbl_src_info <- trimws(get_tbl_dbi_src_info(tbl))
+  src_lines <- tbl_src_info[grepl("^src:", tbl_src_info)]
   if (length(src_lines) > 0) {
     result <- gsub("src:\\s*", "", src_lines[1])
     result <- trimws(result)
     return(result)
   }
-  
+
   # if no "src:" line found
   ""
 }
@@ -947,9 +946,15 @@ get_tbl_information_dbi <- function(tbl) {
     # nocov end
 
   } else if (any(grepl("sqlite", class(tbl), ignore.case = TRUE))) {
-    
+
     tbl_src <- "sqlite"
-    
+
+  } else if (grepl("oracle", tbl_src_details)) {
+
+    # nocov start
+    tbl_src <- "oracle"
+    # nocov end
+
   } else {
     # try to extract from src details, fallback to class inspection
     if (nchar(tbl_src_details) > 0) {
@@ -1037,6 +1042,21 @@ get_tbl_information_dbi <- function(tbl) {
 
       # nocov end
 
+    } else if (tbl_src == "oracle") {
+
+      # nocov start
+
+      q_types <-
+        as.character(
+          glue::glue(
+            "SELECT DATA_TYPE FROM \\
+          USER_TAB_COLUMNS WHERE \\
+          table_name = '{toupper(db_tbl_name)}' AND ROWNUM <= {n_cols}"
+          )
+        )
+
+      # nocov end
+
     } else {
 
         q_types <-
@@ -1064,6 +1084,18 @@ get_tbl_information_dbi <- function(tbl) {
     # nocov end
   }
 
+  if (tbl_src == "oracle") {
+
+    # nocov start
+
+    db_col_types <-
+      DBI::dbGetQuery(tbl_connection, q_types) %>%
+      dplyr::pull(DATA_TYPE) %>%
+      tolower()
+
+    # nocov end
+  }
+
   if (tbl_src %in% c("duckdb", "sqlite")) {
 
     db_col_types <-
@@ -1086,7 +1118,7 @@ get_tbl_information_dbi <- function(tbl) {
       tolower()
   }
 
-  if (!(tbl_src %in% c("duckdb", "sqlite", "postgres"))) {
+  if (!(tbl_src %in% c("duckdb", "sqlite", "postgres", "oracle"))) {
 
     # nocov start
 

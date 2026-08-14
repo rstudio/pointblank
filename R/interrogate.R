@@ -1141,11 +1141,15 @@ tbl_val_comparison <- function(
   # Construct a string-based expression for the validation
   expression <- call(operator, as.symbol(column), value)
 
-  if (is_tbl_mssql(table)) {
+  if (uses_numeric_logical(table)) {
+
+    na_pass_num <- if (na_pass) 1 else 0
+    col_sym <- as.symbol(column)
 
     table %>%
       dplyr::mutate(pb_is_good_ = dplyr::case_when(
         !!expression ~ 1,
+        is.na(!!col_sym) ~ na_pass_num,
         .default = 0
       ))
 
@@ -1566,8 +1570,8 @@ interrogate_set <- function(
       # Ensure that the `column` provided is valid
       column_validity_checks_column(table = table, column = {{ column }})
 
-      true <- if (is_tbl_mssql(table)) 1 else TRUE
-      false <- if (is_tbl_mssql(table)) 0 else FALSE
+      true <- if (uses_numeric_logical(table)) 1 else TRUE
+      false <- if (uses_numeric_logical(table)) 0 else FALSE
       na_pass_bool <- if (na_pass) false else true
 
       table %>%
@@ -2229,8 +2233,8 @@ interrogate_null <- function(
     # Ensure that the `column` provided is valid
     column_validity_checks_column(table = table, column = {{ column }})
 
-    true <- if (is_tbl_mssql(table)) 1 else TRUE
-    false <- if (is_tbl_mssql(table)) 0 else FALSE
+    true <- if (uses_numeric_logical(table)) 1 else TRUE
+    false <- if (uses_numeric_logical(table)) 0 else FALSE
 
     table %>%
       dplyr::mutate(pb_is_good_ = dplyr::case_when(
@@ -2264,8 +2268,8 @@ interrogate_not_null <- function(
     # Ensure that the `column` provided is valid
     column_validity_checks_column(table = table, column = {{ column }})
 
-    true <- if (is_tbl_mssql(table)) 1 else TRUE
-    false <- if (is_tbl_mssql(table)) 0 else FALSE
+    true <- if (uses_numeric_logical(table)) 1 else TRUE
+    false <- if (uses_numeric_logical(table)) 0 else FALSE
 
     table %>%
       dplyr::mutate(pb_is_good_ = dplyr::case_when(
@@ -3027,7 +3031,7 @@ add_reporting_data <- function(
   # Get total count of TRUE rows
   #
 
-  if (is_tbl_mssql(tbl_checked)) {
+  if (uses_numeric_logical(tbl_checked)) {
 
     # nocov start
 
@@ -3054,7 +3058,7 @@ add_reporting_data <- function(
   # Get total count of FALSE rows
   #
 
-  if (is_tbl_mssql(tbl_checked)) {
+  if (uses_numeric_logical(tbl_checked)) {
 
     # nocov start
 
@@ -3312,7 +3316,7 @@ add_table_extract <- function(
 
   tbl_type <- tbl_checked %>% class()
 
-  if (is_tbl_mssql(tbl_checked)) {
+  if (uses_numeric_logical(tbl_checked)) {
 
     # nocov start
 

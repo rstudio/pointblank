@@ -2,6 +2,8 @@
 
 ### All vignettes
 
+- [CDISC SDTMIG Conformance
+  Validation](https://rstudio.github.io/pointblank/articles/cdisc-conformance.md):
 - [Intro to Information
   Management](https://rstudio.github.io/pointblank/articles/INFO-1.md):
 - [Advanced Information

@@ -724,6 +724,28 @@ tables, and Spark tables.
   [`from_github()`](https://rstudio.github.io/pointblank/reference/from_github.md)
   : Specify a file for download from GitHub
 
+## CDISC Conformance
+
+Validate SDTM datasets against the CDISC SDTMIG rule catalog using the
+built-in conformance engine. No external tools or API calls needed.
+
+- [`validate_sdtmig()`](https://rstudio.github.io/pointblank/reference/validate_sdtmig.md)
+  : Validate SDTM datasets against the SDTMIG rule catalog
+- [`cdisc_all_passed()`](https://rstudio.github.io/pointblank/reference/cdisc_all_passed.md)
+  : Did all conformance rules pass?
+- [`cdisc_n_total_issues()`](https://rstudio.github.io/pointblank/reference/cdisc_n_total_issues.md)
+  : Get the total number of conformance issues
+- [`cdisc_status_counts()`](https://rstudio.github.io/pointblank/reference/cdisc_status_counts.md)
+  : Get a table of conformance status counts
+- [`cdisc_rules()`](https://rstudio.github.io/pointblank/reference/cdisc_rules.md)
+  : Get conformance rule results, optionally filtered by status
+- [`cdisc_issues()`](https://rstudio.github.io/pointblank/reference/cdisc_issues.md)
+  : Get a data frame of conformance issues
+- [`cdisc_findings()`](https://rstudio.github.io/pointblank/reference/cdisc_findings.md)
+  : Get all row-level findings as a list
+- [`cdisc_findings_df()`](https://rstudio.github.io/pointblank/reference/cdisc_findings_df.md)
+  : Get a data frame of row-level conformance findings
+
 ## Datasets
 
 - [`small_table`](https://rstudio.github.io/pointblank/reference/small_table.md)

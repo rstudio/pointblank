@@ -1,0 +1,346 @@
+# CDISC SDTMIG Conformance Validation
+
+The **pointblank** package includes a built-in CDISC conformance engine
+that can validate SDTM datasets against the SDTMIG rule catalog. This
+engine runs entirely within R, so no external tools or API calls are
+needed at runtime. The CDISC CORE rules and SDTM Controlled Terminology
+are bundled as JSON files inside the package, so validation works
+offline and out of the box.
+
+The conformance engine evaluates 426 rules from the SDTMIG v3.4
+specification. These cover per-row value checks (e.g., codelist
+membership, ISO 8601 date formats), structural checks (required
+variables, column ordering), and domain-level requirements (required
+domains like DM, TS, and TA). Each rule traces back to an official CDISC
+CORE rule identifier, making it straightforward to cross-reference
+findings with published CDISC guidance.
+
+## Quick Start
+
+The main entry point is
+[`validate_sdtmig()`](https://rstudio.github.io/pointblank/reference/validate_sdtmig.md).
+It takes a named list of data frames (one per SDTM domain) and returns a
+`cdisc_conformance_result` object. The names in the list correspond to
+domain abbreviations (e.g., `"DM"`, `"AE"`, `"LB"`) and are matched
+case-insensitively.
+
+Let’s set up a small Demographics (`DM`) domain with a couple of
+deliberate problems. The third subject has an invalid `SEX` value
+(`"INVALID"` is not in the CDISC controlled terminology for SEX), and
+the second subject has a malformed reference start date (`"not-a-date"`
+is not a valid ISO 8601 datetime string).
+
+``` r
+
+dm <- 
+  dplyr::tibble(
+    STUDYID  = rep("STUDY01", 3),
+    DOMAIN   = rep("DM", 3),
+    USUBJID  = c("STUDY01-001", "STUDY01-002", "STUDY01-003"),
+    SUBJID   = c("001", "002", "003"),
+    SEX      = c("M", "F", "INVALID"),
+    AGE      = c(45, 62, 38),
+    RFSTDTC  = c("2024-01-15", "not-a-date", "2024-03"),
+    ARMCD    = c("TRT", "PBO", "TRT"),
+    ARM      = c("Treatment", "Placebo", "Treatment"),
+    ACTARMCD = c("TRT", "PBO", "TRT"),
+    ACTARM   = c("Treatment", "Placebo", "Treatment"),
+    COUNTRY  = c("USA", "GBR", "CAN")
+  )
+```
+
+Now run the validation. The engine loads the bundled rule catalog and
+controlled terminology automatically:
+
+``` r
+
+result <- validate_sdtmig(list(DM = dm))
+
+result
+```
+
+    ## <cdisc_conformance_result> SDTMIG 3-4
+    ##   426 rules (fail=7, not_applicable=12, pass=407)
+    ##   7 issues -- FAIL
+
+The printed summary tells us how many of the 426 rules passed, failed,
+or were not applicable (rules that require inputs we didn’t provide,
+like Define-XML metadata or additional domains). In this case the engine
+flagged several issues: the two data-quality problems we planted, plus a
+few structural findings (missing required variables and domains that a
+complete submission would include).
+
+## Inspecting Results
+
+The conformance result object has several accessor functions that make
+it easy to drill into the details using familiar tidyverse patterns.
+
+### Overall status
+
+The
+[`cdisc_all_passed()`](https://rstudio.github.io/pointblank/reference/cdisc_all_passed.md)
+function gives a single logical value: did every rule pass without
+findings?
+
+``` r
+
+cdisc_all_passed(result)
+```
+
+    ## [1] FALSE
+
+For a more granular view,
+[`cdisc_status_counts()`](https://rstudio.github.io/pointblank/reference/cdisc_status_counts.md)
+breaks down the rules by status. The five possible statuses are `pass`,
+`fail`, `error` (rule encountered an unexpected problem),
+`not_applicable` (required inputs missing), and `not_supported` (rule
+type not yet implemented).
+
+``` r
+
+cdisc_status_counts(result)
+```
+
+    ## statuses
+    ##           fail not_applicable           pass 
+    ##              7             12            407
+
+### Issues summary
+
+The
+[`cdisc_issues()`](https://rstudio.github.io/pointblank/reference/cdisc_issues.md)
+function returns a data frame containing only the rules that found
+problems. Each row represents one failing rule with its ID, the affected
+dataset, the issue count, severity, and message. This is the best
+starting point for understanding what went wrong at a glance.
+
+``` r
+
+cdisc_issues(result) |>
+  dplyr::select(rule_id, dataset, n_issues, sensitivity, message)
+```
+
+    ##    rule_id dataset n_issues sensitivity
+    ## 1 SDTM-007      DM        1       Error
+    ## 2 SDTM-011      DM        1       Error
+    ## 3 SDTM-032      DM        1       Error
+    ## 4 SDTM-033      DM        1       Error
+    ## 5 SDTM-034      DM        1       Error
+    ## 6 SDTM-121      TS        1       Error
+    ## 7 SDTM-122      TA        1     Warning
+    ##                                                                                                             message
+    ## 1                                                                             SEX value is not in the SEX codelist.
+    ## 2                                                    RFSTDTC does not conform to ISO 8601 extended datetime format.
+    ## 3                     DM domain is missing one or more required demographic variables (SEX, RACE, ETHNIC, COUNTRY).
+    ## 4 DM domain must include RFSTDTC (Subject Reference Start Date/Time) and RFENDTC (Subject Reference End Date/Time).
+    ## 5                                                                     DM domain must include SITEID, AGE, and AGEU.
+    ## 6                                                                                    Required domain(s) missing: TS
+    ## 7                                                                                    Required domain(s) missing: TA
+
+Notice that the issues include both the data-quality problems we
+introduced (SDTM-007 for the invalid SEX value, SDTM-011 for the
+malformed date) and structural findings (SDTM-032 through SDTM-034 for
+missing DM variables, SDTM-121 and SDTM-122 for the required TS and TA
+domains that a complete submission would contain).
+
+### Row-level findings
+
+For rules that perform per-row checks (like `RECORD_CHECK`), the engine
+captures detailed findings that pinpoint exactly which subject, row, and
+column triggered each violation. The
+[`cdisc_findings_df()`](https://rstudio.github.io/pointblank/reference/cdisc_findings_df.md)
+function flattens these into a tidy data frame:
+
+``` r
+
+cdisc_findings_df(result) |>
+  dplyr::select(rule_id, dataset, row, usubjid, checked_column, checked_value)
+```
+
+    ##    rule_id dataset row     usubjid checked_column checked_value
+    ## 1 SDTM-007      DM   3 STUDY01-003            SEX       INVALID
+    ## 2 SDTM-011      DM   2 STUDY01-002        RFSTDTC    not-a-date
+
+The `row` column uses 1-based indexing (following R convention), so you
+can look up the offending row directly with `dm[row, ]`. The
+`checked_column` and `checked_value` fields tell you exactly which
+variable failed and what value it contained, making it straightforward
+to trace the problem back to source data.
+
+## Working with Multiple Domains
+
+Real SDTM submissions contain many domains. Pass them all as entries in
+the named list and the engine will evaluate each rule against its
+applicable domain(s). Rules that check for domain presence or
+cross-domain consistency will also run as appropriate.
+
+Here we add a small Adverse Events (`AE`) domain alongside the DM:
+
+``` r
+
+ae <- 
+  dplyr::tibble(
+    STUDYID = rep("STUDY01", 2),
+    DOMAIN  = rep("AE", 2),
+    USUBJID = c("STUDY01-001", "STUDY01-002"),
+    AESEQ   = c(1, 1),
+    AETERM  = c("Headache", "Nausea"),
+    AEDECOD = c("Headache", "Nausea"),
+    AESTDTC = c("2024-02-01", "2024-02-15"),
+    AEENDTC = c("2024-02-03", "2024-02-17")
+  )
+
+result_multi <- validate_sdtmig(list(DM = dm, AE = ae))
+
+result_multi
+```
+
+    ## <cdisc_conformance_result> SDTMIG 3-4
+    ##   426 rules (fail=11, not_applicable=12, pass=403)
+    ##   11 issues -- FAIL
+
+With the AE domain present, rules that apply specifically to adverse
+event data now run as well. The total rule count stays at 426 (the full
+catalog is always loaded), but more rules will produce `pass` or `fail`
+results rather than being skipped for lack of input data.
+
+We can quickly compare which rules failed across the two runs:
+
+``` r
+
+cdisc_issues(result_multi) |>
+  dplyr::select(rule_id, dataset, n_issues, message)
+```
+
+    ##     rule_id dataset n_issues
+    ## 1  SDTM-007      DM        1
+    ## 2  SDTM-011      DM        1
+    ## 3  SDTM-032      DM        1
+    ## 4  SDTM-033      DM        1
+    ## 5  SDTM-034      DM        1
+    ## 6  SDTM-037      AE        1
+    ## 7  SDTM-038      AE        1
+    ## 8  SDTM-121      TS        1
+    ## 9  SDTM-122      TA        1
+    ## 10 SDTM-162      AE        1
+    ## 11 SDTM-289      AE        1
+    ##                                                                                                              message
+    ## 1                                                                              SEX value is not in the SEX codelist.
+    ## 2                                                     RFSTDTC does not conform to ISO 8601 extended datetime format.
+    ## 3                      DM domain is missing one or more required demographic variables (SEX, RACE, ETHNIC, COUNTRY).
+    ## 4  DM domain must include RFSTDTC (Subject Reference Start Date/Time) and RFENDTC (Subject Reference End Date/Time).
+    ## 5                                                                      DM domain must include SITEID, AGE, and AGEU.
+    ## 6                        AE domain must include AETERM, AEDECOD (MedDRA preferred term), and AEBODSYS (body system).
+    ## 7                                AE domain must include AESEV (severity), AESER (serious flag), and AEOUT (outcome).
+    ## 8                                                                                     Required domain(s) missing: TS
+    ## 9                                                                                     Required domain(s) missing: TA
+    ## 10                                                                                   VISITNUM must be present in AE.
+    ## 11                                                                                      AESER must be present in AE.
+
+## Filtering by Rule Type
+
+Sometimes you only want to focus on a particular category of checks. The
+`rule_types` argument lets you restrict which rule types are loaded and
+evaluated. This can be useful during iterative data cleaning, where you
+might want to fix all per-row value issues before moving on to
+structural checks.
+
+``` r
+
+result_records <- 
+  validate_sdtmig(
+    list(DM = dm),
+    rule_types = "RECORD_CHECK"
+  )
+
+result_records
+```
+
+    ## <cdisc_conformance_result> SDTMIG 3-4
+    ##   271 rules (fail=2, pass=269)
+    ##   2 issues -- FAIL
+
+The engine supports seven rule types. The first five are fully
+implemented and the last two are stubs that will become active when a
+Define-XML importer is added to the R package:
+
+| Rule type | What it checks |
+|:---|:---|
+| `RECORD_CHECK` | Per-row value validation (codelist membership, date formats, consistency) |
+| `VARIABLE_METADATA_CHECK` | Column presence and ordering within a domain |
+| `DATASET_METADATA_CHECK` | Dataset-level attributes (sort keys, required structure) |
+| `DATASET_CONTENTS_CHECK` | Dataset-level value constraints evaluated row-by-row |
+| `DOMAIN_PRESENCE_CHECK` | Whether required domains are present or prohibited ones are absent |
+| `DEFINE_ITEM_METADATA_CHECK` | Variable declarations against Define-XML (stub) |
+| `DEFINE_CODELIST_CHECK` | Codelist values against Define-XML declarations (stub) |
+
+## What’s in the Rule Catalog?
+
+The bundled catalog for SDTMIG v3.4 contains 426 rules translated from
+the CDISC CORE rule definitions. Each rule consists of:
+
+- A **core_id** (e.g., `"SDTM-007"`) that links back to the official
+  CDISC CORE rule identifier, making it easy to cross-reference with
+  published CDISC documentation and the CORE Rules Engine output.
+- A **rule_type** that determines how the rule is dispatched by the
+  engine (record check, metadata check, etc.).
+- A set of **operations** that compute intermediate columns before
+  evaluation. These handle things like codelist lookups, ISO 8601 format
+  validation, data type verification, column presence checks, and
+  variable ordering.
+- A **conditions** tree (a nested structure of AND/OR/NOT boolean
+  expressions) that defines when a violation is flagged. Conditions
+  reference the computed columns added by operations.
+- A **sensitivity** level (`Error`, `Warning`, or `Notice`) indicating
+  the severity of a finding per CDISC guidance.
+
+## Controlled Terminology
+
+CDISC publishes Controlled Terminology (CT) packages that define the
+permitted values for coded variables like `SEX`, `RACE`, `COUNTRY`, and
+many others. The engine ships with a bundled SDTM CT package
+(`sdtm-ct-2024-09-27`) that is loaded automatically when you call
+[`validate_sdtmig()`](https://rstudio.github.io/pointblank/reference/validate_sdtmig.md).
+
+Codelist validation is case-insensitive: a value of `"m"` will match the
+codelist term `"M"`. Missing values (`NA`) and empty strings are always
+treated as valid for codelist purposes (null-handling is covered by
+separate not-null rules).
+
+If additional CT packages are bundled in the future (e.g., newer
+terminology releases or ADaM CT), you can select them explicitly with
+the `ct_packages` argument:
+
+``` r
+
+result <- 
+  validate_sdtmig(
+    list(DM = dm),
+    ct_packages = "sdtm-ct-2024-09-27"
+  )
+```
+
+## Current Limitations
+
+There are a few areas where the R conformance engine differs from the
+full CDISC CORE Rules Engine or has functionality that is not yet
+implemented:
+
+- **Define-XML support**: The four Define-XML-aware operations
+  (`define_var_declared`, `define_required_check`,
+  `define_codelist_check`, `define_type_check`) are currently stubs that
+  always pass. They will produce real results once a Define-XML importer
+  is added to the R package. In the meantime, rules that depend on
+  Define-XML metadata will simply not flag any issues (they won’t
+  produce false positives).
+
+- **SDTMIG version coverage**: Only SDTMIG v3.4 is currently bundled.
+  Additional standard/version combinations can be added by running the
+  catalog generation script from the Python **pointblank** package and
+  copying the resulting JSON file to the `inst/conformance/rules/`
+  directory.
+
+- **JSONata expressions**: A small number of advanced CORE rules use
+  JSONata expressions for complex cross-dataset logic. The JSONata
+  evaluator is not yet ported to R. Rules that depend on it will return
+  `not_supported`. This affects a very small fraction of the catalog.

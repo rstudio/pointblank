@@ -32,6 +32,8 @@
     <li><h6 class="dropdown-header" data-toc-skip>Information Management</h6></li>
     <li><a class="dropdown-item" href="../articles/INFO-1.html">Intro to Information Management</a></li>
     <li><a class="dropdown-item" href="../articles/INFO-2.html">Advanced Information Management</a></li>
+    <li><h6 class="dropdown-header" data-toc-skip>CDISC</h6></li>
+    <li><a class="dropdown-item" href="../articles/cdisc-conformance.html">SDTMIG Conformance Validation</a></li>
   </ul></li>
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">News</a></li>
@@ -878,6 +880,71 @@
 
         </dt>
         <dd>Specify a file for download from GitHub</dd>
+      </dl></div><div class="section level2">
+      <h2 id="cdisc-conformance">CDISC Conformance<a class="anchor" aria-label="anchor" href="#cdisc-conformance"></a></h2>
+
+      <div class="section-desc"><p>Validate SDTM datasets against the CDISC SDTMIG rule catalog using the built-in conformance engine. No external tools or API calls needed.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="validate_sdtmig.html">validate_sdtmig()</a></code>
+
+        </dt>
+        <dd>Validate SDTM datasets against the SDTMIG rule catalog</dd>
+
+        <dt>
+
+          <code><a href="cdisc_all_passed.html">cdisc_all_passed()</a></code>
+
+        </dt>
+        <dd>Did all conformance rules pass?</dd>
+
+        <dt>
+
+          <code><a href="cdisc_n_total_issues.html">cdisc_n_total_issues()</a></code>
+
+        </dt>
+        <dd>Get the total number of conformance issues</dd>
+
+        <dt>
+
+          <code><a href="cdisc_status_counts.html">cdisc_status_counts()</a></code>
+
+        </dt>
+        <dd>Get a table of conformance status counts</dd>
+
+        <dt>
+
+          <code><a href="cdisc_rules.html">cdisc_rules()</a></code>
+
+        </dt>
+        <dd>Get conformance rule results, optionally filtered by status</dd>
+
+        <dt>
+
+          <code><a href="cdisc_issues.html">cdisc_issues()</a></code>
+
+        </dt>
+        <dd>Get a data frame of conformance issues</dd>
+
+        <dt>
+
+          <code><a href="cdisc_findings.html">cdisc_findings()</a></code>
+
+        </dt>
+        <dd>Get all row-level findings as a list</dd>
+
+        <dt>
+
+          <code><a href="cdisc_findings_df.html">cdisc_findings_df()</a></code>
+
+        </dt>
+        <dd>Get a data frame of row-level conformance findings</dd>
       </dl></div><div class="section level2">
       <h2 id="datasets">Datasets<a class="anchor" aria-label="anchor" href="#datasets"></a></h2>
 

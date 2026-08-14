@@ -13,6 +13,7 @@
 <url><loc>https://rstudio.github.io/pointblank/articles/VALID-IV.html</loc></url>
 <url><loc>https://rstudio.github.io/pointblank/articles/VALID-V.html</loc></url>
 <url><loc>https://rstudio.github.io/pointblank/articles/VALID-VI.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/articles/cdisc-conformance.html</loc></url>
 <url><loc>https://rstudio.github.io/pointblank/articles/index.html</loc></url>
 <url><loc>https://rstudio.github.io/pointblank/articles/pointblank.html</loc></url>
 <url><loc>https://rstudio.github.io/pointblank/articles/validation_workflows.html</loc></url>
@@ -24,6 +25,13 @@
 <url><loc>https://rstudio.github.io/pointblank/reference/affix_date.html</loc></url>
 <url><loc>https://rstudio.github.io/pointblank/reference/affix_datetime.html</loc></url>
 <url><loc>https://rstudio.github.io/pointblank/reference/all_passed.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/cdisc_all_passed.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/cdisc_findings.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/cdisc_findings_df.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/cdisc_issues.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/cdisc_n_total_issues.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/cdisc_rules.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/cdisc_status_counts.html</loc></url>
 <url><loc>https://rstudio.github.io/pointblank/reference/col_count_match.html</loc></url>
 <url><loc>https://rstudio.github.io/pointblank/reference/col_exists.html</loc></url>
 <url><loc>https://rstudio.github.io/pointblank/reference/col_is_character.html</loc></url>
@@ -127,6 +135,7 @@
 <url><loc>https://rstudio.github.io/pointblank/reference/tt_time_shift.html</loc></url>
 <url><loc>https://rstudio.github.io/pointblank/reference/tt_time_slice.html</loc></url>
 <url><loc>https://rstudio.github.io/pointblank/reference/validate_rmd.html</loc></url>
+<url><loc>https://rstudio.github.io/pointblank/reference/validate_sdtmig.html</loc></url>
 <url><loc>https://rstudio.github.io/pointblank/reference/write_testthat_file.html</loc></url>
 <url><loc>https://rstudio.github.io/pointblank/reference/x_read_disk.html</loc></url>
 <url><loc>https://rstudio.github.io/pointblank/reference/x_write_disk.html</loc></url>

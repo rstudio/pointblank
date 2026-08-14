@@ -313,6 +313,9 @@ navbar:
       href: 'articles/INFO-1.html'
     - text: 'Advanced Information Management'
       href: 'articles/INFO-2.html'
+    - text: CDISC
+    - text: 'SDTMIG Conformance Validation'
+      href: 'articles/cdisc-conformance.html'
   - text: Reference
     href: reference/index.html
   - text: News

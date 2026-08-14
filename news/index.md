@@ -4,6 +4,8 @@
 
 ## pointblank 0.12.4
 
+CRAN release: 2026-07-21
+
 - Deprecated
   [`log4r_step()`](https://rstudio.github.io/pointblank/reference/log4r_step.md)
   and logging support in

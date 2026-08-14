@@ -799,3 +799,45 @@ test_that("is_exact = FALSE validates all columns, not just the first (#657)", {
       )
   )
 })
+
+test_that("is_exact = FALSE catches wrong types on logical columns (#670)", {
+
+  tbl_with_logical <- data.frame(a = 1:2, b = rep(TRUE, 2))
+  tbl_with_na <- data.frame(a = 1:2, b = rep(NA, 2))
+
+  # Correct types should pass
+  expect_true(
+    tbl_with_logical %>%
+      test_col_schema_match(
+        schema = col_schema(a = "integer", b = "logical"),
+        is_exact = FALSE
+      )
+  )
+
+  # Wrong type for a logical column should fail
+  expect_false(
+    tbl_with_logical %>%
+      test_col_schema_match(
+        schema = col_schema(a = "integer", b = "anything"),
+        is_exact = FALSE
+      )
+  )
+
+  # Also fails for NA-only logical columns
+  expect_false(
+    tbl_with_na %>%
+      test_col_schema_match(
+        schema = col_schema(a = "integer", b = "anything"),
+        is_exact = FALSE
+      )
+  )
+
+  # Wrong type on a non-logical column should still fail
+  expect_false(
+    tbl_with_na %>%
+      test_col_schema_match(
+        schema = col_schema(a = "anything", b = "logical"),
+        is_exact = FALSE
+      )
+  )
+})

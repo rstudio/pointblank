@@ -457,8 +457,8 @@ create_autobrief <- function(
 
   if (assertion_type == "col_vals_str_len") {
 
-    value_1 <- if (!is.null(values$min)) values$min else "∞"
-    value_2 <- if (!is.null(values$max)) values$max else "∞"
+    value_1 <- if (!is.null(values$min)) values$min else "\u221e"
+    value_2 <- if (!is.null(values$max)) values$max else "\u221e"
 
     expectation_text <-
       prep_str_len_expectation_text(

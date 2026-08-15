@@ -405,6 +405,10 @@ autobriefs:
     da: "Overskridelse af antallet af fejlslagne testenheder, hvor værdier {column_text} skulle have været i overensstemmelse med følgende regular expression: {values_text}."
     sv: "Överskrider antalet misslyckade testenheter där värden {column_text} borde ha matchat följande reguljära uttryck: {values_text}."
     nl: "Overschrijding van mislukte testeenheden waarbij waarden in {column_text} overeen moeten komen met de reguliere expressie: {values_text}."
+  str_len_expectation_text:
+    en: "Expect that string lengths in {column_text} {column_computed_text} should be between {value_1} and {value_2}."
+  str_len_failure_text:
+    en: "Exceedance of failed test units where string lengths in {column_text} should have been between {value_1} and {value_2}."
   within_spec_expectation_text:
     en: "Expect that values in {column_text} {column_computed_text} should match the specification: {values_text}."
     fr: "On s'attend à ce que les valeurs de {column_text} {column_computed_text} correspondent à la spécification : {values_text}."

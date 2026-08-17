@@ -604,6 +604,11 @@ the form `test_*()`) that always returns a logical value.
   [`test_col_vals_regex()`](https://rstudio.github.io/pointblank/reference/col_vals_regex.md)
   : Do strings in column data match a regex pattern?
 
+- [`col_vals_str_len()`](https://rstudio.github.io/pointblank/reference/col_vals_str_len.md)
+  [`expect_col_vals_str_len()`](https://rstudio.github.io/pointblank/reference/col_vals_str_len.md)
+  [`test_col_vals_str_len()`](https://rstudio.github.io/pointblank/reference/col_vals_str_len.md)
+  : Are string lengths in column data within a specified range?
+
 - [![](icons/col_vals_within_spec.png)](https://rstudio.github.io/pointblank/reference/col_vals_within_spec.md)
   [`col_vals_within_spec()`](https://rstudio.github.io/pointblank/reference/col_vals_within_spec.md)
   [`expect_col_vals_within_spec()`](https://rstudio.github.io/pointblank/reference/col_vals_within_spec.md)

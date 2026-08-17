@@ -455,6 +455,23 @@ create_autobrief <- function(
     autobrief <- finalize_autobrief(expectation_text, precondition_text)
   }
 
+  if (assertion_type == "col_vals_str_len") {
+
+    value_1 <- if (!is.null(values$min)) values$min else "\u221e"
+    value_2 <- if (!is.null(values$max)) values$max else "\u221e"
+
+    expectation_text <-
+      prep_str_len_expectation_text(
+        column_text,
+        column_computed_text,
+        value_1,
+        value_2,
+        lang = lang
+      )
+
+    autobrief <- finalize_autobrief(expectation_text, precondition_text)
+  }
+
   if (assertion_type == "col_vals_within_spec") {
 
     values_text <- prep_values_text(values = values, lang = lang)
@@ -831,6 +848,16 @@ prep_regex_expectation_text <- function(
   glue::glue(get_lsv("autobriefs/regex_expectation_text")[[lang]])
 }
 
+prep_str_len_expectation_text <- function(
+    column_text,
+    column_computed_text,
+    value_1,
+    value_2,
+    lang
+) {
+  glue::glue(get_lsv("autobriefs/str_len_expectation_text")[[lang]])
+}
+
 prep_within_spec_expectation_text <- function(
     column_text,
     column_computed_text,
@@ -970,6 +997,7 @@ failure_message_gluestring <- function(
       "expect_col_vals_increasing" = get_lsv("autobriefs/increasing_failure_text")[[lang]],
       "expect_col_vals_decreasing" = get_lsv("autobriefs/decreasing_failure_text")[[lang]],
       "expect_col_vals_regex" = get_lsv("autobriefs/regex_failure_text")[[lang]],
+      "expect_col_vals_str_len" = get_lsv("autobriefs/str_len_failure_text")[[lang]],
       "expect_conjointly" = get_lsv("autobriefs/conjointly_failure_text")[[lang]],
       "expect_col_exists" = get_lsv("autobriefs/col_exists_failure_text")[[lang]],
       "expect_col_is_numeric" =,

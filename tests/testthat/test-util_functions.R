@@ -332,6 +332,7 @@ test_that("Utility functions won't fail us", {
       "decreasing_expectation_text", "decreasing_failure_text",
       "col_vals_expr_expectation_text", "col_vals_expr_failure_text",
       "regex_expectation_text", "regex_failure_text",
+      "str_len_expectation_text", "str_len_failure_text",
       "within_spec_expectation_text", "within_spec_failure_text",
       "conjointly_expectation_text", "conjointly_failure_text",
       "serially_expectation_test_text", "serially_expectation_tests_text",

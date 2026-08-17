@@ -1003,6 +1003,11 @@ check_table_with_assertion <- function(
         idx = idx,
         table = table
       ),
+      "col_vals_str_len" = interrogate_str_len(
+        agent = agent,
+        idx = idx,
+        table = table
+      ),
       "col_vals_within_spec" = interrogate_within_spec(
         agent = agent,
         idx = idx,
@@ -1873,6 +1878,67 @@ interrogate_regex <- function(
       tbl_type = tbl_type,
       column = {{ column }},
       regex = regex,
+      na_pass = na_pass
+    )
+  )
+}
+
+interrogate_str_len <- function(
+    agent,
+    idx,
+    table
+) {
+
+  str_len_values <- get_values_at_idx(agent = agent, idx = idx)
+
+  min_len <- str_len_values$min
+  max_len <- str_len_values$max
+
+  na_pass <- get_column_na_pass_at_idx(agent = agent, idx = idx)
+
+  column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
+
+  tbl_val_str_len <- function(
+    table,
+    column,
+    min_len,
+    max_len,
+    na_pass
+  ) {
+
+    tbl_validity_check(table = table)
+
+    column_validity_checks_column(table = table, column = {{ column }})
+
+    tbl <-
+      table %>%
+      dplyr::mutate(
+        pb_is_good_ = ifelse(
+          !is.na({{ column }}) & is.character({{ column }}),
+          {
+            len <- nchar({{ column }})
+            check <- rep(TRUE, length(len))
+            if (!is.null(min_len)) check <- check & len >= min_len
+            if (!is.null(max_len)) check <- check & len <= max_len
+            check
+          },
+          ifelse(is.na({{ column }}), NA, FALSE)
+        )
+      ) %>%
+      dplyr::mutate(pb_is_good_ = dplyr::case_when(
+        is.na(pb_is_good_) ~ na_pass,
+        TRUE ~ pb_is_good_
+      ))
+
+    tbl
+  }
+
+  pointblank_try_catch(
+    tbl_val_str_len(
+      table = table,
+      column = {{ column }},
+      min_len = min_len,
+      max_len = max_len,
       na_pass = na_pass
     )
   )

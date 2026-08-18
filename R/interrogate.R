@@ -3142,17 +3142,19 @@ perform_action <- function(
       }
     }
   } else if (type == "notify") {
-    x$this_type <- "notify"
+    x$this_type <- "critical"
     if (!is.na(.notify) && .notify) {
-      if ("notify" %in% names(actions$fns) && !is.null(actions$fns$notify)) {
-        actions$fns$notify %>% rlang::f_rhs() %>% rlang::eval_tidy()
+      fn_critical <- actions$fns$critical %||% actions$fns$notify
+      if (!is.null(fn_critical)) {
+        fn_critical %>% rlang::f_rhs() %>% rlang::eval_tidy()
       }
     }
   } else if (type == "stop") {
-    x$this_type <- "stop"
+    x$this_type <- "error"
     if (!is.na(.stop) && .stop) {
-      if ("stop" %in% names(actions$fns) && !is.null(actions$fns$stop)) {
-        actions$fns$stop %>% rlang::f_rhs() %>% rlang::eval_tidy()
+      fn_error <- actions$fns$error %||% actions$fns$stop
+      if (!is.null(fn_error)) {
+        fn_error %>% rlang::f_rhs() %>% rlang::eval_tidy()
       }
     }
   }
@@ -3369,10 +3371,10 @@ determine_action <- function(
   if (is.null(al$warn_count) && is.null(al$warn_fraction)) {
     warn <- NA
   }
-  if (is.null(al$stop_count) && is.null(al$stop_fraction)) {
+  if (is.null(al$error_count) && is.null(al$error_fraction)) {
     stop <- NA
   }
-  if (is.null(al$notify_count) && is.null(al$notify_fraction)) {
+  if (is.null(al$critical_count) && is.null(al$critical_fraction)) {
     notify <- NA
   }
 
@@ -3385,17 +3387,17 @@ determine_action <- function(
   }
 
   if (!is.na(stop)) {
-    if (is.null(al$stop_count)) {
+    if (is.null(al$error_count)) {
       stop <- FALSE
-    } else if (false_count >= al$stop_count) {
+    } else if (false_count >= al$error_count) {
       stop <- TRUE
     }
   }
 
   if (!is.na(notify)) {
-    if (is.null(al$notify_count)) {
+    if (is.null(al$critical_count)) {
       notify <- FALSE
-    } else if (false_count >= al$notify_count) {
+    } else if (false_count >= al$critical_count) {
       notify <- TRUE
     }
   }
@@ -3408,15 +3410,15 @@ determine_action <- function(
   }
 
   if (!is.na(stop)) {
-    if (!is.null(al$stop_fraction)) {
-      stop_count <- round(al$stop_fraction * n, 0)
+    if (!is.null(al$error_fraction)) {
+      stop_count <- round(al$error_fraction * n, 0)
       if (false_count > 0 && false_count >= stop_count) stop <- TRUE
     }
   }
 
   if (!is.na(notify)) {
-    if (!is.null(al$notify_fraction)) {
-      notify_count <- round(al$notify_fraction * n, 0)
+    if (!is.null(al$critical_fraction)) {
+      notify_count <- round(al$critical_fraction * n, 0)
       if (false_count > 0 && false_count >= notify_count) notify <- TRUE
     }
   }

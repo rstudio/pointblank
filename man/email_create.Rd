@@ -40,7 +40,7 @@ useful for demonstrating an emailing scenario. It will have absolute values
 for the \code{warn} and \code{notify} states (with thresholds of \code{1} and \code{2} 'fail'
 units, respectively, for the two states).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{al <-
   action_levels(
     warn_at = 1,
     notify_at = 2
@@ -66,7 +66,7 @@ email just by printing \code{email_object}. It should appear in the Viewer.
   col_vals_lt(a, value = 7) \%>\%
   interrogate() \%>\%
   email_create()
-  
+
 email_object
 }\if{html}{\out{</div>}}
 

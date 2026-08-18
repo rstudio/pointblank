@@ -88,7 +88,7 @@ We see data, and not an error, so the validation was successful!
 Let's do another: for in-app purchases in the \code{game_revenue} table, check
 that the median revenue is somewhere between $8 and $12.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{game_revenue \%>\% 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{game_revenue \%>\%
   dplyr::filter(item_type == "iap") \%>\%
   tt_summary_stats() \%>\%
   col_vals_between(
@@ -118,7 +118,7 @@ transforms the target table into a summary table for the validation step. The
 final step of the transformation in \code{preconditions} is a \code{dplyr::filter()}
 step that isolates the row of the median statistic.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(
     tbl = game_revenue,
     tbl_name = "game_revenue",

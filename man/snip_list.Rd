@@ -128,12 +128,12 @@ column \code{f}). Define a location for the snippet result in \code{{ }} and the
 \code{\link[=incorporate]{incorporate()}} the snippet into the info text. Note here that the order of
 the \code{\link[=info_columns]{info_columns()}} and \code{\link[=info_snippet]{info_snippet()}} calls doesn't matter.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <-
   create_informant(
     tbl = ~ small_table,
     tbl_name = "small_table",
     label = "An example."
-  ) \%>\% 
+  ) \%>\%
   info_columns(
     columns = f,
     `Items` = "This column contains \{values_f\}."

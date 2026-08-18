@@ -8,8 +8,8 @@ test_that("The `action_levels()` helper function works as expected", {
   expect_named(
     al,
     c(
-      "warn_fraction", "warn_count", "stop_fraction", "stop_count",
-      "notify_fraction", "notify_count", "fns"
+      "warn_fraction", "warn_count", "error_fraction", "error_count",
+      "critical_fraction", "critical_count", "fns"
       )
   )
   expect_length(al, 7)
@@ -19,7 +19,7 @@ test_that("The `action_levels()` helper function works as expected", {
   expect_null(al[[4]])
   expect_null(al[[5]])
   expect_null(al[[6]])
-  expect_true(all(c("warn", "stop", "notify") %in% names(al[[7]])))
+  expect_true(all(c("warn", "error", "critical") %in% names(al[[7]])))
   expect_type(al[[7]], "list")
   expect_null(al[[7]][[1]])
   expect_null(al[[7]][[2]])
@@ -34,20 +34,20 @@ test_that("The `action_levels()` helper function works as expected", {
   expect_named(
     al,
     c(
-      "warn_fraction", "warn_count", "stop_fraction", "stop_count",
-      "notify_fraction", "notify_count", "fns"
+      "warn_fraction", "warn_count", "error_fraction", "error_count",
+      "critical_fraction", "critical_count", "fns"
     )
   )
 
   expect_equal(al$warn_fraction, 0.2)
   expect_null(al$warn_count)
-  expect_equal(al$stop_fraction, 0.8)
-  expect_null(al$stop_count)
-  expect_equal(al$notify_fraction, 0.345)
-  expect_null(al$notify_count)
+  expect_equal(al$error_fraction, 0.8)
+  expect_null(al$error_count)
+  expect_equal(al$critical_fraction, 0.345)
+  expect_null(al$critical_count)
 
   expect_length(al[[7]], 5)
-  expect_true(all(c("warn", "stop", "notify") %in% names(al[[7]])))
+  expect_true(all(c("warn", "error", "critical") %in% names(al[[7]])))
   expect_type(al[[7]], "list")
   expect_null(al[[7]][[1]])
   expect_null(al[[7]][[2]])
@@ -60,17 +60,17 @@ test_that("The `action_levels()` helper function works as expected", {
   al %>%
     expect_named(
       c(
-        "warn_fraction", "warn_count", "stop_fraction", "stop_count",
-        "notify_fraction", "notify_count", "fns")
+        "warn_fraction", "warn_count", "error_fraction", "error_count",
+        "critical_fraction", "critical_count", "fns")
     )
-  expect_true(all(c("warn", "stop", "notify") %in% names(al[[7]])))
+  expect_true(all(c("warn", "error", "critical") %in% names(al[[7]])))
 
   al$warn_fraction %>% expect_null()
   al$warn_count %>% expect_equal(20)
-  al$stop_fraction %>% expect_null()
-  al$stop_count %>% expect_equal(80)
-  al$notify_fraction %>% expect_null()
-  al$notify_count %>% expect_equal(34)
+  al$error_fraction %>% expect_null()
+  al$error_count %>% expect_equal(80)
+  al$critical_fraction %>% expect_null()
+  al$critical_count %>% expect_equal(34)
   al[[7]] %>% expect_type("list")
   al[[7]][[1]] %>% expect_null()
   al[[7]][[2]] %>% expect_null()
@@ -98,10 +98,10 @@ test_that("The `action_levels()` helper function works as expected", {
     names() %>%
     expect_equal(
       c(
-        "warn_fraction", "warn_count", "stop_fraction", "stop_count",
-        "notify_fraction", "notify_count", "fns")
+        "warn_fraction", "warn_count", "error_fraction", "error_count",
+        "critical_fraction", "critical_count", "fns")
     )
-  expect_true(all(c("warn", "stop", "notify") %in% names(al[[7]])))
+  expect_true(all(c("warn", "error", "critical") %in% names(al[[7]])))
   al[[7]][[1]] %>% expect_s3_class("formula")
   al[[7]][[1]] %>%
     as.character() %>%
@@ -109,10 +109,10 @@ test_that("The `action_levels()` helper function works as expected", {
 
   al$warn_fraction %>% expect_null()
   al$warn_count %>% expect_equal(3)
-  al$stop_fraction %>% expect_null()
-  al$stop_count %>% expect_null()
-  al$notify_fraction %>% expect_null()
-  al$notify_count %>% expect_null()
+  al$error_fraction %>% expect_null()
+  al$error_count %>% expect_null()
+  al$critical_fraction %>% expect_null()
+  al$critical_count %>% expect_null()
   al[[7]] %>% expect_type("list")
   al %>% expect_length(7)
 
@@ -198,4 +198,37 @@ test_that("The appropriate actions occur when using `action_levels()`", {
 
   agent_report <- get_agent_report(agent, display_table = FALSE)
   agent_report$E %>% expect_equal(rep(TRUE, 2))
+})
+
+test_that("Deprecated argument names in `action_levels()` emit warnings", {
+
+  # All three old arg names trigger the same deprecation warning (cli frequency-limited)
+  # Test that the first call emits the deprecatedWarning class
+  expect_warning(
+    al_warn <- action_levels(warn_at = 0.1),
+    class = "deprecatedWarning"
+  )
+  expect_equal(al_warn$warn_fraction, 0.1)
+
+  # Subsequent calls in same session may not re-emit (frequency-limited) — test results only
+  al_stop <- suppressWarnings(action_levels(stop_at = 0.2))
+  expect_equal(al_stop$error_fraction, 0.2)
+
+  al_notify <- suppressWarnings(action_levels(notify_at = 0.3))
+  expect_equal(al_notify$critical_fraction, 0.3)
+
+  al_warn_at <- suppressWarnings(warn_on_fail(warn_at = 0.1))
+  expect_equal(al_warn_at$warn_fraction, 0.1)
+
+  # stop_on_fail() uses a separate cli_warn (not frequency-limited the same way)
+  expect_warning(
+    al <- stop_on_fail(stop_at = 0.5),
+    regexp = "deprecated"
+  )
+  expect_equal(al$error_fraction, 0.5)
+
+  # No warning when using new names
+  expect_no_warning(action_levels(warn = 0.1, error = 0.2, critical = 0.3))
+  expect_no_warning(error_on_fail(error = 0.5))
+  expect_no_warning(warn_on_fail(warn = 0.1))
 })

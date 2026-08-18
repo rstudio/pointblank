@@ -98,7 +98,7 @@ text} by using one or more calls of \code{info_section()}. This is how it is
 expressed in both R code and in the YAML representation.
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{# R statement
-informant \%>\% 
+informant \%>\%
   info_section(
     section_name = "History",
     Changes = "
@@ -116,7 +116,7 @@ informant \%>\%
 # YAML representation
 History:
   Changes: |2-
-  
+
     - Change 1
     - Change 2
     - Change 3
@@ -148,7 +148,7 @@ Create a pointblank \code{informant} object with \code{\link[=create_informant]{
 specify a \code{tbl} with the \code{~} followed by a statement that gets the
 \code{small_table} dataset.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <-
   create_informant(
     tbl = ~ small_table,
     tbl_name = "small_table",

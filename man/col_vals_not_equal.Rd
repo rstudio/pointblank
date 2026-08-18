@@ -349,7 +349,7 @@ corresponding YAML representation.
 
 R statement:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
   col_vals_not_equal(
     columns = a,
     value = 1,
@@ -373,7 +373,7 @@ YAML representation:
     segments: b ~ c("group_1", "group_2")
     actions:
       warn_fraction: 0.1
-      stop_fraction: 0.2
+      error_fraction: 0.2
     label: The `col_vals_not_equal()` step.
     active: false
 }\if{html}{\out{</div>}}
@@ -442,7 +442,7 @@ This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
 behavior of side effects can be customized with the \code{actions} option.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   col_vals_not_equal(columns = a, value = 6) \%>\%
   dplyr::pull(a)
 #> [1] 5 5 5 5 5 5

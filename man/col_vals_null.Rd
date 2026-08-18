@@ -310,7 +310,7 @@ representation.
 
 R statement:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
   col_vals_null(
     columns = a,
     preconditions = ~ . \%>\% dplyr::filter(a < 10),
@@ -330,7 +330,7 @@ YAML representation:
     segments: b ~ c("group_1", "group_2")
     actions:
       warn_fraction: 0.1
-      stop_fraction: 0.2
+      error_fraction: 0.2
     label: The `col_vals_null()` step.
     active: false
 }\if{html}{\out{</div>}}

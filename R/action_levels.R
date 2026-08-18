@@ -345,10 +345,10 @@ action_levels <- function(
     list(
       warn_fraction = warn_list$fraction,
       warn_count = warn_list$count,
-      stop_fraction = error_list$fraction,
-      stop_count = error_list$count,
-      notify_fraction = critical_list$fraction,
-      notify_count = critical_list$count,
+      error_fraction = error_list$fraction,
+      error_count = error_list$count,
+      critical_fraction = critical_list$fraction,
+      critical_count = critical_list$count,
       fns = fns
     )
 
@@ -393,6 +393,8 @@ stop_on_fail <- function(stop_at = 1) {
   error_on_fail(error = stop_at)
 }
 
+#' @rdname action_levels
+#' @export
 action_fns <- function(warn = NULL, error = NULL, critical = NULL) {
   fns <- structure(
     list(warn = warn, error = error, critical = critical,
@@ -464,7 +466,7 @@ prime_actions <- function(actions) {
     actions$fns <-
       action_fns(
         warn = actions$fns$warn %||% ~stock_warning(x = x),
-        error = actions$fns$stop %||% ~stock_stoppage(x = x),
+        error = actions$fns$error %||% ~stock_stoppage(x = x),
         critical = actions$fns$critical
       )
   } else {
@@ -503,12 +505,12 @@ stock_stoppage <- function(x) {
     col_type <- prep_col_type(fn_name = fn_name)
   }
 
-  if (!is.null(x$actions$stop_count)) {
-    threshold <- x$actions$stop_count
+  if (!is.null(x$actions$error_count)) {
+    threshold <- x$actions$error_count
     failed_amount <- x$n_failed
     threshold_type <- "absolute"
-  } else if (!is.null(x$actions$stop_fraction)) {
-    threshold <- x$actions$stop_fraction
+  } else if (!is.null(x$actions$error_fraction)) {
+    threshold <- x$actions$error_fraction
     failed_amount <- x$f_failed
     threshold_type <- "proportional"
   }

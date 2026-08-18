@@ -330,7 +330,7 @@ the corresponding YAML representation.
 
 R statement:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
   col_vals_make_subset(
     columns = a,
     set = c(1, 2, 3, 4),
@@ -356,7 +356,7 @@ YAML representation:
    segments: b ~ c("group_1", "group_2")
    actions:
      warn_fraction: 0.1
-     stop_fraction: 0.2
+     error_fraction: 0.2
    label: The `col_vals_make_subset()` step.
    active: false
 }\if{html}{\out{</div>}}

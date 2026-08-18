@@ -66,7 +66,7 @@ test_that("YAML writing and reading works as expected", {
   )
   expect_match(
     as.character(testthat::capture_messages(yaml_agent_string(agent = agent))),
-    "tbl: ~small_table.*?tbl_name: .*?label: .*?actions:.*?warn_fraction: 0.1.*?stop_fraction: 0.2.*?steps:.*"
+    "tbl: ~small_table.*?tbl_name: .*?label: .*?actions:.*?warn_fraction: 0.1.*?error_fraction: 0.2.*?steps:.*"
   )
 
   # Write the agent to a pointblank YAML file in the temp directory
@@ -83,7 +83,7 @@ test_that("YAML writing and reading works as expected", {
   )
   expect_match(
     as.character(testthat::capture_messages(yaml_agent_string(filename = file.path(work_path, "test.yaml")))),
-    "tbl: ~small_table.*?tbl_name: .*?label: .*?actions:.*?warn_fraction: 0.1.*?stop_fraction: 0.2.*?steps:.*"
+    "tbl: ~small_table.*?tbl_name: .*?label: .*?actions:.*?warn_fraction: 0.1.*?error_fraction: 0.2.*?steps:.*"
   )
 
   # Generate an agent with a plan defined by the YAML file

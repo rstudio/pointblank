@@ -103,6 +103,11 @@ whenever the \code{warn} state is entered. Here, the function call with
       )
     )
   )
+#> Warning: ! `warn_at`, `stop_at`, and `notify_at` are deprecated.
+#>   Action levels are now `warn`, `error`, and `critical`.
+#> This warning is displayed once every 8 hours.
+#> Warning: ! Passing a list to `fns` is deprecated.
+#>   Please use `action_fns()` instead.
 }\if{html}{\out{</div>}}
 
 Within the \code{\link[=action_levels]{action_levels()}}-produced object, it's important to match things
@@ -122,7 +127,7 @@ Let's create an agent with \code{small_table} as the target table. We'll apply t
 \code{action_levels} object created above as \code{al}, add two validation steps, and
 then \code{\link[=interrogate]{interrogate()}} the data.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(
     tbl = ~ small_table,
     tbl_name = "small_table",

@@ -5,6 +5,7 @@
 \alias{warn_on_fail}
 \alias{error_on_fail}
 \alias{stop_on_fail}
+\alias{action_fns}
 \title{Set action levels: failure thresholds and functions to invoke}
 \usage{
 action_levels(
@@ -23,6 +24,8 @@ warn_on_fail(warn = 1, warn_at = NULL)
 error_on_fail(error = 1)
 
 stop_on_fail(stop_at = 1)
+
+action_fns(warn = NULL, error = NULL, critical = NULL)
 }
 \arguments{
 \item{warn}{\emph{Threshold value for the 'warn' failure state}
@@ -52,8 +55,8 @@ units that result in entering the \code{critical} failure state.}
 
 A named list of functions that is to be paired with the appropriate failure
 states. The syntax for this list involves using failure state names from
-the set of \code{warn}, \code{error}, and \code{critical}. The functions corresponding to the
-failure states are provided as formulas (e.g.,
+the set of \code{warn}, \code{error}, and \code{critical}. The functions corresponding to
+the failure states are provided as formulas (e.g.,
 \code{list(warn = ~ warning("Too many failures."))}. A series of expressions for
 each named state can be used by enclosing the set of statements with \code{{ }}.}
 

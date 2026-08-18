@@ -191,7 +191,7 @@
 #'     in_order: false
 #'     is_exact: false
 #'     actions:
-#'       stop_count: 1.0
+#'       error_count: 1.0
 #'     label: The `col_schema_match()` step.
 #'     active: false
 #' ```

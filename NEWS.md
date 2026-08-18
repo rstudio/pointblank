@@ -1,5 +1,7 @@
 # pointblank (development version)
 
+- The failure threshold levels in `action_levels()` have been renamed to align with Python pointblank: `stop` → `error` and `notify` → `critical`. The old parameter names (`warn_at`, `stop_at`, `notify_at`) are deprecated with informative messages. The internal fields of the `action_levels` object now use `error_fraction`/`error_count` and `critical_fraction`/`critical_count`. YAML files written with new names are fully supported; old YAML files with `stop_fraction`/`notify_fraction` keys are still readable. The `action_fns()` function is now exported. The `get_multiagent_report()` display now uses W/E/C labels (was W/S/N). (#611)
+
 - Bugfix agents auto-generating a table label that was too long. They now get truncated (#614)
 
 - Bugfix agents not searching the formula environment when materializing `~ tbl` (#599)

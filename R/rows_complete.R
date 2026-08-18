@@ -187,7 +187,7 @@
 #'     segments: b ~ c("group_1", "group_2")
 #'     actions:
 #'       warn_fraction: 0.1
-#'       stop_fraction: 0.2
+#'       error_fraction: 0.2
 #'     label: The `rows_complete()` step.
 #'     active: false
 #' ```

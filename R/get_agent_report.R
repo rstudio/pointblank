@@ -2265,15 +2265,15 @@ make_action_levels_html <- function(
 
   error <-
     c(
-      pb_fmt_number(actions$stop_fraction, decimals = 2, locale = locale),
-      pb_fmt_number(actions$stop_count, decimals = 0, locale = locale)
+      pb_fmt_number(actions$error_fraction, decimals = 2, locale = locale),
+      pb_fmt_number(actions$error_count, decimals = 0, locale = locale)
     ) %||% "&mdash;"
 
 
   critical <-
     c(
-      pb_fmt_number(actions$notify_fraction, decimals = 2, locale = locale),
-      pb_fmt_number(actions$notify_count, decimals = 0, locale = locale)
+      pb_fmt_number(actions$critical_fraction, decimals = 2, locale = locale),
+      pb_fmt_number(actions$critical_count, decimals = 0, locale = locale)
     ) %||% "&mdash;"
 
   as.character(

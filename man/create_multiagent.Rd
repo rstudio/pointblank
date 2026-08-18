@@ -66,7 +66,7 @@ First, \code{tbl_1}:
     e = LETTERS[b],
     f = LETTERS[c]
   )
-  
+
 tbl_1
 #> # A tibble: 6 x 6
 #>       a     b     c d     e     f    
@@ -132,7 +132,7 @@ displays the multiagent report with its default options (i.e., a 'long'
 report view).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{multiagent <- create_multiagent(agent_1, agent_2)
-  
+
 multiagent
 }\if{html}{\out{</div>}}
 

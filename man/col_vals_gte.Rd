@@ -350,7 +350,7 @@ representation.
 
 R statement:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
   col_vals_gte(
     columns = a,
     value = 1,
@@ -374,7 +374,7 @@ YAML representation:
     segments: b ~ c("group_1", "group_2")
     actions:
       warn_fraction: 0.1
-      stop_fraction: 0.2
+      error_fraction: 0.2
     label: The `col_vals_gte()` step.
     active: false
 }\if{html}{\out{</div>}}
@@ -402,7 +402,7 @@ columns (\code{a}, \code{b}, and \code{c}) and three character columns (\code{d}
       e = LETTERS[b],
       f = LETTERS[c]
   )
-  
+
 tbl
 #> # A tibble: 6 x 6
 #>       a     b     c d     e     f    

@@ -538,7 +538,7 @@
 #'     columns: vars(a)
 #'     actions:
 #'       warn_fraction: 0.1
-#'       stop_fraction: 0.2
+#'       error_fraction: 0.2
 #'     label: El paso `col_exists()`.
 #'     active: false
 #' ```
@@ -708,7 +708,7 @@
 #'     columns: vars(a)
 #'     actions:
 #'       warn_fraction: 0.1
-#'       stop_fraction: 0.2
+#'       error_fraction: 0.2
 #'     label: El paso `col_is_character()`.
 #'     active: false
 #' ```
@@ -870,7 +870,7 @@
 #'     columns: vars(a)
 #'     actions:
 #'       warn_fraction: 0.1
-#'       stop_fraction: 0.2
+#'       error_fraction: 0.2
 #'     label: El paso `col_is_date()`.
 #'     active: false
 #' ```
@@ -1033,7 +1033,7 @@
 #'     columns: vars(a)
 #'     actions:
 #'       warn_fraction: 0.1
-#'       stop_fraction: 0.2
+#'       error_fraction: 0.2
 #'     label: El paso `col_is_factor()`.
 #'     active: false
 #' ```
@@ -1198,7 +1198,7 @@
 #'     columns: vars(a)
 #'     actions:
 #'       warn_fraction: 0.1
-#'       stop_fraction: 0.2
+#'       error_fraction: 0.2
 #'     label: El paso `col_is_integer()`.
 #'     active: false
 #' ```
@@ -1360,7 +1360,7 @@
 #'     columns: vars(a)
 #'     actions:
 #'       warn_fraction: 0.1
-#'       stop_fraction: 0.2
+#'       error_fraction: 0.2
 #'     label: El paso `col_is_logical()`.
 #'     active: false
 #' ```
@@ -1523,7 +1523,7 @@
 #'     columns: vars(a)
 #'     actions:
 #'       warn_fraction: 0.1
-#'       stop_fraction: 0.2
+#'       error_fraction: 0.2
 #'     label: El paso `col_is_numeric()`.
 #'     active: false
 #' ```
@@ -1687,7 +1687,7 @@
 #'     columns: vars(a)
 #'     actions:
 #'       warn_fraction: 0.1
-#'       stop_fraction: 0.2
+#'       error_fraction: 0.2
 #'     label: El paso `col_is_posix()`.
 #'     active: false
 #' ```
@@ -1952,7 +1952,7 @@
 #'     in_order: false
 #'     is_exact: false
 #'     actions:
-#'       stop_count: 1.0
+#'       error_count: 1.0
 #'     label: El paso `col_schema_match()`.
 #'     active: false
 #' ```
@@ -2245,7 +2245,7 @@
 #'     segments: b ~ c("group_1", "group_2")
 #'     actions:
 #'       warn_fraction: 0.1
-#'       stop_fraction: 0.2
+#'       error_fraction: 0.2
 #'     label: El paso `col_vals_between()`.
 #'     active: false
 #' ```
@@ -2530,7 +2530,7 @@
 #'     segments: b ~ c("group_1", "group_2")
 #'     actions:
 #'       warn_fraction: 0.1
-#'       stop_fraction: 0.2
+#'       error_fraction: 0.2
 #'     label: El paso `col_vals_decreasing()`.
 #'     active: false
 #' ```
@@ -2721,7 +2721,7 @@
 #'     segments: b ~ c("group_1", "group_2")
 #'     actions:
 #'       warn_fraction: 0.1
-#'       stop_fraction: 0.2
+#'       error_fraction: 0.2
 #'     label: El paso `col_vals_equal()`.
 #'     active: false
 #' ```
@@ -2949,7 +2949,7 @@
 #'     segments: b ~ c("group_1", "group_2")
 #'     actions:
 #'       warn_fraction: 0.1
-#'       stop_fraction: 0.2
+#'       error_fraction: 0.2
 #'     label: El paso `col_vals_expr()`.
 #'     active: false
 #' ```
@@ -3223,7 +3223,7 @@
 #'     segments: b ~ c("group_1", "group_2")
 #'     actions:
 #'       warn_fraction: 0.1
-#'       stop_fraction: 0.2
+#'       error_fraction: 0.2
 #'     label: El paso `col_vals_gt()`.
 #'     active: false
 #' ```
@@ -3553,7 +3553,7 @@
 #'     segments: b ~ c("group_1", "group_2")
 #'     actions:
 #'       warn_fraction: 0.1
-#'       stop_fraction: 0.2
+#'       error_fraction: 0.2
 #'     label: El paso `col_vals_gte()`.
 #'     active: false
 #' ```
@@ -3796,7 +3796,7 @@
 #'    segments: b ~ c("group_1", "group_2")
 #'    actions:
 #'      warn_fraction: 0.1
-#'      stop_fraction: 0.2
+#'      error_fraction: 0.2
 #'    label: El paso `col_vals_in_set()`.
 #'    active: false
 #' ```
@@ -4048,7 +4048,7 @@
 #'     segments: b ~ c("group_1", "group_2")
 #'     actions:
 #'       warn_fraction: 0.1
-#'       stop_fraction: 0.2
+#'       error_fraction: 0.2
 #'     label: El paso `col_vals_increasing()`.
 #'     active: false
 #' ```
@@ -4239,7 +4239,7 @@
 #'     segments: b ~ c("group_1", "group_2")
 #'     actions:
 #'       warn_fraction: 0.1
-#'       stop_fraction: 0.2
+#'       error_fraction: 0.2
 #'     label: El paso `col_vals_lt()`.
 #'     active: false
 #' ```
@@ -4490,7 +4490,7 @@
 #'     segments: b ~ c("group_1", "group_2")
 #'     actions:
 #'       warn_fraction: 0.1
-#'       stop_fraction: 0.2
+#'       error_fraction: 0.2
 #'     label: El paso `col_vals_lte()`.
 #'     active: false
 #' ```
@@ -4738,7 +4738,7 @@
 #'    segments: b ~ c("group_1", "group_2")
 #'    actions:
 #'      warn_fraction: 0.1
-#'      stop_fraction: 0.2
+#'      error_fraction: 0.2
 #'    label: El paso `col_vals_make_set()`.
 #'    active: false
 #' ```
@@ -4977,7 +4977,7 @@
 #'    segments: b ~ c("group_1", "group_2")
 #'    actions:
 #'      warn_fraction: 0.1
-#'      stop_fraction: 0.2
+#'      error_fraction: 0.2
 #'    label: El paso `col_vals_make_subset()`.
 #'    active: false
 #' ```
@@ -5241,7 +5241,7 @@
 #'     segments: b ~ c("group_1", "group_2")
 #'     actions:
 #'       warn_fraction: 0.1
-#'       stop_fraction: 0.2
+#'       error_fraction: 0.2
 #'     label: El paso `col_vals_not_between()`.
 #'     active: false
 #' ```
@@ -5520,7 +5520,7 @@
 #'     segments: b ~ c("group_1", "group_2")
 #'     actions:
 #'       warn_fraction: 0.1
-#'       stop_fraction: 0.2
+#'       error_fraction: 0.2
 #'     label: El paso `col_vals_not_equal()`.
 #'     active: false
 #' ```
@@ -5764,7 +5764,7 @@
 #'    segments: b ~ c("group_1", "group_2")
 #'    actions:
 #'      warn_fraction: 0.1
-#'      stop_fraction: 0.2
+#'      error_fraction: 0.2
 #'    label: El paso `col_vals_not_in_set()`.
 #'    active: false
 #' ```
@@ -6001,7 +6001,7 @@
 #'     segments: b ~ c("group_1", "group_2")
 #'     actions:
 #'       warn_fraction: 0.1
-#'       stop_fraction: 0.2
+#'       error_fraction: 0.2
 #'     label: El paso `col_vals_not_null()`.
 #'     active: false
 #' ```
@@ -6234,7 +6234,7 @@
 #'     segments: b ~ c("group_1", "group_2")
 #'     actions:
 #'       warn_fraction: 0.1
-#'       stop_fraction: 0.2
+#'       error_fraction: 0.2
 #'     label: El paso `col_vals_null()`.
 #'     active: false
 #' ```
@@ -6479,7 +6479,7 @@
 #'     segments: b ~ c("group_1", "group_2")
 #'     actions:
 #'       warn_fraction: 0.1
-#'       stop_fraction: 0.2
+#'       error_fraction: 0.2
 #'     label: El paso `col_vals_regex()`.
 #'     active: false
 #' ```
@@ -6784,7 +6784,7 @@
 #'     segments: b ~ c("group_1", "group_2")
 #'     actions:
 #'       warn_fraction: 0.1
-#'       stop_fraction: 0.2
+#'       error_fraction: 0.2
 #'     label: El paso `col_vals_within_spec()`.
 #'     active: false
 #' ```
@@ -7044,7 +7044,7 @@
 #'     segments: b ~ c("group_1", "group_2")
 #'     actions:
 #'       warn_fraction: 0.1
-#'       stop_fraction: 0.2
+#'       error_fraction: 0.2
 #'     label: El paso `conjointly()`.
 #'     active: false
 #' ```
@@ -7275,8 +7275,8 @@
 #' locale: fr_CA
 #' actions:
 #'   warn_fraction: 0.1
-#' stop_fraction: 0.25
-#' notify_fraction: 0.35
+#' error_fraction: 0.25
+#' critical_fraction: 0.35
 #' end_fns:
 #' - ~beepr::beep(2)
 #' - ~Sys.sleep(1)
@@ -8191,7 +8191,7 @@
 #' locale: en
 #' actions:
 #'   warn_count: 1.0
-#'   notify_count: 2.0
+#'   critical_count: 2.0
 #' end_fns: ~email_blast(x, to = "joe_public@example.com", 
 #'   from = "pb_notif@example.com", msg_subject = "Table Validation",
 #'   credentials = blastula::creds_key(id = "smtp2go"),
@@ -11366,7 +11366,7 @@
 #'     segments: b ~ c("group_1", "group_2")
 #'     actions:
 #'       warn_fraction: 0.1
-#'       stop_fraction: 0.2
+#'       error_fraction: 0.2
 #'     label: El paso `row_count_match()`.
 #'     active: false
 #' ```
@@ -11558,7 +11558,7 @@
 #'     segments: b ~ c("group_1", "group_2")
 #'     actions:
 #'       warn_fraction: 0.1
-#'       stop_fraction: 0.2
+#'       error_fraction: 0.2
 #'     label: El paso `rows_complete()`.
 #'     active: false
 #' ```
@@ -11737,7 +11737,7 @@
 #'     segments: b ~ c("group_1", "group_2")
 #'     actions:
 #'       warn_fraction: 0.1
-#'       stop_fraction: 0.2
+#'       error_fraction: 0.2
 #'     label: El paso `rows_distinct()`.
 #'     active: false
 #' ```
@@ -12007,7 +12007,7 @@
 #'     preconditions: ~. %>% dplyr::filter(a < 10)
 #'     actions:
 #'       warn_fraction: 0.1
-#'       stop_fraction: 0.2
+#'       error_fraction: 0.2
 #'     label: El paso `serially()`.
 #'     active: false
 #' ```
@@ -12693,7 +12693,7 @@
 #'     preconditions: ~. %>% dplyr::filter(a < 10)
 #'     actions:
 #'       warn_fraction: 0.1
-#'       stop_fraction: 0.2
+#'       error_fraction: 0.2
 #'     label: El paso `specially()`.
 #'     active: false
 #' ```
@@ -13053,7 +13053,7 @@
 #'     segments: b ~ c("group_1", "group_2")
 #'     actions:
 #'       warn_fraction: 0.1
-#'       stop_fraction: 0.2
+#'       error_fraction: 0.2
 #'     label: El paso `tbl_match()`.
 #'     active: false
 #' ```

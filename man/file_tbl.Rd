@@ -58,7 +58,7 @@ file and some CSV reading options (the ones used by \code{readr::read_csv()}) to
 the \code{file_tbl()} function. For this example we could obtain a path to a CSV
 file in the \strong{pointblank} package with \code{system.file()}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{csv_path <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{csv_path <-
   system.file(
     "data_files", "small_table.csv",
     package = "pointblank"
@@ -68,7 +68,7 @@ file in the \strong{pointblank} package with \code{system.file()}.
 Then use that path in \code{file_tbl()} with the option to specify the column
 types in that CSV.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <-
   file_tbl(
     file = csv_path,
     col_types = "TDdcddlc"
@@ -78,20 +78,20 @@ tbl
 }\if{html}{\out{</div>}}
 
 \preformatted{## # A tibble: 13 × 8
-##    date_time           date           a b           c      d e     f    
+##    date_time           date           a b           c      d e     f
 ##    <dttm>              <date>     <dbl> <chr>   <dbl>  <dbl> <lgl> <chr>
-##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-…     3  3423. TRUE  high 
-##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-…     8 10000. TRUE  low  
-##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-…     3  2343. TRUE  high 
-##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-…    NA  3892. FALSE mid  
-##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-…     7   284. TRUE  low  
-##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-…     4  3291. TRUE  mid  
-##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-…     3   843. TRUE  high 
-##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-…     2  1036. FALSE low  
-##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-…     9   838. FALSE high 
-## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-…     9   838. FALSE high 
-## 11 2016-01-26 20:07:00 2016-01-26     4 2-dmx-…     7   834. TRUE  low  
-## 12 2016-01-28 02:51:00 2016-01-28     2 7-dmx-…     8   108. FALSE low  
+##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-…     3  3423. TRUE  high
+##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-…     8 10000. TRUE  low
+##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-…     3  2343. TRUE  high
+##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-…    NA  3892. FALSE mid
+##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-…     7   284. TRUE  low
+##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-…     4  3291. TRUE  mid
+##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-…     3   843. TRUE  high
+##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-…     2  1036. FALSE low
+##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-…     9   838. FALSE high
+## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-…     9   838. FALSE high
+## 11 2016-01-26 20:07:00 2016-01-26     4 2-dmx-…     7   834. TRUE  low
+## 12 2016-01-28 02:51:00 2016-01-28     2 7-dmx-…     8   108. FALSE low
 ## 13 2016-01-30 11:23:00 2016-01-30     1 3-dka-…    NA  2230. TRUE  high}
 
 
@@ -105,7 +105,7 @@ Now that we have a `tbl` object that is a tibble it could be introduced to
 A different strategy is to provide the data-reading function call directly to
 \code{\link[=create_agent]{create_agent()}}:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(
     tbl = ~ file_tbl(
       file = system.file(
@@ -130,7 +130,7 @@ A CSV can be obtained from a public GitHub repo by using the \code{\link[=from_g
 helper function. Let's create an agent a supply a table-prep formula that
 gets the same CSV file from the GitHub repository for the pointblank package.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(
     tbl = ~ file_tbl(
       file = from_github(
@@ -189,20 +189,20 @@ reference the table in the store by its name (given to the left of the \code{~})
 }\if{html}{\out{</div>}}
 
 \preformatted{## # A tibble: 13 × 8
-##    date_time           date           a b           c      d e     f    
+##    date_time           date           a b           c      d e     f
 ##    <dttm>              <date>     <dbl> <chr>   <dbl>  <dbl> <lgl> <chr>
-##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-…     3  3423. TRUE  high 
-##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-…     8 10000. TRUE  low  
-##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-…     3  2343. TRUE  high 
-##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-…    NA  3892. FALSE mid  
-##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-…     7   284. TRUE  low  
-##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-…     4  3291. TRUE  mid  
-##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-…     3   843. TRUE  high 
-##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-…     2  1036. FALSE low  
-##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-…     9   838. FALSE high 
-## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-…     9   838. FALSE high 
-## 11 2016-01-26 20:07:00 2016-01-26     4 2-dmx-…     7   834. TRUE  low  
-## 12 2016-01-28 02:51:00 2016-01-28     2 7-dmx-…     8   108. FALSE low  
+##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-…     3  3423. TRUE  high
+##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-…     8 10000. TRUE  low
+##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-…     3  2343. TRUE  high
+##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-…    NA  3892. FALSE mid
+##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-…     7   284. TRUE  low
+##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-…     4  3291. TRUE  mid
+##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-…     3   843. TRUE  high
+##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-…     2  1036. FALSE low
+##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-…     9   838. FALSE high
+## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-…     9   838. FALSE high
+## 11 2016-01-26 20:07:00 2016-01-26     4 2-dmx-…     7   834. TRUE  low
+## 12 2016-01-28 02:51:00 2016-01-28     2 7-dmx-…     8   108. FALSE low
 ## 13 2016-01-30 11:23:00 2016-01-30     1 3-dka-…    NA  2230. TRUE  high}
 
 
@@ -214,13 +214,13 @@ just as easily obtainable via \code{\link[=tbl_get]{tbl_get()}}:
 }\if{html}{\out{</div>}}
 
 \preformatted{## # A tibble: 6 × 8
-##   date_time           date           a b             c     d e     f    
+##   date_time           date           a b             c     d e     f
 ##   <dttm>              <date>     <dbl> <chr>     <dbl> <dbl> <lgl> <chr>
-## 1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3 3423. TRUE  high 
-## 2 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3 2343. TRUE  high 
-## 3 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3  843. TRUE  high 
-## 4 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high 
-## 5 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high 
+## 1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3 3423. TRUE  high
+## 2 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3 2343. TRUE  high
+## 3 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3  843. TRUE  high
+## 4 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high
+## 5 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9  838. FALSE high
 ## 6 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA 2230. TRUE  high}
 
 
@@ -228,7 +228,7 @@ The table-prep formulas in the \code{store} object could also be used in functio
 with a \code{tbl} argument (like \code{\link[=create_agent]{create_agent()}} and \code{\link[=create_informant]{create_informant()}}). This
 is accomplished most easily with the \code{\link[=tbl_source]{tbl_source()}} function.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(
     tbl = ~ tbl_source(
       tbl = "small_table_file",
@@ -237,7 +237,7 @@ is accomplished most easily with the \code{\link[=tbl_source]{tbl_source()}} fun
   )
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <-
   create_informant(
     tbl = ~ tbl_source(
       tbl = "small_high_file",

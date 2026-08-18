@@ -81,22 +81,22 @@ available.
 
 \preformatted{## $`1`
 ## # A tibble: 6 × 6
-##       a b             c     d e     f    
+##       a b             c     d e     f
 ##   <int> <chr>     <dbl> <dbl> <lgl> <chr>
-## 1     8 3-ldm-038     7  284. TRUE  low  
-## 2     7 1-knw-093     3  843. TRUE  high 
-## 3     3 5-bce-642     9  838. FALSE high 
-## 4     3 5-bce-642     9  838. FALSE high 
-## 5     4 2-dmx-010     7  834. TRUE  low  
-## 6     2 7-dmx-010     8  108. FALSE low  
-## 
+## 1     8 3-ldm-038     7  284. TRUE  low
+## 2     7 1-knw-093     3  843. TRUE  high
+## 3     3 5-bce-642     9  838. FALSE high
+## 4     3 5-bce-642     9  838. FALSE high
+## 5     4 2-dmx-010     7  834. TRUE  low
+## 6     2 7-dmx-010     8  108. FALSE low
+##
 ## $`2`
 ## # A tibble: 4 × 6
-##       a b             c     d e     f    
+##       a b             c     d e     f
 ##   <int> <chr>     <dbl> <dbl> <lgl> <chr>
-## 1     6 8-kdg-938     3 2343. TRUE  high 
-## 2     8 3-ldm-038     7  284. TRUE  low  
-## 3     7 1-knw-093     3  843. TRUE  high 
+## 1     6 8-kdg-938     3 2343. TRUE  high
+## 2     8 3-ldm-038     7  284. TRUE  low
+## 3     7 1-knw-093     3  843. TRUE  high
 ## 4     4 5-boe-639     2 1036. FALSE low}
 
 
@@ -109,13 +109,13 @@ argument. Let's get the failing rows from the first validation step (the
 }\if{html}{\out{</div>}}
 
 \preformatted{## # A tibble: 6 × 6
-##       a b             c     d e     f    
+##       a b             c     d e     f
 ##   <int> <chr>     <dbl> <dbl> <lgl> <chr>
-## 1     8 3-ldm-038     7  284. TRUE  low  
-## 2     7 1-knw-093     3  843. TRUE  high 
-## 3     3 5-bce-642     9  838. FALSE high 
-## 4     3 5-bce-642     9  838. FALSE high 
-## 5     4 2-dmx-010     7  834. TRUE  low  
+## 1     8 3-ldm-038     7  284. TRUE  low
+## 2     7 1-knw-093     3  843. TRUE  high
+## 3     3 5-bce-642     9  838. FALSE high
+## 4     3 5-bce-642     9  838. FALSE high
+## 5     4 2-dmx-010     7  834. TRUE  low
 ## 6     2 7-dmx-010     8  108. FALSE low}
 }
 

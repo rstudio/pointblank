@@ -175,7 +175,12 @@ whenever the <code>warn</code> state is entered. Here, the function call with
 <span>        <span class="va">x</span>, append_to <span class="op">=</span> <span class="st">"example_log"</span></span>
 <span>      <span class="op">)</span></span>
 <span>    <span class="op">)</span></span>
-<span>  <span class="op">)</span></span></code></pre><p></p></div>
+<span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: ! `warn_at`, `stop_at`, and `notify_at` are deprecated.</span></span>
+<span><span class="co">#&gt;   Action levels are now `warn`, `error`, and `critical`.</span></span>
+<span><span class="co">#&gt; This warning is displayed once every 8 hours.</span></span>
+<span><span class="co">#&gt; Warning: ! Passing a list to `fns` is deprecated.</span></span>
+<span><span class="co">#&gt;   Please use `action_fns()` instead.</span></span></code></pre><p></p></div>
 <p>Within the <code><a href="action_levels.html">action_levels()</a></code>-produced object, it's important to match things
 up: notice that <code>warn_at</code> is given a threshold and the list of functions
 given to <code>fns</code> has a <code>warn</code> component.</p>

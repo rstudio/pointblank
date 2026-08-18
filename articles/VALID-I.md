@@ -276,6 +276,10 @@ to define thresholds for the `WARN` and `STOP` conditions.
 al <- action_levels(warn_at = 0.1, stop_at = 0.2)
 ```
 
+    ## Warning: ! `warn_at`, `stop_at`, and `notify_at` are deprecated.
+    ##   Action levels are now `warn`, `error`, and `critical`.
+    ## This warning is displayed once every 8 hours.
+
 Printing the `al` object gives us a summary of the settings.
 
 ``` r
@@ -285,7 +289,7 @@ al
 
     ## -- The `action_levels` settings
     ## WARN failure threshold of 0.1 of all test units.
-    ## STOP failure threshold of 0.2 of all test units.
+    ## ERROR failure threshold of 0.2 of all test units.
     ## ----
 
 Let’s use the `action_levels` object in a new validation. It’s similar
@@ -352,6 +356,9 @@ al <-
   )
 ```
 
+    ## Warning: ! Passing a list to `fns` is deprecated.
+    ##   Please use `action_fns()` instead.
+
 Printing this new `al` object will show us the failure threshold
 settings and the associated actions for the failure conditions.
 
@@ -363,8 +370,7 @@ al
     ## -- The `action_levels` settings
     ## WARN failure threshold of 0.1 of all test units.
     ## \fns\ ~ message("Step ", x$i, " exceeded the WARN threshold.")
-    ## STOP failure threshold of 0.2 of all test units.
-    ## \fns\ ~ message("Step ", x$i, " exceeded the STOP threshold.")
+    ## ERROR failure threshold of 0.2 of all test units.
     ## ----
 
 Using this new `al` object with our validation workflow will result in

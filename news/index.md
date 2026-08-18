@@ -2,6 +2,14 @@
 
 ## pointblank (development version)
 
+- The `stop` and `notify` threshold levels in
+  [`action_levels()`](https://rstudio.github.io/pointblank/reference/action_levels.md)
+  are renamed to `error` and `critical` (aligning with Python
+  pointblank), with deprecation warnings for old names;
+  [`action_fns()`](https://rstudio.github.io/pointblank/reference/action_levels.md)
+  is now exported.
+  ([\#611](https://github.com/rstudio/pointblank/issues/611))
+
 ## pointblank 0.12.4
 
 CRAN release: 2026-07-21

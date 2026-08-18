@@ -5,7 +5,7 @@
 - **Richard Iannone**. Author, maintainer.
   [](https://orcid.org/0000-0003-3925-190X)
 
-- **Mauricio Vargas**. Author. [](https://orcid.org/0000-0003-1017-7574)
+- **Mauricio Vargas**. Author. [](https://orcid.org/0000-0002-0701-921X)
 
 - **June Choe**. Author. [](https://orcid.org/0000-0002-0701-921X)
 

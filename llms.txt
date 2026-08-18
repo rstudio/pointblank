@@ -444,7 +444,9 @@ function.
 - [![](icons/action_levels.png)](https://rstudio.github.io/pointblank/reference/action_levels.md)
   [`action_levels()`](https://rstudio.github.io/pointblank/reference/action_levels.md)
   [`warn_on_fail()`](https://rstudio.github.io/pointblank/reference/action_levels.md)
+  [`error_on_fail()`](https://rstudio.github.io/pointblank/reference/action_levels.md)
   [`stop_on_fail()`](https://rstudio.github.io/pointblank/reference/action_levels.md)
+  [`action_fns()`](https://rstudio.github.io/pointblank/reference/action_levels.md)
   : Set action levels: failure thresholds and functions to invoke
 
 - [![](icons/db_tbl.png)](https://rstudio.github.io/pointblank/reference/db_tbl.md)

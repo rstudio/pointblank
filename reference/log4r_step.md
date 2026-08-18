@@ -121,6 +121,11 @@ there is one failing test unit.
           )
         )
       )
+    #> Warning: ! `warn_at`, `stop_at`, and `notify_at` are deprecated.
+    #>   Action levels are now `warn`, `error`, and `critical`.
+    #> This warning is displayed once every 8 hours.
+    #> Warning: ! Passing a list to `fns` is deprecated.
+    #>   Please use `action_fns()` instead.
 
 Within the
 [`action_levels()`](https://rstudio.github.io/pointblank/reference/action_levels.md)-produced

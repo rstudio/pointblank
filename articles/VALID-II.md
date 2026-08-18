@@ -126,6 +126,17 @@ small_table %>%
   )
 ```
 
+    ## Warning: ! `stop_on_fail()` is deprecated.
+    ##   Please use `error_on_fail()` instead.
+    ## ! `stop_on_fail()` is deprecated.
+    ##   Please use `error_on_fail()` instead.
+    ## ! `stop_on_fail()` is deprecated.
+    ##   Please use `error_on_fail()` instead.
+    ## ! `stop_on_fail()` is deprecated.
+    ##   Please use `error_on_fail()` instead.
+    ## ! `stop_on_fail()` is deprecated.
+    ##   Please use `error_on_fail()` instead.
+
     ## Error:
     ## ! Exceedance of failed test units where values in `d` should have been between `0` and `5000`.
     ## The `col_vals_between()` validation failed beyond the absolute threshold level (1).
@@ -160,6 +171,10 @@ small_table %>%
     actions = warn_on_fail(warn_at = 1)
   )
 ```
+
+    ## Warning: ! `warn_at`, `stop_at`, and `notify_at` are deprecated.
+    ##   Action levels are now `warn`, `error`, and `critical`.
+    ## This warning is displayed once every 8 hours.
 
     ## Warning: Exceedance of failed test units where values in `d` should have been between `0` and `5000`.
     ## The `col_vals_between()` validation failed beyond the absolute threshold level (1).
@@ -243,6 +258,9 @@ al <-
   )
 ```
 
+    ## Warning: ! Passing a list to `fns` is deprecated.
+    ##   Please use `action_fns()` instead.
+
 Once we assigned the `action_levels` to an object (in this case, as
 `al`) we can print it to get a summary of the settings.
 
@@ -254,10 +272,8 @@ al
     ## -- The `action_levels` settings
     ## WARN failure threshold of 0.1 of all test units.
     ## \fns\ ~ warning("WARN threshold exceeded.")
-    ## STOP failure threshold of 0.2 of all test units.
-    ## \fns\ ~ stop("STOP threshold exceeded.")
-    ## NOTIFY failure threshold of 0.3 of all test units.
-    ## \fns\ ~ message("Step ", x$i, " exceeded the NOTIFY threshold.")
+    ## ERROR failure threshold of 0.2 of all test units.
+    ## CRITICAL failure threshold of 0.3 of all test units.
     ## ----
 
 Finally, we will apply this object to every validation function call in
@@ -275,10 +291,10 @@ small_table %>%
 
     ## Warning in rlang::eval_tidy(.): WARN threshold exceeded.
 
-    ## Step 1 exceeded the NOTIFY threshold.
-
     ## Error:
-    ## ! STOP threshold exceeded.
+    ## ! Exceedance of failed test units where values in `f` should have been in the set of `low`, `mid`.
+    ## The `col_vals_in_set()` validation failed beyond the proportional threshold level (0.2).
+    ## * failure level (0.46154) >= failure threshold (0.2)
 
 In addition to an error and a warning, the custom function used for the
 `NOTIFY` condition will emit a message for any validation step that

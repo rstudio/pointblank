@@ -160,12 +160,12 @@ but rather if a single condition is true or false.
 
 Knowing about the numbers of test units across validation methods
 matters because you have the option to set action levels (that can
-signal ‘warn_at’, ‘stop_at’, and ‘notify_at’ flags) based on either the
+signal ‘warn’, ‘error’, and ‘critical’ flags) based on either the
 relative proportion or absolute number of failing test units.
 
 ``` r
 
-al <- action_levels(warn_at = 2, stop_at = 4)
+al <- action_levels(warn = 2, error = 4)
 
 small_table %>%
   col_vals_lt(a, value = 7, actions = al)
@@ -210,11 +210,11 @@ If you look at the validation report table, we can see:
 - The `FAIL` column shows that 2 tests units have failed.
 - the `W` column (short for ‘warning’) shows a filled yellow circle
   indicating those failing test units reached that threshold value.
-- the `S` column (short for ‘stop’) shows an open red circle indicating
+- the `E` column (short for ‘error’) shows an open red circle indicating
   that the number of failing test units is below that threshold.
 
-The one final action level, `N` (for ‘notify’), wasn’t set so it appears
-on the validation table as a long dash.
+The one final action level, `C` (for ‘critical’), wasn’t set so it
+appears on the validation table as a long dash.
 
 Setting thresholds is important since you might want some sort of signal
 for the discovery of errors in your data. How you set the particular

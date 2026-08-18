@@ -65,8 +65,8 @@ following components are available:
 - `f_failed`: the fraction of failing test units for the validation
   step, `n_failed` / `n` (`num [1]`)
 
-- `warn`, `stop`, `notify`: a logical value indicating whether the level
-  of failing test units caused the corresponding conditions to be
+- `warn`, `error`, `critical`: a logical value indicating whether the
+  level of failing test units caused the corresponding conditions to be
   entered (`lgl [1]`)
 
 - `lang`: the two-letter language code that indicates which language
@@ -80,8 +80,8 @@ step) then certain length-one components in the **x-list** will be
 expanded to the total number of validation steps (these are: `i`,
 `type`, `columns`, `values`, `briefs`, `eval_error`, `eval_warning`,
 `capture_stack`, `n`, `n_passed`, `n_failed`, `f_passed`, `f_failed`,
-`warn`, `stop`, and `notify`). The **x-list** will also have additional
-components when `i` is `NULL`, which are:
+`warn`, `error`, and `critical`). The **x-list** will also have
+additional components when `i` is `NULL`, which are:
 
 - `report_object`: a **gt** table object, which is also presented as the
   default print method for a `ptblank_agent`
@@ -149,13 +149,14 @@ Create a simple data frame with a column of numerical values.
 
 Create an
 [`action_levels()`](https://rstudio.github.io/pointblank/reference/action_levels.md)
-list with fractional values for the `warn`, `stop`, and `notify` states.
+list with fractional values for the `warn`, `error`, and `critical`
+states.
 
     al <-
       action_levels(
-        warn_at = 0.2,
-        stop_at = 0.8,
-        notify_at = 0.345
+        warn = 0.2,
+        error = 0.8,
+        critical = 0.345
       )
 
 Create an agent (giving it the `tbl` and the `al` objects), supply two

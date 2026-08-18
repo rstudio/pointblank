@@ -248,7 +248,7 @@
 #'     segments: b ~ c("group_1", "group_2")
 #'     actions:
 #'       warn_fraction: 0.1
-#'       stop_fraction: 0.2
+#'       error_fraction: 0.2
 #'     label: The `col_vals_not_between()` step.
 #'     active: false
 #' ```
@@ -512,7 +512,7 @@ expect_col_vals_not_between <- function(
       inclusive = inclusive,
       na_pass = na_pass,
       preconditions = {{ preconditions }},
-      actions = action_levels(notify_at = threshold)
+      actions = action_levels(critical = threshold)
     ) %>%
     interrogate() %>%
     .$validation_set
@@ -602,7 +602,7 @@ test_col_vals_not_between <- function(
       inclusive = inclusive,
       na_pass = na_pass,
       preconditions = {{ preconditions }},
-      actions = action_levels(notify_at = threshold)
+      actions = action_levels(critical = threshold)
     ) %>%
     interrogate() %>%
     .$validation_set

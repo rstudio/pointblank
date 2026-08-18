@@ -174,8 +174,8 @@
 #' locale: en
 #' actions:
 #'   warn_fraction: 0.1
-#'   stop_fraction: 0.25
-#'   notify_fraction: 0.35
+#'   error_fraction: 0.25
+#'   critical_fraction: 0.35
 #' steps:
 #' - col_exists:
 #'     columns: c(date, date_time)
@@ -612,8 +612,8 @@ yaml_write <- function(
 #' locale: en
 #' actions:
 #'   warn_fraction: 0.1
-#'   stop_fraction: 0.25
-#'   notify_fraction: 0.35
+#'   error_fraction: 0.25
+#'   critical_fraction: 0.35
 #' steps:
 #' - col_exists:
 #'     columns: vars(date)
@@ -750,8 +750,6 @@ to_list_action_levels <- function(actions) {
   agent_actions <- actions
   agent_actions[sapply(agent_actions, is.null)] <- NULL
   agent_actions$fns[sapply(agent_actions$fns, is.null)] <- NULL
-
-  if (length(agent_actions$fns) == 0) agent_actions$fns <- NULL
 
   if (length(agent_actions$fns) == 0) {
     agent_actions$fns <- NULL

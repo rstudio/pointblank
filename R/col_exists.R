@@ -137,7 +137,7 @@
 #'     columns: c(a)
 #'     actions:
 #'       warn_fraction: 0.1
-#'       stop_fraction: 0.2
+#'       error_fraction: 0.2
 #'     label: The `col_exists()` step.
 #'     active: false
 #' ```
@@ -334,7 +334,7 @@ expect_col_exists <- function(
     create_agent(tbl = object, label = "::QUIET::") %>%
     col_exists(
       columns = {{ columns }},
-      actions = action_levels(notify_at = threshold)
+      actions = action_levels(critical = threshold)
     ) %>%
     interrogate() %>%
     .$validation_set
@@ -404,7 +404,7 @@ test_col_exists <- function(
     create_agent(tbl = object, label = "::QUIET::") %>%
     col_exists(
       columns = {{ columns }},
-      actions = action_levels(notify_at = threshold)
+      actions = action_levels(critical = threshold)
     ) %>%
     interrogate() %>%
     .$validation_set

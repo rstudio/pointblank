@@ -103,6 +103,11 @@ whenever the \code{warn} state is entered. Here, the function call with
       )
     )
   )
+#> Warning: ! `warn_at`, `stop_at`, and `notify_at` are deprecated.
+#>   Action levels are now `warn`, `error`, and `critical`.
+#> This warning is displayed once every 8 hours.
+#> Warning: ! Passing a list to `fns` is deprecated.
+#>   Please use `action_fns()` instead.
 }\if{html}{\out{</div>}}
 
 Within the \code{\link[=action_levels]{action_levels()}}-produced object, it's important to match things

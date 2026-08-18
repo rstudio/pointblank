@@ -140,7 +140,7 @@
 #'     columns: c(a)
 #'     actions:
 #'       warn_fraction: 0.1
-#'       stop_fraction: 0.2
+#'       error_fraction: 0.2
 #'     label: The `col_is_integer()` step.
 #'     active: false
 #' ```
@@ -321,7 +321,7 @@ expect_col_is_integer <- function(
     create_agent(tbl = object, label = "::QUIET::") %>%
     col_is_integer(
       columns = {{ columns }},
-      actions = action_levels(notify_at = threshold)
+      actions = action_levels(critical = threshold)
     ) %>%
     interrogate() %>%
     .$validation_set
@@ -394,7 +394,7 @@ test_col_is_integer <- function(
     create_agent(tbl = object, label = "::QUIET::") %>%
     col_is_integer(
       columns = {{ columns }},
-      actions = action_levels(notify_at = threshold)
+      actions = action_levels(critical = threshold)
     ) %>%
     interrogate() %>%
     .$validation_set

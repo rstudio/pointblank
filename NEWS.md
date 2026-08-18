@@ -1,5 +1,7 @@
 # pointblank (development version)
 
+- The `stop` and `notify` threshold levels in `action_levels()` are renamed to `error` and `critical` (aligning with Python pointblank), with deprecation warnings for old names; `action_fns()` is now exported. (#611)
+
 # pointblank 0.12.4
 
 * Deprecated `log4r_step()` and logging support in `validate_rmd()` following the removal of {log4r} from CRAN (#672).

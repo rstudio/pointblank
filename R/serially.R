@@ -222,7 +222,7 @@
 #'     preconditions: ~. %>% dplyr::filter(a < 10)
 #'     actions:
 #'       warn_fraction: 0.1
-#'       stop_fraction: 0.2
+#'       error_fraction: 0.2
 #'     label: The `serially()` step.
 #'     active: false
 #' ```
@@ -708,7 +708,7 @@ expect_serially <- function(
     serially(
       .list = .list,
       preconditions = {{ preconditions }},
-      actions = action_levels(notify_at = threshold)
+      actions = action_levels(critical = threshold)
     ) %>%
     interrogate() %>%
     .$validation_set
@@ -759,7 +759,7 @@ test_serially <- function(
     serially(
       .list = .list,
       preconditions = {{ preconditions }},
-      actions = action_levels(notify_at = threshold)
+      actions = action_levels(critical = threshold)
     ) %>%
     interrogate() %>%
     .$validation_set

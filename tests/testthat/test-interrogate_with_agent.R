@@ -1495,7 +1495,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
       columns = vars(a),
       value = 1.5,
       na_pass = FALSE,
-      actions = action_levels(warn_at = 1)
+      actions = action_levels(warn = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -1507,7 +1507,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
       columns = vars(a),
       value = 1.5,
       na_pass = TRUE,
-      actions = action_levels(warn_at = 1)
+      actions = action_levels(warn = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -1522,7 +1522,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
       columns = vars(a),
       value = 2.0,
       na_pass = FALSE,
-      actions = action_levels(warn_at = 1)
+      actions = action_levels(warn = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -1534,7 +1534,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
       columns = vars(a),
       value = 2.0,
       na_pass = TRUE,
-      actions = action_levels(warn_at = 1)
+      actions = action_levels(warn = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -1549,7 +1549,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
       columns = vars(a),
       value = 0.5,
       na_pass = FALSE,
-      actions = action_levels(warn_at = 1)
+      actions = action_levels(warn = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -1561,7 +1561,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
       columns = vars(a),
       value = 0.5,
       na_pass = TRUE,
-      actions = action_levels(warn_at = 1)
+      actions = action_levels(warn = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -1576,7 +1576,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
       columns = vars(a),
       value = 1.0,
       na_pass = FALSE,
-      actions = action_levels(warn_at = 1)
+      actions = action_levels(warn = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -1588,7 +1588,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
       columns = vars(a),
       value = 1.0,
       na_pass = TRUE,
-      actions = action_levels(warn_at = 1)
+      actions = action_levels(warn = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -1603,7 +1603,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
       columns = vars(a),
       value = 3.0,
       na_pass = FALSE,
-      actions = action_levels(warn_at = 1)
+      actions = action_levels(warn = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -1615,7 +1615,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
       columns = vars(a),
       value = 3.0,
       na_pass = TRUE,
-      actions = action_levels(warn_at = 1)
+      actions = action_levels(warn = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -1630,7 +1630,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
       columns = vars(a),
       value = 2.5,
       na_pass = FALSE,
-      actions = action_levels(warn_at = 1)
+      actions = action_levels(warn = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -1642,7 +1642,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
       columns = vars(a),
       value = 2.5,
       na_pass = TRUE,
-      actions = action_levels(warn_at = 1)
+      actions = action_levels(warn = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -1657,7 +1657,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
       columns = vars(a),
       left = 0, right = 3.0,
       na_pass = FALSE,
-      actions = action_levels(warn_at = 1)
+      actions = action_levels(warn = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -1669,7 +1669,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
       columns = vars(a),
       left = 0, right = 3.0,
       na_pass = TRUE,
-      actions = action_levels(warn_at = 1)
+      actions = action_levels(warn = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -1684,7 +1684,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
       columns = vars(a),
       left = 3.0, right = 4.5,
       na_pass = FALSE,
-      actions = action_levels(warn_at = 1)
+      actions = action_levels(warn = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -1696,7 +1696,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
       columns = vars(a),
       left = 3.0, right = 4.5,
       na_pass = TRUE,
-      actions = action_levels(warn_at = 1)
+      actions = action_levels(warn = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -1711,7 +1711,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
       columns = vars(a),
       regex = "[0-9]-[a-z]{3}-[0-9]{3}",
       na_pass = FALSE,
-      actions = action_levels(warn_at = 1)
+      actions = action_levels(warn = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -1723,7 +1723,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
       columns = vars(a),
       regex = "[0-9]-[a-z]{3}-[0-9]{3}",
       na_pass = TRUE,
-      actions = action_levels(warn_at = 1)
+      actions = action_levels(warn = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -1756,7 +1756,7 @@ test_that("The validations with sets can include NA values", {
     col_vals_in_set(
       columns = vars(a),
       set = c("one", "two", "three", "four", "five"),
-      actions = action_levels(warn_at = 1)
+      actions = action_levels(warn = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -1767,7 +1767,7 @@ test_that("The validations with sets can include NA values", {
     col_vals_in_set(
       columns = vars(a),
       set = c("one", "two", "three", "four", "five", NA),
-      actions = action_levels(warn_at = 1)
+      actions = action_levels(warn = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -1780,7 +1780,7 @@ test_that("The validations with sets can include NA values", {
     col_vals_not_in_set(
       columns = vars(a),
       set = c("four", "five", "six", NA),
-      actions = action_levels(warn_at = 1)
+      actions = action_levels(warn = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -1791,7 +1791,7 @@ test_that("The validations with sets can include NA values", {
     col_vals_not_in_set(
       columns = vars(a),
       set = c("four", "five", "six"),
-      actions = action_levels(warn_at = 1)
+      actions = action_levels(warn = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -1925,7 +1925,7 @@ test_that("Select validation steps can be `active` or not", {
   # Perform validation directly on data with `active = TRUE`
   # for all of the validation steps; set action levels to
   # warn when there is a single unit failing in each step
-  al <- action_levels(warn_at = 1)
+  al <- action_levels(warn = 1)
 
   expect_snapshot(
     obj <- small_table %>%

@@ -73,8 +73,8 @@ for the validation step (\code{num [1]})
 \code{n_passed} / \code{n} (\code{num [1]})
 \item \code{f_failed}: the fraction of failing test units for the validation step,
 \code{n_failed} / \code{n} (\code{num [1]})
-\item \code{warn}, \code{stop}, \code{notify}: a logical value indicating whether the level
-of failing test units caused the corresponding conditions to be entered
+\item \code{warn}, \code{error}, \code{critical}: a logical value indicating whether the
+level of failing test units caused the corresponding conditions to be entered
 (\code{lgl [1]})
 \item \code{lang}: the two-letter language code that indicates which
 language should be used for all briefs, the agent report, and the reporting
@@ -85,8 +85,8 @@ If \code{i} is unspecified (i.e., not constrained to a specific validation step)
 then certain length-one components in the \strong{x-list} will be expanded to the
 total number of validation steps (these are: \code{i}, \code{type}, \code{columns},
 \code{values}, \code{briefs}, \code{eval_error}, \code{eval_warning}, \code{capture_stack}, \code{n},
-\code{n_passed}, \code{n_failed}, \code{f_passed}, \code{f_failed}, \code{warn}, \code{stop}, and
-\code{notify}). The \strong{x-list} will also have additional components when \code{i} is
+\code{n_passed}, \code{n_failed}, \code{f_passed}, \code{f_failed}, \code{warn}, \code{error}, and
+\code{critical}). The \strong{x-list} will also have additional components when \code{i} is
 \code{NULL}, which are:
 \itemize{
 \item \code{report_object}: a \strong{gt} table object, which is also presented as the
@@ -118,13 +118,13 @@ tbl
 }\if{html}{\out{</div>}}
 
 Create an \code{action_levels()} list with fractional values for the \code{warn},
-\code{stop}, and \code{notify} states.
+\code{error}, and \code{critical} states.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{al <-
   action_levels(
-    warn_at = 0.2,
-    stop_at = 0.8,
-    notify_at = 0.345
+    warn = 0.2,
+    error = 0.8,
+    critical = 0.345
   )
 }\if{html}{\out{</div>}}
 

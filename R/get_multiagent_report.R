@@ -1137,7 +1137,7 @@ generate_cell_content <- function(
                     margin_right = "4px",
                     font_size = "smaller"
                   ),
-                  htmltools::tags$code("S")
+                  htmltools::tags$code("E")
                 ),
                 htmltools::tags$span(
                   htmltools::HTML(
@@ -1172,7 +1172,7 @@ generate_cell_content <- function(
                     margin_right = "4px",
                     font_size = "smaller"
                   ),
-                  htmltools::tags$code("N")
+                  htmltools::tags$code("C")
                 ),
                 htmltools::tags$span(
                   htmltools::HTML(
@@ -1349,7 +1349,7 @@ generate_cell_content <- function(
                 style = htmltools::css(
                   font_family = "'IBM Plex Mono'"
                 ),
-                "S"
+                "E"
               ),
               htmltools::tags$span(
                 htmltools::HTML(
@@ -1372,7 +1372,7 @@ generate_cell_content <- function(
                 style = htmltools::css(
                   font_family = "'IBM Plex Mono'"
                 ),
-                "N"
+                "C"
               ),
               htmltools::tags$span(
                 htmltools::HTML(

@@ -205,7 +205,7 @@
 #'     segments: b ~ c("group_1", "group_2")
 #'     actions:
 #'       warn_fraction: 0.1
-#'       stop_fraction: 0.2
+#'       error_fraction: 0.2
 #'     label: The `row_count_match()` step.
 #'     active: false
 #' ```
@@ -444,7 +444,7 @@ expect_row_count_match <- function(
     row_count_match(
       count = {{ count }},
       preconditions = {{ preconditions }},
-      actions = action_levels(notify_at = threshold)
+      actions = action_levels(critical = threshold)
     ) %>%
     interrogate() %>%
     .$validation_set
@@ -514,7 +514,7 @@ test_row_count_match <- function(
     row_count_match(
       count = {{ count }},
       preconditions = {{ preconditions }},
-      actions = action_levels(notify_at = threshold)
+      actions = action_levels(critical = threshold)
     ) %>%
     interrogate() %>%
     .$validation_set

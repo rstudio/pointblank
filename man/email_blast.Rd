@@ -102,7 +102,7 @@ lang: en
 locale: en
 actions:
   warn_count: 1.0
-  notify_count: 2.0
+  critical_count: 2.0
 end_fns: ~email_blast(x, to = "joe_public@example.com",
   from = "pb_notif@example.com", msg_subject = "Table Validation",
   credentials = blastula::creds_key(id = "smtp2go"),

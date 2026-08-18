@@ -89,7 +89,7 @@ test_that("Interrogating simply returns the expected results", {
       col_vals_lt(
         columns = vars(a),
         value = 7,
-        actions = stop_on_fail()
+        actions = error_on_fail()
       )
   )
 
@@ -136,7 +136,7 @@ test_that("Interrogating simply returns the expected results", {
       col_vals_lte(
         columns = vars(a),
         value = 7,
-        actions = stop_on_fail()
+        actions = error_on_fail()
       )
   )
 
@@ -184,7 +184,7 @@ test_that("Interrogating simply returns the expected results", {
       col_vals_equal(
         columns = vars(d),
         value = 283.94,
-        actions = stop_on_fail()
+        actions = error_on_fail()
       )
   )
 
@@ -233,7 +233,7 @@ test_that("Interrogating simply returns the expected results", {
       col_vals_not_equal(
         columns = vars(d),
         value = 283.94,
-        actions = stop_on_fail()
+        actions = error_on_fail()
       )
   )
 
@@ -280,7 +280,7 @@ test_that("Interrogating simply returns the expected results", {
       col_vals_gte(
         columns = vars(a),
         value = 3,
-        actions = stop_on_fail()
+        actions = error_on_fail()
       )
   )
 
@@ -327,7 +327,7 @@ test_that("Interrogating simply returns the expected results", {
       col_vals_gt(
         columns = vars(a),
         value = 2,
-        actions = stop_on_fail()
+        actions = error_on_fail()
       )
   )
 
@@ -374,7 +374,7 @@ test_that("Interrogating simply returns the expected results", {
       col_vals_between(
         columns = vars(d),
         left = 0, right = 1000,
-        actions = stop_on_fail()
+        actions = error_on_fail()
       )
   )
 
@@ -421,7 +421,7 @@ test_that("Interrogating simply returns the expected results", {
       col_vals_not_between(
         columns = vars(d),
         left = 9000, right = 11000,
-        actions = stop_on_fail()
+        actions = error_on_fail()
       )
   )
 
@@ -467,7 +467,7 @@ test_that("Interrogating simply returns the expected results", {
         columns = vars(d),
         left = 0, right = 3000,
         preconditions = ~ . %>% dplyr::filter(date > "2016-01-20"),
-        actions = stop_on_fail()
+        actions = error_on_fail()
       )
   )
 
@@ -514,7 +514,7 @@ test_that("Interrogating simply returns the expected results", {
       col_vals_in_set(
         columns = vars(f),
         set = c("low", "mid", "higher"),
-        actions = stop_on_fail()
+        actions = error_on_fail()
       )
   )
 
@@ -561,7 +561,7 @@ test_that("Interrogating simply returns the expected results", {
       col_vals_not_in_set(
         columns = vars(f),
         set = c("lower", "mid", "higher"),
-        actions = stop_on_fail()
+        actions = error_on_fail()
       )
   )
 
@@ -608,7 +608,7 @@ test_that("Interrogating simply returns the expected results", {
       col_vals_in_set(
         columns = vars(f),
         set = c("low", "mid", "higher", "highest"),
-        actions = stop_on_fail()
+        actions = error_on_fail()
       )
   )
 
@@ -622,7 +622,7 @@ test_that("Interrogating simply returns the expected results", {
       col_vals_in_set(
         columns = vars(f),
         set = c("low", "mid"),
-        actions = stop_on_fail()
+        actions = error_on_fail()
       )
   )
 
@@ -682,7 +682,7 @@ test_that("Interrogating simply returns the expected results", {
       col_vals_make_subset(
         columns = vars(f),
         set = c("lower", "mid", "higher", "highest"),
-        actions = stop_on_fail()
+        actions = error_on_fail()
       )
   )
 
@@ -696,7 +696,7 @@ test_that("Interrogating simply returns the expected results", {
       col_vals_make_subset(
         columns = vars(f),
         set = c("low", "mid", "highly"),
-        actions = stop_on_fail()
+        actions = error_on_fail()
       )
   )
 
@@ -740,7 +740,7 @@ test_that("Interrogating simply returns the expected results", {
       increasing_tbl %>%
       col_vals_increasing(
         columns = vars(b),
-        actions = stop_on_fail()
+        actions = error_on_fail()
       )
   )
 
@@ -784,7 +784,7 @@ test_that("Interrogating simply returns the expected results", {
       decreasing_tbl %>%
       col_vals_decreasing(
         columns = vars(b),
-        actions = stop_on_fail()
+        actions = error_on_fail()
       )
   )
 
@@ -831,7 +831,7 @@ test_that("Interrogating simply returns the expected results", {
       col_vals_null(
         columns = vars(c),
         preconditions = ~ . %>% dplyr::filter(date != "2016-01-06"),
-        actions = stop_on_fail()
+        actions = error_on_fail()
       )
   )
 
@@ -875,7 +875,7 @@ test_that("Interrogating simply returns the expected results", {
       tbl %>%
       col_vals_not_null(
         columns = vars(c),
-        actions = stop_on_fail()
+        actions = error_on_fail()
       )
   )
 
@@ -922,7 +922,7 @@ test_that("Interrogating simply returns the expected results", {
       col_vals_regex(
         columns = vars(b),
         regex = "[0-7]-[a-z]*?-[0-9]*?",
-        actions = stop_on_fail()
+        actions = error_on_fail()
       )
   )
 
@@ -978,7 +978,7 @@ test_that("Interrogating simply returns the expected results", {
       col_vals_within_spec(
         columns = vars(isbn_numbers),
         spec = "isbn",
-        actions = stop_on_fail()
+        actions = error_on_fail()
       )
   )
 
@@ -1022,7 +1022,7 @@ test_that("Interrogating simply returns the expected results", {
       tbl %>%
       col_vals_expr(
         expr = ~ a %% 2 == 0,
-        actions = stop_on_fail()
+        actions = error_on_fail()
       )
   )
 
@@ -1052,7 +1052,7 @@ test_that("Interrogating simply returns the expected results", {
 
   # Perform a simple validation step that results in stopping
   expect_error(
-    tbl_result <- tbl %>% rows_distinct(actions = stop_on_fail())
+    tbl_result <- tbl %>% rows_distinct(actions = error_on_fail())
   )
 
   # Expect that `tbl_result` is never created
@@ -1081,7 +1081,7 @@ test_that("Interrogating simply returns the expected results", {
 
   # Perform a simple validation step that results in stopping
   expect_error(
-    tbl_result <- tbl_complete_no %>% rows_complete(actions = stop_on_fail())
+    tbl_result <- tbl_complete_no %>% rows_complete(actions = error_on_fail())
   )
 
   # Expect that `tbl_result` is never created
@@ -1119,7 +1119,7 @@ test_that("Interrogating simply returns the expected results", {
       tbl %>%
       col_is_character(
         columns = vars(a),
-        actions = stop_on_fail()
+        actions = error_on_fail()
       )
   )
 
@@ -1165,7 +1165,7 @@ test_that("Interrogating simply returns the expected results", {
       tbl %>%
       col_is_numeric(
         columns = vars(b),
-        actions = stop_on_fail()
+        actions = error_on_fail()
       )
   )
 
@@ -1209,7 +1209,7 @@ test_that("Interrogating simply returns the expected results", {
       tbl %>%
       col_is_integer(
         columns = vars(b),
-        actions = stop_on_fail()
+        actions = error_on_fail()
       )
   )
 
@@ -1253,7 +1253,7 @@ test_that("Interrogating simply returns the expected results", {
       tbl %>%
       col_is_posix(
         columns = vars(b),
-        actions = stop_on_fail()
+        actions = error_on_fail()
       )
   )
 
@@ -1297,7 +1297,7 @@ test_that("Interrogating simply returns the expected results", {
       tbl %>%
       col_is_date(
         columns = vars(b),
-        actions = stop_on_fail()
+        actions = error_on_fail()
       )
   )
 
@@ -1335,7 +1335,7 @@ test_that("Interrogating simply returns the expected results", {
       tbl %>%
       col_is_logical(
         columns = vars(b),
-        actions = stop_on_fail()
+        actions = error_on_fail()
       )
   )
 
@@ -1374,7 +1374,7 @@ test_that("Interrogating simply returns the expected results", {
       tbl %>%
       col_is_factor(
         columns = vars(a),
-        actions = stop_on_fail()
+        actions = error_on_fail()
       )
   )
 
@@ -1403,16 +1403,16 @@ test_that("Interrogating simply returns the expected results", {
   # Using the `col_exists()` function to perform
   # a simple validation step results in an error
   expect_error(
-    tbl %>% col_exists(columns = vars(h), actions = stop_on_fail())
+    tbl %>% col_exists(columns = vars(h), actions = error_on_fail())
   )
   expect_error(
-    tbl %>% col_exists(columns = "h", actions = stop_on_fail())
+    tbl %>% col_exists(columns = "h", actions = error_on_fail())
   )
   expect_error(
-    tbl %>% col_exists(columns = vars(a, h), actions = stop_on_fail())
+    tbl %>% col_exists(columns = vars(a, h), actions = error_on_fail())
   )
   expect_error(
-    tbl %>% col_exists(columns = c("a", "h"), actions = stop_on_fail())
+    tbl %>% col_exists(columns = c("a", "h"), actions = error_on_fail())
   )
 
   # Expect no warning or error if all column names are correct
@@ -1420,7 +1420,7 @@ test_that("Interrogating simply returns the expected results", {
     tbl %>% col_exists(columns = colnames(tbl), actions = warn_on_fail())
   )
   expect_no_error(
-    tbl %>% col_exists(columns = colnames(tbl), actions = stop_on_fail())
+    tbl %>% col_exists(columns = colnames(tbl), actions = error_on_fail())
   )
 
   #
@@ -1466,7 +1466,7 @@ test_that("Interrogating simply returns the expected results", {
     tbl_result <- tbl %>%
       col_schema_match(
         schema = schema_incorrect,
-        actions = stop_on_fail()
+        actions = error_on_fail()
       )
   )
 
@@ -1521,7 +1521,7 @@ test_that("Interrogating simply returns the expected results", {
       tbl_complete_yes %>%
       row_count_match(
         count = pointblank::small_table,
-        actions = stop_on_fail()
+        actions = error_on_fail()
       )
   )
 
@@ -1569,7 +1569,7 @@ test_that("Interrogating simply returns the expected results", {
       tbl_complete_yes %>%
       row_count_match(
         count = 15,
-        actions = stop_on_fail()
+        actions = error_on_fail()
       )
   )
 
@@ -1624,7 +1624,7 @@ test_that("Interrogating simply returns the expected results", {
       tbl_complete_yes %>%
       col_count_match(
         count = pointblank::small_table,
-        actions = stop_on_fail()
+        actions = error_on_fail()
       )
   )
 
@@ -1672,7 +1672,7 @@ test_that("Interrogating simply returns the expected results", {
       tbl_complete_yes %>%
       col_count_match(
         count = 15,
-        actions = stop_on_fail()
+        actions = error_on_fail()
       )
   )
 
@@ -1725,7 +1725,7 @@ test_that("Interrogating simply returns the expected results", {
       tbl_complete_yes %>%
       tbl_match(
         tbl_compare = pointblank::small_table,
-        actions = stop_on_fail()
+        actions = error_on_fail()
       )
   )
 
@@ -1784,7 +1784,7 @@ test_that("Interrogating simply returns the expected results", {
       conjointly(
         ~ col_vals_gt(., columns = vars(d), value = 200),
         ~ col_vals_lt(., columns = vars(c), value = 10),
-        actions = stop_on_fail()
+        actions = error_on_fail()
       )
   )
 
@@ -2038,7 +2038,7 @@ test_that("The inclusivity options work well for the range-based validations", {
       col_vals_between(
         columns = vars(a), left = 1, right = 10,
         inclusive = c(FALSE, FALSE),
-        actions = action_levels(warn_at = 3)
+        actions = action_levels(warn = 3)
       )
   )
   expect_warning(
@@ -2046,7 +2046,7 @@ test_that("The inclusivity options work well for the range-based validations", {
       col_vals_between(
         columns = vars(a), left = 1, right = 10,
         inclusive = c(FALSE, FALSE),
-        actions = action_levels(warn_at = 2)
+        actions = action_levels(warn = 2)
       )
   )
 

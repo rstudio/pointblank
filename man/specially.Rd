@@ -266,7 +266,7 @@ YAML representation:
     preconditions: ~. \%>\% dplyr::filter(a < 10)
     actions:
       warn_fraction: 0.1
-      stop_fraction: 0.2
+      error_fraction: 0.2
     label: The `specially()` step.
     active: false
 }\if{html}{\out{</div>}}

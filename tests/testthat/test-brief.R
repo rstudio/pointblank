@@ -152,7 +152,7 @@ test_that("Briefs batch tests: special validations", {
         ~ test_col_vals_gt(., columns = c, value = vars(a)),
         ~ col_vals_not_null(., columns = b),
         preconditions = ~ . %>% dplyr::filter(a < 10),
-        actions = action_levels(warn_at = 0.1, stop_at = 0.2),
+        actions = action_levels(warn = 0.1, error = 0.2),
         label = "The `serially()` step.",
         active = FALSE,
         brief = "custom brief"
@@ -168,7 +168,7 @@ test_that("Briefs batch tests: special validations", {
       specially(
         fn = function(x) { ... },
         preconditions = ~ . %>% dplyr::filter(a < 10),
-        actions = action_levels(warn_at = 0.1, stop_at = 0.2),
+        actions = action_levels(warn = 0.1, error = 0.2),
         label = "The `specially()` step.",
         active = FALSE,
         brief = "custom brief"
@@ -187,7 +187,7 @@ test_that("Briefs batch tests: special validations", {
         ~ col_vals_not_null(., columns = b),
         preconditions = ~ . %>% dplyr::filter(a < 10),
         # segments = b ~ c("group_1", "group_2"),
-        actions = action_levels(warn_at = 0.1, stop_at = 0.2),
+        actions = action_levels(warn = 0.1, error = 0.2),
         label = "The `conjointly()` step.",
         active = FALSE,
         brief = "custom brief"
@@ -205,7 +205,7 @@ test_that("Briefs batch tests: special validations", {
         ~ col_vals_not_null(., columns = b),
         preconditions = ~ . %>% dplyr::filter(a < 10),
         segments = b ~ c("group_1", "group_2"),
-        actions = action_levels(warn_at = 0.1, stop_at = 0.2),
+        actions = action_levels(warn = 0.1, error = 0.2),
         label = "The `conjointly()` step.",
         active = FALSE,
         brief = "custom brief constant"
@@ -216,7 +216,7 @@ test_that("Briefs batch tests: special validations", {
         ~ col_vals_not_null(., columns = b),
         preconditions = ~ . %>% dplyr::filter(a < 10),
         segments = b ~ c("group_1", "group_2"),
-        actions = action_levels(warn_at = 0.1, stop_at = 0.2),
+        actions = action_levels(warn = 0.1, error = 0.2),
         label = "The `conjointly()` step.",
         active = FALSE,
         brief = c("custom brief multi1", "custom brief multi2")

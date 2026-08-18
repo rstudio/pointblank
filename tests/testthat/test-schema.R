@@ -1,4 +1,4 @@
-al <- action_levels(stop_at = 1)
+al <- action_levels(error = 1)
 
 test_that("The `cols_schema_match()` function works with an agent", {
 

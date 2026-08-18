@@ -294,8 +294,8 @@ lang: fr
 locale: fr_CA
 actions:
   warn_fraction: 0.1
-  stop_fraction: 0.25
-  notify_fraction: 0.35
+  error_fraction: 0.25
+  critical_fraction: 0.35
   fns:
     notify: ~email_blast(x, to = "joe_public@example.com",
       from = "pb_notif@example.com",

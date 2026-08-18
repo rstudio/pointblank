@@ -270,7 +270,7 @@ print.x_list_i <- function(x, ...) {
     "({.green num [{length_rows}]})"
   )
   cli::cli_text(
-    "{.cyan $warn $stop $notify} ({.yellow lgl [{length_rows}]})"
+    "{.cyan $warn $error $critical} ({.yellow lgl [{length_rows}]})"
   )
   cli::cli_text(
     "{.cyan $lang} ({.red chr [1]})"
@@ -321,7 +321,7 @@ knit_print.x_list_i <- function(x, ...) {
       "$capture_stack (list [{length(x$capture_stack)}])\n",
       "$n $n_passed $n_failed $f_passed $f_failed ",
       "(num [{length_rows}])\n",
-      "$warn $stop $notify (lgl [{length_rows}])\n",
+      "$warn $error $critical (lgl [{length_rows}])\n",
       "$lang (chr [1])\n",
       "{bottom_rule}\n"
     )
@@ -395,7 +395,7 @@ print.x_list_n <- function(x, ...) {
     "({.green num [{length_rows}]})"
   )
   cli::cli_text(
-    "{.cyan $warn $stop $notify} ({.yellow lgl [{length_rows}]})"
+    "{.cyan $warn $error $critical} ({.yellow lgl [{length_rows}]})"
   )
   cli::cli_text(
     "{.cyan $validation_set} ",
@@ -461,7 +461,7 @@ knit_print.x_list_n <- function(x, ...) {
       "$capture_stack (list [{length(x$capture_stack)}])\n",
       "$n $n_passed $n_failed $f_passed $f_failed ",
       "(num [{length_rows}])\n",
-      "$warn $stop $notify (lgl [{length_rows}])\n",
+      "$warn $error $critical (lgl [{length_rows}])\n",
       "$validation_set (tbl_df [{validation_set_rows}, ",
       "{validation_set_cols}])\n",
       "$lang (chr [1])\n",
@@ -490,8 +490,8 @@ knit_print.x_list_n <- function(x, ...) {
 print.action_levels <- function(x, ...) {
 
   has_warn_fns <- !is.null(x$fns$warn)
-  has_stop_fns <- !is.null(x$fns$stop)
-  has_notify_fns <- !is.null(x$fns$notify)
+  has_error_fns <- !is.null(x$fns$error)
+  has_critical_fns <- !is.null(x$fns$critical)
 
   cli::cli_div(
     theme = list(
@@ -522,7 +522,7 @@ print.action_levels <- function(x, ...) {
         "{.yellow WARN} fns provided without a failure threshold."
       )
       cli::cli_alert_info(
-        "Set the {.yellow WARN} threshold using the `warn_at` argument."
+        "Set the {.yellow WARN} threshold using the `warn` argument."
       )
       cli::cli_text()
     } else {
@@ -532,56 +532,56 @@ print.action_levels <- function(x, ...) {
     }
   }
 
-  if (!is.null(x$stop_fraction)) {
+  if (!is.null(x$error_fraction)) {
     cli::cli_text(
-      "{.red STOP} failure threshold of {x$stop_fraction} of all test units."
+      "{.red ERROR} failure threshold of {x$error_fraction} of all test units."
     )
   }
-  if (!is.null(x$stop_count)) {
+  if (!is.null(x$error_count)) {
     cli::cli_text(
-      "{.red STOP} failure threshold of ",
-      "{pb_fmt_number(x$stop_count, decimals = 0)} test units."
+      "{.red ERROR} failure threshold of ",
+      "{pb_fmt_number(x$error_count, decimals = 0)} test units."
     )
   }
-  if (has_stop_fns) {
-    if (is.null(x$stop_fraction) && is.null(x$stop_count)) {
+  if (has_error_fns) {
+    if (is.null(x$error_fraction) && is.null(x$error_count)) {
       cli::cli_alert_warning(
-        "{.red STOP} fns provided without a failure threshold."
+        "{.red ERROR} fns provided without a failure threshold."
       )
       cli::cli_alert_info(
-        "Set the {.red STOP} threshold using the `stop_at` argument."
+        "Set the {.red ERROR} threshold using the `error` argument."
       )
       cli::cli_text()
     } else {
       cli::cli_text(
-        "{.red \\fns\\} {paste(as.character(x$fns$stop), collapse = ' ')}"
+        "{.red \\fns\\} {paste(as.character(x$fns$error), collapse = ' ')}"
       )
     }
   }
 
-  if (!is.null(x$notify_fraction)) {
+  if (!is.null(x$critical_fraction)) {
     cli::cli_text(
-      "{.blue NOTIFY} failure threshold of {x$notify_fraction} of all test units."
+      "{.blue CRITICAL} failure threshold of {x$critical_fraction} of all test units."
     )
   }
-  if (!is.null(x$notify_count)) {
+  if (!is.null(x$critical_count)) {
     cli::cli_text(
-      "{.blue NOTIFY} failure threshold of ",
-      "{pb_fmt_number(x$notify_count, decimals = 0)} test units."
+      "{.blue CRITICAL} failure threshold of ",
+      "{pb_fmt_number(x$critical_count, decimals = 0)} test units."
     )
   }
-  if (has_notify_fns) {
-    if (is.null(x$notify_fraction) && is.null(x$notify_count)) {
+  if (has_critical_fns) {
+    if (is.null(x$critical_fraction) && is.null(x$critical_count)) {
       cli::cli_alert_warning(
-        "{.blue NOTIFY} fns provided without a failure threshold."
+        "{.blue CRITICAL} fns provided without a failure threshold."
       )
       cli::cli_alert_info(
-        "Set the {.blue NOTIFY} threshold using the `notify_at` argument."
+        "Set the {.blue CRITICAL} threshold using the `critical` argument."
       )
       cli::cli_text()
     } else {
       cli::cli_text(
-        "{.blue \\fns\\} {paste(as.character(x$fns$notify), collapse = ' ')}"
+        "{.blue \\fns\\} {paste(as.character(x$fns$critical), collapse = ' ')}"
       )
     }
   }
@@ -602,8 +602,8 @@ print.action_levels <- function(x, ...) {
 knit_print.action_levels <- function(x, ...) {
 
   has_warn_fns <- !is.null(x$fns$warn)
-  has_stop_fns <- !is.null(x$fns$stop)
-  has_notify_fns <- !is.null(x$fns$notify)
+  has_error_fns <- !is.null(x$fns$error)
+  has_critical_fns <- !is.null(x$fns$critical)
 
   top_rule <- "-- The `action_levels` settings"
   bottom_rule <- "----"
@@ -647,76 +647,76 @@ knit_print.action_levels <- function(x, ...) {
     }
   }
 
-  if (!is.null(x$stop_fraction)) {
+  if (!is.null(x$error_fraction)) {
     action_levels_lines <-
       c(action_levels_lines,
         paste0(
-          "STOP failure threshold of ",
-          x$stop_fraction,
+          "ERROR failure threshold of ",
+          x$error_fraction,
           " of all test units."
         )
       )
   }
-  if (!is.null(x$stop_count)) {
+  if (!is.null(x$error_count)) {
     action_levels_lines <-
       c(action_levels_lines,
         paste0(
-          "STOP failure threshold of ",
-          pb_fmt_number(x$stop_count, decimals = 0),
+          "ERROR failure threshold of ",
+          pb_fmt_number(x$error_count, decimals = 0),
           "test units."
         )
       )
   }
-  if (has_stop_fns) {
-    if (is.null(x$stop_fraction) && is.null(x$stop_count)) {
+  if (has_error_fns) {
+    if (is.null(x$error_fraction) && is.null(x$error_count)) {
       action_levels_lines <-
         c(action_levels_lines,
           paste0(
-            "STOP fns provided without a failure threshold.\n",
-            "Set the STOP threshold using the `stop_at` argument.\n"
+            "ERROR fns provided without a failure threshold.\n",
+            "Set the ERROR threshold using the `error` argument.\n"
           )
         )
     } else {
       action_levels_lines <-
         c(action_levels_lines,
-          paste0("\\fns\\ ", paste(as.character(x$fns$stop), collapse = " "))
+          paste0("\\fns\\ ", paste(as.character(x$fns$error), collapse = " "))
         )
     }
   }
 
-  if (!is.null(x$notify_fraction)) {
+  if (!is.null(x$critical_fraction)) {
     action_levels_lines <-
       c(action_levels_lines,
         paste0(
-          "NOTIFY failure threshold of ",
-          x$notify_fraction,
+          "CRITICAL failure threshold of ",
+          x$critical_fraction,
           " of all test units."
         )
       )
   }
-  if (!is.null(x$notify_count)) {
+  if (!is.null(x$critical_count)) {
     action_levels_lines <-
       c(action_levels_lines,
         paste0(
-          "NOTIFY failure threshold of ",
-          pb_fmt_number(x$notify_count, decimals = 0),
+          "CRITICAL failure threshold of ",
+          pb_fmt_number(x$critical_count, decimals = 0),
           "test units."
         )
       )
   }
-  if (has_notify_fns) {
-    if (is.null(x$notify_fraction) && is.null(x$notify_count)) {
+  if (has_critical_fns) {
+    if (is.null(x$critical_fraction) && is.null(x$critical_count)) {
       action_levels_lines <-
         c(action_levels_lines,
           paste0(
-            "NOTIFY fns provided without a failure threshold.\n",
-            "Set the NOTIFY threshold using the `notify_at` argument.\n"
+            "CRITICAL fns provided without a failure threshold.\n",
+            "Set the CRITICAL threshold using the `critical` argument.\n"
           )
         )
     } else {
       action_levels_lines <-
         c(action_levels_lines,
-          paste0("\\fns\\ ", paste(as.character(x$fns$notify), collapse = " "))
+          paste0("\\fns\\ ", paste(as.character(x$fns$critical), collapse = " "))
         )
     }
   }

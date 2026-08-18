@@ -169,13 +169,13 @@
 #' instead of this
 #'
 #' ```r
-#' create_agent(tbl = small_table) %>% rows_distinct() %>% interrogate()
+#' create_agent(tbl = small_table) |> rows_distinct() |> interrogate()
 #' ````
 #'
 #' you would use this:
 #'
 #' ```r
-#' small_table %>% rows_distinct()
+#' small_table |> rows_distinct()
 #' ```
 #'
 #' This results in an error (with the default failure threshold settings),
@@ -187,7 +187,7 @@
 #' workflows. The first returns to us a logical value. So this
 #'
 #' ```r
-#' small_table %>% test_rows_distinct()
+#' small_table |> test_rows_distinct()
 #' ```
 #'
 #' returns `FALSE` instead of an error.
@@ -196,7 +196,7 @@
 #' would with **testthat**'s library of `expect_*()` functions:
 #'
 #' ```r
-#' small_table %>% expect_rows_distinct()
+#' small_table |> expect_rows_distinct()
 #' ```
 #'
 #' This test of `small_table` would be counted as a failure.
@@ -259,9 +259,9 @@
 #'   tbl_name = "small_table",
 #'   label = "An example.",
 #'   actions = action_levels(
-#'     warn_at = 0.10,
-#'     stop_at = 0.25,
-#'     notify_at = 0.35,
+#'     warn = 0.10,
+#'     error = 0.25,
+#'     critical = 0.35,
 #'     fns = list(notify = ~ email_blast(
 #'       x,
 #'       to = "joe_public@example.com",
@@ -366,9 +366,9 @@
 #' ```r
 #' al <-
 #'   action_levels(
-#'       warn_at = 0.10,
-#'       stop_at = 0.25,
-#'     notify_at = 0.35
+#'       warn = 0.10,
+#'       error = 0.25,
+#'     critical = 0.35
 #'   )
 #' ```
 #'
@@ -393,20 +393,20 @@
 #'
 #' ```r
 #' agent <-
-#'   agent %>%
-#'   col_exists(columns = c(date, date_time)) %>%
+#'   agent |>
+#'   col_exists(columns = c(date, date_time)) |>
 #'   col_vals_regex(
 #'     columns = b,
 #'     regex = "[0-9]-[a-z]{3}-[0-9]{3}"
-#'   ) %>%
-#'   rows_distinct() %>%
-#'   col_vals_gt(columns = d, value = 100) %>%
-#'   col_vals_lte(columns = c, value = 5) %>%
+#'   ) |>
+#'   rows_distinct() |>
+#'   col_vals_gt(columns = d, value = 100) |>
+#'   col_vals_lte(columns = c, value = 5) |>
 #'   col_vals_between(
 #'     columns = c,
 #'     left = vars(a), right = vars(d),
 #'     na_pass = TRUE
-#'   ) %>%
+#'   ) |>
 #'   interrogate()
 #' ```
 #'
@@ -456,7 +456,7 @@
 #' [get_data_extracts()].
 #'
 #' ```r
-#' agent %>% get_data_extracts(i = 4)
+#' agent |> get_data_extracts(i = 4)
 #' ```
 #'
 #' \preformatted{## # A tibble: 2 × 8
@@ -471,7 +471,7 @@
 #' for the 4th step with [get_agent_x_list()].
 #'
 #' ```r
-#' xl_step_4 <- agent %>% get_agent_x_list(i = 4)
+#' xl_step_4 <- agent |> get_agent_x_list(i = 4)
 #' ```
 #'
 #' And then we can peruse the different parts of the list. Let's get the

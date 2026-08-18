@@ -83,10 +83,10 @@
 #' documentation for the lowdown on how to create reactions to above-threshold
 #' failure levels in validation. The basic gist is that you'll want at least a
 #' single threshold level (specified as either the fraction of test units
-#' failed, or, an absolute value), often using the `warn_at` argument. This is
+#' failed, or, an absolute value), often using the `warn` argument. This is
 #' especially true when `x` is a table object because, otherwise, nothing
-#' happens. For the `col_is_*()`-type functions, using `action_levels(warn_at =
-#' 1)` or `action_levels(stop_at = 1)` are good choices depending on the
+#' happens. For the `col_is_*()`-type functions, using `action_levels(warn =
+#' 1)` or `action_levels(error = 1)` are good choices depending on the
 #' situation (the first produces a warning, the other will `stop()`).
 #'
 #' @section Labels:
@@ -123,10 +123,10 @@
 #' R statement:
 #'
 #' ```r
-#' agent %>%
+#' agent |>
 #'   col_is_logical(
 #'     columns = a,
-#'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
+#'     actions = action_levels(warn = 0.1, error = 0.2),
 #'     label = "The `col_is_logical()` step.",
 #'     active = FALSE
 #'   )
@@ -168,8 +168,8 @@
 #'
 #' ```r
 #' agent <-
-#'   create_agent(tbl = small_table) %>%
-#'   col_is_logical(columns = e) %>%
+#'   create_agent(tbl = small_table) |>
+#'   col_is_logical(columns = e) |>
 #'   interrogate()
 #' ```
 #'
@@ -190,8 +190,8 @@
 #' behavior of side effects can be customized with the `actions` option.
 #'
 #' ```{r}
-#' small_table %>%
-#'   col_is_logical(columns = e) %>%
+#' small_table |>
+#'   col_is_logical(columns = e) |>
 #'   dplyr::slice(1:5)
 #' ```
 #'
@@ -210,7 +210,7 @@
 #' us.
 #'
 #' ```{r}
-#' small_table %>% test_col_is_logical(columns = e)
+#' small_table |> test_col_is_logical(columns = e)
 #' ```
 #'
 #' @family validation functions

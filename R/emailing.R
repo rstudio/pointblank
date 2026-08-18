@@ -59,7 +59,7 @@
 #'   using the [get_agent_x_list()] function. The default expression is `~ TRUE
 #'   %in% x$notify`, which results in `TRUE` if there are any `TRUE` values in
 #'   the `x$notify` logical vector (i.e., any validation step that results in a
-#'   'notify' state).
+#'   'critical' state).
 #'
 #' @return Nothing is returned. The end result is the side-effect of
 #'   email-sending if certain conditions are met.
@@ -92,8 +92,8 @@
 #'       )
 #'     )
 #'   )
-#' ) %>%
-#'   col_vals_gt(a, 1) %>%
+#' ) |>
+#'   col_vals_gt(a, 1) |>
 #'   col_vals_lt(a, 7)
 #' ```
 #'
@@ -128,14 +128,14 @@
 #' For the example provided here, we'll use the included `small_table` dataset.
 #' We are also going to create an `action_levels()` list object since this is
 #' useful for demonstrating an emailing scenario. It will have absolute values
-#' for the `warn` and `notify` states (with thresholds of `1` and `2` 'fail'
+#' for the `warn` and `critical` states (with thresholds of `1` and `2` 'fail'
 #' units, respectively, for the two states).
 #'
 #' ```r
 #' al <-
 #'   action_levels(
-#'     warn_at = 1,
-#'     notify_at = 2
+#'     warn = 1,
+#'     critical = 2
 #'   )
 #' ```
 #'
@@ -149,9 +149,9 @@
 #' sent. By default this is set to `~ TRUE %in% x$notify`. Let's unpack this a
 #' bit. The variable `x` is a list (we call it an x-list) and it will be
 #' populated with elements pertaining to the agent. After interrogation, and
-#' only if action levels were set for the `notify` state, `x$notify` will be
+#' only if action levels were set for the `critical` state, `x$notify` will be
 #' present as a logical vector where the length corresponds to the number of
-#' validation steps. Thus, if any of those steps entered the `notify` state
+#' validation steps. Thus, if any of those steps entered the `critical` state
 #' (here, it would take two or more failing test units, per step, for that to
 #' happen), then the statement as a whole is `TRUE` and the email of the
 #' interrogation report will be sent. Here is the complete set of statements for
@@ -175,9 +175,9 @@
 #'         send_condition = ~ TRUE %in% x$notify
 #'       )
 #'     )
-#'   ) %>%
-#'   col_vals_gt(a, value = 1) %>%
-#'   col_vals_lt(a, value = 7) %>%
+#'   ) |>
+#'   col_vals_gt(a, value = 1) |>
+#'   col_vals_lt(a, value = 7) |>
 #'   interrogate()
 #' ```
 #'
@@ -267,14 +267,14 @@ email_blast <- function(
 #' For the example provided here, we'll use the included `small_table` dataset.
 #' We are also going to create an `action_levels()` list object since this is
 #' useful for demonstrating an emailing scenario. It will have absolute values
-#' for the `warn` and `notify` states (with thresholds of `1` and `2` 'fail'
+#' for the `warn` and `critical` states (with thresholds of `1` and `2` 'fail'
 #' units, respectively, for the two states).
 #'
 #' ```r
 #' al <-
 #'   action_levels(
-#'     warn_at = 1,
-#'     notify_at = 2
+#'     warn = 1,
+#'     critical = 2
 #'   )
 #' ```
 #'
@@ -293,10 +293,10 @@ email_blast <- function(
 #'     tbl_name = "small_table",
 #'     label = "An example.",
 #'     actions = al
-#'   ) %>%
-#'   col_vals_gt(a, value = 1) %>%
-#'   col_vals_lt(a, value = 7) %>%
-#'   interrogate() %>%
+#'   ) |>
+#'   col_vals_gt(a, value = 1) |>
+#'   col_vals_lt(a, value = 7) |>
+#'   interrogate() |>
 #'   email_create()
 #'
 #' email_object

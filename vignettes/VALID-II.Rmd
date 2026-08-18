@@ -18,11 +18,11 @@ Where would we do this? When importing data, for instance, we could pass the inc
 Let's adapt an example used in the [*VALID-I: Data Quality Reporting Workflow*](../articles/VALID-I.html) article to the pipeline data validation workflow:
 
 ```{r error=TRUE, paged.print=FALSE}
-small_table %>%
-  col_is_posix(date_time) %>%
-  col_vals_in_set(f, set = c("low", "mid", "high")) %>%
-  col_vals_lt(a, value = 10) %>%
-  col_vals_regex(b, regex = "^[0-9]-[a-z]{3}-[0-9]{3}$") %>%
+small_table |>
+  col_is_posix(date_time) |>
+  col_vals_in_set(f, set = c("low", "mid", "high")) |>
+  col_vals_lt(a, value = 10) |>
+  col_vals_regex(b, regex = "^[0-9]-[a-z]{3}-[0-9]{3}$") |>
   col_vals_between(d, left = 0, right = 5000)
 ```
 
@@ -39,23 +39,23 @@ There are ways to counteract the stopping behavior seen in the previous example.
 There are two helper functions that are convenient for this workflow: `warn_on_fail()` and `stop_on_fail()`. These functions return an `action_levels` object that either warns or stops, doing so with informative warning or error messages. The default failure threshold for each is set to `1`: one *fail* unit means that the threshold for the `WARN` or `FAIL` condition will be met. The `stop_on_fail()` helper is (behind the scenes) applied by default when using validation functions in the *VALID-II* workflow. So, the previous example is exactly the same as this expanded form:
 
 ```{r error=TRUE, paged.print=FALSE}
-small_table %>%
+small_table |>
   col_is_posix(
     date_time,
     actions = stop_on_fail(stop_at = 1)
-  ) %>%
+  ) |>
   col_vals_in_set(
     f, set = c("low", "mid", "high"),
     actions = stop_on_fail(stop_at = 1)
-  ) %>%
+  ) |>
   col_vals_lt(
     a, value = 10,
     actions = stop_on_fail(stop_at = 1)
-  ) %>%
+  ) |>
   col_vals_regex(
     b, regex = "^[0-9]-[a-z]{3}-[0-9]{3}$",
     actions = stop_on_fail(stop_at = 1)
-  ) %>%
+  ) |>
   col_vals_between(
     d, left = 0, right = 5000,
     actions = stop_on_fail(stop_at = 1)
@@ -65,23 +65,23 @@ small_table %>%
 If we want to instead issue warnings, perhaps with less stringent failure thresholds in certain steps, the `warn_on_fail()` function provides a simple way to express this.
 
 ```{r warn=TRUE, paged.print=FALSE}
-small_table %>%
+small_table |>
   col_is_posix(
     date_time,
     actions = warn_on_fail()
-  ) %>%
+  ) |>
   col_vals_in_set(
     f, set = c("low", "mid", "high"),
     actions = warn_on_fail(warn_at = 0.2)
-  ) %>%
+  ) |>
   col_vals_lt(
     a, value = 10,
     actions = warn_on_fail(warn_at = 3)
-  ) %>%
+  ) |>
   col_vals_regex(
     b, regex = "^[0-9]-[a-z]{3}-[0-9]{3}$",
     actions = warn_on_fail(warn_at = 0.2)
-  ) %>%
+  ) |>
   col_vals_between(
     d, left = 0, right = 5000,
     actions = warn_on_fail(warn_at = 1)
@@ -101,9 +101,9 @@ Let's try a hybrid approach where each of three available conditions have failur
 ```{r action_levels_set_1}
 al <-
   action_levels(
-    warn_at = 0.1,
-    stop_at = 0.2,
-    notify_at = 0.3,
+    warn = 0.1,
+    error = 0.2,
+    critical = 0.3,
     fns = list(
       warn = ~ warning("WARN threshold exceeded."),
       stop = ~ stop("STOP threshold exceeded."),
@@ -121,11 +121,11 @@ al
 Finally, we will apply this object to every validation function call in the expression (changed slightly to result in more test units failing).
 
 ```{r error=TRUE, paged.print=FALSE}
-small_table %>%
-  col_is_posix(date_time, actions = al) %>%
-  col_vals_in_set(f, set = c("low", "mid"), actions = al) %>%
-  col_vals_lt(a, value = 7, actions = al) %>%
-  col_vals_regex(b, regex = "^[0-9]-[a-w]{3}-[2-9]{3}$", actions = al) %>%
+small_table |>
+  col_is_posix(date_time, actions = al) |>
+  col_vals_in_set(f, set = c("low", "mid"), actions = al) |>
+  col_vals_lt(a, value = 7, actions = al) |>
+  col_vals_regex(b, regex = "^[0-9]-[a-w]{3}-[2-9]{3}$", actions = al) |>
   col_vals_between(d, left = 0, right = 4000, actions = al)
 ```
 

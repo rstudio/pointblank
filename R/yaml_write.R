@@ -106,15 +106,15 @@
 #' ```
 #'
 #' Creating an `action_levels` object is a common workflow step when creating a
-#' **pointblank** agent. We designate failure thresholds to the `warn`, `stop`,
-#' and `notify` states using [action_levels()].
+#' **pointblank** agent. We designate failure thresholds to the `warn`, `error`,
+#' and `critical` states using [action_levels()].
 #'
 #' ```r
 #' al <-
 #'   action_levels(
-#'     warn_at = 0.10,
-#'     stop_at = 0.25,
-#'     notify_at = 0.35
+#'     warn = 0.10,
+#'     error = 0.25,
+#'     critical = 0.35
 #'   )
 #' ```
 #'
@@ -138,14 +138,14 @@
 #'
 #' ```r
 #' agent <-
-#'   agent %>%
-#'   col_exists(columns = c(date, date_time)) %>%
+#'   agent |>
+#'   col_exists(columns = c(date, date_time)) |>
 #'   col_vals_regex(
 #'     columns = b,
 #'     regex = "[0-9]-[a-z]{3}-[0-9]{3}"
-#'   ) %>%
-#'   rows_distinct() %>%
-#'   col_vals_gt(columns = d, value = 100) %>%
+#'   ) |>
+#'   rows_distinct() |>
+#'   col_vals_gt(columns = d, value = 100) |>
 #'   col_vals_lte(columns = c, value = 5)
 #' ```
 #'
@@ -280,15 +280,15 @@
 #'
 #' ```r
 #' informant <-
-#'   informant %>%
+#'   informant |>
 #'   info_columns(
 #'     columns = a,
 #'     info = "In the range of 1 to 10. (SIMPLE)"
-#'   ) %>%
+#'   ) |>
 #'   info_columns(
 #'     columns = starts_with("date"),
 #'     info = "Time-based values (e.g., `Sys.time()`)."
-#'   ) %>%
+#'   ) |>
 #'   info_columns(
 #'     columns = date,
 #'     info = "The date part of `date_time`. (CALC)"

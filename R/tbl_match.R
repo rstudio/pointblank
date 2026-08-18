@@ -121,8 +121,8 @@
 #' documentation for the lowdown on how to create reactions to above-threshold
 #' failure levels in validation. The basic gist is that you'll want at least a
 #' single threshold level (specified as either the fraction of test units
-#' failed, or, an absolute value), often using the `warn_at` argument. Using
-#' `action_levels(warn_at = 1)` or `action_levels(stop_at = 1)` are good choices
+#' failed, or, an absolute value), often using the `warn` argument. Using
+#' `action_levels(warn = 1)` or `action_levels(error = 1)` are good choices
 #' depending on the situation (the first produces a warning, the other
 #' `stop()`s).
 #'
@@ -161,7 +161,7 @@
 #' R statement:
 #'
 #' ```r
-#' agent %>%
+#' agent |>
 #'   tbl_match(
 #'     tbl_compare = ~ file_tbl(
 #'       file = from_github(
@@ -170,9 +170,9 @@
 #'         subdir = "data-large"
 #'         )
 #'       ),
-#'     preconditions = ~ . %>% dplyr::filter(a < 10),
+#'     preconditions = \(x) x |> dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
-#'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
+#'     actions = action_levels(warn = 0.1, error = 0.2),
 #'     label = "The `tbl_match()` step.",
 #'     active = FALSE
 #'   )
@@ -241,8 +241,8 @@
 #'
 #' ```r
 #' agent <-
-#'   create_agent(tbl = tbl) %>%
-#'   tbl_match(tbl_compare = tbl_2) %>%
+#'   create_agent(tbl = tbl) |>
+#'   tbl_match(tbl_compare = tbl_2) |>
 #'   interrogate()
 #' ```
 #'
@@ -263,7 +263,7 @@
 #' behavior of side effects can be customized with the `actions` option.
 #'
 #' ```{r}
-#' tbl %>% tbl_match(tbl_compare = tbl_2)
+#' tbl |> tbl_match(tbl_compare = tbl_2)
 #' ```
 #'
 #' ## C: Using the expectation function
@@ -281,7 +281,7 @@
 #' us.
 #'
 #' ```{r}
-#' tbl %>% test_tbl_match(tbl_compare = tbl_2)
+#' tbl |> test_tbl_match(tbl_compare = tbl_2)
 #' ```
 #'
 #' @family validation functions

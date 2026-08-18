@@ -130,7 +130,7 @@
 #' the statements can be translated to SQL if necessary (i.e., if the target
 #' table resides in a database). The code is most easily supplied as a one-sided
 #' **R** formula (using a leading `~`). In the formula representation, the `.`
-#' serves as the input data table to be transformed (e.g., `~ . %>%
+#' serves as the input data table to be transformed (e.g., `\(x) x |>
 #' dplyr::mutate(col_b = col_a + 10)`). Alternatively, a function could instead
 #' be supplied (e.g., `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
 #'
@@ -173,10 +173,10 @@
 #' function's documentation for the lowdown on how to create reactions to
 #' above-threshold failure levels in validation. The basic gist is that you'll
 #' want at least a single threshold level (specified as either the fraction of
-#' test units failed, or, an absolute value), often using the `warn_at`
+#' test units failed, or, an absolute value), often using the `warn`
 #' argument. This is especially true when `x` is a table object because,
 #' otherwise, nothing happens. For the `col_vals_*()`-type functions, using
-#' `action_levels(warn_at = 0.25)` or `action_levels(stop_at = 0.25)` are good
+#' `action_levels(warn = 0.25)` or `action_levels(error = 0.25)` are good
 #' choices depending on the situation (the first produces a warning when a
 #' quarter of the total test units fails, the other `stop()`s at the same
 #' threshold level).
@@ -217,16 +217,16 @@
 #' R statement:
 #'
 #' ```r
-#' agent %>%
+#' agent |>
 #'   col_vals_not_between(
 #'     columns = a,
 #'     left = 1,
 #'     right = 2,
 #'     inclusive = c(TRUE, FALSE),
 #'     na_pass = TRUE,
-#'     preconditions = ~ . %>% dplyr::filter(a < 10),
+#'     preconditions = \(x) x |> dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
-#'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
+#'     actions = action_levels(warn = 0.1, error = 0.2),
 #'     label = "The `col_vals_not_between()` step.",
 #'     active = FALSE
 #'   )
@@ -279,12 +279,12 @@
 #'
 #' ```r
 #' agent <-
-#'   create_agent(tbl = small_table) %>%
+#'   create_agent(tbl = small_table) |>
 #'   col_vals_not_between(
 #'     columns = c,
 #'     left = 10, right = 20,
 #'     na_pass = TRUE
-#'   ) %>%
+#'   ) |>
 #'   interrogate()
 #' ```
 #'
@@ -305,12 +305,12 @@
 #' behavior of side effects can be customized with the `actions` option.
 #'
 #' ```{r}
-#' small_table %>%
+#' small_table |>
 #'   col_vals_not_between(
 #'     columns = c,
 #'     left = 10, right = 20,
 #'     na_pass = TRUE
-#'   ) %>%
+#'   ) |>
 #'   dplyr::pull(c)
 #' ```
 #'
@@ -333,7 +333,7 @@
 #' us.
 #'
 #' ```{r}
-#' small_table %>%
+#' small_table |>
 #'   test_col_vals_not_between(
 #'     columns = c,
 #'     left = 10, right = 20,
@@ -350,7 +350,7 @@
 #' (or left) bound (and any values 'not between' count as passing test units).
 #'
 #' ```{r}
-#' small_table %>%
+#' small_table |>
 #'   test_col_vals_not_between(
 #'     columns = c,
 #'     left = 9, right = 20,

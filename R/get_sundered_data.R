@@ -90,16 +90,16 @@
 #' ```r
 #' agent <-
 #'   create_agent(
-#'     tbl = small_table %>%
+#'     tbl = small_table |>
 #'       dplyr::select(a:f),
 #'     label = "`get_sundered_data()`"
-#'   ) %>%
-#'   col_vals_gt(columns = d, value = 1000) %>%
+#'   ) |>
+#'   col_vals_gt(columns = d, value = 1000) |>
 #'   col_vals_between(
 #'     columns = c,
 #'     left = vars(a), right = vars(d),
 #'     na_pass = TRUE
-#'   ) %>%
+#'   ) |>
 #'   interrogate()
 #' ```
 #'
@@ -107,7 +107,7 @@
 #' validation steps (the default piece). This yields 5 of 13 total rows.
 #'
 #' ```r
-#' agent %>% get_sundered_data()
+#' agent |> get_sundered_data()
 #' ```
 #'
 #' \preformatted{## # A tibble: 5 × 6
@@ -125,7 +125,7 @@
 #' two validation steps. This yields 8 of 13 total rows.
 #'
 #' ```r
-#' agent %>% get_sundered_data(type = "fail")
+#' agent |> get_sundered_data(type = "fail")
 #' ```
 #'
 #' \preformatted{## # A tibble: 8 × 6
@@ -147,7 +147,7 @@
 #' column will contain `"pass"` and `"fail"` values.
 #'
 #' ```r
-#' agent %>% get_sundered_data(type = "combined")
+#' agent |> get_sundered_data(type = "combined")
 #' ```
 #'
 #' \preformatted{## # A tibble: 13 × 7
@@ -173,7 +173,7 @@
 #' with the `pass_fail` argument. One possibility is `TRUE`/`FALSE`.
 #'
 #' ```r
-#' agent %>%
+#' agent |>
 #'   get_sundered_data(
 #'     type = "combined",
 #'     pass_fail = c(TRUE, FALSE)
@@ -202,7 +202,7 @@
 #' ...and using `0` and `1` might be worthwhile in some situations.
 #'
 #' ```r
-#' agent %>%
+#' agent |>
 #'   get_sundered_data(
 #'     type = "combined",
 #'     pass_fail = 0:1

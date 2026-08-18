@@ -1048,8 +1048,8 @@ info_section <- function(
 #' Generate an informant object, add two snippets with `info_snippet()`,
 #' add information with some other `info_*()` functions and then [incorporate()]
 #' the snippets into the info text. The first snippet will be made with the
-#' expression `\(x) x |> nrow()` (giving us the number of rows in the dataset) and
-#' the second uses the [snip_highest()] function with column `a` (giving us
+#' expression `\(x) x |> nrow()` (giving us the number of rows in the dataset),
+#' and the second uses the [snip_highest()] function with column `a` (giving us
 #' the highest value in that column).
 #'
 #' ```r

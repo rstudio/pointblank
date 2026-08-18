@@ -65,7 +65,7 @@ default, this is \code{FALSE}. Set to \code{TRUE} to give \code{NA}s a pass.}
 
 An optional expression for mutating the input table before proceeding with
 the validation. This can either be provided as a one-sided R formula using
-a leading \code{~} (e.g., \code{~ . \%>\% dplyr::mutate(col = col + 10)} or as a
+a leading \code{~} (e.g., \verb{\\(x) x |> dplyr::mutate(col = col + 10)} or as a
 function (e.g., \code{function(x) dplyr::mutate(x, col = col + 10)}. See the
 \emph{Preconditions} section for more information.}
 
@@ -136,7 +136,7 @@ be used with \code{.} (serving as the input data table) to evaluate to a single
 logical value. With this approach, the \strong{pointblank} function
 \code{\link[=has_columns]{has_columns()}} can be used to determine whether to make a validation step
 active on the basis of one or more columns existing in the table
-(e.g., \code{~ . \%>\% has_columns(c(d, e))}).}
+(e.g., \verb{\\(x) x |> has_columns(c(d, e))}).}
 
 \item{object}{\emph{A data table for expectations or tests}
 
@@ -226,7 +226,7 @@ where \code{preconditions} is used. Using \strong{dplyr} code is suggested here 
 the statements can be translated to SQL if necessary (i.e., if the target
 table resides in a database). The code is most easily supplied as a one-sided
 \strong{R} formula (using a leading \code{~}). In the formula representation, the \code{.}
-serves as the input data table to be transformed (e.g., \code{~ . \%>\% dplyr::mutate(col_b = col_a + 10)}). Alternatively, a function could instead
+serves as the input data table to be transformed (e.g., \verb{\\(x) x |> dplyr::mutate(col_b = col_a + 10)}). Alternatively, a function could instead
 be supplied (e.g., \code{function(x) dplyr::mutate(x, col_b = col_a + 10)}).
 }
 
@@ -272,10 +272,10 @@ object that is best produced by the \code{\link[=action_levels]{action_levels()}
 function's documentation for the lowdown on how to create reactions to
 above-threshold failure levels in validation. The basic gist is that you'll
 want at least a single threshold level (specified as either the fraction of
-test units failed, or, an absolute value), often using the \code{warn_at}
+test units failed, or, an absolute value), often using the \code{warn}
 argument. This is especially true when \code{x} is a table object because,
 otherwise, nothing happens. For the \verb{col_vals_*()}-type functions, using
-\code{action_levels(warn_at = 0.25)} or \code{action_levels(stop_at = 0.25)} are good
+\code{action_levels(warn = 0.25)} or \code{action_levels(error = 0.25)} are good
 choices depending on the situation (the first produces a warning when a
 quarter of the total test units fails, the other \code{stop()}s at the same
 threshold level).
@@ -322,12 +322,12 @@ representation.
 
 R statement:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent |>
   col_vals_expr(
     expr = ~ a \%\% 1 == 0,
-    preconditions = ~ . \%>\% dplyr::filter(a < 10),
+    preconditions = \\(x) x |> dplyr::filter(a < 10),
     segments = b ~ c("group_1", "group_2"),
-    actions = action_levels(warn_at = 0.1, stop_at = 0.2),
+    actions = action_levels(warn = 0.1, error = 0.2),
     label = "The `col_vals_expr()` step.",
     active = FALSE
   )
@@ -386,8 +386,8 @@ operator and expecting \code{0}. We'll determine if this validation has any
 failing test units (there are 6 test units, one for each row).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
-  create_agent(tbl = tbl) \%>\%
-  col_vals_expr(expr = expr(a \%\% 1 == 0)) \%>\%
+  create_agent(tbl = tbl) |>
+  col_vals_expr(expr = expr(a \%\% 1 == 0)) |>
   interrogate()
 }\if{html}{\out{</div>}}
 
@@ -408,8 +408,8 @@ This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
 behavior of side effects can be customized with the \code{actions} option.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
-  col_vals_expr(expr = expr(a \%\% 1 == 0)) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl |>
+  col_vals_expr(expr = expr(a \%\% 1 == 0)) |>
   dplyr::pull(a)
 #> [1] 1 2 1 7 8 6
 }\if{html}{\out{</div>}}
@@ -439,9 +439,9 @@ us.
 We can do more complex things by taking advantage of the \code{case_when()} and
 \code{between()} functions (available for use in the \strong{pointblank} package).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl |>
   test_col_vals_expr(expr = ~ case_when(
-    b == 0 ~ a \%>\% between(0, 5) & c < 1,
+    b == 0 ~ a |> between(0, 5) & c < 1,
     b == 1 ~ a > 5 & c >= 1
   ))
 #> [1] TRUE
@@ -451,11 +451,11 @@ If you only want to test a subset of rows, then the \code{case_when()} statement
 doesn't need to be exhaustive. Any rows that don't fall into the cases will
 be pruned (giving us less test units overall).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl |>
   test_col_vals_expr(expr = ~ case_when(
     b == 1 ~ a > 5 & c >= 1
   ))
-#> Warning in test_col_vals_expr(., expr = ~case_when(b == 1 ~ a > 5 & c >= :
+#> Warning in test_col_vals_expr(tbl, expr = ~case_when(b == 1 ~ a > 5 & c >= :
 #> Expression generated `NA` value(s). Edit the `expr` or specify `na_pass`
 #> (default is `FALSE`).
 #> [1] FALSE

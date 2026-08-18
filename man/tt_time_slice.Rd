@@ -108,7 +108,7 @@ Omit the first 25\% of records from \code{small_table}, also included in the
 package, with a fractional \code{slice_point} of \code{0.25} on the basis of a timeline
 that begins at \verb{2016-01-04 11:00:00} and ends at \verb{2016-01-30 11:23:00}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table |>
   tt_time_slice(
     slice_point = 0.25,
     keep = "right"

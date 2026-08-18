@@ -64,9 +64,9 @@ pointblank agent. We designate failure thresholds to the \code{warn}, \code{stop
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{al <-
   action_levels(
-    warn_at = 0.10,
-    stop_at = 0.25,
-    notify_at = 0.35
+    warn = 0.10,
+    error = 0.25,
+    critical = 0.35
   )
 }\if{html}{\out{</div>}}
 
@@ -87,15 +87,15 @@ As with any agent object, we can add steps to the validation plan by using as
 many validation functions as we want. Then, we \code{\link[=interrogate]{interrogate()}}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
-  agent \%>\%
-  col_exists(columns = c(date, date_time)) \%>\%
+  agent |>
+  col_exists(columns = c(date, date_time)) |>
   col_vals_regex(
     columns = b,
     regex = "[0-9]-[a-z]\{3\}-[0-9]\{3\}"
-  ) \%>\%
-  rows_distinct() \%>\%
-  col_vals_gt(columns = d, value = 100) \%>\%
-  col_vals_lte(columns = c, value = 5) \%>\%
+  ) |>
+  rows_distinct() |>
+  col_vals_gt(columns = d, value = 100) |>
+  col_vals_lte(columns = c, value = 5) |>
   interrogate()
 }\if{html}{\out{</div>}}
 
@@ -137,27 +137,27 @@ integrated into the text.
     tbl = ~ small_table,
     tbl_name = "small_table",
     label = "`export_report()`"
-  ) \%>\%
+  ) |>
   info_snippet(
     snippet_name = "high_a",
     fn = snip_highest(column = "a")
-  ) \%>\%
+  ) |>
   info_snippet(
     snippet_name = "low_a",
     fn = snip_lowest(column = "a")
-  ) \%>\%
+  ) |>
   info_columns(
     columns = a,
     info = "From \{low_a\} to \{high_a\}."
-  ) \%>\%
+  ) |>
   info_columns(
     columns = starts_with("date"),
     info = "Time-based values."
-  ) \%>\%
+  ) |>
   info_columns(
     columns = date,
     info = "The date part of `date_time`."
-  ) \%>\%
+  ) |>
   incorporate()
 }\if{html}{\out{</div>}}
 

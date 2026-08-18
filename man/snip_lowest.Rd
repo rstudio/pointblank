@@ -35,15 +35,15 @@ the snippet into the info text. Note here that the order of the
     tbl = ~ small_table,
     tbl_name = "small_table",
     label = "An example."
-  ) \%>\%
+  ) |>
   info_columns(
     columns = a,
     `Lowest Value` = "Lowest value is \{lowest_a\}."
-  ) \%>\%
+  ) |>
   info_snippet(
     snippet_name = "lowest_a",
     fn = snip_lowest(column = "a")
-  ) \%>\%
+  ) |>
   incorporate()
 }\if{html}{\out{</div>}}
 

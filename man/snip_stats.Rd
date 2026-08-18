@@ -53,15 +53,15 @@ the snippet into the info text. Note here that the order of the
     tbl = ~ small_table,
     tbl_name = "small_table",
     label = "An example."
-  ) \%>\%
+  ) |>
   info_columns(
     columns = d,
     `Stats` = "Stats (fivenum): \{stats_d\}."
-  ) \%>\%
+  ) |>
   info_snippet(
     snippet_name = "stats_d",
     fn = snip_stats(column = "d")
-  ) \%>\%
+  ) |>
   incorporate()
 }\if{html}{\out{</div>}}
 

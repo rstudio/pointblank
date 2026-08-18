@@ -41,7 +41,7 @@ then that won't happen. The expression can use x-list variables (e.g.,
 \code{x$notify}, \code{x$type}, etc.) and all of those variables can be explored
 using the \code{\link[=get_agent_x_list]{get_agent_x_list()}} function. The default expression is \code{~ TRUE \%in\% x$notify}, which results in \code{TRUE} if there are any \code{TRUE} values in
 the \code{x$notify} logical vector (i.e., any validation step that results in a
-'notify' state).}
+'critical' state).}
 }
 \value{
 Nothing is returned. The end result is the side-effect of
@@ -87,8 +87,8 @@ R statement:
       )
     )
   )
-) \%>\%
-  col_vals_gt(a, 1) \%>\%
+) |>
+  col_vals_gt(a, 1) |>
   col_vals_lt(a, 7)
 }\if{html}{\out{</div>}}
 
@@ -124,13 +124,13 @@ steps:
 For the example provided here, we'll use the included \code{small_table} dataset.
 We are also going to create an \code{action_levels()} list object since this is
 useful for demonstrating an emailing scenario. It will have absolute values
-for the \code{warn} and \code{notify} states (with thresholds of \code{1} and \code{2} 'fail'
+for the \code{warn} and \code{critical} states (with thresholds of \code{1} and \code{2} 'fail'
 units, respectively, for the two states).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{al <-
   action_levels(
-    warn_at = 1,
-    notify_at = 2
+    warn = 1,
+    critical = 2
   )
 }\if{html}{\out{</div>}}
 
@@ -144,9 +144,9 @@ argument of \code{create_agent()}. The \code{email_blast()} call itself has a
 sent. By default this is set to \code{~ TRUE \%in\% x$notify}. Let's unpack this a
 bit. The variable \code{x} is a list (we call it an x-list) and it will be
 populated with elements pertaining to the agent. After interrogation, and
-only if action levels were set for the \code{notify} state, \code{x$notify} will be
+only if action levels were set for the \code{critical} state, \code{x$notify} will be
 present as a logical vector where the length corresponds to the number of
-validation steps. Thus, if any of those steps entered the \code{notify} state
+validation steps. Thus, if any of those steps entered the \code{critical} state
 (here, it would take two or more failing test units, per step, for that to
 happen), then the statement as a whole is \code{TRUE} and the email of the
 interrogation report will be sent. Here is the complete set of statements for
@@ -169,9 +169,9 @@ interrogation of data in \code{small_table}:
         send_condition = ~ TRUE \%in\% x$notify
       )
     )
-  ) \%>\%
-  col_vals_gt(a, value = 1) \%>\%
-  col_vals_lt(a, value = 7) \%>\%
+  ) |>
+  col_vals_gt(a, value = 1) |>
+  col_vals_lt(a, value = 7) |>
   interrogate()
 }\if{html}{\out{</div>}}
 

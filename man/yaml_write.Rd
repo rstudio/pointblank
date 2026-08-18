@@ -114,14 +114,14 @@ eventually offload the developed validation plan to a YAML file.
 }\if{html}{\out{</div>}}
 
 Creating an \code{action_levels} object is a common workflow step when creating a
-\strong{pointblank} agent. We designate failure thresholds to the \code{warn}, \code{stop},
-and \code{notify} states using \code{\link[=action_levels]{action_levels()}}.
+\strong{pointblank} agent. We designate failure thresholds to the \code{warn}, \code{error},
+and \code{critical} states using \code{\link[=action_levels]{action_levels()}}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{al <-
   action_levels(
-    warn_at = 0.10,
-    stop_at = 0.25,
-    notify_at = 0.35
+    warn = 0.10,
+    error = 0.25,
+    critical = 0.35
   )
 }\if{html}{\out{</div>}}
 
@@ -143,14 +143,14 @@ Then, as with any \code{agent} object, we can add steps to the validation plan b
 using as many validation functions as we want.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
-  agent \%>\%
-  col_exists(columns = c(date, date_time)) \%>\%
+  agent |>
+  col_exists(columns = c(date, date_time)) |>
   col_vals_regex(
     columns = b,
     regex = "[0-9]-[a-z]\{3\}-[0-9]\{3\}"
-  ) \%>\%
-  rows_distinct() \%>\%
-  col_vals_gt(columns = d, value = 100) \%>\%
+  ) |>
+  rows_distinct() |>
+  col_vals_gt(columns = d, value = 100) |>
   col_vals_lte(columns = c, value = 5)
 }\if{html}{\out{</div>}}
 
@@ -278,15 +278,15 @@ Then, as with any \code{informant} object, we can add info text to the
 using as many \verb{info_*()} functions as we want.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <-
-  informant \%>\%
+  informant |>
   info_columns(
     columns = a,
     info = "In the range of 1 to 10. (SIMPLE)"
-  ) \%>\%
+  ) |>
   info_columns(
     columns = starts_with("date"),
     info = "Time-based values (e.g., `Sys.time()`)."
-  ) \%>\%
+  ) |>
   info_columns(
     columns = date,
     info = "The date part of `date_time`. (CALC)"

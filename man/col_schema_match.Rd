@@ -143,7 +143,7 @@ be used with \code{.} (serving as the input data table) to evaluate to a single
 logical value. With this approach, the \strong{pointblank} function
 \code{\link[=has_columns]{has_columns()}} can be used to determine whether to make a validation step
 active on the basis of one or more columns existing in the table
-(e.g., \code{~ . \%>\% has_columns(c(d, e))}).}
+(e.g., \verb{\\(x) x |> has_columns(c(d, e))}).}
 
 \item{object}{\emph{A data table for expectations or tests}
 
@@ -236,8 +236,8 @@ that is best produced by the \code{\link[=action_levels]{action_levels()}} funct
 documentation for the lowdown on how to create reactions to above-threshold
 failure levels in validation. The basic gist is that you'll want at least a
 single threshold level (specified as either the fraction of test units
-failed, or, an absolute value), often using the \code{warn_at} argument. Using
-\code{action_levels(warn_at = 1)} or \code{action_levels(stop_at = 1)} are good choices
+failed, or, an absolute value), often using the \code{warn} argument. Using
+\code{action_levels(warn = 1)} or \code{action_levels(error = 1)} are good choices
 depending on the situation (the first produces a warning, the other
 \code{stop()}s).
 }
@@ -280,7 +280,7 @@ representation.
 
 R statement:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent |>
   col_schema_match(
     schema = col_schema(
       a = "integer",
@@ -289,7 +289,7 @@ R statement:
     complete = FALSE,
     in_order = FALSE,
     is_exact = FALSE,
-    actions = action_levels(stop_at = 1),
+    actions = action_levels(error = 1),
     label = "The `col_schema_match()` step.",
     active = FALSE
   )
@@ -370,8 +370,8 @@ and column types. We'll determine if this validation has a failing test unit
 (there is a single test unit governed by whether there is a match).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
-  create_agent(tbl = tbl) \%>\%
-  col_schema_match(schema = schema_obj) \%>\%
+  create_agent(tbl = tbl) |>
+  col_schema_match(schema = schema_obj) |>
   interrogate()
 }\if{html}{\out{</div>}}
 
@@ -392,7 +392,7 @@ This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
 behavior of side effects can be customized with the \code{actions} option.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% col_schema_match(schema = schema_obj)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl |> col_schema_match(schema = schema_obj)
 #> # A tibble: 5 x 2
 #>       a b    
 #>   <int> <chr>
@@ -418,7 +418,7 @@ time. This is primarily used in \strong{testthat} tests.
 With the \verb{test_*()} form, we should get a single logical value returned to
 us.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% test_col_schema_match(schema = schema_obj)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl |> test_col_schema_match(schema = schema_obj)
 #> [1] TRUE
 }\if{html}{\out{</div>}}
 }

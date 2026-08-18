@@ -61,9 +61,9 @@ R statement for generating the \code{"tbl_store.yml"} file:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl_store(
   tbl_duckdb ~ db_tbl(small_table, dbname = ":memory:", dbtype = "duckdb"),
-  sml_table_high ~ small_table \%>\% dplyr::filter(f == "high"),
+  sml_table_high ~ small_table |> dplyr::filter(f == "high"),
   .init = ~ library(tidyverse)
-) \%>\%
+) |>
   yaml_write()
 }\if{html}{\out{</div>}}
 
@@ -72,7 +72,7 @@ YAML representation (\code{"tbl_store.yml"}):
 \if{html}{\out{<div class="sourceCode yaml">}}\preformatted{type: tbl_store
 tbls:
   tbl_duckdb: ~ db_tbl(small_table, dbname = ":memory:", dbtype = "duckdb")
-  sml_table_high: ~ small_table \%>\% dplyr::filter(f == "high")
+  sml_table_high: ~ small_table |> dplyr::filter(f == "high")
 init: ~library(tidyverse)
 }\if{html}{\out{</div>}}
 
@@ -89,9 +89,9 @@ to YAML:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{create_agent(
   tbl = ~ tbl_source("sml_table_high", "tbl_store.yml"),
   label = "An example that uses a table store.",
-  actions = action_levels(warn_at = 0.10)
-) \%>\%
-  col_exists(c(date, date_time)) \%>\%
+  actions = action_levels(warn = 0.10)
+) |>
+  col_exists(c(date, date_time)) |>
   write_yaml()
 }\if{html}{\out{</div>}}
 
@@ -138,7 +138,7 @@ and \code{sml_table_high} (a filtered version of \code{tbl_duckdb}):
         pointblank::small_table,
         dbname = ":memory:",
         dbtype = "duckdb"
-      ) \%>\%
+      ) |>
       dplyr::filter(f == "high")
   )
 }\if{html}{\out{</div>}}
@@ -211,7 +211,7 @@ the revised \code{tbl_store()} call:
         dbtype = "duckdb"
       ),
     sml_table_high ~
-      \{\{ tbl_duckdb \}\} \%>\%
+      \{\{ tbl_duckdb \}\} |>
       filter(f == "high"),
     .init = ~ library(tidyverse)
   )
@@ -351,7 +351,7 @@ produced to your specification with the \code{\link[=tbl_get]{tbl_get()}} functi
 Another way to get the same table materialized is by using \code{$} to get the
 entry of choice for \code{\link[=tbl_get]{tbl_get()}}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{store_3$small_table_duck \%>\% tbl_get()
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{store_3$small_table_duck |> tbl_get()
 }\if{html}{\out{</div>}}
 
 \preformatted{## # Source:   table<small_table> [?? x 8]

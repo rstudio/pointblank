@@ -169,12 +169,12 @@ become output data (without modification), but there may be warnings, errors,
 or other side effects that you can define if validation fails. Basically,
 instead of this
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{create_agent(tbl = small_table) \%>\% rows_distinct() \%>\% interrogate()
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{create_agent(tbl = small_table) |> rows_distinct() |> interrogate()
 }\if{html}{\out{</div>}}
 
 you would use this:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% rows_distinct()
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table |> rows_distinct()
 }\if{html}{\out{</div>}}
 
 This results in an error (with the default failure threshold settings),
@@ -185,7 +185,7 @@ We can use variants of the validation functions, the \emph{test} (\verb{test_*()
 \emph{expectation} (\verb{expect_*()}) versions, directly on the data for different
 workflows. The first returns to us a logical value. So this
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% test_rows_distinct()
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table |> test_rows_distinct()
 }\if{html}{\out{</div>}}
 
 returns \code{FALSE} instead of an error.
@@ -193,7 +193,7 @@ returns \code{FALSE} instead of an error.
 In a unit testing scenario, we can use \emph{expectation} functions exactly as we
 would with \strong{testthat}'s library of \verb{expect_*()} functions:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\% expect_rows_distinct()
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table |> expect_rows_distinct()
 }\if{html}{\out{</div>}}
 
 This test of \code{small_table} would be counted as a failure.
@@ -261,9 +261,9 @@ R statement:
   tbl_name = "small_table",
   label = "An example.",
   actions = action_levels(
-    warn_at = 0.10,
-    stop_at = 0.25,
-    notify_at = 0.35,
+    warn = 0.10,
+    error = 0.25,
+    critical = 0.35,
     fns = list(notify = ~ email_blast(
       x,
       to = "joe_public@example.com",
@@ -386,9 +386,9 @@ states using \code{\link[=action_levels]{action_levels()}}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{al <-
   action_levels(
-      warn_at = 0.10,
-      stop_at = 0.25,
-    notify_at = 0.35
+      warn = 0.10,
+      error = 0.25,
+    critical = 0.35
   )
 }\if{html}{\out{</div>}}
 
@@ -411,20 +411,20 @@ using as many validation functions as we want. then, we use \code{\link[=interro
 to actually perform the validations and gather intel.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
-  agent \%>\%
-  col_exists(columns = c(date, date_time)) \%>\%
+  agent |>
+  col_exists(columns = c(date, date_time)) |>
   col_vals_regex(
     columns = b,
     regex = "[0-9]-[a-z]\{3\}-[0-9]\{3\}"
-  ) \%>\%
-  rows_distinct() \%>\%
-  col_vals_gt(columns = d, value = 100) \%>\%
-  col_vals_lte(columns = c, value = 5) \%>\%
+  ) |>
+  rows_distinct() |>
+  col_vals_gt(columns = d, value = 100) |>
+  col_vals_lte(columns = c, value = 5) |>
   col_vals_between(
     columns = c,
     left = vars(a), right = vars(d),
     na_pass = TRUE
-  ) \%>\%
+  ) |>
   interrogate()
 }\if{html}{\out{</div>}}
 
@@ -472,7 +472,7 @@ We can see from the validation report that Step 4 (which used the
 duplicated rows, that failed. We can see those rows with
 \code{\link[=get_data_extracts]{get_data_extracts()}}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% get_data_extracts(i = 4)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent |> get_data_extracts(i = 4)
 }\if{html}{\out{</div>}}
 
 \preformatted{## # A tibble: 2 × 8
@@ -486,7 +486,7 @@ duplicated rows, that failed. We can see those rows with
 We can get an x-list for the entire validation process (7 steps), or, just
 for the 4th step with \code{\link[=get_agent_x_list]{get_agent_x_list()}}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{xl_step_4 <- agent \%>\% get_agent_x_list(i = 4)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{xl_step_4 <- agent |> get_agent_x_list(i = 4)
 }\if{html}{\out{</div>}}
 
 And then we can peruse the different parts of the list. Let's get the

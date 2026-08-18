@@ -50,12 +50,12 @@ agent_1 <-
     tbl = small_table,
     tbl_name = "small_table",
     label = "An example."
-  ) \%>\%
-  col_exists(columns = date) \%>\%
+  ) |>
+  col_exists(columns = date) |>
   col_vals_regex(
     columns = b,
     regex = "[0-9]-[a-z]{3}-[0-9]"
-  ) \%>\%
+  ) |>
   interrogate()
 
 # The second validation step is
@@ -65,8 +65,8 @@ agent_1 <-
 # was decided that the step should
 # be deactivated for now
 agent_2 <-
-  agent_1 \%>\%
-  deactivate_steps(i = 2) \%>\%
+  agent_1 |>
+  deactivate_steps(i = 2) |>
   interrogate()
 
 }

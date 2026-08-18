@@ -37,13 +37,13 @@ will make the HTML email message appear in the Viewer.
 For the example provided here, we'll use the included \code{small_table} dataset.
 We are also going to create an \code{action_levels()} list object since this is
 useful for demonstrating an emailing scenario. It will have absolute values
-for the \code{warn} and \code{notify} states (with thresholds of \code{1} and \code{2} 'fail'
+for the \code{warn} and \code{critical} states (with thresholds of \code{1} and \code{2} 'fail'
 units, respectively, for the two states).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{al <-
   action_levels(
-    warn_at = 1,
-    notify_at = 2
+    warn = 1,
+    critical = 2
   )
 }\if{html}{\out{</div>}}
 
@@ -61,10 +61,10 @@ email just by printing \code{email_object}. It should appear in the Viewer.
     tbl_name = "small_table",
     label = "An example.",
     actions = al
-  ) \%>\%
-  col_vals_gt(a, value = 1) \%>\%
-  col_vals_lt(a, value = 7) \%>\%
-  interrogate() \%>\%
+  ) |>
+  col_vals_gt(a, value = 1) |>
+  col_vals_lt(a, value = 7) |>
+  interrogate() |>
   email_create()
 
 email_object

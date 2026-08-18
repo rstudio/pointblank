@@ -28,7 +28,7 @@ snippet formula into \emph{info text} defined by an \verb{info_*()} function.}
 A formula that obtains a snippet of data from the target table. It's best
 to use a leading dot (\code{.}) that stands for the table itself and use pipes
 to construct a series of operations to be performed on the table (e.g.,
-\code{~ . \%>\% dplyr::pull(column_2) \%>\% max(na.rm = TRUE)}). So long as the
+\verb{\\(x) x |> dplyr::pull(column_2) |> max(na.rm = TRUE)}). So long as the
 result is a length-1 vector, it'll likely be valid for insertion into some
 info text. Alternatively, a \verb{snip_*()} function can be used here (these
 functions always return a formula that's suitable for all types of data
@@ -78,20 +78,20 @@ the YAML output (showing both the \code{meta_snippets} and \code{columns} keys t
 demonstrate their relationship here).
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{# R statement
-informant \%>\%
+informant |>
   info_columns(
     columns = date_time,
     `Latest Date` = "The latest date is \{latest_date\}."
-  ) \%>\%
+  ) |>
   info_snippet(
     snippet_name = "latest_date",
-    fn = ~ . \%>\% dplyr::pull(date) \%>\% max(na.rm = TRUE)
-  ) \%>\%
+    fn = \\(x) x |> dplyr::pull(date) |> max(na.rm = TRUE)
+  ) |>
   incorporate()
 
 # YAML representation
 meta_snippets:
-  latest_date: ~. \%>\% dplyr::pull(date) \%>\% max(na.rm = TRUE)
+  latest_date: \\(x) x |> dplyr::pull(date) |> max(na.rm = TRUE)
 ...
 columns:
   date_time:
@@ -116,7 +116,7 @@ Take the \code{small_table} dataset included in \strong{pointblank} and assign i
 Generate an informant object, add two snippets with \code{info_snippet()},
 add information with some other \verb{info_*()} functions and then \code{\link[=incorporate]{incorporate()}}
 the snippets into the info text. The first snippet will be made with the
-expression \code{~ . \%>\% nrow()} (giving us the number of rows in the dataset) and
+expression \verb{\\(x) x |> nrow()} (giving us the number of rows in the dataset) and
 the second uses the \code{\link[=snip_highest]{snip_highest()}} function with column \code{a} (giving us
 the highest value in that column).
 
@@ -125,31 +125,31 @@ the highest value in that column).
     tbl = ~ test_table,
     tbl_name = "test_table",
     label = "An example."
-  ) \%>\%
+  ) |>
   info_snippet(
     snippet_name = "row_count",
-    fn = ~ . \%>\% nrow()
-  ) \%>\%
+    fn = \\(x) x |> nrow()
+  ) |>
   info_snippet(
     snippet_name = "max_a",
     fn = snip_highest(column = "a")
-  ) \%>\%
+  ) |>
   info_columns(
     columns = a,
     info = "In the range of 1 to \{max_a\}. ((SIMPLE))"
-  ) \%>\%
+  ) |>
   info_columns(
     columns = starts_with("date"),
     info = "Time-based values (e.g., `Sys.time()`)."
-  ) \%>\%
+  ) |>
   info_columns(
     columns = date,
     info = "The date part of `date_time`. ((CALC))"
-  ) \%>\%
+  ) |>
   info_section(
     section_name = "rows",
     row_count = "There are \{row_count\} rows available."
-  ) \%>\%
+  ) |>
   incorporate()
 }\if{html}{\out{</div>}}
 
@@ -168,14 +168,14 @@ Let's modify \code{test_table} with some \strong{dplyr} to give it more rows and
 extra column.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{test_table <-
-  dplyr::bind_rows(test_table, test_table) \%>\%
+  dplyr::bind_rows(test_table, test_table) |>
   dplyr::mutate(h = a + c)
 }\if{html}{\out{</div>}}
 
 Using \code{\link[=incorporate]{incorporate()}} on the \code{informant} object will cause the snippets to be
 reprocessed, and, the info text to be updated.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- informant \%>\% incorporate()
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- informant |> incorporate()
 
 informant
 }\if{html}{\out{</div>}}

@@ -88,7 +88,7 @@ Calls of \code{action_levels()} could also be applied directly to any validation
 step and this will act as an override if set also in \code{\link[=create_agent]{create_agent()}}. Usage
 of \code{action_levels()} is required to have any useful side effects (i.e.,
 warnings, throwing errors) in the case of validation functions operating
-directly on data (e.g., \code{mtcars \%>\% col_vals_lt("mpg", 35)}). There are two
+directly on data (e.g., \code{mtcars |> col_vals_lt("mpg", 35)}). There are two
 helper functions that are convenient when using validation functions directly
 on data (the \code{agent}-less workflow): \code{warn_on_fail()} and \code{error_on_fail()}.
 These helpers either warn or stop (default failure threshold for each is set
@@ -103,7 +103,7 @@ slightly differently if using an \emph{agent} or using validation functions
 directly on a data table. For convenience, when working directly on data, any
 values supplied to \code{warn} or \code{error} will be automatically given a stock
 \code{warning()} or \code{stop()} function. For example using
-\code{small_table \%>\% col_is_integer("date")} will provide a detailed stop message
+\code{small_table |> col_is_integer("date")} will provide a detailed stop message
 by default, indicating the reason for the failure. If you were to supply the
 \code{fns} for \code{warn} or \code{error} manually then the stock functions would be
 overridden. Furthermore, if \code{actions} is NULL in this workflow (the default),
@@ -183,13 +183,13 @@ validation steps and interrogate the \code{small_table}.
   create_agent(
     tbl = small_table,
     actions = al
-  ) \%>\%
+  ) |>
   col_vals_gt(
     columns = a, value = 2
-  ) \%>\%
+  ) |>
   col_vals_lt(
     columns = d, value = 20000
-  ) \%>\%
+  ) |>
   interrogate()
 }\if{html}{\out{</div>}}
 
@@ -214,14 +214,14 @@ another such object to the validation step instead (this time using the
   create_agent(
     tbl = small_table,
     actions = al
-  ) \%>\%
+  ) |>
   col_vals_gt(
     columns = a, value = 2,
     actions = warn_on_fail(warn = 0.5)
-  ) \%>\%
+  ) |>
   col_vals_lt(
     columns = d, value = 20000
-  ) \%>\%
+  ) |>
   interrogate()
 }\if{html}{\out{</div>}}
 
@@ -243,7 +243,7 @@ involvement of an agent) we want to trigger warnings and raise errors. The
 following will yield a warning if it is executed (returning the \code{small_table}
 data).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table |>
   col_vals_gt(
     columns = a, value = 2,
     actions = warn_on_fail(warn = 2)
@@ -279,7 +279,7 @@ data).
 With the same pipeline, not supplying anything for \code{actions} (it's \code{NULL} by
 default) will have the same effect as using \code{error_on_fail(error = 1)}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table |>
   col_vals_gt(columns = a, value = 2)
 }\if{html}{\out{</div>}}
 
@@ -292,7 +292,7 @@ default) will have the same effect as using \code{error_on_fail(error = 1)}.
 
 Here's the equivalent set of statements:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table |>
   col_vals_gt(
     columns = a, value = 2,
     actions = error_on_fail(error = 1)

@@ -136,14 +136,14 @@ dataset in this package.
 }\if{html}{\out{</div>}}
 
 To set failure limits and signal conditions, we designate proportional
-failure thresholds to the \code{warn}, \code{stop}, and \code{notify} states using
+failure thresholds to the \code{warn}, \code{error}, and \code{critical} states using
 \code{action_levels()}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{al <-
   action_levels(
-    warn_at = 0.05,
-    stop_at = 0.10,
-    notify_at = 0.20
+    warn = 0.05,
+    error = 0.10,
+    critical = 0.20
   )
 }\if{html}{\out{</div>}}
 
@@ -156,34 +156,34 @@ steps are created and the agent will interrogate the \code{small_table}.
     tbl = small_table,
     label = "An example.",
     actions = al
-  ) \%>\%
+  ) |>
   col_vals_gt(
     columns = date_time,
     value = vars(date),
     na_pass = TRUE
-  ) \%>\%
+  ) |>
   col_vals_gt(
     columns = b,
     value = vars(g),
     na_pass = TRUE
-  ) \%>\%
-  rows_distinct() \%>\%
+  ) |>
+  rows_distinct() |>
   col_vals_equal(
     columns = d,
     value = vars(d),
     na_pass = TRUE
-  ) \%>\%
+  ) |>
   col_vals_between(
     columns = c,
     left = vars(a), right = vars(d)
-  ) \%>\%
+  ) |>
   col_vals_not_between(
     columns = c,
     left = 10, right = 20,
     na_pass = TRUE
-  ) \%>\%
-  rows_distinct(columns = d, e, f) \%>\%
-  col_is_integer(columns = a) \%>\%
+  ) |>
+  rows_distinct(columns = d, e, f) |>
+  col_is_integer(columns = a) |>
   interrogate()
 }\if{html}{\out{</div>}}
 
@@ -191,13 +191,13 @@ The second agent, \code{agent_2}, retains all of the steps of \code{agent_1} and
 two more (the last of which is inactive).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_2 <-
-  agent_1 \%>\%
-  col_exists(columns = date, date_time) \%>\%
+  agent_1 |>
+  col_exists(columns = date, date_time) |>
   col_vals_regex(
     columns = b,
     regex = "[0-9]-[a-z]\{3\}-[0-9]\{3\}",
     active = FALSE
-  ) \%>\%
+  ) |>
   interrogate()
 }\if{html}{\out{</div>}}
 
@@ -205,13 +205,13 @@ The third agent, \code{agent_3}, adds a single validation step, removes the fift
 one, and deactivates the first.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_3 <-
-  agent_2 \%>\%
+  agent_2 |>
   col_vals_in_set(
     columns = f,
     set = c("low", "mid", "high")
-  ) \%>\%
-  remove_steps(i = 5) \%>\%
-  deactivate_steps(i = 1) \%>\%
+  ) |>
+  remove_steps(i = 5) |>
+  deactivate_steps(i = 1) |>
   interrogate()
 }\if{html}{\out{</div>}}
 
@@ -219,10 +219,10 @@ The fourth and final agent, \code{agent_4}, reactivates steps 1 and 10, and
 removes the sixth step.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_4 <-
-  agent_3 \%>\%
-  activate_steps(i = 1) \%>\%
-  activate_steps(i = 10) \%>\%
-  remove_steps(i = 6) \%>\%
+  agent_3 |>
+  activate_steps(i = 1) |>
+  activate_steps(i = 10) |>
+  remove_steps(i = 6) |>
   interrogate()
 }\if{html}{\out{</div>}}
 

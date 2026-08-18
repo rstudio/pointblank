@@ -69,7 +69,7 @@ Allows for the use of a list as an input alternative to \code{...}.}
 
 An optional expression for mutating the input table before proceeding with
 the validation. This can either be provided as a one-sided R formula using
-a leading \code{~} (e.g., \code{~ . \%>\% dplyr::mutate(col = col + 10)} or as a
+a leading \code{~} (e.g., \verb{\\(x) x |> dplyr::mutate(col = col + 10)} or as a
 function (e.g., \code{function(x) dplyr::mutate(x, col = col + 10)}. See the
 \emph{Preconditions} section for more information.}
 
@@ -130,7 +130,7 @@ be used with \code{.} (serving as the input data table) to evaluate to a single
 logical value. With this approach, the \strong{pointblank} function
 \code{\link[=has_columns]{has_columns()}} can be used to determine whether to make a validation step
 active on the basis of one or more columns existing in the table
-(e.g., \code{~ . \%>\% has_columns(c(d, e))}).}
+(e.g., \verb{\\(x) x |> has_columns(c(d, e))}).}
 
 \item{object}{\emph{A data table for expectations or tests}
 
@@ -264,7 +264,7 @@ where \code{preconditions} is used. Using \strong{dplyr} code is suggested here 
 the statements can be translated to SQL if necessary (i.e., if the target
 table resides in a database). The code is most easily supplied as a one-sided
 \strong{R} formula (using a leading \code{~}). In the formula representation, the \code{.}
-serves as the input data table to be transformed (e.g., \code{~ . \%>\% dplyr::mutate(col_b = col_a + 10)}). Alternatively, a function could instead
+serves as the input data table to be transformed (e.g., \verb{\\(x) x |> dplyr::mutate(col_b = col_a + 10)}). Alternatively, a function could instead
 be supplied (e.g., \code{function(x) dplyr::mutate(x, col_b = col_a + 10)}).
 }
 
@@ -277,10 +277,10 @@ object that is best produced by the \code{\link[=action_levels]{action_levels()}
 function's documentation for the lowdown on how to create reactions to
 above-threshold failure levels in validation. The basic gist is that you'll
 want at least a single threshold level (specified as either the fraction of
-test units failed, or, an absolute value), often using the \code{warn_at}
+test units failed, or, an absolute value), often using the \code{warn}
 argument. This is especially true when \code{x} is a table object because,
 otherwise, nothing happens. For the \verb{col_vals_*()}-type functions, using
-\code{action_levels(warn_at = 0.25)} or \code{action_levels(stop_at = 0.25)} are good
+\code{action_levels(warn = 0.25)} or \code{action_levels(error = 0.25)} are good
 choices depending on the situation (the first produces a warning when a
 quarter of the total test units fails, the other \code{stop()}s at the same
 threshold level).
@@ -324,13 +324,13 @@ representation.
 
 R statement:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent |>
   serially(
     ~ test_col_vals_lt(., columns = a, value = 8),
     ~ test_col_vals_gt(., columns = c, value = vars(a)),
     ~ col_vals_not_null(., columns = b),
-    preconditions = ~ . \%>\% dplyr::filter(a < 10),
-    actions = action_levels(warn_at = 0.1, stop_at = 0.2),
+    preconditions = \\(x) x |> dplyr::filter(a < 10),
+    actions = action_levels(warn = 0.1, error = 0.2),
     label = "The `serially()` step.",
     active = FALSE
   )
@@ -393,12 +393,12 @@ validation has any failing test units (there are 4 tests and a final
 validation).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_1 <-
-  create_agent(tbl = tbl) \%>\%
+  create_agent(tbl = tbl) |>
   serially(
     ~ test_col_is_numeric(., columns = c(a, b)),
     ~ test_col_vals_not_null(., columns = c(a, b)),
     ~ col_vals_gt(., columns = b, value = vars(a))
-    ) \%>\%
+    ) |>
   interrogate()
 }\if{html}{\out{</div>}}
 
@@ -419,11 +419,11 @@ The final validation is optional and so here is a variation where only the
 serial tests are performed.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_2 <-
-  create_agent(tbl = tbl) \%>\%
+  create_agent(tbl = tbl) |>
   serially(
     ~ test_col_is_numeric(., columns = c(a, b)),
     ~ test_col_vals_not_null(., columns = c(a, b))
-  ) \%>\%
+  ) |>
   interrogate()
 }\if{html}{\out{</div>}}
 
@@ -442,7 +442,7 @@ This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
 behavior of side effects can be customized with the \code{actions} option.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl |>
   serially(
     ~ test_col_is_numeric(., columns = c(a, b)),
     ~ test_col_vals_not_null(., columns = c(a, b)),
@@ -476,7 +476,7 @@ time. This is primarily used in \strong{testthat} tests.
 With the \verb{test_*()} form, we should get a single logical value returned to
 us.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl |>
   test_serially(
     ~ test_col_is_numeric(., columns = c(a, b)),
     ~ test_col_vals_not_null(., columns = c(a, b)),

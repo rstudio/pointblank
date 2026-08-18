@@ -114,7 +114,7 @@ A different strategy is to provide the data-reading function call directly to
       ),
       col_types = "TDdcddlc"
     )
-  ) \%>\%
+  ) |>
   col_vals_gt(columns = a, value = 0)
 }\if{html}{\out{</div>}}
 
@@ -141,8 +141,8 @@ gets the same CSV file from the GitHub repository for the pointblank package.
     ),
     tbl_name = "small_table",
     label = "`file_tbl()` example.",
-  ) \%>\%
-  col_vals_gt(columns = a, value = 0) \%>\%
+  ) |>
+  col_vals_gt(columns = a, value = 0) |>
   interrogate()
 }\if{html}{\out{</div>}}
 
@@ -177,7 +177,7 @@ with two named entries for table preparations involving the \code{\link[=tbl_sto
       ),
       col_types = "TDdcddlc"
     ),
-    small_high_file ~ \{\{ small_table_file \}\} \%>\%
+    small_high_file ~ \{\{ small_table_file \}\} |>
       dplyr::filter(f == "high")
   )
 }\if{html}{\out{</div>}}

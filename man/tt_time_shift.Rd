@@ -83,8 +83,8 @@ Keeping only the \code{date_time} and \code{a}-\code{f} columns of \code{small_t
 included in the package, shift the times back 2 days and 12 hours with the
 \code{"-2d 12H"} specification.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
-  dplyr::select(-date) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table |>
+  dplyr::select(-date) |>
   tt_time_shift("-2d 12H")
 #> # A tibble: 13 x 7
 #>    date_time               a b             c      d e     f    

@@ -1,22 +1,66 @@
 # pointblank (development version)
 
-- The failure threshold levels in `action_levels()` have been renamed to align with Python pointblank: `stop` → `error` and `notify` → `critical`. The old parameter names (`warn_at`, `stop_at`, `notify_at`) are deprecated with informative messages. The internal fields of the `action_levels` object now use `error_fraction`/`error_count` and `critical_fraction`/`critical_count`. YAML files written with new names are fully supported; old YAML files with `stop_fraction`/`notify_fraction` keys are still readable. The `action_fns()` function is now exported. The `get_multiagent_report()` display now uses W/E/C labels (was W/S/N). (#611)
+- The `stop` and `notify` threshold levels in `action_levels()` are renamed to `error` and `critical` (aligning with Python pointblank), with deprecation warnings for old names; `action_fns()` is now exported. (#611)
 
-- Bugfix agents auto-generating a table label that was too long. They now get truncated (#614)
+# pointblank 0.12.4
 
-- Bugfix agents not searching the formula environment when materializing `~ tbl` (#599)
+* Deprecated `log4r_step()` and logging support in `validate_rmd()` following the removal of {log4r} from CRAN (#672).
 
-- `info_columns()` warn more informatively when no columns are selected (#589).
+* Fixed rendering of ampersands in `specially()` assertions within the agent report (#661). (#673)
 
-- `write_yaml()` errors more informatively when `tbl` value is incompatible for yaml-writing (#597)
+* Fixed `get_sundered_data()` failing on DB tables when using `type = "combined"` (#637). (#649, @pachadotdev)
 
-- Data extracts for `rows_distinct()`/`rows_complete()` preserves all columns, not just the ones tested (#588, #591)
+* Fixed `export_report()` not working for multiagent objects (#449). (#647, @pachadotdev)
 
-- The `brief` argument of validation functions now also supports `{glue}` syntax (#587)
+* Fixed `scan_data()` error caused by incorrect access to dplyr/ggplot2 namespace (#628). (#646, @pachadotdev)
 
-- Validation step `brief`s correctly recycle to match expanded steps (#564)
+* Fixed plot error when dimensions exceed 50 inches (#365). (#648, @pachadotdev)
 
-- A new Get Started vignette (#605).
+* Fixed DuckDB tables throwing an error when passed to `create_agent()` due to newline handling in identifier strings (#635). (#639, @petrbouchal)
+
+* Fixed passing of variable names to the `preconditions` argument (#315). (#671, @pachadotdev)
+
+* Avoided use of deprecated `dplyr::case_match()`. (#669, @olivroy)
+
+# pointblank 0.12.3
+
+* We now support validation checks of Oracle tables via ODBC (#462). (#644, @pachadotdev)
+
+* Redshift table support has now been fixed (#538). (#623, #643, @pachadotdev and @hfrick)
+
+* Added the `na_pass` argument to `col_vals_expr()` for finer control of `NA` values. Previously, `NA`s were ignored, but now they are caught as failures with the default `na_pass = FALSE`. As a safeguard, if an expression generates `NA` values while `na_pass` is not explicitly supplied, a warning is thrown (#616). (#617)
+
+* Added an infix resolution for `log4r_step()`'s `message` argument (#654). (#656, @alexpaynter) 
+
+* Fixed the issue where an agent would auto-generating a table label that was too long (truncation occurs now) (#613). (#614)
+
+* Fixed problem where agents would not search the formula environment when materializing `~ tbl` (#598). (#599)
+
+* `info_columns()` now warns more informatively when no columns are selected (#344). (#589).
+
+* `write_yaml()` errors more informatively now when a `tbl` value is incompatible for YAML-writing (#596). (#597)
+
+* The `yaml_agent_string()` function now returns the yaml string (#609). (#610)
+
+* The `col_vals_regex()` function now supports Perl regexes (#606). (#608)
+
+* We now use a safeguard to fall back to the original string as-is if glue interpolation fails (useful in cases where a user-provided regex like `{1,2}` is to be preservedin in autobrief but triggers an error by {glue}) (#600). (#601)
+
+* Data extracts for `rows_distinct()`/`rows_complete()` now preserve all columns, not just the ones tested (#475). (#588, #591)
+
+* The `brief` argument of validation functions now also supports `{glue}` syntax. (#587)
+
+* Validation step `brief`s correctly recycle to match expanded steps. (#564)
+
+* Performed extensive refactoring of internal dplyr and ggplot2 code. (#579, #582, #583, @olivroy)
+
+* Rebuilt translation table and added support for ordered factors in `scan_data()`. (#580, @olivroy)
+
+* Modernized test infrastructure and removed deprecated testthat features. (#577, @olivroy)
+
+* Added a new Get Started vignette. (#605, @hfrick)
+
+* The README.md has undergone some refinements. (#618)
 
 # pointblank 0.12.2
 

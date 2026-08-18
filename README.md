@@ -14,6 +14,7 @@
 [![Monthly Downloads](https://cranlogs.r-pkg.org/badges/pointblank)](https://CRAN.R-project.org/package=pointblank)
 [![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/pointblank)](https://CRAN.R-project.org/package=pointblank)
 [![Posit Cloud](https://img.shields.io/badge/Posit%20Cloud-pointblank%20Test%20Drive-blue?style=social&logo=rstudio&logoColor=75AADB)](https://rstudio.cloud/project/3411822)
+[![Discord](https://img.shields.io/discord/1345877328982446110?color=%237289da&label=Discord)](https://discord.com/invite/YH7CybCNCQ)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.1%20adopted-ff69b4.svg)](https://www.contributor-covenant.org/version/2/1/code_of_conduct.html)
 <!-- badges: end -->
 
@@ -78,14 +79,16 @@ agent <-
     actions = al
   ) %>%
   col_vals_between(
-    vars(a), 1, 9,
+    columns = a,
+    left = 1,
+    right = 9,
     na_pass = TRUE
   ) %>%
   col_vals_lt(
-    vars(c), 12,
+    columns = c, 12,
     preconditions = ~ . %>% dplyr::mutate(c = a + b)
   ) %>%
-  col_is_numeric(vars(a, b)) %>%
+  col_is_numeric(columns = c(a, b)) %>%
   interrogate()
 ```
 
@@ -139,14 +142,17 @@ dplyr::tibble(
     b = c(6, 1, 0, 6,  0, 7)
   ) %>%
   col_vals_between(
-    a, 1, 9,
+    columns = a,
+    left = 1,
+    right = 9,
     na_pass = TRUE
   ) %>%
   col_vals_lt(
-    c, 12,
+    columns = c,
+    value = 12,
     preconditions = ~ . %>% dplyr::mutate(c = a + b)
   ) %>%
-  col_is_numeric(c(a, b))
+  col_is_numeric(columns = c(a, b))
 ```
 
     Error: Exceedance of failed test units where values in `c` should have been < `12`.
@@ -167,17 +173,20 @@ dplyr::tibble(
     b = c(6, 1, 0, 6,  0, 7)
   ) %>%
   col_vals_between(
-    a, 1, 9,
+    columns = a,
+    left = 1,
+    right = 9,
     na_pass = TRUE,
     actions = warn_on_fail()
   ) %>%
   col_vals_lt(
-    c, 12,
+    columns = c,
+    value = 12,
     preconditions = ~ . %>% dplyr::mutate(c = a + b),
     actions = warn_on_fail()
   ) %>%
   col_is_numeric(
-    c(a, b),
+    columns = c(a, b),
     actions = warn_on_fail()
   )
 ```
@@ -203,30 +212,6 @@ thresholds and side effects for each failure state. However, with
 `warn_on_fail()` and `stop_on_fail()` (applied by default, with
 `stop_at = 1`), you should have good enough options for this validation
 workflow.
-
-<hr>
-
-## VALIDATIONS IN R MARKDOWN DOCUMENTS
-
-Using **pointblank** in an R Markdown workflow is enabled by default
-once the **pointblank** library is loaded. The framework allows for
-validation testing within specialized validation code chunks where the
-`validate = TRUE` option is set. Using **pointblank** validation
-functions on data in these marked code chunks will flag overall failure
-if the stop threshold is exceeded anywhere. All errors are reported in
-the validation code chunk after rendering the document to HTML, where
-green or red status buttons indicate whether all validations succeeded
-or failures occurred. Click them to reveal the otherwise hidden
-validation statements and any associated error messages.
-
-<p align="center">
-
-<img src="man/figures/pointblank_rmarkdown.png" width="100%" style="border:2px solid #021a40;">
-
-</p>
-
-The above R Markdown document is available as a template in the RStudio
-IDE; it’s called `Pointblank Validation`.
 
 <hr>
 
@@ -340,13 +325,6 @@ a *Test Drive* in the [Posit Cloud project](https://rstudio.cloud/project/341182
 
 <hr>
 
-## DISCUSSIONS
-
-Let's talk about data validation and data documentation in
-[**pointblank** Discussions](https://github.com/rstudio/pointblank/discussions)!
-It's a great place to ask questions about how to use the package, discuss
-some ideas, engage with others, and much more!
-
 ## INSTALLATION
 
 Want to try this out? The **pointblank** package is available on **CRAN**:
@@ -362,9 +340,21 @@ You can also install the development version of **pointblank** from **GitHub**:
 pak::pak("rstudio/pointblank")
 ```
 
+## Getting in Touch
+
 If you encounter a bug, have usage questions, or want to share ideas to
 make this package better, feel free to file an
 [issue](https://github.com/rstudio/pointblank/issues).
+
+Wanna talk about data validation in a more relaxed setting? Join our
+[_Discord server_](https://discord.com/invite/YH7CybCNCQ)! This is a great option for asking about
+the development of **pointblank**, pitching ideas that may become features, and just sharing your ideas!
+
+[![Discord Server](https://img.shields.io/badge/Discord-Chat%20with%20us-blue?style=social&logo=discord&logoColor=purple)](https://discord.com/invite/YH7CybCNCQ)
+
+## Pointblank for Python
+
+There's also a version of **pointblank** for Python, a project that got off the ground in late 2024 and is gaining traction in the Python community. You can find it at https://github.com/posit-dev/pointblank.
 
 -----
 

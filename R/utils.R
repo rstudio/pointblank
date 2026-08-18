@@ -84,8 +84,48 @@ is_tbl_mssql <- function(x) {
     return(FALSE)
   }
 
+  # detect by class
+  if (any(grepl("mssql|sqlserver", class(x), ignore.case = TRUE))) {
+    return(TRUE)
+  }
+
+  # fallback to parsing source details
   tbl_src_details <- tolower(get_tbl_dbi_src_details(x))
   grepl("sql server|sqlserver", tbl_src_details)
+}
+
+is_tbl_duckdb <- function(x) {
+
+  if (!is_tbl_dbi(x)) {
+    return(FALSE)
+  }
+
+  if (any(grepl("duckdb", class(x), ignore.case = TRUE))) {
+    return(TRUE)
+  }
+
+  tbl_src_details <- tolower(get_tbl_dbi_src_details(x))
+  grepl("duckdb", tbl_src_details)
+}
+
+is_tbl_sqlite <- function(x) {
+
+  if (!is_tbl_dbi(x)) {
+    return(FALSE)
+  }
+
+  if (any(grepl("sqlite", class(x), ignore.case = TRUE))) {
+    return(TRUE)
+  }
+
+  tbl_src_details <- tolower(get_tbl_dbi_src_details(x))
+  grepl("sqlite", tbl_src_details)
+}
+
+# Check if table type requires numeric logical values (1/0) instead of
+# logicals
+uses_numeric_logical <- function(x) {
+  is_tbl_mssql(x) || is_tbl_duckdb(x) || is_tbl_sqlite(x)
 }
 
 # nocov end
@@ -765,8 +805,16 @@ get_tbl_dbi_src_info <- function(tbl) {
 }
 
 get_tbl_dbi_src_details <- function(tbl) {
-  tbl_src_info <- get_tbl_dbi_src_info(tbl)
-  tbl_src_info[grepl("^src:", tbl_src_info)] %>% gsub("src:\\s*", "", .)
+  tbl_src_info <- trimws(get_tbl_dbi_src_info(tbl))
+  src_lines <- tbl_src_info[grepl("^src:", tbl_src_info)]
+  if (length(src_lines) > 0) {
+    result <- gsub("src:\\s*", "", src_lines[1])
+    result <- trimws(result)
+    return(result)
+  }
+
+  # if no "src:" line found
+  ""
 }
 
 get_r_column_names_types <- function(tbl) {
@@ -876,26 +924,51 @@ get_tbl_information_dbi <- function(tbl) {
 
   tbl_src_details <- tolower(get_tbl_dbi_src_details(tbl))
 
-  if (grepl("sql server|sqlserver", tbl_src_details)) {
+  if (grepl("sql server|sqlserver", tbl_src_details) || 
+      any(grepl("mssql|sqlserver", class(tbl), ignore.case = TRUE))) {
 
     # nocov start
     tbl_src <- "mssql"
     # nocov end
 
-  } else if (grepl("duckdb", tbl_src_details)) {
+  } else if (grepl("duckdb", tbl_src_details) || 
+             any(grepl("duckdb", class(tbl), ignore.case = TRUE))) {
 
     # nocov start
     tbl_src <- "duckdb"
     # nocov end
 
-  } else if (grepl("bq_|bigquery", tbl_src_details)) {
+  } else if (grepl("bq_|bigquery", tbl_src_details) || 
+             any(grepl("bigquery", class(tbl), ignore.case = TRUE))) {
 
     # nocov start
     tbl_src <- "bigquery"
     # nocov end
 
+  } else if (any(grepl("sqlite", class(tbl), ignore.case = TRUE))) {
+
+    tbl_src <- "sqlite"
+
+  } else if (grepl("oracle", tbl_src_details)) {
+
+    # nocov start
+    tbl_src <- "oracle"
+    # nocov end
+
   } else {
-    tbl_src <- gsub("^([a-z]*).*", "\\1", get_tbl_dbi_src_details(tbl))
+    # try to extract from src details, fallback to class inspection
+    if (nchar(tbl_src_details) > 0) {
+      tbl_src <- gsub("^([a-z]*).*", "\\1", tbl_src_details)
+    } else {
+      class_str <- paste(class(tbl), collapse = " ")
+      if (grepl("postgres", class_str, ignore.case = TRUE)) {
+        tbl_src <- "postgres"
+      } else if (grepl("mysql", class_str, ignore.case = TRUE)) {
+        tbl_src <- "mysql"
+      } else {
+        tbl_src <- "unknown"
+      }
+    }
   }
 
   db_tbl_name <- as.character(dbplyr::remote_name(tbl))
@@ -969,6 +1042,21 @@ get_tbl_information_dbi <- function(tbl) {
 
       # nocov end
 
+    } else if (tbl_src == "oracle") {
+
+      # nocov start
+
+      q_types <-
+        as.character(
+          glue::glue(
+            "SELECT DATA_TYPE FROM \\
+          USER_TAB_COLUMNS WHERE \\
+          table_name = '{toupper(db_tbl_name)}' AND ROWNUM <= {n_cols}"
+          )
+        )
+
+      # nocov end
+
     } else {
 
         q_types <-
@@ -996,6 +1084,18 @@ get_tbl_information_dbi <- function(tbl) {
     # nocov end
   }
 
+  if (tbl_src == "oracle") {
+
+    # nocov start
+
+    db_col_types <-
+      DBI::dbGetQuery(tbl_connection, q_types) %>%
+      dplyr::pull(DATA_TYPE) %>%
+      tolower()
+
+    # nocov end
+  }
+
   if (tbl_src %in% c("duckdb", "sqlite")) {
 
     db_col_types <-
@@ -1018,7 +1118,7 @@ get_tbl_information_dbi <- function(tbl) {
       tolower()
   }
 
-  if (!(tbl_src %in% c("duckdb", "sqlite", "postgres"))) {
+  if (!(tbl_src %in% c("duckdb", "sqlite", "postgres", "oracle"))) {
 
     # nocov start
 

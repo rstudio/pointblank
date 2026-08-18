@@ -873,7 +873,36 @@ get_agent_report <- function(
         assertion_str <- assertion_type[x]
 
         if (assertion_str == "specially") {
-          values_i <- capture_function(values_i)
+
+          text <- capture_function(values_i)
+          text <- gsub("$", "&dollar;", text, fixed = TRUE)
+
+          if (size == "small") {
+
+            return(
+              paste0(
+                "<div><p title=\"", text, "\" style=\"margin-top: 0px; ",
+                "margin-bottom: 0px; ",
+                "font-family: monospace; white-space: nowrap; ",
+                "text-overflow: ellipsis; overflow: hidden;\">",
+                text,
+                "</p></div>"
+              )
+            )
+
+          } else {
+
+            return(
+              paste0(
+                "<div><p style=\"margin-top: 0px; ",
+                "margin-bottom: 0px; ",
+                "font-size: 11px; white-space: nowrap; ",
+                "text-overflow: ellipsis; overflow: hidden;\">",
+                "<code>", text, "</code>",
+                "</p></div>"
+              )
+            )
+          }
         }
 
         # In the `serially()` step, there are two possibilities for what

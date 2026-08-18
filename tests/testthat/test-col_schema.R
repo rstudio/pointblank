@@ -241,3 +241,40 @@ test_that("`col_schema_match()` works properly", {
   expect_error(tbl %>% col_schema_match(schema_obj_cnc_2, complete = FALSE, in_order = FALSE))
   expect_error(tbl %>% col_schema_match(schema_obj_cnc_3, complete = FALSE, in_order = FALSE))
 })
+
+test_that("col_schema() with positional table arg works in pipeline (#657)", {
+
+  schema_from_tbl <- col_schema(tbl)
+
+  # Should pass when validating the same table
+
+  expect_identical(tbl %>% col_schema_match(schema_from_tbl), tbl)
+
+  # Should also work with is_exact = FALSE
+  expect_identical(
+    tbl %>% col_schema_match(schema_from_tbl, is_exact = FALSE),
+    tbl
+  )
+})
+
+test_that("is_exact = FALSE catches wrong types on logical columns in pipeline (#670)", {
+
+  # Wrong type for logical column should error in pipeline
+  expect_error(
+    data.frame(a = 1:2, b = rep(TRUE, 2)) %>%
+      col_schema_match(
+        col_schema(a = "integer", b = "anything"),
+        is_exact = FALSE
+      )
+  )
+
+  # Correct type for logical column should pass
+  expect_identical(
+    data.frame(a = 1:2, b = rep(TRUE, 2)) %>%
+      col_schema_match(
+        col_schema(a = "integer", b = "logical"),
+        is_exact = FALSE
+      ),
+    data.frame(a = 1:2, b = rep(TRUE, 2))
+  )
+})

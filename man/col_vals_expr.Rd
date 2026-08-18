@@ -9,6 +9,7 @@
 col_vals_expr(
   x,
   expr,
+  na_pass = FALSE,
   preconditions = NULL,
   segments = NULL,
   actions = NULL,
@@ -18,9 +19,21 @@ col_vals_expr(
   active = TRUE
 )
 
-expect_col_vals_expr(object, expr, preconditions = NULL, threshold = 1)
+expect_col_vals_expr(
+  object,
+  expr,
+  na_pass = FALSE,
+  preconditions = NULL,
+  threshold = 1
+)
 
-test_col_vals_expr(object, expr, preconditions = NULL, threshold = 1)
+test_col_vals_expr(
+  object,
+  expr,
+  na_pass = FALSE,
+  preconditions = NULL,
+  threshold = 1
+)
 }
 \arguments{
 \item{x}{\emph{A pointblank agent or a data table}
@@ -38,6 +51,13 @@ commonly created with \code{\link[=create_agent]{create_agent()}}.}
 A predicate expression to use for this validation. This can either be in
 the form of a call made with the \code{expr()} function or as a one-sided \strong{R}
 formula (using a leading \code{~}).}
+
+\item{na_pass}{\emph{Allow missing values to pass validation}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+Should any encountered \code{NA} values be considered as passing test units? By
+default, this is \code{FALSE}. Set to \code{TRUE} to give \code{NA}s a pass.}
 
 \item{preconditions}{\emph{Input table modification prior to validation}
 
@@ -180,6 +200,14 @@ The types of data tables that are officially supported are:
 Other database tables may work to varying degrees but they haven't been
 formally tested (so be mindful of this when using unsupported backends with
 \strong{pointblank}).
+}
+
+\section{Missing Values}{
+
+
+This validation function supports special handling of \code{NA} values. The
+\code{na_pass} argument will determine whether an \code{NA} value appearing in a test
+unit should be counted as a \emph{pass} or a \emph{fail}. The default of \code{na_pass = FALSE} means that any \code{NA}s encountered will accumulate failing test units.
 }
 
 \section{Preconditions}{
@@ -427,7 +455,10 @@ be pruned (giving us less test units overall).
   test_col_vals_expr(expr = ~ case_when(
     b == 1 ~ a > 5 & c >= 1
   ))
-#> [1] TRUE
+#> Warning in test_col_vals_expr(., expr = ~case_when(b == 1 ~ a > 5 & c >= :
+#> Expression generated `NA` value(s). Edit the `expr` or specify `na_pass`
+#> (default is `FALSE`).
+#> [1] FALSE
 }\if{html}{\out{</div>}}
 }
 }

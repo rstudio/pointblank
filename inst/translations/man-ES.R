@@ -270,10 +270,8 @@
 #' personalizable.
 #' 
 #' Las funciones [x_write_disk()], [yaml_write()] permiten la escritura de
-#' objetos **pointblank** al disco. Además, la función [log4r_step()] tiene
-#' el argumento `append_to` que acepta nombres de archivo, y es razonable que un
-#' La serie de archivos de registro se puede diferenciar por un componente de
-#' fecha en el nombre esquema. La modificación de la cadena del nombre del
+#' objetos **pointblank** al disco. La serie de archivos de registro se puede
+#' diferenciar por un componente de fecha en el nombre esquema. La modificación de la cadena del nombre del
 #' archivo tiene efecto inmediatamente, pero no en el momento de escribir un
 #' archivo en el disco. En la mayoría de los casos, especialmente cuando usando
 #' `affix_date()` con las funciones de escritura de archivos antes mencionadas,

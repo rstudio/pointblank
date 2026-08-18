@@ -615,6 +615,17 @@ col_schema <- function(
 
   x <- rlang::list2(...)
 
+  # If a single unnamed table object was passed via `...`, treat it as `.tbl`
+  if (
+    is.null(.tbl) &&
+    length(x) == 1L &&
+    (is.null(names(x)) || !nzchar(names(x))) &&
+    inherits(x[[1]], "data.frame")
+  ) {
+    .tbl <- x[[1]]
+    x <- list()
+  }
+
   # Transform SQL column types to lowercase to allow
   # both uppercase and lowercase conventions while
   # standardizing the input

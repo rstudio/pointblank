@@ -48,7 +48,7 @@ If you are assessing the data quality to make sure no poor data is fed into a da
 
 ## A Simple Validation Table
 
-If you are building a report on the state of your data quality you can capture more fine-graned information in a validation table.
+If you are building a report on the state of your data quality you can capture more fine-grained information in a validation table.
 
 This is the validation report table produced from the above validation of `small_table`:
 

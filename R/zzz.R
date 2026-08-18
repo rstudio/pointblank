@@ -176,6 +176,7 @@ utils::globalVariables(
     "schema",
     "sd",
     "seg_expr",
+    "segments",
     "set_element",
     "S_pts",
     "S_val",

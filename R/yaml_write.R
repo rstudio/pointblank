@@ -1253,6 +1253,32 @@ as_agent_yaml_list <- function(agent, expanded) {
           )
         )
 
+    } else if (validation_fn == "col_vals_str_len") {
+
+      column_text <-
+        get_column_text(
+          step_list = step_list,
+          expanded = expanded
+        )
+
+      lst_step <-
+        list(
+          validation_fn = list(
+            columns = column_text,
+            min = step_list$values$min,
+            max = step_list$values$max,
+            na_pass = step_list$na_pass,
+            preconditions = as_list_preconditions(step_list$preconditions),
+            segments = as_list_segments(step_list$seg_expr),
+            actions = as_action_levels(
+              step_list$actions[[1]],
+              action_levels_default
+            ),
+            label = step_list$label,
+            active = as_list_active(step_list$active)
+          )
+        )
+
     } else if (validation_fn == "col_vals_within_spec") {
 
       column_text <-

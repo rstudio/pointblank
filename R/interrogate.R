@@ -1003,6 +1003,11 @@ check_table_with_assertion <- function(
         idx = idx,
         table = table
       ),
+      "col_vals_str_len" = interrogate_str_len(
+        agent = agent,
+        idx = idx,
+        table = table
+      ),
       "col_vals_within_spec" = interrogate_within_spec(
         agent = agent,
         idx = idx,
@@ -1141,11 +1146,15 @@ tbl_val_comparison <- function(
   # Construct a string-based expression for the validation
   expression <- call(operator, as.symbol(column), value)
 
-  if (is_tbl_mssql(table)) {
+  if (uses_numeric_logical(table)) {
+
+    na_pass_num <- if (na_pass) 1 else 0
+    col_sym <- as.symbol(column)
 
     table %>%
       dplyr::mutate(pb_is_good_ = dplyr::case_when(
         !!expression ~ 1,
+        is.na(!!col_sym) ~ na_pass_num,
         .default = 0
       ))
 
@@ -1230,8 +1239,8 @@ tbl_vals_between <- function(
     right = {{ right }}
   )
 
-  true <- if (is_tbl_mssql(table)) 1 else TRUE
-  false <- if (is_tbl_mssql(table)) 0 else FALSE
+  true <- if (uses_numeric_logical(table)) 1 else TRUE
+  false <- if (uses_numeric_logical(table)) 0 else FALSE
   na_pass_bool <- if (na_pass) true else false
 
   #
@@ -1386,8 +1395,8 @@ interrogate_set <- function(
       # Ensure that the `column` provided is valid
       column_validity_checks_column(table = table, column = {{ column }})
 
-      true <- if (is_tbl_mssql(table)) 1 else TRUE
-      false <- if (is_tbl_mssql(table)) 0 else FALSE
+      true <- if (uses_numeric_logical(table)) 1 else TRUE
+      false <- if (uses_numeric_logical(table)) 0 else FALSE
       na_pass_bool <- if (na_pass) true else false
 
       table %>%
@@ -1566,8 +1575,8 @@ interrogate_set <- function(
       # Ensure that the `column` provided is valid
       column_validity_checks_column(table = table, column = {{ column }})
 
-      true <- if (is_tbl_mssql(table)) 1 else TRUE
-      false <- if (is_tbl_mssql(table)) 0 else FALSE
+      true <- if (uses_numeric_logical(table)) 1 else TRUE
+      false <- if (uses_numeric_logical(table)) 0 else FALSE
       na_pass_bool <- if (na_pass) false else true
 
       table %>%
@@ -1874,6 +1883,67 @@ interrogate_regex <- function(
   )
 }
 
+interrogate_str_len <- function(
+    agent,
+    idx,
+    table
+) {
+
+  str_len_values <- get_values_at_idx(agent = agent, idx = idx)
+
+  min_len <- str_len_values$min
+  max_len <- str_len_values$max
+
+  na_pass <- get_column_na_pass_at_idx(agent = agent, idx = idx)
+
+  column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
+
+  tbl_val_str_len <- function(
+    table,
+    column,
+    min_len,
+    max_len,
+    na_pass
+  ) {
+
+    tbl_validity_check(table = table)
+
+    column_validity_checks_column(table = table, column = {{ column }})
+
+    tbl <-
+      table %>%
+      dplyr::mutate(
+        pb_is_good_ = ifelse(
+          !is.na({{ column }}) & is.character({{ column }}),
+          {
+            len <- nchar({{ column }})
+            check <- rep(TRUE, length(len))
+            if (!is.null(min_len)) check <- check & len >= min_len
+            if (!is.null(max_len)) check <- check & len <= max_len
+            check
+          },
+          ifelse(is.na({{ column }}), NA, FALSE)
+        )
+      ) %>%
+      dplyr::mutate(pb_is_good_ = dplyr::case_when(
+        is.na(pb_is_good_) ~ na_pass,
+        TRUE ~ pb_is_good_
+      ))
+
+    tbl
+  }
+
+  pointblank_try_catch(
+    tbl_val_str_len(
+      table = table,
+      column = {{ column }},
+      min_len = min_len,
+      max_len = max_len,
+      na_pass = na_pass
+    )
+  )
+}
+
 interrogate_within_spec <- function(
     agent,
     idx,
@@ -2100,10 +2170,14 @@ interrogate_expr <- function(
   # Get the expression
   expr <- get_values_at_idx(agent = agent, idx = idx)
 
+  # Determine whether NAs should be allowed
+  na_pass <- get_column_na_pass_at_idx(agent = agent, idx = idx)
+
   # Create function for validating the `col_vals_expr()` step function
   tbl_val_expr <- function(
     table,
-    expr
+    expr,
+    na_pass
   ) {
 
     # Ensure that the input `table` is actually a table object
@@ -2111,13 +2185,41 @@ interrogate_expr <- function(
 
     expr <- expr[[1]]
 
-    table %>%
-      dplyr::mutate(pb_is_good_ = !!expr) %>%
-      dplyr::filter(!is.na(pb_is_good_))
+    tbl <- table %>%
+      dplyr::mutate(pb_is_good_ = !!expr)
+
+    if (anyNA(tbl$pb_is_good_)) {
+
+      # Throw warning if `expr` results in `NA` values but `na_pass` was unset
+      if (is.na(na_pass)) {
+        warn(
+          paste(
+            "Expression generated `NA` value(s).",
+            "Edit the `expr` or specify `na_pass` (default is `FALSE`)."
+          ),
+          # "simpleWarning" lets it trickle up to the test/expect functions
+          class = "simpleWarning"
+        )
+        # Re-apply user-facing default of `na_pass = FALSE`
+        na_pass <- FALSE
+      }
+
+      tbl$pb_is_good_[is.na(tbl$pb_is_good_)] <- na_pass
+
+    }
+
+    tbl
+
   }
 
   # Perform rowwise validations for the column
-  pointblank_try_catch(tbl_val_expr(table = table, expr = expr))
+  pointblank_try_catch(
+    tbl_val_expr(
+      table = table,
+      expr = expr,
+      na_pass = na_pass
+    )
+  )
 }
 
 interrogate_specially <- function(
@@ -2197,8 +2299,8 @@ interrogate_null <- function(
     # Ensure that the `column` provided is valid
     column_validity_checks_column(table = table, column = {{ column }})
 
-    true <- if (is_tbl_mssql(table)) 1 else TRUE
-    false <- if (is_tbl_mssql(table)) 0 else FALSE
+    true <- if (uses_numeric_logical(table)) 1 else TRUE
+    false <- if (uses_numeric_logical(table)) 0 else FALSE
 
     table %>%
       dplyr::mutate(pb_is_good_ = dplyr::case_when(
@@ -2232,8 +2334,8 @@ interrogate_not_null <- function(
     # Ensure that the `column` provided is valid
     column_validity_checks_column(table = table, column = {{ column }})
 
-    true <- if (is_tbl_mssql(table)) 1 else TRUE
-    false <- if (is_tbl_mssql(table)) 0 else FALSE
+    true <- if (uses_numeric_logical(table)) 1 else TRUE
+    false <- if (uses_numeric_logical(table)) 0 else FALSE
 
     table %>%
       dplyr::mutate(pb_is_good_ = dplyr::case_when(
@@ -2608,7 +2710,7 @@ interrogate_col_schema_match <- function(
 
       unit_results <- c()
 
-      for (i in seq_along(length(table_schema_y))) {
+      for (i in seq_along(table_schema_y)) {
 
         unit_results <-
           c(
@@ -2995,7 +3097,7 @@ add_reporting_data <- function(
   # Get total count of TRUE rows
   #
 
-  if (is_tbl_mssql(tbl_checked)) {
+  if (uses_numeric_logical(tbl_checked)) {
 
     # nocov start
 
@@ -3022,7 +3124,7 @@ add_reporting_data <- function(
   # Get total count of FALSE rows
   #
 
-  if (is_tbl_mssql(tbl_checked)) {
+  if (uses_numeric_logical(tbl_checked)) {
 
     # nocov start
 
@@ -3282,7 +3384,7 @@ add_table_extract <- function(
 
   tbl_type <- tbl_checked %>% class()
 
-  if (is_tbl_mssql(tbl_checked)) {
+  if (uses_numeric_logical(tbl_checked)) {
 
     # nocov start
 

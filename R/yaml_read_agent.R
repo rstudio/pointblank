@@ -480,7 +480,7 @@ make_action_levels_str <- function(al) {
     top_args <-
       c(top_args, paste0("warn = ", c(al$warn_fraction, al$warn_count)))
   }
-  # Support both new names (error_fraction/error_count) and old names (stop_fraction/stop_count)
+  # Support both new (error/critical) and old (stop/notify) field names
   error_fraction <- al$error_fraction %||% al$stop_fraction
   error_count <- al$error_count %||% al$stop_count
   critical_fraction <- al$critical_fraction %||% al$notify_fraction
@@ -507,7 +507,8 @@ make_action_levels_str <- function(al) {
     fns_args <- c(fns_args, paste0("error = ", al$fns$error %||% al$fns$stop))
   }
   if (!is.null(al$fns$critical %||% al$fns$notify)) {
-    fns_args <- c(fns_args, paste0("critical = ", al$fns$critical %||% al$fns$notify))
+    fn_critical <- al$fns$critical %||% al$fns$notify
+    fns_args <- c(fns_args, paste0("critical = ", fn_critical))
   }
 
   if (length(fns_args) > 0) {

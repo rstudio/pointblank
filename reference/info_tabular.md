@@ -113,7 +113,7 @@ YAML representation.
 
 R statement:
 
-    informant %>%
+    informant |>
       info_tabular(
         section_1 = "*info text* 1.",
         `section 2` = "*info text* 2 and {snippet_1}"
@@ -164,7 +164,7 @@ functions. In this example, we'll use `info_tabular()` to generally
 describe the `small_table` dataset.
 
     informant <-
-      informant %>%
+      informant |>
       info_tabular(
         `Row Definition` = "A row has randomized values.",
         Source = c(

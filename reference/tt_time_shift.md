@@ -89,8 +89,8 @@ Keeping only the `date_time` and `a`-`f` columns of `small_table`, also
 included in the package, shift the times back 2 days and 12 hours with
 the `"-2d 12H"` specification.
 
-    small_table %>%
-      dplyr::select(-date) %>%
+    small_table |>
+      dplyr::select(-date) |>
       tt_time_shift("-2d 12H")
     #> # A tibble: 13 x 7
     #>    date_time               a b             c      d e     f

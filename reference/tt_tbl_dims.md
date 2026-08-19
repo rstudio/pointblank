@@ -43,8 +43,8 @@ Get the dimensions of the `game_revenue` dataset that is included in the
 This output table is useful when a table validation depends on its
 dimensions. Here, we check that `game_revenue` has at least `1500` rows.
 
-    tt_tbl_dims(tbl = game_revenue) %>%
-      dplyr::filter(.param. == "rows") %>%
+    tt_tbl_dims(tbl = game_revenue) |>
+      dplyr::filter(.param. == "rows") |>
       test_col_vals_gt(
         columns = value,
         value = 1500
@@ -54,8 +54,8 @@ dimensions. Here, we check that `game_revenue` has at least `1500` rows.
 We can check `small_table` to ensure that number of columns is less than
 `10`.
 
-    tt_tbl_dims(tbl = small_table) %>%
-      dplyr::filter(.param. == "columns") %>%
+    tt_tbl_dims(tbl = small_table) |>
+      dplyr::filter(.param. == "columns") |>
       test_col_vals_lt(
         columns = value,
         value = 10

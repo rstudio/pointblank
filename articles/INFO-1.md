@@ -120,14 +120,14 @@ informant <-
     tbl = small_table,
     tbl_name = "small_table",
     label = "Example No. 2"
-  ) %>%
+  ) |>
   info_tabular(
     description = "This table is included in the **pointblank** pkg."
-  ) %>%
+  ) |>
   info_columns(
     columns = date_time,
     info = "This column is full of timestamps."
-  ) %>%
+  ) |>
   info_section(
     section_name = "further information", 
     `examples and documentation` = "Examples for how to use the `info_*()` functions
@@ -183,7 +183,7 @@ back ticks. For example, why not put some emoji in your subsection name?
 
 ``` r
 
-informant %>% 
+informant |> 
   info_tabular("🔄 updates" = "This table is not regularly updated.")
 ```
 
@@ -243,40 +243,40 @@ informant_pp <-
     tbl = palmerpenguins::penguins,
     tbl_name = "penguins",
     label = "The `penguins` dataset from the **palmerpenguins** 📦."
-  ) %>% 
+  ) |> 
   info_columns(
     columns = species,
     `ℹ️` = "A factor denoting penguin species (*Adélie*, *Chinstrap*, and *Gentoo*)."
-  ) %>%
+  ) |>
   info_columns(
     columns = island,
     `ℹ️` = "A factor denoting island in Palmer Archipelago, Antarctica
     (*Biscoe*, *Dream*, or *Torgersen*)."
-  ) %>%
+  ) |>
   info_columns(
     columns = bill_length_mm,
     `ℹ️` = "A number denoting bill length"
-  ) %>%
+  ) |>
   info_columns(
     columns = bill_depth_mm,
     `ℹ️` = "A number denoting bill depth"
-  ) %>%
+  ) |>
   info_columns(
     columns = flipper_length_mm,
     `ℹ️` = "An integer denoting flipper length"
-  ) %>%
+  ) |>
   info_columns(
     columns = ends_with("mm"),
     `ℹ️` = "(in units of millimeters)."
-  ) %>%
+  ) |>
   info_columns(
     columns = body_mass_g,
     `ℹ️` = "An integer denoting body mass (grams)."
-  ) %>%
+  ) |>
   info_columns(
     columns = sex,
     `ℹ️` = "A factor denoting penguin sex (`\"female\"`, `\"male\"`)."
-  ) %>%
+  ) |>
   info_columns(
     columns = year,
     `ℹ️` = "The study year (e.g., `2007`, `2008`, `2009`)."
@@ -333,7 +333,7 @@ describe the `palmerpenguins::penguins` dataset.
 ``` r
 
 informant_pp <- 
-  informant_pp %>%
+  informant_pp |>
   info_section(
     section_name = "source",
     "References" = c(

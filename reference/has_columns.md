@@ -4,11 +4,11 @@ This utility function can help you easily determine whether a column of
 a specified name is present in a table object. This function works well
 enough on a table object but it can also be used as part of a formula in
 any validation function's `active` argument. Using
-`active = ~ . %>% has_columns(column_1)` means that the validation step
-will be inactive if the target table doesn't contain a column named
+`active = \(x) x |> has_columns(column_1)` means that the validation
+step will be inactive if the target table doesn't contain a column named
 `column_1`. We can also use multiple columns in
 [`c()`](https://rdrr.io/r/base/c.html), so having
-`active = ~ . %>% has_columns(c(column_1, column_2))` in a validation
+`active = \(x) x |> has_columns(c(column_1, column_2))` in a validation
 step will make it inactive at
 [`interrogate()`](https://rstudio.github.io/pointblank/reference/interrogate.md)
 time unless the columns `column_1` and `column_2` are both present.
@@ -69,27 +69,27 @@ The `small_table` dataset in the package has the columns `date_time`,
 With `has_columns()` we can check for column existence by using it
 directly on the table.
 
-    small_table %>% has_columns(columns = date)
+    small_table |> has_columns(columns = date)
 
     ## [1] TRUE
 
 Multiple column names can be supplied. The following is `TRUE` because
 both columns are present in `small_table`.
 
-    small_table %>% has_columns(columns = c(a, b))
+    small_table |> has_columns(columns = c(a, b))
 
     ## [1] TRUE
 
 It's possible to use a tidyselect helper as well:
 
-    small_table %>% has_columns(columns = c(a, starts_with("b")))
+    small_table |> has_columns(columns = c(a, starts_with("b")))
 
     ## [1] TRUE
 
 Because column `h` isn't present, this returns `FALSE` (all specified
 columns need to be present to obtain `TRUE`).
 
-    small_table %>% has_columns(columns = c(a, h))
+    small_table |> has_columns(columns = c(a, h))
 
     ## [1] FALSE
 
@@ -97,8 +97,8 @@ The same holds in the case of tidyselect helpers. Because no columns
 start with `"h"`, including `starts_with("h")` returns `FALSE` for the
 entire check.
 
-    small_table %>% has_columns(columns = starts_with("h"))
-    small_table %>% has_columns(columns = c(a, starts_with("h")))
+    small_table |> has_columns(columns = starts_with("h"))
+    small_table |> has_columns(columns = c(a, starts_with("h")))
 
     ## [1] FALSE
     ## [1] FALSE
@@ -117,20 +117,20 @@ agent report).
       create_agent(
         tbl = small_table,
         tbl_name = "small_table"
-      ) %>%
+      ) |>
       col_vals_gt(
         columns = c, value = vars(a),
-        active = ~ . %>% has_columns(c(a, c))
-      ) %>%
+        active = \(x) x |> has_columns(c(a, c))
+      ) |>
       col_vals_lt(
         columns = h, value = vars(d),
-        preconditions = ~ . %>% dplyr::mutate(h = d - a),
-        active = ~ . %>% has_columns(c(a, d))
-      ) %>%
+        preconditions = \(x) x |> dplyr::mutate(h = d - a),
+        active = \(x) x |> has_columns(c(a, d))
+      ) |>
       col_is_character(
         columns = j,
-        active = ~ . %>% has_columns(j)
-      ) %>%
+        active = \(x) x |> has_columns(j)
+      ) |>
       interrogate()
 
 Through the agent's x-list, we can verify that no evaluation error (any

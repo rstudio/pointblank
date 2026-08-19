@@ -151,8 +151,8 @@ table).</p></dd>
 <p>Get summary statistics for the first quarter of the <code>game_revenue</code> dataset
 that's included in the <strong>pointblank</strong> package.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">stats_tbl</span> <span class="op">&lt;-</span></span>
-<span>  <span class="va">game_revenue</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/tt_time_slice.html">tt_time_slice</a></span><span class="op">(</span>slice_point <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="va">game_revenue</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tt_time_slice.html">tt_time_slice</a></span><span class="op">(</span>slice_point <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tt_summary_stats.html">tt_summary_stats</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">stats_tbl</span></span>
@@ -174,11 +174,11 @@ function. So if we wanted to test whether the maximum session duration during
 the rest of the time period (the remaining 0.75) is never higher than that of
 the first quarter of the year, we can supply a value from <code>stats_tbl</code> to
 <code><a href="col_vals_lte.html">test_col_vals_lte()</a></code>:</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">game_revenue</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">game_revenue</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tt_time_slice.html">tt_time_slice</a></span><span class="op">(</span></span>
 <span>    slice_point <span class="op">=</span> <span class="fl">0.25</span>,</span>
 <span>    keep <span class="op">=</span> <span class="st">"right"</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_lte.html">test_col_vals_lte</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">session_duration</span>,</span>
 <span>    value <span class="op">=</span> <span class="fu"><a href="../reference/get_tt_param.html">get_tt_param</a></span><span class="op">(</span></span>

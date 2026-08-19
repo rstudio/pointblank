@@ -153,7 +153,7 @@ data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spark</code>
 <p>Table transformers work great in conjunction with validation functions. Let's
 ensure that the maximum revenue for individual purchases in the
 <code>game_revenue</code> table is less than $150.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/tt_summary_stats.html">tt_summary_stats</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">game_revenue</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/tt_summary_stats.html">tt_summary_stats</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">game_revenue</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">item_revenue</span>,</span>
 <span>    value <span class="op">=</span> <span class="fl">150</span>,</span>
@@ -174,9 +174,9 @@ ensure that the maximum revenue for individual purchases in the
 <p>We see data, and not an error, so the validation was successful!</p>
 <p>Let's do another: for in-app purchases in the <code>game_revenue</code> table, check
 that the median revenue is somewhere between $8 and $12.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">game_revenue</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">item_type</span> <span class="op">==</span> <span class="st">"iap"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/tt_summary_stats.html">tt_summary_stats</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">game_revenue</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">item_type</span> <span class="op">==</span> <span class="st">"iap"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tt_summary_stats.html">tt_summary_stats</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">item_revenue</span>,</span>
 <span>    left <span class="op">=</span> <span class="fl">8</span>, right <span class="op">=</span> <span class="fl">12</span>,</span>
@@ -207,21 +207,21 @@ step that isolates the row of the median statistic.</p>
 <span>    tbl_name <span class="op">=</span> <span class="st">"game_revenue"</span>,</span>
 <span>    label <span class="op">=</span> <span class="st">"`tt_summary_stats()` example."</span>,</span>
 <span>    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span></span>
-<span>      warn_at <span class="op">=</span> <span class="fl">0.10</span>,</span>
-<span>      stop_at <span class="op">=</span> <span class="fl">0.25</span>,</span>
-<span>      notify_at <span class="op">=</span> <span class="fl">0.35</span></span>
+<span>      warn <span class="op">=</span> <span class="fl">0.10</span>,</span>
+<span>      error <span class="op">=</span> <span class="fl">0.25</span>,</span>
+<span>      critical <span class="op">=</span> <span class="fl">0.35</span></span>
 <span>    <span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/rows_complete.html">rows_complete</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/rows_distinct.html">rows_distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/rows_complete.html">rows_complete</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/rows_distinct.html">rows_distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">item_revenue</span>,</span>
 <span>    left <span class="op">=</span> <span class="fl">8</span>, right <span class="op">=</span> <span class="fl">12</span>,</span>
-<span>    preconditions <span class="op">=</span> <span class="op">~</span> <span class="va">.</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">item_type</span> <span class="op">==</span> <span class="st">"iap"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>      <span class="fu"><a href="../reference/tt_summary_stats.html">tt_summary_stats</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>    preconditions <span class="op">=</span> \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">|&gt;</span></span>
+<span>      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">item_type</span> <span class="op">==</span> <span class="st">"iap"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>      <span class="fu"><a href="../reference/tt_summary_stats.html">tt_summary_stats</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">.param.</span> <span class="op">==</span> <span class="st">"med"</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>Printing the <code>agent</code> in the console shows the validation report in the
 Viewer. Here is an excerpt of validation report. Take note of the final step

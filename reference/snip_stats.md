@@ -68,15 +68,15 @@ calls doesn't matter.
         tbl = ~ small_table,
         tbl_name = "small_table",
         label = "An example."
-      ) %>%
+      ) |>
       info_columns(
         columns = d,
         `Stats` = "Stats (fivenum): {stats_d}."
-      ) %>%
+      ) |>
       info_snippet(
         snippet_name = "stats_d",
         fn = snip_stats(column = "d")
-      ) %>%
+      ) |>
       incorporate()
 
 We can print the `informant` object to see the information report.

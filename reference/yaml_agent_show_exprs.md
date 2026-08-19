@@ -46,18 +46,18 @@ enables retrieval of the target table.
         tbl_name = "small_table",
         label = "A simple example with the `small_table`.",
         actions = action_levels(
-          warn_at = 0.10,
-          stop_at = 0.25,
-          notify_at = 0.35
+          warn = 0.10,
+          error = 0.25,
+          critical = 0.35
         )
-      ) %>%
-      col_exists(columns = c(date, date_time)) %>%
+      ) |>
+      col_exists(columns = c(date, date_time)) |>
       col_vals_regex(
         columns = b,
         regex = "[0-9]-[a-z]{3}-[0-9]{3}"
-      ) %>%
-      rows_distinct() %>%
-      col_vals_gt(columns = d, value = 100) %>%
+      ) |>
+      rows_distinct() |>
+      col_vals_gt(columns = d, value = 100) |>
       col_vals_lte(columns = c, value = 5)
 
 The agent can be written to a **pointblank** YAML file with
@@ -88,25 +88,25 @@ agent, we can use `yaml_agent_show_exprs()`.
     create_agent(
       tbl = ~small_table,
       actions = action_levels(
-        warn_at = 0.1,
-        stop_at = 0.25,
-        notify_at = 0.35
+        warn = 0.1,
+        error = 0.25,
+        critical = 0.35
       ),
       tbl_name = "small_table",
       label = "A simple example with the `small_table`."
-    ) %>%
+    ) |>
       col_exists(
         columns = c(date, date_time)
-      ) %>%
+      ) |>
       col_vals_regex(
         columns = b,
         regex = "[0-9]-[a-z]{3}-[0-9]{3}"
-      ) %>%
-      rows_distinct() %>%
+      ) |>
+      rows_distinct() |>
       col_vals_gt(
         columns = d,
         value = 100
-      ) %>%
+      ) |>
       col_vals_lte(
         columns = c,
         value = 5

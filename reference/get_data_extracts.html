@@ -156,21 +156,21 @@ data extract tables will be provided in a list object.</p></dd>
 part of the <code>small_table</code> object. Use <code><a href="interrogate.html">interrogate()</a></code> right after that.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span></span>
-<span>    tbl <span class="op">=</span> <span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>    tbl <span class="op">=</span> <span class="va">small_table</span> <span class="op">|&gt;</span></span>
 <span>      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">a</span><span class="op">:</span><span class="va">f</span><span class="op">)</span>,</span>
 <span>    label <span class="op">=</span> <span class="st">"`get_data_extracts()`"</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="va">d</span>, value <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="va">d</span>, value <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">c</span>,</span>
 <span>    left <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, right <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>,</span>
 <span>    na_pass <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>Using <code>get_data_extracts()</code> with its defaults returns of a list of tables,
 where each table is named after the validation step that has an extract
 available.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/get_data_extracts.html">get_data_extracts</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/get_data_extracts.html">get_data_extracts</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <div class="sourceCode"><pre><code><span><span class="co">## $`1`</span></span>
 <span><span class="co">## # A tibble: 6 × 6</span></span>
 <span><span class="co">##       a b             c     d e     f</span></span>
@@ -196,7 +196,7 @@ available.</p>
 <p>We can get an extract for a specific step by specifying it in the <code>i</code>
 argument. Let's get the failing rows from the first validation step (the
 <code><a href="col_vals_gt.html">col_vals_gt()</a></code> one).</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/get_data_extracts.html">get_data_extracts</a></span><span class="op">(</span>i <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/get_data_extracts.html">get_data_extracts</a></span><span class="op">(</span>i <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre><p></p></div>
 <div class="sourceCode"><pre><code><span><span class="co">## # A tibble: 6 × 6</span></span>
 <span><span class="co">##       a b             c     d e     f</span></span>
 <span><span class="co">##   &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;</span></span>

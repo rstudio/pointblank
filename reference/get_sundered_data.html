@@ -167,20 +167,20 @@ part of the <code>small_table</code> object. Then, use <code><a href="interrogat
 validation plan into action.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span></span>
-<span>    tbl <span class="op">=</span> <span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>    tbl <span class="op">=</span> <span class="va">small_table</span> <span class="op">|&gt;</span></span>
 <span>      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">a</span><span class="op">:</span><span class="va">f</span><span class="op">)</span>,</span>
 <span>    label <span class="op">=</span> <span class="st">"`get_sundered_data()`"</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">d</span>, value <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">d</span>, value <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">c</span>,</span>
 <span>    left <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, right <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>,</span>
 <span>    na_pass <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>Get the sundered data piece that contains only rows that passed both
 validation steps (the default piece). This yields 5 of 13 total rows.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/get_sundered_data.html">get_sundered_data</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/get_sundered_data.html">get_sundered_data</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <div class="sourceCode"><pre><code><span><span class="co">## # A tibble: 5 × 6</span></span>
 <span><span class="co">##       a b             c      d e     f</span></span>
 <span><span class="co">##   &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;</span></span>
@@ -193,7 +193,7 @@ validation steps (the default piece). This yields 5 of 13 total rows.</p>
 
 <p>Get the complementary data piece: all of those rows that failed either of the
 two validation steps. This yields 8 of 13 total rows.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/get_sundered_data.html">get_sundered_data</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"fail"</span><span class="op">)</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/get_sundered_data.html">get_sundered_data</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"fail"</span><span class="op">)</span></span></code></pre><p></p></div>
 <div class="sourceCode"><pre><code><span><span class="co">## # A tibble: 8 × 6</span></span>
 <span><span class="co">##       a b             c     d e     f</span></span>
 <span><span class="co">##   &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;</span></span>
@@ -210,7 +210,7 @@ two validation steps. This yields 8 of 13 total rows.</p>
 <p>We can get all of the input data returned with a flag column (called
 <code>.pb_combined</code>). This is done by using <code>type = "combined"</code> and that rightmost
 column will contain <code>"pass"</code> and <code>"fail"</code> values.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/get_sundered_data.html">get_sundered_data</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"combined"</span><span class="op">)</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/get_sundered_data.html">get_sundered_data</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"combined"</span><span class="op">)</span></span></code></pre><p></p></div>
 <div class="sourceCode"><pre><code><span><span class="co">## # A tibble: 13 × 7</span></span>
 <span><span class="co">##        a b             c      d e     f     .pb_combined</span></span>
 <span><span class="co">##    &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt; &lt;chr&gt;</span></span>
@@ -231,7 +231,7 @@ column will contain <code>"pass"</code> and <code>"fail"</code> values.</p>
 
 <p>We can change the <code>"pass"</code> or <code>"fail"</code> text values to another type of coding
 with the <code>pass_fail</code> argument. One possibility is <code>TRUE</code>/<code>FALSE</code>.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/get_sundered_data.html">get_sundered_data</a></span><span class="op">(</span></span>
 <span>    type <span class="op">=</span> <span class="st">"combined"</span>,</span>
 <span>    pass_fail <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span></span>
@@ -255,7 +255,7 @@ with the <code>pass_fail</code> argument. One possibility is <code>TRUE</code>/<
 
 
 <p>...and using <code>0</code> and <code>1</code> might be worthwhile in some situations.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/get_sundered_data.html">get_sundered_data</a></span><span class="op">(</span></span>
 <span>    type <span class="op">=</span> <span class="st">"combined"</span>,</span>
 <span>    pass_fail <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">1</span></span>

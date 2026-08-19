@@ -257,20 +257,20 @@ on the data. This acts as a sort of data filter in that the input table will
 become output data (without modification), but there may be warnings, errors,
 or other side effects that you can define if validation fails. Basically,
 instead of this</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">small_table</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/rows_distinct.html">rows_distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">small_table</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/rows_distinct.html">rows_distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>you would use this:</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/rows_distinct.html">rows_distinct</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">small_table</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/rows_distinct.html">rows_distinct</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>This results in an error (with the default failure threshold settings),
 displaying the reason for the error in the console. Notably, the data is not
 passed though.</p>
 <p>We can use variants of the validation functions, the <em>test</em> (<code>test_*()</code>) and
 <em>expectation</em> (<code>expect_*()</code>) versions, directly on the data for different
 workflows. The first returns to us a logical value. So this</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/rows_distinct.html">test_rows_distinct</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">small_table</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/rows_distinct.html">test_rows_distinct</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>returns <code>FALSE</code> instead of an error.</p>
 <p>In a unit testing scenario, we can use <em>expectation</em> functions exactly as we
 would with <strong>testthat</strong>'s library of <code>expect_*()</code> functions:</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/rows_distinct.html">expect_rows_distinct</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">small_table</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/rows_distinct.html">expect_rows_distinct</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>This test of <code>small_table</code> would be counted as a failure.</p>
     </div>
     <div class="section level2">
@@ -333,9 +333,9 @@ in the corresponding YAML representation.</p>
 <span>  tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,</span>
 <span>  label <span class="op">=</span> <span class="st">"An example."</span>,</span>
 <span>  actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span></span>
-<span>    warn_at <span class="op">=</span> <span class="fl">0.10</span>,</span>
-<span>    stop_at <span class="op">=</span> <span class="fl">0.25</span>,</span>
-<span>    notify_at <span class="op">=</span> <span class="fl">0.35</span>,</span>
+<span>    warn <span class="op">=</span> <span class="fl">0.10</span>,</span>
+<span>    error <span class="op">=</span> <span class="fl">0.25</span>,</span>
+<span>    critical <span class="op">=</span> <span class="fl">0.35</span>,</span>
 <span>    fns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>notify <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="../reference/email_blast.html">email_blast</a></span><span class="op">(</span></span>
 <span>      <span class="va">x</span>,</span>
 <span>      to <span class="op">=</span> <span class="st">"joe_public@example.com"</span>,</span>
@@ -451,9 +451,9 @@ designate proportional failure thresholds to the <code>warn</code>, <code>stop</
 states using <code><a href="action_levels.html">action_levels()</a></code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">al</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span></span>
-<span>      warn_at <span class="op">=</span> <span class="fl">0.10</span>,</span>
-<span>      stop_at <span class="op">=</span> <span class="fl">0.25</span>,</span>
-<span>    notify_at <span class="op">=</span> <span class="fl">0.35</span></span>
+<span>      warn <span class="op">=</span> <span class="fl">0.10</span>,</span>
+<span>      error <span class="op">=</span> <span class="fl">0.25</span>,</span>
+<span>    critical <span class="op">=</span> <span class="fl">0.35</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p>Now create a pointblank <code>agent</code> object and give it the <code>al</code> object (which
 serves as a default for all validation steps which can be overridden). The
@@ -470,20 +470,20 @@ We also provide a target table and we'll use <code><a href="small_table.html">po
 using as many validation functions as we want. then, we use <code><a href="interrogate.html">interrogate()</a></code>
 to actually perform the validations and gather intel.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op">&lt;-</span></span>
-<span>  <span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/col_exists.html">col_exists</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">date_time</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="va">agent</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/col_exists.html">col_exists</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">date_time</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">b</span>,</span>
 <span>    regex <span class="op">=</span> <span class="st">"[0-9]-[a-z]{3}-[0-9]{3}"</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/rows_distinct.html">rows_distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">d</span>, value <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/col_vals_lte.html">col_vals_lte</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">c</span>, value <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/rows_distinct.html">rows_distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">d</span>, value <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_lte.html">col_vals_lte</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">c</span>, value <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">c</span>,</span>
 <span>    left <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, right <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>,</span>
 <span>    na_pass <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>The <code>agent</code> object can be printed to see the validation report in the
 Viewer.</p>
@@ -512,7 +512,7 @@ of the information collected during interrogation.</p>
 <code><a href="rows_distinct.html">rows_distinct()</a></code> validation function) had two test units, corresponding to
 duplicated rows, that failed. We can see those rows with
 <code><a href="get_data_extracts.html">get_data_extracts()</a></code>.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/get_data_extracts.html">get_data_extracts</a></span><span class="op">(</span>i <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/get_data_extracts.html">get_data_extracts</a></span><span class="op">(</span>i <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre><p></p></div>
 <div class="sourceCode"><pre><code><span><span class="co">## # A tibble: 2 × 8</span></span>
 <span><span class="co">##   date_time           date           a b            c     d e     f</span></span>
 <span><span class="co">##   &lt;dttm&gt;              &lt;date&gt;     &lt;int&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;</span></span>
@@ -523,7 +523,7 @@ duplicated rows, that failed. We can see those rows with
 
 <p>We can get an x-list for the entire validation process (7 steps), or, just
 for the 4th step with <code><a href="get_agent_x_list.html">get_agent_x_list()</a></code>.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">xl_step_4</span> <span class="op">&lt;-</span> <span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/get_agent_x_list.html">get_agent_x_list</a></span><span class="op">(</span>i <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">xl_step_4</span> <span class="op">&lt;-</span> <span class="va">agent</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/get_agent_x_list.html">get_agent_x_list</a></span><span class="op">(</span>i <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>And then we can peruse the different parts of the list. Let's get the
 fraction of test units that failed.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">xl_step_4</span><span class="op">$</span><span class="va">f_failed</span></span></code></pre><p></p></div>

@@ -173,7 +173,7 @@ default, this is <code>FALSE</code>. Set to <code>TRUE</code> to give <code>NA</
 <p><code>&lt;table mutation expression&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>An optional expression for mutating the input table before proceeding with
 the validation. This can either be provided as a one-sided R formula using
-a leading <code>~</code> (e.g., <code>~ . %&gt;% dplyr::mutate(col = col + 10)</code> or as a
+a leading <code>~</code> (e.g., <code>\(x) x |&gt; dplyr::mutate(col = col + 10)</code> or as a
 function (e.g., <code>function(x) dplyr::mutate(x, col = col + 10)</code>. See the
 <em>Preconditions</em> section for more information.</p></dd>
 
@@ -244,7 +244,7 @@ be used with <code>.</code> (serving as the input data table) to evaluate to a s
 logical value. With this approach, the <strong>pointblank</strong> function
 <code><a href="has_columns.html">has_columns()</a></code> can be used to determine whether to make a validation step
 active on the basis of one or more columns existing in the table
-(e.g., <code>~ . %&gt;% has_columns(c(d, e))</code>).</p></dd>
+(e.g., <code>\(x) x |&gt; has_columns(c(d, e))</code>).</p></dd>
 
 
 <dt id="arg-object">object<a class="anchor" aria-label="anchor" href="#arg-object"></a></dt>
@@ -300,8 +300,8 @@ The test function returns a logical value.</p>
 <span><span class="co">#&gt; 4 JK        4</span></span></code></pre><p></p></div>
 <p>Validate that string lengths in column <code>id</code> are between 2 and 4 characters.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">tbl</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/col_vals_str_len.html">col_vals_str_len</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">id</span>, min <span class="op">=</span> <span class="fl">2</span>, max <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">tbl</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_str_len.html">col_vals_str_len</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">id</span>, min <span class="op">=</span> <span class="fl">2</span>, max <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>Determine if this validation step passed by using <code><a href="all_passed.html">all_passed()</a></code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/all_passed.html">all_passed</a></span><span class="op">(</span><span class="va">agent</span><span class="op">)</span></span></code></pre><p></p></div>

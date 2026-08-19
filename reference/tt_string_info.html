@@ -128,11 +128,11 @@ dataset that is included in the <strong>pointblank</strong> package.</p>
 <span><span class="co">#&gt; 3 length_max         15         24      3        11          14      14</span></span></code></pre><p></p></div>
 <p>Ensure that <code>player_id</code> and <code>session_id</code> values always have the same fixed
 numbers of characters (<code>15</code> and <code>24</code>, respectively) throughout the table.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/tt_string_info.html">tt_string_info</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">game_revenue</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/tt_string_info.html">tt_string_info</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">game_revenue</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_equal.html">col_vals_equal</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">player_id</span>,</span>
 <span>    value <span class="op">=</span> <span class="fl">15</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_equal.html">col_vals_equal</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">session_id</span>,</span>
 <span>    value <span class="op">=</span> <span class="fl">24</span></span>
@@ -147,7 +147,7 @@ numbers of characters (<code>15</code> and <code>24</code>, respectively) throug
 <p>Let's use a <code>tt_string_info()</code>-transformed table with the
 <code><a href="col_vals_lte.html">test_col_vals_lte()</a></code> to check that the maximum string length in column <code>f</code>
 of the <code>small_table</code> dataset is no greater than <code>4</code>.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/tt_string_info.html">tt_string_info</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">small_table</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/tt_string_info.html">tt_string_info</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">small_table</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_lte.html">test_col_vals_lte</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">f</span>,</span>
 <span>    value <span class="op">=</span> <span class="fl">4</span></span>

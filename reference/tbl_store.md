@@ -77,9 +77,9 @@ R statement for generating the `"tbl_store.yml"` file:
 
     tbl_store(
       tbl_duckdb ~ db_tbl(small_table, dbname = ":memory:", dbtype = "duckdb"),
-      sml_table_high ~ small_table %>% dplyr::filter(f == "high"),
+      sml_table_high ~ small_table |> dplyr::filter(f == "high"),
       .init = ~ library(tidyverse)
-    ) %>%
+    ) |>
       yaml_write()
 
 YAML representation (`"tbl_store.yml"`):
@@ -87,7 +87,7 @@ YAML representation (`"tbl_store.yml"`):
     type: tbl_store
     tbls:
       tbl_duckdb: ~ db_tbl(small_table, dbname = ":memory:", dbtype = "duckdb")
-      sml_table_high: ~ small_table %>% dplyr::filter(f == "high")
+      sml_table_high: ~ small_table |> dplyr::filter(f == "high")
     init: ~library(tidyverse)
 
 This is useful when you want to get fresh pulls of prepared data from a
@@ -105,9 +105,9 @@ agent to YAML:
     create_agent(
       tbl = ~ tbl_source("sml_table_high", "tbl_store.yml"),
       label = "An example that uses a table store.",
-      actions = action_levels(warn_at = 0.10)
-    ) %>%
-      col_exists(c(date, date_time)) %>%
+      actions = action_levels(warn = 0.10)
+    ) |>
+      col_exists(c(date, date_time)) |>
       write_yaml()
 
 The YAML representation (`"agent-sml_table_high.yml"`):
@@ -154,7 +154,7 @@ Here we'll define two tables that can be materialized later:
             pointblank::small_table,
             dbname = ":memory:",
             dbtype = "duckdb"
-          ) %>%
+          ) |>
           dplyr::filter(f == "high")
       )
 
@@ -224,7 +224,7 @@ revised `tbl_store()` call:
             dbtype = "duckdb"
           ),
         sml_table_high ~
-          {{ tbl_duckdb }} %>%
+          {{ tbl_duckdb }} |>
           filter(f == "high"),
         .init = ~ library(tidyverse)
       )
@@ -359,7 +359,7 @@ Another way to get the same table materialized is by using `$` to get
 the entry of choice for
 [`tbl_get()`](https://rstudio.github.io/pointblank/reference/tbl_get.md).
 
-    store_3$small_table_duck %>% tbl_get()
+    store_3$small_table_duck |> tbl_get()
 
     ## # Source:   table<small_table> [?? x 8]
     ## # Database: duckdb_connection

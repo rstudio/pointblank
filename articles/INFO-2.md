@@ -49,7 +49,7 @@ decimal place, one such way we could do it is with this expression:
 
 ``` r
 
-small_table %>% .$d %>% mean() %>% round(1)
+small_table$d |> mean() |> round(1)
 ```
 
     ## [1] 2304.7
@@ -66,10 +66,10 @@ informant <-
     tbl = small_table,
     tbl_name = "small_table",
     label = "Example No. 2"
-  ) %>%
+  ) |>
   info_snippet(
     snippet_name = "mean_d",
-    fn = ~ . %>% .$d %>% mean() %>% round(1)
+    fn = \(x) x$d |> mean() |> round(1)
   )
 ```
 
@@ -89,7 +89,7 @@ above example:
 ``` r
 
 informant <- 
-  informant %>%
+  informant |>
   info_columns(
     columns = d,
     info = "This column contains fairly large numbers (much larger than
@@ -147,17 +147,17 @@ informant <-
     tbl = small_table,
     tbl_name = "small_table",
     label = "Example No. 2"
-  ) %>%
+  ) |>
   info_snippet(
     snippet_name = "mean_d",
-    fn = ~ . %>% .$d %>% mean() %>% round(1)
-  ) %>%
+    fn = \(x) x$d |> mean() |> round(1)
+  ) |>
     info_columns(
     columns = d,
     info = "This column contains fairly large numbers (much larger than
     those numbers in column `a`. The mean value is {mean_d}, which is
     far greater than any number in that other column."
-  ) %>%
+  ) |>
   incorporate()
 
 informant
@@ -242,7 +242,7 @@ informant_tt <-
     tbl = ~ target_table,
     tbl_name = "target_table",
     label = "Example No. 3"
-  ) %>%
+  ) |>
   incorporate()
 
 informant_tt
@@ -267,7 +267,7 @@ column counts.
 ``` r
 
 target_table <- 
-  dplyr::bind_rows(small_table, small_table) %>%
+  dplyr::bind_rows(small_table, small_table) |>
   dplyr::mutate(g = a + c)
 
 dim(target_table)
@@ -281,7 +281,7 @@ keeps pace with the change.
 
 ``` r
 
-informant_tt %>% incorporate()
+informant_tt |> incorporate()
 ```
 
 ![This is a tabular report entitled 'Pointblank Information'. This
@@ -357,24 +357,24 @@ informant_pp <-
     tbl = ~ palmerpenguins::penguins,
     tbl_name = "penguins",
     label = "The `penguins` dataset from the **palmerpenguins** 📦."
-  ) %>% 
+  ) |> 
   info_columns(
     columns = species,
     `ℹ️` = "A factor denoting penguin species ({species_snippet})."
-  ) %>%
+  ) |>
   info_columns(
     columns = island,
     `ℹ️` = "A factor denoting island in Palmer Archipelago, Antarctica
     ({island_snippet})."
-  ) %>%
+  ) |>
   info_snippet(
     snippet_name = "species_snippet",
     fn = snip_list(column = "species")
-  ) %>%
+  ) |>
   info_snippet(
     snippet_name = "island_snippet",
     fn = snip_list(column = "island")
-  ) %>%
+  ) |>
   incorporate()
 
 informant_pp
@@ -410,15 +410,15 @@ an `integer` column):
 ``` r
 
 informant_pp <-
-  informant_pp %>%
+  informant_pp |>
   info_columns(
     columns = year,
     `ℹ️` = "The study year ({year_snippet})."
-  ) %>%
+  ) |>
   info_snippet(
     snippet_name = "year_snippet",
     fn = snip_list(column = "year")
-  ) %>%
+  ) |>
   incorporate()
 
 informant_pp
@@ -456,40 +456,40 @@ and
 ``` r
 
 informant_pp <-
-  informant_pp %>%
+  informant_pp |>
   info_columns(
     columns = bill_length_mm,
     `ℹ️` = "A number denoting bill length"
-  ) %>%
+  ) |>
   info_columns(
     columns = bill_depth_mm,
     `ℹ️` = "A number denoting bill depth (in the range of
     {min_depth} to {max_depth} millimeters)."
-  ) %>%
+  ) |>
   info_columns(
     columns = flipper_length_mm,
     `ℹ️` = "An integer denoting flipper length"
-  ) %>%
+  ) |>
   info_columns(
     columns = matches("length"),
     `ℹ️` = "(in units of millimeters)."
-  ) %>%
+  ) |>
   info_columns(
     columns = flipper_length_mm,
     `ℹ️` = "Largest observed is {largest_flipper_length} mm."
-  ) %>%
+  ) |>
   info_snippet(
     snippet_name = "min_depth",
     fn = snip_lowest(column = "bill_depth_mm")
-  ) %>%
+  ) |>
   info_snippet(
     snippet_name = "max_depth",
     fn = snip_highest(column = "bill_depth_mm")
-  ) %>%
+  ) |>
   info_snippet(
     snippet_name = "largest_flipper_length",
     fn = snip_highest(column = "flipper_length_mm")
-  ) %>%
+  ) |>
   incorporate()
 
 informant_pp
@@ -561,7 +561,7 @@ information to the **palmerpenguins** reporting:
 ``` r
 
 informant_pp <-
-  informant_pp %>%
+  informant_pp |>
   info_tabular(
     `R dataset` = "The goal of `palmerpenguins` is to provide a great dataset
     for data exploration & visualization, as an alternative to `iris`. The
@@ -573,7 +573,7 @@ informant_pp <-
     Archipelago (Antarctica) penguin data. R package version 0.1.0.
     <https://allisonhorst.github.io/palmerpenguins/>. 
     doi: 10.5281/zenodo.3960218."
-  ) %>%
+  ) |>
   incorporate()
 
 informant_pp
@@ -611,19 +611,19 @@ we have two options,
 ``` r
 
 informant_pp <-
-  informant_pp %>%
+  informant_pp |>
   info_columns(
     columns = body_mass_g, 
     `ℹ️` = "An integer denoting body mass."
-  ) %>%
+  ) |>
   info_columns(
     columns = c(ends_with("mm"), ends_with("g")),
     `ℹ️` = "((measured))"    
-  ) %>%
+  ) |>
   info_section(
     section_name = "additional notes",
     `data types` = "(((factor))) (((numeric))) (((integer)))"
-  ) %>%
+  ) |>
   incorporate()
 
 informant_pp
@@ -691,12 +691,12 @@ Continuing with our **palmerpenguins** reporting, we’ll add some more
 ``` r
 
 informant_pp <-
-  informant_pp %>%
+  informant_pp |>
   info_columns(
     columns = sex, 
     `ℹ️` = "A [[factor]]<<text-decoration: underline;>> 
     denoting penguin sex (female or male)."
-  ) %>%
+  ) |>
   info_section(
     section_name = "additional notes",
     keywords = "
@@ -704,7 +704,7 @@ informant_pp <-
      [[((Antarctica))]]<<border-color: #800080; background-color: #F2F2F2;>>
      [[((measurements))]]<<border-color: #FFB3B3; background-color: #FFFEF4;>>
     "
-  ) %>%
+  ) |>
   incorporate()
 
 informant_pp

@@ -121,7 +121,7 @@ of `info_section()`. This is how it is expressed in both R code and in
 the YAML representation.
 
     # R statement
-    informant %>%
+    informant |>
       info_section(
         section_name = "History",
         Changes = "
@@ -129,7 +129,7 @@ the YAML representation.
     - Change 2
     - Change 3",
         `Last Update` = "(2020-10-23) at 3:28 PM."
-      ) %>%
+      ) |>
       info_section(
         section_name = "Additional Notes",
         `Notes 1` = "Notes with a {snippet}.",
@@ -187,12 +187,12 @@ subsection in the report called `"Notes"` and add text to two parts of
 that: `"creation"` and `"usage"`.
 
     informant <-
-      informant %>%
+      informant |>
       info_section(
         section_name = "Notes",
         creation = "Dataset generated on (2020-01-15).",
-        usage = "`small_table %>% dplyr::glimpse()`"
-      ) %>%
+        usage = "`small_table |> dplyr::glimpse()`"
+      ) |>
       incorporate()
 
 Upon printing the `informant` object, we see the addition of the 'Notes'

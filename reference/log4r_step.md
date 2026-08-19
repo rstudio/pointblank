@@ -70,7 +70,7 @@ R statement:
       tbl_name = "small_table",
       label = "An example.",
       actions = action_levels(
-        warn_at = 1,
+        warn = 1,
         fns = list(
           warn = ~ log4r_step(
             x, append_to = "example_log"
@@ -114,23 +114,20 @@ there is one failing test unit.
 
     al <-
       action_levels(
-        warn_at = 1,
+        warn = 1,
         fns = list(
           warn = ~ log4r_step(
             x, append_to = "example_log"
           )
         )
       )
-    #> Warning: ! `warn_at`, `stop_at`, and `notify_at` are deprecated.
-    #>   Action levels are now `warn`, `error`, and `critical`.
-    #> This warning is displayed once every 8 hours.
     #> Warning: ! Passing a list to `fns` is deprecated.
     #>   Please use `action_fns()` instead.
 
 Within the
 [`action_levels()`](https://rstudio.github.io/pointblank/reference/action_levels.md)-produced
-object, it's important to match things up: notice that `warn_at` is
-given a threshold and the list of functions given to `fns` has a `warn`
+object, it's important to match things up: notice that `warn` is given a
+threshold and the list of functions given to `fns` has a `warn`
 component.
 
 Printing `al` will show us the settings for the `action_levels` object:
@@ -153,9 +150,9 @@ the data.
         tbl_name = "small_table",
         label = "An example.",
         actions = al
-      ) %>%
-      col_vals_gt(columns = d, 300) %>%
-      col_vals_in_set(columns = f, c("low", "high")) %>%
+      ) |>
+      col_vals_gt(columns = d, 300) |>
+      col_vals_in_set(columns = f, c("low", "high")) |>
       interrogate()
 
     agent

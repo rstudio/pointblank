@@ -13,7 +13,7 @@ Calls of action_levels() could also be applied directly to any validation
 step and this will act as an override if set also in create_agent(). Usage
 of action_levels() is required to have any useful side effects (i.e.,
 warnings, throwing errors) in the case of validation functions operating
-directly on data (e.g., mtcars %&amp;gt;% col_vals_lt("mpg", 35)). There are two
+directly on data (e.g., mtcars |&amp;gt; col_vals_lt("mpg", 35)). There are two
 helper functions that are convenient when using validation functions directly
 on data (the agent-less workflow): warn_on_fail() and error_on_fail().
 These helpers either warn or stop (default failure threshold for each is set
@@ -34,7 +34,7 @@ Calls of action_levels() could also be applied directly to any validation
 step and this will act as an override if set also in create_agent(). Usage
 of action_levels() is required to have any useful side effects (i.e.,
 warnings, throwing errors) in the case of validation functions operating
-directly on data (e.g., mtcars %&amp;gt;% col_vals_lt("mpg", 35)). There are two
+directly on data (e.g., mtcars |&amp;gt; col_vals_lt("mpg", 35)). There are two
 helper functions that are convenient when using validation functions directly
 on data (the agent-less workflow): warn_on_fail() and error_on_fail().
 These helpers either warn or stop (default failure threshold for each is set
@@ -115,7 +115,7 @@ validation as a whole.</p>
 step and this will act as an override if set also in <code><a href="create_agent.html">create_agent()</a></code>. Usage
 of <code>action_levels()</code> is required to have any useful side effects (i.e.,
 warnings, throwing errors) in the case of validation functions operating
-directly on data (e.g., <code>mtcars %&gt;% col_vals_lt("mpg", 35)</code>). There are two
+directly on data (e.g., <code>mtcars |&gt; col_vals_lt("mpg", 35)</code>). There are two
 helper functions that are convenient when using validation functions directly
 on data (the <code>agent</code>-less workflow): <code>warn_on_fail()</code> and <code>error_on_fail()</code>.
 These helpers either warn or stop (default failure threshold for each is set
@@ -159,14 +159,14 @@ units that result in entering the <code>warn</code> failure state.</p></dd>
 
 
 <dt id="arg-error">error<a class="anchor" aria-label="anchor" href="#arg-error"></a></dt>
-<dd><p><em>Threshold value for the 'stop' failure state</em></p>
+<dd><p><em>Threshold value for the 'error' failure state</em></p>
 <p><code>scalar&lt;integer|numeric&gt;(val&gt;=0)</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>Either the threshold number or the threshold fraction of <em>failing</em> test
 units that result in entering the <code>error</code> failure state.</p></dd>
 
 
 <dt id="arg-critical">critical<a class="anchor" aria-label="anchor" href="#arg-critical"></a></dt>
-<dd><p><em>Threshold value for the 'notify' failure state</em></p>
+<dd><p><em>Threshold value for the 'critical' failure state</em></p>
 <p><code>scalar&lt;integer|numeric&gt;(val&gt;=0)</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>Either the threshold number or the threshold fraction of <em>failing</em> test
 units that result in entering the <code>critical</code> failure state.</p></dd>
@@ -210,7 +210,7 @@ slightly differently if using an <em>agent</em> or using validation functions
 directly on a data table. For convenience, when working directly on data, any
 values supplied to <code>warn</code> or <code>error</code> will be automatically given a stock
 <code><a href="https://rdrr.io/r/base/warning.html" class="external-link">warning()</a></code> or <code><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop()</a></code> function. For example using
-<code>small_table %&gt;% col_is_integer("date")</code> will provide a detailed stop message
+<code>small_table |&gt; col_is_integer("date")</code> will provide a detailed stop message
 by default, indicating the reason for the failure. If you were to supply the
 <code>fns</code> for <code>warn</code> or <code>error</code> manually then the stock functions would be
 overridden. Furthermore, if <code>actions</code> is NULL in this workflow (the default),
@@ -283,13 +283,13 @@ validation steps and interrogate the <code>small_table</code>.</p>
 <span>  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span></span>
 <span>    tbl <span class="op">=</span> <span class="va">small_table</span>,</span>
 <span>    actions <span class="op">=</span> <span class="va">al</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">a</span>, value <span class="op">=</span> <span class="fl">2</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">d</span>, value <span class="op">=</span> <span class="fl">20000</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>The report from the agent will show that the <code>warn</code> state has been entered
 for the first validation step but not the second one. We can confirm this in
@@ -306,14 +306,14 @@ another such object to the validation step instead (this time using the
 <span>  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span></span>
 <span>    tbl <span class="op">=</span> <span class="va">small_table</span>,</span>
 <span>    actions <span class="op">=</span> <span class="va">al</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">a</span>, value <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">warn_on_fail</a></span><span class="op">(</span>warn <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">d</span>, value <span class="op">=</span> <span class="fl">20000</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>In this case, the first validation step has a less stringent failure
 threshold for the <code>warn</code> state and it's high enough that the condition is not
@@ -327,7 +327,7 @@ x-list <code>warn</code> component.</p>
 involvement of an agent) we want to trigger warnings and raise errors. The
 following will yield a warning if it is executed (returning the <code>small_table</code>
 data).</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">small_table</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">a</span>, value <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">warn_on_fail</a></span><span class="op">(</span>warn <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
@@ -360,7 +360,7 @@ data).</p>
 
 <p>With the same pipeline, not supplying anything for <code>actions</code> (it's <code>NULL</code> by
 default) will have the same effect as using <code>error_on_fail(error = 1)</code>.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">small_table</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">a</span>, value <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre><p></p></div>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="do">## Error: Exceedance of failed test units where values in `a` should have</span></span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="do">## been &gt; `2`.</span></span>
@@ -368,7 +368,7 @@ default) will have the same effect as using <code>error_on_fail(error = 1)</code
 <span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="do">## level (1).</span></span>
 <span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="do">## * failure level (4) &gt;= failure threshold (1)</span></span></code></pre><p></p></div>
 <p>Here's the equivalent set of statements:</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">small_table</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">a</span>, value <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">error_on_fail</a></span><span class="op">(</span>error <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>

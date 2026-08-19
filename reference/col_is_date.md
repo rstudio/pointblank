@@ -128,7 +128,7 @@ test_col_is_date(object, columns, threshold = 1)
   [`has_columns()`](https://rstudio.github.io/pointblank/reference/has_columns.md)
   can be used to determine whether to make a validation step active on
   the basis of one or more columns existing in the table (e.g.,
-  `~ . %>% has_columns(c(d, e))`).
+  `\(x) x |> has_columns(c(d, e))`).
 
 - object:
 
@@ -226,10 +226,10 @@ function. Read that function's documentation for the lowdown on how to
 create reactions to above-threshold failure levels in validation. The
 basic gist is that you'll want at least a single threshold level
 (specified as either the fraction of test units failed, or, an absolute
-value), often using the `warn_at` argument. This is especially true when
+value), often using the `warn` argument. This is especially true when
 `x` is a table object because, otherwise, nothing happens. For the
-`col_is_*()`-type functions, using `action_levels(warn_at = 1)` or
-`action_levels(stop_at = 1)` are good choices depending on the situation
+`col_is_*()`-type functions, using `action_levels(warn = 1)` or
+`action_levels(error = 1)` are good choices depending on the situation
 (the first produces a warning, the other will
 [`stop()`](https://rdrr.io/r/base/stop.html)).
 
@@ -272,10 +272,10 @@ corresponding YAML representation.
 
 R statement:
 
-    agent %>%
+    agent |>
       col_is_date(
         columns = a,
-        actions = action_levels(warn_at = 0.1, stop_at = 0.2),
+        actions = action_levels(warn = 0.1, error = 0.2),
         label = "The `col_is_date()` step.",
         active = FALSE
       )
@@ -331,8 +331,8 @@ class.
 Validate that the column `date` has the `Date` class.
 
     agent <-
-      create_agent(tbl = small_table) %>%
-      col_is_date(columns = date) %>%
+      create_agent(tbl = small_table) |>
+      col_is_date(columns = date) |>
       interrogate()
 
 Printing the `agent` in the console shows the validation report in the
@@ -350,8 +350,8 @@ passed through but should [`stop()`](https://rdrr.io/r/base/stop.html)
 if there is a single test unit failing. The behavior of side effects can
 be customized with the `actions` option.
 
-    small_table %>%
-      col_is_date(columns = date) %>%
+    small_table |>
+      col_is_date(columns = date) |>
       dplyr::slice(1:5)
     #> # A tibble: 5 x 8
     #>   date_time           date           a b             c      d e     f
@@ -374,7 +374,7 @@ a time. This is primarily used in **testthat** tests.
 With the `test_*()` form, we should get a single logical value returned
 to us.
 
-    small_table %>% test_col_is_date(columns = date)
+    small_table |> test_col_is_date(columns = date)
     #> [1] TRUE
 
 ## Function ID

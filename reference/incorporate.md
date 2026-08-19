@@ -78,31 +78,31 @@ info text.
         tbl = ~ changing_table,
         tbl_name = "changing_table",
         label = "`informant()` example"
-      ) %>%
+      ) |>
       info_snippet(
         snippet_name = "row_count",
-        fn = ~ . %>% nrow()
-      ) %>%
+        fn = \(x) x |> nrow()
+      ) |>
       info_snippet(
         snippet_name = "col_count",
-        fn = ~ . %>% ncol()
-      ) %>%
+        fn = \(x) x |> ncol()
+      ) |>
       info_columns(
         columns = a,
         info = "In the range of 1 to 10. ((SIMPLE))"
-      ) %>%
+      ) |>
       info_columns(
         columns = starts_with("date"),
         info = "Time-based values (e.g., `Sys.time()`)."
-      ) %>%
+      ) |>
       info_columns(
         columns = date,
         info = "The date part of `date_time`. ((CALC))"
-      ) %>%
+      ) |>
       info_section(
         section_name = "rows",
         row_count = "There are {row_count} rows available."
-      ) %>%
+      ) |>
       incorporate()
 
 We can print the resulting object to see the information report.
@@ -116,14 +116,14 @@ file.](https://raw.githubusercontent.com/rstudio/pointblank/main/images/man_inco
 Let's modify `test_table` to give it more rows and an extra column.
 
     changing_table <-
-      dplyr::bind_rows(changing_table, changing_table) %>%
+      dplyr::bind_rows(changing_table, changing_table) |>
       dplyr::mutate(h = a + c)
 
 Using `incorporate()` will cause the snippets to be reprocessed and
 accordingly the content of the report will be updated to keep up with
 the current state of the `changing_table`.
 
-    informant <- informant %>% incorporate()
+    informant <- informant |> incorporate()
 
 When printed again, we'll also see that the row and column counts in the
 header have been updated to reflect the new dimensions of the target

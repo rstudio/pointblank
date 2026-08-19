@@ -19,7 +19,7 @@ validation step and this will act as an override if set also in
 [`create_agent()`](https://rstudio.github.io/pointblank/reference/create_agent.md).
 Usage of `action_levels()` is required to have any useful side effects
 (i.e., warnings, throwing errors) in the case of validation functions
-operating directly on data (e.g., `mtcars %>% col_vals_lt("mpg", 35)`).
+operating directly on data (e.g., `mtcars |> col_vals_lt("mpg", 35)`).
 There are two helper functions that are convenient when using validation
 functions directly on data (the `agent`-less workflow): `warn_on_fail()`
 and `error_on_fail()`. These helpers either warn or stop (default
@@ -64,7 +64,7 @@ action_fns(warn = NULL, error = NULL, critical = NULL)
 
 - error:
 
-  *Threshold value for the 'stop' failure state*
+  *Threshold value for the 'error' failure state*
 
   `scalar<integer|numeric>(val>=0)` // *default:* `NULL` (`optional`)
 
@@ -73,7 +73,7 @@ action_fns(warn = NULL, error = NULL, critical = NULL)
 
 - critical:
 
-  *Threshold value for the 'notify' failure state*
+  *Threshold value for the 'critical' failure state*
 
   `scalar<integer|numeric>(val>=0)` // *default:* `NULL` (`optional`)
 
@@ -123,7 +123,7 @@ directly on data, any values supplied to `warn` or `error` will be
 automatically given a stock
 [`warning()`](https://rdrr.io/r/base/warning.html) or
 [`stop()`](https://rdrr.io/r/base/stop.html) function. For example using
-`small_table %>% col_is_integer("date")` will provide a detailed stop
+`small_table |> col_is_integer("date")` will provide a detailed stop
 message by default, indicating the reason for the failure. If you were
 to supply the `fns` for `warn` or `error` manually then the stock
 functions would be overridden. Furthermore, if `actions` is NULL in this
@@ -201,13 +201,13 @@ two validation steps and interrogate the `small_table`.
       create_agent(
         tbl = small_table,
         actions = al
-      ) %>%
+      ) |>
       col_vals_gt(
         columns = a, value = 2
-      ) %>%
+      ) |>
       col_vals_lt(
         columns = d, value = 20000
-      ) %>%
+      ) |>
       interrogate()
 
 The report from the agent will show that the `warn` state has been
@@ -230,14 +230,14 @@ using the `warn_on_fail()` shorthand).
       create_agent(
         tbl = small_table,
         actions = al
-      ) %>%
+      ) |>
       col_vals_gt(
         columns = a, value = 2,
         actions = warn_on_fail(warn = 0.5)
-      ) %>%
+      ) |>
       col_vals_lt(
         columns = d, value = 20000
-      ) %>%
+      ) |>
       interrogate()
 
 In this case, the first validation step has a less stringent failure
@@ -256,7 +256,7 @@ involvement of an agent) we want to trigger warnings and raise errors.
 The following will yield a warning if it is executed (returning the
 `small_table` data).
 
-    small_table %>%
+    small_table |>
       col_vals_gt(
         columns = a, value = 2,
         actions = warn_on_fail(warn = 2)
@@ -290,7 +290,7 @@ With the same pipeline, not supplying anything for `actions` (it's
 `NULL` by default) will have the same effect as using
 `error_on_fail(error = 1)`.
 
-    small_table %>%
+    small_table |>
       col_vals_gt(columns = a, value = 2)
 
     ## Error: Exceedance of failed test units where values in `a` should have
@@ -301,7 +301,7 @@ With the same pipeline, not supplying anything for `actions` (it's
 
 Here's the equivalent set of statements:
 
-    small_table %>%
+    small_table |>
       col_vals_gt(
         columns = a, value = 2,
         actions = error_on_fail(error = 1)

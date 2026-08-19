@@ -77,12 +77,12 @@ agent_1 <-
     tbl = small_table,
     tbl_name = "small_table",
     label = "An example."
-  ) %>%
-  col_exists(columns = date) %>%
+  ) |>
+  col_exists(columns = date) |>
   col_vals_regex(
     columns = b,
     regex = "[0-9]-[a-z]{3}-[0-9]"
-  ) %>%
+  ) |>
   interrogate()
 
 # The second validation step has
@@ -91,7 +91,7 @@ agent_1 <-
 # by using `remove_steps()` with the
 # agent object
 agent_2 <-
-  agent_1 %>%
-  remove_steps(i = 2) %>%
+  agent_1 |>
+  remove_steps(i = 2) |>
   interrogate()
 ```

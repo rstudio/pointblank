@@ -102,7 +102,7 @@ first column has the column names and the second contains the *info
 text*.
 
     informant <-
-      informant %>%
+      informant |>
       info_columns_from_tbl(tbl = game_revenue_info)
 
 Upon printing the `informant` object, we see the additions made to the
@@ -124,19 +124,19 @@ content for the `item_revenue` and `acquisition` columns and view the
 updated report.
 
     informant <-
-      informant %>%
+      informant |>
       info_columns(
         columns = item_revenue,
         info = "Revenue reported in USD."
-      ) %>%
+      ) |>
       info_columns(
         columns = acquisition,
         `top list` = "{top5_aq}"
-      ) %>%
+      ) |>
       info_snippet(
         snippet_name = "top5_aq",
         fn = snip_list(column = "acquisition")
-      ) %>%
+      ) |>
       incorporate()
 
     informant

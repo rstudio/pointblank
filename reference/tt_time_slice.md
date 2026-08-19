@@ -122,7 +122,7 @@ package, with a fractional `slice_point` of `0.25` on the basis of a
 timeline that begins at `2016-01-04 11:00:00` and ends at
 `2016-01-30 11:23:00`.
 
-    small_table %>%
+    small_table |>
       tt_time_slice(
         slice_point = 0.25,
         keep = "right"

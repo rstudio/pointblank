@@ -121,9 +121,9 @@ value is provided then any existing label will be retained.</p></dd>
 states using <code><a href="action_levels.html">action_levels()</a></code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">al</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span></span>
-<span>      warn_at <span class="op">=</span> <span class="fl">0.10</span>,</span>
-<span>      stop_at <span class="op">=</span> <span class="fl">0.25</span>,</span>
-<span>    notify_at <span class="op">=</span> <span class="fl">0.35</span></span>
+<span>      warn <span class="op">=</span> <span class="fl">0.10</span>,</span>
+<span>      error <span class="op">=</span> <span class="fl">0.25</span>,</span>
+<span>    critical <span class="op">=</span> <span class="fl">0.35</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p>Create an agent that has <code>small_table</code> set as the target table via <code>tbl</code>.
 Apply the actions, add some validation steps and then interrogate the data.</p>
@@ -133,21 +133,21 @@ Apply the actions, add some validation steps and then interrogate the data.</p>
 <span>    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,</span>
 <span>    label <span class="op">=</span> <span class="st">"An example."</span>,</span>
 <span>    actions <span class="op">=</span> <span class="va">al</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/col_exists.html">col_exists</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">date_time</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/col_exists.html">col_exists</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">date_time</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">b</span>,</span>
 <span>    regex <span class="op">=</span> <span class="st">"[0-9]-[a-z]{3}-[0-9]{3}"</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/rows_distinct.html">rows_distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/rows_distinct.html">rows_distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>Replace the agent's association to <code>small_table</code> with a mutated version of it
 (one that removes duplicate rows). Then, interrogate the new target table.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">agent_2</span> <span class="op">&lt;-</span></span>
-<span>  <span class="va">agent_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="va">agent_1</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/set_tbl.html">set_tbl</a></span><span class="op">(</span></span>
-<span>    tbl <span class="op">=</span> <span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>    tbl <span class="op">=</span> <span class="va">small_table</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
     </div>
     <div class="section level2">

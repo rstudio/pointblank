@@ -145,7 +145,7 @@ test_col_vals_between(
   An optional expression for mutating the input table before proceeding
   with the validation. This can either be provided as a one-sided R
   formula using a leading `~` (e.g.,
-  `~ . %>% dplyr::mutate(col = col + 10)` or as a function (e.g.,
+  `\(x) x |> dplyr::mutate(col = col + 10)` or as a function (e.g.,
   `function(x) dplyr::mutate(x, col = col + 10)`. See the
   *Preconditions* section for more information.
 
@@ -236,7 +236,7 @@ test_col_vals_between(
   [`has_columns()`](https://rstudio.github.io/pointblank/reference/has_columns.md)
   can be used to determine whether to make a validation step active on
   the basis of one or more columns existing in the table (e.g.,
-  `~ . %>% has_columns(c(d, e))`).
+  `\(x) x |> has_columns(c(d, e))`).
 
 - object:
 
@@ -346,11 +346,9 @@ The table mutation is totally isolated in scope to the validation
 step(s) where `preconditions` is used. Using **dplyr** code is suggested
 here since the statements can be translated to SQL if necessary (i.e.,
 if the target table resides in a database). The code is most easily
-supplied as a one-sided **R** formula (using a leading `~`). In the
-formula representation, the `.` serves as the input data table to be
-transformed (e.g., `~ . %>% dplyr::mutate(col_b = col_a + 10)`).
-Alternatively, a function could instead be supplied (e.g.,
-`function(x) dplyr::mutate(x, col_b = col_a + 10)`).
+supplied as a one-sided anonymous function, where `x` represents the
+input data table to be transformed (e.g.,
+`\(x) x |> dplyr::mutate(col_b = col_a + 10)`).
 
 ## Segments
 
@@ -397,10 +395,10 @@ function. Read that function's documentation for the lowdown on how to
 create reactions to above-threshold failure levels in validation. The
 basic gist is that you'll want at least a single threshold level
 (specified as either the fraction of test units failed, or, an absolute
-value), often using the `warn_at` argument. This is especially true when
+value), often using the `warn` argument. This is especially true when
 `x` is a table object because, otherwise, nothing happens. For the
-`col_vals_*()`-type functions, using `action_levels(warn_at = 0.25)` or
-`action_levels(stop_at = 0.25)` are good choices depending on the
+`col_vals_*()`-type functions, using `action_levels(warn = 0.25)` or
+`action_levels(error = 0.25)` are good choices depending on the
 situation (the first produces a warning when a quarter of the total test
 units fails, the other [`stop()`](https://rdrr.io/r/base/stop.html)s at
 the same threshold level).
@@ -448,16 +446,16 @@ the corresponding YAML representation.
 
 R statement:
 
-    agent %>%
+    agent |>
       col_vals_between(
         columns = a,
         left = 1,
         right = 2,
         inclusive = c(TRUE, FALSE),
         na_pass = TRUE,
-        preconditions = ~ . %>% dplyr::filter(a < 10),
+        preconditions = \(x) x |> dplyr::filter(a < 10),
         segments = b ~ c("group_1", "group_2"),
-        actions = action_levels(warn_at = 0.1, stop_at = 0.2),
+        actions = action_levels(warn = 0.1, error = 0.2),
         label = "The `col_vals_between()` step.",
         active = FALSE
       )
@@ -523,12 +521,12 @@ there are `NA` values, we'll choose to let those pass validation by
 setting `na_pass = TRUE`.
 
     agent <-
-      create_agent(tbl = small_table) %>%
+      create_agent(tbl = small_table) |>
       col_vals_between(
         columns = c,
         left = 1, right = 9,
         na_pass = TRUE
-      ) %>%
+      ) |>
       interrogate()
 
 Printing the `agent` in the console shows the validation report in the
@@ -546,12 +544,12 @@ passed through but should [`stop()`](https://rdrr.io/r/base/stop.html)
 if there is a single test unit failing. The behavior of side effects can
 be customized with the `actions` option.
 
-    small_table %>%
+    small_table |>
       col_vals_between(
         columns = c,
         left = 1, right = 9,
         na_pass = TRUE
-      ) %>%
+      ) |>
       dplyr::pull(c)
     #>  [1]  3  8  3 NA  7  4  3  2  9  9  7  8 NA
 
@@ -571,7 +569,7 @@ a time. This is primarily used in **testthat** tests.
 With the `test_*()` form, we should get a single logical value returned
 to us.
 
-    small_table %>%
+    small_table |>
       test_col_vals_between(
         columns = c,
         left = 1, right = 9,
@@ -588,7 +586,7 @@ Testing with the upper bound being non-inclusive, we get `FALSE` since
 two values are `9` and they now fall outside of the upper (or right)
 bound.
 
-    small_table %>%
+    small_table |>
       test_col_vals_between(
         columns = c, left = 1, right = 9,
         inclusive = c(TRUE, FALSE),

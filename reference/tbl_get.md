@@ -102,7 +102,7 @@ using `$` to get the formula of choice from `tbls` and passing that to
 show us what's available in the table store (i.e., appears after typing
 the `$`).
 
-    store$small_table_duck %>% tbl_get()
+    store$small_table_duck |> tbl_get()
 
     ## # Source:   table<small_table> [?? x 8]
     ## # Database: duckdb_connection

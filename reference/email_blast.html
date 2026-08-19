@@ -140,7 +140,7 @@ then that won't happen. The expression can use x-list variables (e.g.,
 <code>x$notify</code>, <code>x$type</code>, etc.) and all of those variables can be explored
 using the <code><a href="get_agent_x_list.html">get_agent_x_list()</a></code> function. The default expression is <code>~ TRUE %in% x$notify</code>, which results in <code>TRUE</code> if there are any <code>TRUE</code> values in
 the <code>x$notify</code> logical vector (i.e., any validation step that results in a
-'notify' state).</p></dd>
+'critical' state).</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -176,8 +176,8 @@ representation.</p>
 <span>      <span class="op">)</span></span>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="va">a</span>, <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="va">a</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span><span class="va">a</span>, <span class="fl">7</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>YAML representation:</p>
 <p></p><div class="sourceCode yaml"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">type</span><span class="kw">:</span><span class="at"> agent</span></span>
@@ -210,12 +210,12 @@ representation.</p>
 <p>For the example provided here, we'll use the included <code>small_table</code> dataset.
 We are also going to create an <code><a href="action_levels.html">action_levels()</a></code> list object since this is
 useful for demonstrating an emailing scenario. It will have absolute values
-for the <code>warn</code> and <code>notify</code> states (with thresholds of <code>1</code> and <code>2</code> 'fail'
+for the <code>warn</code> and <code>critical</code> states (with thresholds of <code>1</code> and <code>2</code> 'fail'
 units, respectively, for the two states).</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">al</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span></span>
-<span>    warn_at <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>    notify_at <span class="op">=</span> <span class="fl">2</span></span>
+<span>    warn <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    critical <span class="op">=</span> <span class="fl">2</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p>Validate that values in column <code>a</code> from <code>small_tbl</code> are always greater than
 <code>1</code> (with the <code><a href="col_vals_gt.html">col_vals_gt()</a></code> validation function), and, that values in <code>a</code>
@@ -226,9 +226,9 @@ argument of <code><a href="create_agent.html">create_agent()</a></code>. The <co
 sent. By default this is set to <code>~ TRUE %in% x$notify</code>. Let's unpack this a
 bit. The variable <code>x</code> is a list (we call it an x-list) and it will be
 populated with elements pertaining to the agent. After interrogation, and
-only if action levels were set for the <code>notify</code> state, <code>x$notify</code> will be
+only if action levels were set for the <code>critical</code> state, <code>x$notify</code> will be
 present as a logical vector where the length corresponds to the number of
-validation steps. Thus, if any of those steps entered the <code>notify</code> state
+validation steps. Thus, if any of those steps entered the <code>critical</code> state
 (here, it would take two or more failing test units, per step, for that to
 happen), then the statement as a whole is <code>TRUE</code> and the email of the
 interrogation report will be sent. Here is the complete set of statements for
@@ -250,9 +250,9 @@ interrogation of data in <code>small_table</code>:</p>
 <span>        send_condition <span class="op">=</span> <span class="op">~</span> <span class="cn">TRUE</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">x</span><span class="op">$</span><span class="va">notify</span></span>
 <span>      <span class="op">)</span></span>
 <span>    <span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="va">a</span>, value <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span><span class="va">a</span>, value <span class="op">=</span> <span class="fl">7</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="va">a</span>, value <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span><span class="va">a</span>, value <span class="op">=</span> <span class="fl">7</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>The reason for the <code>~</code> present in the statements:</p><ul><li><p><code>~ email_blast(...)</code> and</p></li>
 <li><p><code>~ TRUE %in% x$notify</code></p></li>

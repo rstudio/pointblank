@@ -71,16 +71,16 @@ agent_1 <-
     tbl = small_table,
     tbl_name = "small_table",
     label = "An example."
-  ) %>%
+  ) |>
   col_exists(
     columns = date,
     active = FALSE
-  ) %>%
+  ) |>
   col_vals_regex(
     columns = b,
     regex = "[0-9]-[a-z]{3}-[0-9]{3}",
     active = FALSE
-  ) %>%
+  ) |>
   interrogate()
 
 # In the above, the data is
@@ -90,7 +90,7 @@ agent_1 <-
 # can selectively change this
 # with `activate_steps()`
 agent_2 <-
-  agent_1 %>%
-  activate_steps(i = 1) %>%
+  agent_1 |>
+  activate_steps(i = 1) |>
   interrogate()
 ```

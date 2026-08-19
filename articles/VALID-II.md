@@ -31,11 +31,11 @@ article to the pipeline data validation workflow:
 
 ``` r
 
-small_table %>%
-  col_is_posix(date_time) %>%
-  col_vals_in_set(f, set = c("low", "mid", "high")) %>%
-  col_vals_lt(a, value = 10) %>%
-  col_vals_regex(b, regex = "^[0-9]-[a-z]{3}-[0-9]{3}$") %>%
+small_table |>
+  col_is_posix(date_time) |>
+  col_vals_in_set(f, set = c("low", "mid", "high")) |>
+  col_vals_lt(a, value = 10) |>
+  col_vals_regex(b, regex = "^[0-9]-[a-z]{3}-[0-9]{3}$") |>
   col_vals_between(d, left = 0, right = 5000)
 ```
 
@@ -103,23 +103,23 @@ exactly the same as this expanded form:
 
 ``` r
 
-small_table %>%
+small_table |>
   col_is_posix(
     date_time,
     actions = stop_on_fail(stop_at = 1)
-  ) %>%
+  ) |>
   col_vals_in_set(
     f, set = c("low", "mid", "high"),
     actions = stop_on_fail(stop_at = 1)
-  ) %>%
+  ) |>
   col_vals_lt(
     a, value = 10,
     actions = stop_on_fail(stop_at = 1)
-  ) %>%
+  ) |>
   col_vals_regex(
     b, regex = "^[0-9]-[a-z]{3}-[0-9]{3}$",
     actions = stop_on_fail(stop_at = 1)
-  ) %>%
+  ) |>
   col_vals_between(
     d, left = 0, right = 5000,
     actions = stop_on_fail(stop_at = 1)
@@ -149,23 +149,23 @@ function provides a simple way to express this.
 
 ``` r
 
-small_table %>%
+small_table |>
   col_is_posix(
     date_time,
     actions = warn_on_fail()
-  ) %>%
+  ) |>
   col_vals_in_set(
     f, set = c("low", "mid", "high"),
     actions = warn_on_fail(warn_at = 0.2)
-  ) %>%
+  ) |>
   col_vals_lt(
     a, value = 10,
     actions = warn_on_fail(warn_at = 3)
-  ) %>%
+  ) |>
   col_vals_regex(
     b, regex = "^[0-9]-[a-z]{3}-[0-9]{3}$",
     actions = warn_on_fail(warn_at = 0.2)
-  ) %>%
+  ) |>
   col_vals_between(
     d, left = 0, right = 5000,
     actions = warn_on_fail(warn_at = 1)
@@ -247,9 +247,9 @@ how we might create such an `action_levels` object with
 
 al <-
   action_levels(
-    warn_at = 0.1,
-    stop_at = 0.2,
-    notify_at = 0.3,
+    warn = 0.1,
+    error = 0.2,
+    critical = 0.3,
     fns = list(
       warn = ~ warning("WARN threshold exceeded."),
       stop = ~ stop("STOP threshold exceeded."),
@@ -281,11 +281,11 @@ the expression (changed slightly to result in more test units failing).
 
 ``` r
 
-small_table %>%
-  col_is_posix(date_time, actions = al) %>%
-  col_vals_in_set(f, set = c("low", "mid"), actions = al) %>%
-  col_vals_lt(a, value = 7, actions = al) %>%
-  col_vals_regex(b, regex = "^[0-9]-[a-w]{3}-[2-9]{3}$", actions = al) %>%
+small_table |>
+  col_is_posix(date_time, actions = al) |>
+  col_vals_in_set(f, set = c("low", "mid"), actions = al) |>
+  col_vals_lt(a, value = 7, actions = al) |>
+  col_vals_regex(b, regex = "^[0-9]-[a-w]{3}-[2-9]{3}$", actions = al) |>
   col_vals_between(d, left = 0, right = 4000, actions = al)
 ```
 

@@ -61,7 +61,7 @@ test_specially(object, fn, preconditions = NULL, threshold = 1)
   An optional expression for mutating the input table before proceeding
   with the validation. This can either be provided as a one-sided R
   formula using a leading `~` (e.g.,
-  `~ . %>% dplyr::mutate(col = col + 10)` or as a function (e.g.,
+  `\(x) x |> dplyr::mutate(col = col + 10)` or as a function (e.g.,
   `function(x) dplyr::mutate(x, col = col + 10)`. See the
   *Preconditions* section for more information.
 
@@ -139,7 +139,7 @@ test_specially(object, fn, preconditions = NULL, threshold = 1)
   [`has_columns()`](https://rstudio.github.io/pointblank/reference/has_columns.md)
   can be used to determine whether to make a validation step active on
   the basis of one or more columns existing in the table (e.g.,
-  `~ . %>% has_columns(c(d, e))`).
+  `\(x) x |> has_columns(c(d, e))`).
 
 - object:
 
@@ -224,11 +224,9 @@ The table mutation is totally isolated in scope to the validation
 step(s) where `preconditions` is used. Using **dplyr** code is suggested
 here since the statements can be translated to SQL if necessary (i.e.,
 if the target table resides in a database). The code is most easily
-supplied as a one-sided **R** formula (using a leading `~`). In the
-formula representation, the `.` serves as the input data table to be
-transformed (e.g., `~ . %>% dplyr::mutate(col_b = col_a + 10)`).
-Alternatively, a function could instead be supplied (e.g.,
-`function(x) dplyr::mutate(x, col_b = col_a + 10)`).
+supplied as a one-sided anonymous function, where `x` represents the
+input data table to be transformed (e.g.,
+`\(x) x |> dplyr::mutate(col_b = col_a + 10)`).
 
 ## Actions
 
@@ -240,10 +238,10 @@ function. Read that function's documentation for the lowdown on how to
 create reactions to above-threshold failure levels in validation. The
 basic gist is that you'll want at least a single threshold level
 (specified as either the fraction of test units failed, or, an absolute
-value), often using the `warn_at` argument. This is especially true when
+value), often using the `warn` argument. This is especially true when
 `x` is a table object because, otherwise, nothing happens. For the
-`col_vals_*()`-type functions, using `action_levels(warn_at = 0.25)` or
-`action_levels(stop_at = 0.25)` are good choices depending on the
+`col_vals_*()`-type functions, using `action_levels(warn = 0.25)` or
+`action_levels(error = 0.25)` are good choices depending on the
 situation (the first produces a warning when a quarter of the total test
 units fails, the other [`stop()`](https://rdrr.io/r/base/stop.html)s at
 the same threshold level).
@@ -285,11 +283,11 @@ corresponding YAML representation.
 
 R statement:
 
-    agent %>%
+    agent |>
       specially(
         fn = function(x) { ... },
-        preconditions = ~ . %>% dplyr::filter(a < 10),
-        actions = action_levels(warn_at = 0.1, stop_at = 0.2),
+        preconditions = \(x) x |> dplyr::filter(a < 10),
+        actions = action_levels(warn = 0.1, error = 0.2),
         label = "The `specially()` step.",
         active = FALSE
       )
@@ -347,8 +345,8 @@ length of 1. We'll determine if this validation has any failing test
 units (there is 1 test unit).
 
     agent <-
-      create_agent(tbl = tbl) %>%
-      specially(fn = function(x) nrow(x) == 3) %>%
+      create_agent(tbl = tbl) |>
+      specially(fn = function(x) nrow(x) == 3) |>
       interrogate()
 
 Printing the `agent` in the console shows the validation report in the
@@ -366,7 +364,7 @@ passed through but should [`stop()`](https://rdrr.io/r/base/stop.html)
 if there is a single test unit failing. The behavior of side effects can
 be customized with the `actions` option.
 
-    tbl %>% specially(fn = function(x) nrow(x) == 3)
+    tbl |> specially(fn = function(x) nrow(x) == 3)
     #> # A tibble: 3 x 3
     #>       a     b     c
     #>   <dbl> <dbl> <dbl>
@@ -386,7 +384,7 @@ a time. This is primarily used in **testthat** tests.
 With the `test_*()` form, we should get a single logical value returned
 to us.
 
-    tbl %>% test_specially(fn = function(x) nrow(x) == 3)
+    tbl |> test_specially(fn = function(x) nrow(x) == 3)
     #> [1] TRUE
 
 ### Variations
@@ -395,7 +393,7 @@ We can do more complex things with `specially()` and its variants.
 
 Check the class of the target table.
 
-    tbl %>%
+    tbl |>
       test_specially(
         fn = function(x) {
           inherits(x, "data.frame")
@@ -406,7 +404,7 @@ Check the class of the target table.
 Check that the number of rows in the target table is less than
 `small_table`.
 
-    tbl %>%
+    tbl |>
       test_specially(
         fn = function(x) {
           nrow(x) < nrow(small_table)
@@ -416,11 +414,11 @@ Check that the number of rows in the target table is less than
 
 Check that all numbers across all numeric column are less than `10`.
 
-    tbl %>%
+    tbl |>
       test_specially(
         fn = function(x) {
-          (x %>%
-             dplyr::select(where(is.numeric)) %>%
+          (x |>
+             dplyr::select(where(is.numeric)) |>
              unlist()
           ) < 10
         }
@@ -432,10 +430,10 @@ Check that all values in column `c` are greater than b and greater than
 the new column `d` which is a logical column (that is used as the
 evaluation of test units).
 
-    tbl %>%
+    tbl |>
       test_specially(
         fn = function(x) {
-          x %>%
+          x |>
             dplyr::mutate(
               d = c > b & c > a & c < 10
             )
@@ -446,7 +444,7 @@ evaluation of test units).
 Check that the `game_revenue` table (which is not the target table) has
 exactly 2000 rows.
 
-    tbl %>%
+    tbl |>
       test_specially(
         fn = function(x) {
           nrow(game_revenue) == 2000

@@ -176,9 +176,9 @@ pointblank agent. We designate failure thresholds to the <code>warn</code>, <cod
 <code>notify</code> states using <code><a href="action_levels.html">action_levels()</a></code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">al</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span></span>
-<span>    warn_at <span class="op">=</span> <span class="fl">0.10</span>,</span>
-<span>    stop_at <span class="op">=</span> <span class="fl">0.25</span>,</span>
-<span>    notify_at <span class="op">=</span> <span class="fl">0.35</span></span>
+<span>    warn <span class="op">=</span> <span class="fl">0.10</span>,</span>
+<span>    error <span class="op">=</span> <span class="fl">0.25</span>,</span>
+<span>    critical <span class="op">=</span> <span class="fl">0.35</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p>Now, let's create a pointblank <code>agent</code> object and give it the <code>al</code> object
 (which serves as a default for all validation steps which can be overridden).
@@ -194,15 +194,15 @@ The data will be referenced in the <code>tbl</code> argument with a leading <cod
 using as many validation functions as we want. After that, use
 <code><a href="interrogate.html">interrogate()</a></code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op">&lt;-</span></span>
-<span>  <span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/col_exists.html">col_exists</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">date_time</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="va">agent</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/col_exists.html">col_exists</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">date_time</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">b</span>,</span>
 <span>    regex <span class="op">=</span> <span class="st">"[0-9]-[a-z]{3}-[0-9]{3}"</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/rows_distinct.html">rows_distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">d</span>, value <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/col_vals_lte.html">col_vals_lte</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">c</span>, value <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/rows_distinct.html">rows_distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">d</span>, value <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_lte.html">col_vals_lte</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">c</span>, value <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>The <code>agent</code> can be written to a file with the <code>x_write_disk()</code> function.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/x_write_disk.html">x_write_disk</a></span><span class="op">(</span></span>
@@ -239,27 +239,27 @@ integrated into the text.</p>
 <span>    tbl <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,</span>
 <span>    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,</span>
 <span>    label <span class="op">=</span> <span class="st">"`x_write_disk()`"</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/info_snippet.html">info_snippet</a></span><span class="op">(</span></span>
 <span>    snippet_name <span class="op">=</span> <span class="st">"high_a"</span>,</span>
 <span>    fn <span class="op">=</span> <span class="fu"><a href="../reference/snip_highest.html">snip_highest</a></span><span class="op">(</span>column <span class="op">=</span> <span class="st">"a"</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/info_snippet.html">info_snippet</a></span><span class="op">(</span></span>
 <span>    snippet_name <span class="op">=</span> <span class="st">"low_a"</span>,</span>
 <span>    fn <span class="op">=</span> <span class="fu"><a href="../reference/snip_lowest.html">snip_lowest</a></span><span class="op">(</span>column <span class="op">=</span> <span class="st">"a"</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">a</span>,</span>
 <span>    info <span class="op">=</span> <span class="st">"From {low_a} to {high_a}."</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="fu">starts_with</span><span class="op">(</span><span class="st">"date"</span><span class="op">)</span>,</span>
 <span>    info <span class="op">=</span> <span class="st">"Time-based values."</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">date</span>,</span>
 <span>    info <span class="op">=</span> <span class="st">"The date part of `date_time`."</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/incorporate.html">incorporate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>The <code>informant</code> can be written to a file with <code>x_write_disk()</code>. Let's do this
 with <code><a href="affix_date.html">affix_date()</a></code> so that the filename has a datestamp.</p>
@@ -285,17 +285,17 @@ validation steps, and <code><a href="interrogate.html">interrogate()</a></code>.
 <span>    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,</span>
 <span>    label <span class="op">=</span> <span class="st">"`x_write_disk()`"</span>,</span>
 <span>    actions <span class="op">=</span> <span class="va">al</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">b</span>,</span>
 <span>    value <span class="op">=</span> <span class="va">g</span>,</span>
 <span>    na_pass <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    label <span class="op">=</span> <span class="st">"b &gt; g"</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_is_character.html">col_is_character</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">b</span>, <span class="va">f</span><span class="op">)</span>,</span>
 <span>    label <span class="op">=</span> <span class="st">"Verifying character-type columns"</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>Now we can combine the earlier <code>agent</code> object with the newer <code>agent_b</code> to
 create a <code>multiagent</code>.</p>

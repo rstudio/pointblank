@@ -160,7 +160,7 @@ represented in YAML, <em>info text</em> goes into subsections of the top-level
 <code>table</code> key. Here is an example of how a call of <code>info_tabular()</code> is
 expressed in R code and in the corresponding YAML representation.</p>
 <p>R statement:</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">informant</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">informant</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/info_tabular.html">info_tabular</a></span><span class="op">(</span></span>
 <span>    section_1 <span class="op">=</span> <span class="st">"*info text* 1."</span>,</span>
 <span>    `section 2` <span class="op">=</span> <span class="st">"*info text* 2 and {snippet_1}"</span></span>
@@ -202,7 +202,7 @@ specify a <code>tbl</code> with the <code>~</code> followed by a statement that 
 functions. In this example, we'll use <code>info_tabular()</code> to generally describe
 the <code>small_table</code> dataset.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">informant</span> <span class="op">&lt;-</span></span>
-<span>  <span class="va">informant</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="va">informant</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/info_tabular.html">info_tabular</a></span><span class="op">(</span></span>
 <span>    `Row Definition` <span class="op">=</span> <span class="st">"A row has randomized values."</span>,</span>
 <span>    Source <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>

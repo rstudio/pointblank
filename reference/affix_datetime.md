@@ -147,7 +147,7 @@ validation runs per day are being executed on the same target table.
         "yaml", "agent-small_table.yml",
         package = "pointblank"
       )
-    ) %>%
+    ) |>
       x_write_disk(
         filename = affix_datetime(
           filename = "small_table_agent.rds",

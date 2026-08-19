@@ -22,7 +22,7 @@ We use a `small_table` for our example. We expect the values in column
 
 data(small_table)
 
-small_table %>%
+small_table |>
   col_vals_lt(a, value = 10)
 #> # A tibble: 13 × 8
 #>    date_time           date           a b             c      d e     f    
@@ -47,10 +47,10 @@ table - so we can directly pass that to further validation rules.
 
 ``` r
 
-small_table %>%
-  col_vals_lt(a, value = 10) %>%
-  col_vals_between(d, left = 0, right = 5000) %>% 
-  col_vals_in_set(f, set = c("low", "mid", "high")) %>%
+small_table |>
+  col_vals_lt(a, value = 10) |>
+  col_vals_between(d, left = 0, right = 5000) |> 
+  col_vals_in_set(f, set = c("low", "mid", "high")) |>
   col_vals_regex(b, regex = "^[0-9]-[a-z]{3}-[0-9]{3}$")
 #> Error:
 #> ! Exceedance of failed test units where values in `d` should have been between `0` and `5000`.
@@ -103,14 +103,14 @@ Here’s the code that performs the validation on the data frame.
 
 ``` r
 
-agent <- small_table %>%
-  create_agent() %>% 
-  col_vals_lt(a, value = 10) %>%
-  col_vals_between(d, left = 0, right = 5000) %>% 
-  col_vals_in_set(f, set = c("low", "mid", "high")) %>%
+agent <- small_table |>
+  create_agent() |> 
+  col_vals_lt(a, value = 10) |>
+  col_vals_between(d, left = 0, right = 5000) |> 
+  col_vals_in_set(f, set = c("low", "mid", "high")) |>
   col_vals_regex(b, regex = "^[0-9]-[a-z]{3}-[0-9]{3}$") 
   
-agent %>% 
+agent |> 
   interrogate()
 ```
 
@@ -167,7 +167,7 @@ relative proportion or absolute number of failing test units.
 
 al <- action_levels(warn = 2, error = 4)
 
-small_table %>%
+small_table |>
   col_vals_lt(a, value = 7, actions = al)
 #> Warning: Exceedance of failed test units where values in `a` should have been < `7`.
 #> The `col_vals_lt()` validation failed beyond the absolute threshold level (2).
@@ -197,9 +197,9 @@ applies to all rules in a validation plan.
 
 ``` r
 
-small_table %>%
-  create_agent(actions = al) %>% 
-  col_vals_lt(a, value = 7) %>%
+small_table |>
+  create_agent(actions = al) |> 
+  col_vals_lt(a, value = 7) |>
   interrogate()
 ```
 

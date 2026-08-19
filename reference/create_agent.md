@@ -208,11 +208,11 @@ input table will become output data (without modification), but there
 may be warnings, errors, or other side effects that you can define if
 validation fails. Basically, instead of this
 
-    create_agent(tbl = small_table) %>% rows_distinct() %>% interrogate()
+    create_agent(tbl = small_table) |> rows_distinct() |> interrogate()
 
 you would use this:
 
-    small_table %>% rows_distinct()
+    small_table |> rows_distinct()
 
 This results in an error (with the default failure threshold settings),
 displaying the reason for the error in the console. Notably, the data is
@@ -222,14 +222,14 @@ We can use variants of the validation functions, the *test* (`test_*()`)
 and *expectation* (`expect_*()`) versions, directly on the data for
 different workflows. The first returns to us a logical value. So this
 
-    small_table %>% test_rows_distinct()
+    small_table |> test_rows_distinct()
 
 returns `FALSE` instead of an error.
 
 In a unit testing scenario, we can use *expectation* functions exactly
 as we would with **testthat**'s library of `expect_*()` functions:
 
-    small_table %>% expect_rows_distinct()
+    small_table |> expect_rows_distinct()
 
 This test of `small_table` would be counted as a failure.
 
@@ -307,9 +307,9 @@ R statement:
       tbl_name = "small_table",
       label = "An example.",
       actions = action_levels(
-        warn_at = 0.10,
-        stop_at = 0.25,
-        notify_at = 0.35,
+        warn = 0.10,
+        error = 0.25,
+        critical = 0.35,
         fns = list(notify = ~ email_blast(
           x,
           to = "joe_public@example.com",
@@ -438,9 +438,9 @@ and `notify` states using
 
     al <-
       action_levels(
-          warn_at = 0.10,
-          stop_at = 0.25,
-        notify_at = 0.35
+          warn = 0.10,
+          error = 0.25,
+        critical = 0.35
       )
 
 Now create a pointblank `agent` object and give it the `al` object
@@ -464,20 +464,20 @@ plan by using as many validation functions as we want. then, we use
 to actually perform the validations and gather intel.
 
     agent <-
-      agent %>%
-      col_exists(columns = c(date, date_time)) %>%
+      agent |>
+      col_exists(columns = c(date, date_time)) |>
       col_vals_regex(
         columns = b,
         regex = "[0-9]-[a-z]{3}-[0-9]{3}"
-      ) %>%
-      rows_distinct() %>%
-      col_vals_gt(columns = d, value = 100) %>%
-      col_vals_lte(columns = c, value = 5) %>%
+      ) |>
+      rows_distinct() |>
+      col_vals_gt(columns = d, value = 100) |>
+      col_vals_lte(columns = c, value = 5) |>
       col_vals_between(
         columns = c,
         left = vars(a), right = vars(d),
         na_pass = TRUE
-      ) %>%
+      ) |>
       interrogate()
 
 The `agent` object can be printed to see the validation report in the
@@ -518,7 +518,7 @@ validation function) had two test units, corresponding to duplicated
 rows, that failed. We can see those rows with
 [`get_data_extracts()`](https://rstudio.github.io/pointblank/reference/get_data_extracts.md).
 
-    agent %>% get_data_extracts(i = 4)
+    agent |> get_data_extracts(i = 4)
 
     ## # A tibble: 2 × 8
     ##   date_time           date           a b            c     d e     f
@@ -530,7 +530,7 @@ We can get an x-list for the entire validation process (7 steps), or,
 just for the 4th step with
 [`get_agent_x_list()`](https://rstudio.github.io/pointblank/reference/get_agent_x_list.md).
 
-    xl_step_4 <- agent %>% get_agent_x_list(i = 4)
+    xl_step_4 <- agent |> get_agent_x_list(i = 4)
 
 And then we can peruse the different parts of the list. Let's get the
 fraction of test units that failed.

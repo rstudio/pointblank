@@ -63,9 +63,9 @@ states using
 
     al <-
       action_levels(
-          warn_at = 0.10,
-          stop_at = 0.25,
-        notify_at = 0.35
+          warn = 0.10,
+          error = 0.25,
+        critical = 0.35
       )
 
 Create an agent that has `small_table` set as the target table via
@@ -78,13 +78,13 @@ the data.
         tbl_name = "small_table",
         label = "An example.",
         actions = al
-      ) %>%
-      col_exists(columns = c(date, date_time)) %>%
+      ) |>
+      col_exists(columns = c(date, date_time)) |>
       col_vals_regex(
         columns = b,
         regex = "[0-9]-[a-z]{3}-[0-9]{3}"
-      ) %>%
-      rows_distinct() %>%
+      ) |>
+      rows_distinct() |>
       interrogate()
 
 Replace the agent's association to `small_table` with a mutated version
@@ -92,10 +92,10 @@ of it (one that removes duplicate rows). Then, interrogate the new
 target table.
 
     agent_2 <-
-      agent_1 %>%
+      agent_1 |>
       set_tbl(
-        tbl = small_table %>% dplyr::distinct()
-      ) %>%
+        tbl = small_table |> dplyr::distinct()
+      ) |>
       interrogate()
 
 ## Function ID

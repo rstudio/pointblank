@@ -71,7 +71,7 @@ Table transformers work great in conjunction with validation functions.
 Let's ensure that the maximum revenue for individual purchases in the
 `game_revenue` table is less than \$150.
 
-    tt_summary_stats(tbl = game_revenue) %>%
+    tt_summary_stats(tbl = game_revenue) |>
       col_vals_lt(
         columns = item_revenue,
         value = 150,
@@ -95,9 +95,9 @@ We see data, and not an error, so the validation was successful!
 Let's do another: for in-app purchases in the `game_revenue` table,
 check that the median revenue is somewhere between \$8 and \$12.
 
-    game_revenue %>%
-      dplyr::filter(item_type == "iap") %>%
-      tt_summary_stats() %>%
+    game_revenue |>
+      dplyr::filter(item_type == "iap") |>
+      tt_summary_stats() |>
       col_vals_between(
         columns = item_revenue,
         left = 8, right = 12,
@@ -132,21 +132,21 @@ step that isolates the row of the median statistic.
         tbl_name = "game_revenue",
         label = "`tt_summary_stats()` example.",
         actions = action_levels(
-          warn_at = 0.10,
-          stop_at = 0.25,
-          notify_at = 0.35
+          warn = 0.10,
+          error = 0.25,
+          critical = 0.35
         )
-      ) %>%
-      rows_complete() %>%
-      rows_distinct() %>%
+      ) |>
+      rows_complete() |>
+      rows_distinct() |>
       col_vals_between(
         columns = item_revenue,
         left = 8, right = 12,
-        preconditions = ~ . %>%
-          dplyr::filter(item_type == "iap") %>%
-          tt_summary_stats() %>%
+        preconditions = \(x) x |>
+          dplyr::filter(item_type == "iap") |>
+          tt_summary_stats() |>
           dplyr::filter(.param. == "med")
-      ) %>%
+      ) |>
       interrogate()
 
 Printing the `agent` in the console shows the validation report in the

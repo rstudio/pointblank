@@ -181,19 +181,19 @@ the top-level <code>columns</code> key. Here is an example of how several calls 
 <code>info_columns()</code> are expressed in R code and how the result corresponds to
 the YAML representation.</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># R statement</span></span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>informant <span class="sc">%&gt;%</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>informant <span class="sc">|&gt;</span></span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>  <span class="fu">info_columns</span>(</span>
 <span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>    <span class="at">columns =</span> date_time,</span>
 <span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>    <span class="at">info =</span> <span class="st">"*info text* 1."</span></span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
 <span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>  <span class="fu">info_columns</span>(</span>
 <span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>    <span class="at">columns =</span> date,</span>
 <span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>    <span class="at">info =</span> <span class="st">"*info text* 2."</span></span>
-<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
 <span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>  <span class="fu">info_columns</span>(</span>
 <span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>    <span class="at">columns =</span> item_count,</span>
 <span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>    <span class="at">info =</span> <span class="st">"*info text* 3. Statistics: {snippet_1}."</span></span>
-<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
 <span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>  <span class="fu">info_columns</span>(</span>
 <span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a>    <span class="at">columns =</span> <span class="fu">c</span>(date, date_time),</span>
 <span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a>    <span class="at">info =</span> <span class="st">"UTC time."</span></span>
@@ -246,15 +246,15 @@ describe some of the columns in the <code>small_table</code> dataset. Note here 
 various subsections (i.e., the text will be appended and won't overwrite
 existing if it lands in the same area).</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">informant</span> <span class="op">&lt;-</span></span>
-<span>  <span class="va">informant</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="va">informant</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">a</span>,</span>
 <span>    info <span class="op">=</span> <span class="st">"In the range of 1 to 10. ((SIMPLE))"</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="fu">starts_with</span><span class="op">(</span><span class="st">"date"</span><span class="op">)</span>,</span>
 <span>    info <span class="op">=</span> <span class="st">"Time-based values (e.g., `Sys.time()`)."</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">date</span>,</span>
 <span>    info <span class="op">=</span> <span class="st">"The date part of `date_time`. ((CALC))"</span></span>

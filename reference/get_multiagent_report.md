@@ -147,14 +147,14 @@ find it as a dataset in this package.
     #> 13 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA  2230. TRUE  high
 
 To set failure limits and signal conditions, we designate proportional
-failure thresholds to the `warn`, `stop`, and `notify` states using
+failure thresholds to the `warn`, `error`, and `critical` states using
 [`action_levels()`](https://rstudio.github.io/pointblank/reference/action_levels.md).
 
     al <-
       action_levels(
-        warn_at = 0.05,
-        stop_at = 0.10,
-        notify_at = 0.20
+        warn = 0.05,
+        error = 0.10,
+        critical = 0.20
       )
 
 We will create four different agents and have slightly different
@@ -167,70 +167,70 @@ the `small_table`.
         tbl = small_table,
         label = "An example.",
         actions = al
-      ) %>%
+      ) |>
       col_vals_gt(
         columns = date_time,
         value = vars(date),
         na_pass = TRUE
-      ) %>%
+      ) |>
       col_vals_gt(
         columns = b,
         value = vars(g),
         na_pass = TRUE
-      ) %>%
-      rows_distinct() %>%
+      ) |>
+      rows_distinct() |>
       col_vals_equal(
         columns = d,
         value = vars(d),
         na_pass = TRUE
-      ) %>%
+      ) |>
       col_vals_between(
         columns = c,
         left = vars(a), right = vars(d)
-      ) %>%
+      ) |>
       col_vals_not_between(
         columns = c,
         left = 10, right = 20,
         na_pass = TRUE
-      ) %>%
-      rows_distinct(columns = d, e, f) %>%
-      col_is_integer(columns = a) %>%
+      ) |>
+      rows_distinct(columns = d, e, f) |>
+      col_is_integer(columns = a) |>
       interrogate()
 
 The second agent, `agent_2`, retains all of the steps of `agent_1` and
 adds two more (the last of which is inactive).
 
     agent_2 <-
-      agent_1 %>%
-      col_exists(columns = date, date_time) %>%
+      agent_1 |>
+      col_exists(columns = date, date_time) |>
       col_vals_regex(
         columns = b,
         regex = "[0-9]-[a-z]{3}-[0-9]{3}",
         active = FALSE
-      ) %>%
+      ) |>
       interrogate()
 
 The third agent, `agent_3`, adds a single validation step, removes the
 fifth one, and deactivates the first.
 
     agent_3 <-
-      agent_2 %>%
+      agent_2 |>
       col_vals_in_set(
         columns = f,
         set = c("low", "mid", "high")
-      ) %>%
-      remove_steps(i = 5) %>%
-      deactivate_steps(i = 1) %>%
+      ) |>
+      remove_steps(i = 5) |>
+      deactivate_steps(i = 1) |>
       interrogate()
 
 The fourth and final agent, `agent_4`, reactivates steps 1 and 10, and
 removes the sixth step.
 
     agent_4 <-
-      agent_3 %>%
-      activate_steps(i = 1) %>%
-      activate_steps(i = 10) %>%
-      remove_steps(i = 6) %>%
+      agent_3 |>
+      activate_steps(i = 1) |>
+      activate_steps(i = 10) |>
+      remove_steps(i = 6) |>
       interrogate()
 
 While all the agents are slightly different from each other, we can

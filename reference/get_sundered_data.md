@@ -102,22 +102,22 @@ to put the validation plan into action.
 
     agent <-
       create_agent(
-        tbl = small_table %>%
+        tbl = small_table |>
           dplyr::select(a:f),
         label = "`get_sundered_data()`"
-      ) %>%
-      col_vals_gt(columns = d, value = 1000) %>%
+      ) |>
+      col_vals_gt(columns = d, value = 1000) |>
       col_vals_between(
         columns = c,
         left = vars(a), right = vars(d),
         na_pass = TRUE
-      ) %>%
+      ) |>
       interrogate()
 
 Get the sundered data piece that contains only rows that passed both
 validation steps (the default piece). This yields 5 of 13 total rows.
 
-    agent %>% get_sundered_data()
+    agent |> get_sundered_data()
 
     ## # A tibble: 5 × 6
     ##       a b             c      d e     f
@@ -131,7 +131,7 @@ validation steps (the default piece). This yields 5 of 13 total rows.
 Get the complementary data piece: all of those rows that failed either
 of the two validation steps. This yields 8 of 13 total rows.
 
-    agent %>% get_sundered_data(type = "fail")
+    agent |> get_sundered_data(type = "fail")
 
     ## # A tibble: 8 × 6
     ##       a b             c     d e     f
@@ -149,7 +149,7 @@ We can get all of the input data returned with a flag column (called
 `.pb_combined`). This is done by using `type = "combined"` and that
 rightmost column will contain `"pass"` and `"fail"` values.
 
-    agent %>% get_sundered_data(type = "combined")
+    agent |> get_sundered_data(type = "combined")
 
     ## # A tibble: 13 × 7
     ##        a b             c      d e     f     .pb_combined
@@ -171,7 +171,7 @@ rightmost column will contain `"pass"` and `"fail"` values.
 We can change the `"pass"` or `"fail"` text values to another type of
 coding with the `pass_fail` argument. One possibility is `TRUE`/`FALSE`.
 
-    agent %>%
+    agent |>
       get_sundered_data(
         type = "combined",
         pass_fail = c(TRUE, FALSE)
@@ -196,7 +196,7 @@ coding with the `pass_fail` argument. One possibility is `TRUE`/`FALSE`.
 
 ...and using `0` and `1` might be worthwhile in some situations.
 
-    agent %>%
+    agent |>
       get_sundered_data(
         type = "combined",
         pass_fail = 0:1

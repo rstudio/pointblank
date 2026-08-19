@@ -140,43 +140,43 @@ use <code>incorporate()</code> to work the snippets into the info text.</p>
 <span>    tbl <span class="op">=</span> <span class="op">~</span> <span class="va">changing_table</span>,</span>
 <span>    tbl_name <span class="op">=</span> <span class="st">"changing_table"</span>,</span>
 <span>    label <span class="op">=</span> <span class="st">"`informant()` example"</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/info_snippet.html">info_snippet</a></span><span class="op">(</span></span>
 <span>    snippet_name <span class="op">=</span> <span class="st">"row_count"</span>,</span>
-<span>    fn <span class="op">=</span> <span class="op">~</span> <span class="va">.</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>    fn <span class="op">=</span> \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/info_snippet.html">info_snippet</a></span><span class="op">(</span></span>
 <span>    snippet_name <span class="op">=</span> <span class="st">"col_count"</span>,</span>
-<span>    fn <span class="op">=</span> <span class="op">~</span> <span class="va">.</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>    fn <span class="op">=</span> \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">a</span>,</span>
 <span>    info <span class="op">=</span> <span class="st">"In the range of 1 to 10. ((SIMPLE))"</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="fu">starts_with</span><span class="op">(</span><span class="st">"date"</span><span class="op">)</span>,</span>
 <span>    info <span class="op">=</span> <span class="st">"Time-based values (e.g., `Sys.time()`)."</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">date</span>,</span>
 <span>    info <span class="op">=</span> <span class="st">"The date part of `date_time`. ((CALC))"</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/info_section.html">info_section</a></span><span class="op">(</span></span>
 <span>    section_name <span class="op">=</span> <span class="st">"rows"</span>,</span>
 <span>    row_count <span class="op">=</span> <span class="st">"There are {row_count} rows available."</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/incorporate.html">incorporate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>We can print the resulting object to see the information report.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">informant</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/pointblank/main/images/man_incorporate_1.png" alt="This image was generated from the first code example in the `incorporate()` help file." style="width:100%;"></p>
 <p>Let's modify <code>test_table</code> to give it more rows and an extra column.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">changing_table</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="va">changing_table</span>, <span class="va">changing_table</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="va">changing_table</span>, <span class="va">changing_table</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>h <span class="op">=</span> <span class="va">a</span> <span class="op">+</span> <span class="va">c</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>Using <code>incorporate()</code> will cause the snippets to be reprocessed and
 accordingly the content of the report will be updated to keep up with the
 current state of the <code>changing_table</code>.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">informant</span> <span class="op">&lt;-</span> <span class="va">informant</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/incorporate.html">incorporate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">informant</span> <span class="op">&lt;-</span> <span class="va">informant</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/incorporate.html">incorporate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>When printed again, we'll also see that the row and column counts in the
 header have been updated to reflect the new dimensions of the target table.
 Furthermore, the info text in the <code>ROWS</code> section has updated text

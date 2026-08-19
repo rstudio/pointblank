@@ -136,7 +136,7 @@ the table at interrogation time.</p></dd>
 <p><code>&lt;table mutation expression&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>An optional expression for mutating the input table before proceeding with
 the validation. This can either be provided as a one-sided R formula using
-a leading <code>~</code> (e.g., <code>~ . %&gt;% dplyr::mutate(col = col + 10)</code> or as a
+a leading <code>~</code> (e.g., <code>\(x) x |&gt; dplyr::mutate(col = col + 10)</code> or as a
 function (e.g., <code>function(x) dplyr::mutate(x, col = col + 10)</code>. See the
 <em>Preconditions</em> section for more information.</p></dd>
 
@@ -207,7 +207,7 @@ be used with <code>.</code> (serving as the input data table) to evaluate to a s
 logical value. With this approach, the <strong>pointblank</strong> function
 <code><a href="has_columns.html">has_columns()</a></code> can be used to determine whether to make a validation step
 active on the basis of one or more columns existing in the table
-(e.g., <code>~ . %&gt;% has_columns(c(d, e))</code>).</p></dd>
+(e.g., <code>\(x) x |&gt; has_columns(c(d, e))</code>).</p></dd>
 
 
 <dt id="arg-object">object<a class="anchor" aria-label="anchor" href="#arg-object"></a></dt>
@@ -314,8 +314,8 @@ that is best produced by the <code><a href="action_levels.html">action_levels()<
 documentation for the lowdown on how to create reactions to above-threshold
 failure levels in validation. The basic gist is that you'll want at least a
 single threshold level (specified as either the fraction of test units
-failed, or, an absolute value), often using the <code>warn_at</code> argument. Using
-<code>action_levels(warn_at = 1)</code> or <code>action_levels(stop_at = 1)</code> are good choices
+failed, or, an absolute value), often using the <code>warn</code> argument. Using
+<code>action_levels(warn = 1)</code> or <code>action_levels(error = 1)</code> are good choices
 depending on the situation (the first produces a warning, the other
 <code><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop()</a></code>s).</p>
     </div>
@@ -357,7 +357,7 @@ function. Here is an example of how a complex call of <code>tbl_match()</code> a
 validation step is expressed in R code and in the corresponding YAML
 representation.</p>
 <p>R statement:</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tbl_match.html">tbl_match</a></span><span class="op">(</span></span>
 <span>    tbl_compare <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="../reference/file_tbl.html">file_tbl</a></span><span class="op">(</span></span>
 <span>      file <span class="op">=</span> <span class="fu"><a href="../reference/from_github.html">from_github</a></span><span class="op">(</span></span>
@@ -366,9 +366,9 @@ representation.</p>
 <span>        subdir <span class="op">=</span> <span class="st">"data-large"</span></span>
 <span>        <span class="op">)</span></span>
 <span>      <span class="op">)</span>,</span>
-<span>    preconditions <span class="op">=</span> <span class="op">~</span> <span class="va">.</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">a</span> <span class="op">&lt;</span> <span class="fl">10</span><span class="op">)</span>,</span>
+<span>    preconditions <span class="op">=</span> \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">a</span> <span class="op">&lt;</span> <span class="fl">10</span><span class="op">)</span>,</span>
 <span>    segments <span class="op">=</span> <span class="va">b</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"group_1"</span>, <span class="st">"group_2"</span><span class="op">)</span>,</span>
-<span>    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span>warn_at <span class="op">=</span> <span class="fl">0.1</span>, stop_at <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span>,</span>
+<span>    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span>warn <span class="op">=</span> <span class="fl">0.1</span>, error <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span>,</span>
 <span>    label <span class="op">=</span> <span class="st">"The `tbl_match()` step."</span>,</span>
 <span>    active <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
@@ -439,8 +439,8 @@ function.</p>
 <p>Validate that the target table (<code>tbl</code>) and the comparison table (<code>tbl_2</code>) are
 equivalent in terms of content.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">tbl</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/tbl_match.html">tbl_match</a></span><span class="op">(</span>tbl_compare <span class="op">=</span> <span class="va">tbl_2</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">tbl</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tbl_match.html">tbl_match</a></span><span class="op">(</span>tbl_compare <span class="op">=</span> <span class="va">tbl_2</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>Printing the <code>agent</code> in the console shows the validation report in the
 Viewer. Here is an excerpt of validation report, showing the single entry
@@ -455,7 +455,7 @@ that corresponds to the validation step demonstrated here.</p>
 <p>This way of using validation functions acts as a data filter. Data is passed
 through but should <code><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop()</a></code> if there is a single test unit failing. The
 behavior of side effects can be customized with the <code>actions</code> option.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/tbl_match.html">tbl_match</a></span><span class="op">(</span>tbl_compare <span class="op">=</span> <span class="va">tbl_2</span><span class="op">)</span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">tbl</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/tbl_match.html">tbl_match</a></span><span class="op">(</span>tbl_compare <span class="op">=</span> <span class="va">tbl_2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 4 x 3</span></span>
 <span><span class="co">#&gt;       a     b     c</span></span>
 <span><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
@@ -480,7 +480,7 @@ time. This is primarily used in <strong>testthat</strong> tests.</p>
 
 <p>With the <code>test_*()</code> form, we should get a single logical value returned to
 us.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/tbl_match.html">test_tbl_match</a></span><span class="op">(</span>tbl_compare <span class="op">=</span> <span class="va">tbl_2</span><span class="op">)</span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">tbl</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/tbl_match.html">test_tbl_match</a></span><span class="op">(</span>tbl_compare <span class="op">=</span> <span class="va">tbl_2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] TRUE</span></span></code></pre><p></p></div>
 </div>
 

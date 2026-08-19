@@ -45,14 +45,14 @@ For the example provided here, we'll use the included `small_table`
 dataset. We are also going to create an
 [`action_levels()`](https://rstudio.github.io/pointblank/reference/action_levels.md)
 list object since this is useful for demonstrating an emailing scenario.
-It will have absolute values for the `warn` and `notify` states (with
+It will have absolute values for the `warn` and `critical` states (with
 thresholds of `1` and `2` 'fail' units, respectively, for the two
 states).
 
     al <-
       action_levels(
-        warn_at = 1,
-        notify_at = 2
+        warn = 1,
+        critical = 2
       )
 
 In a workflow that involves an `agent` object, we can make use of the
@@ -71,10 +71,10 @@ Viewer.
         tbl_name = "small_table",
         label = "An example.",
         actions = al
-      ) %>%
-      col_vals_gt(a, value = 1) %>%
-      col_vals_lt(a, value = 7) %>%
-      interrogate() %>%
+      ) |>
+      col_vals_gt(a, value = 1) |>
+      col_vals_lt(a, value = 7) |>
+      interrogate() |>
       email_create()
 
     email_object

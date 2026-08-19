@@ -135,7 +135,7 @@ directly to
           ),
           col_types = "TDdcddlc"
         )
-      ) %>%
+      ) |>
       col_vals_gt(columns = a, value = 0)
 
 All of the file-reading instructions are encapsulated in the `tbl`
@@ -162,8 +162,8 @@ pointblank package.
         ),
         tbl_name = "small_table",
         label = "`file_tbl()` example.",
-      ) %>%
-      col_vals_gt(columns = a, value = 0) %>%
+      ) |>
+      col_vals_gt(columns = a, value = 0) |>
       interrogate()
 
     agent
@@ -194,7 +194,7 @@ and `file_tbl()` functions.
           ),
           col_types = "TDdcddlc"
         ),
-        small_high_file ~ {{ small_table_file }} %>%
+        small_high_file ~ {{ small_table_file }} |>
           dplyr::filter(f == "high")
       )
 

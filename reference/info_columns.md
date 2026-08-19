@@ -135,19 +135,19 @@ is an example of how several calls of `info_columns()` are expressed in
 R code and how the result corresponds to the YAML representation.
 
     # R statement
-    informant %>%
+    informant |>
       info_columns(
         columns = date_time,
         info = "*info text* 1."
-      ) %>%
+      ) |>
       info_columns(
         columns = date,
         info = "*info text* 2."
-      ) %>%
+      ) |>
       info_columns(
         columns = item_count,
         info = "*info text* 3. Statistics: {snippet_1}."
-      ) %>%
+      ) |>
       info_columns(
         columns = c(date, date_time),
         info = "UTC time."
@@ -209,15 +209,15 @@ the various subsections (i.e., the text will be appended and won't
 overwrite existing if it lands in the same area).
 
     informant <-
-      informant %>%
+      informant |>
       info_columns(
         columns = a,
         info = "In the range of 1 to 10. ((SIMPLE))"
-      ) %>%
+      ) |>
       info_columns(
         columns = starts_with("date"),
         info = "Time-based values (e.g., `Sys.time()`)."
-      ) %>%
+      ) |>
       info_columns(
         columns = date,
         info = "The date part of `date_time`. ((CALC))"

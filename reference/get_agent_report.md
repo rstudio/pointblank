@@ -262,14 +262,14 @@ always greater than `4`.
         tbl = tbl,
         tbl_name = "small_table",
         label = "An example."
-      ) %>%
-      col_vals_gt(columns = a, value = 4) %>%
+      ) |>
+      col_vals_gt(columns = a, value = 4) |>
       interrogate()
 
 We can get a tibble-based report from the agent by using
 `get_agent_report()` with `display_table = FALSE`.
 
-    agent %>% get_agent_report(display_table = FALSE)
+    agent |> get_agent_report(display_table = FALSE)
 
     ## # A tibble: 1 × 14
     ##       i type    columns values precon active eval  units n_pass

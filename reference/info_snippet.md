@@ -54,7 +54,7 @@ info_snippet(x, snippet_name, fn)
   A formula that obtains a snippet of data from the target table. It's
   best to use a leading dot (`.`) that stands for the table itself and
   use pipes to construct a series of operations to be performed on the
-  table (e.g., `~ . %>% dplyr::pull(column_2) %>% max(na.rm = TRUE)`).
+  table (e.g., `\(x) x |> dplyr::pull(column_2) |> max(na.rm = TRUE)`).
   So long as the result is a length-1 vector, it'll likely be valid for
   insertion into some info text. Alternatively, a `snip_*()` function
   can be used here (these functions always return a formula that's
@@ -99,20 +99,20 @@ are expressed in both R code and in the YAML output (showing both the
 here).
 
     # R statement
-    informant %>%
+    informant |>
       info_columns(
         columns = date_time,
         `Latest Date` = "The latest date is {latest_date}."
-      ) %>%
+      ) |>
       info_snippet(
         snippet_name = "latest_date",
-        fn = ~ . %>% dplyr::pull(date) %>% max(na.rm = TRUE)
-      ) %>%
+        fn = \(x) x |> dplyr::pull(date) |> max(na.rm = TRUE)
+      ) |>
       incorporate()
 
     # YAML representation
     meta_snippets:
-      latest_date: ~. %>% dplyr::pull(date) %>% max(na.rm = TRUE)
+      latest_date: \(x) x |> dplyr::pull(date) |> max(na.rm = TRUE)
     ...
     columns:
       date_time:
@@ -134,8 +134,8 @@ Generate an informant object, add two snippets with `info_snippet()`,
 add information with some other `info_*()` functions and then
 [`incorporate()`](https://rstudio.github.io/pointblank/reference/incorporate.md)
 the snippets into the info text. The first snippet will be made with the
-expression `~ . %>% nrow()` (giving us the number of rows in the
-dataset) and the second uses the
+expression `\(x) x |> nrow()` (giving us the number of rows in the
+dataset), and the second uses the
 [`snip_highest()`](https://rstudio.github.io/pointblank/reference/snip_highest.md)
 function with column `a` (giving us the highest value in that column).
 
@@ -144,31 +144,31 @@ function with column `a` (giving us the highest value in that column).
         tbl = ~ test_table,
         tbl_name = "test_table",
         label = "An example."
-      ) %>%
+      ) |>
       info_snippet(
         snippet_name = "row_count",
-        fn = ~ . %>% nrow()
-      ) %>%
+        fn = \(x) x |> nrow()
+      ) |>
       info_snippet(
         snippet_name = "max_a",
         fn = snip_highest(column = "a")
-      ) %>%
+      ) |>
       info_columns(
         columns = a,
         info = "In the range of 1 to {max_a}. ((SIMPLE))"
-      ) %>%
+      ) |>
       info_columns(
         columns = starts_with("date"),
         info = "Time-based values (e.g., `Sys.time()`)."
-      ) %>%
+      ) |>
       info_columns(
         columns = date,
         info = "The date part of `date_time`. ((CALC))"
-      ) %>%
+      ) |>
       info_section(
         section_name = "rows",
         row_count = "There are {row_count} rows available."
-      ) %>%
+      ) |>
       incorporate()
 
 We can print the `informant` object to see the information report.
@@ -183,7 +183,7 @@ Let's modify `test_table` with some **dplyr** to give it more rows and
 an extra column.
 
     test_table <-
-      dplyr::bind_rows(test_table, test_table) %>%
+      dplyr::bind_rows(test_table, test_table) |>
       dplyr::mutate(h = a + c)
 
 Using
@@ -191,7 +191,7 @@ Using
 on the `informant` object will cause the snippets to be reprocessed,
 and, the info text to be updated.
 
-    informant <- informant %>% incorporate()
+    informant <- informant |> incorporate()
 
     informant
 

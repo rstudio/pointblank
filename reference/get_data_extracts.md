@@ -78,23 +78,23 @@ right after that.
 
     agent <-
       create_agent(
-        tbl = small_table %>%
+        tbl = small_table |>
           dplyr::select(a:f),
         label = "`get_data_extracts()`"
-      ) %>%
-      col_vals_gt(d, value = 1000) %>%
+      ) |>
+      col_vals_gt(d, value = 1000) |>
       col_vals_between(
         columns = c,
         left = vars(a), right = vars(d),
         na_pass = TRUE
-      ) %>%
+      ) |>
       interrogate()
 
 Using `get_data_extracts()` with its defaults returns of a list of
 tables, where each table is named after the validation step that has an
 extract available.
 
-    agent %>% get_data_extracts()
+    agent |> get_data_extracts()
 
     ## $`1`
     ## # A tibble: 6 × 6
@@ -121,7 +121,7 @@ argument. Let's get the failing rows from the first validation step (the
 [`col_vals_gt()`](https://rstudio.github.io/pointblank/reference/col_vals_gt.md)
 one).
 
-    agent %>% get_data_extracts(i = 1)
+    agent |> get_data_extracts(i = 1)
 
     ## # A tibble: 6 × 6
     ##       a b             c     d e     f

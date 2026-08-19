@@ -160,35 +160,35 @@ whether each of these is `TRUE` or `FALSE` before hovering over the line
 of code.  
   
 
-`small_table %>% test_col_is_logical(vars(e))`
+`small_table |> test_col_is_logical(vars(e))`
 
   
 
-`small_table %>% test_col_vals_between( vars(c), left = 1, right = 10 )`
+`small_table |> test_col_vals_between( vars(c), left = 1, right = 10 )`
 
   
 
-`small_table %>% test_col_vals_between( vars(c), left = 0, right = vars(d), na_pass = TRUE, threshold = 0.5 )`
+`small_table |> test_col_vals_between( vars(c), left = 0, right = vars(d), na_pass = TRUE, threshold = 0.5 )`
 
   
 
-`small_table %>% test_col_vals_between( vars(c), left = 0, right = vars(d), na_pass = TRUE, threshold = 3 )`
+`small_table |> test_col_vals_between( vars(c), left = 0, right = vars(d), na_pass = TRUE, threshold = 3 )`
 
   
 
-`small_table %>% test_col_schema_match( col_schema(.tbl = small_table_sqlite()) )`
+`small_table |> test_col_schema_match( col_schema(.tbl = small_table_sqlite()) )`
 
   
 
-`small_table %>% test_col_vals_regex(vars(b), regex = ".-[a-z]{3}.*") `
+`small_table |> test_col_vals_regex(vars(b), regex = ".-[a-z]{3}.*") `
 
   
 
-`small_table %>% test_col_exists(columns = "g")`
+`small_table |> test_col_exists(columns = "g")`
 
   
 
-`small_table %>% test_col_vals_gt( vars(z), value = vars(a), preconditions = ~ . %>% dplyr::mutate(z = c + e), threshold = 0.5 )`
+`small_table |> test_col_vals_gt( vars(z), value = vars(a), preconditions = \(x) x |> dplyr::mutate(z = c + e), threshold = 0.5 )`
 
   
 And there you have it. A nice set of examples revealing their

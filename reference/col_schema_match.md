@@ -204,7 +204,7 @@ test_col_schema_match(
   [`has_columns()`](https://rstudio.github.io/pointblank/reference/has_columns.md)
   can be used to determine whether to make a validation step active on
   the basis of one or more columns existing in the table (e.g.,
-  `~ . %>% has_columns(c(d, e))`).
+  `\(x) x |> has_columns(c(d, e))`).
 
 - object:
 
@@ -283,10 +283,10 @@ function. Read that function's documentation for the lowdown on how to
 create reactions to above-threshold failure levels in validation. The
 basic gist is that you'll want at least a single threshold level
 (specified as either the fraction of test units failed, or, an absolute
-value), often using the `warn_at` argument. Using
-`action_levels(warn_at = 1)` or `action_levels(stop_at = 1)` are good
-choices depending on the situation (the first produces a warning, the
-other [`stop()`](https://rdrr.io/r/base/stop.html)s).
+value), often using the `warn` argument. Using `action_levels(warn = 1)`
+or `action_levels(error = 1)` are good choices depending on the
+situation (the first produces a warning, the other
+[`stop()`](https://rdrr.io/r/base/stop.html)s).
 
 ## Labels
 
@@ -325,7 +325,7 @@ the corresponding YAML representation.
 
 R statement:
 
-    agent %>%
+    agent |>
       col_schema_match(
         schema = col_schema(
           a = "integer",
@@ -334,7 +334,7 @@ R statement:
         complete = FALSE,
         in_order = FALSE,
         is_exact = FALSE,
-        actions = action_levels(stop_at = 1),
+        actions = action_levels(error = 1),
         label = "The `col_schema_match()` step.",
         active = FALSE
       )
@@ -417,8 +417,8 @@ test unit (there is a single test unit governed by whether there is a
 match).
 
     agent <-
-      create_agent(tbl = tbl) %>%
-      col_schema_match(schema = schema_obj) %>%
+      create_agent(tbl = tbl) |>
+      col_schema_match(schema = schema_obj) |>
       interrogate()
 
 Printing the `agent` in the console shows the validation report in the
@@ -436,7 +436,7 @@ passed through but should [`stop()`](https://rdrr.io/r/base/stop.html)
 if there is a single test unit failing. The behavior of side effects can
 be customized with the `actions` option.
 
-    tbl %>% col_schema_match(schema = schema_obj)
+    tbl |> col_schema_match(schema = schema_obj)
     #> # A tibble: 5 x 2
     #>       a b
     #>   <int> <chr>
@@ -458,7 +458,7 @@ a time. This is primarily used in **testthat** tests.
 With the `test_*()` form, we should get a single logical value returned
 to us.
 
-    tbl %>% test_col_schema_match(schema = schema_obj)
+    tbl |> test_col_schema_match(schema = schema_obj)
     #> [1] TRUE
 
 ## Function ID

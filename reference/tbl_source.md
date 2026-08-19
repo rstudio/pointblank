@@ -68,9 +68,9 @@ shortly thereafter.
       create_agent(
         tbl = ~ tbl_source("sml_table", store),
         label = "`tbl_source()` example",
-        actions = action_levels(warn_at = 0.10)
-      ) %>%
-      col_exists(columns = c(date, date_time)) %>%
+        actions = action_levels(warn = 0.10)
+      ) |>
+      col_exists(columns = c(date, date_time)) |>
       interrogate()
 
 The `agent_1` object can be printed to see the validation report in the
@@ -94,7 +94,7 @@ Let's modify the agent's target to point to the table labeled as
 `"sml_table"` in the YAML representation of the `tbl_store`.
 
     agent_2 <-
-      agent_1 %>%
+      agent_1 |>
       set_tbl(
         ~ tbl_source(
             tbl = "sml_table",

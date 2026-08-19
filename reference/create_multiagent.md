@@ -116,8 +116,8 @@ First up, is `agent_1`:
         tbl = tbl_1,
         tbl_name = "tbl_1",
         label = "Example table 1."
-      ) %>%
-      col_vals_gt(columns = a, value = 4) %>%
+      ) |>
+      col_vals_gt(columns = a, value = 4) |>
       interrogate()
 
 Then, `agent_2`:
@@ -127,8 +127,8 @@ Then, `agent_2`:
         tbl = tbl_2,
         tbl_name = "tbl_2",
         label = "Example table 2."
-      ) %>%
-      col_is_character(columns = b) %>%
+      ) |>
+      col_is_character(columns = b) |>
       interrogate()
 
 Now, we'll combine the two agents into a *multiagent* with the

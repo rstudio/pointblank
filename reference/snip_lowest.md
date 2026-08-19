@@ -46,15 +46,15 @@ calls doesn't matter.
         tbl = ~ small_table,
         tbl_name = "small_table",
         label = "An example."
-      ) %>%
+      ) |>
       info_columns(
         columns = a,
         `Lowest Value` = "Lowest value is {lowest_a}."
-      ) %>%
+      ) |>
       info_snippet(
         snippet_name = "lowest_a",
         fn = snip_lowest(column = "a")
-      ) %>%
+      ) |>
       incorporate()
 
 We can print the `informant` object to see the information report.

@@ -243,7 +243,7 @@ the prior tests adequately pass. An example of this is
 <p><code>&lt;table mutation expression&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>An optional expression for mutating the input table before proceeding with
 the validation. This can either be provided as a one-sided R formula using
-a leading <code>~</code> (e.g., <code>~ . %&gt;% dplyr::mutate(col = col + 10)</code> or as a
+a leading <code>~</code> (e.g., <code>\(x) x |&gt; dplyr::mutate(col = col + 10)</code> or as a
 function (e.g., <code>function(x) dplyr::mutate(x, col = col + 10)</code>. See the
 <em>Preconditions</em> section for more information.</p></dd>
 
@@ -304,7 +304,7 @@ be used with <code>.</code> (serving as the input data table) to evaluate to a s
 logical value. With this approach, the <strong>pointblank</strong> function
 <code><a href="has_columns.html">has_columns()</a></code> can be used to determine whether to make a validation step
 active on the basis of one or more columns existing in the table
-(e.g., <code>~ . %&gt;% has_columns(c(d, e))</code>).</p></dd>
+(e.g., <code>\(x) x |&gt; has_columns(c(d, e))</code>).</p></dd>
 
 
 <dt id="arg-object">object<a class="anchor" aria-label="anchor" href="#arg-object"></a></dt>
@@ -387,9 +387,8 @@ as needed, along the way.</p>
 where <code>preconditions</code> is used. Using <strong>dplyr</strong> code is suggested here since
 the statements can be translated to SQL if necessary (i.e., if the target
 table resides in a database). The code is most easily supplied as a one-sided
-<strong>R</strong> formula (using a leading <code>~</code>). In the formula representation, the <code>.</code>
-serves as the input data table to be transformed (e.g., <code>~ . %&gt;% dplyr::mutate(col_b = col_a + 10)</code>). Alternatively, a function could instead
-be supplied (e.g., <code>function(x) dplyr::mutate(x, col_b = col_a + 10)</code>).</p>
+anonymous function, where <code>x</code> represents the input data table to be
+transformed (e.g., <code>\(x) x |&gt; dplyr::mutate(col_b = col_a + 10)</code>).</p>
     </div>
     <div class="section level2">
     <h2 id="actions">Actions<a class="anchor" aria-label="anchor" href="#actions"></a></h2>
@@ -402,10 +401,10 @@ object that is best produced by the <code><a href="action_levels.html">action_le
 function's documentation for the lowdown on how to create reactions to
 above-threshold failure levels in validation. The basic gist is that you'll
 want at least a single threshold level (specified as either the fraction of
-test units failed, or, an absolute value), often using the <code>warn_at</code>
+test units failed, or, an absolute value), often using the <code>warn</code>
 argument. This is especially true when <code>x</code> is a table object because,
 otherwise, nothing happens. For the <code>col_vals_*()</code>-type functions, using
-<code>action_levels(warn_at = 0.25)</code> or <code>action_levels(stop_at = 0.25)</code> are good
+<code>action_levels(warn = 0.25)</code> or <code>action_levels(error = 0.25)</code> are good
 choices depending on the situation (the first produces a warning when a
 quarter of the total test units fails, the other <code><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop()</a></code>s at the same
 threshold level).</p>
@@ -446,13 +445,13 @@ function. Here is an example of how a complex call of <code>serially()</code> as
 validation step is expressed in R code and in the corresponding YAML
 representation.</p>
 <p>R statement:</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/serially.html">serially</a></span><span class="op">(</span></span>
 <span>    <span class="op">~</span> <span class="fu"><a href="../reference/col_vals_lt.html">test_col_vals_lt</a></span><span class="op">(</span><span class="va">.</span>, columns <span class="op">=</span> <span class="va">a</span>, value <span class="op">=</span> <span class="fl">8</span><span class="op">)</span>,</span>
 <span>    <span class="op">~</span> <span class="fu"><a href="../reference/col_vals_gt.html">test_col_vals_gt</a></span><span class="op">(</span><span class="va">.</span>, columns <span class="op">=</span> <span class="va">c</span>, value <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>    <span class="op">~</span> <span class="fu"><a href="../reference/col_vals_not_null.html">col_vals_not_null</a></span><span class="op">(</span><span class="va">.</span>, columns <span class="op">=</span> <span class="va">b</span><span class="op">)</span>,</span>
-<span>    preconditions <span class="op">=</span> <span class="op">~</span> <span class="va">.</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">a</span> <span class="op">&lt;</span> <span class="fl">10</span><span class="op">)</span>,</span>
-<span>    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span>warn_at <span class="op">=</span> <span class="fl">0.1</span>, stop_at <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span>,</span>
+<span>    preconditions <span class="op">=</span> \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">a</span> <span class="op">&lt;</span> <span class="fl">10</span><span class="op">)</span>,</span>
+<span>    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span>warn <span class="op">=</span> <span class="fl">0.1</span>, error <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span>,</span>
 <span>    label <span class="op">=</span> <span class="st">"The `serially()` step."</span>,</span>
 <span>    active <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
@@ -509,12 +508,12 @@ values in <code>b</code> are greater than values in <code>a</code>. We'll determ
 validation has any failing test units (there are 4 tests and a final
 validation).</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">agent_1</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">tbl</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">tbl</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/serially.html">serially</a></span><span class="op">(</span></span>
 <span>    <span class="op">~</span> <span class="fu"><a href="../reference/col_is_numeric.html">test_col_is_numeric</a></span><span class="op">(</span><span class="va">.</span>, columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>    <span class="op">~</span> <span class="fu"><a href="../reference/col_vals_not_null.html">test_col_vals_not_null</a></span><span class="op">(</span><span class="va">.</span>, columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>    <span class="op">~</span> <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="va">.</span>, columns <span class="op">=</span> <span class="va">b</span>, value <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span></span>
-<span>    <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>Printing the <code>agent</code> in the console shows the validation report in the
 Viewer. Here is an excerpt of validation report, showing the single entry
@@ -525,11 +524,11 @@ occurred. There were no failing test units in that either!</p>
 <p>The final validation is optional and so here is a variation where only the
 serial tests are performed.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">agent_2</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">tbl</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">tbl</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/serially.html">serially</a></span><span class="op">(</span></span>
 <span>    <span class="op">~</span> <span class="fu"><a href="../reference/col_is_numeric.html">test_col_is_numeric</a></span><span class="op">(</span><span class="va">.</span>, columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>    <span class="op">~</span> <span class="fu"><a href="../reference/col_vals_not_null.html">test_col_vals_not_null</a></span><span class="op">(</span><span class="va">.</span>, columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>Everything is good here too:</p>
 <p><img src="https://raw.githubusercontent.com/rstudio/pointblank/main/images/man_serially_2.png" alt="This image was generated from the second code example in the `serially()` help file." style="width:100%;"></p>
@@ -542,7 +541,7 @@ serial tests are performed.</p>
 <p>This way of using validation functions acts as a data filter. Data is passed
 through but should <code><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop()</a></code> if there is a single test unit failing. The
 behavior of side effects can be customized with the <code>actions</code> option.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">tbl</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/serially.html">serially</a></span><span class="op">(</span></span>
 <span>    <span class="op">~</span> <span class="fu"><a href="../reference/col_is_numeric.html">test_col_is_numeric</a></span><span class="op">(</span><span class="va">.</span>, columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>    <span class="op">~</span> <span class="fu"><a href="../reference/col_vals_not_null.html">test_col_vals_not_null</a></span><span class="op">(</span><span class="va">.</span>, columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -576,7 +575,7 @@ time. This is primarily used in <strong>testthat</strong> tests.</p>
 
 <p>With the <code>test_*()</code> form, we should get a single logical value returned to
 us.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">tbl</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/serially.html">test_serially</a></span><span class="op">(</span></span>
 <span>    <span class="op">~</span> <span class="fu"><a href="../reference/col_is_numeric.html">test_col_is_numeric</a></span><span class="op">(</span><span class="va">.</span>, columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>    <span class="op">~</span> <span class="fu"><a href="../reference/col_vals_not_null.html">test_col_vals_not_null</a></span><span class="op">(</span><span class="va">.</span>, columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span><span class="op">)</span>,</span>

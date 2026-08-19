@@ -99,8 +99,8 @@ Get summary statistics for the first quarter of the `game_revenue`
 dataset that's included in the **pointblank** package.
 
     stats_tbl <-
-      game_revenue %>%
-      tt_time_slice(slice_point = 0.25) %>%
+      game_revenue |>
+      tt_time_slice(slice_point = 0.25) |>
       tt_summary_stats()
 
     stats_tbl
@@ -125,11 +125,11 @@ the time period (the remaining 0.75) is never higher than that of the
 first quarter of the year, we can supply a value from `stats_tbl` to
 [`test_col_vals_lte()`](https://rstudio.github.io/pointblank/reference/col_vals_lte.md):
 
-    game_revenue %>%
+    game_revenue |>
       tt_time_slice(
         slice_point = 0.25,
         keep = "right"
-      ) %>%
+      ) |>
       test_col_vals_lte(
         columns = session_duration,
         value = get_tt_param(

@@ -128,9 +128,9 @@ some validation steps, and interrogate the table shortly thereafter.</p>
 <span>  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span></span>
 <span>    tbl <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="../reference/tbl_source.html">tbl_source</a></span><span class="op">(</span><span class="st">"sml_table"</span>, <span class="va">store</span><span class="op">)</span>,</span>
 <span>    label <span class="op">=</span> <span class="st">"`tbl_source()` example"</span>,</span>
-<span>    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span>warn_at <span class="op">=</span> <span class="fl">0.10</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/col_exists.html">col_exists</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">date_time</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span>warn <span class="op">=</span> <span class="fl">0.10</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/col_exists.html">col_exists</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">date_time</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>The <code>agent_1</code> object can be printed to see the validation report in the
 Viewer.</p>
@@ -143,7 +143,7 @@ function. The following statement writes the <code>tbl_store.yml</code> file by 
 <p>Let's modify the agent's target to point to the table labeled as
 <code>"sml_table"</code> in the YAML representation of the <code>tbl_store</code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">agent_2</span> <span class="op">&lt;-</span></span>
-<span>  <span class="va">agent_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="va">agent_1</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/set_tbl.html">set_tbl</a></span><span class="op">(</span></span>
 <span>    <span class="op">~</span> <span class="fu"><a href="../reference/tbl_source.html">tbl_source</a></span><span class="op">(</span></span>
 <span>        tbl <span class="op">=</span> <span class="st">"sml_table"</span>,</span>

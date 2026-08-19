@@ -188,7 +188,7 @@ strictly for the first 15 days of 2015. The <code>keep</code> argument has a def
 <p>Omit the first 25% of records from <code>small_table</code>, also included in the
 package, with a fractional <code>slice_point</code> of <code>0.25</code> on the basis of a timeline
 that begins at <code>2016-01-04 11:00:00</code> and ends at <code>2016-01-30 11:23:00</code>.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">small_table</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tt_time_slice.html">tt_time_slice</a></span><span class="op">(</span></span>
 <span>    slice_point <span class="op">=</span> <span class="fl">0.25</span>,</span>
 <span>    keep <span class="op">=</span> <span class="st">"right"</span></span>

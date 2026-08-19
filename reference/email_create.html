@@ -109,12 +109,12 @@ footer components of the HTML email message.</p></dd>
 <p>For the example provided here, we'll use the included <code>small_table</code> dataset.
 We are also going to create an <code><a href="action_levels.html">action_levels()</a></code> list object since this is
 useful for demonstrating an emailing scenario. It will have absolute values
-for the <code>warn</code> and <code>notify</code> states (with thresholds of <code>1</code> and <code>2</code> 'fail'
+for the <code>warn</code> and <code>critical</code> states (with thresholds of <code>1</code> and <code>2</code> 'fail'
 units, respectively, for the two states).</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">al</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span></span>
-<span>    warn_at <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>    notify_at <span class="op">=</span> <span class="fl">2</span></span>
+<span>    warn <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    critical <span class="op">=</span> <span class="fl">2</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p>In a workflow that involves an <code>agent</code> object, we can make use of the
 <code>end_fns</code> argument and programmatically email the report with the
@@ -129,10 +129,10 @@ email just by printing <code>email_object</code>. It should appear in the Viewer
 <span>    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,</span>
 <span>    label <span class="op">=</span> <span class="st">"An example."</span>,</span>
 <span>    actions <span class="op">=</span> <span class="va">al</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="va">a</span>, value <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span><span class="va">a</span>, value <span class="op">=</span> <span class="fl">7</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="va">a</span>, value <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span><span class="va">a</span>, value <span class="op">=</span> <span class="fl">7</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/email_create.html">email_create</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">email_object</span></span></code></pre><p></p></div>

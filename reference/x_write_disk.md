@@ -119,9 +119,9 @@ creating a pointblank agent. We designate failure thresholds to the
 
     al <-
       action_levels(
-        warn_at = 0.10,
-        stop_at = 0.25,
-        notify_at = 0.35
+        warn = 0.10,
+        error = 0.25,
+        critical = 0.35
       )
 
 Now, let's create a pointblank `agent` object and give it the `al`
@@ -142,15 +142,15 @@ plan by using as many validation functions as we want. After that, use
 [`interrogate()`](https://rstudio.github.io/pointblank/reference/interrogate.md).
 
     agent <-
-      agent %>%
-      col_exists(columns = c(date, date_time)) %>%
+      agent |>
+      col_exists(columns = c(date, date_time)) |>
       col_vals_regex(
         columns = b,
         regex = "[0-9]-[a-z]{3}-[0-9]{3}"
-      ) %>%
-      rows_distinct() %>%
-      col_vals_gt(columns = d, value = 100) %>%
-      col_vals_lte(columns = c, value = 5) %>%
+      ) |>
+      rows_distinct() |>
+      col_vals_gt(columns = d, value = 100) |>
+      col_vals_lte(columns = c, value = 5) |>
       interrogate()
 
 The `agent` can be written to a file with the `x_write_disk()` function.
@@ -202,27 +202,27 @@ so that info snippets are integrated into the text.
         tbl = ~ small_table,
         tbl_name = "small_table",
         label = "`x_write_disk()`"
-      ) %>%
+      ) |>
       info_snippet(
         snippet_name = "high_a",
         fn = snip_highest(column = "a")
-      ) %>%
+      ) |>
       info_snippet(
         snippet_name = "low_a",
         fn = snip_lowest(column = "a")
-      ) %>%
+      ) |>
       info_columns(
         columns = a,
         info = "From {low_a} to {high_a}."
-      ) %>%
+      ) |>
       info_columns(
         columns = starts_with("date"),
         info = "Time-based values."
-      ) %>%
+      ) |>
       info_columns(
         columns = date,
         info = "The date part of `date_time`."
-      ) %>%
+      ) |>
       incorporate()
 
 The `informant` can be written to a file with `x_write_disk()`. Let's do
@@ -253,17 +253,17 @@ validation steps, and
         tbl_name = "small_table",
         label = "`x_write_disk()`",
         actions = al
-      ) %>%
+      ) |>
       col_vals_gt(
         columns = b,
         value = g,
         na_pass = TRUE,
         label = "b > g"
-      ) %>%
+      ) |>
       col_is_character(
         columns = c(b, f),
         label = "Verifying character-type columns"
-      ) %>%
+      ) |>
       interrogate()
 
 Now we can combine the earlier `agent` object with the newer `agent_b`

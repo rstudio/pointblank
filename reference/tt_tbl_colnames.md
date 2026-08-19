@@ -54,7 +54,7 @@ of the table. Here, we check that `game_revenue` table, included in the
 **pointblank** package, has certain column names present with
 [`test_col_vals_make_subset()`](https://rstudio.github.io/pointblank/reference/col_vals_make_subset.md).
 
-    tt_tbl_colnames(tbl = game_revenue) %>%
+    tt_tbl_colnames(tbl = game_revenue) |>
       test_col_vals_make_subset(
         columns = value,
         set = c("acquisition", "country")
@@ -69,9 +69,9 @@ and finally
 [`test_col_vals_lt()`](https://rstudio.github.io/pointblank/reference/col_vals_lt.md)
 to perform the test.
 
-    specifications %>%
-      tt_tbl_colnames() %>%
-      tt_string_info() %>%
+    specifications |>
+      tt_tbl_colnames() |>
+      tt_string_info() |>
       test_col_vals_lt(
         columns = value,
         value = 15

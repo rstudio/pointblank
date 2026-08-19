@@ -101,8 +101,8 @@ Validate that the schema object `schema_obj` exactly defines the column
 names and column types of the `tbl` table.
 
     agent <-
-      create_agent(tbl = tbl) %>%
-      col_schema_match(schema_obj) %>%
+      create_agent(tbl = tbl) |>
+      col_schema_match(schema_obj) |>
       interrogate()
 
 Determine if this validation step passed by using
@@ -126,9 +126,9 @@ object.
 This should provide the same interrogation results as in the previous
 example.
 
-    create_agent(tbl = tbl) %>%
-      col_schema_match(schema_obj) %>%
-      interrogate() %>%
+    create_agent(tbl = tbl) |>
+      col_schema_match(schema_obj) |>
+      interrogate() |>
       all_passed()
 
     ## [1] TRUE

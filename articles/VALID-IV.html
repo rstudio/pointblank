@@ -351,19 +351,19 @@ skill, guess whether each of these is <code>TRUE</code> or
 
 </style>
 <button class="btn true">
-<code>small_table %&gt;%
+<code>small_table |&gt;
   test_col_is_logical(vars(e))</code>
 </button>
 
 <br><button class="btn false">
-<code>small_table %&gt;% 
+<code>small_table |&gt; 
   test_col_vals_between(
     vars(c), left = 1, right = 10
   )</code>
 </button>
 
 <br><button class="btn true">
-<code>small_table %&gt;% 
+<code>small_table |&gt; 
   test_col_vals_between(
     vars(c), left = 0, right = vars(d),
     na_pass = TRUE, threshold = 0.5
@@ -371,7 +371,7 @@ skill, guess whether each of these is <code>TRUE</code> or
 </button>
 
 <br><button class="btn false">
-<code>small_table %&gt;% 
+<code>small_table |&gt; 
   test_col_vals_between(
     vars(c), left = 0, right = vars(d),
     na_pass = TRUE, threshold = 3
@@ -379,27 +379,27 @@ skill, guess whether each of these is <code>TRUE</code> or
 </button>
 
 <br><button class="btn false">
-<code>small_table %&gt;% 
+<code>small_table |&gt; 
   test_col_schema_match(
     col_schema(.tbl = small_table_sqlite())
   )</code>
 </button>
 
 <br><button class="btn true">
-<code>small_table %&gt;%
+<code>small_table |&gt;
   test_col_vals_regex(vars(b), regex = ".-[a-z]{3}.*")
 </code>
 </button>
 
 <br><button class="btn false">
-<code>small_table %&gt;% test_col_exists(columns = "g")</code>
+<code>small_table |&gt; test_col_exists(columns = "g")</code>
 </button>
 
 <br><button class="btn false">
-<code>small_table %&gt;% 
+<code>small_table |&gt; 
   test_col_vals_gt(
     vars(z), value = vars(a),
-    preconditions = ~ . %&gt;% dplyr::mutate(z = c + e), threshold = 0.5
+    preconditions = \(x) x |&gt; dplyr::mutate(z = c + e), threshold = 0.5
   )</code>
 </button>
 

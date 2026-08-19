@@ -85,8 +85,8 @@ Other Utility and Helper Functions:
 #       ),
 #       col_types = "TDdcddlc"
 #     )
-#   ) %>%
-#   col_vals_gt(a, 0) %>%
+#   ) |>
+#   col_vals_gt(a, 0) |>
 #   interrogate()
 
 # The `from_github()` helper function is

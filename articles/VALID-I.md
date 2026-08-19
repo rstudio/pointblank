@@ -171,12 +171,12 @@ agent <-
     tbl = small_table,
     tbl_name = "small_table",
     label = "VALID-I Example No. 1"
-  ) %>%
-  col_is_posix(date_time) %>%
-  col_vals_in_set(f, set = c("low", "mid", "high")) %>%
-  col_vals_lt(a, value = 10) %>%
-  col_vals_regex(b, regex = "^[0-9]-[a-z]{3}-[0-9]{3}$") %>%
-  col_vals_between(d, left = 0, right = 5000) %>%
+  ) |>
+  col_is_posix(date_time) |>
+  col_vals_in_set(f, set = c("low", "mid", "high")) |>
+  col_vals_lt(a, value = 10) |>
+  col_vals_regex(b, regex = "^[0-9]-[a-z]{3}-[0-9]{3}$") |>
+  col_vals_between(d, left = 0, right = 5000) |>
   interrogate()
 ```
 
@@ -273,12 +273,8 @@ to define thresholds for the `WARN` and `STOP` conditions.
 
 ``` r
 
-al <- action_levels(warn_at = 0.1, stop_at = 0.2)
+al <- action_levels(warn = 0.1, error = 0.2)
 ```
-
-    ## Warning: ! `warn_at`, `stop_at`, and `notify_at` are deprecated.
-    ##   Action levels are now `warn`, `error`, and `critical`.
-    ## This warning is displayed once every 8 hours.
 
 Printing the `al` object gives us a summary of the settings.
 
@@ -305,12 +301,12 @@ agent <-
     tbl_name = "small_table",
     label = "VALID-I Example No. 2",
     actions = al
-  ) %>%
-  col_is_posix(date_time) %>%
-  col_vals_in_set(f, set = c("low", "mid")) %>%
-  col_vals_lt(a, value = 7) %>%
-  col_vals_regex(b, regex = "^[0-9]-[a-w]{3}-[2-9]{3}$") %>%
-  col_vals_between(d, left = 0, right = 4000) %>%
+  ) |>
+  col_is_posix(date_time) |>
+  col_vals_in_set(f, set = c("low", "mid")) |>
+  col_vals_lt(a, value = 7) |>
+  col_vals_regex(b, regex = "^[0-9]-[a-w]{3}-[2-9]{3}$") |>
+  col_vals_between(d, left = 0, right = 4000) |>
   interrogate()
 ```
 
@@ -347,8 +343,8 @@ access to the x-list for each validation step.
 
 al <-
   action_levels(
-    warn_at = 0.1,
-    stop_at = 0.2,
+    warn = 0.1,
+    error = 0.2,
     fns = list(
       warn = ~ message("Step ", x$i, " exceeded the WARN threshold."),
       stop = ~ message("Step ", x$i, " exceeded the STOP threshold.")
@@ -385,12 +381,12 @@ agent <-
     tbl_name = "small_table",
     label = "VALID-I Example No. 3",
     actions = al
-  ) %>%
-  col_is_posix(date_time) %>%
-  col_vals_in_set(f, set = c("low", "mid")) %>%
-  col_vals_lt(a, value = 7) %>%
-  col_vals_regex(b, regex = "^[0-9]-[a-w]{3}-[2-9]{3}$") %>%
-  col_vals_between(d, left = 0, right = 4000) %>%
+  ) |>
+  col_is_posix(date_time) |>
+  col_vals_in_set(f, set = c("low", "mid")) |>
+  col_vals_lt(a, value = 7) |>
+  col_vals_regex(b, regex = "^[0-9]-[a-w]{3}-[2-9]{3}$") |>
+  col_vals_between(d, left = 0, right = 4000) |>
   interrogate()
 ```
 

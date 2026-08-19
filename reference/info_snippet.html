@@ -118,7 +118,7 @@ snippet formula into <em>info text</em> defined by an <code>info_*()</code> func
 <p>A formula that obtains a snippet of data from the target table. It's best
 to use a leading dot (<code>.</code>) that stands for the table itself and use pipes
 to construct a series of operations to be performed on the table (e.g.,
-<code>~ . %&gt;% dplyr::pull(column_2) %&gt;% max(na.rm = TRUE)</code>). So long as the
+<code>\(x) x |&gt; dplyr::pull(column_2) |&gt; max(na.rm = TRUE)</code>). So long as the
 result is a length-1 vector, it'll likely be valid for insertion into some
 info text. Alternatively, a <code>snip_*()</code> function can be used here (these
 functions always return a formula that's suitable for all types of data
@@ -156,20 +156,20 @@ representation and here is is how they are expressed in both R code and in
 the YAML output (showing both the <code>meta_snippets</code> and <code>columns</code> keys to
 demonstrate their relationship here).</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># R statement</span></span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>informant <span class="sc">%&gt;%</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>informant <span class="sc">|&gt;</span></span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>  <span class="fu">info_columns</span>(</span>
 <span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>    <span class="at">columns =</span> date_time,</span>
 <span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>    <span class="st">`</span><span class="at">Latest Date</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"The latest date is {latest_date}."</span></span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
 <span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>  <span class="fu">info_snippet</span>(</span>
 <span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>    <span class="at">snippet_name =</span> <span class="st">"latest_date"</span>,</span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>    <span class="at">fn =</span> <span class="sc">~</span> . <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">pull</span>(date) <span class="sc">%&gt;%</span> <span class="fu">max</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>    <span class="at">fn =</span> \(x) x <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">pull</span>(date) <span class="sc">|&gt;</span> <span class="fu">max</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
 <span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>  <span class="fu">incorporate</span>()</span>
 <span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a></span>
 <span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="co"># YAML representation</span></span>
 <span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>meta_snippets<span class="sc">:</span></span>
-<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>  latest_date<span class="sc">:</span> <span class="er">~</span>. <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">pull</span>(date) <span class="sc">%&gt;%</span> <span class="fu">max</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>  latest_date<span class="sc">:</span> \(x) x <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">pull</span>(date) <span class="sc">|&gt;</span> <span class="fu">max</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a>...</span>
 <span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a>columns<span class="sc">:</span></span>
 <span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a>  date_time<span class="sc">:</span></span>
@@ -191,39 +191,39 @@ demonstrate their relationship here).</p>
 <p>Generate an informant object, add two snippets with <code>info_snippet()</code>,
 add information with some other <code>info_*()</code> functions and then <code><a href="incorporate.html">incorporate()</a></code>
 the snippets into the info text. The first snippet will be made with the
-expression <code>~ . %&gt;% nrow()</code> (giving us the number of rows in the dataset) and
-the second uses the <code><a href="snip_highest.html">snip_highest()</a></code> function with column <code>a</code> (giving us
+expression <code>\(x) x |&gt; nrow()</code> (giving us the number of rows in the dataset),
+and the second uses the <code><a href="snip_highest.html">snip_highest()</a></code> function with column <code>a</code> (giving us
 the highest value in that column).</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">informant</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span></span>
 <span>    tbl <span class="op">=</span> <span class="op">~</span> <span class="va">test_table</span>,</span>
 <span>    tbl_name <span class="op">=</span> <span class="st">"test_table"</span>,</span>
 <span>    label <span class="op">=</span> <span class="st">"An example."</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/info_snippet.html">info_snippet</a></span><span class="op">(</span></span>
 <span>    snippet_name <span class="op">=</span> <span class="st">"row_count"</span>,</span>
-<span>    fn <span class="op">=</span> <span class="op">~</span> <span class="va">.</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>    fn <span class="op">=</span> \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/info_snippet.html">info_snippet</a></span><span class="op">(</span></span>
 <span>    snippet_name <span class="op">=</span> <span class="st">"max_a"</span>,</span>
 <span>    fn <span class="op">=</span> <span class="fu"><a href="../reference/snip_highest.html">snip_highest</a></span><span class="op">(</span>column <span class="op">=</span> <span class="st">"a"</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">a</span>,</span>
 <span>    info <span class="op">=</span> <span class="st">"In the range of 1 to {max_a}. ((SIMPLE))"</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="fu">starts_with</span><span class="op">(</span><span class="st">"date"</span><span class="op">)</span>,</span>
 <span>    info <span class="op">=</span> <span class="st">"Time-based values (e.g., `Sys.time()`)."</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">date</span>,</span>
 <span>    info <span class="op">=</span> <span class="st">"The date part of `date_time`. ((CALC))"</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/info_section.html">info_section</a></span><span class="op">(</span></span>
 <span>    section_name <span class="op">=</span> <span class="st">"rows"</span>,</span>
 <span>    row_count <span class="op">=</span> <span class="st">"There are {row_count} rows available."</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/incorporate.html">incorporate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>We can print the <code>informant</code> object to see the information report.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">informant</span></span></code></pre><p></p></div>
@@ -231,11 +231,11 @@ the highest value in that column).</p>
 <p>Let's modify <code>test_table</code> with some <strong>dplyr</strong> to give it more rows and an
 extra column.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">test_table</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="va">test_table</span>, <span class="va">test_table</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="va">test_table</span>, <span class="va">test_table</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>h <span class="op">=</span> <span class="va">a</span> <span class="op">+</span> <span class="va">c</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>Using <code><a href="incorporate.html">incorporate()</a></code> on the <code>informant</code> object will cause the snippets to be
 reprocessed, and, the info text to be updated.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">informant</span> <span class="op">&lt;-</span> <span class="va">informant</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/incorporate.html">incorporate</a></span><span class="op">(</span><span class="op">)</span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">informant</span> <span class="op">&lt;-</span> <span class="va">informant</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/incorporate.html">incorporate</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">informant</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/pointblank/main/images/man_info_snippet_2.png" alt="This image was generated from the second code example in the `info_snippet()` help file." style="width:100%;"></p>

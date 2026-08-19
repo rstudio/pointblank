@@ -112,7 +112,7 @@ test_col_vals_str_len(
   An optional expression for mutating the input table before proceeding
   with the validation. This can either be provided as a one-sided R
   formula using a leading `~` (e.g.,
-  `~ . %>% dplyr::mutate(col = col + 10)` or as a function (e.g.,
+  `\(x) x |> dplyr::mutate(col = col + 10)` or as a function (e.g.,
   `function(x) dplyr::mutate(x, col = col + 10)`. See the
   *Preconditions* section for more information.
 
@@ -203,7 +203,7 @@ test_col_vals_str_len(
   [`has_columns()`](https://rstudio.github.io/pointblank/reference/has_columns.md)
   can be used to determine whether to make a validation step active on
   the basis of one or more columns existing in the table (e.g.,
-  `~ . %>% has_columns(c(d, e))`).
+  `\(x) x |> has_columns(c(d, e))`).
 
 - object:
 
@@ -263,8 +263,8 @@ Validate that string lengths in column `id` are between 2 and 4
 characters.
 
     agent <-
-      create_agent(tbl = tbl) %>%
-      col_vals_str_len(columns = id, min = 2, max = 4) %>%
+      create_agent(tbl = tbl) |>
+      col_vals_str_len(columns = id, min = 2, max = 4) |>
       interrogate()
 
 Determine if this validation step passed by using

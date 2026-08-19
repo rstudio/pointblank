@@ -182,7 +182,7 @@ be used with <code>.</code> (serving as the input data table) to evaluate to a s
 logical value. With this approach, the <strong>pointblank</strong> function
 <code><a href="has_columns.html">has_columns()</a></code> can be used to determine whether to make a validation step
 active on the basis of one or more columns existing in the table
-(e.g., <code>~ . %&gt;% has_columns(c(d, e))</code>).</p></dd>
+(e.g., <code>\(x) x |&gt; has_columns(c(d, e))</code>).</p></dd>
 
 
 <dt id="arg-object">object<a class="anchor" aria-label="anchor" href="#arg-object"></a></dt>
@@ -260,9 +260,9 @@ that is best produced by the <code><a href="action_levels.html">action_levels()<
 documentation for the lowdown on how to create reactions to above-threshold
 failure levels in validation. The basic gist is that you'll want at least a
 single threshold level (specified as either the fraction of test units
-failed, or, an absolute value), often using the <code>warn_at</code> argument. This is
+failed, or, an absolute value), often using the <code>warn</code> argument. This is
 especially true when <code>x</code> is a table object because, otherwise, nothing
-happens. For the <code>col_is_*()</code>-type functions, using <code>action_levels(warn_at = 1)</code> or <code>action_levels(stop_at = 1)</code> are good choices depending on the
+happens. For the <code>col_is_*()</code>-type functions, using <code>action_levels(warn = 1)</code> or <code>action_levels(error = 1)</code> are good choices depending on the
 situation (the first produces a warning, the other will <code><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop()</a></code>).</p>
     </div>
     <div class="section level2">
@@ -302,10 +302,10 @@ function. Here is an example of how a complex call of <code>col_is_logical()</co
 validation step is expressed in R code and in the corresponding YAML
 representation.</p>
 <p>R statement:</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_is_logical.html">col_is_logical</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">a</span>,</span>
-<span>    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span>warn_at <span class="op">=</span> <span class="fl">0.1</span>, stop_at <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span>,</span>
+<span>    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span>warn <span class="op">=</span> <span class="fl">0.1</span>, error <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span>,</span>
 <span>    label <span class="op">=</span> <span class="st">"The `col_is_logical()` step."</span>,</span>
 <span>    active <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
@@ -355,8 +355,8 @@ values. The following examples will validate that that column is of the
 
 <p>Validate that the column <code>e</code> has the <code>logical</code> class.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">agent</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">small_table</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/col_is_logical.html">col_is_logical</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">e</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">small_table</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/col_is_logical.html">col_is_logical</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">e</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>Printing the <code>agent</code> in the console shows the validation report in the
 Viewer. Here is an excerpt of validation report, showing the single entry
@@ -371,8 +371,8 @@ that corresponds to the validation step demonstrated here.</p>
 <p>This way of using validation functions acts as a data filter. Data is passed
 through but should <code><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop()</a></code> if there is a single test unit failing. The
 behavior of side effects can be customized with the <code>actions</code> option.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/col_is_logical.html">col_is_logical</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">e</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">small_table</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/col_is_logical.html">col_is_logical</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">e</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 5 x 8</span></span>
 <span><span class="co">#&gt;   date_time           date           a b             c      d e     f</span></span>
@@ -399,7 +399,7 @@ time. This is primarily used in <strong>testthat</strong> tests.</p>
 
 <p>With the <code>test_*()</code> form, we should get a single logical value returned to
 us.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/col_is_logical.html">test_col_is_logical</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">e</span><span class="op">)</span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">small_table</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/col_is_logical.html">test_col_is_logical</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">e</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] TRUE</span></span></code></pre><p></p></div>
 </div>
 

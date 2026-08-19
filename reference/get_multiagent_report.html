@@ -209,13 +209,13 @@ dataset in this package.</p>
 <span><span class="co">#&gt; 12 2016-01-28 02:51:00 2016-01-28     2 7-dmx-010     8   108. FALSE low</span></span>
 <span><span class="co">#&gt; 13 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA  2230. TRUE  high</span></span></code></pre><p></p></div>
 <p>To set failure limits and signal conditions, we designate proportional
-failure thresholds to the <code>warn</code>, <code>stop</code>, and <code>notify</code> states using
+failure thresholds to the <code>warn</code>, <code>error</code>, and <code>critical</code> states using
 <code><a href="action_levels.html">action_levels()</a></code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">al</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span></span>
-<span>    warn_at <span class="op">=</span> <span class="fl">0.05</span>,</span>
-<span>    stop_at <span class="op">=</span> <span class="fl">0.10</span>,</span>
-<span>    notify_at <span class="op">=</span> <span class="fl">0.20</span></span>
+<span>    warn <span class="op">=</span> <span class="fl">0.05</span>,</span>
+<span>    error <span class="op">=</span> <span class="fl">0.10</span>,</span>
+<span>    critical <span class="op">=</span> <span class="fl">0.20</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p>We will create four different agents and have slightly different validation
 steps in each of them. In the first, <code>agent_1</code>, eight different validation
@@ -225,64 +225,64 @@ steps are created and the agent will interrogate the <code>small_table</code>.</
 <span>    tbl <span class="op">=</span> <span class="va">small_table</span>,</span>
 <span>    label <span class="op">=</span> <span class="st">"An example."</span>,</span>
 <span>    actions <span class="op">=</span> <span class="va">al</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">date_time</span>,</span>
 <span>    value <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span>,</span>
 <span>    na_pass <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">b</span>,</span>
 <span>    value <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span>,</span>
 <span>    na_pass <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/rows_distinct.html">rows_distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/rows_distinct.html">rows_distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_equal.html">col_vals_equal</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">d</span>,</span>
 <span>    value <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>,</span>
 <span>    na_pass <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">c</span>,</span>
 <span>    left <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, right <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_not_between.html">col_vals_not_between</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">c</span>,</span>
 <span>    left <span class="op">=</span> <span class="fl">10</span>, right <span class="op">=</span> <span class="fl">20</span>,</span>
 <span>    na_pass <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/rows_distinct.html">rows_distinct</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">d</span>, <span class="va">e</span>, <span class="va">f</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/col_is_integer.html">col_is_integer</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">a</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/rows_distinct.html">rows_distinct</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">d</span>, <span class="va">e</span>, <span class="va">f</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/col_is_integer.html">col_is_integer</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">a</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>The second agent, <code>agent_2</code>, retains all of the steps of <code>agent_1</code> and adds
 two more (the last of which is inactive).</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">agent_2</span> <span class="op">&lt;-</span></span>
-<span>  <span class="va">agent_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/col_exists.html">col_exists</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">date</span>, <span class="va">date_time</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="va">agent_1</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/col_exists.html">col_exists</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">date</span>, <span class="va">date_time</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">b</span>,</span>
 <span>    regex <span class="op">=</span> <span class="st">"[0-9]-[a-z]{3}-[0-9]{3}"</span>,</span>
 <span>    active <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>The third agent, <code>agent_3</code>, adds a single validation step, removes the fifth
 one, and deactivates the first.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">agent_3</span> <span class="op">&lt;-</span></span>
-<span>  <span class="va">agent_2</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="va">agent_2</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_in_set.html">col_vals_in_set</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">f</span>,</span>
 <span>    set <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"low"</span>, <span class="st">"mid"</span>, <span class="st">"high"</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/remove_steps.html">remove_steps</a></span><span class="op">(</span>i <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/deactivate_steps.html">deactivate_steps</a></span><span class="op">(</span>i <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/remove_steps.html">remove_steps</a></span><span class="op">(</span>i <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/deactivate_steps.html">deactivate_steps</a></span><span class="op">(</span>i <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>The fourth and final agent, <code>agent_4</code>, reactivates steps 1 and 10, and
 removes the sixth step.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">agent_4</span> <span class="op">&lt;-</span></span>
-<span>  <span class="va">agent_3</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/activate_steps.html">activate_steps</a></span><span class="op">(</span>i <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/activate_steps.html">activate_steps</a></span><span class="op">(</span>i <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/remove_steps.html">remove_steps</a></span><span class="op">(</span>i <span class="op">=</span> <span class="fl">6</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="va">agent_3</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/activate_steps.html">activate_steps</a></span><span class="op">(</span>i <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/activate_steps.html">activate_steps</a></span><span class="op">(</span>i <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/remove_steps.html">remove_steps</a></span><span class="op">(</span>i <span class="op">=</span> <span class="fl">6</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>While all the agents are slightly different from each other, we can still get
 a combined report of them by creating a 'multiagent'.</p>

@@ -54,11 +54,11 @@ Ensure that `player_id` and `session_id` values always have the same
 fixed numbers of characters (`15` and `24`, respectively) throughout the
 table.
 
-    tt_string_info(tbl = game_revenue) %>%
+    tt_string_info(tbl = game_revenue) |>
       col_vals_equal(
         columns = player_id,
         value = 15
-      ) %>%
+      ) |>
       col_vals_equal(
         columns = session_id,
         value = 24
@@ -77,7 +77,7 @@ Let's use a `tt_string_info()`-transformed table with the
 to check that the maximum string length in column `f` of the
 `small_table` dataset is no greater than `4`.
 
-    tt_string_info(tbl = small_table) %>%
+    tt_string_info(tbl = small_table) |>
       test_col_vals_lte(
         columns = f,
         value = 4

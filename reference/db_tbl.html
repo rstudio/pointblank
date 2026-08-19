@@ -338,7 +338,7 @@ with two named entries for table preparations involving the <code><a href="tbl_s
 <span>      dbtype <span class="op">=</span> <span class="st">"duckdb"</span>,</span>
 <span>      dbname <span class="op">=</span> <span class="st">":memory:"</span></span>
 <span>    <span class="op">)</span>,</span>
-<span>    <span class="va">small_high_duck</span> <span class="op">~</span> <span class="op">{</span><span class="op">{</span> <span class="va">small_table_duck</span> <span class="op">}</span><span class="op">}</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="va">small_high_duck</span> <span class="op">~</span> <span class="op">{</span><span class="op">{</span> <span class="va">small_table_duck</span> <span class="op">}</span><span class="op">}</span> <span class="op">|&gt;</span></span>
 <span>      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">f</span> <span class="op">==</span> <span class="st">"high"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p>Now it's easy to obtain either of these tables via <code><a href="tbl_get.html">tbl_get()</a></code>. We can

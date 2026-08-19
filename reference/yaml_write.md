@@ -138,14 +138,14 @@ file.
 
 Creating an `action_levels` object is a common workflow step when
 creating a **pointblank** agent. We designate failure thresholds to the
-`warn`, `stop`, and `notify` states using
+`warn`, `error`, and `critical` states using
 [`action_levels()`](https://rstudio.github.io/pointblank/reference/action_levels.md).
 
     al <-
       action_levels(
-        warn_at = 0.10,
-        stop_at = 0.25,
-        notify_at = 0.35
+        warn = 0.10,
+        error = 0.25,
+        critical = 0.35
       )
 
 Now let's create the `agent` and pass it the `al` object (which serves
@@ -166,14 +166,14 @@ Then, as with any `agent` object, we can add steps to the validation
 plan by using as many validation functions as we want.
 
     agent <-
-      agent %>%
-      col_exists(columns = c(date, date_time)) %>%
+      agent |>
+      col_exists(columns = c(date, date_time)) |>
       col_vals_regex(
         columns = b,
         regex = "[0-9]-[a-z]{3}-[0-9]{3}"
-      ) %>%
-      rows_distinct() %>%
-      col_vals_gt(columns = d, value = 100) %>%
+      ) |>
+      rows_distinct() |>
+      col_vals_gt(columns = d, value = 100) |>
       col_vals_lte(columns = c, value = 5)
 
 The agent can be written to a **pointblank**-readable YAML file with the
@@ -294,15 +294,15 @@ Then, as with any `informant` object, we can add info text to the using
 as many `info_*()` functions as we want.
 
     informant <-
-      informant %>%
+      informant |>
       info_columns(
         columns = a,
         info = "In the range of 1 to 10. (SIMPLE)"
-      ) %>%
+      ) |>
       info_columns(
         columns = starts_with("date"),
         info = "Time-based values (e.g., `Sys.time()`)."
-      ) %>%
+      ) |>
       info_columns(
         columns = date,
         info = "The date part of `date_time`. (CALC)"

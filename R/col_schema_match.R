@@ -338,7 +338,7 @@ col_schema_match <- function(
   if (is_a_table_object(x)) {
 
     secret_agent <-
-      create_agent(x, label = "::QUIET::") %>%
+      create_agent(x, label = "::QUIET::") |>
       col_schema_match(
         schema = schema,
         complete = complete,
@@ -348,7 +348,7 @@ col_schema_match <- function(
         brief = brief,
         actions = prime_actions(actions),
         active = active
-      ) %>%
+      ) |>
       interrogate()
 
     return(x)
@@ -404,18 +404,18 @@ expect_col_schema_match <- function(
   fn_name <- "expect_col_schema_match"
 
   vs <-
-    create_agent(tbl = object, label = "::QUIET::") %>%
+    create_agent(tbl = object, label = "::QUIET::") |>
     col_schema_match(
       schema = {{ schema }},
       complete = complete,
       in_order = in_order,
       is_exact = is_exact,
       actions = action_levels(critical = threshold)
-    ) %>%
-    interrogate() %>%
-    .$validation_set
+    ) |>
+    interrogate() |>
+    (\(x) x$validation_set)()
 
-  x <- vs$notify %>% all()
+  x <- all(vs$notify)
 
   threshold_type <- get_threshold_type(threshold = threshold)
 
@@ -461,16 +461,16 @@ test_col_schema_match <- function(
 ) {
 
   vs <-
-    create_agent(tbl = object, label = "::QUIET::") %>%
+    create_agent(tbl = object, label = "::QUIET::") |>
     col_schema_match(
       schema = {{ schema }},
       complete = complete,
       in_order = in_order,
       is_exact = is_exact,
       actions = action_levels(critical = threshold)
-    ) %>%
-    interrogate() %>%
-    .$validation_set
+    ) |>
+    interrogate() |>
+    (\(x) x$validation_set)()
 
   if (inherits(vs$capture_stack[[1]]$warning, "simpleWarning")) {
     warning(conditionMessage(vs$capture_stack[[1]]$warning))
@@ -688,8 +688,8 @@ create_col_schema_from_df <- function(tbl) {
   if (is_a_table_object(tbl) && !is_tbl_df(tbl)) {
 
     tbl <-
-      tbl %>%
-      utils::head(1) %>%
+      tbl |>
+      utils::head(1) |>
       dplyr::collect()
   }
 

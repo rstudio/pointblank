@@ -344,7 +344,7 @@ write_testthat_file <- function(
 
   # Select only the necessary columns from the agent's `validation_set`
   agent_validation_set <-
-    agent$validation_set %>%
+    agent$validation_set |>
     dplyr::select(
       i, assertion_type, brief, eval_active
     )
@@ -366,11 +366,9 @@ write_testthat_file <- function(
   # Using the `expanded = TRUE` option in `agent_get_exprs()` so that
   # that the expanded form of the validation steps is available
   # (same number of steps as in the validation report)
-  agent_exprs_raw <-
-    agent_get_exprs(agent, expanded = TRUE) %>%
-    strsplit("%>%") %>%
-    unlist() %>%
-    gsub("^\n", "", .)
+  agent_exprs_raw <- agent_get_exprs(agent, expanded = TRUE)
+  agent_exprs_raw <- unlist(strsplit(agent_exprs_raw, "%>%"))
+  agent_exprs_raw <- gsub("^\n", "", agent_exprs_raw)
 
   if (grepl("^create_agent", agent_exprs_raw[1])) {
     agent_exprs_raw <- agent_exprs_raw[-1]
@@ -408,11 +406,10 @@ write_testthat_file <- function(
     )
 
   # Generate descriptions for each test
-  test_that_desc <-
-    agent_validation_set$brief %>%
-    gsub("(Expect that |Expect )", "", .) %>%
-    gsub(" $", "", .) %>%
-    gsub("\\.$", "", .)
+  test_that_desc <- agent_validation_set$brief
+  test_that_desc <- gsub("(Expect that |Expect )", "", test_that_desc)
+  test_that_desc <- gsub(" $", "", test_that_desc)
+  test_that_desc <- gsub("\\.$", "", test_that_desc)
 
   # Initialize vector of `test_that()` tests
   test_that_tests <- c()
@@ -426,11 +423,13 @@ write_testthat_file <- function(
           "test_that(\"",
           test_that_desc[i],
           "\", {\n\n",
-          agent_exprs_raw[i] %>%
-            gsub("^", "  ", .) %>%
-            gsub("\n  ", "\n    ", .) %>%
-            gsub("\n\\)", "\n  )", .) %>%
-            gsub("    #", "  #", .),
+          {
+            expr_i <- agent_exprs_raw[i]
+            expr_i <- gsub("^", "  ", expr_i)
+            expr_i <- gsub("\n  ", "\n    ", expr_i)
+            expr_i <- gsub("\n\\)", "\n  )", expr_i)
+            gsub("    #", "  #", expr_i)
+          },
           "\n})\n\n"
         )
       )
@@ -570,8 +569,11 @@ insert_threshold_values <- function(
         threshold_val <- 1
       }
 
-      agent_exprs_raw[x] %>%
-        gsub("\n\\)", paste0(",\n  threshold = ", threshold_val, "\n\\)"), .)
+      gsub(
+        "\n\\)",
+        paste0(",\n  threshold = ", threshold_val, "\n\\)"),
+        agent_exprs_raw[x]
+      )
     }
   )
 }
@@ -587,12 +589,9 @@ resolve_test_filename <- function(agent, name) {
 
     } else {
 
-      file_name <-
-        agent$tbl_name %>%
-        fs::path_sanitize() %>%
-        gsub("(\\.| |'|:)", "_", .) %>%
-        paste0("test-", .) %>%
-        paste0(., ".R")
+      file_name <- fs::path_sanitize(agent$tbl_name)
+      file_name <- gsub("(\\.| |'|:)", "_", file_name)
+      file_name <- paste0("test-", file_name, ".R")
     }
 
   } else {
@@ -604,12 +603,9 @@ resolve_test_filename <- function(agent, name) {
       )
     }
 
-    file_name <-
-      name[1] %>%
-      fs::path_sanitize() %>%
-      gsub("(\\.| |'|:)", "_", .) %>%
-      paste0("test-", .) %>%
-      paste0(., ".R")
+    file_name <- fs::path_sanitize(name[1])
+    file_name <- gsub("(\\.| |'|:)", "_", file_name)
+    file_name <- paste0("test-", file_name, ".R")
   }
 
   file_name

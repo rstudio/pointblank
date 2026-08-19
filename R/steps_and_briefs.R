@@ -332,9 +332,10 @@ create_autobrief <- function(
   if (assertion_type == "col_exists") {
 
     autobrief <-
-      prep_col_exists_expectation_text(column_text, lang = lang) %>%
-      as.character() %>%
-      tidy_gsub("\\s{2,}", " ")
+      tidy_gsub(
+        as.character(prep_col_exists_expectation_text(column_text, lang = lang)),
+        "\\s{2,}", " "
+      )
   }
 
   if (assertion_type %in% c("col_vals_in_set", "col_vals_not_in_set")) {
@@ -400,8 +401,9 @@ create_autobrief <- function(
 
     values_text <- prep_values_text(values = values, lang = lang)
 
-    value_1 <- strsplit(values_text, ", ") %>% unlist() %>% .[1]
-    value_2 <- strsplit(values_text, ", ") %>% unlist() %>% .[2]
+    parts <- unlist(strsplit(values_text, ", "))
+    value_1 <- parts[1]
+    value_2 <- parts[2]
 
     expectation_text <-
       prep_between_expectation_text(
@@ -558,8 +560,7 @@ create_autobrief <- function(
   if (assertion_type == "conjointly") {
 
     values_text <-
-      prep_values_text(values = values, lang = lang) %>%
-      tidy_gsub("\"", "'")
+      tidy_gsub(prep_values_text(values = values, lang = lang), "\"", "'")
 
     expectation_text <-
       prep_conjointly_expectation_text(values_text, lang = lang)
@@ -604,9 +605,10 @@ finalize_autobrief <- function(
     precondition_text
 ) {
 
-  glue::glue("{expectation_text} {precondition_text}") %>%
-    as.character() %>%
-    tidy_gsub("\\s{2,}", " ")
+  tidy_gsub(
+    as.character(glue::glue("{expectation_text} {precondition_text}")),
+    "\\s{2,}", " "
+  )
 }
 
 generate_autobriefs <- function(
@@ -672,9 +674,9 @@ prep_precondition_text <- function(
   if (is.null(preconditions)) return("")
 
   if (rlang::is_formula(preconditions)) {
-    precondition_label <- preconditions %>% rlang::f_rhs() %>% rlang::as_label()
+    precondition_label <- rlang::as_label(rlang::f_rhs(preconditions))
   } else {
-    precondition_label <- preconditions %>% rlang::as_label()
+    precondition_label <- rlang::as_label(preconditions)
   }
 
   paste0(

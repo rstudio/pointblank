@@ -393,11 +393,8 @@ serially <- function(
       FUN.VALUE = character(1),
       USE.NAMES = FALSE,
       FUN = function(x) {
-
-        x %>%
-          rlang::f_rhs() %>%
-          as.character() %>%
-          .[[1]]
+        chars <- as.character(rlang::f_rhs(x))
+        chars[[1]]
       }
     )
 
@@ -469,9 +466,9 @@ serially <- function(
 
     # Check [3]: the validation function call cannot yield multiple steps
     validation_step_call_args <-
-      validation_formulas[length(validation_formulas)][[1]] %>%
-      as.call() %>%
-      rlang::call_args()
+      rlang::call_args(
+        as.call(validation_formulas[length(validation_formulas)][[1]])
+      )
 
     # Check the first argument
     if (!as.character(validation_step_call_args[[1]]) == ".") {
@@ -497,10 +494,11 @@ serially <- function(
 
     if (has_expandable_cols_arg) {
 
-      has_multiple_cols <-
-        rlang::as_label(validation_step_call_args[[2]]) %>%
-        gsub("^\"|\"$", "", .) %>%
-        grepl(",", x = .)
+      lbl <- gsub(
+        "^\"|\"$", "",
+        rlang::as_label(validation_step_call_args[[2]])
+      )
+      has_multiple_cols <- grepl(",", x = lbl)
 
       if (has_multiple_cols) {
 
@@ -524,7 +522,7 @@ serially <- function(
   if (is_a_table_object(x)) {
 
     secret_agent <-
-      create_agent(x, label = "::QUIET::") %>%
+      create_agent(x, label = "::QUIET::") |>
       serially(
         .list = .list,
         preconditions = preconditions,
@@ -533,7 +531,7 @@ serially <- function(
         label = label,
         brief = brief,
         active = active
-      ) %>%
+      ) |>
       interrogate()
 
     return(x)
@@ -551,10 +549,8 @@ serially <- function(
         FUN.VALUE = character(1),
         USE.NAMES = FALSE,
         FUN = function(x) {
-          x %>%
-            rlang::f_rhs() %>%
-            as.character() %>%
-            .[[1]]
+          chars <- as.character(rlang::f_rhs(x))
+          chars[[1]]
         }
       )
 
@@ -582,12 +578,12 @@ serially <- function(
         eval(
           expr = parse(
             text =
-              validation_formulas[[k]] %>%
-              rlang::f_rhs() %>%
-              rlang::expr_deparse() %>%
-              tidy_gsub("(.", "(double_agent", fixed = TRUE) %>%
-              tidy_gsub("^test_", "") %>%
-              tidy_gsub("threshold\\s+?=\\s.*$", ")") %>%
+              validation_formulas[[k]] |>
+              rlang::f_rhs() |>
+              rlang::expr_deparse() |>
+              tidy_gsub("(.", "(double_agent", fixed = TRUE) |>
+              tidy_gsub("^test_", "") |>
+              tidy_gsub("threshold\\s+?=\\s.*$", ")") |>
               tidy_gsub(",\\s+?\\)$", ")")
 
           ),
@@ -607,12 +603,12 @@ serially <- function(
         eval(
           expr = parse(
             text =
-              validation_formulas[[length(validation_formulas)]] %>%
-              rlang::f_rhs() %>%
-              rlang::expr_deparse() %>%
-              tidy_gsub("(.", "(double_agent", fixed = TRUE) %>%
-              tidy_gsub("^test_", "") %>%
-              tidy_gsub("threshold\\s+?=\\s.*$", ")") %>%
+              validation_formulas[[length(validation_formulas)]] |>
+              rlang::f_rhs() |>
+              rlang::expr_deparse() |>
+              tidy_gsub("(.", "(double_agent", fixed = TRUE) |>
+              tidy_gsub("^test_", "") |>
+              tidy_gsub("threshold\\s+?=\\s.*$", ")") |>
               tidy_gsub(",\\s+?\\)$", ")")
 
           ),
@@ -702,16 +698,16 @@ expect_serially <- function(
   fn_name <- "expect_serially"
 
   vs <-
-    create_agent(tbl = object, label = "::QUIET::") %>%
+    create_agent(tbl = object, label = "::QUIET::") |>
     serially(
       .list = .list,
       preconditions = {{ preconditions }},
       actions = action_levels(critical = threshold)
-    ) %>%
-    interrogate() %>%
-    .$validation_set
+    ) |>
+    interrogate() |>
+    (\(x) x$validation_set)()
 
-  x <- vs$notify %>% all()
+  x <- all(vs$notify)
 
   threshold_type <- get_threshold_type(threshold = threshold)
 
@@ -753,14 +749,14 @@ test_serially <- function(
 ) {
 
   vs <-
-    create_agent(tbl = object, label = "::QUIET::") %>%
+    create_agent(tbl = object, label = "::QUIET::") |>
     serially(
       .list = .list,
       preconditions = {{ preconditions }},
       actions = action_levels(critical = threshold)
-    ) %>%
-    interrogate() %>%
-    .$validation_set
+    ) |>
+    interrogate() |>
+    (\(x) x$validation_set)()
 
   if (inherits(vs$capture_stack[[1]]$warning, "simpleWarning")) {
     warning(conditionMessage(vs$capture_stack[[1]]$warning))

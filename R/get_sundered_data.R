@@ -278,9 +278,9 @@ get_sundered_data <- function(
 
   # Get the row count of the input table
   row_count_input_tbl <-
-    input_tbl %>%
-    dplyr::count() %>%
-    dplyr::pull(n) %>%
+    input_tbl |>
+    dplyr::count() |>
+    dplyr::pull(n) |>
     as.numeric()
 
   # Keep only the validation steps that:
@@ -288,7 +288,7 @@ get_sundered_data <- function(
   # - are row-based (not including `rows_distinct()`)
   # - are `active`
   validation_set_prefiltered <-
-    agent$validation_set %>%
+    agent$validation_set |>
     dplyr::filter(
       !eval_error,
       assertion_type %in%
@@ -322,7 +322,7 @@ get_sundered_data <- function(
 
   # Obtain the validation steps that are to be used for sundering
   validation_steps_i <-
-    validation_set_prefiltered %>%
+    validation_set_prefiltered |>
     dplyr::pull(i)
 
   if (length(validation_steps_i) == 0) {
@@ -347,8 +347,8 @@ get_sundered_data <- function(
 
   # Get the stored `tbl_check` objects for `validation_steps_i`
   tbl_check_obj <-
-    agent$validation_set %>%
-    dplyr::filter(i %in% validation_steps_i) %>%
+    agent$validation_set |>
+    dplyr::filter(i %in% validation_steps_i) |>
     dplyr::pull(tbl_checked)
 
   for (i in seq(tbl_check_obj)) {
@@ -358,13 +358,13 @@ get_sundered_data <- function(
       new_col_i <- paste0("pb_is_good_", i)
 
       tbl_check_join <-
-        tbl_check_obj[[i]][[1]] %>%
+        tbl_check_obj[[i]][[1]] |>
         dplyr::rename(!!new_col_i := pb_is_good_)
 
       if (agent$tbl_src %in% c("tbl_df", "data.frame")) {
 
         tbl_check_join <-
-          tbl_check_join %>%
+          tbl_check_join |>
           tibble::rowid_to_column(var = "__pb_rowid__")
       }
     }
@@ -380,20 +380,20 @@ get_sundered_data <- function(
       by_cols <- id_cols
 
       tbl_check_join <-
-        tbl_check_join %>%
+        tbl_check_join |>
         dplyr::select(
           dplyr::all_of(by_cols), dplyr::starts_with("pb_is_good_")
-        ) %>%
+        ) |>
         dplyr::left_join(
-          tbl_check_join_r %>%
-            dplyr::rename(!!new_col_ii := pb_is_good_) %>%
+          tbl_check_join_r |>
+            dplyr::rename(!!new_col_ii := pb_is_good_) |>
             dplyr::select(
               dplyr::all_of(by_cols), dplyr::starts_with("pb_is_good_")
             ),
           by = by_cols
-        ) %>%
+        ) |>
         dplyr::left_join(
-          tbl_check_join %>%
+          tbl_check_join |>
             dplyr::select(-dplyr::starts_with("pb_is_good_")),
           by = by_cols
         )
@@ -401,15 +401,15 @@ get_sundered_data <- function(
     } else if (agent$tbl_src %in% c("tbl_df", "data.frame")) {
 
       tbl_check_join_r <-
-        tbl_check_join_r %>%
+        tbl_check_join_r |>
         tibble::rowid_to_column(var = "__pb_rowid__")
 
       by_cols <- c("__pb_rowid__", agent$col_names)
 
       tbl_check_join <-
-        tbl_check_join %>%
+        tbl_check_join |>
         dplyr::left_join(
-          tbl_check_join_r %>%
+          tbl_check_join_r |>
             dplyr::rename(!!new_col_ii := pb_is_good_),
           by = by_cols
         )
@@ -423,26 +423,26 @@ get_sundered_data <- function(
   validation_n <- length(seq(tbl_check_obj))
 
   tbl_check_join <-
-    tbl_check_join %>%
-    dplyr::mutate(pb_is_good_ = !!rlang::parse_expr(columns_str_add)) %>%
-    dplyr::select(-dplyr::all_of(columns_str_vec)) %>%
+    tbl_check_join |>
+    dplyr::mutate(pb_is_good_ = !!rlang::parse_expr(columns_str_add)) |>
+    dplyr::select(-dplyr::all_of(columns_str_vec)) |>
     dplyr::mutate(pb_is_good_ = dplyr::case_when(
       pb_is_good_ == validation_n ~ TRUE,
       TRUE ~ FALSE
-    )) %>%
+    )) |>
     dplyr::select(-dplyr::starts_with("__pb_rowid__"))
 
   if (!is.null(type) && type == "pass") {
 
     if (uses_numeric_logical(input_tbl)) {
       sundered_tbl_pass <-
-        tbl_check_join %>%
-        dplyr::filter(pb_is_good_ == 1) %>%
+        tbl_check_join |>
+        dplyr::filter(pb_is_good_ == 1) |>
         dplyr::select(-pb_is_good_)
     } else {
       sundered_tbl_pass <-
-        tbl_check_join %>%
-        dplyr::filter(pb_is_good_ == TRUE) %>%
+        tbl_check_join |>
+        dplyr::filter(pb_is_good_ == TRUE) |>
         dplyr::select(-pb_is_good_)
     }
 
@@ -453,13 +453,13 @@ get_sundered_data <- function(
 
     if (uses_numeric_logical(input_tbl)) {
       sundered_tbl_fail <-
-        tbl_check_join %>%
-        dplyr::filter(pb_is_good_ == 0) %>%
+        tbl_check_join |>
+        dplyr::filter(pb_is_good_ == 0) |>
         dplyr::select(-pb_is_good_)
     } else {
       sundered_tbl_fail <-
-        tbl_check_join %>%
-        dplyr::filter(pb_is_good_ == FALSE) %>%
+        tbl_check_join |>
+        dplyr::filter(pb_is_good_ == FALSE) |>
         dplyr::select(-pb_is_good_)
     }
 
@@ -469,12 +469,12 @@ get_sundered_data <- function(
   if (!is.null(type) && type == "combined") {
 
     sundered_tbl_combined <-
-      tbl_check_join %>%
+      tbl_check_join |>
       dplyr::mutate(pb_is_good_ = dplyr::case_when(
         pb_is_good_ ~ pass_fail[1],
         !pb_is_good_ ~ pass_fail[2],
         TRUE ~ pass_fail[1]
-      )) %>%
+      )) |>
       dplyr::rename(`.pb_combined` = pb_is_good_)
 
     return(sundered_tbl_combined)
@@ -485,21 +485,21 @@ get_sundered_data <- function(
     if (uses_numeric_logical(input_tbl)) {
       sundered_tbl_list <-
         list(
-          pass = tbl_check_join %>%
-            dplyr::filter(pb_is_good_ == 1) %>%
+          pass = tbl_check_join |>
+            dplyr::filter(pb_is_good_ == 1) |>
             dplyr::select(-pb_is_good_),
-          fail = tbl_check_join %>%
-            dplyr::filter(pb_is_good_ == 0) %>%
+          fail = tbl_check_join |>
+            dplyr::filter(pb_is_good_ == 0) |>
             dplyr::select(-pb_is_good_)
         )
     } else {
       sundered_tbl_list <-
         list(
-          pass = tbl_check_join %>%
-            dplyr::filter(pb_is_good_ == TRUE) %>%
+          pass = tbl_check_join |>
+            dplyr::filter(pb_is_good_ == TRUE) |>
             dplyr::select(-pb_is_good_),
-          fail = tbl_check_join %>%
-            dplyr::filter(pb_is_good_ == FALSE) %>%
+          fail = tbl_check_join |>
+            dplyr::filter(pb_is_good_ == FALSE) |>
             dplyr::select(-pb_is_good_)
         )
     }

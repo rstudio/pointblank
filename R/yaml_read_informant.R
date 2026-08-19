@@ -113,8 +113,8 @@ yaml_read_informant <- function(
     expr_from_informant_yaml(path = file_to_read, incorporate = FALSE)
 
   informant <-
-    informant_list$expr_str %>%
-    rlang::parse_expr() %>%
+    informant_list$expr_str |>
+    rlang::parse_expr() |>
     rlang::eval_tidy()
 
   informant$metadata <- informant_list$metadata
@@ -203,13 +203,13 @@ yaml_informant_incorporate <- function(
     expr_from_informant_yaml(path = filename)
 
   informant <-
-    informant_list$expr_str %>%
-    rlang::parse_expr() %>%
+    informant_list$expr_str |>
+    rlang::parse_expr() |>
     rlang::eval_tidy()
 
   informant$metadata <- informant_list$metadata
 
-  informant <- informant %>% incorporate()
+  informant <- informant |> incorporate()
   informant
 }
 
@@ -273,7 +273,7 @@ expr_from_informant_yaml <- function(path, incorporate = FALSE) {
   # Add the `incorporate()` statement if needed (this is
   # for the `yaml_informant_incorporate()` function)
   if (incorporate) {
-    expr_str <- paste0(expr_str, "%>%\nincorporate()")
+    expr_str <- paste0(expr_str, "|>\nincorporate()")
   }
 
   y$tbl <- NULL
@@ -427,7 +427,7 @@ make_info_snippets <- function(snippets) {
         snippet_fun <- snippets[[x]]
 
         paste0(
-          "%>% info_snippet(",
+          "|> info_snippet(",
           "snippet_name = \"", snippet_name, "\", ",
           "fn = ", snippet_fun, ")"
         )

@@ -210,7 +210,7 @@ email_blast <- function(
   # nocov start
 
   # Evaluate condition for sending email
-  condition_result <- rlang::f_rhs(send_condition) %>% rlang::eval_tidy()
+  condition_result <- rlang::f_rhs(send_condition) |> rlang::eval_tidy()
 
   if (!is.logical(condition_result)) {
     warning("The `send_condition` expression must resolve to a logical value",
@@ -225,9 +225,9 @@ email_blast <- function(
     # Preparation of the message
     blastula_message <-
       blastula::compose_email(
-        header = glue::glue(msg_header) %>% blastula::md(),
-        body = glue::glue(msg_body) %>% blastula::md(),
-        footer = glue::glue(msg_footer) %>% blastula::md(),
+        header = glue::glue(msg_header) |> blastula::md(),
+        body = glue::glue(msg_body) |> blastula::md(),
+        footer = glue::glue(msg_footer) |> blastula::md(),
       )
 
     # Sending of the message
@@ -390,7 +390,7 @@ stock_msg_body <- function() {
       ),
       htmltools::HTML("&#9678;")
     )
-  ) %>%
+  ) |>
     as.character()
 }
 
@@ -432,7 +432,7 @@ stock_msg_footer <- function() {
         htmltools::HTML("{get_lsv('email/footer_2')[[x$lang]]}")
       )
     )
-  ) %>%
+  ) |>
     as.character()
 }
 

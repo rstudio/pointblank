@@ -284,7 +284,7 @@ col_count_match <- function(
   if (is_a_table_object(x)) {
 
     secret_agent <-
-      create_agent(x, label = "::QUIET::") %>%
+      create_agent(x, label = "::QUIET::") |>
       col_count_match(
         count = count,
         preconditions = preconditions,
@@ -292,7 +292,7 @@ col_count_match <- function(
         brief = brief,
         actions = prime_actions(actions),
         active = active
-      ) %>%
+      ) |>
       interrogate()
 
     return(x)
@@ -349,16 +349,16 @@ expect_col_count_match <- function(
   fn_name <- "expect_col_count_match"
 
   vs <-
-    create_agent(tbl = object, label = "::QUIET::") %>%
+    create_agent(tbl = object, label = "::QUIET::") |>
     col_count_match(
       count = {{ count }},
       preconditions = {{ preconditions }},
       actions = action_levels(critical = threshold)
-    ) %>%
-    interrogate() %>%
-    .$validation_set
+    ) |>
+    interrogate() |>
+    (\(x) x$validation_set)()
 
-  x <- vs$notify %>% all()
+  x <- vs$notify |> all()
 
   threshold_type <- get_threshold_type(threshold = threshold)
 
@@ -402,14 +402,14 @@ test_col_count_match <- function(
 ) {
 
   vs <-
-    create_agent(tbl = object, label = "::QUIET::") %>%
+    create_agent(tbl = object, label = "::QUIET::") |>
     col_count_match(
       count = {{ count }},
       preconditions = {{ preconditions }},
       actions = action_levels(critical = threshold)
-    ) %>%
-    interrogate() %>%
-    .$validation_set
+    ) |>
+    interrogate() |>
+    (\(x) x$validation_set)()
 
   if (inherits(vs$capture_stack[[1]]$warning, "simpleWarning")) {
     warning(conditionMessage(vs$capture_stack[[1]]$warning))

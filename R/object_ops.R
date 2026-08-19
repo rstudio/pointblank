@@ -326,7 +326,7 @@ x_write_disk <- function(
     x$validation_set$tbl_checked <- NULL
 
     x$validation_set <-
-      x$validation_set %>%
+      x$validation_set |>
       dplyr::mutate(tbl_checked = list(NULL))
 
     if (keep_tbl) {
@@ -759,67 +759,67 @@ export_report <- function(
 
     object_type <- "agent"
 
-    x %>%
-      get_agent_report() %>%
-      htmltools::as.tags() %>%
+    x |>
+      get_agent_report() |>
+      htmltools::as.tags() |>
       htmltools::save_html(file = filename)
 
   } else if (inherits(x, "ptblank_informant")) {
 
     object_type <- "informant"
 
-    x %>%
-      get_informant_report() %>%
-      htmltools::as.tags() %>%
+    x |>
+      get_informant_report() |>
+      htmltools::as.tags() |>
       htmltools::save_html(file = filename)
 
   } else if (inherits(x, "ptblank_multiagent")) {
 
     object_type <- "multiagent"
 
-    x %>%
-      get_multiagent_report() %>%
-      htmltools::as.tags() %>%
+    x |>
+      get_multiagent_report() |>
+      htmltools::as.tags() |>
       htmltools::save_html(file = filename)
 
   } else if (inherits(x, "ptblank_tbl_scan")) {
 
     object_type <- "table scan"
 
-    x %>%
-      htmltools::as.tags() %>%
+    x |>
+      htmltools::as.tags() |>
       htmltools::save_html(file = filename)
 
   } else if (inherits(x, "ptblank_agent_report")) {
 
     object_type <- "agent report"
 
-    x %>%
-      htmltools::as.tags() %>%
+    x |>
+      htmltools::as.tags() |>
       htmltools::save_html(file = filename)
 
   } else if (inherits(x, "ptblank_informant_report")) {
 
     object_type <- "informant report"
 
-    x %>%
-      htmltools::as.tags() %>%
+    x |>
+      htmltools::as.tags() |>
       htmltools::save_html(file = filename)
 
   } else if (inherits(x, "ptblank_multiagent_report.wide")) {
 
     object_type <- "multiagent report (wide)"
 
-    x %>%
-      htmltools::as.tags() %>%
+    x |>
+      htmltools::as.tags() |>
       htmltools::save_html(file = filename)
 
   } else if (inherits(x, "ptblank_multiagent_report.long")) {
 
     object_type <- "multiagent report (long)"
 
-    x %>%
-      htmltools::as.tags() %>%
+    x |>
+      htmltools::as.tags() |>
       htmltools::save_html(file = filename)
   }
 

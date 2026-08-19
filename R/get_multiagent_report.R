@@ -281,19 +281,19 @@ get_multiagent_report <- function(
     i_name <- rlang::quo_name(i_name)
 
     val_set_packed <-
-      multiagent[["agents"]][[i]][["validation_set"]] %>%
+      multiagent[["agents"]][[i]][["validation_set"]] |>
       dplyr::select(
         sha1, i, step_id, assertion_type, column, values,
         na_pass, preconditions, actions, label, brief,
         eval_active, eval_error, eval_warning, all_passed,
         n, f_passed, f_failed, warn, notify, stop
-      ) %>%
+      ) |>
       tidyr::pack(validation = c(
         i, step_id, assertion_type, column, values,
         na_pass, preconditions, actions, label, brief,
         eval_active, eval_error, eval_warning, all_passed,
         n, f_passed, f_failed, warn, notify, stop
-      )) %>%
+      )) |>
       dplyr::rename(!!i_name := "validation")
 
     if (i == 1) {
@@ -302,12 +302,12 @@ get_multiagent_report <- function(
     }
 
     report_tbl <-
-      report_tbl %>%
+      report_tbl |>
       dplyr::full_join(val_set_packed, by = "sha1")
   }
 
   report_tbl <-
-    report_tbl %>%
+    report_tbl |>
     dplyr::select(-sha1)
 
   if (!display_table) {
@@ -345,7 +345,7 @@ get_multiagent_report <- function(
         )
 
       long_report_i <-
-        long_report_i %>%
+        long_report_i |>
         gt::tab_options(
           table.border.top.width = "0",
           table.border.bottom.style = "double",
@@ -384,7 +384,7 @@ get_multiagent_report <- function(
         ),
         htmltools::HTML(table_type)
       )
-    ) %>% as.character()
+    ) |> as.character()
 
 
   create_report_time_html <- function(time) {
@@ -429,7 +429,7 @@ get_multiagent_report <- function(
     date_time <- c(date_time, date_time_el)
 
     val_set <-
-      multiagent[["agents"]][[i]][["validation_set"]] %>%
+      multiagent[["agents"]][[i]][["validation_set"]] |>
       dplyr::select(
         sha1, i, eval_active, eval_error, eval_warning, all_passed,
         n, f_passed, f_failed, warn, notify, stop
@@ -440,9 +440,7 @@ get_multiagent_report <- function(
     for (j in seq_len(nrow(val_set))) {
 
       vals_step_j <-
-        val_set %>%
-        dplyr::select(-sha1) %>%
-        .[j, ] %>%
+        dplyr::select(val_set, -sha1)[j, ] |>
         as.list()
 
       cell_content <-
@@ -455,8 +453,8 @@ get_multiagent_report <- function(
     }
 
     val_set <-
-      val_set %>%
-      dplyr::mutate(!!i_name := html_cells) %>%
+      val_set |>
+      dplyr::mutate(!!i_name := html_cells) |>
       dplyr::select(
         -c(
           i, eval_active, eval_error, eval_warning, all_passed,
@@ -470,7 +468,7 @@ get_multiagent_report <- function(
     }
 
     report_tbl <-
-      report_tbl %>%
+      report_tbl |>
       dplyr::full_join(val_set, by = "sha1")
   }
 
@@ -483,10 +481,10 @@ get_multiagent_report <- function(
       i_name <- rlang::quo_name(i_names[j])
 
       report_tbl <-
-        report_tbl %>%
+        report_tbl |>
         dplyr::bind_cols(
           dplyr::tibble(pb_extra_ = rep(NA_character_, nrow(report_tbl)))
-        ) %>%
+        ) |>
         dplyr::rename(!!i_name := "pb_extra_")
     }
 
@@ -501,10 +499,10 @@ get_multiagent_report <- function(
       i_name <- rlang::quo_name(i_names[j])
 
       report_tbl <-
-        report_tbl %>%
+        report_tbl |>
         dplyr::bind_cols(
           dplyr::tibble(pb_extra_ = rep(NA_character_, nrow(report_tbl)))
-        ) %>%
+        ) |>
         dplyr::rename(!!i_name := "pb_extra_")
     }
 
@@ -519,10 +517,10 @@ get_multiagent_report <- function(
       i_name <- rlang::quo_name(i_names[j])
 
       report_tbl <-
-        report_tbl %>%
+        report_tbl |>
         dplyr::bind_cols(
           dplyr::tibble(pb_extra_ = rep(NA_character_, nrow(report_tbl)))
-        ) %>%
+        ) |>
         dplyr::rename(!!i_name := "pb_extra_")
     }
 
@@ -621,15 +619,15 @@ get_multiagent_report <- function(
     assertion_tbl <-
       dplyr::bind_rows(
         assertion_tbl,
-        multiagent[["agents"]][[x]][["validation_set"]] %>%
+        multiagent[["agents"]][[x]][["validation_set"]] |>
           dplyr::select(sha1, assertion_type)
       )
   }
 
   report_tbl <-
-    report_tbl %>%
+    report_tbl |>
     dplyr::left_join(
-      assertion_tbl %>% dplyr::distinct(),
+      assertion_tbl |> dplyr::distinct(),
       by = "sha1"
     )
 
@@ -652,18 +650,18 @@ get_multiagent_report <- function(
 
   # Overall width should be 875px (agent report is 876px)
   report_tbl <-
-    report_tbl %>%
-    dplyr::select(-assertion_type) %>%
+    report_tbl |>
+    dplyr::select(-assertion_type) |>
     gt::gt(id = "report")
 
   if (layout_type == "4UP") {
 
     report_tbl <-
-      report_tbl %>%
+      report_tbl |>
       gt::cols_width(
         gt::matches("[0-9]{3}") ~ gt::px(200),
         gt::everything() ~ gt::px(75)
-      ) %>%
+      ) |>
       gt::tab_style(
         list(
           style = gt::cell_text(
@@ -675,11 +673,11 @@ get_multiagent_report <- function(
           )
         ),
         locations = gt::cells_column_labels(columns = gt::everything())
-      ) %>%
+      ) |>
       gt::tab_style(
         style = gt::cell_text(weight = "bold", color = "#666666"),
         locations = gt::cells_column_labels(columns = "sha1")
-      ) %>%
+      ) |>
       gt::tab_style(
         locations = gt::cells_body(columns = gt::everything()),
         style = "height: 56px; margin: 0;"
@@ -688,11 +686,11 @@ get_multiagent_report <- function(
   } else if (layout_type == "8UP") {
 
     report_tbl <-
-      report_tbl %>%
+      report_tbl |>
       gt::cols_width(
         gt::matches("[0-9]{3}") ~ gt::px(100),
         gt::everything() ~ gt::px(75)
-      ) %>%
+      ) |>
       gt::tab_style(
         list(
           style = gt::cell_text(
@@ -707,7 +705,7 @@ get_multiagent_report <- function(
           )
         ),
         locations = gt::cells_column_labels(columns = gt::everything())
-      ) %>%
+      ) |>
       gt::tab_style(
         style = gt::cell_text(
           weight = "bold",
@@ -717,7 +715,7 @@ get_multiagent_report <- function(
           align = "left"
         ),
         locations = gt::cells_column_labels(columns = "sha1")
-      ) %>%
+      ) |>
       gt::tab_style(
         locations = gt::cells_body(columns = gt::everything()),
         style = "height: 56px; margin: 0;"
@@ -726,11 +724,11 @@ get_multiagent_report <- function(
   } else {
 
     report_tbl <-
-      report_tbl %>%
+      report_tbl |>
       gt::cols_width(
         gt::matches("[0-9]{3}") ~ gt::px(50),
         gt::everything() ~ gt::px(75)
-      ) %>%
+      ) |>
       gt::tab_style(
         list(
           style = gt::cell_text(
@@ -747,7 +745,7 @@ get_multiagent_report <- function(
           )
         ),
         locations = gt::cells_column_labels(columns = gt::everything())
-      ) %>%
+      ) |>
       gt::tab_style(
         list(
           style = gt::cell_text(
@@ -763,7 +761,7 @@ get_multiagent_report <- function(
           )
         ),
         locations = gt::cells_column_labels(columns = "sha1")
-      ) %>%
+      ) |>
       gt::tab_style(
         locations = gt::cells_body(columns = gt::everything()),
         style = "height: 56px; margin: 0;"
@@ -773,15 +771,15 @@ get_multiagent_report <- function(
   if (n_columns > 17) {
 
     report_tbl <-
-      report_tbl %>%
+      report_tbl |>
       gt::tab_style(
         style = "left: 0; position: sticky; background: white; z-index: 1;",
         locations = gt::cells_body(columns = 1)
-      ) %>%
+      ) |>
       gt::tab_style(
         style = "left: 0; position: sticky; background: white; z-index: 1;",
         locations = gt::cells_column_labels(columns = 1)
-      ) %>%
+      ) |>
       gt::tab_options(container.width = gt::px(875))
   }
 
@@ -795,20 +793,20 @@ get_multiagent_report <- function(
     )
 
   report_tbl <-
-    report_tbl %>%
+    report_tbl |>
     gt::tab_header(
       title = title_text,
       subtitle = gt::md(combined_subtitle)
-    ) %>%
+    ) |>
     gt::tab_source_note(
       source_note = gt::md(create_report_time_html(time = Sys.time()))
-    ) %>%
+    ) |>
     gt::tab_options(
       table.font.size = gt::pct(90),
       row.striping.include_table_body = FALSE
-    ) %>%
-    gt::fmt_markdown(columns = 2:n_columns) %>%
-    gt::fmt_markdown(columns = "sha1") %>%
+    ) |>
+    gt::fmt_markdown(columns = 2:n_columns) |>
+    gt::fmt_markdown(columns = "sha1") |>
     gt::sub_missing(
       columns = columns_used_tbl,
       missing_text = gt::html(
@@ -823,15 +821,15 @@ get_multiagent_report <- function(
           )
         )
       )
-    ) %>%
+    ) |>
     gt::sub_missing(
       columns = columns_not_used,
       missing_text = ""
-    ) %>%
+    ) |>
     gt::tab_style(
       style = gt::cell_text(font = "IBM Plex Mono", size = "small"),
       locations = gt::cells_body(columns = "sha1")
-    ) %>%
+    ) |>
     gt::tab_style(
       style = gt::cell_text(
         size = gt::px(28),
@@ -840,43 +838,43 @@ get_multiagent_report <- function(
         color = "#444444"
       ),
       locations = gt::cells_title("title")
-    ) %>%
+    ) |>
     gt::tab_style(
       style = gt::cell_text(
         size = gt::px(12),
         align = "left"
       ),
       locations = gt::cells_title("subtitle")
-    ) %>%
+    ) |>
     gt::tab_style(
       style = list(
         gt::cell_borders(sides = "right", color = "#D3D3D3"),
         gt::cell_fill(color = "#FCFCFC")
       ),
       locations = gt::cells_body(columns = "sha1")
-    ) %>%
+    ) |>
     gt::tab_style(
       style = list(
         gt::cell_borders(sides = "right", color = "#D3D3D3", style = "dotted"),
         gt::cell_fill(color = "#FCFCFC")
       ),
       locations = gt::cells_body(columns = gt::matches("[0-9]{3}"))
-    ) %>%
-    gt::cols_label(.list = date_time) %>%
-    gt::opt_align_table_header(align = "left") %>%
-    gt::opt_table_font(font = gt::google_font("IBM Plex Sans")) %>%
+    ) |>
+    gt::cols_label(.list = date_time) |>
+    gt::opt_align_table_header(align = "left") |>
+    gt::opt_table_font(font = gt::google_font("IBM Plex Sans")) |>
     gt::opt_css(
       paste0(
         "@import url(\"https://unpkg.com/",
         "balloon-css/balloon.min.css\");"
       )
-    ) %>%
+    ) |>
     gt::opt_css(
       paste0(
         "@import url(\"https://fonts.googleapis.com/",
         "css2?family=IBM+Plex+Mono&display=swap\");"
       )
-    ) %>%
+    ) |>
     gt::opt_css(
       css = "
           #pb_information {
@@ -909,7 +907,7 @@ get_multiagent_report <- function(
 
   if (layout_type == "16UP") {
     report_tbl <-
-      report_tbl %>%
+      report_tbl |>
       gt::cols_label(`001` = gt::html(date_time[[2]]))
   }
 
@@ -1197,7 +1195,7 @@ generate_cell_content <- function(
             )
           )
         )
-      ) %>%
+      ) |>
       as.character()
 
     return(cell_content)
@@ -1393,7 +1391,7 @@ generate_cell_content <- function(
             )
           )
         )
-      ) %>%
+      ) |>
       as.character()
 
     return(cell_content)
@@ -1505,7 +1503,7 @@ generate_cell_content <- function(
               )
             )
           )
-      ) %>%
+      ) |>
       as.character()
 
     return(cell_content)

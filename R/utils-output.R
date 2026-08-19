@@ -30,7 +30,7 @@ create_rds_tbl <- function(path = NULL, files = NULL) {
         "agent.*?[0-9]{4}-[0-9]{2}-[0-9]{2}_",
         "[0-9]{2}-[0-9]{2}-[0-9]{2}.rds$"
       )
-    ) %>%
+    ) |>
     basename()
 
   agent_rds_tbl_names <-
@@ -52,7 +52,7 @@ create_rds_tbl <- function(path = NULL, files = NULL) {
         "informant.*?[0-9]{4}-[0-9]{2}-[0-9]{2}_",
         "[0-9]{2}-[0-9]{2}-[0-9]{2}.rds$"
       ),
-    ) %>%
+    ) |>
     basename()
 
   informant_rds_tbl_names <-
@@ -109,7 +109,7 @@ create_rds_tbl <- function(path = NULL, files = NULL) {
       }
 
       agent_tbl <-
-        agent_tbl %>%
+        agent_tbl |>
         dplyr::arrange(dplyr::desc(time_str))
     }
 
@@ -134,7 +134,7 @@ create_rds_tbl <- function(path = NULL, files = NULL) {
       }
 
       informant_tbl <-
-        informant_tbl %>%
+        informant_tbl |>
         dplyr::arrange(dplyr::desc(time_str))
     }
 

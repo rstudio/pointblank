@@ -687,7 +687,7 @@ check_info_columns_tbl <- function(tbl) {
 
   # Filter out any missing or NA values in the `info` column
   tbl <-
-    tbl %>%
+    tbl |>
     dplyr::filter(!is.na(info) & !grepl("^\\s*$", info))
 
   colnames_in_tbl <- dplyr::pull(tbl, column)

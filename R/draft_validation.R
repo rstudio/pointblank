@@ -518,8 +518,8 @@ draft_validation <- function(
         agent_lines,
         "%>%\n  interrogate()\n\nagent",
         collapse = ""
-      ) %>%
-      gsub("  %>%", " %>%", .)
+      )
+    file_content <- gsub("  %>%", " %>%", file_content)
 
   } else {
 
@@ -546,8 +546,8 @@ draft_validation <- function(
         "agent\n",
         "```\n",
         collapse = ""
-      ) %>%
-      gsub("  %>%", " %>%", .)
+      )
+    file_content <- gsub("  %>%", " %>%", file_content)
   }
 
   # Write the file to the resulting `path`
@@ -775,11 +775,9 @@ resolve_file_filename <- function(agent,
       name <- gsub("::", "__", name, fixed = TRUE)
     }
 
-    file_name <-
-      name[1] %>%
-      fs::path_sanitize() %>%
-      gsub("(\\.| |'|\\:)", "_", .) %>%
-      paste0(., ".", output_type)
+    file_name <- fs::path_sanitize(name[1])
+    file_name <- gsub("(\\.| |'|\\:)", "_", file_name)
+    file_name <- paste0(file_name, ".", output_type)
   }
 
   file_name

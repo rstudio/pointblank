@@ -86,11 +86,11 @@ the target table is available for each of the \code{\link[testthat:test_that]{te
 statements that follow. If an \emph{agent} was not created using a table-prep
 formula set for the \code{tbl}, it can be modified via the \code{\link[=set_tbl]{set_tbl()}} function.
 
-Thresholds will be obtained from those applied for the \code{error} state. This can
-be set up for a \strong{pointblank} \emph{agent} by passing an \code{action_levels} object
-to the \code{actions} argument of \code{\link[=create_agent]{create_agent()}} or the same argument of any
-included validation function. If \code{error} thresholds are not available, then a
-threshold value of \code{1} will be used for each generated \verb{expect_*()} statement
+Thresholds will be obtained from those applied for the \code{error} state. This
+can be set up for a \strong{pointblank} \emph{agent} by passing an \code{action_levels}
+object to the \code{actions} argument of \code{\link[=create_agent]{create_agent()}} or the same argument
+of any included validation function. If \code{error} thresholds are not available,
+then a threshold value of \code{1} will be used for each generated \verb{expect_*()}
 in the resulting \strong{testthat} test file.
 
 There is no requirement that the \strong{agent} first undergo interrogation with

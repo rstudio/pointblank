@@ -657,7 +657,7 @@ yaml_agent_string <- function(
       as_agent_yaml_list(
         agent = agent,
         expanded = expanded
-      ) %>%
+      ) |>
         yaml::as.yaml(
           handlers = list(
             logical = function(x) {
@@ -675,8 +675,7 @@ yaml_agent_string <- function(
       if (!is.null(path)) {
         filename <- file.path(path, filename)
       }
-      readLines(filename) %>%
-        paste(collapse = "\n")
+      paste(readLines(filename), collapse = "\n")
     }
   )
 
@@ -699,8 +698,11 @@ as_list_preconditions <- function(preconditions) {
   } else if (is.function(preconditions[[1]])) {
 
     return(
-      paste(deparse(preconditions[[1]]), collapse = "\n") %>%
-        gsub("function (x) \n{", "function(x) {", ., fixed = TRUE)
+      gsub(
+        "function (x) \n{", "function(x) {",
+        paste(deparse(preconditions[[1]]), collapse = "\n"),
+        fixed = TRUE
+      )
     )
 
   }
@@ -758,7 +760,7 @@ to_list_action_levels <- function(actions) {
       lapply(
         agent_actions$fns,
         FUN = function(x) {
-          if (!is.null(x)) x %>% as.character() %>% paste(collapse = "")
+          if (!is.null(x)) paste(as.character(x), collapse = "")
         }
       )
   }
@@ -779,7 +781,7 @@ as_action_levels <- function(actions, actions_default = NULL) {
       lapply(
         agent_actions$fns,
         FUN = function(x) {
-          if (!is.null(x)) x %>% as.character() %>% paste(collapse = "")
+          if (!is.null(x)) paste(as.character(x), collapse = "")
         }
       )
   }
@@ -966,7 +968,7 @@ as_agent_yaml_list <- function(agent, expanded) {
   check_lazy_tbl(agent, "agent")
 
   action_levels_default <- as_action_levels(agent$actions)
-  end_fns <- agent$end_fns %>% unlist()
+  end_fns <- unlist(agent$end_fns)
 
   lst_label <- to_list_label(agent$label)
   lst_tbl_name <- to_list_tbl_name(agent$tbl_name)
@@ -1011,14 +1013,14 @@ as_agent_yaml_list <- function(agent, expanded) {
     # and doesn't split `vars()`)
 
     agent_validation_set <-
-      agent$validation_set %>%
+      agent$validation_set |>
       dplyr::select(
         i_o, assertion_type, columns_expr, column, values, na_pass,
         preconditions, seg_expr, actions, label, brief, active
-      ) %>%
-      dplyr::group_by(i_o) %>%
-      dplyr::filter(dplyr::row_number() == 1) %>%
-      dplyr::ungroup() %>%
+      ) |>
+      dplyr::group_by(i_o) |>
+      dplyr::filter(dplyr::row_number() == 1) |>
+      dplyr::ungroup() |>
       dplyr::rename(i = i_o)
 
     # Temporary conversion of `$label` to list-column
@@ -1037,7 +1039,7 @@ as_agent_yaml_list <- function(agent, expanded) {
     # evaluated and split into a validation step per target column
 
     agent_validation_set <-
-      agent$validation_set %>%
+      agent$validation_set |>
       dplyr::select(
         i, assertion_type, columns_expr, column, values, na_pass,
         preconditions, seg_expr, actions, label, brief, active
@@ -1048,7 +1050,7 @@ as_agent_yaml_list <- function(agent, expanded) {
 
   for (i in seq_len(nrow(agent_validation_set))) {
 
-    step_list <- agent_validation_set[i, ] %>% as.list()
+    step_list <- as.list(agent_validation_set[i, ])
 
     validation_fn <- step_list$assertion_type
 

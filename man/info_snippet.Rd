@@ -116,8 +116,8 @@ Take the \code{small_table} dataset included in \strong{pointblank} and assign i
 Generate an informant object, add two snippets with \code{info_snippet()},
 add information with some other \verb{info_*()} functions and then \code{\link[=incorporate]{incorporate()}}
 the snippets into the info text. The first snippet will be made with the
-expression \verb{\\(x) x |> nrow()} (giving us the number of rows in the dataset) and
-the second uses the \code{\link[=snip_highest]{snip_highest()}} function with column \code{a} (giving us
+expression \verb{\\(x) x |> nrow()} (giving us the number of rows in the dataset),
+and the second uses the \code{\link[=snip_highest]{snip_highest()}} function with column \code{a} (giving us
 the highest value in that column).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <-

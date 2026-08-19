@@ -144,10 +144,8 @@
 #' where `preconditions` is used. Using **dplyr** code is suggested here since
 #' the statements can be translated to SQL if necessary (i.e., if the target
 #' table resides in a database). The code is most easily supplied as a one-sided
-#' **R** formula (using a leading `~`). In the formula representation, the `.`
-#' serves as the input data table to be transformed (e.g., `\(x) x |>
-#' dplyr::mutate(col_b = col_a + 10)`). Alternatively, a function could instead
-#' be supplied (e.g., `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
+#' anonymous function, where `x` represents the input data table to be
+#' transformed (e.g., `\(x) x |> dplyr::mutate(col_b = col_a + 10)`).
 #'
 #' @section Actions:
 #'

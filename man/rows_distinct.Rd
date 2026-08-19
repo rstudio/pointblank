@@ -208,9 +208,8 @@ The table mutation is totally isolated in scope to the validation step(s)
 where \code{preconditions} is used. Using \strong{dplyr} code is suggested here since
 the statements can be translated to SQL if necessary (i.e., if the target
 table resides in a database). The code is most easily supplied as a one-sided
-\strong{R} formula (using a leading \code{~}). In the formula representation, the \code{.}
-serves as the input data table to be transformed (e.g., \verb{\\(x) x |> dplyr::mutate(col_b = col_a + 10)}). Alternatively, a function could instead
-be supplied (e.g., \code{function(x) dplyr::mutate(x, col_b = col_a + 10)}).
+anonymous function, where \code{x} represents the input data table to be
+transformed (e.g., \verb{\\(x) x |> dplyr::mutate(col_b = col_a + 10)}).
 }
 
 \section{Segments}{

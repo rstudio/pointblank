@@ -35,14 +35,14 @@ action_fns(warn = NULL, error = NULL, critical = NULL)
 Either the threshold number or the threshold fraction of \emph{failing} test
 units that result in entering the \code{warn} failure state.}
 
-\item{error}{\emph{Threshold value for the 'stop' failure state}
+\item{error}{\emph{Threshold value for the 'error' failure state}
 
 \code{scalar<integer|numeric>(val>=0)} // \emph{default:} \code{NULL} (\code{optional})
 
 Either the threshold number or the threshold fraction of \emph{failing} test
 units that result in entering the \code{error} failure state.}
 
-\item{critical}{\emph{Threshold value for the 'notify' failure state}
+\item{critical}{\emph{Threshold value for the 'critical' failure state}
 
 \code{scalar<integer|numeric>(val>=0)} // \emph{default:} \code{NULL} (\code{optional})
 

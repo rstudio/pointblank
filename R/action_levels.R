@@ -80,14 +80,14 @@
 #'   Either the threshold number or the threshold fraction of *failing* test
 #'   units that result in entering the `warn` failure state.
 #'
-#' @param error *Threshold value for the 'stop' failure state*
+#' @param error *Threshold value for the 'error' failure state*
 #'
 #'   `scalar<integer|numeric>(val>=0)` // *default:* `NULL` (`optional`)
 #'
 #'   Either the threshold number or the threshold fraction of *failing* test
 #'   units that result in entering the `error` failure state.
 #'
-#' @param critical *Threshold value for the 'notify' failure state*
+#' @param critical *Threshold value for the 'critical' failure state*
 #'
 #'   `scalar<integer|numeric>(val>=0)` // *default:* `NULL` (`optional`)
 #'

@@ -107,7 +107,7 @@
 #' R statement:
 #'
 #' ```r
-#' informant %>%
+#' informant |>
 #'   info_tabular(
 #'     section_1 = "*info text* 1.",
 #'     `section 2` = "*info text* 2 and {snippet_1}"
@@ -159,7 +159,7 @@
 #'
 #' ```r
 #' informant <-
-#'   informant %>%
+#'   informant |>
 #'   info_tabular(
 #'     `Row Definition` = "A row has randomized values.",
 #'     Source = c(
@@ -329,19 +329,19 @@ info_tabular <- function(
 #'
 #' ```
 #' # R statement
-#' informant %>%
+#' informant |>
 #'   info_columns(
 #'     columns = date_time,
 #'     info = "*info text* 1."
-#'   ) %>%
+#'   ) |>
 #'   info_columns(
 #'     columns = date,
 #'     info = "*info text* 2."
-#'   ) %>%
+#'   ) |>
 #'   info_columns(
 #'     columns = item_count,
 #'     info = "*info text* 3. Statistics: {snippet_1}."
-#'   ) %>%
+#'   ) |>
 #'   info_columns(
 #'     columns = c(date, date_time),
 #'     info = "UTC time."
@@ -399,15 +399,15 @@ info_tabular <- function(
 #'
 #' ```r
 #' informant <-
-#'   informant %>%
+#'   informant |>
 #'   info_columns(
 #'     columns = a,
 #'     info = "In the range of 1 to 10. ((SIMPLE))"
-#'   ) %>%
+#'   ) |>
 #'   info_columns(
 #'     columns = starts_with("date"),
 #'     info = "Time-based values (e.g., `Sys.time()`)."
-#'   ) %>%
+#'   ) |>
 #'   info_columns(
 #'     columns = date,
 #'     info = "The date part of `date_time`. ((CALC))"
@@ -581,7 +581,7 @@ info_columns <- function(
 #'
 #' ```r
 #' informant <-
-#'   informant %>%
+#'   informant |>
 #'   info_columns_from_tbl(tbl = game_revenue_info)
 #' ```
 #'
@@ -607,19 +607,19 @@ info_columns <- function(
 #'
 #' ```r
 #' informant <-
-#'   informant %>%
+#'   informant |>
 #'   info_columns(
 #'     columns = item_revenue,
 #'     info = "Revenue reported in USD."
-#'   ) %>%
+#'   ) |>
 #'   info_columns(
 #'     columns = acquisition,
 #'     `top list` = "{top5_aq}"
-#'   ) %>%
+#'   ) |>
 #'   info_snippet(
 #'     snippet_name = "top5_aq",
 #'     fn = snip_list(column = "acquisition")
-#'   ) %>%
+#'   ) |>
 #'   incorporate()
 #'
 #' informant
@@ -794,7 +794,7 @@ check_info_columns_tbl <- function(tbl) {
 #'
 #' ```
 #' # R statement
-#' informant %>%
+#' informant |>
 #'   info_section(
 #'     section_name = "History",
 #'     Changes = "
@@ -802,7 +802,7 @@ check_info_columns_tbl <- function(tbl) {
 #' - Change 2
 #' - Change 3",
 #'     `Last Update` = "(2020-10-23) at 3:28 PM."
-#'   ) %>%
+#'   ) |>
 #'   info_section(
 #'     section_name = "Additional Notes",
 #'     `Notes 1` = "Notes with a {snippet}.",
@@ -859,12 +859,12 @@ check_info_columns_tbl <- function(tbl) {
 #'
 #' ```r
 #' informant <-
-#'   informant %>%
+#'   informant |>
 #'   info_section(
 #'     section_name = "Notes",
 #'     creation = "Dataset generated on (2020-01-15).",
-#'     usage = "`small_table %>% dplyr::glimpse()`"
-#'   ) %>%
+#'     usage = "`small_table |> dplyr::glimpse()`"
+#'   ) |>
 #'   incorporate()
 #' ```
 #'
@@ -977,7 +977,7 @@ info_section <- function(
 #'   A formula that obtains a snippet of data from the target table. It's best
 #'   to use a leading dot (`.`) that stands for the table itself and use pipes
 #'   to construct a series of operations to be performed on the table (e.g.,
-#'   `~ . %>% dplyr::pull(column_2) %>% max(na.rm = TRUE)`). So long as the
+#'   `\(x) x |> dplyr::pull(column_2) |> max(na.rm = TRUE)`). So long as the
 #'   result is a length-1 vector, it'll likely be valid for insertion into some
 #'   info text. Alternatively, a `snip_*()` function can be used here (these
 #'   functions always return a formula that's suitable for all types of data
@@ -1011,20 +1011,20 @@ info_section <- function(
 #'
 #' ```
 #' # R statement
-#' informant %>%
+#' informant |>
 #'   info_columns(
 #'     columns = date_time,
 #'     `Latest Date` = "The latest date is {latest_date}."
-#'   ) %>%
+#'   ) |>
 #'   info_snippet(
 #'     snippet_name = "latest_date",
-#'     fn = ~ . %>% dplyr::pull(date) %>% max(na.rm = TRUE)
-#'   ) %>%
+#'     fn = \(x) x |> dplyr::pull(date) |> max(na.rm = TRUE)
+#'   ) |>
 #'   incorporate()
 #'
 #' # YAML representation
 #' meta_snippets:
-#'   latest_date: ~. %>% dplyr::pull(date) %>% max(na.rm = TRUE)
+#'   latest_date: \(x) x |> dplyr::pull(date) |> max(na.rm = TRUE)
 #' ...
 #' columns:
 #'   date_time:
@@ -1048,8 +1048,8 @@ info_section <- function(
 #' Generate an informant object, add two snippets with `info_snippet()`,
 #' add information with some other `info_*()` functions and then [incorporate()]
 #' the snippets into the info text. The first snippet will be made with the
-#' expression `~ . %>% nrow()` (giving us the number of rows in the dataset) and
-#' the second uses the [snip_highest()] function with column `a` (giving us
+#' expression `\(x) x |> nrow()` (giving us the number of rows in the dataset),
+#' and the second uses the [snip_highest()] function with column `a` (giving us
 #' the highest value in that column).
 #'
 #' ```r
@@ -1058,31 +1058,31 @@ info_section <- function(
 #'     tbl = ~ test_table,
 #'     tbl_name = "test_table",
 #'     label = "An example."
-#'   ) %>%
+#'   ) |>
 #'   info_snippet(
 #'     snippet_name = "row_count",
-#'     fn = ~ . %>% nrow()
-#'   ) %>%
+#'     fn = \(x) x |> nrow()
+#'   ) |>
 #'   info_snippet(
 #'     snippet_name = "max_a",
 #'     fn = snip_highest(column = "a")
-#'   ) %>%
+#'   ) |>
 #'   info_columns(
 #'     columns = a,
 #'     info = "In the range of 1 to {max_a}. ((SIMPLE))"
-#'   ) %>%
+#'   ) |>
 #'   info_columns(
 #'     columns = starts_with("date"),
 #'     info = "Time-based values (e.g., `Sys.time()`)."
-#'   ) %>%
+#'   ) |>
 #'   info_columns(
 #'     columns = date,
 #'     info = "The date part of `date_time`. ((CALC))"
-#'   ) %>%
+#'   ) |>
 #'   info_section(
 #'     section_name = "rows",
 #'     row_count = "There are {row_count} rows available."
-#'   ) %>%
+#'   ) |>
 #'   incorporate()
 #' ```
 #'
@@ -1103,7 +1103,7 @@ info_section <- function(
 #'
 #' ```r
 #' test_table <-
-#'   dplyr::bind_rows(test_table, test_table) %>%
+#'   dplyr::bind_rows(test_table, test_table) |>
 #'   dplyr::mutate(h = a + c)
 #' ```
 #'
@@ -1111,7 +1111,7 @@ info_section <- function(
 #' reprocessed, and, the info text to be updated.
 #'
 #' ```r
-#' informant <- informant %>% incorporate()
+#' informant <- informant |> incorporate()
 #'
 #' informant
 #' ```
@@ -1268,15 +1268,15 @@ info_snippet <- function(
 #'     tbl = ~ small_table,
 #'     tbl_name = "small_table",
 #'     label = "An example."
-#'   ) %>%
+#'   ) |>
 #'   info_columns(
 #'     columns = f,
 #'     `Items` = "This column contains {values_f}."
-#'   ) %>%
+#'   ) |>
 #'   info_snippet(
 #'     snippet_name = "values_f",
 #'     fn = snip_list(column = "f")
-#'   ) %>%
+#'   ) |>
 #'   incorporate()
 #' ```
 #'
@@ -1503,15 +1503,15 @@ snip_list <- function(
 #'     tbl = ~ small_table,
 #'     tbl_name = "small_table",
 #'     label = "An example."
-#'   ) %>%
+#'   ) |>
 #'   info_columns(
 #'     columns = d,
 #'     `Stats` = "Stats (fivenum): {stats_d}."
-#'   ) %>%
+#'   ) |>
 #'   info_snippet(
 #'     snippet_name = "stats_d",
 #'     fn = snip_stats(column = "d")
-#'   ) %>%
+#'   ) |>
 #'   incorporate()
 #' ```
 #'
@@ -1582,15 +1582,15 @@ snip_stats <- function(
 #'     tbl = ~ small_table,
 #'     tbl_name = "small_table",
 #'     label = "An example."
-#'   ) %>%
+#'   ) |>
 #'   info_columns(
 #'     columns = a,
 #'     `Lowest Value` = "Lowest value is {lowest_a}."
-#'   ) %>%
+#'   ) |>
 #'   info_snippet(
 #'     snippet_name = "lowest_a",
 #'     fn = snip_lowest(column = "a")
-#'   ) %>%
+#'   ) |>
 #'   incorporate()
 #' ```
 #'
@@ -1656,15 +1656,15 @@ snip_lowest <- function(column) {
 #'     tbl = ~ small_table,
 #'     tbl_name = "small_table",
 #'     label = "An example."
-#'   ) %>%
+#'   ) |>
 #'   info_columns(
 #'     columns = a,
 #'     `Highest Value` = "Highest value is {highest_a}."
-#'   ) %>%
+#'   ) |>
 #'   info_snippet(
 #'     snippet_name = "highest_a",
 #'     fn = snip_highest(column = "a")
-#'   ) %>%
+#'   ) |>
 #'   incorporate()
 #' ```
 #'

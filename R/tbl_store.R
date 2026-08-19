@@ -75,9 +75,9 @@
 #' ```r
 #' tbl_store(
 #'   tbl_duckdb ~ db_tbl(small_table, dbname = ":memory:", dbtype = "duckdb"),
-#'   sml_table_high ~ small_table %>% dplyr::filter(f == "high"),
+#'   sml_table_high ~ small_table |> dplyr::filter(f == "high"),
 #'   .init = ~ library(tidyverse)
-#' ) %>%
+#' ) |>
 #'   yaml_write()
 #' ```
 #'
@@ -87,7 +87,7 @@
 #' type: tbl_store
 #' tbls:
 #'   tbl_duckdb: ~ db_tbl(small_table, dbname = ":memory:", dbtype = "duckdb")
-#'   sml_table_high: ~ small_table %>% dplyr::filter(f == "high")
+#'   sml_table_high: ~ small_table |> dplyr::filter(f == "high")
 #' init: ~library(tidyverse)
 #' ```
 #'
@@ -105,9 +105,9 @@
 #' create_agent(
 #'   tbl = ~ tbl_source("sml_table_high", "tbl_store.yml"),
 #'   label = "An example that uses a table store.",
-#'   actions = action_levels(warn_at = 0.10)
-#' ) %>%
-#'   col_exists(c(date, date_time)) %>%
+#'   actions = action_levels(warn = 0.10)
+#' ) |>
+#'   col_exists(c(date, date_time)) |>
 #'   write_yaml()
 #' ```
 #'
@@ -155,7 +155,7 @@
 #'         pointblank::small_table,
 #'         dbname = ":memory:",
 #'         dbtype = "duckdb"
-#'       ) %>%
+#'       ) |>
 #'       dplyr::filter(f == "high")
 #'   )
 #' ```
@@ -233,7 +233,7 @@
 #'         dbtype = "duckdb"
 #'       ),
 #'     sml_table_high ~
-#'       {{ tbl_duckdb }} %>%
+#'       {{ tbl_duckdb }} |>
 #'       filter(f == "high"),
 #'     .init = ~ library(tidyverse)
 #'   )
@@ -380,7 +380,7 @@
 #' entry of choice for [tbl_get()].
 #'
 #' ```r
-#' store_3$small_table_duck %>% tbl_get()
+#' store_3$small_table_duck |> tbl_get()
 #' ```
 #'
 #' \preformatted{## # Source:   table<small_table> [?? x 8]
@@ -618,9 +618,9 @@ add_to_name_list <- function(
 #'   create_agent(
 #'     tbl = ~ tbl_source("sml_table", store),
 #'     label = "`tbl_source()` example",
-#'     actions = action_levels(warn_at = 0.10)
-#'   ) %>%
-#'   col_exists(columns = c(date, date_time)) %>%
+#'     actions = action_levels(warn = 0.10)
+#'   ) |>
+#'   col_exists(columns = c(date, date_time)) |>
 #'   interrogate()
 #' ```
 #'
@@ -651,7 +651,7 @@ add_to_name_list <- function(
 #'
 #' ```r
 #' agent_2 <-
-#'   agent_1 %>%
+#'   agent_1 |>
 #'   set_tbl(
 #'     ~ tbl_source(
 #'         tbl = "sml_table",
@@ -837,7 +837,7 @@ has_substitutions <- function(x) {
 #' in the table store (i.e., appears after typing the `$`).
 #'
 #' ```r
-#' store$small_table_duck %>% tbl_get()
+#' store$small_table_duck |> tbl_get()
 #' ```
 #'
 #' \preformatted{## # Source:   table<small_table> [?? x 8]

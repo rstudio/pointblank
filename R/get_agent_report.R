@@ -209,8 +209,8 @@
 #'     tbl = tbl,
 #'     tbl_name = "small_table",
 #'     label = "An example."
-#'   ) %>%
-#'   col_vals_gt(columns = a, value = 4) %>%
+#'   ) |>
+#'   col_vals_gt(columns = a, value = 4) |>
 #'   interrogate()
 #' ```
 #'
@@ -218,7 +218,7 @@
 #' with `display_table = FALSE`.
 #'
 #' ```r
-#' agent %>% get_agent_report(display_table = FALSE)
+#' agent |> get_agent_report(display_table = FALSE)
 #' ```
 #'
 #' \preformatted{## # A tibble: 1 × 14

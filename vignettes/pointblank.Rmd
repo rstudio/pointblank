@@ -28,17 +28,17 @@ We can specify this validation rule via `col_vals_lt()`.
 ```{r}
 data(small_table)
 
-small_table %>%
+small_table |>
   col_vals_lt(a, value = 10)
 ```
 
 If the table fulfills the validation rule, it just return the input table - so we can directly pass that to further validation rules.
 
 ```{r error=TRUE, paged.print=FALSE}
-small_table %>%
-  col_vals_lt(a, value = 10) %>%
-  col_vals_between(d, left = 0, right = 5000) %>% 
-  col_vals_in_set(f, set = c("low", "mid", "high")) %>%
+small_table |>
+  col_vals_lt(a, value = 10) |>
+  col_vals_between(d, left = 0, right = 5000) |> 
+  col_vals_in_set(f, set = c("low", "mid", "high")) |>
   col_vals_regex(b, regex = "^[0-9]-[a-z]{3}-[0-9]{3}$")
 ```
 
@@ -53,12 +53,12 @@ If you are building a report on the state of your data quality you can capture m
 This is the validation report table produced from the above validation of `small_table`:
 
 ```{r echo = FALSE}
-small_table %>%
-  create_agent() %>% 
-  col_vals_lt(a, value = 10) %>%
-  col_vals_between(d, left = 0, right = 5000) %>% 
-  col_vals_in_set(f, set = c("low", "mid", "high")) %>%
-  col_vals_regex(b, regex = "^[0-9]-[a-z]{3}-[0-9]{3}$") %>% 
+small_table |>
+  create_agent() |> 
+  col_vals_lt(a, value = 10) |>
+  col_vals_between(d, left = 0, right = 5000) |> 
+  col_vals_in_set(f, set = c("low", "mid", "high")) |>
+  col_vals_regex(b, regex = "^[0-9]-[a-z]{3}-[0-9]{3}$") |> 
   interrogate()
 ```
 
@@ -87,14 +87,14 @@ stakeholders.
 Here's the code that performs the validation on the data frame.
 
 ```{r, eval = FALSE}
-agent <- small_table %>%
-  create_agent() %>% 
-  col_vals_lt(a, value = 10) %>%
-  col_vals_between(d, left = 0, right = 5000) %>% 
-  col_vals_in_set(f, set = c("low", "mid", "high")) %>%
+agent <- small_table |>
+  create_agent() |> 
+  col_vals_lt(a, value = 10) |>
+  col_vals_between(d, left = 0, right = 5000) |> 
+  col_vals_in_set(f, set = c("low", "mid", "high")) |>
   col_vals_regex(b, regex = "^[0-9]-[a-z]{3}-[0-9]{3}$") 
   
-agent %>% 
+agent |> 
   interrogate()
 ```
 
@@ -126,7 +126,7 @@ Knowing about the numbers of test units across validation methods matters becaus
 ```{r}
 al <- action_levels(warn = 2, error = 4)
 
-small_table %>%
+small_table |>
   col_vals_lt(a, value = 7, actions = al)
 ```
 
@@ -135,9 +135,9 @@ You can set the action levels for individual validation rules via the `actions` 
 If you set it while creating the agent, it applies to all rules in a validation plan.
 
 ```{r}
-small_table %>%
-  create_agent(actions = al) %>% 
-  col_vals_lt(a, value = 7) %>%
+small_table |>
+  create_agent(actions = al) |> 
+  col_vals_lt(a, value = 7) |>
   interrogate()
 ```
 

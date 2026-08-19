@@ -76,10 +76,10 @@
 #'
 #' ```r
 #' agent <-
-#'   create_agent(tbl = tbl) %>%
-#'   col_vals_gt(columns = a, value = 3) %>%
-#'   col_vals_lte(columns = a, value = 10) %>%
-#'   col_vals_increasing(columns = a) %>%
+#'   create_agent(tbl = tbl) |>
+#'   col_vals_gt(columns = a, value = 3) |>
+#'   col_vals_lte(columns = a, value = 10) |>
+#'   col_vals_increasing(columns = a) |>
 #'   interrogate()
 #' ```
 #'

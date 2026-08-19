@@ -52,7 +52,7 @@ R statement:
   tbl_name = "small_table",
   label = "An example.",
   actions = action_levels(
-    warn_at = 1,
+    warn = 1,
     fns = list(
       warn = ~ log4r_step(
         x, append_to = "example_log"
@@ -96,22 +96,19 @@ whenever the \code{warn} state is entered. Here, the function call with
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{al <-
   action_levels(
-    warn_at = 1,
+    warn = 1,
     fns = list(
       warn = ~ log4r_step(
         x, append_to = "example_log"
       )
     )
   )
-#> Warning: ! `warn_at`, `stop_at`, and `notify_at` are deprecated.
-#>   Action levels are now `warn`, `error`, and `critical`.
-#> This warning is displayed once every 8 hours.
 #> Warning: ! Passing a list to `fns` is deprecated.
 #>   Please use `action_fns()` instead.
 }\if{html}{\out{</div>}}
 
 Within the \code{\link[=action_levels]{action_levels()}}-produced object, it's important to match things
-up: notice that \code{warn_at} is given a threshold and the list of functions
+up: notice that \code{warn} is given a threshold and the list of functions
 given to \code{fns} has a \code{warn} component.
 
 Printing \code{al} will show us the settings for the \code{action_levels} object:
@@ -133,9 +130,9 @@ then \code{\link[=interrogate]{interrogate()}} the data.
     tbl_name = "small_table",
     label = "An example.",
     actions = al
-  ) \%>\%
-  col_vals_gt(columns = d, 300) \%>\%
-  col_vals_in_set(columns = f, c("low", "high")) \%>\%
+  ) |>
+  col_vals_gt(columns = d, 300) |>
+  col_vals_in_set(columns = f, c("low", "high")) |>
   interrogate()
 
 agent

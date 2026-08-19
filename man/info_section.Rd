@@ -98,7 +98,7 @@ text} by using one or more calls of \code{info_section()}. This is how it is
 expressed in both R code and in the YAML representation.
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{# R statement
-informant \%>\%
+informant |>
   info_section(
     section_name = "History",
     Changes = "
@@ -106,7 +106,7 @@ informant \%>\%
 - Change 2
 - Change 3",
     `Last Update` = "(2020-10-23) at 3:28 PM."
-  ) \%>\%
+  ) |>
   info_section(
     section_name = "Additional Notes",
     `Notes 1` = "Notes with a \{snippet\}.",
@@ -163,12 +163,12 @@ in the report called \code{"Notes"} and add text to two parts of that:
 \code{"creation"} and \code{"usage"}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <-
-  informant \%>\%
+  informant |>
   info_section(
     section_name = "Notes",
     creation = "Dataset generated on (2020-01-15).",
-    usage = "`small_table \%>\% dplyr::glimpse()`"
-  ) \%>\%
+    usage = "`small_table |> dplyr::glimpse()`"
+  ) |>
   incorporate()
 }\if{html}{\out{</div>}}
 

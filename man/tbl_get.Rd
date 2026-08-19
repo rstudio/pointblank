@@ -88,7 +88,7 @@ to get the formula of choice from \code{tbls} and passing that to \code{tbl_get(
 benefit of this is that we can use autocompletion to show us what's available
 in the table store (i.e., appears after typing the \code{$}).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{store$small_table_duck \%>\% tbl_get()
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{store$small_table_duck |> tbl_get()
 }\if{html}{\out{</div>}}
 
 \preformatted{## # Source:   table<small_table> [?? x 8]

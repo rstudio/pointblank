@@ -39,11 +39,11 @@
 #' statements that follow. If an *agent* was not created using a table-prep
 #' formula set for the `tbl`, it can be modified via the [set_tbl()] function.
 #'
-#' Thresholds will be obtained from those applied for the `stop` state. This can
-#' be set up for a **pointblank** *agent* by passing an `action_levels` object
-#' to the `actions` argument of [create_agent()] or the same argument of any
-#' included validation function. If `stop` thresholds are not available, then a
-#' threshold value of `1` will be used for each generated `expect_*()` statement
+#' Thresholds will be obtained from those applied for the `error` state. This
+#' can be set up for a **pointblank** *agent* by passing an `action_levels`
+#' object to the `actions` argument of [create_agent()] or the same argument
+#' of any included validation function. If `error` thresholds are not available,
+#' then a threshold value of `1` will be used for each generated `expect_*()`
 #' in the resulting **testthat** test file.
 #'
 #' There is no requirement that the **agent** first undergo interrogation with
@@ -104,9 +104,9 @@
 #' agent <-
 #'   create_agent(
 #'     tbl = ~ small_table,
-#'     actions = action_levels(stop_at = 0.25)
-#'   ) %>%
-#'   col_exists(date_time) %>%
+#'     actions = action_levels(error = 0.25)
+#'   ) |>
+#'   col_exists(date_time) |>
 #'   col_vals_lte(c, value = 5)
 #'
 #' write_testthat_file(
@@ -183,15 +183,15 @@
 #' ```
 #'
 #' Creating an `action_levels` object is a common workflow step when creating a
-#' pointblank agent. We designate failure thresholds to the `warn`, `stop`, and
-#' `notify` states using `action_levels()`.
+#' pointblank agent. We designate failure thresholds to the `warn`, `error`, and
+#' `critical` states using `action_levels()`.
 #'
 #' ```r
 #' al <-
 #'   action_levels(
-#'     warn_at = 0.10,
-#'     stop_at = 0.25,
-#'     notify_at = 0.35
+#'     warn = 0.10,
+#'     error = 0.25,
+#'     critical = 0.35
 #'   )
 #' ```
 #'
@@ -205,19 +205,19 @@
 #'     tbl = ~ small_table,
 #'     label = "An example.",
 #'     actions = al
-#'   ) %>%
-#'   col_exists(c(date, date_time)) %>%
+#'   ) |>
+#'   col_exists(c(date, date_time)) |>
 #'   col_vals_regex(
 #'     b,
 #'     regex = "[0-9]-[a-z]{3}-[0-9]{3}"
-#'   ) %>%
-#'   col_vals_gt(d, value = 100) %>%
-#'   col_vals_lte(c, value = 5) %>%
+#'   ) |>
+#'   col_vals_gt(d, value = 100) |>
+#'   col_vals_lte(c, value = 5) |>
 #'   interrogate()
 #' ```
 #'
 #' This agent and all of the checks can be transformed into a testthat file with
-#' `write_testthat_file()`. The `stop` thresholds will be ported over to the
+#' `write_testthat_file()`. The `error` thresholds will be ported over to the
 #' `expect_*()` functions in the new file.
 #'
 #' ```r

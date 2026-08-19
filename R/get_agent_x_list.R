@@ -144,9 +144,9 @@
 #'   create_agent(
 #'     tbl = tbl,
 #'     actions = al
-#'   ) %>%
-#'   col_vals_gt(columns = a, value = 7) %>%
-#'   col_is_numeric(columns = a) %>%
+#'   ) |>
+#'   col_vals_gt(columns = a, value = 7) |>
+#'   col_is_numeric(columns = a) |>
 #'   interrogate()
 #' ```
 #'

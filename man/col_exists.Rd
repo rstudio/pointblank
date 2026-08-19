@@ -94,7 +94,7 @@ be used with \code{.} (serving as the input data table) to evaluate to a single
 logical value. With this approach, the \strong{pointblank} function
 \code{\link[=has_columns]{has_columns()}} can be used to determine whether to make a validation step
 active on the basis of one or more columns existing in the table
-(e.g., \code{~ . \%>\% has_columns(c(d, e))}).}
+(e.g., \verb{\\(x) x |> has_columns(c(d, e))}).}
 
 \item{object}{\emph{A data table for expectations or tests}
 
@@ -184,8 +184,8 @@ that is best produced by the \code{\link[=action_levels]{action_levels()}} funct
 documentation for the lowdown on how to create reactions to above-threshold
 failure levels in validation. The basic gist is that you'll want at least a
 single threshold level (specified as either the fraction of test units
-failed, or, an absolute value), often using the \code{warn_at} argument. Using
-\code{action_levels(warn_at = 1)} or \code{action_levels(stop_at = 1)} are good choices
+failed, or, an absolute value), often using the \code{warn} argument. Using
+\code{action_levels(warn = 1)} or \code{action_levels(error = 1)} are good choices
 depending on the situation (the first produces a warning, the other
 \code{stop()}s).
 }
@@ -229,10 +229,10 @@ representation.
 
 R statement:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent |>
   col_exists(
     columns = a,
-    actions = action_levels(warn_at = 0.1, stop_at = 0.2),
+    actions = action_levels(warn = 0.1, error = 0.2),
     label = "The `col_exists()` step.",
     active = FALSE
   )
@@ -288,8 +288,8 @@ We'll use this table with the different function variants.
 Validate that column \code{a} exists in the \code{tbl} table with \code{col_exists()}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
-  create_agent(tbl = tbl) \%>\%
-  col_exists(columns = a) \%>\%
+  create_agent(tbl = tbl) |>
+  col_exists(columns = a) |>
   interrogate()
 }\if{html}{\out{</div>}}
 
@@ -310,7 +310,7 @@ This way of using validation functions acts as a data filter. Data is
 passed through but should \code{stop()} if there is a single test unit failing.
 The behavior of side effects can be customized with the \code{actions} option.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% col_exists(columns = a)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl |> col_exists(columns = a)
 #> # A tibble: 6 x 2
 #>       a     b
 #>   <dbl> <dbl>
@@ -337,7 +337,7 @@ time. This is primarily used in \strong{testthat} tests.
 With the \verb{test_*()} form, we should get a single logical value returned to
 us.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% test_col_exists(columns = a)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl |> test_col_exists(columns = a)
 #> [1] TRUE
 }\if{html}{\out{</div>}}
 }

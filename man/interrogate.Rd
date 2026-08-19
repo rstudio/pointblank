@@ -130,8 +130,8 @@ process.
   create_agent(
     tbl = tbl,
     label = "`interrogate()` example"
-  ) \%>\%
-  col_vals_gt(columns = a, value = 5) \%>\%
+  ) |>
+  col_vals_gt(columns = a, value = 5) |>
   interrogate()
 }\if{html}{\out{</div>}}
 

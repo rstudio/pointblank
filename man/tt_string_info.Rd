@@ -50,11 +50,11 @@ dataset that is included in the \strong{pointblank} package.
 Ensure that \code{player_id} and \code{session_id} values always have the same fixed
 numbers of characters (\code{15} and \code{24}, respectively) throughout the table.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_string_info(tbl = game_revenue) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_string_info(tbl = game_revenue) |>
   col_vals_equal(
     columns = player_id,
     value = 15
-  ) \%>\%
+  ) |>
   col_vals_equal(
     columns = session_id,
     value = 24
@@ -73,7 +73,7 @@ Let's use a \code{tt_string_info()}-transformed table with the
 \code{\link[=test_col_vals_lte]{test_col_vals_lte()}} to check that the maximum string length in column \code{f}
 of the \code{small_table} dataset is no greater than \code{4}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_string_info(tbl = small_table) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_string_info(tbl = small_table) |>
   test_col_vals_lte(
     columns = f,
     value = 4

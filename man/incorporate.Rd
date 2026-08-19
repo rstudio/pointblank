@@ -66,31 +66,31 @@ use \code{incorporate()} to work the snippets into the info text.
     tbl = ~ changing_table,
     tbl_name = "changing_table",
     label = "`informant()` example"
-  ) \%>\%
+  ) |>
   info_snippet(
     snippet_name = "row_count",
-    fn = ~ . \%>\% nrow()
-  ) \%>\%
+    fn = \\(x) x |> nrow()
+  ) |>
   info_snippet(
     snippet_name = "col_count",
-    fn = ~ . \%>\% ncol()
-  ) \%>\%
+    fn = \\(x) x |> ncol()
+  ) |>
   info_columns(
     columns = a,
     info = "In the range of 1 to 10. ((SIMPLE))"
-  ) \%>\%
+  ) |>
   info_columns(
     columns = starts_with("date"),
     info = "Time-based values (e.g., `Sys.time()`)."
-  ) \%>\%
+  ) |>
   info_columns(
     columns = date,
     info = "The date part of `date_time`. ((CALC))"
-  ) \%>\%
+  ) |>
   info_section(
     section_name = "rows",
     row_count = "There are \{row_count\} rows available."
-  ) \%>\%
+  ) |>
   incorporate()
 }\if{html}{\out{</div>}}
 
@@ -109,7 +109,7 @@ We can print the resulting object to see the information report.
 Let's modify \code{test_table} to give it more rows and an extra column.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{changing_table <-
-  dplyr::bind_rows(changing_table, changing_table) \%>\%
+  dplyr::bind_rows(changing_table, changing_table) |>
   dplyr::mutate(h = a + c)
 }\if{html}{\out{</div>}}
 
@@ -117,7 +117,7 @@ Using \code{incorporate()} will cause the snippets to be reprocessed and
 accordingly the content of the report will be updated to keep up with the
 current state of the \code{changing_table}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- informant \%>\% incorporate()
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <- informant |> incorporate()
 }\if{html}{\out{</div>}}
 
 When printed again, we'll also see that the row and column counts in the

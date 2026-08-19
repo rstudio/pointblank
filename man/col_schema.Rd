@@ -95,8 +95,8 @@ Validate that the schema object \code{schema_obj} exactly defines the column nam
 and column types of the \code{tbl} table.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
-  create_agent(tbl = tbl) \%>\%
-  col_schema_match(schema_obj) \%>\%
+  create_agent(tbl = tbl) |>
+  col_schema_match(schema_obj) |>
   interrogate()
 }\if{html}{\out{</div>}}
 
@@ -122,9 +122,9 @@ We can alternatively create a column schema object from a \code{tbl_df} object.
 This should provide the same interrogation results as in the previous
 example.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{create_agent(tbl = tbl) \%>\%
-  col_schema_match(schema_obj) \%>\%
-  interrogate() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{create_agent(tbl = tbl) |>
+  col_schema_match(schema_obj) |>
+  interrogate() |>
   all_passed()
 }\if{html}{\out{</div>}}
 

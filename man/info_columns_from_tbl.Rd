@@ -90,7 +90,7 @@ The \code{info_columns_from_tbl()} function takes a table object where the first
 column has the column names and the second contains the \emph{info text}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <-
-  informant \%>\%
+  informant |>
   info_columns_from_tbl(tbl = game_revenue_info)
 }\if{html}{\out{</div>}}
 
@@ -114,19 +114,19 @@ subsection will append text. Here, we'll add content for the \code{item_revenue}
 and \code{acquisition} columns and view the updated report.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <-
-  informant \%>\%
+  informant |>
   info_columns(
     columns = item_revenue,
     info = "Revenue reported in USD."
-  ) \%>\%
+  ) |>
   info_columns(
     columns = acquisition,
     `top list` = "\{top5_aq\}"
-  ) \%>\%
+  ) |>
   info_snippet(
     snippet_name = "top5_aq",
     fn = snip_list(column = "acquisition")
-  ) \%>\%
+  ) |>
   incorporate()
 
 informant

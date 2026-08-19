@@ -261,7 +261,7 @@
 #'       dbtype = "duckdb",
 #'       dbname = ":memory:"
 #'     ),
-#'     small_high_duck ~ {{ small_table_duck }} %>%
+#'     small_high_duck ~ {{ small_table_duck }} |>
 #'       dplyr::filter(f == "high")
 #'   )
 #' ```

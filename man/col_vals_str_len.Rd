@@ -85,7 +85,7 @@ default, this is \code{FALSE}. Set to \code{TRUE} to give \code{NA}s a pass.}
 
 An optional expression for mutating the input table before proceeding with
 the validation. This can either be provided as a one-sided R formula using
-a leading \code{~} (e.g., \code{~ . \%>\% dplyr::mutate(col = col + 10)} or as a
+a leading \code{~} (e.g., \verb{\\(x) x |> dplyr::mutate(col = col + 10)} or as a
 function (e.g., \code{function(x) dplyr::mutate(x, col = col + 10)}. See the
 \emph{Preconditions} section for more information.}
 
@@ -156,7 +156,7 @@ be used with \code{.} (serving as the input data table) to evaluate to a single
 logical value. With this approach, the \strong{pointblank} function
 \code{\link[=has_columns]{has_columns()}} can be used to determine whether to make a validation step
 active on the basis of one or more columns existing in the table
-(e.g., \code{~ . \%>\% has_columns(c(d, e))}).}
+(e.g., \verb{\\(x) x |> has_columns(c(d, e))}).}
 
 \item{object}{\emph{A data table for expectations or tests}
 
@@ -224,8 +224,8 @@ tbl
 Validate that string lengths in column \code{id} are between 2 and 4 characters.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
-  create_agent(tbl = tbl) \%>\%
-  col_vals_str_len(columns = id, min = 2, max = 4) \%>\%
+  create_agent(tbl = tbl) |>
+  col_vals_str_len(columns = id, min = 2, max = 4) |>
   interrogate()
 }\if{html}{\out{</div>}}
 

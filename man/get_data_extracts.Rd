@@ -59,16 +59,16 @@ part of the \code{small_table} object. Use \code{\link[=interrogate]{interrogate
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(
-    tbl = small_table \%>\%
+    tbl = small_table |>
       dplyr::select(a:f),
     label = "`get_data_extracts()`"
-  ) \%>\%
-  col_vals_gt(d, value = 1000) \%>\%
+  ) |>
+  col_vals_gt(d, value = 1000) |>
   col_vals_between(
     columns = c,
     left = vars(a), right = vars(d),
     na_pass = TRUE
-  ) \%>\%
+  ) |>
   interrogate()
 }\if{html}{\out{</div>}}
 
@@ -76,7 +76,7 @@ Using \code{get_data_extracts()} with its defaults returns of a list of tables,
 where each table is named after the validation step that has an extract
 available.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% get_data_extracts()
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent |> get_data_extracts()
 }\if{html}{\out{</div>}}
 
 \preformatted{## $`1`
@@ -105,7 +105,7 @@ We can get an extract for a specific step by specifying it in the \code{i}
 argument. Let's get the failing rows from the first validation step (the
 \code{\link[=col_vals_gt]{col_vals_gt()}} one).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% get_data_extracts(i = 1)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent |> get_data_extracts(i = 1)
 }\if{html}{\out{</div>}}
 
 \preformatted{## # A tibble: 6 × 6

@@ -68,7 +68,7 @@
 #'   tbl_name = "small_table",
 #'   label = "An example.",
 #'   actions = action_levels(
-#'     warn_at = 1,
+#'     warn = 1,
 #'     fns = list(
 #'       warn = ~ log4r_step(
 #'         x, append_to = "example_log"
@@ -112,7 +112,7 @@
 #' ```{r}
 #' al <-
 #'   action_levels(
-#'     warn_at = 1,
+#'     warn = 1,
 #'     fns = list(
 #'       warn = ~ log4r_step(
 #'         x, append_to = "example_log"
@@ -122,7 +122,7 @@
 #' ```
 #'
 #' Within the [action_levels()]-produced object, it's important to match things
-#' up: notice that `warn_at` is given a threshold and the list of functions
+#' up: notice that `warn` is given a threshold and the list of functions
 #' given to `fns` has a `warn` component.
 #'
 #' Printing `al` will show us the settings for the `action_levels` object:
@@ -142,9 +142,9 @@
 #'     tbl_name = "small_table",
 #'     label = "An example.",
 #'     actions = al
-#'   ) %>%
-#'   col_vals_gt(columns = d, 300) %>%
-#'   col_vals_in_set(columns = f, c("low", "high")) %>%
+#'   ) |>
+#'   col_vals_gt(columns = d, 300) |>
+#'   col_vals_in_set(columns = f, c("low", "high")) |>
 #'   interrogate()
 #'
 #' agent

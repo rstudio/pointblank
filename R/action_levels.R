@@ -39,7 +39,7 @@
 #' step and this will act as an override if set also in [create_agent()]. Usage
 #' of `action_levels()` is required to have any useful side effects (i.e.,
 #' warnings, throwing errors) in the case of validation functions operating
-#' directly on data (e.g., `mtcars %>% col_vals_lt("mpg", 35)`). There are two
+#' directly on data (e.g., `mtcars |> col_vals_lt("mpg", 35)`). There are two
 #' helper functions that are convenient when using validation functions directly
 #' on data (the `agent`-less workflow): `warn_on_fail()` and `error_on_fail()`.
 #' These helpers either warn or stop (default failure threshold for each is set
@@ -55,7 +55,7 @@
 #' directly on a data table. For convenience, when working directly on data, any
 #' values supplied to `warn` or `error` will be automatically given a stock
 #' `warning()` or `stop()` function. For example using
-#' `small_table %>% col_is_integer("date")` will provide a detailed stop message
+#' `small_table |> col_is_integer("date")` will provide a detailed stop message
 #' by default, indicating the reason for the failure. If you were to supply the
 #' `fns` for `warn` or `error` manually then the stock functions would be
 #' overridden. Furthermore, if `actions` is NULL in this workflow (the default),
@@ -80,14 +80,14 @@
 #'   Either the threshold number or the threshold fraction of *failing* test
 #'   units that result in entering the `warn` failure state.
 #'
-#' @param error *Threshold value for the 'stop' failure state*
+#' @param error *Threshold value for the 'error' failure state*
 #'
 #'   `scalar<integer|numeric>(val>=0)` // *default:* `NULL` (`optional`)
 #'
 #'   Either the threshold number or the threshold fraction of *failing* test
 #'   units that result in entering the `error` failure state.
 #'
-#' @param critical *Threshold value for the 'notify' failure state*
+#' @param critical *Threshold value for the 'critical' failure state*
 #'
 #'   `scalar<integer|numeric>(val>=0)` // *default:* `NULL` (`optional`)
 #'
@@ -159,13 +159,13 @@
 #'   create_agent(
 #'     tbl = small_table,
 #'     actions = al
-#'   ) %>%
+#'   ) |>
 #'   col_vals_gt(
 #'     columns = a, value = 2
-#'   ) %>%
+#'   ) |>
 #'   col_vals_lt(
 #'     columns = d, value = 20000
-#'   ) %>%
+#'   ) |>
 #'   interrogate()
 #' ```
 #'
@@ -193,14 +193,14 @@
 #'   create_agent(
 #'     tbl = small_table,
 #'     actions = al
-#'   ) %>%
+#'   ) |>
 #'   col_vals_gt(
 #'     columns = a, value = 2,
 #'     actions = warn_on_fail(warn = 0.5)
-#'   ) %>%
+#'   ) |>
 #'   col_vals_lt(
 #'     columns = d, value = 20000
-#'   ) %>%
+#'   ) |>
 #'   interrogate()
 #' ```
 #'
@@ -225,7 +225,7 @@
 #' data).
 #'
 #' ```r
-#' small_table %>%
+#' small_table |>
 #'   col_vals_gt(
 #'     columns = a, value = 2,
 #'     actions = warn_on_fail(warn = 2)
@@ -262,7 +262,7 @@
 #' default) will have the same effect as using `error_on_fail(error = 1)`.
 #'
 #' ```r
-#' small_table %>%
+#' small_table |>
 #'   col_vals_gt(columns = a, value = 2)
 #' ```
 #'
@@ -278,7 +278,7 @@
 #' Here's the equivalent set of statements:
 #'
 #' ```r
-#' small_table %>%
+#' small_table |>
 #'   col_vals_gt(
 #'     columns = a, value = 2,
 #'     actions = error_on_fail(error = 1)

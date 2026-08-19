@@ -80,23 +80,23 @@ validation plan into action.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
   create_agent(
-    tbl = small_table \%>\%
+    tbl = small_table |>
       dplyr::select(a:f),
     label = "`get_sundered_data()`"
-  ) \%>\%
-  col_vals_gt(columns = d, value = 1000) \%>\%
+  ) |>
+  col_vals_gt(columns = d, value = 1000) |>
   col_vals_between(
     columns = c,
     left = vars(a), right = vars(d),
     na_pass = TRUE
-  ) \%>\%
+  ) |>
   interrogate()
 }\if{html}{\out{</div>}}
 
 Get the sundered data piece that contains only rows that passed both
 validation steps (the default piece). This yields 5 of 13 total rows.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% get_sundered_data()
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent |> get_sundered_data()
 }\if{html}{\out{</div>}}
 
 \preformatted{## # A tibble: 5 × 6
@@ -112,7 +112,7 @@ validation steps (the default piece). This yields 5 of 13 total rows.
 Get the complementary data piece: all of those rows that failed either of the
 two validation steps. This yields 8 of 13 total rows.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% get_sundered_data(type = "fail")
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent |> get_sundered_data(type = "fail")
 }\if{html}{\out{</div>}}
 
 \preformatted{## # A tibble: 8 × 6
@@ -132,7 +132,7 @@ We can get all of the input data returned with a flag column (called
 \code{.pb_combined}). This is done by using \code{type = "combined"} and that rightmost
 column will contain \code{"pass"} and \code{"fail"} values.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\% get_sundered_data(type = "combined")
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent |> get_sundered_data(type = "combined")
 }\if{html}{\out{</div>}}
 
 \preformatted{## # A tibble: 13 × 7
@@ -156,7 +156,7 @@ column will contain \code{"pass"} and \code{"fail"} values.
 We can change the \code{"pass"} or \code{"fail"} text values to another type of coding
 with the \code{pass_fail} argument. One possibility is \code{TRUE}/\code{FALSE}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent |>
   get_sundered_data(
     type = "combined",
     pass_fail = c(TRUE, FALSE)
@@ -183,7 +183,7 @@ with the \code{pass_fail} argument. One possibility is \code{TRUE}/\code{FALSE}.
 
 ...and using \code{0} and \code{1} might be worthwhile in some situations.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent |>
   get_sundered_data(
     type = "combined",
     pass_fail = 0:1

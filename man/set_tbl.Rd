@@ -55,9 +55,9 @@ states using \code{\link[=action_levels]{action_levels()}}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{al <-
   action_levels(
-      warn_at = 0.10,
-      stop_at = 0.25,
-    notify_at = 0.35
+      warn = 0.10,
+      error = 0.25,
+    critical = 0.35
   )
 }\if{html}{\out{</div>}}
 
@@ -70,13 +70,13 @@ Apply the actions, add some validation steps and then interrogate the data.
     tbl_name = "small_table",
     label = "An example.",
     actions = al
-  ) \%>\%
-  col_exists(columns = c(date, date_time)) \%>\%
+  ) |>
+  col_exists(columns = c(date, date_time)) |>
   col_vals_regex(
     columns = b,
     regex = "[0-9]-[a-z]\{3\}-[0-9]\{3\}"
-  ) \%>\%
-  rows_distinct() \%>\%
+  ) |>
+  rows_distinct() |>
   interrogate()
 }\if{html}{\out{</div>}}
 
@@ -84,10 +84,10 @@ Replace the agent's association to \code{small_table} with a mutated version of 
 (one that removes duplicate rows). Then, interrogate the new target table.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_2 <-
-  agent_1 \%>\%
+  agent_1 |>
   set_tbl(
-    tbl = small_table \%>\% dplyr::distinct()
-  ) \%>\%
+    tbl = small_table |> dplyr::distinct()
+  ) |>
   interrogate()
 }\if{html}{\out{</div>}}
 }

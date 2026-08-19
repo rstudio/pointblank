@@ -106,7 +106,7 @@ process.
     "yaml", "agent-small_table.yml",
     package = "pointblank"
   )
-) \%>\%
+) |>
   x_write_disk(
     filename = affix_date(
       filename = "small_table_agent.rds",

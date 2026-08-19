@@ -99,7 +99,7 @@ default, this is \code{FALSE}. Set to \code{TRUE} to give \code{NA}s a pass.}
 
 An optional expression for mutating the input table before proceeding with
 the validation. This can either be provided as a one-sided R formula using
-a leading \code{~} (e.g., \code{~ . \%>\% dplyr::mutate(col = col + 10)} or as a
+a leading \code{~} (e.g., \verb{\\(x) x |> dplyr::mutate(col = col + 10)} or as a
 function (e.g., \code{function(x) dplyr::mutate(x, col = col + 10)}. See the
 \emph{Preconditions} section for more information.}
 
@@ -170,7 +170,7 @@ be used with \code{.} (serving as the input data table) to evaluate to a single
 logical value. With this approach, the \strong{pointblank} function
 \code{\link[=has_columns]{has_columns()}} can be used to determine whether to make a validation step
 active on the basis of one or more columns existing in the table
-(e.g., \code{~ . \%>\% has_columns(c(d, e))}).}
+(e.g., \verb{\\(x) x |> has_columns(c(d, e))}).}
 
 \item{object}{\emph{A data table for expectations or tests}
 
@@ -283,9 +283,8 @@ The table mutation is totally isolated in scope to the validation step(s)
 where \code{preconditions} is used. Using \strong{dplyr} code is suggested here since
 the statements can be translated to SQL if necessary (i.e., if the target
 table resides in a database). The code is most easily supplied as a one-sided
-\strong{R} formula (using a leading \code{~}). In the formula representation, the \code{.}
-serves as the input data table to be transformed (e.g., \code{~ . \%>\% dplyr::mutate(col_b = col_a + 10)}). Alternatively, a function could instead
-be supplied (e.g., \code{function(x) dplyr::mutate(x, col_b = col_a + 10)}).
+anonymous function, where \code{x} represents the input data table to be
+transformed (e.g., \verb{\\(x) x |> dplyr::mutate(col_b = col_a + 10)}).
 }
 
 \section{Segments}{
@@ -330,10 +329,10 @@ object that is best produced by the \code{\link[=action_levels]{action_levels()}
 function's documentation for the lowdown on how to create reactions to
 above-threshold failure levels in validation. The basic gist is that you'll
 want at least a single threshold level (specified as either the fraction of
-test units failed, or, an absolute value), often using the \code{warn_at}
+test units failed, or, an absolute value), often using the \code{warn}
 argument. This is especially true when \code{x} is a table object because,
 otherwise, nothing happens. For the \verb{col_vals_*()}-type functions, using
-\code{action_levels(warn_at = 0.25)} or \code{action_levels(stop_at = 0.25)} are good
+\code{action_levels(warn = 0.25)} or \code{action_levels(error = 0.25)} are good
 choices depending on the situation (the first produces a warning when a
 quarter of the total test units fails, the other \code{stop()}s at the same
 threshold level).
@@ -380,16 +379,16 @@ the corresponding YAML representation.
 
 R statement:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent |>
   col_vals_not_between(
     columns = a,
     left = 1,
     right = 2,
     inclusive = c(TRUE, FALSE),
     na_pass = TRUE,
-    preconditions = ~ . \%>\% dplyr::filter(a < 10),
+    preconditions = \\(x) x |> dplyr::filter(a < 10),
     segments = b ~ c("group_1", "group_2"),
-    actions = action_levels(warn_at = 0.1, stop_at = 0.2),
+    actions = action_levels(warn = 0.1, error = 0.2),
     label = "The `col_vals_not_between()` step.",
     active = FALSE
   )
@@ -456,12 +455,12 @@ there are \code{NA} values, we'll choose to let those pass validation by setting
 units (there are 13 test units, one for each row).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
-  create_agent(tbl = small_table) \%>\%
+  create_agent(tbl = small_table) |>
   col_vals_not_between(
     columns = c,
     left = 10, right = 20,
     na_pass = TRUE
-  ) \%>\%
+  ) |>
   interrogate()
 }\if{html}{\out{</div>}}
 
@@ -482,12 +481,12 @@ This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
 behavior of side effects can be customized with the \code{actions} option.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table |>
   col_vals_not_between(
     columns = c,
     left = 10, right = 20,
     na_pass = TRUE
-  ) \%>\%
+  ) |>
   dplyr::pull(c)
 #>  [1]  3  8  3 NA  7  4  3  2  9  9  7  8 NA
 }\if{html}{\out{</div>}}
@@ -511,7 +510,7 @@ time. This is primarily used in \strong{testthat} tests.
 With the \verb{test_*()} form, we should get a single logical value returned to
 us.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table |>
   test_col_vals_not_between(
     columns = c,
     left = 10, right = 20,
@@ -528,7 +527,7 @@ In changing the lower bound to be \code{9} and making it non-inclusive, we get
 \code{TRUE} since although two values are \code{9} and they fall outside of the lower
 (or left) bound (and any values 'not between' count as passing test units).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_table |>
   test_col_vals_not_between(
     columns = c,
     left = 9, right = 20,

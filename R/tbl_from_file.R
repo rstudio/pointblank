@@ -134,7 +134,7 @@
 #'       ),
 #'       col_types = "TDdcddlc"
 #'     )
-#'   ) %>%
+#'   ) |>
 #'   col_vals_gt(columns = a, value = 0)
 #' ```
 #'
@@ -161,8 +161,8 @@
 #'     ),
 #'     tbl_name = "small_table",
 #'     label = "`file_tbl()` example.",
-#'   ) %>%
-#'   col_vals_gt(columns = a, value = 0) %>%
+#'   ) |>
+#'   col_vals_gt(columns = a, value = 0) |>
 #'   interrogate()
 #' ```
 #'
@@ -198,7 +198,7 @@
 #'       ),
 #'       col_types = "TDdcddlc"
 #'     ),
-#'     small_high_file ~ {{ small_table_file }} %>%
+#'     small_high_file ~ {{ small_table_file }} |>
 #'       dplyr::filter(f == "high")
 #'   )
 #' ```
@@ -456,8 +456,8 @@ file_tbl <- function(
 #' #       ),
 #' #       col_types = "TDdcddlc"
 #' #     )
-#' #   ) %>%
-#' #   col_vals_gt(a, 0) %>%
+#' #   ) |>
+#' #   col_vals_gt(a, 0) |>
 #' #   interrogate()
 #'
 #' # The `from_github()` helper function is

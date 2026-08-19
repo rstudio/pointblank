@@ -94,7 +94,7 @@ expressed in R code and in the corresponding YAML representation.
 
 R statement:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{informant |>
   info_tabular(
     section_1 = "*info text* 1.",
     `section 2` = "*info text* 2 and \{snippet_1\}"
@@ -145,7 +145,7 @@ functions. In this example, we'll use \code{\link[=info_tabular]{info_tabular()}
 the \code{small_table} dataset.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{informant <-
-  informant \%>\%
+  informant |>
   info_tabular(
     `Row Definition` = "A row has randomized values.",
     Source = c(

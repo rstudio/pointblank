@@ -53,9 +53,9 @@ some validation steps, and interrogate the table shortly thereafter.
   create_agent(
     tbl = ~ tbl_source("sml_table", store),
     label = "`tbl_source()` example",
-    actions = action_levels(warn_at = 0.10)
-  ) \%>\%
-  col_exists(columns = c(date, date_time)) \%>\%
+    actions = action_levels(warn = 0.10)
+  ) |>
+  col_exists(columns = c(date, date_time)) |>
   interrogate()
 }\if{html}{\out{</div>}}
 
@@ -83,7 +83,7 @@ Let's modify the agent's target to point to the table labeled as
 \code{"sml_table"} in the YAML representation of the \code{tbl_store}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent_2 <-
-  agent_1 \%>\%
+  agent_1 |>
   set_tbl(
     ~ tbl_source(
         tbl = "sml_table",

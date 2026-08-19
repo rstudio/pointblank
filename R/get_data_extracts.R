@@ -73,16 +73,16 @@
 #' ```r
 #' agent <-
 #'   create_agent(
-#'     tbl = small_table %>%
+#'     tbl = small_table |>
 #'       dplyr::select(a:f),
 #'     label = "`get_data_extracts()`"
-#'   ) %>%
-#'   col_vals_gt(d, value = 1000) %>%
+#'   ) |>
+#'   col_vals_gt(d, value = 1000) |>
 #'   col_vals_between(
 #'     columns = c,
 #'     left = vars(a), right = vars(d),
 #'     na_pass = TRUE
-#'   ) %>%
+#'   ) |>
 #'   interrogate()
 #' ```
 #'
@@ -91,7 +91,7 @@
 #' available.
 #'
 #' ```r
-#' agent %>% get_data_extracts()
+#' agent |> get_data_extracts()
 #' ```
 #'
 #' \preformatted{## $`1`
@@ -121,7 +121,7 @@
 #' [col_vals_gt()] one).
 #'
 #' ```r
-#' agent %>% get_data_extracts(i = 1)
+#' agent |> get_data_extracts(i = 1)
 #' ```
 #'
 #' \preformatted{## # A tibble: 6 × 6

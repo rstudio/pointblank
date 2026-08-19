@@ -53,7 +53,7 @@ table. Here, we check that \code{game_revenue} table, included in the
 \strong{pointblank} package, has certain column names present with
 \code{\link[=test_col_vals_make_subset]{test_col_vals_make_subset()}}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_tbl_colnames(tbl = game_revenue) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_tbl_colnames(tbl = game_revenue) |>
   test_col_vals_make_subset(
     columns = value,
     set = c("acquisition", "country")
@@ -66,9 +66,9 @@ are all less than \code{15} characters in length. For this, we would use the
 combination of \code{tt_tbl_colnames()}, then \code{\link[=tt_string_info]{tt_string_info()}}, and finally
 \code{\link[=test_col_vals_lt]{test_col_vals_lt()}} to perform the test.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{specifications \%>\%
-  tt_tbl_colnames() \%>\%
-  tt_string_info() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{specifications |>
+  tt_tbl_colnames() |>
+  tt_string_info() |>
   test_col_vals_lt(
     columns = value,
     value = 15

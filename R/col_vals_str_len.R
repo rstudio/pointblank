@@ -75,8 +75,8 @@
 #'
 #' ```r
 #' agent <-
-#'   create_agent(tbl = tbl) %>%
-#'   col_vals_str_len(columns = id, min = 2, max = 4) %>%
+#'   create_agent(tbl = tbl) |>
+#'   col_vals_str_len(columns = id, min = 2, max = 4) |>
 #'   interrogate()
 #' ```
 #'

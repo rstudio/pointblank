@@ -133,15 +133,15 @@ the \code{\link[=info_columns]{info_columns()}} and \code{\link[=info_snippet]{i
     tbl = ~ small_table,
     tbl_name = "small_table",
     label = "An example."
-  ) \%>\%
+  ) |>
   info_columns(
     columns = f,
     `Items` = "This column contains \{values_f\}."
-  ) \%>\%
+  ) |>
   info_snippet(
     snippet_name = "values_f",
     fn = snip_list(column = "f")
-  ) \%>\%
+  ) |>
   incorporate()
 }\if{html}{\out{</div>}}
 

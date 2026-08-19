@@ -44,7 +44,7 @@ logical column.}
 
 An optional expression for mutating the input table before proceeding with
 the validation. This can either be provided as a one-sided R formula using
-a leading \code{~} (e.g., \code{~ . \%>\% dplyr::mutate(col = col + 10)} or as a
+a leading \code{~} (e.g., \verb{\\(x) x |> dplyr::mutate(col = col + 10)} or as a
 function (e.g., \code{function(x) dplyr::mutate(x, col = col + 10)}. See the
 \emph{Preconditions} section for more information.}
 
@@ -105,7 +105,7 @@ be used with \code{.} (serving as the input data table) to evaluate to a single
 logical value. With this approach, the \strong{pointblank} function
 \code{\link[=has_columns]{has_columns()}} can be used to determine whether to make a validation step
 active on the basis of one or more columns existing in the table
-(e.g., \code{~ . \%>\% has_columns(c(d, e))}).}
+(e.g., \verb{\\(x) x |> has_columns(c(d, e))}).}
 
 \item{object}{\emph{A data table for expectations or tests}
 
@@ -187,9 +187,8 @@ The table mutation is totally isolated in scope to the validation step(s)
 where \code{preconditions} is used. Using \strong{dplyr} code is suggested here since
 the statements can be translated to SQL if necessary (i.e., if the target
 table resides in a database). The code is most easily supplied as a one-sided
-\strong{R} formula (using a leading \code{~}). In the formula representation, the \code{.}
-serves as the input data table to be transformed (e.g., \code{~ . \%>\% dplyr::mutate(col_b = col_a + 10)}). Alternatively, a function could instead
-be supplied (e.g., \code{function(x) dplyr::mutate(x, col_b = col_a + 10)}).
+anonymous function, where \code{x} represents the input data table to be
+transformed (e.g., \verb{\\(x) x |> dplyr::mutate(col_b = col_a + 10)}).
 }
 
 \section{Actions}{
@@ -201,10 +200,10 @@ object that is best produced by the \code{\link[=action_levels]{action_levels()}
 function's documentation for the lowdown on how to create reactions to
 above-threshold failure levels in validation. The basic gist is that you'll
 want at least a single threshold level (specified as either the fraction of
-test units failed, or, an absolute value), often using the \code{warn_at}
+test units failed, or, an absolute value), often using the \code{warn}
 argument. This is especially true when \code{x} is a table object because,
 otherwise, nothing happens. For the \verb{col_vals_*()}-type functions, using
-\code{action_levels(warn_at = 0.25)} or \code{action_levels(stop_at = 0.25)} are good
+\code{action_levels(warn = 0.25)} or \code{action_levels(error = 0.25)} are good
 choices depending on the situation (the first produces a warning when a
 quarter of the total test units fails, the other \code{stop()}s at the same
 threshold level).
@@ -248,11 +247,11 @@ representation.
 
 R statement:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{agent |>
   specially(
     fn = function(x) \{ ... \},
-    preconditions = ~ . \%>\% dplyr::filter(a < 10),
-    actions = action_levels(warn_at = 0.1, stop_at = 0.2),
+    preconditions = \\(x) x |> dplyr::filter(a < 10),
+    actions = action_levels(warn = 0.1, error = 0.2),
     label = "The `specially()` step.",
     active = FALSE
   )
@@ -309,8 +308,8 @@ target table) results in a logical vector with a length of 1. We'll determine
 if this validation has any failing test units (there is 1 test unit).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{agent <-
-  create_agent(tbl = tbl) \%>\%
-  specially(fn = function(x) nrow(x) == 3) \%>\%
+  create_agent(tbl = tbl) |>
+  specially(fn = function(x) nrow(x) == 3) |>
   interrogate()
 }\if{html}{\out{</div>}}
 
@@ -331,7 +330,7 @@ This way of using validation functions acts as a data filter. Data is passed
 through but should \code{stop()} if there is a single test unit failing. The
 behavior of side effects can be customized with the \code{actions} option.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% specially(fn = function(x) nrow(x) == 3)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl |> specially(fn = function(x) nrow(x) == 3)
 #> # A tibble: 3 x 3
 #>       a     b     c
 #>   <dbl> <dbl> <dbl>
@@ -355,7 +354,7 @@ time. This is primarily used in \strong{testthat} tests.
 With the \verb{test_*()} form, we should get a single logical value returned to
 us.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\% test_specially(fn = function(x) nrow(x) == 3)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl |> test_specially(fn = function(x) nrow(x) == 3)
 #> [1] TRUE
 }\if{html}{\out{</div>}}
 }
@@ -366,7 +365,7 @@ We can do more complex things with \code{specially()} and its variants.
 
 Check the class of the target table.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl |>
   test_specially(
     fn = function(x) \{
       inherits(x, "data.frame")
@@ -377,7 +376,7 @@ Check the class of the target table.
 
 Check that the number of rows in the target table is less than \code{small_table}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl |>
   test_specially(
     fn = function(x) \{
       nrow(x) < nrow(small_table)
@@ -388,11 +387,11 @@ Check that the number of rows in the target table is less than \code{small_table
 
 Check that all numbers across all numeric column are less than \code{10}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl |>
   test_specially(
     fn = function(x) \{
-      (x \%>\%
-         dplyr::select(where(is.numeric)) \%>\%
+      (x |>
+         dplyr::select(where(is.numeric)) |>
          unlist()
       ) < 10
     \}
@@ -405,10 +404,10 @@ Check that all values in column \code{c} are greater than b and greater than \co
 column \code{d} which is a logical column (that is used as the evaluation of test
 units).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl |>
   test_specially(
     fn = function(x) \{
-      x \%>\%
+      x |>
         dplyr::mutate(
           d = c > b & c > a & c < 10
         )
@@ -420,7 +419,7 @@ units).
 Check that the \code{game_revenue} table (which is not the target table) has
 exactly 2000 rows.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl |>
   test_specially(
     fn = function(x) \{
       nrow(game_revenue) == 2000

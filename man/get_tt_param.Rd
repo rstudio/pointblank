@@ -62,8 +62,8 @@ Get summary statistics for the first quarter of the \code{game_revenue} dataset
 that's included in the \strong{pointblank} package.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{stats_tbl <-
-  game_revenue \%>\%
-  tt_time_slice(slice_point = 0.25) \%>\%
+  game_revenue |>
+  tt_time_slice(slice_point = 0.25) |>
   tt_summary_stats()
 
 stats_tbl
@@ -88,11 +88,11 @@ the rest of the time period (the remaining 0.75) is never higher than that of
 the first quarter of the year, we can supply a value from \code{stats_tbl} to
 \code{\link[=test_col_vals_lte]{test_col_vals_lte()}}:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{game_revenue \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{game_revenue |>
   tt_time_slice(
     slice_point = 0.25,
     keep = "right"
-  ) \%>\%
+  ) |>
   test_col_vals_lte(
     columns = session_duration,
     value = get_tt_param(

@@ -81,8 +81,8 @@
 #' documentation for the lowdown on how to create reactions to above-threshold
 #' failure levels in validation. The basic gist is that you'll want at least a
 #' single threshold level (specified as either the fraction of test units
-#' failed, or, an absolute value), often using the `warn_at` argument. Using
-#' `action_levels(warn_at = 1)` or `action_levels(stop_at = 1)` are good choices
+#' failed, or, an absolute value), often using the `warn` argument. Using
+#' `action_levels(warn = 1)` or `action_levels(error = 1)` are good choices
 #' depending on the situation (the first produces a warning, the other
 #' `stop()`s).
 #'
@@ -120,10 +120,10 @@
 #' R statement:
 #'
 #' ```r
-#' agent %>%
+#' agent |>
 #'   col_exists(
 #'     columns = a,
-#'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
+#'     actions = action_levels(warn = 0.1, error = 0.2),
 #'     label = "The `col_exists()` step.",
 #'     active = FALSE
 #'   )
@@ -172,8 +172,8 @@
 #'
 #' ```r
 #' agent <-
-#'   create_agent(tbl = tbl) %>%
-#'   col_exists(columns = a) %>%
+#'   create_agent(tbl = tbl) |>
+#'   col_exists(columns = a) |>
 #'   interrogate()
 #' ```
 #'
@@ -194,7 +194,7 @@
 #' The behavior of side effects can be customized with the `actions` option.
 #'
 #' ```{r}
-#' tbl %>% col_exists(columns = a)
+#' tbl |> col_exists(columns = a)
 #' ```
 #'
 #' ## C: Using the expectation function
@@ -212,7 +212,7 @@
 #' us.
 #'
 #' ```{r}
-#' tbl %>% test_col_exists(columns = a)
+#' tbl |> test_col_exists(columns = a)
 #' ```
 #'
 #' @family validation functions

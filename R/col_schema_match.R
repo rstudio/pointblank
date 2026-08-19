@@ -126,8 +126,8 @@
 #' documentation for the lowdown on how to create reactions to above-threshold
 #' failure levels in validation. The basic gist is that you'll want at least a
 #' single threshold level (specified as either the fraction of test units
-#' failed, or, an absolute value), often using the `warn_at` argument. Using
-#' `action_levels(warn_at = 1)` or `action_levels(stop_at = 1)` are good choices
+#' failed, or, an absolute value), often using the `warn` argument. Using
+#' `action_levels(warn = 1)` or `action_levels(error = 1)` are good choices
 #' depending on the situation (the first produces a warning, the other
 #' `stop()`s).
 #'
@@ -164,7 +164,7 @@
 #' R statement:
 #'
 #' ```r
-#' agent %>%
+#' agent |>
 #'   col_schema_match(
 #'     schema = col_schema(
 #'       a = "integer",
@@ -173,7 +173,7 @@
 #'     complete = FALSE,
 #'     in_order = FALSE,
 #'     is_exact = FALSE,
-#'     actions = action_levels(stop_at = 1),
+#'     actions = action_levels(error = 1),
 #'     label = "The `col_schema_match()` step.",
 #'     active = FALSE
 #'   )
@@ -241,8 +241,8 @@
 #'
 #' ```r
 #' agent <-
-#'   create_agent(tbl = tbl) %>%
-#'   col_schema_match(schema = schema_obj) %>%
+#'   create_agent(tbl = tbl) |>
+#'   col_schema_match(schema = schema_obj) |>
 #'   interrogate()
 #' ```
 #'
@@ -263,7 +263,7 @@
 #' behavior of side effects can be customized with the `actions` option.
 #'
 #' ```{r}
-#' tbl %>% col_schema_match(schema = schema_obj)
+#' tbl |> col_schema_match(schema = schema_obj)
 #' ```
 #'
 #' ## C: Using the expectation function
@@ -281,7 +281,7 @@
 #' us.
 #'
 #' ```{r}
-#' tbl %>% test_col_schema_match(schema = schema_obj)
+#' tbl |> test_col_schema_match(schema = schema_obj)
 #' ```
 #'
 #' @family validation functions
@@ -559,8 +559,8 @@ test_col_schema_match <- function(
 #'
 #' ```r
 #' agent <-
-#'   create_agent(tbl = tbl) %>%
-#'   col_schema_match(schema_obj) %>%
+#'   create_agent(tbl = tbl) |>
+#'   col_schema_match(schema_obj) |>
 #'   interrogate()
 #' ```
 #'
@@ -590,9 +590,9 @@ test_col_schema_match <- function(
 #' example.
 #'
 #' ```r
-#' create_agent(tbl = tbl) %>%
-#'   col_schema_match(schema_obj) %>%
-#'   interrogate() %>%
+#' create_agent(tbl = tbl) |>
+#'   col_schema_match(schema_obj) |>
+#'   interrogate() |>
 #'   all_passed()
 #' ```
 #'

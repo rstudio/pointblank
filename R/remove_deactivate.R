@@ -58,16 +58,16 @@
 #'     tbl = small_table,
 #'     tbl_name = "small_table",
 #'     label = "An example."
-#'   ) %>%
+#'   ) |>
 #'   col_exists(
 #'     columns = date,
 #'     active = FALSE
-#'   ) %>%
+#'   ) |>
 #'   col_vals_regex(
 #'     columns = b,
 #'     regex = "[0-9]-[a-z]{3}-[0-9]{3}",
 #'     active = FALSE
-#'   ) %>%
+#'   ) |>
 #'   interrogate()
 #'
 #' # In the above, the data is
@@ -77,8 +77,8 @@
 #' # can selectively change this
 #' # with `activate_steps()`
 #' agent_2 <-
-#'   agent_1 %>%
-#'   activate_steps(i = 1) %>%
+#'   agent_1 |>
+#'   activate_steps(i = 1) |>
 #'   interrogate()
 #'
 #' @family Object Ops
@@ -145,12 +145,12 @@ activate_steps <- function(
 #'     tbl = small_table,
 #'     tbl_name = "small_table",
 #'     label = "An example."
-#'   ) %>%
-#'   col_exists(columns = date) %>%
+#'   ) |>
+#'   col_exists(columns = date) |>
 #'   col_vals_regex(
 #'     columns = b,
 #'     regex = "[0-9]-[a-z]{3}-[0-9]"
-#'   ) %>%
+#'   ) |>
 #'   interrogate()
 #'
 #' # The second validation step is
@@ -160,8 +160,8 @@ activate_steps <- function(
 #' # was decided that the step should
 #' # be deactivated for now
 #' agent_2 <-
-#'   agent_1 %>%
-#'   deactivate_steps(i = 2) %>%
+#'   agent_1 |>
+#'   deactivate_steps(i = 2) |>
 #'   interrogate()
 #'
 #' @family Object Ops
@@ -226,12 +226,12 @@ deactivate_steps <- function(
 #'     tbl = small_table,
 #'     tbl_name = "small_table",
 #'     label = "An example."
-#'   ) %>%
-#'   col_exists(columns = date) %>%
+#'   ) |>
+#'   col_exists(columns = date) |>
 #'   col_vals_regex(
 #'     columns = b,
 #'     regex = "[0-9]-[a-z]{3}-[0-9]"
-#'   ) %>%
+#'   ) |>
 #'   interrogate()
 #'
 #' # The second validation step has
@@ -240,8 +240,8 @@ deactivate_steps <- function(
 #' # by using `remove_steps()` with the
 #' # agent object
 #' agent_2 <-
-#'   agent_1 %>%
-#'   remove_steps(i = 2) %>%
+#'   agent_1 |>
+#'   remove_steps(i = 2) |>
 #'   interrogate()
 #'
 #' @return A `ptblank_agent` object.

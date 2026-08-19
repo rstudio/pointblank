@@ -65,7 +65,7 @@
 #' `game_revenue` table is less than $150.
 #'
 #' ```{r}
-#' tt_summary_stats(tbl = game_revenue) %>%
+#' tt_summary_stats(tbl = game_revenue) |>
 #'   col_vals_lt(
 #'     columns = item_revenue,
 #'     value = 150,
@@ -79,9 +79,9 @@
 #' that the median revenue is somewhere between $8 and $12.
 #'
 #' ```{r}
-#' game_revenue %>%
-#'   dplyr::filter(item_type == "iap") %>%
-#'   tt_summary_stats() %>%
+#' game_revenue |>
+#'   dplyr::filter(item_type == "iap") |>
+#'   tt_summary_stats() |>
 #'   col_vals_between(
 #'     columns = item_revenue,
 #'     left = 8, right = 12,
@@ -104,21 +104,21 @@
 #'     tbl_name = "game_revenue",
 #'     label = "`tt_summary_stats()` example.",
 #'     actions = action_levels(
-#'       warn_at = 0.10,
-#'       stop_at = 0.25,
-#'       notify_at = 0.35
+#'       warn = 0.10,
+#'       error = 0.25,
+#'       critical = 0.35
 #'     )
-#'   ) %>%
-#'   rows_complete() %>%
-#'   rows_distinct() %>%
+#'   ) |>
+#'   rows_complete() |>
+#'   rows_distinct() |>
 #'   col_vals_between(
 #'     columns = item_revenue,
 #'     left = 8, right = 12,
-#'     preconditions = ~ . %>%
-#'       dplyr::filter(item_type == "iap") %>%
-#'       tt_summary_stats() %>%
+#'     preconditions = \(x) x |>
+#'       dplyr::filter(item_type == "iap") |>
+#'       tt_summary_stats() |>
 #'       dplyr::filter(.param. == "med")
-#'   ) %>%
+#'   ) |>
 #'   interrogate()
 #' ```
 #'
@@ -236,11 +236,11 @@ tt_summary_stats <- function(tbl) {
 #' numbers of characters (`15` and `24`, respectively) throughout the table.
 #'
 #' ```{r}
-#' tt_string_info(tbl = game_revenue) %>%
+#' tt_string_info(tbl = game_revenue) |>
 #'   col_vals_equal(
 #'     columns = player_id,
 #'     value = 15
-#'   ) %>%
+#'   ) |>
 #'   col_vals_equal(
 #'     columns = session_id,
 #'     value = 24
@@ -254,7 +254,7 @@ tt_summary_stats <- function(tbl) {
 #' of the `small_table` dataset is no greater than `4`.
 #'
 #' ```{r}
-#' tt_string_info(tbl = small_table) %>%
+#' tt_string_info(tbl = small_table) |>
 #'   test_col_vals_lte(
 #'     columns = f,
 #'     value = 4
@@ -340,8 +340,8 @@ tt_string_info <- function(tbl) {
 #' dimensions. Here, we check that `game_revenue` has at least `1500` rows.
 #'
 #' ```{r}
-#' tt_tbl_dims(tbl = game_revenue) %>%
-#'   dplyr::filter(.param. == "rows") %>%
+#' tt_tbl_dims(tbl = game_revenue) |>
+#'   dplyr::filter(.param. == "rows") |>
 #'   test_col_vals_gt(
 #'     columns = value,
 #'     value = 1500
@@ -352,8 +352,8 @@ tt_string_info <- function(tbl) {
 #' `10`.
 #'
 #' ```{r}
-#' tt_tbl_dims(tbl = small_table) %>%
-#'   dplyr::filter(.param. == "columns") %>%
+#' tt_tbl_dims(tbl = small_table) |>
+#'   dplyr::filter(.param. == "columns") |>
 #'   test_col_vals_lt(
 #'     columns = value,
 #'     value = 10
@@ -419,7 +419,7 @@ tt_tbl_dims <- function(tbl) {
 #' [test_col_vals_make_subset()].
 #'
 #' ```{r}
-#' tt_tbl_colnames(tbl = game_revenue) %>%
+#' tt_tbl_colnames(tbl = game_revenue) |>
 #'   test_col_vals_make_subset(
 #'     columns = value,
 #'     set = c("acquisition", "country")
@@ -432,9 +432,9 @@ tt_tbl_dims <- function(tbl) {
 #' [test_col_vals_lt()] to perform the test.
 #'
 #' ```{r}
-#' specifications %>%
-#'   tt_tbl_colnames() %>%
-#'   tt_string_info() %>%
+#' specifications |>
+#'   tt_tbl_colnames() |>
+#'   tt_string_info() |>
 #'   test_col_vals_lt(
 #'     columns = value,
 #'     value = 15
@@ -531,8 +531,8 @@ tt_tbl_colnames <- function(tbl) {
 #' `"-2d 12H"` specification.
 #'
 #' ```{r}
-#' small_table %>%
-#'   dplyr::select(-date) %>%
+#' small_table |>
+#'   dplyr::select(-date) |>
 #'   tt_time_shift("-2d 12H")
 #' ```
 #'
@@ -729,7 +729,7 @@ tt_time_shift <- function(
 #' that begins at `2016-01-04 11:00:00` and ends at `2016-01-30 11:23:00`.
 #'
 #' ```{r}
-#' small_table %>%
+#' small_table |>
 #'   tt_time_slice(
 #'     slice_point = 0.25,
 #'     keep = "right"
@@ -910,8 +910,8 @@ tt_time_slice <- function(
 #'
 #' ```{r}
 #' stats_tbl <-
-#'   game_revenue %>%
-#'   tt_time_slice(slice_point = 0.25) %>%
+#'   game_revenue |>
+#'   tt_time_slice(slice_point = 0.25) |>
 #'   tt_summary_stats()
 #'
 #' stats_tbl
@@ -925,11 +925,11 @@ tt_time_slice <- function(
 #' [test_col_vals_lte()]:
 #'
 #' ```{r}
-#' game_revenue %>%
+#' game_revenue |>
 #'   tt_time_slice(
 #'     slice_point = 0.25,
 #'     keep = "right"
-#'   ) %>%
+#'   ) |>
 #'   test_col_vals_lte(
 #'     columns = session_duration,
 #'     value = get_tt_param(

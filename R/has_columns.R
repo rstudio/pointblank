@@ -26,10 +26,10 @@
 #' This utility function can help you easily determine whether a column of a
 #' specified name is present in a table object. This function works well enough
 #' on a table object but it can also be used as part of a formula in any
-#' validation function's `active` argument. Using `active = ~ . %>%
+#' validation function's `active` argument. Using `active = \(x) x |>
 #' has_columns(column_1)` means that the validation step will be inactive if
 #' the target table doesn't contain a column named `column_1`. We can also use
-#' multiple columns in `c()`, so having `active = ~ . %>%
+#' multiple columns in `c()`, so having `active = \(x) x |>
 #' has_columns(c(column_1, column_2))` in a validation step will make it
 #' inactive at [interrogate()] time unless the columns `column_1` and `column_2`
 #' are both present.
@@ -63,7 +63,7 @@
 #' on the table.
 #'
 #' ```r
-#' small_table %>% has_columns(columns = date)
+#' small_table |> has_columns(columns = date)
 #' ```
 #'
 #' ```
@@ -74,7 +74,7 @@
 #' columns are present in `small_table`.
 #'
 #' ```r
-#' small_table %>% has_columns(columns = c(a, b))
+#' small_table |> has_columns(columns = c(a, b))
 #' ```
 #'
 #' ```
@@ -84,7 +84,7 @@
 #' It's possible to use a tidyselect helper as well:
 #'
 #' ```r
-#' small_table %>% has_columns(columns = c(a, starts_with("b")))
+#' small_table |> has_columns(columns = c(a, starts_with("b")))
 #' ```
 #'
 #' ```
@@ -95,7 +95,7 @@
 #' need to be present to obtain `TRUE`).
 #'
 #' ```r
-#' small_table %>% has_columns(columns = c(a, h))
+#' small_table |> has_columns(columns = c(a, h))
 #' ```
 #'
 #' ```
@@ -107,8 +107,8 @@
 #' check.
 #'
 #' ```r
-#' small_table %>% has_columns(columns = starts_with("h"))
-#' small_table %>% has_columns(columns = c(a, starts_with("h")))
+#' small_table |> has_columns(columns = starts_with("h"))
+#' small_table |> has_columns(columns = c(a, starts_with("h")))
 #' ```
 #'
 #' ```
@@ -130,20 +130,20 @@
 #'   create_agent(
 #'     tbl = small_table,
 #'     tbl_name = "small_table"
-#'   ) %>%
+#'   ) |>
 #'   col_vals_gt(
 #'     columns = c, value = vars(a),
-#'     active = ~ . %>% has_columns(c(a, c))
-#'   ) %>%
+#'     active = \(x) x |> has_columns(c(a, c))
+#'   ) |>
 #'   col_vals_lt(
 #'     columns = h, value = vars(d),
-#'     preconditions = ~ . %>% dplyr::mutate(h = d - a),
-#'     active = ~ . %>% has_columns(c(a, d))
-#'   ) %>%
+#'     preconditions = \(x) x |> dplyr::mutate(h = d - a),
+#'     active = \(x) x |> has_columns(c(a, d))
+#'   ) |>
 #'   col_is_character(
 #'     columns = j,
-#'     active = ~ . %>% has_columns(j)
-#'   ) %>%
+#'     active = \(x) x |> has_columns(j)
+#'   ) |>
 #'   interrogate()
 #' ```
 #'

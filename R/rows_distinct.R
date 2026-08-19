@@ -83,10 +83,8 @@
 #' where `preconditions` is used. Using **dplyr** code is suggested here since
 #' the statements can be translated to SQL if necessary (i.e., if the target
 #' table resides in a database). The code is most easily supplied as a one-sided
-#' **R** formula (using a leading `~`). In the formula representation, the `.`
-#' serves as the input data table to be transformed (e.g., `~ . %>%
-#' dplyr::mutate(col_b = col_a + 10)`). Alternatively, a function could instead
-#' be supplied (e.g., `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
+#' anonymous function, where `x` represents the input data table to be
+#' transformed (e.g., `\(x) x |> dplyr::mutate(col_b = col_a + 10)`).
 #'
 #' @section Segments:
 #'
@@ -124,9 +122,9 @@
 #' documentation for the lowdown on how to create reactions to above-threshold
 #' failure levels in validation. The basic gist is that you'll want at least a
 #' single threshold level (specified as either the fraction of test units
-#' failed, or, an absolute value), often using the `warn_at` argument. This is
+#' failed, or, an absolute value), often using the `warn` argument. This is
 #' especially true when `x` is a table object because, otherwise, nothing
-#' happens. Using `action_levels(warn_at = 0.25)` or `action_levels(stop_at =
+#' happens. Using `action_levels(warn = 0.25)` or `action_levels(error =
 #' 0.25)` are good choices depending on the situation (the first produces a
 #' warning when a quarter of the total test units fails, the other `stop()`s at
 #' the same threshold level).
@@ -167,12 +165,12 @@
 #' R statement:
 #'
 #' ```r
-#' agent %>%
+#' agent |>
 #'   rows_distinct(
 #'     columns = c(a, b),
-#'     preconditions = ~ . %>% dplyr::filter(a < 10),
+#'     preconditions = \(x) x |> dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
-#'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
+#'     actions = action_levels(warn = 0.1, error = 0.2),
 #'     label = "The `rows_distinct()` step.",
 #'     active = FALSE
 #'   )
@@ -223,8 +221,8 @@
 #'
 #' ```r
 #' agent <-
-#'   create_agent(tbl = tbl) %>%
-#'   rows_distinct(columns = c(a, b)) %>%
+#'   create_agent(tbl = tbl) |>
+#'   rows_distinct(columns = c(a, b)) |>
 #'   interrogate()
 #' ```
 #'
@@ -245,8 +243,8 @@
 #' behavior of side effects can be customized with the `actions` option.
 #'
 #' ```{r}
-#' tbl %>%
-#'   rows_distinct(columns = c(a, b)) %>%
+#' tbl |>
+#'   rows_distinct(columns = c(a, b)) |>
 #'   dplyr::pull(a)
 #' ```
 #'

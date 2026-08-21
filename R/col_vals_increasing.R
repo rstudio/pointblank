@@ -379,7 +379,7 @@ col_vals_increasing <- function(
   if (is_a_table_object(x)) {
 
     secret_agent <-
-      create_agent(x, label = "::QUIET::") %>%
+      create_agent(x, label = "::QUIET::") |>
       col_vals_increasing(
         columns = tidyselect::all_of(columns),
         allow_stationary = allow_stationary,
@@ -391,7 +391,7 @@ col_vals_increasing <- function(
         brief = brief,
         actions = prime_actions(actions),
         active = active
-      ) %>%
+      ) |>
       interrogate()
 
     return(x)
@@ -466,7 +466,7 @@ expect_col_vals_increasing <- function(
   fn_name <- "expect_col_vals_increasing"
 
   vs <-
-    create_agent(tbl = object, label = "::QUIET::") %>%
+    create_agent(tbl = object, label = "::QUIET::") |>
     col_vals_increasing(
       columns = {{ columns }},
       allow_stationary = allow_stationary,
@@ -474,9 +474,9 @@ expect_col_vals_increasing <- function(
       na_pass = na_pass,
       preconditions = {{ preconditions }},
       actions = action_levels(critical = threshold)
-    ) %>%
-    interrogate() %>%
-    .$validation_set
+    ) |>
+    interrogate() |>
+    (\(x) x$validation_set)()
 
   x <- vs$notify
 
@@ -552,7 +552,7 @@ test_col_vals_increasing <- function(
 ) {
 
   vs <-
-    create_agent(tbl = object, label = "::QUIET::") %>%
+    create_agent(tbl = object, label = "::QUIET::") |>
     col_vals_increasing(
       columns = {{ columns }},
       allow_stationary = allow_stationary,
@@ -560,9 +560,9 @@ test_col_vals_increasing <- function(
       na_pass = na_pass,
       preconditions = {{ preconditions }},
       actions = action_levels(critical = threshold)
-    ) %>%
-    interrogate() %>%
-    .$validation_set
+    ) |>
+    interrogate() |>
+    (\(x) x$validation_set)()
 
   if (inherits(vs$capture_stack[[1]]$warning, "simpleWarning")) {
     warning(conditionMessage(vs$capture_stack[[1]]$warning))

@@ -190,7 +190,7 @@ interrogate <- function(
 
       if (inherits(agent$tbl, "read_fn")) {
         if (inherits(agent$tbl, "with_tbl_name")) {
-          agent$tbl_name <- agent$tbl %>% rlang::f_lhs() %>% as.character()
+          agent$tbl_name <- agent$tbl |> rlang::f_lhs() |> as.character()
         }
         agent$tbl <- eval_f_rhs(agent$tbl)
       }
@@ -247,8 +247,8 @@ interrogate <- function(
     if (rlang::is_formula(agent$validation_set[[i, "active"]][[1]])) {
 
       is_active <-
-        agent$validation_set[[i, "active"]][[1]] %>%
-        rlang::f_rhs() %>%
+        agent$validation_set[[i, "active"]][[1]] |>
+        rlang::f_rhs() |>
         rlang::eval_tidy()
 
       agent$validation_set[[i, "eval_active"]] <- is_active(table)
@@ -315,8 +315,8 @@ interrogate <- function(
       validation_n <- length(validation_formulas)
 
       validation_fns <-
-        validation_formulas %>%
-        lapply(rlang::f_rhs) %>%
+        validation_formulas |>
+        lapply(rlang::f_rhs) |>
         vapply(
           FUN.VALUE = character(1),
           USE.NAMES = FALSE,
@@ -349,9 +349,9 @@ interrogate <- function(
           eval(
             expr = parse(
               text =
-                formula %>%
-                rlang::f_rhs() %>%
-                rlang::expr_deparse() %>%
+                formula |>
+                rlang::f_rhs() |>
+                rlang::expr_deparse() |>
                 tidy_gsub("(.", "(double_agent", fixed = TRUE)
             ),
             envir = NULL
@@ -388,16 +388,16 @@ interrogate <- function(
        } else {
 
          tbl_checked <-
-           tbl_checked %>%
+           tbl_checked |>
            dplyr::mutate(
-             pb_is_good_ = {{ tbl_check_t }} %>%
-               utils::head(1) %>%
+             pb_is_good_ = {{ tbl_check_t }} |>
+               utils::head(1) |>
                dplyr::pull(pb_is_good_)
            )
        }
 
         tbl_checked <-
-          tbl_checked %>%
+          tbl_checked |>
           dplyr::rename(!!new_col := pb_is_good_)
       }
 
@@ -415,9 +415,9 @@ interrogate <- function(
         # are entirely of the combined set of `col_vals_*()`, `col_is_*()`,
         # and `col_exists()`
 
-        tbl_checked %>%
-          dplyr::mutate(pb_is_good_ = !!rlang::parse_expr(columns_str_add)) %>%
-          dplyr::select(-dplyr::all_of(columns_str_vec)) %>%
+        tbl_checked |>
+          dplyr::mutate(pb_is_good_ = !!rlang::parse_expr(columns_str_add)) |>
+          dplyr::select(-dplyr::all_of(columns_str_vec)) |>
           dplyr::mutate(pb_is_good_ = pb_is_good_ == validation_n)
       }
 
@@ -442,10 +442,8 @@ interrogate <- function(
           FUN.VALUE = character(1),
           USE.NAMES = FALSE,
           FUN = function(x) {
-            x %>%
-              rlang::f_rhs() %>%
-              as.character() %>%
-              .[[1]]
+            chars <- as.character(rlang::f_rhs(x))
+            chars[[1]]
           }
         )
 
@@ -477,12 +475,12 @@ interrogate <- function(
           eval(
             expr = parse(
               text =
-                validation_formulas[[k]] %>%
-                rlang::f_rhs() %>%
-                rlang::expr_deparse() %>%
-                tidy_gsub("(.", "(double_agent", fixed = TRUE) %>%
-                tidy_gsub("^test_", "") %>%
-                tidy_gsub("threshold\\s+?=\\s.*$", ")") %>%
+                validation_formulas[[k]] |>
+                rlang::f_rhs() |>
+                rlang::expr_deparse() |>
+                tidy_gsub("(.", "(double_agent", fixed = TRUE) |>
+                tidy_gsub("^test_", "") |>
+                tidy_gsub("threshold\\s+?=\\s.*$", ")") |>
                 tidy_gsub(",\\s+?\\)$", ")")
 
             ),
@@ -499,30 +497,30 @@ interrogate <- function(
         double_agent <- create_agent(tbl = table, label = "::QUIET::")
 
         deparsed_call <-
-          validation_formulas[[k]] %>%
-          rlang::f_rhs() %>%
-          rlang::expr_deparse() %>%
+          validation_formulas[[k]] |>
+          rlang::f_rhs() |>
+          rlang::expr_deparse() |>
           paste(collapse = " ")
 
         if (grepl("threshold", deparsed_call)) {
 
           threshold_value <-
-            validation_formulas[[k]] %>%
-            rlang::f_rhs() %>%
-            rlang::expr_deparse() %>%
-            tidy_gsub(".*?(threshold\\s+?=\\s+[0-9\\.]+?).+?", "\\1") %>%
-            tidy_gsub("threshold\\s+?=\\s+?", "") %>%
+            validation_formulas[[k]] |>
+            rlang::f_rhs() |>
+            rlang::expr_deparse() |>
+            tidy_gsub(".*?(threshold\\s+?=\\s+[0-9\\.]+?).+?", "\\1") |>
+            tidy_gsub("threshold\\s+?=\\s+?", "") |>
             as.numeric()
 
           double_agent <-
             eval(
               expr = parse(
                 text =
-                  validation_formulas[[k]] %>%
-                  rlang::f_rhs() %>%
-                  rlang::expr_deparse() %>%
-                  tidy_gsub("(.", "(double_agent", fixed = TRUE) %>%
-                  tidy_gsub("^test_", "") %>%
+                  validation_formulas[[k]] |>
+                  rlang::f_rhs() |>
+                  rlang::expr_deparse() |>
+                  tidy_gsub("(.", "(double_agent", fixed = TRUE) |>
+                  tidy_gsub("^test_", "") |>
                   tidy_gsub(
                     "threshold\\s+?=\\s+?[0-9\\.]+?",
                     paste0(
@@ -542,11 +540,11 @@ interrogate <- function(
             eval(
               expr = parse(
                 text =
-                  validation_formulas[[k]] %>%
-                  rlang::f_rhs() %>%
-                  rlang::expr_deparse() %>%
-                  tidy_gsub("(.", "(double_agent", fixed = TRUE) %>%
-                  tidy_gsub("^test_", "") %>%
+                  validation_formulas[[k]] |>
+                  rlang::f_rhs() |>
+                  rlang::expr_deparse() |>
+                  tidy_gsub("(.", "(double_agent", fixed = TRUE) |>
+                  tidy_gsub("^test_", "") |>
                   tidy_gsub(
                     "\\)$",
                     paste0(
@@ -559,17 +557,17 @@ interrogate <- function(
             )
         }
 
-        double_agent <- double_agent %>% interrogate()
+        double_agent <- double_agent |> interrogate()
 
         serially_validation_set <-
           dplyr::bind_rows(
             serially_validation_set,
-            double_agent$validation_set %>%
+            double_agent$validation_set |>
               dplyr::select(
                 -c(step_id, sha1, -warn, -notify, -tbl_checked,
                    interrogation_notes
                 )
-              ) %>%
+              ) |>
               dplyr::mutate(i_o = .env$k)
           )
 
@@ -615,25 +613,25 @@ interrogate <- function(
           eval(
             expr = parse(
               text =
-                validation_formulas[[validation_n]] %>%
-                rlang::f_rhs() %>%
-                rlang::expr_deparse() %>%
+                validation_formulas[[validation_n]] |>
+                rlang::f_rhs() |>
+                rlang::expr_deparse() |>
                 tidy_gsub("(.", "(double_agent", fixed = TRUE)
             ),
             envir = NULL
           )
 
-        double_agent <- double_agent %>% interrogate()
+        double_agent <- double_agent |> interrogate()
 
         serially_validation_set <-
           dplyr::bind_rows(
             serially_validation_set,
-            double_agent$validation_set %>%
+            double_agent$validation_set |>
               dplyr::select(
                 -c(step_id, sha1, -warn, -notify, -tbl_checked,
                    interrogation_notes
                 )
-              ) %>%
+              ) |>
               dplyr::mutate(i_o = .env$k)
           )
 
@@ -656,8 +654,8 @@ interrogate <- function(
       # Renumber `i` in the `serially()` validation set so that
       # it is an ascending integer sequence
       serially_validation_set <-
-        serially_validation_set %>%
-        dplyr::mutate(i = seq_len(nrow(.)))
+        serially_validation_set |>
+        dplyr::mutate(i = seq_len(dplyr::n()))
 
       # Add interrogation notes
       agent$validation_set[[i, "interrogation_notes"]] <-
@@ -828,34 +826,34 @@ create_post_step_cli_output_a <- function(
   if (quiet) return()
 
   interrogation_evaluation <-
-    agent$validation_set[i, ] %>%
-    dplyr::select(eval_error, eval_warning) %>%
+    agent$validation_set[i, ] |>
+    dplyr::select(eval_error, eval_warning) |>
     dplyr::mutate(condition = dplyr::case_when(
       !eval_error & !eval_warning ~ "OK",
       eval_error & eval_warning ~ "{.yellow WARNING} + {.red ERROR}",
       eval_error ~ "{.red ERROR}",
       eval_warning ~ "{.yellow WARNING}"
-    )) %>%
+    )) |>
     dplyr::pull(condition)
 
   validation_condition <-
-    agent$validation_set[i, ] %>%
-    dplyr::select(warn, stop) %>%
+    agent$validation_set[i, ] |>
+    dplyr::select(warn, stop) |>
     dplyr::mutate(condition = dplyr::case_when(
       is.na(warn) & is.na(stop) ~ "NONE",
       !is.na(stop) && stop ~ "STOP",
       !is.na(warn) && warn ~ "WARN",
       TRUE ~ "NONE"
-    )) %>%
+    )) |>
     dplyr::pull(condition)
 
   notify_condition <-
-    agent$validation_set[i, ] %>%
-    dplyr::select(notify) %>%
+    agent$validation_set[i, ] |>
+    dplyr::select(notify) |>
     dplyr::mutate(condition = dplyr::case_when(
       !is.na(notify) && notify ~ "NOTIFY",
       TRUE ~ "NONE"
-    )) %>%
+    )) |>
     dplyr::pull(condition)
 
   label <- agent$validation_set[i, ]$label
@@ -1106,7 +1104,7 @@ interrogate_comparison <- function(
 
   # Obtain the target column as a label
   column <-
-    get_column_as_sym_at_idx(agent = agent, idx = idx) %>%
+    get_column_as_sym_at_idx(agent = agent, idx = idx) |>
     as.character()
 
   # Determine whether NAs should be allowed
@@ -1151,7 +1149,7 @@ tbl_val_comparison <- function(
     na_pass_num <- if (na_pass) 1 else 0
     col_sym <- as.symbol(column)
 
-    table %>%
+    table |>
       dplyr::mutate(pb_is_good_ = dplyr::case_when(
         !!expression ~ 1,
         is.na(!!col_sym) ~ na_pass_num,
@@ -1160,8 +1158,8 @@ tbl_val_comparison <- function(
 
   } else {
 
-    table %>%
-      dplyr::mutate(pb_is_good_ = !!expression) %>%
+    table |>
+      dplyr::mutate(pb_is_good_ = !!expression) |>
       dplyr::mutate(pb_is_good_ = dplyr::case_when(
         is.na(pb_is_good_) ~ na_pass,
         .default = pb_is_good_
@@ -1191,12 +1189,12 @@ interrogate_between <- function(
   # Normalize `left` and `right` to `name` objects
   # (if they are given as columns in `vars()`)
   if (inherits(left, "list")) {
-    left <- left[[1]] %>% rlang::get_expr()
+    left <- left[[1]] |> rlang::get_expr()
   } else {
     left <- unname(left)
   }
   if (inherits(right, "list")) {
-    right <- right[[1]] %>% rlang::get_expr()
+    right <- right[[1]] |> rlang::get_expr()
   } else {
     right <- unname(right)
   }
@@ -1254,7 +1252,7 @@ tbl_vals_between <- function(
     if (identical(inclusive, c(TRUE, TRUE))) {
 
       table <-
-        table %>%
+        table |>
         dplyr::mutate(pb_is_good_ = dplyr::case_when(
           `>=`({{ column }}, {{ left }}) &
             `<=`({{ column }}, {{ right }}) ~ {{ true }},
@@ -1267,7 +1265,7 @@ tbl_vals_between <- function(
     if (identical(inclusive, c(FALSE, TRUE))) {
 
       table <-
-        table %>%
+        table |>
         dplyr::mutate(pb_is_good_ = dplyr::case_when(
           `>`({{ column }}, {{ left }}) &
             `<=`({{ column }}, {{ right }}) ~ {{ true }},
@@ -1280,7 +1278,7 @@ tbl_vals_between <- function(
     if (identical(inclusive, c(TRUE, FALSE))) {
 
       table <-
-        table %>%
+        table |>
         dplyr::mutate(pb_is_good_ = dplyr::case_when(
           `>=`({{ column }}, {{ left }}) &
             `<`({{ column }}, {{ right }}) ~ {{ true }},
@@ -1293,7 +1291,7 @@ tbl_vals_between <- function(
     if (identical(inclusive, c(FALSE, FALSE))) {
 
       table <-
-        table %>%
+        table |>
         dplyr::mutate(pb_is_good_ = dplyr::case_when(
           `>`({{ column }}, {{ left }}) &
             `<`({{ column }}, {{ right }}) ~ {{ true }},
@@ -1308,7 +1306,7 @@ tbl_vals_between <- function(
     if (identical(inclusive, c(TRUE, TRUE))) {
 
       table <-
-        table %>%
+        table |>
         dplyr::mutate(pb_is_good_ = dplyr::case_when(
           `<`({{ column }}, {{ left }}) |
             `>`({{ column }}, {{ right }}) ~ {{ true }},
@@ -1321,7 +1319,7 @@ tbl_vals_between <- function(
     if (identical(inclusive, c(FALSE, TRUE))) {
 
       table <-
-        table %>%
+        table |>
         dplyr::mutate(pb_is_good_ = dplyr::case_when(
           `<=`({{ column }}, {{ left }}) |
             `>`({{ column }}, {{ right }}) ~ {{ true }},
@@ -1334,7 +1332,7 @@ tbl_vals_between <- function(
     if (identical(inclusive, c(TRUE, FALSE))) {
 
       table <-
-        table %>%
+        table |>
         dplyr::mutate(pb_is_good_ = dplyr::case_when(
           `<`({{ column }}, {{ left }}) |
             `>=`({{ column }}, {{ right }}) ~ {{ true }},
@@ -1347,7 +1345,7 @@ tbl_vals_between <- function(
     if (identical(inclusive, c(FALSE, FALSE))) {
 
       table <-
-        table %>%
+        table |>
         dplyr::mutate(pb_is_good_ = dplyr::case_when(
           `<=`({{ column }}, {{ left }}) |
             `>=`({{ column }}, {{ right }}) ~ {{ true }},
@@ -1357,7 +1355,7 @@ tbl_vals_between <- function(
     }
   }
 
-  table %>%
+  table |>
     dplyr::mutate(pb_is_good_ = dplyr::case_when(
       is.na({{ column }}) ~ na_pass_bool,
       .default = pb_is_good_
@@ -1399,11 +1397,11 @@ interrogate_set <- function(
       false <- if (uses_numeric_logical(table)) 0 else FALSE
       na_pass_bool <- if (na_pass) true else false
 
-      table %>%
+      table |>
         dplyr::mutate(pb_is_good_ = dplyr::case_when(
           {{ column }} %in% set ~ {{ true }},
           !({{ column }} %in% set) ~ {{ false }}
-        )) %>%
+        )) |>
         dplyr::mutate(pb_is_good_ = dplyr::case_when(
           is.na({{ column }}) ~ na_pass_bool,
           TRUE ~ pb_is_good_
@@ -1439,10 +1437,10 @@ interrogate_set <- function(
       # Define function to get distinct values from a column in the
       # order of first appearance
       table_col_distinct_values <-
-        table %>%
-        dplyr::select({{ column }}) %>%
-        dplyr::distinct({{ column }}) %>%
-        dplyr::collect() %>%
+        table |>
+        dplyr::select({{ column }}) |>
+        dplyr::distinct({{ column }}) |>
+        dplyr::collect() |>
         dplyr::pull({{ column }})
 
       if (na_pass) {
@@ -1461,23 +1459,23 @@ interrogate_set <- function(
         table_col_distinct_values[table_col_distinct_values %in% set]
 
       dplyr::bind_rows(
-        dplyr::tibble(set_element = as.character(set)) %>%
+        dplyr::tibble(set_element = as.character(set)) |>
           dplyr::left_join(
             dplyr::tibble(
               col_element = as.character(table_col_distinct_set),
               pb_is_good_ = TRUE
             ),
             by = c("set_element" = "col_element")
-          ) %>%
+          ) |>
           dplyr::mutate(
             pb_is_good_ = ifelse(is.na(pb_is_good_), FALSE, pb_is_good_)
           ),
         dplyr::tibble(
           set_element = "::outside_values::",
           pb_is_good_ = NA
-        ) %>%
+        ) |>
           dplyr::mutate(pb_is_good_ = length(extra_variables) == 0)
-      ) %>%
+      ) |>
         dplyr::mutate(pb_is_good_ = dplyr::case_when(
           is.na(pb_is_good_) ~ na_pass,
           TRUE ~ pb_is_good_
@@ -1513,10 +1511,10 @@ interrogate_set <- function(
       # Define function to get distinct values from a column in the
       # order of first appearance
       table_col_distinct_values <-
-        table %>%
-        dplyr::select({{ column }}) %>%
-        dplyr::distinct({{ column }}) %>%
-        dplyr::collect() %>%
+        table |>
+        dplyr::select({{ column }}) |>
+        dplyr::distinct({{ column }}) |>
+        dplyr::collect() |>
         dplyr::pull({{ column }})
 
       if (na_pass) {
@@ -1532,17 +1530,17 @@ interrogate_set <- function(
       table_col_distinct_set <-
         table_col_distinct_values[table_col_distinct_values %in% set]
 
-      dplyr::tibble(set_element = as.character(set)) %>%
+      dplyr::tibble(set_element = as.character(set)) |>
         dplyr::left_join(
           dplyr::tibble(
             col_element = as.character(table_col_distinct_set),
             pb_is_good_ = TRUE
           ),
           by = c("set_element" = "col_element")
-        ) %>%
+        ) |>
         dplyr::mutate(
           pb_is_good_ = ifelse(is.na(pb_is_good_), FALSE, pb_is_good_)
-        ) %>%
+        ) |>
         dplyr::mutate(pb_is_good_ = dplyr::case_when(
           is.na(pb_is_good_) ~ na_pass,
           TRUE ~ pb_is_good_
@@ -1579,11 +1577,11 @@ interrogate_set <- function(
       false <- if (uses_numeric_logical(table)) 0 else FALSE
       na_pass_bool <- if (na_pass) false else true
 
-      table %>%
+      table |>
         dplyr::mutate(pb_is_good_ = dplyr::case_when(
           !({{ column }} %in% set) ~ {{ true }},
           {{ column }} %in% set ~ {{ false }}
-        )) %>%
+        )) |>
         dplyr::mutate(pb_is_good_ = dplyr::case_when(
           is.na({{ column }}) ~ na_pass_bool,
           TRUE ~ pb_is_good_
@@ -1654,7 +1652,7 @@ interrogate_direction <- function(
     column_validity_checks_column(table = table, column = {{ column }})
 
     tbl <-
-      table %>%
+      table |>
       dplyr::mutate(
         pb_lagged_difference_ = {{ column }} - dplyr::lag({{ column }}))
 
@@ -1663,7 +1661,7 @@ interrogate_direction <- function(
       if (direction == "increasing") {
 
         tbl <-
-          tbl %>%
+          tbl |>
           dplyr::mutate(pb_is_good_ = dplyr::case_when(
             pb_lagged_difference_ > 0 ~ TRUE,
             pb_lagged_difference_ <= 0 ~ FALSE,
@@ -1673,7 +1671,7 @@ interrogate_direction <- function(
       } else {
 
         tbl <-
-          tbl %>%
+          tbl |>
           dplyr::mutate(pb_is_good_ = dplyr::case_when(
             pb_lagged_difference_ < 0 ~ TRUE,
             pb_lagged_difference_ >= 0 ~ FALSE,
@@ -1687,7 +1685,7 @@ interrogate_direction <- function(
       if (direction == "increasing") {
 
         tbl <-
-          tbl %>%
+          tbl |>
           dplyr::mutate(pb_is_good_ = dplyr::case_when(
             pb_lagged_difference_ >= 0 ~ TRUE,
             pb_lagged_difference_ < 0 ~ FALSE,
@@ -1697,7 +1695,7 @@ interrogate_direction <- function(
       } else {
 
         tbl <-
-          tbl %>%
+          tbl |>
           dplyr::mutate(pb_is_good_ = dplyr::case_when(
             pb_lagged_difference_ <= 0 ~ TRUE,
             pb_lagged_difference_ > 0 ~ FALSE,
@@ -1713,7 +1711,7 @@ interrogate_direction <- function(
       if (direction == "increasing") {
 
         tbl <-
-          tbl %>%
+          tbl |>
           dplyr::mutate(pb_is_good_ = ifelse(
             !is.na(pb_lagged_difference_) &
               pb_lagged_difference_ >= (-abs(stat_tol[2])), TRUE, pb_is_good_
@@ -1722,7 +1720,7 @@ interrogate_direction <- function(
       } else {
 
         tbl <-
-          tbl %>%
+          tbl |>
           dplyr::mutate(pb_is_good_ = ifelse(
             !is.na(pb_lagged_difference_) &
               pb_lagged_difference_ <= abs(stat_tol[2]), TRUE, pb_is_good_
@@ -1731,10 +1729,10 @@ interrogate_direction <- function(
     }
 
     tbl <-
-      tbl %>%
+      tbl |>
       dplyr::mutate(pb_is_good_ = ifelse(
         is.na(pb_lagged_difference_) & is.na(pb_is_good_), TRUE, pb_is_good_
-      )) %>%
+      )) |>
       dplyr::select(-pb_lagged_difference_)
   }
 
@@ -1805,11 +1803,11 @@ interrogate_regex <- function(
     if (tbl_type == "tbl_spark") {
 
       tbl <-
-        table %>%
+        table |>
         dplyr::mutate(
           pb_is_good_ = ifelse(
             !is.na({{ column }}), RLIKE({{ column }}, regex), NA)
-        ) %>%
+        ) |>
         dplyr::mutate(pb_is_good_ = dplyr::case_when(
           is.na(pb_is_good_) ~ na_pass,
           TRUE ~ pb_is_good_
@@ -1818,10 +1816,10 @@ interrogate_regex <- function(
     } else if (tbl_type == "mysql") {
 
       tbl <-
-        table %>%
+        table |>
         dplyr::mutate(pb_is_good_ = ifelse(
           !is.na({{ column }}), {{ column }} %REGEXP% regex, NA)
-        ) %>%
+        ) |>
         dplyr::mutate(pb_is_good_ = dplyr::case_when(
           is.na(pb_is_good_) ~ na_pass,
           TRUE ~ pb_is_good_
@@ -1830,11 +1828,11 @@ interrogate_regex <- function(
     } else if (tbl_type == "bigquery") {
 
       tbl <-
-        table %>%
+        table |>
         dplyr::mutate(
           pb_is_good_ = ifelse(
             !is.na({{ column }}), REGEXP_CONTAINS({{ column }}, regex), NA)
-        ) %>%
+        ) |>
         dplyr::mutate(pb_is_good_ = dplyr::case_when(
           is.na(pb_is_good_) ~ na_pass,
           TRUE ~ pb_is_good_
@@ -1843,10 +1841,10 @@ interrogate_regex <- function(
     } else if (tbl_type == "duckdb") {
 
       tbl <-
-        table %>%
+        table |>
         dplyr::mutate(pb_is_good_ = ifelse(
           !is.na({{ column }}), regexp_matches({{ column }}, regex), NA)
-        ) %>%
+        ) |>
         dplyr::mutate(pb_is_good_ = dplyr::case_when(
           is.na(pb_is_good_) ~ na_pass,
           TRUE ~ pb_is_good_
@@ -1856,10 +1854,10 @@ interrogate_regex <- function(
 
       # This works for postgres and local tables; untested so far in other DBs
       tbl <-
-        table %>%
+        table |>
         dplyr::mutate(pb_is_good_ = ifelse(
           !is.na({{ column }}), grepl(regex, {{ column }}, perl = TRUE), NA)
-        ) %>%
+        ) |>
         dplyr::mutate(pb_is_good_ = dplyr::case_when(
           is.na(pb_is_good_) ~ na_pass,
           TRUE ~ pb_is_good_
@@ -1911,7 +1909,7 @@ interrogate_str_len <- function(
     column_validity_checks_column(table = table, column = {{ column }})
 
     tbl <-
-      table %>%
+      table |>
       dplyr::mutate(
         pb_is_good_ = ifelse(
           !is.na({{ column }}) & is.character({{ column }}),
@@ -1924,7 +1922,7 @@ interrogate_str_len <- function(
           },
           ifelse(is.na({{ column }}), NA, FALSE)
         )
-      ) %>%
+      ) |>
       dplyr::mutate(pb_is_good_ = dplyr::case_when(
         is.na(pb_is_good_) ~ na_pass,
         TRUE ~ pb_is_good_
@@ -2031,11 +2029,11 @@ interrogate_within_spec <- function(
         if (tbl_type == "tbl_spark") {
 
           tbl <-
-            table %>%
+            table |>
             dplyr::mutate(
               pb_is_good_ = ifelse(
                 !is.na({{ column }}), RLIKE({{ column }}, regex), NA)
-            ) %>%
+            ) |>
             dplyr::mutate(pb_is_good_ = dplyr::case_when(
               is.na(pb_is_good_) ~ na_pass,
               TRUE ~ pb_is_good_
@@ -2044,10 +2042,10 @@ interrogate_within_spec <- function(
         } else if (tbl_type == "mysql") {
 
           tbl <-
-            table %>%
+            table |>
             dplyr::mutate(pb_is_good_ = ifelse(
               !is.na({{ column }}), {{ column }} %REGEXP% regex, NA)
-            ) %>%
+            ) |>
             dplyr::mutate(pb_is_good_ = dplyr::case_when(
               is.na(pb_is_good_) ~ na_pass,
               TRUE ~ pb_is_good_
@@ -2056,10 +2054,10 @@ interrogate_within_spec <- function(
         } else if (tbl_type == "duckdb") {
 
           tbl <-
-            table %>%
+            table |>
             dplyr::mutate(pb_is_good_ = ifelse(
               !is.na({{ column }}), regexp_matches({{ column }}, regex), NA)
-            ) %>%
+            ) |>
             dplyr::mutate(pb_is_good_ = dplyr::case_when(
               is.na(pb_is_good_) ~ na_pass,
               TRUE ~ pb_is_good_
@@ -2070,10 +2068,10 @@ interrogate_within_spec <- function(
           # This works for postgres and local tables;
           # untested so far in other DBs
           tbl <-
-            table %>%
+            table |>
             dplyr::mutate(pb_is_good_ = ifelse(
               !is.na({{ column }}), grepl(regex, {{ column }}), NA)
-            ) %>%
+            ) |>
             dplyr::mutate(pb_is_good_ = dplyr::case_when(
               is.na(pb_is_good_) ~ na_pass,
               TRUE ~ pb_is_good_
@@ -2086,7 +2084,7 @@ interrogate_within_spec <- function(
       if (spec == "vin") {
 
         tbl <-
-          check_vin_db(table, column = {{ column }}) %>%
+          check_vin_db(table, column = {{ column }}) |>
           dplyr::mutate(pb_is_good_ = dplyr::case_when(
             is.na(pb_is_good_) ~ na_pass,
             .default = pb_is_good_
@@ -2185,7 +2183,7 @@ interrogate_expr <- function(
 
     expr <- expr[[1]]
 
-    tbl <- table %>%
+    tbl <- table |>
       dplyr::mutate(pb_is_good_ = !!expr)
 
     if (anyNA(tbl$pb_is_good_)) {
@@ -2302,7 +2300,7 @@ interrogate_null <- function(
     true <- if (uses_numeric_logical(table)) 1 else TRUE
     false <- if (uses_numeric_logical(table)) 0 else FALSE
 
-    table %>%
+    table |>
       dplyr::mutate(pb_is_good_ = dplyr::case_when(
         is.na({{ column }}) ~ {{ true }},
         TRUE ~ {{ false }}
@@ -2337,7 +2335,7 @@ interrogate_not_null <- function(
     true <- if (uses_numeric_logical(table)) 1 else TRUE
     false <- if (uses_numeric_logical(table)) 0 else FALSE
 
-    table %>%
+    table |>
       dplyr::mutate(pb_is_good_ = dplyr::case_when(
         is.na({{ column }}) ~ {{ false }},
         TRUE ~ {{ true }}
@@ -2416,11 +2414,11 @@ interrogate_col_type <- function(
     column_validity_checks_column(table = table, column = {{ column }})
 
     column_class <-
-      table %>%
-      dplyr::select({{ column }}) %>%
-      utils::head(1) %>%
-      dplyr::as_tibble() %>%
-      dplyr::pull({{ column }}) %>%
+      table |>
+      dplyr::select({{ column }}) |>
+      utils::head(1) |>
+      dplyr::as_tibble() |>
+      dplyr::pull({{ column }}) |>
       class()
 
     validation_res <-
@@ -2457,12 +2455,12 @@ interrogate_distinct <- function(
 ) {
 
   column_names <-
-    get_column_as_sym_at_idx(agent = agent, idx = idx) %>%
+    get_column_as_sym_at_idx(agent = agent, idx = idx) |>
     as.character()
 
   if (grepl("(,|&)", column_names)) {
     column_names <-
-      strsplit(split = "(, |,|&)", column_names) %>%
+      strsplit(split = "(, |,|&)", column_names) |>
       unlist()
   }
 
@@ -2484,9 +2482,9 @@ interrogate_distinct <- function(
     tbl_validity_check(table = table)
     column_validity_has_columns(columns = column_names)
 
-    table %>%
-      dplyr::group_by(!!!col_syms) %>%
-      dplyr::mutate(`pb_is_good_` = dplyr::n() == 1L) %>%
+    table |>
+      dplyr::group_by(!!!col_syms) |>
+      dplyr::mutate(`pb_is_good_` = dplyr::n() == 1L) |>
       dplyr::ungroup()
   }
 
@@ -2504,13 +2502,13 @@ interrogate_distinct <- function(
     tbl_validity_check(table = table)
 
     unduplicated <-
-      table %>%
-      dplyr::count(!!!col_syms, name = "pb_is_good_") %>%
-      dplyr::mutate(`pb_is_good_` = `pb_is_good_` == 1L) %>%
+      table |>
+      dplyr::count(!!!col_syms, name = "pb_is_good_") |>
+      dplyr::mutate(`pb_is_good_` = `pb_is_good_` == 1L) |>
       dplyr::filter(`pb_is_good_`)
 
-    table %>%
-      dplyr::left_join(unduplicated, by = column_names) %>%
+    table |>
+      dplyr::left_join(unduplicated, by = column_names) |>
       dplyr::mutate(`pb_is_good_` = !is.na(`pb_is_good_`))
   }
 
@@ -2543,12 +2541,12 @@ interrogate_complete <- function(
 ) {
 
   column_names <-
-    get_column_as_sym_at_idx(agent = agent, idx = idx) %>%
+    get_column_as_sym_at_idx(agent = agent, idx = idx) |>
     as.character()
 
   if (grepl("(,|&)", column_names)) {
     column_names <-
-      strsplit(split = "(, |,|&)", column_names) %>%
+      strsplit(split = "(, |,|&)", column_names) |>
       unlist()
   }
 
@@ -2578,13 +2576,13 @@ interrogate_complete <- function(
         )
 
       table_check <-
-        table %>%
+        table |>
         dplyr::mutate(pb_is_good_ = !!col_expr)
 
     } else {
 
       table_check <-
-        table %>%
+        table |>
         dplyr::mutate(
           pb_is_good_ = stats::complete.cases(dplyr::pick({{ column_names }}))
         )
@@ -2903,9 +2901,9 @@ interrogate_tbl_match <- function(
         dplyr::bind_cols(
           dplyr::collect(dplyr::rename(dplyr::select(table, i), a = 1)),
           dplyr::collect(dplyr::rename(dplyr::select(tbl_compare, i), b = 1))
-        ) %>%
-        dplyr::mutate(pb_is_good_ = identical(a, b)) %>%
-        dplyr::pull(pb_is_good_) %>%
+        ) |>
+        dplyr::mutate(pb_is_good_ = identical(a, b)) |>
+        dplyr::pull(pb_is_good_) |>
         all()
 
       column_all_matched <- c(column_all_matched, col_pair_match)
@@ -3088,9 +3086,9 @@ add_reporting_data <- function(
 
   # Get total count of rows
   row_count <-
-    tbl_checked %>%
-    dplyr::count() %>%
-    dplyr::pull(n) %>%
+    tbl_checked |>
+    dplyr::count() |>
+    dplyr::pull(n) |>
     as.numeric()
 
   #
@@ -3102,10 +3100,10 @@ add_reporting_data <- function(
     # nocov start
 
     n_passed <-
-      tbl_checked %>%
-      dplyr::filter(pb_is_good_ == 1) %>%
-      dplyr::count() %>%
-      dplyr::pull(n) %>%
+      tbl_checked |>
+      dplyr::filter(pb_is_good_ == 1) |>
+      dplyr::count() |>
+      dplyr::pull(n) |>
       as.numeric()
 
     # nocov end
@@ -3113,10 +3111,10 @@ add_reporting_data <- function(
   } else {
 
     n_passed <-
-      tbl_checked %>%
-      dplyr::filter(pb_is_good_ == TRUE) %>%
-      dplyr::count() %>%
-      dplyr::pull(n) %>%
+      tbl_checked |>
+      dplyr::filter(pb_is_good_ == TRUE) |>
+      dplyr::count() |>
+      dplyr::pull(n) |>
       as.numeric()
   }
 
@@ -3129,10 +3127,10 @@ add_reporting_data <- function(
     # nocov start
 
     n_failed <-
-      tbl_checked %>%
-      dplyr::filter(pb_is_good_ == 0) %>%
-      dplyr::count() %>%
-      dplyr::pull(n) %>%
+      tbl_checked |>
+      dplyr::filter(pb_is_good_ == 0) |>
+      dplyr::count() |>
+      dplyr::pull(n) |>
       as.numeric()
 
     # nocov end
@@ -3140,10 +3138,10 @@ add_reporting_data <- function(
   } else {
 
     n_failed <-
-      tbl_checked %>%
-      dplyr::filter(pb_is_good_ == FALSE) %>%
-      dplyr::count() %>%
-      dplyr::pull(n) %>%
+      tbl_checked |>
+      dplyr::filter(pb_is_good_ == FALSE) |>
+      dplyr::count() |>
+      dplyr::pull(n) |>
       as.numeric()
   }
 
@@ -3169,7 +3167,7 @@ perform_action <- function(
 ) {
 
   actions <-
-    agent$validation_set[[idx, "actions"]] %>%
+    agent$validation_set[[idx, "actions"]] |>
     unlist(recursive = FALSE)
 
   .warn <- agent$validation_set[[idx, "warn"]]
@@ -3188,9 +3186,9 @@ perform_action <- function(
 
   .i <- idx
   .type <- agent$validation_set[[idx, "assertion_type"]]
-  .column <- agent$validation_set[[idx, "column"]] %>% unlist()
-  .values <- agent$validation_set[[idx, "values"]] %>% unlist()
-  .actions <- agent$validation_set[[idx, "actions"]] %>% unlist()
+  .column <- agent$validation_set[[idx, "column"]] |> unlist()
+  .values <- agent$validation_set[[idx, "values"]] |> unlist()
+  .actions <- agent$validation_set[[idx, "actions"]] |> unlist()
   .brief <- agent$validation_set[[idx, "brief"]]
 
   .eval_error <- agent$validation_set[[idx, "eval_error"]]
@@ -3240,7 +3238,7 @@ perform_action <- function(
     x$this_type <- "warn"
     if (!is.na(.warn) && .warn) {
       if ("warn" %in% names(actions$fns) && !is.null(actions$fns$warn)) {
-        actions$fns$warn %>% rlang::f_rhs() %>% rlang::eval_tidy()
+        actions$fns$warn |> rlang::f_rhs() |> rlang::eval_tidy()
       }
     }
   } else if (type == "notify") {
@@ -3248,7 +3246,7 @@ perform_action <- function(
     if (!is.na(.notify) && .notify) {
       fn_critical <- actions$fns$critical %||% actions$fns$notify
       if (!is.null(fn_critical)) {
-        fn_critical %>% rlang::f_rhs() %>% rlang::eval_tidy()
+        fn_critical |> rlang::f_rhs() |> rlang::eval_tidy()
       }
     }
   } else if (type == "stop") {
@@ -3256,7 +3254,7 @@ perform_action <- function(
     if (!is.na(.stop) && .stop) {
       fn_error <- actions$fns$error %||% actions$fns$stop
       if (!is.null(fn_error)) {
-        fn_error %>% rlang::f_rhs() %>% rlang::eval_tidy()
+        fn_error |> rlang::f_rhs() |> rlang::eval_tidy()
       }
     }
   }
@@ -3266,7 +3264,7 @@ perform_action <- function(
 
 perform_end_action <- function(agent) {
 
-  actions <- agent$end_fns %>% unlist()
+  actions <- agent$end_fns |> unlist()
 
   .warn <- agent$validation_set$warn
   .notify <- agent$validation_set$notify
@@ -3355,7 +3353,7 @@ perform_end_action <- function(agent) {
     )
 
   lapply(actions, FUN = function(y) {
-    y %>% rlang::f_rhs() %>% rlang::eval_tidy()
+    y |> rlang::f_rhs() |> rlang::eval_tidy()
   })
 
   NULL
@@ -3382,15 +3380,15 @@ add_table_extract <- function(
 
   tbl_checked <- tbl_checked$value
 
-  tbl_type <- tbl_checked %>% class()
+  tbl_type <- tbl_checked |> class()
 
   if (uses_numeric_logical(tbl_checked)) {
 
     # nocov start
 
     problem_rows <-
-      tbl_checked %>%
-      dplyr::filter(pb_is_good_ == 0) %>%
+      tbl_checked |>
+      dplyr::filter(pb_is_good_ == 0) |>
       dplyr::select(-pb_is_good_)
 
     # nocov end
@@ -3398,16 +3396,16 @@ add_table_extract <- function(
   } else {
 
     problem_rows <-
-      tbl_checked %>%
-      dplyr::filter(pb_is_good_ == FALSE) %>%
+      tbl_checked |>
+      dplyr::filter(pb_is_good_ == FALSE) |>
       dplyr::select(-pb_is_good_)
   }
 
   if (!is.null(get_first_n)) {
 
     problem_rows <-
-      problem_rows %>%
-      utils::head(get_first_n) %>%
+      problem_rows |>
+      utils::head(get_first_n) |>
       dplyr::as_tibble()
 
   } else if (
@@ -3421,7 +3419,7 @@ add_table_extract <- function(
       dplyr::slice_sample(
         problem_rows,
         n = sample_n,
-        replace = FALSE) %>%
+        replace = FALSE) |>
       dplyr::as_tibble()
 
   } else if (
@@ -3435,15 +3433,15 @@ add_table_extract <- function(
       dplyr::slice_sample(
         problem_rows,
         prop = sample_frac,
-        replace = FALSE) %>%
-      dplyr::as_tibble() %>%
+        replace = FALSE) |>
+      dplyr::as_tibble() |>
       utils::head(sample_limit)
 
   } else {
 
     problem_rows <-
-      problem_rows %>%
-      utils::head(5000) %>%
+      problem_rows |>
+      utils::head(5000) |>
       dplyr::as_tibble()
   }
 
@@ -3465,7 +3463,7 @@ determine_action <- function(
     false_count
 ) {
 
-  al <- agent$validation_set[[idx, "actions"]] %>% unlist(recursive = FALSE)
+  al <- agent$validation_set[[idx, "actions"]] |> unlist(recursive = FALSE)
   n <- agent$validation_set[[idx, "n"]]
 
   warn <- stop <- notify <- FALSE

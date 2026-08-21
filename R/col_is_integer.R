@@ -250,14 +250,14 @@ col_is_integer <- function(
   if (is_a_table_object(x)) {
 
     secret_agent <-
-      create_agent(x, label = "::QUIET::") %>%
+      create_agent(x, label = "::QUIET::") |>
       col_is_integer(
         columns = tidyselect::all_of(columns),
         label = label,
         brief = brief,
         actions = prime_actions(actions),
         active = active
-      ) %>%
+      ) |>
       interrogate()
 
     return(x)
@@ -318,13 +318,13 @@ expect_col_is_integer <- function(
   fn_name <- "expect_col_is_integer"
 
   vs <-
-    create_agent(tbl = object, label = "::QUIET::") %>%
+    create_agent(tbl = object, label = "::QUIET::") |>
     col_is_integer(
       columns = {{ columns }},
       actions = action_levels(critical = threshold)
-    ) %>%
-    interrogate() %>%
-    .$validation_set
+    ) |>
+    interrogate() |>
+    (\(x) x$validation_set)()
 
   x <- vs$notify
 
@@ -391,13 +391,13 @@ test_col_is_integer <- function(
 ) {
 
   vs <-
-    create_agent(tbl = object, label = "::QUIET::") %>%
+    create_agent(tbl = object, label = "::QUIET::") |>
     col_is_integer(
       columns = {{ columns }},
       actions = action_levels(critical = threshold)
-    ) %>%
-    interrogate() %>%
-    .$validation_set
+    ) |>
+    interrogate() |>
+    (\(x) x$validation_set)()
 
   if (inherits(vs$capture_stack[[1]]$warning, "simpleWarning")) {
     warning(conditionMessage(vs$capture_stack[[1]]$warning))

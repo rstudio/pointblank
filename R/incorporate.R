@@ -194,7 +194,7 @@ incorporate <- function(informant) {
 
       if (inherits(tbl, "read_fn")) {
         if (inherits(tbl, "with_tbl_name") && is.na(tbl_name)) {
-          tbl_name <- tbl %>% rlang::f_lhs() %>% as.character()
+          tbl_name <- as.character(rlang::f_lhs(tbl))
         }
         tbl <- eval_f_rhs(tbl)
       }
@@ -248,14 +248,10 @@ incorporate <- function(informant) {
 
   for (i in seq_along(meta_snippets)) {
 
-    snippet_fn <-
-      informant$meta_snippets[[i]] %>%
-      rlang::f_rhs()
+    snippet_fn <- rlang::f_rhs(informant$meta_snippets[[i]])
 
     snippet_f_rhs_str <-
-      informant$meta_snippets[[i]] %>%
-      rlang::f_rhs() %>%
-      as.character()
+      as.character(rlang::f_rhs(informant$meta_snippets[[i]]))
 
     if (
       any(grepl("pb_str_catalog", snippet_f_rhs_str)) &&
@@ -282,17 +278,19 @@ incorporate <- function(informant) {
       # Put the snippet back together as a formula and
       # get only the RHS
       snippet_fn <-
-        paste0(
-          "~",
-          snippet_f_rhs_str[select_call_idx],
-          " %>% ",
-          snippet_f_rhs_str[pb_str_catalog_call_idx]
-        ) %>%
-        stats::as.formula() %>%
-        rlang::f_rhs()
+        rlang::f_rhs(
+          stats::as.formula(
+            paste0(
+              "~",
+              snippet_f_rhs_str[select_call_idx],
+              " %>% ",
+              snippet_f_rhs_str[pb_str_catalog_call_idx]
+            )
+          )
+        )
     }
 
-    snippet_fn <- snippet_fn %>% rlang::eval_tidy()
+    snippet_fn <- rlang::eval_tidy(snippet_fn)
 
     if (inherits(snippet_fn, "fseq")) {
 
@@ -305,15 +303,11 @@ incorporate <- function(informant) {
 
         if (is.integer(snippet)) {
 
-          snippet <-
-            snippet %>%
-            pb_fmt_number(locale = locale, decimals = 0)
+          snippet <- pb_fmt_number(snippet, locale = locale, decimals = 0)
 
         } else {
 
-          snippet <-
-            snippet %>%
-            pb_fmt_number(locale = locale)
+          snippet <- pb_fmt_number(snippet, locale = locale)
         }
       }
 

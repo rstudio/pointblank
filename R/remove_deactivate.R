@@ -95,7 +95,7 @@ activate_steps <- function(
 
   if (!is.null(i)) {
     agent$validation_set <-
-      agent$validation_set %>%
+      agent$validation_set |>
       dplyr::mutate(active = ifelse(i %in% {{ i }}, list(TRUE), active))
   }
 
@@ -178,7 +178,7 @@ deactivate_steps <- function(
 
   if (!is.null(i)) {
     agent$validation_set <-
-      agent$validation_set %>%
+      agent$validation_set |>
       dplyr::mutate(active = ifelse(i %in% {{ i }}, list(FALSE), active))
   }
 
@@ -263,7 +263,7 @@ remove_steps <- function(
   # TODO: Allow for removal of multiple steps (e.g., `i = 1:3`)
   if (!is.null(i)) {
     agent$validation_set <-
-      agent$validation_set %>%
+      agent$validation_set |>
       dplyr::slice(-{{ i }})
   }
 

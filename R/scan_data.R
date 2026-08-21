@@ -329,7 +329,7 @@ probe_overview_stats <- function(
         n_cols, n_rows, na_cells, duplicate_rows
       ),
       pct = NA_real_
-    ) %>%
+    ) |>
     dplyr::mutate(pct = dplyr::case_when(
       dplyr::row_number() == 3 ~ na_cells / (n_cols * n_rows),
       dplyr::row_number() == 4 ~ duplicate_rows / n_rows,
@@ -337,29 +337,29 @@ probe_overview_stats <- function(
     ))
 
   r_col_types_tbl <-
-    dplyr::tibble(r_col_types = r_col_types) %>%
-    dplyr::count(r_col_types, name = "count", sort = TRUE) %>%
+    dplyr::tibble(r_col_types = r_col_types) |>
+    dplyr::count(r_col_types, name = "count", sort = TRUE) |>
     utils::head(6E8)
 
   data_overview_gt <-
-    gt::gt(data_overview_tbl, locale = locale) %>%
-    gt::fmt_markdown(columns = "label") %>%
-    gt::fmt_integer(columns = "value") %>%
-    gt::fmt_percent(columns = "pct", decimals = 2) %>%
-    gt::cols_merge(columns = c("value", "pct"), pattern = "{1} ({2})") %>%
-    gt::cols_align(align = "right", columns = "value") %>%
+    gt::gt(data_overview_tbl, locale = locale) |>
+    gt::fmt_markdown(columns = "label") |>
+    gt::fmt_integer(columns = "value") |>
+    gt::fmt_percent(columns = "pct", decimals = 2) |>
+    gt::cols_merge(columns = c("value", "pct"), pattern = "{1} ({2})") |>
+    gt::cols_align(align = "right", columns = "value") |>
     gt::text_transform(
       locations = gt::cells_body(columns = "value", rows = 1:2),
       fn = function(x) {
         gsub(" (NA)", "", x, fixed = TRUE)
       }
-    ) %>%
+    ) |>
     gt::text_transform(
       locations = gt::cells_body(columns = "value", rows = 3:4),
       fn = function(x) {
         gsub("^0 \\(.*", "0", x)
       }
-    ) %>%
+    ) |>
     gt::tab_options(
       column_labels.hidden = TRUE,
       table.border.top.style = "none",
@@ -367,9 +367,9 @@ probe_overview_stats <- function(
     )
 
   r_col_types_gt <-
-    gt::gt(r_col_types_tbl) %>%
-    gt::fmt_number(columns = "count", decimals = 0, locale = locale) %>%
-    gt::cols_align(align = "right", columns = "count") %>%
+    gt::gt(r_col_types_tbl) |>
+    gt::fmt_number(columns = "count", decimals = 0, locale = locale) |>
+    gt::cols_align(align = "right", columns = "count") |>
     gt::tab_options(
       column_labels.hidden = TRUE,
       table.border.top.style = "none",
@@ -387,16 +387,15 @@ probe_overview_stats <- function(
       value = c(
         paste0("`", strftime(Sys.time()), "`"),
         paste0("`", as.character(utils::packageVersion("pointblank")), "`"),
-        paste0(
+        gsub("-", "&ndash;", paste0(
           R.version$version.string,
           "<br><span style=\"font-size: smaller;\"><em>",
-          R.version$nickname, "</em></span>") %>%
-          gsub("-", "&ndash;", .),
+          R.version$nickname, "</em></span>")),
         paste0("`", R.version$platform, "`")
       )
-    ) %>%
-    gt::gt() %>%
-    gt::fmt_markdown(columns = gt::everything()) %>%
+    ) |>
+    gt::gt() |>
+    gt::fmt_markdown(columns = gt::everything()) |>
     gt::tab_options(
       column_labels.hidden = TRUE,
       table.border.top.style = "none",
@@ -531,9 +530,9 @@ get_column_description_gt <- function(
     )
 
   column_description_gt <-
-    gt::gt(column_description_tbl) %>%
-    gt::fmt_markdown(columns = "label") %>%
-    gt::fmt_number(columns = "value", decimals = 0, locale = locale) %>%
+    gt::gt(column_description_tbl) |>
+    gt::fmt_markdown(columns = "label") |>
+    gt::fmt_number(columns = "value", decimals = 0, locale = locale) |>
     gt::tab_options(
       column_labels.hidden = TRUE,
       table.border.top.style = "none",
@@ -566,14 +565,14 @@ get_numeric_stats_gt <- function(
     )
 
   column_stats_gt <-
-    gt::gt(column_stats_tbl) %>%
-    gt::fmt_markdown(columns = "label") %>%
+    gt::gt(column_stats_tbl) |>
+    gt::fmt_markdown(columns = "label") |>
     gt::fmt_number(
       columns = "value",
       decimals = 2,
       drop_trailing_zeros = TRUE,
       locale = locale
-    ) %>%
+    ) |>
     gt::tab_options(
       column_labels.hidden = TRUE,
       table.border.top.style = "none",
@@ -632,12 +631,12 @@ get_quantile_stats_gt <- function(
     )
 
   quantile_stats_gt <-
-    gt::gt(quantile_stats_tbl) %>%
+    gt::gt(quantile_stats_tbl) |>
     gt::fmt_number(
       columns = "value",
       decimals = 2,
       locale = locale
-    ) %>%
+    ) |>
     gt::tab_options(
       column_labels.hidden = TRUE,
       table.border.top.style = "none",
@@ -720,13 +719,13 @@ get_descriptive_stats_gt <- function(
       )
     )
 
-  gt::gt(descriptive_stats_tbl) %>%
+  gt::gt(descriptive_stats_tbl) |>
     gt::fmt_number(
       columns = "value",
       decimals = 2,
       drop_trailing_zeros = FALSE,
       locale = locale
-    ) %>%
+    ) |>
     gt::tab_options(
       column_labels.hidden = TRUE,
       table.border.top.style = "none",
@@ -773,14 +772,14 @@ get_common_values_gt <- function(
 
     common_values_tbl <-
       dplyr::bind_rows(
-        top_ten_rows %>%
-          utils::head(9) %>%
-          dplyr::collect() %>%
+        top_ten_rows |>
+          utils::head(9) |>
+          dplyr::collect() |>
           dplyr::mutate(
             n = as.numeric(n),
             frequency = n / n_rows
-          ) %>%
-          dplyr::rename(value = 1) %>%
+          ) |>
+          dplyr::rename(value = 1) |>
           dplyr::mutate(value = as.character(value)),
         dplyr::tibble(
           value = paste0(
@@ -796,14 +795,14 @@ get_common_values_gt <- function(
     n_rows_summary_tbl <- nrow(common_values_tbl)
 
     common_values_gt <-
-      common_values_tbl %>%
-      gt::gt() %>%
+      common_values_tbl |>
+      gt::gt() |>
       gt::cols_label(
         value = get_lsv("table_scan/tbl_lab_value")[[lang]],
         n = get_lsv("table_scan/tbl_lab_count")[[lang]],
         frequency = get_lsv("table_scan/tbl_lab_frequency")[[lang]],
-      ) %>%
-      gt::sub_missing(columns = "value", missing_text = "**NA**") %>%
+      ) |>
+      gt::sub_missing(columns = "value", missing_text = "**NA**") |>
       gt::text_transform(
         locations = gt::cells_body(columns = "value"),
         fn = function(x) {
@@ -813,16 +812,16 @@ get_common_values_gt <- function(
             x
           )
         }
-      ) %>%
+      ) |>
       gt::fmt_percent(
         columns = "frequency",
         decimals = 1,
         locale = locale
-      ) %>%
+      ) |>
       gt::fmt_markdown(
         columns = "value",
         rows = n_rows_summary_tbl
-      ) %>%
+      ) |>
       gt::tab_options(
         table.border.top.style = "none",
         table.width = "100%"
@@ -831,27 +830,27 @@ get_common_values_gt <- function(
   } else {
 
     common_values_gt <-
-      dplyr::collect(common_values_tbl) %>%
-      dplyr::mutate(frequency = n / n_rows) %>%
-      dplyr::rename(value = 1) %>%
-      dplyr::mutate(value = as.character(value)) %>%
-      gt::gt() %>%
+      dplyr::collect(common_values_tbl) |>
+      dplyr::mutate(frequency = n / n_rows) |>
+      dplyr::rename(value = 1) |>
+      dplyr::mutate(value = as.character(value)) |>
+      gt::gt() |>
       gt::cols_label(
         value = get_lsv("table_scan/tbl_lab_value")[[lang]],
         n = get_lsv("table_scan/tbl_lab_count")[[lang]],
         frequency = get_lsv("table_scan/tbl_lab_frequency")[[lang]],
-      ) %>%
-      gt::sub_missing(columns = "value", missing_text = "**NA**") %>%
+      ) |>
+      gt::sub_missing(columns = "value", missing_text = "**NA**") |>
       gt::text_transform(
         locations = gt::cells_body(columns = "value"),
         fn = function(x) ifelse(x == "**NA**", "<code>NA</code>", x)
-      ) %>%
+      ) |>
       gt::fmt_percent(
         columns = "frequency",
         decimals = 1,
         locale = locale
-      ) %>%
-      gt::fmt_markdown(columns = "value") %>%
+      ) |>
+      gt::fmt_markdown(columns = "value") |>
       gt::tab_options(
         table.border.top.style = "none",
         table.width = "100%"
@@ -877,7 +876,7 @@ get_top_bottom_slice <- function(
   n_rows <- get_table_total_rows(data = data_column)
 
   data_column_freq <-
-    data_column %>%
+    data_column |>
     dplyr::count(dplyr::pick(1))
 
   name_1 <- rlang::sym(get_lsv("table_scan/tbl_lab_value")[[lang]])
@@ -930,18 +929,18 @@ get_character_nchar_stats_gt <- function(
 ) {
 
   character_nchar_stats <-
-    data_column %>%
-    dplyr::mutate_all(.funs = nchar) %>%
-    dplyr::rename(nchar = 1) %>%
+    data_column |>
+    dplyr::mutate_all(.funs = nchar) |>
+    dplyr::rename(nchar = 1) |>
     dplyr::summarize_all(
       .funs = list(
         mean = ~ mean(., na.rm = TRUE),
         min = ~ min(., na.rm = TRUE),
         max = ~ max(., na.rm = TRUE)
       )
-    ) %>%
-    dplyr::collect() %>%
-    dplyr::mutate_all(.funs = as.numeric) %>%
+    ) |>
+    dplyr::collect() |>
+    dplyr::mutate_all(.funs = as.numeric) |>
     as.list()
 
   dplyr::tribble(
@@ -949,13 +948,13 @@ get_character_nchar_stats_gt <- function(
     get_lsv("table_scan/tbl_lab_mean")[[lang]],     character_nchar_stats$mean,
     get_lsv("table_scan/tbl_lab_minimum")[[lang]],  character_nchar_stats$min,
     get_lsv("table_scan/tbl_lab_maximum")[[lang]],  character_nchar_stats$max
-  ) %>%
-    gt::gt() %>%
+  ) |>
+    gt::gt() |>
     gt::fmt_number(
       columns = "value",
       decimals = 1,
       locale = locale
-    ) %>%
+    ) |>
     gt::tab_options(
       column_labels.hidden = TRUE,
       table.border.top.style = "none",
@@ -995,11 +994,12 @@ get_character_nchar_plot <- function(
     htmltools::tags$div(
       style = "text-align: center",
       htmltools::HTML(
-        gt::local_image(
-          filename = "temp_histogram_ggplot.png",
-          height = "500px"
-        ) %>%
-          gsub("height:500px", "width: 100%", .)
+        gsub(
+          "height:500px", "width: 100%",
+          gt::local_image(
+            filename = "temp_histogram_ggplot.png", height = "500px"
+          )
+        )
       )
     )
 
@@ -1109,7 +1109,7 @@ probe_columns_character <- function(
     locale
 ) {
 
-  data_column <- data %>% dplyr::select(tidyselect::any_of(column))
+  data_column <- data |> dplyr::select(tidyselect::any_of(column))
 
   column_description_gt <-
     get_column_description_gt(
@@ -1160,7 +1160,7 @@ probe_columns_logical <- function(
     locale
 ) {
 
-  data_column <- data %>% dplyr::select(tidyselect::any_of(column))
+  data_column <- data |> dplyr::select(tidyselect::any_of(column))
 
   column_description_gt <-
     get_column_description_gt(
@@ -1187,7 +1187,7 @@ probe_columns_factor <- function(
     locale
 ) {
 
-  data_column <- data %>% dplyr::select(tidyselect::any_of(column))
+  data_column <- data |> dplyr::select(tidyselect::any_of(column))
 
   column_description_gt <-
     get_column_description_gt(
@@ -1214,7 +1214,7 @@ probe_columns_date <- function(
     locale
 ) {
 
-  data_column <- data %>% dplyr::select(tidyselect::any_of(column))
+  data_column <- data |> dplyr::select(tidyselect::any_of(column))
 
   column_description_gt <-
     get_column_description_gt(
@@ -1241,7 +1241,7 @@ probe_columns_posix <- function(
     locale
 ) {
 
-  data_column <- data %>% dplyr::select(tidyselect::any_of(column))
+  data_column <- data |> dplyr::select(tidyselect::any_of(column))
 
   column_description_gt <-
     get_column_description_gt(
@@ -1266,7 +1266,7 @@ probe_columns_other <- function(
     n_rows
 ) {
 
-  data_column <- data %>% dplyr::select(tidyselect::any_of(column))
+  data_column <- data |> dplyr::select(tidyselect::any_of(column))
 
   column_classes <- paste(class(data_column), collapse = ", ")
 
@@ -1293,10 +1293,10 @@ probe_interactions <- function(data) {
     vapply(
       columns_char, FUN.VALUE = integer(1), USE.NAMES = FALSE,
       FUN = function(x) {
-        data %>%
-          dplyr::select(dplyr::all_of(x)) %>%
-          dplyr::distinct() %>%
-          dplyr::count() %>%
+        data |>
+          dplyr::select(dplyr::all_of(x)) |>
+          dplyr::distinct() |>
+          dplyr::count() |>
           dplyr::pull(n)
       }
     )
@@ -1304,7 +1304,7 @@ probe_interactions <- function(data) {
   # Remove the character-based columns from the vector of
   # `col_names` if there are too many categories
   col_names <-
-    col_names %>%
+    col_names |>
     base::setdiff(columns_char[columns_char_distinct_count > category_cutoff])
 
   # Limit the number of variables to prevent plot size issues
@@ -1314,8 +1314,8 @@ probe_interactions <- function(data) {
 
   # Create a ggplot2 plot matrix with the data
   plot_matrix <-
-    data %>%
-    dplyr::select(dplyr::all_of(col_names)) %>%
+    data |>
+    dplyr::select(dplyr::all_of(col_names)) |>
     ggplot2::ggplot(ggplot2::aes(x = .panel_x, y = .panel_y)) +
     ggplot2::geom_point(alpha = 0.50, shape = 16, size = 1) +
     ggforce::geom_autodensity() +
@@ -1352,11 +1352,10 @@ probe_interactions <- function(data) {
     htmltools::tags$div(
       style = "text-align: center",
       htmltools::HTML(
-        gt::local_image(
-          filename = "temp_matrix_ggplot.png",
-          height = "500px"
-        ) %>%
-          gsub("height:500px", "width: 100%", .)
+        gsub(
+          "height:500px", "width: 100%",
+          gt::local_image(filename = "temp_matrix_ggplot.png", height = "500px")
+        )
       )
     )
 
@@ -1418,7 +1417,7 @@ get_corr_plot <- function(
 ) {
 
   corr_df <-
-    as.data.frame(as.table(mat)) %>%
+    as.data.frame(as.table(mat)) |>
     dplyr::mutate(
       Freq = ifelse(Var1 == Var2, NA_real_, Freq),
       Var1 = factor(Var1, levels = names(labels_vec)),
@@ -1426,7 +1425,7 @@ get_corr_plot <- function(
     )
 
   plot_missing <-
-    corr_df %>%
+    corr_df |>
     ggplot2::ggplot(ggplot2::aes(x = Var1, y = Var2, fill = Freq)) +
     ggplot2::geom_tile(color = "white", linejoin = "bevel") +
     ggplot2::scale_fill_gradientn(
@@ -1470,8 +1469,10 @@ get_corr_plot <- function(
     htmltools::tags$div(
       style = "text-align: center",
       htmltools::HTML(
-        gt::local_image(filename = temp_filename, height = "500px") %>%
-          gsub("height:500px", "width: 100%", .)
+        gsub(
+          "height:500px", "width: 100%",
+          gt::local_image(filename = temp_filename, height = "500px")
+        )
       )
     )
 
@@ -1523,11 +1524,12 @@ probe_missing <- function(data) {
     htmltools::tags$div(
       style = "text-align: center",
       htmltools::HTML(
-        gt::local_image(
-          filename = "temp_missing_ggplot.png",
-          height = "500px"
-        ) %>%
-          gsub("height:500px", "width: 100%", .)
+        gsub(
+          "height:500px", "width: 100%",
+          gt::local_image(
+            filename = "temp_missing_ggplot.png", height = "500px"
+          )
+        )
       )
     )
 
@@ -1539,21 +1541,21 @@ probe_missing <- function(data) {
 probe_sample <- function(data) {
 
   probe_sample <-
-    data %>%
-    gt::gt_preview(top_n = 5, bottom_n = 5) %>%
-    gt::sub_missing(columns = gt::everything(), missing_text = "**NA**") %>%
+    data |>
+    gt::gt_preview(top_n = 5, bottom_n = 5) |>
+    gt::sub_missing(columns = gt::everything(), missing_text = "**NA**") |>
     gt::text_transform(
       locations = gt::cells_body(columns = gt::everything()),
       fn = function(x) ifelse(x == "**NA**", "<code>NA</code>", x)
-    ) %>%
-    gt::tab_options(table.width = "100%") %>%
+    ) |>
+    gt::tab_options(table.width = "100%") |>
     gt::tab_style(
       style = gt::cell_text(font = "monospace"),
       locations = list(
         gt::cells_column_labels(),
         gt::cells_body()
       )
-    ) %>%
+    ) |>
     gt::text_transform(
       locations = gt::cells_body(),
       fn = function(x) {
@@ -1598,7 +1600,7 @@ build_table_scan_page <- function(
   }
 
   probe_list <-
-    sections %>%
+    sections |>
     lapply(
       FUN = function(x) {
         switch(
@@ -2755,7 +2757,7 @@ navbar <- function(
 
   # Compose the list of navigational links for the navbar
   item_list <-
-    sections %>%
+    sections |>
     lapply(
       FUN = function(x) {
 

@@ -97,9 +97,9 @@ get_table_column_inf_values <- function(data_column) {
       !inherits(data_column, "tbl_spark")) {
 
     inf_cells <-
-      data_column %>%
-      dplyr::pull(1) %>%
-      is.infinite() %>%
+      data_column |>
+      dplyr::pull(1) |>
+      is.infinite() |>
       sum()
 
   } else {
@@ -115,16 +115,16 @@ get_table_column_inf_values <- function(data_column) {
 # - returns 'tibble' of 1 row, 3 columns
 get_table_column_summary <- function(data_column, round = 2) {
 
-  data_column %>%
+  data_column |>
     dplyr::summarize_all(
       .funs = list(
         ~ mean(., na.rm = TRUE),
         ~ min(., na.rm = TRUE),
         ~ max(., na.rm = TRUE)
       )
-    ) %>%
-    dplyr::collect() %>%
-    dplyr::summarize_all(~ round(., round)) %>%
+    ) |>
+    dplyr::collect() |>
+    dplyr::summarize_all(~ round(., round)) |>
     dplyr::mutate_all(.funs = as.numeric)
 }
 
@@ -134,7 +134,7 @@ get_table_column_summary <- function(data_column, round = 2) {
 # - returns a 'list' with 9 elements
 get_df_column_qtile_stats <- function(data_column) {
 
-  data_column %>%
+  data_column |>
     dplyr::summarize_all(
       .funs = list(
         min = ~ min(., na.rm = TRUE),
@@ -146,9 +146,9 @@ get_df_column_qtile_stats <- function(data_column) {
         max = ~ max(., na.rm = TRUE),
         iqr = ~ stats::IQR(., na.rm = TRUE)
       )
-    ) %>%
-    dplyr::mutate(range = max - min) %>%
-    round(2) %>%
+    ) |>
+    dplyr::mutate(range = max - min) |>
+    round(2) |>
     as.list()
 }
 
@@ -227,7 +227,7 @@ get_spark_column_qtile_stats <- function(data_column) {
     max = quantiles[7],
     iqr = quantiles[5] - quantiles[3],
     range = quantiles[7] - quantiles[1]
-  ) %>%
+  ) |>
     lapply(FUN = function(x) round(x, 2))
 }
 
@@ -240,10 +240,10 @@ get_spark_column_qtile_stats <- function(data_column) {
 get_dbi_column_qtile_stats <- function(data_column) {
 
   data_arranged <-
-    data_column %>%
-    dplyr::rename(a = 1) %>%
-    dplyr::filter(!is.na(a)) %>%
-    dplyr::arrange(a) %>%
+    data_column |>
+    dplyr::rename(a = 1) |>
+    dplyr::filter(!is.na(a)) |>
+    dplyr::arrange(a) |>
     utils::head(6E8)
 
   n_rows <- get_table_total_rows(data = data_arranged)
@@ -254,67 +254,67 @@ get_dbi_column_qtile_stats <- function(data_column) {
   quantile_rows[quantile_rows == 0] <- 1
 
   dplyr::tibble(
-    min = data_arranged %>%
-      dplyr::summarize(a = min(a, na.rm = TRUE)) %>%
-      dplyr::pull(a) %>%
+    min = data_arranged |>
+      dplyr::summarize(a = min(a, na.rm = TRUE)) |>
+      dplyr::pull(a) |>
       as.numeric(),
-    p05 = data_arranged %>%
-      utils::head(quantile_rows[1]) %>%
-      dplyr::arrange(dplyr::desc(a)) %>%
-      utils::head(1) %>%
-      dplyr::pull(a) %>%
+    p05 = data_arranged |>
+      utils::head(quantile_rows[1]) |>
+      dplyr::arrange(dplyr::desc(a)) |>
+      utils::head(1) |>
+      dplyr::pull(a) |>
       as.numeric(),
-    q_1 = data_arranged %>%
-      utils::head(quantile_rows[2]) %>%
-      dplyr::arrange(dplyr::desc(a)) %>%
-      utils::head(1) %>%
-      dplyr::pull(a) %>%
+    q_1 = data_arranged |>
+      utils::head(quantile_rows[2]) |>
+      dplyr::arrange(dplyr::desc(a)) |>
+      utils::head(1) |>
+      dplyr::pull(a) |>
       as.numeric(),
-    med = data_arranged %>%
-      utils::head(quantile_rows[3]) %>%
-      dplyr::arrange(dplyr::desc(a)) %>%
-      utils::head(1) %>%
-      dplyr::pull(a) %>%
+    med = data_arranged |>
+      utils::head(quantile_rows[3]) |>
+      dplyr::arrange(dplyr::desc(a)) |>
+      utils::head(1) |>
+      dplyr::pull(a) |>
       as.numeric(),
-    q_3 = data_arranged %>%
-      utils::head(quantile_rows[4]) %>%
-      dplyr::arrange(dplyr::desc(a)) %>%
-      utils::head(1) %>%
-      dplyr::pull(a) %>%
+    q_3 = data_arranged |>
+      utils::head(quantile_rows[4]) |>
+      dplyr::arrange(dplyr::desc(a)) |>
+      utils::head(1) |>
+      dplyr::pull(a) |>
       as.numeric(),
-    p95 = data_arranged %>%
-      utils::head(quantile_rows[5]) %>%
-      dplyr::arrange(dplyr::desc(a)) %>%
-      utils::head(1) %>%
-      dplyr::pull(a) %>%
+    p95 = data_arranged |>
+      utils::head(quantile_rows[5]) |>
+      dplyr::arrange(dplyr::desc(a)) |>
+      utils::head(1) |>
+      dplyr::pull(a) |>
       as.numeric(),
-    max = data_arranged %>%
-      dplyr::summarize(a = max(a, na.rm = TRUE)) %>%
-      dplyr::pull(a) %>%
+    max = data_arranged |>
+      dplyr::summarize(a = max(a, na.rm = TRUE)) |>
+      dplyr::pull(a) |>
       as.numeric()
-  ) %>%
+  ) |>
     dplyr::mutate(
       iqr = q_3 - q_1,
       range = max - min
-    ) %>%
-    round(2) %>%
+    ) |>
+    round(2) |>
     as.list()
 }
 
 get_table_column_nchar_stats <- function(data_column) {
 
-  data_column %>%
-    dplyr::mutate_all(.funs = nchar) %>%
-    dplyr::rename(nchar = 1) %>%
+  data_column |>
+    dplyr::mutate_all(.funs = nchar) |>
+    dplyr::rename(nchar = 1) |>
     dplyr::summarize_all(
       .funs = list(
         mean = ~ mean(., na.rm = TRUE),
         min = ~ min(., na.rm = TRUE),
         max = ~ max(., na.rm = TRUE)
       )
-    ) %>%
-    dplyr::collect() %>%
-    dplyr::mutate_all(.funs = as.numeric) %>%
+    ) |>
+    dplyr::collect() |>
+    dplyr::mutate_all(.funs = as.numeric) |>
     as.list()
 }
 
@@ -330,13 +330,13 @@ get_table_column_histogram <- function(data_column, lang, locale) {
   y_label <- get_lsv("table_scan/plot_lab_count")[[lang]]
 
   suppressWarnings(
-    data_column %>%
-      dplyr::mutate_all(.funs = nchar) %>%
-      dplyr::rename(nchar = 1) %>%
-      dplyr::count(nchar) %>%
-      dplyr::collect() %>%
-      dplyr::filter(!is.na(nchar)) %>%
-      dplyr::mutate_all(.funs = as.numeric) %>%
+    data_column |>
+      dplyr::mutate_all(.funs = nchar) |>
+      dplyr::rename(nchar = 1) |>
+      dplyr::count(nchar) |>
+      dplyr::collect() |>
+      dplyr::filter(!is.na(nchar)) |>
+      dplyr::mutate_all(.funs = as.numeric) |>
       ggplot2::ggplot(ggplot2::aes(x = nchar, y = n)) +
       ggplot2::geom_col(fill = "steelblue", width = 0.5) +
       ggplot2::geom_hline(yintercept = 0, color = "#B2B2B2") +
@@ -385,7 +385,7 @@ get_tbl_dbi_missing_tbl <- function(data) {
             FUN = function(x) {
 
               missing_n_span <-
-                data %>%
+                data |>
                 dplyr::select(1, dplyr::all_of(x__))
 
               if (ncol(missing_n_span) == 1) {
@@ -398,12 +398,12 @@ get_tbl_dbi_missing_tbl <- function(data) {
               }
 
               missing_n_span <-
-                missing_n_span %>%
-                utils::head(cuts[x]) %>%
+                missing_n_span |>
+                utils::head(cuts[x]) |>
                 dplyr::summarize_all(
                   ~ sum(ifelse(is.na(.), 1, 0), na.rm = TRUE)
-                ) %>%
-                dplyr::pull(a) %>%
+                ) |>
+                dplyr::pull(a) |>
                 as.integer()
 
               missing_bin <- missing_n_span - missing_tally
@@ -423,8 +423,8 @@ get_tbl_dbi_missing_tbl <- function(data) {
       }
     )
 
-  frequency_list %>%
-    dplyr::bind_rows() %>%
+  frequency_list |>
+    dplyr::bind_rows() |>
     dplyr::mutate(
       value = ifelse(value == 0, NA_real_, value),
       col_name = factor(col_name, levels = colnames(data))
@@ -619,14 +619,14 @@ get_missing_value_plot <- function(data, frequency_tbl, missing_by_column_tbl) {
 get_table_slice_gt <- function(data_column,
                                locale) {
 
-  data_column %>%
-    gt::gt() %>%
-    gt::fmt_percent(columns = 3, locale = locale) %>%
-    gt::sub_missing(columns = 1, missing_text = "**NA**") %>%
+  data_column |>
+    gt::gt() |>
+    gt::fmt_percent(columns = 3, locale = locale) |>
+    gt::sub_missing(columns = 1, missing_text = "**NA**") |>
     gt::text_transform(
       locations = gt::cells_body(columns = 1),
       fn = function(x) ifelse(x == "**NA**", "<code>NA</code>", x)
-    ) %>%
+    ) |>
     gt::tab_options(
       table.border.top.style = "none",
       table.width = "100%"

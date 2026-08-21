@@ -254,8 +254,8 @@ knitr_error_hook <- function(previous_hook) {
       increment_count("error")
 
       error_message <-
-        x %>%
-        tidy_gsub("##", "") %>%
+        x |>
+        tidy_gsub("##", "") |>
         tidy_gsub("\n", "")
 
       log4r_error(message = error_message)
@@ -330,8 +330,8 @@ knitr_chunk_hook <- function(x, options) {
 
     matches <- gregexpr(pattern = "```r(.|\n)*?```", x)
 
-    regmatches(x = x, m = matches) %>%
-      unlist() %>%
+    regmatches(x = x, m = matches) |>
+      unlist() |>
       tidy_gsub("(```r\\n|\\n```)", "")
   }
 
@@ -342,8 +342,8 @@ knitr_chunk_hook <- function(x, options) {
       # This is an HTML report for a validation
 
       output <-
-        x %>%
-        tidy_gsub("^\n\n(.|\n)*?```\\{=html\\}", "") %>%
+        x |>
+        tidy_gsub("^\n\n(.|\n)*?```\\{=html\\}", "") |>
         tidy_gsub("```\n", "")
 
     } else {
@@ -353,8 +353,8 @@ knitr_chunk_hook <- function(x, options) {
       matches <- gregexpr(pattern = "```\n##(.|\n)*?```", x)
 
       output <-
-        regmatches(x = x, m = matches) %>%
-        unlist() %>%
+        regmatches(x = x, m = matches) |>
+        unlist() |>
         tidy_gsub("(```\\n|\\n```)", "")
     }
 
@@ -554,7 +554,7 @@ knitr_chunk_hook <- function(x, options) {
       }
 
       content <-
-        c(content, as.character(output_content)) %>%
+        c(content, as.character(output_content)) |>
         as.character()
     }
 

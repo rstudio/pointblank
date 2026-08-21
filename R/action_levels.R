@@ -497,8 +497,8 @@ stock_stoppage <- function(x) {
   operator <- prep_operator_text(fn_name = x$type)
 
   if (grepl("between", fn_name)) {
-    value_1 <- prep_values_text(x$values) %>% tidy_gsub(",.*", "")
-    value_2 <- prep_values_text(x$values) %>% tidy_gsub(".*, ", "")
+    value_1 <- tidy_gsub(prep_values_text(x$values), ",.*", "")
+    value_2 <- tidy_gsub(prep_values_text(x$values), ".*, ", "")
   }
 
   if (grepl("col_is", fn_name)) {
@@ -529,8 +529,8 @@ stock_warning <- function(x) {
   operator <- prep_operator_text(fn_name = x$type)
 
   if (grepl("between", fn_name)) {
-    value_1 <- prep_values_text(x$values) %>% tidy_gsub(",.*", "")
-    value_2 <- prep_values_text(x$values) %>% tidy_gsub(".*, ", "")
+    value_1 <- tidy_gsub(prep_values_text(x$values), ",.*", "")
+    value_2 <- tidy_gsub(prep_values_text(x$values), ".*, ", "")
   }
 
   if (grepl("col_is", fn_name)) {

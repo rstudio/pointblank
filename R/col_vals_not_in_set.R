@@ -333,7 +333,7 @@ col_vals_not_in_set <- function(
   if (is_a_table_object(x)) {
 
     secret_agent <-
-      create_agent(x, label = "::QUIET::") %>%
+      create_agent(x, label = "::QUIET::") |>
       col_vals_not_in_set(
         columns = tidyselect::all_of(columns),
         set = set,
@@ -343,7 +343,7 @@ col_vals_not_in_set <- function(
         brief = brief,
         actions = prime_actions(actions),
         active = active
-      ) %>%
+      ) |>
       interrogate()
 
     return(x)
@@ -415,15 +415,15 @@ expect_col_vals_not_in_set <- function(
   fn_name <- "expect_col_vals_not_in_set"
 
   vs <-
-    create_agent(tbl = object, label = "::QUIET::") %>%
+    create_agent(tbl = object, label = "::QUIET::") |>
     col_vals_not_in_set(
       columns = {{ columns }},
       set = {{ set }},
       preconditions = {{ preconditions }},
       actions = action_levels(critical = threshold)
-    ) %>%
-    interrogate() %>%
-    .$validation_set
+    ) |>
+    interrogate() |>
+    (\(x) x$validation_set)()
 
   x <- vs$notify
 
@@ -493,15 +493,15 @@ test_col_vals_not_in_set <- function(
 ) {
 
   vs <-
-    create_agent(tbl = object, label = "::QUIET::") %>%
+    create_agent(tbl = object, label = "::QUIET::") |>
     col_vals_not_in_set(
       columns = {{ columns }},
       set = {{ set }},
       preconditions = {{ preconditions }},
       actions = action_levels(critical = threshold)
-    ) %>%
-    interrogate() %>%
-    .$validation_set
+    ) |>
+    interrogate() |>
+    (\(x) x$validation_set)()
 
   if (inherits(vs$capture_stack[[1]]$warning, "simpleWarning")) {
     warning(conditionMessage(vs$capture_stack[[1]]$warning))

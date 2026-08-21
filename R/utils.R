@@ -174,7 +174,7 @@ interrogation_time <- function(agent) {
 }
 
 number_of_validation_steps <- function(agent) {
-  if (is_ptblank_agent(agent)) agent$validation_set %>% nrow() else NA
+  if (is_ptblank_agent(agent)) nrow(agent$validation_set) else NA
 }
 
 # Get the next step number for the `validation_set` tibble
@@ -405,9 +405,9 @@ resolve_segments <- function(x, seg_expr, preconditions) {
         column_name <- rlang::as_label(seg_expr[[i]][[j]])
 
         col_seg_vals <-
-          tbl %>%
-          dplyr::select(tidyselect::all_of(column_name)) %>%
-          dplyr::distinct() %>%
+          tbl |>
+          dplyr::select(tidyselect::all_of(column_name)) |>
+          dplyr::distinct() |>
           dplyr::pull()
 
         names(col_seg_vals) <- rep(column_name, length(col_seg_vals))
@@ -607,7 +607,7 @@ process_table_input <- function(tbl, tbl_name) {
     if (inherits(read_fn, "read_fn")) {
 
       if (inherits(read_fn, "with_tbl_name") && is.na(tbl_name)) {
-        tbl_name <- read_fn %>% rlang::f_lhs() %>% as.character()
+        tbl_name <- as.character(rlang::f_lhs(read_fn))
       }
     }
 
@@ -801,7 +801,7 @@ column_expansion_fns_vec <- function() {
 }
 
 get_tbl_dbi_src_info <- function(tbl) {
-  utils::capture.output(tbl %>% unclass() %>% .$src)
+  utils::capture.output(unclass(tbl)$src)
 }
 
 get_tbl_dbi_src_details <- function(tbl) {
@@ -821,8 +821,8 @@ get_r_column_names_types <- function(tbl) {
 
   suppressWarnings(
     column_header <-
-      tbl %>%
-      utils::head(1) %>%
+      tbl |>
+      utils::head(1) |>
       dplyr::collect()
   )
   column_names_types <-
@@ -899,11 +899,7 @@ get_tbl_information_spark <- function(tbl) {
 
   tbl_schema <- sparklyr::sdf_schema(tbl)
 
-  db_col_types <-
-    lapply(tbl_schema, `[[`, 2) %>%
-    unlist() %>%
-    unname() %>%
-    tolower()
+  db_col_types <- tolower(unname(unlist(lapply(tbl_schema, `[[`, 2))))
 
   list(
     tbl_src = "tbl_spark",
@@ -1077,9 +1073,7 @@ get_tbl_information_dbi <- function(tbl) {
     # nocov start
 
     db_col_types <-
-      DBI::dbGetQuery(tbl_connection, q_types) %>%
-      dplyr::pull(data_type) %>%
-      tolower()
+      tolower(dplyr::pull(DBI::dbGetQuery(tbl_connection, q_types), data_type))
 
     # nocov end
   }
@@ -1089,9 +1083,7 @@ get_tbl_information_dbi <- function(tbl) {
     # nocov start
 
     db_col_types <-
-      DBI::dbGetQuery(tbl_connection, q_types) %>%
-      dplyr::pull(DATA_TYPE) %>%
-      tolower()
+      tolower(dplyr::pull(DBI::dbGetQuery(tbl_connection, q_types), DATA_TYPE))
 
     # nocov end
   }
@@ -1107,14 +1099,14 @@ get_tbl_information_dbi <- function(tbl) {
 
           DBI::dbDataType(
             tbl_connection,
-            tbl %>%
-              dplyr::select(tidyselect::all_of(x)) %>%
-              utils::head(1) %>%
-              dplyr::collect() %>%
+            tbl |>
+              dplyr::select(tidyselect::all_of(x)) |>
+              utils::head(1) |>
+              dplyr::collect() |>
               dplyr::pull(x)
           )
         }
-      ) %>%
+      ) |>
       tolower()
   }
 
@@ -1123,9 +1115,9 @@ get_tbl_information_dbi <- function(tbl) {
     # nocov start
 
     db_col_types <-
-      DBI::dbGetQuery(tbl_connection, q_types) %>%
-      dplyr::collect() %>%
-      dplyr::pull(ifelse(tbl_src == "bigquery", "data_type", "DATA_TYPE")) %>%
+      DBI::dbGetQuery(tbl_connection, q_types) |>
+      dplyr::collect() |>
+      dplyr::pull(ifelse(tbl_src == "bigquery", "data_type", "DATA_TYPE")) |>
       tolower()
 
     # nocov end
@@ -1293,11 +1285,11 @@ add_icon_svg <- function(
       `vertical-align` = "middle"
     ),
     htmltools::HTML(
-      paste(readLines(con = file, warn = FALSE), collapse = "") %>%
-        tidy_gsub("width=\"[0-9]*?px", paste0("width=\"", height, "px")) %>%
+      paste(readLines(con = file, warn = FALSE), collapse = "") |>
+        tidy_gsub("width=\"[0-9]*?px", paste0("width=\"", height, "px")) |>
         tidy_gsub("height=\"[0-9]*?px", paste0("height=\"", height, "px"))
     )
-  ) %>%
+  ) |>
     as.character()
 }
 
@@ -1335,7 +1327,7 @@ capture_formula <- function(
     if (grepl("^~", output)) {
       output <- c(NA_character_, output)
     } else {
-      output <- strsplit(output, " ~ ") %>% unlist()
+      output <- unlist(strsplit(output, " ~ "))
       output[2] <- paste("~", output[2])
     }
   }
@@ -1450,8 +1442,8 @@ pb_str_catalog <- function(
     }
   }
 
-  surround_str_1 <- rev(surround) %>% paste(collapse = "")
-  surround_str_2 <- surround %>% paste(collapse = "")
+  surround_str_1 <- paste(rev(surround), collapse = "")
+  surround_str_2 <- paste(surround, collapse = "")
 
   cat_str <- paste0(surround_str_1, item_vector, surround_str_2)
 
@@ -1489,9 +1481,7 @@ pb_str_catalog <- function(
 
     } else {
 
-      cat_str <-
-        paste0(cat_str, separators) %>%
-        paste(collapse = "")
+      cat_str <- paste(paste0(cat_str, separators), collapse = "")
     }
 
     cat_str <- paste(cat_str, n_overlimit)
@@ -1657,8 +1647,8 @@ pb_quantile_stats <- function(
       sparklyr::sdf_quantile(
         data_column, column_name,
         probabilities = quantile
-      ) %>%
-      unname() %>%
+      ) |>
+      unname() |>
       round(2)
 
     return(quantile)
@@ -1668,55 +1658,55 @@ pb_quantile_stats <- function(
   } else if (inherits(data_column, "data.frame")) {
 
     quantile <-
-      data_column %>%
-      stats::quantile(probs = quantile, na.rm = TRUE) %>%
-      unname() %>%
+      data_column |>
+      stats::quantile(probs = quantile, na.rm = TRUE) |>
+      unname() |>
       round(2)
 
   } else if (is_tbl_dbi(data_column)) {
 
-    data_column <- data_column %>% dplyr::filter(!is.na(1))
+    data_column <- dplyr::filter(data_column, !is.na(1))
 
     n_rows <-
-      data_column %>%
-      dplyr::count(name = "n") %>%
-      dplyr::pull(n) %>%
+      data_column |>
+      dplyr::count(name = "n") |>
+      dplyr::pull(n) |>
       as.numeric()
 
     if (n_rows <= 5000) {
 
-      data_column <- data_column %>% dplyr::collect()
+      data_column <- dplyr::collect(data_column)
 
       quantile <-
-        data_column %>%
-        stats::quantile(probs = quantile, na.rm = TRUE) %>%
-        unname() %>%
+        data_column |>
+        stats::quantile(probs = quantile, na.rm = TRUE) |>
+        unname() |>
         round(2)
 
     } else {
 
       data_arranged <-
-        data_column %>%
-        dplyr::rename(a = 1) %>%
-        dplyr::filter(!is.na(a)) %>%
-        dplyr::arrange(a) %>%
+        data_column |>
+        dplyr::rename(a = 1) |>
+        dplyr::filter(!is.na(a)) |>
+        dplyr::arrange(a) |>
         utils::head(6E8)
 
       n_rows_data <-
-        data_arranged %>%
-        dplyr::count(name = "n") %>%
-        dplyr::pull(n) %>%
+        data_arranged |>
+        dplyr::count(name = "n") |>
+        dplyr::pull(n) |>
         as.numeric()
 
       quantile_row <- floor(quantile * n_rows_data)
 
       quantile <-
-        data_arranged %>%
-        utils::head(quantile_row) %>%
-        dplyr::arrange(desc(a)) %>%
-        utils::head(1) %>%
-        dplyr::pull(a) %>%
-        as.numeric() %>%
+        data_arranged |>
+        utils::head(quantile_row) |>
+        dplyr::arrange(desc(a)) |>
+        utils::head(1) |>
+        dplyr::pull(a) |>
+        as.numeric() |>
         round(2)
     }
 
@@ -1730,16 +1720,16 @@ pb_quantile_stats <- function(
 
 pb_min_max_stats <- function(data_column) {
 
-  data_column %>%
+  data_column |>
     dplyr::summarize_all(
       .funs = list(
         ~ min(., na.rm = TRUE),
         ~ max(., na.rm = TRUE)
       )
-    ) %>%
-    dplyr::collect() %>%
-    dplyr::summarize_all(~ round(., 2)) %>%
-    dplyr::mutate_all(.funs = as.numeric) %>%
+    ) |>
+    dplyr::collect() |>
+    dplyr::summarize_all(~ round(., 2)) |>
+    dplyr::mutate_all(.funs = as.numeric) |>
     as.list()
 }
 
@@ -1779,8 +1769,9 @@ print_time <- function(time_diff_s) {
 
   paste0(
     " {.time_taken (",
-    round(time_diff_s, 1) %>%
-      formatC(format = "f", drop0trailing = FALSE, digits = 1),
+    formatC(
+      round(time_diff_s, 1), format = "f", drop0trailing = FALSE, digits = 1
+    ),
     " s)}"
   )
 }

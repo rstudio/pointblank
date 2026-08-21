@@ -275,7 +275,7 @@ check_vin_db <- function(table,
   tbl_colnames <- get_table_column_names(data = table)
 
   table <-
-    table %>%
+    table |>
     dplyr::mutate(
       pb_vin_all_ = {{ column }},
       pb_vin_all_ = tolower(as.character((pb_vin_all_))),
@@ -352,7 +352,7 @@ check_vin_db <- function(table,
     )
 
   table <-
-    table %>% dplyr::select(dplyr::all_of(c(tbl_colnames, "pb_is_good_")))
+    table |> dplyr::select(dplyr::all_of(c(tbl_colnames, "pb_is_good_")))
 
   table
 }

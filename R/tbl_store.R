@@ -878,9 +878,7 @@ tbl_get <- function(
   }
 
   # Obtain the table object
-  tbl_obj <-
-    rlang::f_rhs(tbl_entry) %>%
-    rlang::eval_tidy()
+  tbl_obj <- rlang::eval_tidy(rlang::f_rhs(tbl_entry))
 
   # Add the in-store table name to the `pb_tbl_name` attribute
   # of the retrieved table
@@ -928,10 +926,7 @@ yaml_read_tbl_store <- function(filename) {
       if (is.null(init)) "\n)" else paste0(",\n  .init = ", init, "\n)")
     )
 
-  tbl_store <-
-    expr_str %>%
-    rlang::parse_expr() %>%
-    rlang::eval_tidy()
+  tbl_store <- rlang::eval_tidy(rlang::parse_expr(expr_str))
 
   tbl_store
 }

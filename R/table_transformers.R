@@ -571,7 +571,7 @@ tt_time_shift <- function(
         as.integer(round(as.numeric(time_shift, units = "days"), digits = 0))
 
       tbl <-
-        tbl %>%
+        tbl |>
         dplyr::mutate(
           dplyr::across(
             .cols = tidyselect::all_of(time_columns),
@@ -582,7 +582,7 @@ tt_time_shift <- function(
     } else {
 
       tbl <-
-        tbl %>%
+        tbl |>
         dplyr::mutate(
           dplyr::across(
             .cols = tidyselect::all_of(time_columns),
@@ -631,7 +631,7 @@ tt_time_shift <- function(
 
         # Apply the time change for the particular time basis to all columns
         tbl <-
-          tbl %>%
+          tbl |>
           dplyr::mutate(
             dplyr::across(
               .cols = tidyselect::all_of(time_columns),
@@ -773,15 +773,15 @@ tt_time_slice <- function(
   col_sym <- rlang::sym(time_column)
 
   time_bounds <-
-    tbl %>%
-    dplyr::select(!!col_sym) %>%
+    tbl |>
+    dplyr::select(!!col_sym) |>
     dplyr::summarize_all(
       .funs = list(
         ~ min(., na.rm = TRUE),
         ~ max(., na.rm = TRUE)
       )
-    ) %>%
-    dplyr::collect() %>%
+    ) |>
+    dplyr::collect() |>
     as.list()
 
   if (is.numeric(slice_point)) {
@@ -1035,9 +1035,9 @@ get_tt_param <- function(
 
     # Obtain the value from the `tbl` through a `select()`, `filter()`, `pull()`
     param_value <-
-      tbl %>%
-      dplyr::select(.param., tidyselect::all_of(column)) %>%
-      dplyr::filter(.param. == .env$param) %>%
+      tbl |>
+      dplyr::select(.param., tidyselect::all_of(column)) |>
+      dplyr::filter(.param. == .env$param) |>
       dplyr::pull(tidyselect::all_of(column))
 
   } else if (tt_type == "tbl_dims") {
@@ -1052,8 +1052,8 @@ get_tt_param <- function(
 
     # Obtain the value from the `tbl` through a `filter()` and `pull()`
     param_value <-
-      tbl %>%
-      dplyr::filter(.param. == .env$param) %>%
+      tbl |>
+      dplyr::filter(.param. == .env$param) |>
       dplyr::pull(value)
 
   } else if (tt_type == "tbl_colnames") {
@@ -1070,8 +1070,8 @@ get_tt_param <- function(
 
     # Obtain the value from the `tbl` through a `filter()` and `pull()`
     param_value <-
-      tbl %>%
-      dplyr::filter(.param. == as.integer(.env$param)) %>%
+      tbl |>
+      dplyr::filter(.param. == as.integer(.env$param)) |>
       dplyr::pull(value)
   }
 

@@ -337,7 +337,7 @@ col_vals_expr <- function(
 
     if (rlang::is_formula(expr)) {
 
-      expr <- expr %>% rlang::f_rhs()
+      expr <- expr |> rlang::f_rhs()
 
     } else {
 
@@ -361,7 +361,7 @@ col_vals_expr <- function(
   if (is_a_table_object(x)) {
 
     secret_agent <-
-      create_agent(x, label = "::QUIET::") %>%
+      create_agent(x, label = "::QUIET::") |>
       col_vals_expr(
         expr = expr,
         na_pass = na_pass,
@@ -371,7 +371,7 @@ col_vals_expr <- function(
         brief = brief,
         actions = prime_actions(actions),
         active = active
-      ) %>%
+      ) |>
       interrogate()
 
     return(x)
@@ -447,17 +447,17 @@ expect_col_vals_expr <- function(
   fn_name <- "expect_col_vals_expr"
 
   vs <-
-    create_agent(tbl = object, label = "::QUIET::") %>%
+    create_agent(tbl = object, label = "::QUIET::") |>
     col_vals_expr(
       expr = {{ expr }},
       na_pass = na_pass,
       preconditions = {{ preconditions }},
       actions = action_levels(critical = threshold)
-    ) %>%
-    interrogate() %>%
-    .$validation_set
+    ) |>
+    interrogate() |>
+    (\(x) x$validation_set)()
 
-  x <- vs$notify %>% all()
+  x <- vs$notify |> all()
 
   threshold_type <- get_threshold_type(threshold = threshold)
 
@@ -507,15 +507,15 @@ test_col_vals_expr <- function(
   }
 
   vs <-
-    create_agent(tbl = object, label = "::QUIET::") %>%
+    create_agent(tbl = object, label = "::QUIET::") |>
     col_vals_expr(
       expr = {{ expr }},
       na_pass = na_pass,
       preconditions = {{ preconditions }},
       actions = action_levels(critical = threshold)
-    ) %>%
-    interrogate() %>%
-    .$validation_set
+    ) |>
+    interrogate() |>
+    (\(x) x$validation_set)()
 
   if (inherits(vs$capture_stack[[1]]$warning, "simpleWarning")) {
     warning(conditionMessage(vs$capture_stack[[1]]$warning))

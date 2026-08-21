@@ -33,7 +33,7 @@ get_column_roles <- function(data) {
 
     col_type_i <- col_types$r_col_type[i]
     col_name_i <- col_types$name[i]
-    data_column <- data %>% dplyr::select({{ col_name_i }})
+    data_column <- data |> dplyr::select({{ col_name_i }})
 
     col_role_i <-
       switch(
@@ -80,8 +80,8 @@ get_non_null_col_sample <- function(
 
   # Filter out all NA/NULL values from the `data_column`
   data_column <-
-    data_column %>%
-    dplyr::rename(a__ = 1) %>%
+    data_column |>
+    dplyr::rename(a__ = 1) |>
     dplyr::filter(!is.na(a__))
 
   # Obtain a subsample of non-NULL values in the column
@@ -114,22 +114,22 @@ get_column_cardinality <- function(
 ) {
 
   data_column_groups <-
-    data_column %>%
-    dplyr::rename(a__ = 1) %>%
+    data_column |>
+    dplyr::rename(a__ = 1) |>
     dplyr::distinct()
 
   data_column_has_any_na <-
-    data_column_groups %>%
-    dplyr::filter(is.na(a__)) %>%
-    dplyr::distinct() %>%
-    dplyr::collect() %>%
-    nrow() %>%
+    data_column_groups |>
+    dplyr::filter(is.na(a__)) |>
+    dplyr::distinct() |>
+    dplyr::collect() |>
+    nrow() |>
     as.logical()
 
   data_column_groups_n <-
-    data_column_groups %>%
-    dplyr::count() %>%
-    dplyr::pull(n) %>%
+    data_column_groups |>
+    dplyr::count() |>
+    dplyr::pull(n) |>
     as.integer()
 
   if (data_column_has_any_na && !include_na) {
@@ -143,10 +143,10 @@ get_column_cardinality <- function(
 is_column_integerlike <- function(data_column) {
 
   data_vals <-
-    data_column %>%
-    dplyr::rename(a__ = 1) %>%
-    dplyr::distinct() %>%
-    dplyr::collect() %>%
+    data_column |>
+    dplyr::rename(a__ = 1) |>
+    dplyr::distinct() |>
+    dplyr::collect() |>
     dplyr::pull(a__)
 
   rlang::is_integerish(data_vals)
@@ -168,16 +168,16 @@ get_column_types <- function(data_column) {
 
 get_string_length_stats <- function(data_column) {
 
-  data_column %>%
-    dplyr::rename(a__ = 1) %>%
-    dplyr::mutate(str_length__ = nchar(a__)) %>%
-    dplyr::group_by() %>%
+  data_column |>
+    dplyr::rename(a__ = 1) |>
+    dplyr::mutate(str_length__ = nchar(a__)) |>
+    dplyr::group_by() |>
     dplyr::summarize(
       min = min(str_length__, na.rm = TRUE),
       mean = mean(str_length__, na.rm = TRUE),
       max = max(str_length__, na.rm = TRUE)
-    ) %>%
-    dplyr::ungroup() %>%
+    ) |>
+    dplyr::ungroup() |>
     as.list()
 }
 
@@ -512,8 +512,8 @@ get_column_role_character <- function(data_column) {
 
   # Get the distinct non-null items from the column sample
   column_items <-
-    column_samp %>%
-    dplyr::distinct() %>%
+    column_samp |>
+    dplyr::distinct() |>
     dplyr::pull()
 
   if (col_name_possibly__country(column_name)) {
@@ -563,9 +563,9 @@ get_column_role_character <- function(data_column) {
     # Extract all fully-alphabetical subdivision names to
     # serve as a large set
     subd_names <-
-      subdivisions %>%
-      dplyr::select(subd_name) %>%
-      dplyr::filter(grepl("[A-Z][A-Z]", subd_name)) %>%
+      subdivisions |>
+      dplyr::select(subd_name) |>
+      dplyr::filter(grepl("[A-Z][A-Z]", subd_name)) |>
       dplyr::pull()
 
     # If any of the column items matches any one of the
@@ -610,8 +610,8 @@ get_column_role_character <- function(data_column) {
 
     # Extract all subdivision short names to serve as a large set
     subd_names <-
-      subdivisions %>%
-      dplyr::filter(country_alpha_3 %in% names(subd_list_main)) %>%
+      subdivisions |>
+      dplyr::filter(country_alpha_3 %in% names(subd_list_main)) |>
       dplyr::pull(name_en)
 
     # If any of the column items matches any one of the
@@ -625,8 +625,8 @@ get_column_role_character <- function(data_column) {
       for (co in names(subd_list_main)) {
 
         subd_list_co <-
-          subdivisions %>%
-          dplyr::filter(country_alpha_3 == {{ co }}) %>%
+          subdivisions |>
+          dplyr::filter(country_alpha_3 == {{ co }}) |>
           dplyr::pull(name_en)
 
         # obtain fractional amounts of subdivision names in each main country
@@ -824,8 +824,8 @@ get_column_role_numeric <- function(data_column) {
 
   # Get the distinct non-null items from the column sample
   column_items <-
-    column_samp %>%
-    dplyr::distinct() %>%
+    column_samp |>
+    dplyr::distinct() |>
     dplyr::pull()
 
   if (col_name_possibly__latitude(column_name)) {

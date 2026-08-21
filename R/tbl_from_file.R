@@ -544,9 +544,9 @@ from_github <- function(
 
     # Resolve the PR number to a merge commit SHA
     ref_res <-
-      (jsonlite::fromJSON(pulls_doc_tempfile, flatten = TRUE) %>%
-         dplyr::select(number, merge_commit_sha, head.ref) %>%
-         dplyr::filter(number == as.integer(pr_number)) %>%
+      (jsonlite::fromJSON(pulls_doc_tempfile, flatten = TRUE) |>
+         dplyr::select(number, merge_commit_sha, head.ref) |>
+         dplyr::filter(number == as.integer(pr_number)) |>
          dplyr::pull(merge_commit_sha))[1]
 
   } else {

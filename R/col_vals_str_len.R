@@ -134,7 +134,7 @@ col_vals_str_len <- function(
   if (is_a_table_object(x)) {
 
     secret_agent <-
-      create_agent(x, label = "::QUIET::") %>%
+      create_agent(x, label = "::QUIET::") |>
       col_vals_str_len(
         columns = tidyselect::all_of(columns),
         min = min,
@@ -146,7 +146,7 @@ col_vals_str_len <- function(
         brief = brief,
         actions = prime_actions(actions),
         active = active
-      ) %>%
+      ) |>
       interrogate()
 
     return(x)
@@ -217,7 +217,7 @@ expect_col_vals_str_len <- function(
   fn_name <- "expect_col_vals_str_len"
 
   vs <-
-    create_agent(tbl = object, label = "::QUIET::") %>%
+    create_agent(tbl = object, label = "::QUIET::") |>
     col_vals_str_len(
       columns = {{ columns }},
       min = min,
@@ -225,9 +225,9 @@ expect_col_vals_str_len <- function(
       na_pass = na_pass,
       preconditions = {{ preconditions }},
       actions = action_levels(notify_at = threshold)
-    ) %>%
-    interrogate() %>%
-    .$validation_set
+    ) |>
+    interrogate() |>
+    (\(x) x$validation_set)()
 
   x <- vs$notify
 
@@ -296,7 +296,7 @@ test_col_vals_str_len <- function(
 ) {
 
   vs <-
-    create_agent(tbl = object, label = "::QUIET::") %>%
+    create_agent(tbl = object, label = "::QUIET::") |>
     col_vals_str_len(
       columns = {{ columns }},
       min = min,
@@ -304,9 +304,9 @@ test_col_vals_str_len <- function(
       na_pass = na_pass,
       preconditions = {{ preconditions }},
       actions = action_levels(notify_at = threshold)
-    ) %>%
-    interrogate() %>%
-    .$validation_set
+    ) |>
+    interrogate() |>
+    (\(x) x$validation_set)()
 
   if (inherits(vs$capture_stack[[1]]$warning, "simpleWarning")) {
     warning(conditionMessage(vs$capture_stack[[1]]$warning))

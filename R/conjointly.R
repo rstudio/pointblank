@@ -382,7 +382,7 @@ conjointly <- function(
   if (is_a_table_object(x)) {
 
     secret_agent <-
-      create_agent(x, label = "::QUIET::") %>%
+      create_agent(x, label = "::QUIET::") |>
       conjointly(
         .list = .list,
         preconditions = preconditions,
@@ -391,7 +391,7 @@ conjointly <- function(
         label = label,
         brief = brief,
         active = active
-      ) %>%
+      ) |>
       interrogate()
 
     return(x)
@@ -462,16 +462,16 @@ expect_conjointly <- function(
   fn_name <- "expect_conjointly"
 
   vs <-
-    create_agent(tbl = object, label = "::QUIET::") %>%
+    create_agent(tbl = object, label = "::QUIET::") |>
     conjointly(
       .list = .list,
       preconditions = {{ preconditions }},
       actions = action_levels(critical = threshold)
-    ) %>%
-    interrogate() %>%
-    .$validation_set
+    ) |>
+    interrogate() |>
+    (\(x) x$validation_set)()
 
-  x <- vs$notify %>% all()
+  x <- vs$notify |> all()
 
   threshold_type <- get_threshold_type(threshold = threshold)
 
@@ -513,14 +513,14 @@ test_conjointly <- function(
 ) {
 
   vs <-
-    create_agent(tbl = object, label = "::QUIET::") %>%
+    create_agent(tbl = object, label = "::QUIET::") |>
     conjointly(
       .list = .list,
       preconditions = {{ preconditions }},
       actions = action_levels(critical = threshold)
-    ) %>%
-    interrogate() %>%
-    .$validation_set
+    ) |>
+    interrogate() |>
+    (\(x) x$validation_set)()
 
   if (inherits(vs$capture_stack[[1]]$warning, "simpleWarning")) {
     warning(conditionMessage(vs$capture_stack[[1]]$warning))

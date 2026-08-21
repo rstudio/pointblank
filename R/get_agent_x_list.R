@@ -191,8 +191,8 @@ get_agent_x_list <- function(
 
     .i <- i
     .type <- agent$validation_set[[i, "assertion_type"]]
-    .columns <- agent$validation_set[[i, "column"]] %>% unlist()
-    .values <- agent$validation_set[[i, "values"]] %>% unlist()
+    .columns <- unlist(agent$validation_set[[i, "column"]])
+    .values <- unlist(agent$validation_set[[i, "values"]])
     .label <- agent$validation_set[[i, "label"]]
     .briefs <- agent$validation_set[[i, "brief"]]
 
@@ -276,8 +276,8 @@ get_agent_x_list <- function(
 
     .validation_set <- agent$validation_set
 
-    .report_object <- agent %>% get_agent_report()
-    .report_object_small <- agent %>% get_agent_report(size = "small")
+    .report_object <- get_agent_report(agent)
+    .report_object_small <- get_agent_report(agent, size = "small")
 
     if (!is.null(.report_object)) {
       .report_html <- gt::as_raw_html(.report_object, inline_css = FALSE)
@@ -309,8 +309,8 @@ get_agent_x_list <- function(
       .email_object <-
         blastula::compose_email(
           header = NULL,
-          body = glue::glue(stock_msg_body()) %>% gt::html(),
-          footer = glue::glue(stock_msg_footer()) %>% gt::html(),
+          body = gt::html(glue::glue(stock_msg_body())),
+          footer = gt::html(glue::glue(stock_msg_footer())),
         )
 
     } else {

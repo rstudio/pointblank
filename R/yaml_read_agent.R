@@ -147,9 +147,11 @@ yaml_read_agent <- function(
 
   file_to_read <- basename(filename)
 
-  expr_from_agent_yaml(path = file_to_read, interrogate = FALSE) %>%
-    rlang::parse_expr() %>%
-    rlang::eval_tidy()
+  rlang::eval_tidy(
+    rlang::parse_expr(
+      expr_from_agent_yaml(path = file_to_read, interrogate = FALSE)
+    )
+  )
 }
 
 #' Get an *agent* from **pointblank** YAML and `interrogate()`
@@ -257,9 +259,11 @@ yaml_agent_interrogate <- function(
     filename <- file.path(path, filename)
   }
 
-  expr_from_agent_yaml(path = filename, interrogate = TRUE) %>%
-    rlang::parse_expr() %>%
-    rlang::eval_tidy()
+  rlang::eval_tidy(
+    rlang::parse_expr(
+      expr_from_agent_yaml(path = filename, interrogate = TRUE)
+    )
+  )
 }
 
 #' Display validation expressions using **pointblank** YAML
@@ -705,14 +709,12 @@ make_validation_steps <- function(steps) {
 
         args <- args[args != ""]
 
-        args %>%
-          paste(collapse = ",\n") %>%
-          paste0("%>%\n", step_fn, "(\n", ., "\n)")
+        paste0("%>%\n", step_fn, "(\n", paste(args, collapse = ",\n"), "\n)")
       }
-    ) %>%
-    unlist() %>%
-    paste(collapse = " ") %>%
-    paste0(., " ")
+    ) |>
+    unlist() |>
+    paste(collapse = " ")
+  str_exprs <- paste0(str_exprs, " ")
 
   # nolint end
 

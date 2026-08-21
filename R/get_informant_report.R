@@ -314,7 +314,7 @@ get_informant_report <- function(
                       `font-size` = "large"
                     ),
                     htmltools::HTML("&rarr;")
-                  ) %>%
+                  ) |>
                     as.character(),
                   col_type
                 )
@@ -355,8 +355,10 @@ get_informant_report <- function(
             )
 
           column_escaped <-
-            column %>%
-            gsub("(\\(|\\)|\\[|\\]|\\||\\.|\\^|\\?|\\+|\\$|\\*)", "\\\\\\1", .)
+            gsub(
+              "(\\(|\\)|\\[|\\]|\\||\\.|\\^|\\?|\\+|\\$|\\*)",
+              "\\\\\\1", column
+            )
 
           row_idx <-
             grep(paste0("^<code.*?>", column_escaped, "<.*?"), tbl$item)
@@ -379,7 +381,7 @@ get_informant_report <- function(
 
   # Modify `tbl` so that `group` values correspond to the set `lang`
   tbl <-
-    tbl %>%
+    tbl |>
     dplyr::mutate(group = dplyr::case_when(
       group == "Table" ~ get_lsv(text = c(
         "informant_report", "pointblank_table_text"
@@ -482,7 +484,7 @@ get_informant_report <- function(
         ),
         htmltools::HTML(paste0(table_type_html, table_dims))
       )
-    ) %>% as.character()
+    ) |> as.character()
 
   time_end <- Sys.time()
 
@@ -513,16 +515,16 @@ get_informant_report <- function(
       tbl,
       groupname_col = "group",
       id = "pb_information"
-    ) %>%
+    ) |>
     gt::tab_header(
       title = title_text,
       subtitle = gt::md(combined_subtitle)
-    ) %>%
-    gt::tab_source_note(source_note = gt::md(table_time)) %>%
-    gt::fmt_markdown(columns = "item") %>%
+    ) |>
+    gt::tab_source_note(source_note = gt::md(table_time)) |>
+    gt::fmt_markdown(columns = "item") |>
     gt::tab_options(
       column_labels.hidden = TRUE
-    ) %>%
+    ) |>
     gt::tab_style(
       style = gt::cell_text(
         size = gt::px(28),
@@ -531,14 +533,14 @@ get_informant_report <- function(
         color = "#444444"
       ),
       locations = gt::cells_title("title")
-    ) %>%
+    ) |>
     gt::tab_style(
       style = gt::cell_text(
         size = gt::px(12),
         align = "left"
       ),
       locations = gt::cells_title("subtitle")
-    ) %>%
+    ) |>
     gt::tab_style(
       style = list(
         gt::cell_text(
@@ -554,7 +556,7 @@ get_informant_report <- function(
         )
       ),
       locations = gt::cells_row_groups(groups = TRUE)
-    ) %>%
+    ) |>
     gt::tab_style(
       style = list(
         gt::cell_text(
@@ -574,7 +576,7 @@ get_informant_report <- function(
   if (size == "small") {
 
     gt_informant_report <-
-      gt_informant_report %>%
+      gt_informant_report |>
       gt::cols_width(gt::everything() ~ gt::px(575))
   }
 
@@ -587,12 +589,12 @@ get_informant_report <- function(
     }
 
     gt_informant_report <-
-      gt_informant_report %>%
+      gt_informant_report |>
       gt::tab_options(
         table.width = width_px,
         table.font.size = gt::pct(130)
-      ) %>%
-      gt::opt_table_font(font = gt::google_font("IBM Plex Sans")) %>%
+      ) |>
+      gt::opt_table_font(font = gt::google_font("IBM Plex Sans")) |>
       gt::opt_css(
         css = "
           #pb_information {
@@ -751,14 +753,16 @@ title_text_md <- function(
     if (grepl("\\[\\[.*?\\]\\](\\n?)<<.*?>>", item[i])) {
 
       # Strip any `\n` characters
-      item[i] <- item[i] %>% gsub("\\n", "", .)
+      item[i] <- gsub("\\n", "", item[i])
 
       for (j in 1:10) {
 
-        text_content <-
-          item[i] %>%
-          gsub("(.*)(\\[\\[.*?\\]\\]<<.*?>>)(.*)", "\\2", .) %>%
-          gsub("\\[\\[(.*?)\\]\\]<<(.*?)>>", "\\1", .)
+        text_content <- gsub(
+          "(.*)(\\[\\[.*?\\]\\]<<.*?>>)(.*)", "\\2", item[i]
+        )
+        text_content <- gsub(
+          "\\[\\[(.*?)\\]\\]<<(.*?)>>", "\\1", text_content
+        )
 
         replace_within_anchor_chars <- function(x, left, right, what, repl) {
 
@@ -772,15 +776,18 @@ title_text_md <- function(
           gsub(re, repl, x, perl = TRUE)
         }
 
-        tag_content <-
-          item[i] %>%
-          gsub("(.*)(\\[\\[.*?\\]\\]<<.*?>>)(.*)", "\\2", .) %>%
-          gsub("\\[\\[(.*?)\\]\\]<<(.*?)>>", "\\2", .) %>%
-          gsub(":\\s+?", ":", .) %>%
-          gsub(";\\s+?", ";", .) %>%
-          replace_within_anchor_chars(
-            left = ":", right = ";", what = "\\s+", repl = "&nbsp;") %>%
-          strsplit(" ")
+        tag_content <- gsub(
+          "(.*)(\\[\\[.*?\\]\\]<<.*?>>)(.*)", "\\2", item[i]
+        )
+        tag_content <- gsub(
+          "\\[\\[(.*?)\\]\\]<<(.*?)>>", "\\2", tag_content
+        )
+        tag_content <- gsub(":\\s+?", ":", tag_content)
+        tag_content <- gsub(";\\s+?", ";", tag_content)
+        tag_content <- replace_within_anchor_chars(
+          tag_content, left = ":", right = ";", what = "\\s+", repl = "&nbsp;"
+        )
+        tag_content <- strsplit(tag_content, " ")
 
         id_values <-
           vapply(
@@ -933,7 +940,7 @@ make_info_label_html <- function(info_label) {
       `margin-right` = "5px",
       `padding-right` = "2px"
     )
-  ) %>% as.character()
+  ) |> as.character()
 }
 
 make_table_dims_html <- function(

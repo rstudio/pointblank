@@ -1242,7 +1242,7 @@ as_agent_yaml_list <- function(agent, expanded) {
         list(
           validation_fn = list(
             columns = column_text,
-            regex = get_arg_value(step_list$values),
+            pattern = get_arg_value(step_list$values),
             na_pass = step_list$na_pass,
             preconditions = as_list_preconditions(step_list$preconditions),
             segments = as_list_segments(step_list$seg_expr),

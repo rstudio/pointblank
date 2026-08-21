@@ -65,7 +65,7 @@
 #'   ) |>
 #'   col_vals_regex(
 #'     columns = b,
-#'     regex = "[0-9]-[a-z]{3}-[0-9]{3}",
+#'     pattern = "[0-9]-[a-z]{3}-[0-9]{3}",
 #'     active = FALSE
 #'   ) |>
 #'   interrogate()
@@ -149,7 +149,7 @@ activate_steps <- function(
 #'   col_exists(columns = date) |>
 #'   col_vals_regex(
 #'     columns = b,
-#'     regex = "[0-9]-[a-z]{3}-[0-9]"
+#'     pattern = "[0-9]-[a-z]{3}-[0-9]"
 #'   ) |>
 #'   interrogate()
 #'
@@ -230,7 +230,7 @@ deactivate_steps <- function(
 #'   col_exists(columns = date) |>
 #'   col_vals_regex(
 #'     columns = b,
-#'     regex = "[0-9]-[a-z]{3}-[0-9]"
+#'     pattern = "[0-9]-[a-z]{3}-[0-9]"
 #'   ) |>
 #'   interrogate()
 #'

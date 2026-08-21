@@ -65,15 +65,15 @@ test_that("pointblank expectation functions produce the correct results", {
   expect_false(test_col_vals_lt(tbl, columns = vars(d), value = 9900, threshold = 0.01))
 
   #
-  # test_col_vals_lte()
+  # test_col_vals_le()
   #
 
-  expect_true(test_col_vals_lte(tbl, columns = vars(a), value = 8))
-  expect_false(test_col_vals_lte(tbl, columns = vars(a), value = 7))
-  expect_true(test_col_vals_lte(tbl, columns = vars(a), value = 7, threshold = 2))
-  expect_true(test_col_vals_lte(tbl, columns = vars(a), value = 0, threshold = 1000))
-  expect_false(test_col_vals_lte(tbl, columns = vars(a), value = 7, threshold = 1))
-  expect_false(test_col_vals_lte(tbl, columns = vars(a), value = 7, threshold = 0.01))
+  expect_true(test_col_vals_le(tbl, columns = vars(a), value = 8))
+  expect_false(test_col_vals_le(tbl, columns = vars(a), value = 7))
+  expect_true(test_col_vals_le(tbl, columns = vars(a), value = 7, threshold = 2))
+  expect_true(test_col_vals_le(tbl, columns = vars(a), value = 0, threshold = 1000))
+  expect_false(test_col_vals_le(tbl, columns = vars(a), value = 7, threshold = 1))
+  expect_false(test_col_vals_le(tbl, columns = vars(a), value = 7, threshold = 0.01))
 
   #
   # test_col_vals_equal()
@@ -98,16 +98,16 @@ test_that("pointblank expectation functions produce the correct results", {
   expect_false(test_col_vals_not_equal(tbl_not_equal_c_3, columns = vars(c), value = 7, threshold = 0.01))
 
   #
-  # test_col_vals_gte()
+  # test_col_vals_ge()
   #
 
-  expect_true(test_col_vals_gte(tbl, columns = vars(c), value = 0, na_pass = TRUE))
-  expect_false(test_col_vals_gte(tbl, columns = vars(c), value = 0))
-  expect_false(test_col_vals_gte(tbl, columns = vars(c), value = NA))
-  expect_true(test_col_vals_gte(tbl, columns = vars(c), value = 8, na_pass = TRUE, threshold = 0.6))
-  expect_true(test_col_vals_gte(tbl, columns = vars(c), value = 0, threshold = 1000))
-  expect_false(test_col_vals_gte(tbl, columns = vars(c), value = 0, threshold = 1))
-  expect_false(test_col_vals_gte(tbl, columns = vars(c), value = 0, threshold = 0.01))
+  expect_true(test_col_vals_ge(tbl, columns = vars(c), value = 0, na_pass = TRUE))
+  expect_false(test_col_vals_ge(tbl, columns = vars(c), value = 0))
+  expect_false(test_col_vals_ge(tbl, columns = vars(c), value = NA))
+  expect_true(test_col_vals_ge(tbl, columns = vars(c), value = 8, na_pass = TRUE, threshold = 0.6))
+  expect_true(test_col_vals_ge(tbl, columns = vars(c), value = 0, threshold = 1000))
+  expect_false(test_col_vals_ge(tbl, columns = vars(c), value = 0, threshold = 1))
+  expect_false(test_col_vals_ge(tbl, columns = vars(c), value = 0, threshold = 0.01))
 
   #
   # test_col_vals_gt()
@@ -254,11 +254,11 @@ test_that("pointblank expectation functions produce the correct results", {
   # test_col_vals_regex()
   #
 
-  expect_true(test_col_vals_regex(tbl, vars(b), regex = "^[0-9]-[a-z]{3}-[0-9]{3}$"))
-  expect_false(test_col_vals_regex(tbl, vars(b), regex = "^[0-9]-[a-z]{4}-[0-9]{3}$"))
-  expect_true(test_col_vals_regex(tbl, vars(b), regex = "^[0-9]-[a-z]{4}-[0-9]{3}$", threshold = 1000))
-  expect_false(test_col_vals_regex(tbl, vars(b), regex = "^[0-9]-[a-z]{4}-[0-9]{3}$", threshold = 1))
-  expect_false(test_col_vals_regex(tbl, vars(b), regex = "^[0-9]-[a-z]{4}-[0-9]{3}$", threshold = 0.01))
+  expect_true(test_col_vals_regex(tbl, vars(b), pattern = "^[0-9]-[a-z]{3}-[0-9]{3}$"))
+  expect_false(test_col_vals_regex(tbl, vars(b), pattern = "^[0-9]-[a-z]{4}-[0-9]{3}$"))
+  expect_true(test_col_vals_regex(tbl, vars(b), pattern = "^[0-9]-[a-z]{4}-[0-9]{3}$", threshold = 1000))
+  expect_false(test_col_vals_regex(tbl, vars(b), pattern = "^[0-9]-[a-z]{4}-[0-9]{3}$", threshold = 1))
+  expect_false(test_col_vals_regex(tbl, vars(b), pattern = "^[0-9]-[a-z]{4}-[0-9]{3}$", threshold = 0.01))
 
   #
   # test_col_vals_within_spec()
@@ -792,10 +792,10 @@ test_that("expect errors to be expressed by pointblank under some conditions", {
 
   # Errors caught and expressed when a column doesn't exist
   expect_error(test_col_vals_lt(tbl, columns = vars(z), value = 0), regexp = no_col_msg)
-  expect_error(test_col_vals_lte(tbl, columns = vars(z), value = 0), regexp = no_col_msg)
+  expect_error(test_col_vals_le(tbl, columns = vars(z), value = 0), regexp = no_col_msg)
   expect_error(test_col_vals_equal(tbl, columns = vars(z), value = 3), regexp = no_col_msg)
   expect_error(test_col_vals_not_equal(tbl, columns = vars(z), value = 3), regexp = no_col_msg)
-  expect_error(test_col_vals_gte(tbl, columns = vars(z), value = 0), regexp = no_col_msg)
+  expect_error(test_col_vals_ge(tbl, columns = vars(z), value = 0), regexp = no_col_msg)
   expect_error(test_col_vals_gt(tbl, columns = vars(z), value = 0), regexp = no_col_msg)
   expect_error(test_col_vals_between(tbl, columns = vars(z), left = 0, right = 10000), regexp = no_col_msg)
   expect_error(test_col_vals_not_between(tbl, columns = vars(z), left = 0, right = 10000), regexp = no_col_msg)
@@ -807,7 +807,7 @@ test_that("expect errors to be expressed by pointblank under some conditions", {
   expect_error(test_col_vals_decreasing(tbl, columns = vars(z)), regexp = no_col_msg)
   expect_error(test_col_vals_null(tbl, columns = vars(z)), regexp = no_col_msg)
   expect_error(test_col_vals_not_null(tbl, columns = vars(z)), regexp = no_col_msg)
-  expect_error(test_col_vals_regex(tbl, vars(z), regex = "^[0-9]-[a-z]{3}-[0-9]{3}$"), regexp = no_col_msg)
+  expect_error(test_col_vals_regex(tbl, vars(z), pattern = "^[0-9]-[a-z]{3}-[0-9]{3}$"), regexp = no_col_msg)
   expect_error(test_col_vals_within_spec(tbl, vars(z), spec = "email"), regexp = no_col_msg)
   expect_error(test_col_is_character(tbl, columns = vars(z)), regexp = no_col_msg)
   expect_error(test_col_is_numeric(tbl, columns = vars(z)), regexp = no_col_msg)

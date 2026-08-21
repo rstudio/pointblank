@@ -542,7 +542,7 @@ test_that("Creating a `col_vals_gte()` step is possible", {
   # to specific parameters
   expect_equal(validation$tbl_name, "small_table")
   expect_equal(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
-  expect_equal(validation$validation_set$assertion_type, "col_vals_gte")
+  expect_equal(validation$validation_set$assertion_type, "col_vals_ge")
   expect_equal_unlist(validation$validation_set$column, "b")
   expect_equal(validation$validation_set[["values"]] %>% unlist(), 5)
   expect_true(is.na(validation$validation_set$all_passed))
@@ -630,7 +630,7 @@ test_that("Creating a `col_vals_lte()` step is possible", {
   # to specific parameters
   expect_equal(validation$tbl_name, "small_table")
   expect_equal(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
-  expect_equal(validation$validation_set$assertion_type, "col_vals_lte")
+  expect_equal(validation$validation_set$assertion_type, "col_vals_le")
   expect_equal_unlist(validation$validation_set$column, "b")
   expect_equal(validation$validation_set[["values"]] %>% unlist(), 5)
   expect_true(is.na(validation$validation_set$all_passed))

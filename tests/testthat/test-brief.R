@@ -110,10 +110,10 @@ test_that("Briefs batch tests", {
 
   # columns + segments
   test_multi_briefs("col_vals_lt", value = 5)
-  test_multi_briefs("col_vals_lte", value = 5)
+  test_multi_briefs("col_vals_le", value = 5)
   test_multi_briefs("col_vals_equal", value = 5)
   test_multi_briefs("col_vals_not_equal", value = 5)
-  test_multi_briefs("col_vals_gte", value = 5)
+  test_multi_briefs("col_vals_ge", value = 5)
   test_multi_briefs("col_vals_gt", value = 5)
   test_multi_briefs("col_vals_between", left = 2, right = 5)
   test_multi_briefs("col_vals_not_between", left = 2, right = 5)
@@ -125,7 +125,7 @@ test_that("Briefs batch tests", {
   test_multi_briefs("col_vals_not_null")
   test_multi_briefs("col_vals_increasing")
   test_multi_briefs("col_vals_decreasing")
-  test_multi_briefs("col_vals_regex", regex = "abc")
+  test_multi_briefs("col_vals_regex", pattern = "abc")
   test_multi_briefs("col_vals_within_spec", spec = "email")
 
   # segments

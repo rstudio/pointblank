@@ -526,13 +526,13 @@ test_that("Creating a `col_vals_gt()` step is possible", {
     c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
 
-test_that("Creating a `col_vals_gte()` step is possible", {
+test_that("Creating a `col_vals_ge()` step is possible", {
 
-  # Use `col_vals_gte()` function to create
+  # Use `col_vals_ge()` function to create
   # a validation step
   validation <-
     create_agent(tbl = small_table) %>%
-    col_vals_gte(columns = vars(b), value = 5)
+    col_vals_ge(columns = vars(b), value = 5)
 
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -559,7 +559,7 @@ test_that("Creating a `col_vals_gte()` step is possible", {
   # `everything()` helper function
   validation_all <-
     create_agent(tbl = small_table) %>%
-    col_vals_gte(columns = everything(), value = 5)
+    col_vals_ge(columns = everything(), value = 5)
 
   # Expect 8 rows in the `validation_all$validation_set` object
   expect_equal(nrow(validation_all$validation_set), 8)
@@ -614,13 +614,13 @@ test_that("Creating a `col_vals_lt()` step is possible", {
     c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
 
-test_that("Creating a `col_vals_lte()` step is possible", {
+test_that("Creating a `col_vals_le()` step is possible", {
 
-  # Use `col_vals_lte()` function to create
+  # Use `col_vals_le()` function to create
   # a validation step
   validation <-
     create_agent(tbl = small_table) %>%
-    col_vals_lte(columns = vars(b), value = 5)
+    col_vals_le(columns = vars(b), value = 5)
 
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -647,7 +647,7 @@ test_that("Creating a `col_vals_lte()` step is possible", {
   # `everything()` helper function
   validation_all <-
     create_agent(tbl = small_table) %>%
-    col_vals_lte(columns = everything(), value = 5)
+    col_vals_le(columns = everything(), value = 5)
 
   # Expect 8 rows in the `validation_all$validation_set` object
   expect_equal(nrow(validation_all$validation_set), 8)
@@ -840,7 +840,7 @@ test_that("Creating a `col_vals_regex()` step is possible", {
   # a validation step
   validation <-
     create_agent(tbl = small_table) %>%
-    col_vals_regex(columns = vars(b), regex = "[0-9]-.*")
+    col_vals_regex(columns = vars(b), pattern = "[0-9]-.*")
 
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -867,7 +867,7 @@ test_that("Creating a `col_vals_regex()` step is possible", {
   # `everything()` helper function
   validation_all <-
     create_agent(tbl = small_table) %>%
-    col_vals_regex(columns = everything(), regex = "[0-9]-.*")
+    col_vals_regex(columns = everything(), pattern = "[0-9]-.*")
 
   # Expect 8 rows in the `validation_all$validation_set` object
   expect_equal(nrow(validation_all$validation_set), 8)

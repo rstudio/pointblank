@@ -128,11 +128,8 @@ Workflow</em></a> article to the pipeline data validation workflow:</p>
 <span>  <span class="fu"><a href="../reference/col_is_posix.html">col_is_posix</a></span><span class="op">(</span><span class="va">date_time</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_in_set.html">col_vals_in_set</a></span><span class="op">(</span><span class="va">f</span>, set <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"low"</span>, <span class="st">"mid"</span>, <span class="st">"high"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span><span class="va">a</span>, value <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span><span class="va">b</span>, regex <span class="op">=</span> <span class="st">"^[0-9]-[a-z]{3}-[0-9]{3}$"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span><span class="va">b</span>, pattern <span class="op">=</span> <span class="st">"^[0-9]-[a-z]{3}-[0-9]{3}$"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span><span class="va">d</span>, left <span class="op">=</span> <span class="fl">0</span>, right <span class="op">=</span> <span class="fl">5000</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Warning: The `regex` argument of `col_vals_regex()` is deprecated.</span></span>
-<span><span class="co">## <span style="color: #0000BB;">ℹ</span> Please use `pattern` instead.</span></span>
-<span><span class="co">## <span style="color: #555555;">This warning is displayed once per session.</span></span></span></code></pre>
 <pre><code><span><span class="co">## <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;">:</span></span></span>
 <span><span class="co">## <span style="color: #BBBB00;">!</span> Exceedance of failed test units where values in `d` should have been between `0` and `5000`.</span></span>
 <span><span class="co">## The `col_vals_between()` validation failed beyond the absolute threshold level (1).</span></span>
@@ -193,7 +190,7 @@ default failure threshold for each is set to <code>1</code>: one
 helper is (behind the scenes) applied by default when using validation
 functions in the <em>VALID-II</em> workflow. So, the previous example is
 exactly the same as this expanded form:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">small_table</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_is_posix.html">col_is_posix</a></span><span class="op">(</span></span>
 <span>    <span class="va">date_time</span>,</span>
@@ -208,7 +205,7 @@ exactly the same as this expanded form:</p>
 <span>    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">stop_on_fail</a></span><span class="op">(</span>stop_at <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span></span>
-<span>    <span class="va">b</span>, regex <span class="op">=</span> <span class="st">"^[0-9]-[a-z]{3}-[0-9]{3}$"</span>,</span>
+<span>    <span class="va">b</span>, pattern <span class="op">=</span> <span class="st">"^[0-9]-[a-z]{3}-[0-9]{3}$"</span>,</span>
 <span>    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">stop_on_fail</a></span><span class="op">(</span>stop_at <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span></span>
@@ -232,7 +229,7 @@ exactly the same as this expanded form:</p>
 <p>If we want to instead issue warnings, perhaps with less stringent
 failure thresholds in certain steps, the <code><a href="../reference/action_levels.html">warn_on_fail()</a></code>
 function provides a simple way to express this.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">small_table</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_is_posix.html">col_is_posix</a></span><span class="op">(</span></span>
 <span>    <span class="va">date_time</span>,</span>
@@ -247,7 +244,7 @@ function provides a simple way to express this.</p>
 <span>    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">warn_on_fail</a></span><span class="op">(</span>warn_at <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span></span>
-<span>    <span class="va">b</span>, regex <span class="op">=</span> <span class="st">"^[0-9]-[a-z]{3}-[0-9]{3}$"</span>,</span>
+<span>    <span class="va">b</span>, pattern <span class="op">=</span> <span class="st">"^[0-9]-[a-z]{3}-[0-9]{3}$"</span>,</span>
 <span>    actions <span class="op">=</span> <span class="fu"><a href="../reference/action_levels.html">warn_on_fail</a></span><span class="op">(</span>warn_at <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span></span>
@@ -314,7 +311,7 @@ use a <code><a href="https://rdrr.io/r/base/warning.html" class="external-link">
 <code><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop()</a></code> for <code>STOP</code>, and a <code><a href="https://rdrr.io/r/base/message.html" class="external-link">message()</a></code>
 for <code>NOTIFY</code>. Here’s how we might create such an
 <code>action_levels</code> object with <code><a href="../reference/action_levels.html">action_levels()</a></code>:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">al</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span></span>
 <span>    warn <span class="op">=</span> <span class="fl">0.1</span>,</span>
@@ -331,7 +328,7 @@ for <code>NOTIFY</code>. Here’s how we might create such an
 <p>Once we assigned the <code>action_levels</code> to an object (in this
 case, as <code>al</code>) we can print it to get a summary of the
 settings.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">al</span></span></code></pre></div>
 <pre><code><span><span class="co">## -- The `action_levels` settings</span></span>
 <span><span class="co">## WARN failure threshold of 0.1 of all test units.</span></span>
@@ -342,12 +339,12 @@ settings.</p>
 <p>Finally, we will apply this object to every validation function call
 in the expression (changed slightly to result in more test units
 failing).</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">small_table</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_is_posix.html">col_is_posix</a></span><span class="op">(</span><span class="va">date_time</span>, actions <span class="op">=</span> <span class="va">al</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_in_set.html">col_vals_in_set</a></span><span class="op">(</span><span class="va">f</span>, set <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"low"</span>, <span class="st">"mid"</span><span class="op">)</span>, actions <span class="op">=</span> <span class="va">al</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span><span class="va">a</span>, value <span class="op">=</span> <span class="fl">7</span>, actions <span class="op">=</span> <span class="va">al</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span><span class="va">b</span>, regex <span class="op">=</span> <span class="st">"^[0-9]-[a-w]{3}-[2-9]{3}$"</span>, actions <span class="op">=</span> <span class="va">al</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span><span class="va">b</span>, pattern <span class="op">=</span> <span class="st">"^[0-9]-[a-w]{3}-[2-9]{3}$"</span>, actions <span class="op">=</span> <span class="va">al</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span><span class="va">d</span>, left <span class="op">=</span> <span class="fl">0</span>, right <span class="op">=</span> <span class="fl">4000</span>, actions <span class="op">=</span> <span class="va">al</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Warning in rlang::eval_tidy(rlang::f_rhs(actions$fns$warn)): WARN threshold</span></span>
 <span><span class="co">## exceeded.</span></span></code></pre>

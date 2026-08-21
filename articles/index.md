@@ -23,3 +23,5 @@
   (VALID-VI)](https://rstudio.github.io/pointblank/articles/VALID-VI.md):
 - [Overview of Validation
   Workflows](https://rstudio.github.io/pointblank/articles/validation_workflows.md):
+- [YAML Validation
+  Workflows](https://rstudio.github.io/pointblank/articles/YAML.md):

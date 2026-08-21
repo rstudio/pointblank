@@ -135,7 +135,7 @@ questioning phrase for each function’s purpose:</p>
 <code><a href="../reference/col_vals_lt.html">col_vals_lt()</a></code>: Are column data less than a specified
 value?</li>
 <li>
-<code><a href="../reference/col_vals_le.html">col_vals_lte()</a></code>: Are column data less than or equal to a
+<code><a href="../reference/col_vals_le.html">col_vals_le()</a></code>: Are column data less than or equal to a
 specified value?</li>
 <li>
 <code><a href="../reference/col_vals_equal.html">col_vals_equal()</a></code>: Are column data equal to a specified
@@ -144,8 +144,8 @@ value?</li>
 <code><a href="../reference/col_vals_not_equal.html">col_vals_not_equal()</a></code>: Are column data not equal to a
 specified value?</li>
 <li>
-<code><a href="../reference/col_vals_ge.html">col_vals_gte()</a></code>: Are column data greater than or equal
-to a specified value?</li>
+<code><a href="../reference/col_vals_ge.html">col_vals_ge()</a></code>: Are column data greater than or equal to
+a specified value?</li>
 <li>
 <code><a href="../reference/col_vals_gt.html">col_vals_gt()</a></code>: Are column data greater than a specified
 value?</li>
@@ -300,12 +300,9 @@ the interrogation is going.</p>
 <span>  <span class="fu"><a href="../reference/col_is_posix.html">col_is_posix</a></span><span class="op">(</span><span class="va">date_time</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_in_set.html">col_vals_in_set</a></span><span class="op">(</span><span class="va">f</span>, set <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"low"</span>, <span class="st">"mid"</span>, <span class="st">"high"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span><span class="va">a</span>, value <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span><span class="va">b</span>, regex <span class="op">=</span> <span class="st">"^[0-9]-[a-z]{3}-[0-9]{3}$"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span><span class="va">b</span>, pattern <span class="op">=</span> <span class="st">"^[0-9]-[a-z]{3}-[0-9]{3}$"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span><span class="va">d</span>, left <span class="op">=</span> <span class="fl">0</span>, right <span class="op">=</span> <span class="fl">5000</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Warning: The `regex` argument of `col_vals_regex()` is deprecated.</span></span>
-<span><span class="co">## <span style="color: #0000BB;">ℹ</span> Please use `pattern` instead.</span></span>
-<span><span class="co">## <span style="color: #555555;">This warning is displayed once per session.</span></span></span></code></pre>
 <pre><code>── Interrogation Started - there are 5 steps ──────────────────────────────────
 ✓ Step 1: OK.
 ✓ Step 2: OK.
@@ -321,7 +318,7 @@ these steps will always display <code>OK</code> unless an evaluation
 error occurred (e.g., attempting to interrogate a column that isn’t
 present in the target table). Printing the <code>agent</code> object
 gives a step-by-step breakdown of the interrogation process.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">agent</span></span></code></pre></div>
 <p><img src="images/agent_report_1.png" width="100%"></p>
 <p>Let’s have a look at how to interpret this report. The bright green
@@ -357,7 +354,7 @@ failed test units. For <em>step 5</em>, the
 available (with <code>1</code> row). We can either download the CSV from
 the report or examine that extract in <strong>R</strong> with the
 <code><a href="../reference/get_data_extracts.html">get_data_extracts()</a></code> function:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/get_data_extracts.html">get_data_extracts</a></span><span class="op">(</span><span class="va">agent</span>, i <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 1 × 8</span></span></span>
 <span><span class="co">##   date_time           date           a b             c      d e     f    </span></span>
@@ -386,11 +383,11 @@ creating a default for every validation step). In the following, we use
 relative values (as real numbers between <code>0</code> and
 <code>1</code>) to define thresholds for the <code>WARN</code> and
 <code>STOP</code> conditions.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">al</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span>warn <span class="op">=</span> <span class="fl">0.1</span>, error <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></span></code></pre></div>
 <p>Printing the <code>al</code> object gives us a summary of the
 settings.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">al</span></span></code></pre></div>
 <pre><code><span><span class="co">## -- The `action_levels` settings</span></span>
 <span><span class="co">## WARN failure threshold of 0.1 of all test units.</span></span>
@@ -401,7 +398,7 @@ It’s similar to the last one but the parameters for some of the
 validation functions will result in more failing test units. We’ll see
 that the interrogation messages show mention of <code>STOP</code> and
 <code>WARNING</code> conditions being met.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">agent</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span></span>
 <span>    tbl <span class="op">=</span> <span class="va">small_table</span>,</span>
@@ -412,7 +409,7 @@ that the interrogation messages show mention of <code>STOP</code> and
 <span>  <span class="fu"><a href="../reference/col_is_posix.html">col_is_posix</a></span><span class="op">(</span><span class="va">date_time</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_in_set.html">col_vals_in_set</a></span><span class="op">(</span><span class="va">f</span>, set <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"low"</span>, <span class="st">"mid"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span><span class="va">a</span>, value <span class="op">=</span> <span class="fl">7</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span><span class="va">b</span>, regex <span class="op">=</span> <span class="st">"^[0-9]-[a-w]{3}-[2-9]{3}$"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span><span class="va">b</span>, pattern <span class="op">=</span> <span class="st">"^[0-9]-[a-w]{3}-[2-9]{3}$"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span><span class="va">d</span>, left <span class="op">=</span> <span class="fl">0</span>, right <span class="op">=</span> <span class="fl">4000</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code>── Interrogation Started - there are 5 steps ──────────────────────────────────
@@ -426,7 +423,7 @@ x Step 4: STOP condition met.
 <p>Printing the agent will provide a very different agent report than
 seen previously, one that’s rife with yellow and red color strips to the
 left and matching colors in the far right columns.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">agent</span></span></code></pre></div>
 <p><img src="images/agent_report_2.png" width="100%"></p>
 <p>It’s possible to invoke a custom function when a particular failure
@@ -437,7 +434,7 @@ logging function in the <code>WARN</code> and <code>STOP</code> failure
 conditions. Note that the function calls must be written as one-sided
 <strong>R</strong> formulas, and the <code>x</code> variable provides
 access to the x-list for each validation step.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">al</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/action_levels.html">action_levels</a></span><span class="op">(</span></span>
 <span>    warn <span class="op">=</span> <span class="fl">0.1</span>,</span>
@@ -452,7 +449,7 @@ access to the x-list for each validation step.</p>
 <p>Printing this new <code>al</code> object will show us the failure
 threshold settings and the associated actions for the failure
 conditions.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">al</span></span></code></pre></div>
 <pre><code><span><span class="co">## -- The `action_levels` settings</span></span>
 <span><span class="co">## WARN failure threshold of 0.1 of all test units.</span></span>
@@ -462,7 +459,7 @@ conditions.</p>
 <p>Using this new <code>al</code> object with our validation workflow
 will result in our custom functions being called at certain validation
 steps. Running the following data validation code</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">agent</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/create_agent.html">create_agent</a></span><span class="op">(</span></span>
 <span>    tbl <span class="op">=</span> <span class="va">small_table</span>,</span>
@@ -473,7 +470,7 @@ steps. Running the following data validation code</p>
 <span>  <span class="fu"><a href="../reference/col_is_posix.html">col_is_posix</a></span><span class="op">(</span><span class="va">date_time</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_in_set.html">col_vals_in_set</a></span><span class="op">(</span><span class="va">f</span>, set <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"low"</span>, <span class="st">"mid"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span><span class="va">a</span>, value <span class="op">=</span> <span class="fl">7</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span><span class="va">b</span>, regex <span class="op">=</span> <span class="st">"^[0-9]-[a-w]{3}-[2-9]{3}$"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span><span class="va">b</span>, pattern <span class="op">=</span> <span class="st">"^[0-9]-[a-w]{3}-[2-9]{3}$"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span><span class="op">(</span><span class="va">d</span>, left <span class="op">=</span> <span class="fl">0</span>, right <span class="op">=</span> <span class="fl">4000</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>will show us the same messages as before in the <strong>R</strong>
@@ -490,7 +487,7 @@ x Step 4: STOP condition met.
 variable, which is the x-list for the validation step. Let’s take a look
 at what that is for step 2 (the <code>col_vals_in_set</code> validation
 step) by using the <code><a href="../reference/get_agent_x_list.html">get_agent_x_list()</a></code> function:</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_agent_x_list.html">get_agent_x_list</a></span><span class="op">(</span><span class="va">agent</span>, i <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">x</span></span></code></pre></div>
 <pre><code>── The x-list for STEP 2 ────────────────────────────────────────────
@@ -511,7 +508,7 @@ to know the number of test units, the fraction of those that failed, and
 whether the <code>STOP</code> condition was entered, we can access those
 and even put them into a character string (along with other info from
 the x-list).</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span></span>
 <span>  <span class="st">"In Step {x$i}, there were {x$n} test units and {x$f_failed * 100}% \\</span></span>
 <span><span class="st">  failed. STOP condition met: {tolower(x$stop)}."</span></span>

@@ -15,13 +15,13 @@ functions with a phrase for what each function tests:
 
 - [`test_col_vals_lt()`](https://rstudio.github.io/pointblank/reference/col_vals_lt.md):
   Test whether column data are less than a specified value.
-- [`test_col_vals_lte()`](https://rstudio.github.io/pointblank/reference/col_vals_le.md):
+- [`test_col_vals_le()`](https://rstudio.github.io/pointblank/reference/col_vals_le.md):
   Test whether column data are less than or equal to a specified value.
 - [`test_col_vals_equal()`](https://rstudio.github.io/pointblank/reference/col_vals_equal.md):
   Test whether column data are equal to a specified value.
 - [`test_col_vals_not_equal()`](https://rstudio.github.io/pointblank/reference/col_vals_not_equal.md):
   Test whether column data are not equal to a specified value.
-- [`test_col_vals_gte()`](https://rstudio.github.io/pointblank/reference/col_vals_ge.md):
+- [`test_col_vals_ge()`](https://rstudio.github.io/pointblank/reference/col_vals_ge.md):
   Test whether column data are greater than or equal to a specified
   value.
 - [`test_col_vals_gt()`](https://rstudio.github.io/pointblank/reference/col_vals_gt.md):
@@ -180,7 +180,7 @@ of code.
 
   
 
-`small_table |> test_col_vals_regex(vars(b), regex = ".-[a-z]{3}.*") `
+`small_table |> test_col_vals_regex(vars(b), pattern = ".-[a-z]{3}.*") `
 
   
 

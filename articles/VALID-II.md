@@ -35,13 +35,9 @@ small_table |>
   col_is_posix(date_time) |>
   col_vals_in_set(f, set = c("low", "mid", "high")) |>
   col_vals_lt(a, value = 10) |>
-  col_vals_regex(b, regex = "^[0-9]-[a-z]{3}-[0-9]{3}$") |>
+  col_vals_regex(b, pattern = "^[0-9]-[a-z]{3}-[0-9]{3}$") |>
   col_vals_between(d, left = 0, right = 5000)
 ```
-
-    ## Warning: The `regex` argument of `col_vals_regex()` is deprecated.
-    ## ℹ Please use `pattern` instead.
-    ## This warning is displayed once per session.
 
     ## Error:
     ## ! Exceedance of failed test units where values in `d` should have been between `0` and `5000`.
@@ -121,7 +117,7 @@ small_table |>
     actions = stop_on_fail(stop_at = 1)
   ) |>
   col_vals_regex(
-    b, regex = "^[0-9]-[a-z]{3}-[0-9]{3}$",
+    b, pattern = "^[0-9]-[a-z]{3}-[0-9]{3}$",
     actions = stop_on_fail(stop_at = 1)
   ) |>
   col_vals_between(
@@ -167,7 +163,7 @@ small_table |>
     actions = warn_on_fail(warn_at = 3)
   ) |>
   col_vals_regex(
-    b, regex = "^[0-9]-[a-z]{3}-[0-9]{3}$",
+    b, pattern = "^[0-9]-[a-z]{3}-[0-9]{3}$",
     actions = warn_on_fail(warn_at = 0.2)
   ) |>
   col_vals_between(
@@ -289,7 +285,7 @@ small_table |>
   col_is_posix(date_time, actions = al) |>
   col_vals_in_set(f, set = c("low", "mid"), actions = al) |>
   col_vals_lt(a, value = 7, actions = al) |>
-  col_vals_regex(b, regex = "^[0-9]-[a-w]{3}-[2-9]{3}$", actions = al) |>
+  col_vals_regex(b, pattern = "^[0-9]-[a-w]{3}-[2-9]{3}$", actions = al) |>
   col_vals_between(d, left = 0, right = 4000, actions = al)
 ```
 

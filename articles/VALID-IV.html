@@ -112,7 +112,7 @@ tests:</p>
 <code><a href="../reference/col_vals_lt.html">test_col_vals_lt()</a></code>: Test whether column data are less
 than a specified value.</li>
 <li>
-<code><a href="../reference/col_vals_le.html">test_col_vals_lte()</a></code>: Test whether column data are less
+<code><a href="../reference/col_vals_le.html">test_col_vals_le()</a></code>: Test whether column data are less
 than or equal to a specified value.</li>
 <li>
 <code><a href="../reference/col_vals_equal.html">test_col_vals_equal()</a></code>: Test whether column data are
@@ -121,7 +121,7 @@ equal to a specified value.</li>
 <code><a href="../reference/col_vals_not_equal.html">test_col_vals_not_equal()</a></code>: Test whether column data are
 not equal to a specified value.</li>
 <li>
-<code><a href="../reference/col_vals_ge.html">test_col_vals_gte()</a></code>: Test whether column data are
+<code><a href="../reference/col_vals_ge.html">test_col_vals_ge()</a></code>: Test whether column data are
 greater than or equal to a specified value.</li>
 <li>
 <code><a href="../reference/col_vals_gt.html">test_col_vals_gt()</a></code>: Test whether column data are
@@ -387,7 +387,7 @@ skill, guess whether each of these is <code>TRUE</code> or
 
 <br><button class="btn true">
 <code>small_table |&gt;
-  test_col_vals_regex(vars(b), regex = ".-[a-z]{3}.*")
+  test_col_vals_regex(vars(b), pattern = ".-[a-z]{3}.*")
 </code>
 </button>
 

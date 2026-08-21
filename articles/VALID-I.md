@@ -39,13 +39,13 @@ questioning phrase for each function’s purpose:
 
 - [`col_vals_lt()`](https://rstudio.github.io/pointblank/reference/col_vals_lt.md):
   Are column data less than a specified value?
-- [`col_vals_lte()`](https://rstudio.github.io/pointblank/reference/col_vals_le.md):
+- [`col_vals_le()`](https://rstudio.github.io/pointblank/reference/col_vals_le.md):
   Are column data less than or equal to a specified value?
 - [`col_vals_equal()`](https://rstudio.github.io/pointblank/reference/col_vals_equal.md):
   Are column data equal to a specified value?
 - [`col_vals_not_equal()`](https://rstudio.github.io/pointblank/reference/col_vals_not_equal.md):
   Are column data not equal to a specified value?
-- [`col_vals_gte()`](https://rstudio.github.io/pointblank/reference/col_vals_ge.md):
+- [`col_vals_ge()`](https://rstudio.github.io/pointblank/reference/col_vals_ge.md):
   Are column data greater than or equal to a specified value?
 - [`col_vals_gt()`](https://rstudio.github.io/pointblank/reference/col_vals_gt.md):
   Are column data greater than a specified value?
@@ -175,14 +175,10 @@ agent <-
   col_is_posix(date_time) |>
   col_vals_in_set(f, set = c("low", "mid", "high")) |>
   col_vals_lt(a, value = 10) |>
-  col_vals_regex(b, regex = "^[0-9]-[a-z]{3}-[0-9]{3}$") |>
+  col_vals_regex(b, pattern = "^[0-9]-[a-z]{3}-[0-9]{3}$") |>
   col_vals_between(d, left = 0, right = 5000) |>
   interrogate()
 ```
-
-    ## Warning: The `regex` argument of `col_vals_regex()` is deprecated.
-    ## ℹ Please use `pattern` instead.
-    ## This warning is displayed once per session.
 
     ── Interrogation Started - there are 5 steps ──────────────────────────────────
     ✓ Step 1: OK.
@@ -309,7 +305,7 @@ agent <-
   col_is_posix(date_time) |>
   col_vals_in_set(f, set = c("low", "mid")) |>
   col_vals_lt(a, value = 7) |>
-  col_vals_regex(b, regex = "^[0-9]-[a-w]{3}-[2-9]{3}$") |>
+  col_vals_regex(b, pattern = "^[0-9]-[a-w]{3}-[2-9]{3}$") |>
   col_vals_between(d, left = 0, right = 4000) |>
   interrogate()
 ```
@@ -389,7 +385,7 @@ agent <-
   col_is_posix(date_time) |>
   col_vals_in_set(f, set = c("low", "mid")) |>
   col_vals_lt(a, value = 7) |>
-  col_vals_regex(b, regex = "^[0-9]-[a-w]{3}-[2-9]{3}$") |>
+  col_vals_regex(b, pattern = "^[0-9]-[a-w]{3}-[2-9]{3}$") |>
   col_vals_between(d, left = 0, right = 4000) |>
   interrogate()
 ```

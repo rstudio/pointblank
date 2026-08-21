@@ -1,0 +1,347 @@
+# YAML Validation Workflows
+
+**pointblank** lets you define, store, and execute validation workflows
+entirely through YAML files. This article explains the YAML format and
+walks through the functions you use to read, write, and run YAML-based
+validations.
+
+## Why use YAML?
+
+Writing an agent and its validation plan as R code is the most direct
+approach, but YAML offers a distinct set of advantages:
+
+- validation logic is stored in plain text that can be
+  version-controlled alongside your data infrastructure
+- the same YAML file can be reused across different R scripts, scheduled
+  jobs, or CI pipelines
+- non-programmers can read (and may prefer to edit) the YAML without
+  needing to understand R
+- YAML files are interoperable with **Python pointblank**, which accepts
+  the same format
+
+The YAML approach shouldn’t replace the R API but, rather, it
+complements it. Most simple validations work well in YAML whereas
+complex logic with custom functions is much easier to express in R.
+
+## The YAML file format
+
+A **pointblank** agent YAML file has the following top-level structure:
+
+``` yaml
+type: agent
+tbl: ~ small_table                  # R expression for the target table
+tbl_name: small_table               # Optional display name
+label: "My validation plan"         # Optional label for the report
+lang: en                            # Language for report text
+locale: en                          # Locale for number formatting
+actions:
+  warn_fraction: 0.1                # Global action thresholds
+  stop_fraction: 0.2
+steps:
+  - col_exists:                     # Validation function name (as key)
+      columns: vars(date)
+  - col_vals_gt:
+      columns: vars(d)
+      value: 100.0
+  - col_vals_le:
+      columns: vars(c)
+      value: 5.0
+  - col_vals_regex:
+      columns: vars(b)
+      pattern: '[0-9]-[a-z]{3}-[0-9]{3}'
+```
+
+The top-level fields map directly to arguments of
+[`create_agent()`](https://rstudio.github.io/pointblank/reference/create_agent.md):
+
+| YAML key | Corresponds to |
+|----|----|
+| `tbl` | `tbl` argument of [`create_agent()`](https://rstudio.github.io/pointblank/reference/create_agent.md) (an R expression) |
+| `tbl_name` | `tbl_name` argument of [`create_agent()`](https://rstudio.github.io/pointblank/reference/create_agent.md) |
+| `label` | `label` argument of [`create_agent()`](https://rstudio.github.io/pointblank/reference/create_agent.md) |
+| `lang` | `lang` argument of [`create_agent()`](https://rstudio.github.io/pointblank/reference/create_agent.md) |
+| `locale` | `locale` argument of [`create_agent()`](https://rstudio.github.io/pointblank/reference/create_agent.md) |
+| `actions` | `actions` argument of [`create_agent()`](https://rstudio.github.io/pointblank/reference/create_agent.md): use `warn_fraction`, `stop_fraction`, `notify_fraction`, or their absolute-count variants (`warn_count`, etc.) |
+
+The `steps` list maps each entry to a validation function call. The key
+is the full function name (e.g., `col_vals_gt`, `col_exists`,
+`rows_distinct`) and the value is a mapping of the function’s named
+arguments.
+
+## Creating a YAML file from R
+
+The easiest way to produce a valid **pointblank** YAML file is to build
+an agent in R and write it to disk with
+[`yaml_write()`](https://rstudio.github.io/pointblank/reference/yaml_write.md).
+
+``` r
+
+agent <-
+  create_agent(
+    tbl = ~ small_table,
+    tbl_name = "small_table",
+    label = "A simple example with the `small_table`.",
+    actions = action_levels(warn = 0.1, stop = 0.2)
+  ) |>
+  col_exists(columns = vars(date, date_time)) |>
+  col_vals_gt(columns = vars(d), value = 100) |>
+  col_vals_le(columns = vars(c), value = 5) |>
+  col_vals_regex(columns = vars(b), pattern = "[0-9]-[a-z]{3}-[0-9]{3}")
+
+yaml_write(agent, filename = "agent-small_table.yml")
+```
+
+The resulting YAML file faithfully captures the agent and its entire
+validation plan. Interrogation data is **not** written to YAML. The file
+always represents a plan ready for a new run.
+
+## Reading a YAML file back into an agent
+
+Use
+[`yaml_read_agent()`](https://rstudio.github.io/pointblank/reference/yaml_read_agent.md)
+to reconstruct an agent object from a YAML file:
+
+``` r
+
+agent <- yaml_read_agent(filename = "agent-small_table.yml")
+
+agent
+```
+
+This gives you an agent with a validation plan already in place but
+without interrogation data (the report will helpfully note that no
+interrogation has been performed yet). You have the option of adding
+further validation steps to this agent before interrogating.
+
+To interrogate the table in a single step:
+
+``` r
+
+agent <- yaml_agent_interrogate(filename = "agent-small_table.yml")
+
+agent
+```
+
+[`yaml_agent_interrogate()`](https://rstudio.github.io/pointblank/reference/yaml_agent_interrogate.md)
+reads the YAML, builds the agent, calls
+[`interrogate()`](https://rstudio.github.io/pointblank/reference/interrogate.md),
+and returns the agent with full intel.
+
+**pointblank** provides a ready-to-use example YAML file. You can locate
+it with the [`system.file()`](https://rdrr.io/r/base/system.file.html)
+function:
+
+``` r
+
+yml_file_path <-
+  system.file(
+    "yaml", "agent-small_table.yml",
+    package = "pointblank"
+  )
+
+agent <- yaml_agent_interrogate(filename = yml_file_path)
+```
+
+## Inspecting the expressions a YAML file generates
+
+Before running anything, you can preview the **pointblank** R
+expressions that a YAML file will produce using
+[`yaml_agent_show_exprs()`](https://rstudio.github.io/pointblank/reference/yaml_agent_show_exprs.md):
+
+``` r
+
+yaml_agent_show_exprs(filename = "agent-small_table.yml")
+```
+
+This prints the equivalent R code to the console, which is useful for
+understanding how YAML keys map to function calls, and for debugging
+unexpected behavior.
+
+## Writing the agent YAML string directly
+
+If you want the YAML representation of an existing agent as a character
+string (rather than writing to disk), use
+[`yaml_agent_string()`](https://rstudio.github.io/pointblank/reference/yaml_agent_string.md):
+
+``` r
+
+agent |> yaml_agent_string()
+```
+
+## Validation steps in YAML
+
+Every **pointblank** validation function has a direct YAML equivalent.
+The function name (e.g., `col_vals_gt`) becomes the YAML step key, and
+the function’s arguments become the step’s sub-keys:
+
+``` yaml
+steps:
+  # col_vals_gt(columns = vars(a), value = 0, na_pass = FALSE)
+  - col_vals_gt:
+      columns: vars(a)
+      value: 0.0
+      na_pass: false
+
+  # col_vals_between(columns = vars(d), left = 0, right = 10000, inclusive = c(TRUE, TRUE))
+  - col_vals_between:
+      columns: vars(d)
+      left: 0.0
+      right: 10000.0
+      inclusive:
+        - true
+        - true
+
+  # col_vals_in_set(columns = vars(f), set = c("low", "mid", "high"))
+  - col_vals_in_set:
+      columns: vars(f)
+      set:
+        - low
+        - mid
+        - high
+
+  # col_vals_regex(columns = vars(b), pattern = "^[0-9]-[a-z]{3}-[0-9]{3}$")
+  - col_vals_regex:
+      columns: vars(b)
+      pattern: '^[0-9]-[a-z]{3}-[0-9]{3}$'
+
+  # rows_distinct()
+  - rows_distinct:
+      columns: ~
+```
+
+Arguments that use R expressions (like column selections via
+[`vars()`](https://dplyr.tidyverse.org/reference/vars.html)) are stored
+as strings and evaluated when the YAML is read back.
+
+Here is a live example: we build an agent, write it to a temporary YAML
+file, read it back, interrogate, and check that it passes:
+
+``` r
+
+tmp_yaml <- tempfile(fileext = ".yml")
+
+create_agent(
+  tbl = ~ small_table,
+  label = "YAML round-trip example"
+) |>
+  col_vals_gt(columns = vars(d), value = 100) |>
+  col_vals_le(columns = vars(c), value = 5) |>
+  col_vals_in_set(columns = vars(f), set = c("low", "mid", "high")) |>
+  yaml_write(filename = tmp_yaml, quiet = TRUE)
+
+agent <- yaml_agent_interrogate(filename = tmp_yaml)
+
+all_passed(agent)
+```
+
+    ## [1] FALSE
+
+### Per-step options
+
+Each step can carry its own `actions`, `label`, `brief`, `step_id`, and
+`active` fields, mirroring the corresponding arguments of the validation
+functions:
+
+``` yaml
+steps:
+  - col_vals_not_null:
+      columns: vars(a, b)
+      label: "Core fields must be complete"
+      active: true
+      actions:
+        warn_count: 1
+        stop_fraction: 0.1
+```
+
+## Table stores and `tbl_source()`
+
+When the same target table is used across many agents (or informants),
+it’s convenient to define the table-prep formula once and reference it
+by name. This is what the *table store* (`tbl_store`) is for.
+
+### Creating a table store
+
+``` r
+
+store <-
+  tbl_store(
+    small_table ~ pointblank::small_table,
+    small_table_sqlite ~ {
+      db <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+      dplyr::copy_to(db, pointblank::small_table, "small_table")
+      dplyr::tbl(db, "small_table")
+    }
+  )
+
+yaml_write(store, filename = "tbl_store.yml")
+```
+
+The resulting `tbl_store.yml` looks like:
+
+``` yaml
+type: tbl_store
+tbls:
+  small_table: ~ pointblank::small_table
+  small_table_sqlite: ~{...}
+```
+
+### Referencing tables with `tbl_source()`
+
+In an agent YAML file, use
+[`tbl_source()`](https://rstudio.github.io/pointblank/reference/tbl_source.md)
+to refer to a named entry in a `tbl_store.yml`:
+
+``` yaml
+type: agent
+tbl: ~ tbl_source("small_table", "tbl_store.yml")
+tbl_name: small_table
+steps:
+  - col_vals_gt:
+      columns: vars(d)
+      value: 100.0
+```
+
+At interrogation time,
+[`tbl_source()`](https://rstudio.github.io/pointblank/reference/tbl_source.md)
+reads the table-prep formula from `tbl_store.yml` and evaluates it to
+produce the target table. This keeps the agent YAML decoupled from the
+specific connection details.
+
+## Batch execution with `yaml_exec()`
+
+For scheduled or pipeline-based quality monitoring, you can set up a
+directory of YAML files and run them all at once:
+
+``` r
+
+yaml_exec(path = "my_validations/")
+```
+
+A typical directory might contain:
+
+    my_validations/
+      tbl_store.yml               # Table store (optional but recommended)
+      agent-customers.yml         # Agent for the customers table
+      agent-orders.yml            # Agent for the orders table
+      informant-customers.yml     # Informant for the customers table
+      output/                     # Where results are written (created automatically)
+
+[`yaml_exec()`](https://rstudio.github.io/pointblank/reference/yaml_exec.md)
+interrogates each agent YAML file and incorporates each informant YAML
+file, then writes the resulting objects to the output directory as
+timestamped RDS files. These can be read back later with
+[`x_read_disk()`](https://rstudio.github.io/pointblank/reference/x_read_disk.md)
+or, for multiple agents together, with
+[`read_disk_multiagent()`](https://rstudio.github.io/pointblank/reference/read_disk_multiagent.md).
+
+``` r
+
+# Read the most recently saved agent back
+agent <- x_read_disk("my_validations/output/agent-customers-2025-01-15_09-00-00.rds")
+
+# Read multiple agent snapshots into a multiagent
+multiagent <- read_disk_multiagent(path = "my_validations/output/")
+```
+
+The multiagent collects results across time, enabling trend analysis of
+data quality over multiple runs.

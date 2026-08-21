@@ -45,7 +45,7 @@
       * failure level (13) >= failure threshold (1)
       Warning:
       Exceedance of failed test units where values in `date_time` should have been <= `~date`.
-      The `col_vals_lte()` validation failed beyond the absolute threshold level (1).
+      The `col_vals_le()` validation failed beyond the absolute threshold level (1).
       * failure level (13) >= failure threshold (1)
       Warning:
       Exceedance of failed test units where values in `d` should not have been between `500` and `1000`.

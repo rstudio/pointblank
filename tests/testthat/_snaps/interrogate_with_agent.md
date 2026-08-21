@@ -8,16 +8,16 @@
         e), actions = al) %>% col_vals_between(columns = vars(d), left = 0, right = 5000,
       actions = al) %>% col_vals_equal(columns = vars(d), value = 283.94, actions = al) %>%
         col_vals_gt(columns = vars(date_time), value = vars(date), actions = al) %>%
-        col_vals_gte(columns = vars(date_time), value = vars(date), actions = al) %>%
+        col_vals_ge(columns = vars(date_time), value = vars(date), actions = al) %>%
         col_vals_lt(columns = vars(date_time), value = vars(date), actions = al) %>%
-        col_vals_lte(columns = vars(date_time), value = vars(date), actions = al) %>%
+        col_vals_le(columns = vars(date_time), value = vars(date), actions = al) %>%
         col_vals_in_set(columns = vars(f), set = c("low", "mid", "high"), actions = al) %>%
         col_vals_not_between(columns = vars(d), left = 500, right = 1000, actions = al) %>%
         col_vals_not_equal(columns = vars(d), value = 283.94, actions = al) %>%
         col_vals_not_in_set(columns = vars(f), set = c("lower", "middle", "higher"),
         actions = al) %>% col_vals_not_null(columns = vars(c), actions = al) %>%
         col_vals_null(columns = vars(b), actions = al) %>% col_vals_regex(columns = vars(
-        f), regex = "[a-z]{3}", actions = al) %>% rows_distinct(actions = al) %>%
+        f), pattern = "[a-z]{3}", actions = al) %>% rows_distinct(actions = al) %>%
         conjointly(~ col_vals_gt(., columns = vars(a), value = 1), ~ col_vals_lt(.,
           columns = vars(c), value = 10, na_pass = TRUE), ~ col_vals_not_null(.,
           columns = vars(d)), actions = al) %>% serially(~ test_col_vals_gt(.,

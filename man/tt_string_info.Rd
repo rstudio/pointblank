@@ -70,17 +70,14 @@ numbers of characters (\code{15} and \code{24}, respectively) throughout the tab
 We see data, and not an error, so both validations were successful!
 
 Let's use a \code{tt_string_info()}-transformed table with the
-\code{\link[=test_col_vals_lte]{test_col_vals_lte()}} to check that the maximum string length in column \code{f}
+\code{\link[=test_col_vals_le]{test_col_vals_le()}} to check that the maximum string length in column \code{f}
 of the \code{small_table} dataset is no greater than \code{4}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tt_string_info(tbl = small_table) |>
-  test_col_vals_lte(
+  test_col_vals_le(
     columns = f,
     value = 4
   )
-#> Warning: `test_col_vals_lte()` is deprecated.
-#> i Please use `test_col_vals_le()` instead.
-#> This warning is displayed once per session.
 #> [1] TRUE
 }\if{html}{\out{</div>}}
 }

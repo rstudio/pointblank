@@ -86,7 +86,7 @@
 #'
 #' test_that("values in `c` should be <= `5`", {
 #'
-#'   expect_col_vals_lte(
+#'   expect_col_vals_le(
 #'     tbl,
 #'     columns = c,
 #'     value = 5,
@@ -107,7 +107,7 @@
 #'     actions = action_levels(error = 0.25)
 #'   ) |>
 #'   col_exists(date_time) |>
-#'   col_vals_lte(c, value = 5)
+#'   col_vals_le(c, value = 5)
 #'
 #' write_testthat_file(
 #'   agent = agent,
@@ -209,10 +209,10 @@
 #'   col_exists(c(date, date_time)) |>
 #'   col_vals_regex(
 #'     b,
-#'     regex = "[0-9]-[a-z]{3}-[0-9]{3}"
+#'     pattern = "[0-9]-[a-z]{3}-[0-9]{3}"
 #'   ) |>
 #'   col_vals_gt(d, value = 100) |>
-#'   col_vals_lte(c, value = 5) |>
+#'   col_vals_le(c, value = 5) |>
 #'   interrogate()
 #' ```
 #'
@@ -265,7 +265,7 @@
 #'   expect_col_vals_regex(
 #'     tbl,
 #'     columns = b,
-#'     regex = "[0-9]-[a-z]{3}-[0-9]{3}",
+#'     pattern = "[0-9]-[a-z]{3}-[0-9]{3}",
 #'     threshold = 0.25
 #'   )
 #' })
@@ -282,7 +282,7 @@
 #'
 #' test_that("values in `c` should be <= `5`", {
 #'
-#'   expect_col_vals_lte(
+#'   expect_col_vals_le(
 #'     tbl,
 #'     columns = c,
 #'     value = 5,

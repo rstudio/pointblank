@@ -1389,7 +1389,7 @@ test_that("Interrogating for valid row values", {
     create_agent(tbl = small_table) %>%
     col_vals_regex(
       columns = vars(b),
-      regex = "[0-9]-[a-z]{3}-[0-9]{3}"
+      pattern = "[0-9]-[a-z]{3}-[0-9]{3}"
     ) %>%
     interrogate()
 
@@ -1413,7 +1413,7 @@ test_that("Interrogating for valid row values", {
     create_agent(tbl = small_table) %>%
     col_vals_regex(
       columns = vars(f),
-      regex = "[a-z]{3}",
+      pattern = "[a-z]{3}",
       preconditions = ~ . %>% dplyr::filter(f != "high")
     ) %>%
     interrogate()
@@ -1567,12 +1567,12 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
     all_passed() %>%
     expect_true()
 
-  # Use the `col_vals_gte()` function to perform
+  # Use the `col_vals_ge()` function to perform
   # a validation step with NAs, switching the
   # value of the `na_pass` option
   dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
     create_agent() %>%
-    col_vals_gte(
+    col_vals_ge(
       columns = vars(a),
       value = 1.0,
       na_pass = FALSE,
@@ -1584,7 +1584,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
 
   dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
     create_agent() %>%
-    col_vals_gte(
+    col_vals_ge(
       columns = vars(a),
       value = 1.0,
       na_pass = TRUE,
@@ -1621,12 +1621,12 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
     all_passed() %>%
     expect_true()
 
-  # Use the `col_vals_lte()` function to perform
+  # Use the `col_vals_le()` function to perform
   # a validation step with NAs, switching the
   # value of the `na_pass` option
   dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
     create_agent() %>%
-    col_vals_lte(
+    col_vals_le(
       columns = vars(a),
       value = 2.5,
       na_pass = FALSE,
@@ -1638,7 +1638,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
 
   dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
     create_agent() %>%
-    col_vals_lte(
+    col_vals_le(
       columns = vars(a),
       value = 2.5,
       na_pass = TRUE,
@@ -1709,7 +1709,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
     create_agent() %>%
     col_vals_regex(
       columns = vars(a),
-      regex = "[0-9]-[a-z]{3}-[0-9]{3}",
+      pattern = "[0-9]-[a-z]{3}-[0-9]{3}",
       na_pass = FALSE,
       actions = action_levels(warn = 1)
     ) %>%
@@ -1721,7 +1721,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
     create_agent() %>%
     col_vals_regex(
       columns = vars(a),
-      regex = "[0-9]-[a-z]{3}-[0-9]{3}",
+      pattern = "[0-9]-[a-z]{3}-[0-9]{3}",
       na_pass = TRUE,
       actions = action_levels(warn = 1)
     ) %>%
@@ -1814,16 +1814,16 @@ test_that("Select validation steps can be `active` or not", {
     col_vals_between(columns = vars(d), left = 0, right = 5000) %>%
     col_vals_equal(columns = vars(d), value = 283.94) %>%
     col_vals_gt(columns = vars(date_time), value = vars(date)) %>%
-    col_vals_gte(columns = vars(date_time), value = vars(date)) %>%
+    col_vals_ge(columns = vars(date_time), value = vars(date)) %>%
     col_vals_lt(columns = vars(date_time), value = vars(date)) %>%
-    col_vals_lte(columns = vars(date_time), value = vars(date)) %>%
+    col_vals_le(columns = vars(date_time), value = vars(date)) %>%
     col_vals_in_set(columns = vars(f), set = c("low", "mid", "high")) %>%
     col_vals_not_between(columns = vars(d), left = 500, right = 1000) %>%
     col_vals_not_equal(columns = vars(d), value = 283.94) %>%
     col_vals_not_in_set(columns = vars(f), set = c("lower", "middle", "higher")) %>%
     col_vals_not_null(columns = vars(c)) %>%
     col_vals_null(columns = vars(b)) %>%
-    col_vals_regex(columns = vars(f), regex = "[a-z]{3}") %>%
+    col_vals_regex(columns = vars(f), pattern = "[a-z]{3}") %>%
     rows_distinct() %>%
     conjointly(
       ~ col_vals_gt(., columns = vars(a), value = 1),
@@ -1873,16 +1873,16 @@ test_that("Select validation steps can be `active` or not", {
     col_vals_between(columns = vars(d), left = 0, right = 5000, active = FALSE) %>%
     col_vals_equal(columns = vars(d), value = 283.94, active = FALSE) %>%
     col_vals_gt(columns = vars(date_time), value = vars(date), active = FALSE) %>%
-    col_vals_gte(columns = vars(date_time), value = vars(date), active = FALSE) %>%
+    col_vals_ge(columns = vars(date_time), value = vars(date), active = FALSE) %>%
     col_vals_lt(columns = vars(date_time), value = vars(date), active = FALSE) %>%
-    col_vals_lte(columns = vars(date_time), value = vars(date), active = FALSE) %>%
+    col_vals_le(columns = vars(date_time), value = vars(date), active = FALSE) %>%
     col_vals_in_set(columns = vars(f), set = c("low", "mid", "high"), active = FALSE) %>%
     col_vals_not_between(columns = vars(d), left = 500, right = 1000, active = FALSE) %>%
     col_vals_not_equal(columns = vars(d), value = 283.94, active = FALSE) %>%
     col_vals_not_in_set(columns = vars(f), set = c("lower", "middle", "higher"), active = FALSE) %>%
     col_vals_not_null(columns = vars(c), active = FALSE) %>%
     col_vals_null(columns = vars(b), active = FALSE) %>%
-    col_vals_regex(columns = vars(f), regex = "[a-z]{3}", active = FALSE) %>%
+    col_vals_regex(columns = vars(f), pattern = "[a-z]{3}", active = FALSE) %>%
     rows_distinct(active = FALSE) %>%
     conjointly(
       ~ col_vals_gt(., columns = vars(a), value = 1),
@@ -1938,16 +1938,16 @@ test_that("Select validation steps can be `active` or not", {
       col_vals_between(columns = vars(d), left = 0, right = 5000, actions = al) %>%
       col_vals_equal(columns = vars(d), value = 283.94, actions = al) %>%
       col_vals_gt(columns = vars(date_time), value = vars(date), actions = al) %>%
-      col_vals_gte(columns = vars(date_time), value = vars(date), actions = al) %>%
+      col_vals_ge(columns = vars(date_time), value = vars(date), actions = al) %>%
       col_vals_lt(columns = vars(date_time), value = vars(date), actions = al) %>%
-      col_vals_lte(columns = vars(date_time), value = vars(date), actions = al) %>%
+      col_vals_le(columns = vars(date_time), value = vars(date), actions = al) %>%
       col_vals_in_set(columns = vars(f), set = c("low", "mid", "high"), actions = al) %>%
       col_vals_not_between(columns = vars(d), left = 500, right = 1000, actions = al) %>%
       col_vals_not_equal(columns = vars(d), value = 283.94, actions = al) %>%
       col_vals_not_in_set(columns = vars(f), set = c("lower", "middle", "higher"), actions = al) %>%
       col_vals_not_null(columns = vars(c), actions = al) %>%
       col_vals_null(columns = vars(b), actions = al) %>%
-      col_vals_regex(columns = vars(f), regex = "[a-z]{3}", actions = al) %>%
+      col_vals_regex(columns = vars(f), pattern = "[a-z]{3}", actions = al) %>%
       rows_distinct(actions = al) %>%
       conjointly(
         ~ col_vals_gt(., columns = vars(a), value = 1),
@@ -1985,16 +1985,16 @@ test_that("Select validation steps can be `active` or not", {
       col_vals_between(columns = vars(d), left = 0, right = 5000, actions = al, active = FALSE) %>%
       col_vals_equal(columns = vars(d), value = 283.94, actions = al, active = FALSE) %>%
       col_vals_gt(columns = vars(date_time), value = vars(date), actions = al, active = FALSE) %>%
-      col_vals_gte(columns = vars(date_time), value = vars(date), actions = al, active = FALSE) %>%
+      col_vals_ge(columns = vars(date_time), value = vars(date), actions = al, active = FALSE) %>%
       col_vals_lt(columns = vars(date_time), value = vars(date), actions = al, active = FALSE) %>%
-      col_vals_lte(columns = vars(date_time), value = vars(date), actions = al, active = FALSE) %>%
+      col_vals_le(columns = vars(date_time), value = vars(date), actions = al, active = FALSE) %>%
       col_vals_in_set(columns = vars(f), set = c("low", "mid", "high"), actions = al, active = FALSE) %>%
       col_vals_not_between(columns = vars(d), left = 500, right = 1000, actions = al, active = FALSE) %>%
       col_vals_not_equal(columns = vars(d), value = 283.94, actions = al, active = FALSE) %>%
       col_vals_not_in_set(columns = vars(f), set = c("lower", "middle", "higher"), actions = al, active = FALSE) %>%
       col_vals_not_null(columns = vars(c), actions = al, active = FALSE) %>%
       col_vals_null(columns = vars(b), actions = al, active = FALSE) %>%
-      col_vals_regex(columns = vars(f), regex = "[a-z]{3}", actions = al, active = FALSE) %>%
+      col_vals_regex(columns = vars(f), pattern = "[a-z]{3}", actions = al, active = FALSE) %>%
       rows_distinct(actions = al, active = FALSE) %>%
       conjointly(
         ~ col_vals_gt(., columns = vars(a), value = 1),

@@ -253,7 +253,7 @@ test_that("Agent interrogations with segments yields the correct results", {
   expect_equal(nrow(validation$validation_set), 2)
 
   #
-  # col_vals_lte
+  # col_vals_le
   #
 
   comparison_tbl <-
@@ -265,11 +265,11 @@ test_that("Agent interrogations with segments yields the correct results", {
       b = c(rep(4, 5), rep(5, 10), rep(10, 5), rep(12, 10))
     )
 
-  # Use the `col_vals_lte()` function with `segments`,
+  # Use the `col_vals_le()` function with `segments`,
   # segmenting the data by two grouping values from a single column
   validation <-
     create_agent(tbl = comparison_tbl) %>%
-    col_vals_lte(
+    col_vals_le(
       columns = vars(b), value = 5,
       segments = a ~ c("group_1", "group_2")) %>%
     interrogate()
@@ -364,7 +364,7 @@ test_that("Agent interrogations with segments yields the correct results", {
   expect_equal(nrow(validation$validation_set), 2)
 
   #
-  # col_vals_gte
+  # col_vals_ge
   #
 
   comparison_tbl <-
@@ -376,11 +376,11 @@ test_that("Agent interrogations with segments yields the correct results", {
       b = c(rep(4, 5), rep(5, 10), rep(10, 5), rep(12, 10))
     )
 
-  # Use the `col_vals_gte()` function with `segments`,
+  # Use the `col_vals_ge()` function with `segments`,
   # segmenting the data by two grouping values from a single column
   validation <-
     create_agent(tbl = comparison_tbl) %>%
-    col_vals_gte(
+    col_vals_ge(
       columns = vars(b), value = 4,
       segments = a ~ c("group_1", "group_2")) %>%
     interrogate()
@@ -762,7 +762,7 @@ test_that("Agent interrogations with segments yields the correct results", {
   validation <-
     create_agent(tbl = regex_tbl) %>%
     col_vals_regex(
-      columns = vars(b), regex = "[0-9]{5}",
+      columns = vars(b), pattern = "[0-9]{5}",
       segments = a ~ c("group_1", "group_2")) %>%
     interrogate()
 

@@ -131,7 +131,7 @@ test_that("column `date_time` exists", \{
 
 test_that("values in `c` should be <= `5`", \{
 
-  expect_col_vals_lte(
+  expect_col_vals_le(
     tbl,
     columns = c,
     value = 5,
@@ -151,7 +151,7 @@ agent <-
     actions = action_levels(error = 0.25)
   ) |>
   col_exists(date_time) |>
-  col_vals_lte(c, value = 5)
+  col_vals_le(c, value = 5)
 
 write_testthat_file(
   agent = agent,
@@ -212,10 +212,10 @@ bit more useful after interrogation.
   col_exists(c(date, date_time)) |>
   col_vals_regex(
     b,
-    regex = "[0-9]-[a-z]\{3\}-[0-9]\{3\}"
+    pattern = "[0-9]-[a-z]\{3\}-[0-9]\{3\}"
   ) |>
   col_vals_gt(d, value = 100) |>
-  col_vals_lte(c, value = 5) |>
+  col_vals_le(c, value = 5) |>
   interrogate()
 }\if{html}{\out{</div>}}
 
@@ -266,7 +266,7 @@ test_that("values in `b` should match the regular expression:
   expect_col_vals_regex(
     tbl,
     columns = b,
-    regex = "[0-9]-[a-z]\{3\}-[0-9]\{3\}",
+    pattern = "[0-9]-[a-z]\{3\}-[0-9]\{3\}",
     threshold = 0.25
   )
 \})
@@ -283,7 +283,7 @@ test_that("values in `d` should be > `100`", \{
 
 test_that("values in `c` should be <= `5`", \{
 
-  expect_col_vals_lte(
+  expect_col_vals_le(
     tbl,
     columns = c,
     value = 5,

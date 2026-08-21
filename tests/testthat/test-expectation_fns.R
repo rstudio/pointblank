@@ -124,28 +124,28 @@ test_that("pointblank expectation function produce the correct results", {
   )
 
   #
-  # expect_col_vals_lte()
+  # expect_col_vals_le()
   #
 
-  expect_col_vals_lte(tbl, columns = vars(a), value = 8)
-  expect_success(expect_col_vals_lte(tbl, columns = vars(a), value = 8))
+  expect_col_vals_le(tbl, columns = vars(a), value = 8)
+  expect_success(expect_col_vals_le(tbl, columns = vars(a), value = 8))
 
-  expect_failure(expect_col_vals_lte(tbl, columns = vars(a), value = 7))
-  expect_success(expect_col_vals_lte(tbl, columns = vars(a), value = 7, threshold = 2))
-  expect_success(expect_col_vals_lte(tbl, columns = vars(a), value = 0, threshold = 1000))
+  expect_failure(expect_col_vals_le(tbl, columns = vars(a), value = 7))
+  expect_success(expect_col_vals_le(tbl, columns = vars(a), value = 7, threshold = 2))
+  expect_success(expect_col_vals_le(tbl, columns = vars(a), value = 0, threshold = 1000))
 
-  expect_error(expect_col_vals_lte(tbl, columns = vars(a), value = 7), class = "expectation_failure")
+  expect_error(expect_col_vals_le(tbl, columns = vars(a), value = 7), class = "expectation_failure")
 
-  expect_failure(expect_col_vals_lte(tbl, columns = vars(a), value = 7, threshold = 1), failed_beyond_absolute)
-  expect_failure(expect_col_vals_lte(tbl, columns = vars(a), value = 7, threshold = 0.01), failed_beyond_proportional)
+  expect_failure(expect_col_vals_le(tbl, columns = vars(a), value = 7, threshold = 1), failed_beyond_absolute)
+  expect_failure(expect_col_vals_le(tbl, columns = vars(a), value = 7, threshold = 0.01), failed_beyond_proportional)
 
   expect_failure(
-    expect_col_vals_lte(tbl, columns = vars(a), value = 7),
+    expect_col_vals_le(tbl, columns = vars(a), value = 7),
     "failure level \\(1\\) >= failure threshold \\(1\\)"
   )
 
   eval_batch_expect_fns(
-    expect_fn = expect_col_vals_lte,
+    expect_fn = expect_col_vals_le,
     tbl_test =
       tibble::tibble(
         x = c(5, 6, 10.5), # failing
@@ -220,30 +220,30 @@ test_that("pointblank expectation function produce the correct results", {
   )
 
   #
-  # expect_col_vals_gte()
+  # expect_col_vals_ge()
   #
 
-  expect_col_vals_gte(tbl, columns = vars(a), value = 0)
-  expect_col_vals_gte(tbl, columns = vars(c), value = 0, na_pass = TRUE)
-  expect_success(expect_col_vals_gte(tbl, columns = vars(c), value = 0, na_pass = TRUE))
+  expect_col_vals_ge(tbl, columns = vars(a), value = 0)
+  expect_col_vals_ge(tbl, columns = vars(c), value = 0, na_pass = TRUE)
+  expect_success(expect_col_vals_ge(tbl, columns = vars(c), value = 0, na_pass = TRUE))
 
-  expect_failure(expect_col_vals_gte(tbl, columns = vars(c), value = 0))
-  expect_failure(expect_col_vals_gte(tbl, columns = vars(c), value = NA))
-  expect_success(expect_col_vals_gte(tbl, columns = vars(c), value = 8, na_pass = TRUE, threshold = 0.6))
-  expect_success(expect_col_vals_gte(tbl, columns = vars(c), value = 0, threshold = 1000))
+  expect_failure(expect_col_vals_ge(tbl, columns = vars(c), value = 0))
+  expect_failure(expect_col_vals_ge(tbl, columns = vars(c), value = NA))
+  expect_success(expect_col_vals_ge(tbl, columns = vars(c), value = 8, na_pass = TRUE, threshold = 0.6))
+  expect_success(expect_col_vals_ge(tbl, columns = vars(c), value = 0, threshold = 1000))
 
-  expect_error(expect_col_vals_gte(tbl, columns = vars(c), value = 0), class = "expectation_failure")
+  expect_error(expect_col_vals_ge(tbl, columns = vars(c), value = 0), class = "expectation_failure")
 
-  expect_failure(expect_col_vals_gte(tbl, columns = vars(c), value = 0, threshold = 1), failed_beyond_absolute)
-  expect_failure(expect_col_vals_gte(tbl, columns = vars(c), value = 0, threshold = 0.01), failed_beyond_proportional)
+  expect_failure(expect_col_vals_ge(tbl, columns = vars(c), value = 0, threshold = 1), failed_beyond_absolute)
+  expect_failure(expect_col_vals_ge(tbl, columns = vars(c), value = 0, threshold = 0.01), failed_beyond_proportional)
 
   expect_failure(
-    expect_col_vals_gte(tbl, columns = vars(c), value = 0),
+    expect_col_vals_ge(tbl, columns = vars(c), value = 0),
     "failure level \\(2\\) >= failure threshold \\(1\\)"
   )
 
   eval_batch_expect_fns(
-    expect_fn = expect_col_vals_gte,
+    expect_fn = expect_col_vals_ge,
     tbl_test =
       tibble::tibble(
         x = c(4, 1.5, 8.3),  # failing
@@ -632,18 +632,18 @@ test_that("pointblank expectation function produce the correct results", {
   # expect_col_vals_regex()
   #
 
-  expect_col_vals_regex(tbl, vars(b), regex = "^[0-9]-[a-z]{3}-[0-9]{3}$")
-  expect_success(expect_col_vals_regex(tbl, vars(b), regex = "^[0-9]-[a-z]{3}-[0-9]{3}$"))
-  expect_failure(expect_col_vals_regex(tbl, vars(b), regex = "^[0-9]-[a-z]{4}-[0-9]{3}$"))
-  expect_success(expect_col_vals_regex(tbl, vars(b), regex = "^[0-9]-[a-z]{4}-[0-9]{3}$", threshold = 1000))
+  expect_col_vals_regex(tbl, vars(b), pattern = "^[0-9]-[a-z]{3}-[0-9]{3}$")
+  expect_success(expect_col_vals_regex(tbl, vars(b), pattern = "^[0-9]-[a-z]{3}-[0-9]{3}$"))
+  expect_failure(expect_col_vals_regex(tbl, vars(b), pattern = "^[0-9]-[a-z]{4}-[0-9]{3}$"))
+  expect_success(expect_col_vals_regex(tbl, vars(b), pattern = "^[0-9]-[a-z]{4}-[0-9]{3}$", threshold = 1000))
 
-  expect_error(expect_col_vals_regex(tbl, vars(b), regex = "^[0-9]-[a-z]{4}-[0-9]{3}$"), class = "expectation_failure")
+  expect_error(expect_col_vals_regex(tbl, vars(b), pattern = "^[0-9]-[a-z]{4}-[0-9]{3}$"), class = "expectation_failure")
 
-  expect_failure(expect_col_vals_regex(tbl, vars(b), regex = "^[0-9]-[a-z]{4}-[0-9]{3}$", threshold = 1), failed_beyond_absolute)
-  expect_failure(expect_col_vals_regex(tbl, vars(b), regex = "^[0-9]-[a-z]{4}-[0-9]{3}$", threshold = 0.01), failed_beyond_proportional)
+  expect_failure(expect_col_vals_regex(tbl, vars(b), pattern = "^[0-9]-[a-z]{4}-[0-9]{3}$", threshold = 1), failed_beyond_absolute)
+  expect_failure(expect_col_vals_regex(tbl, vars(b), pattern = "^[0-9]-[a-z]{4}-[0-9]{3}$", threshold = 0.01), failed_beyond_proportional)
 
   expect_failure(
-    expect_col_vals_regex(tbl, vars(b), regex = "^[0-9]-[a-z]{4}-[0-9]{3}$"),
+    expect_col_vals_regex(tbl, vars(b), pattern = "^[0-9]-[a-z]{4}-[0-9]{3}$"),
     "failure level \\(13\\) >= failure threshold \\(1\\)"
   )
 
@@ -655,7 +655,7 @@ test_that("pointblank expectation function produce the correct results", {
         y = c("sea", "eat", "tea"), # passing
         z = c("unchallangeable", "levelheadedness", "reauthorization")  # passing
       ),
-    regex = "ea"
+    pattern = "ea"
   )
 
   #
@@ -1629,10 +1629,10 @@ test_that("expect errors to be expressed by pointblank under some conditions", {
 
   # Errors caught and expressed when a column doesn't exist
   expect_error(expect_col_vals_lt(tbl, columns = vars(z), value = 0), regexp = no_col_msg)
-  expect_error(expect_col_vals_lte(tbl, columns = vars(z), value = 0), regexp = no_col_msg)
+  expect_error(expect_col_vals_le(tbl, columns = vars(z), value = 0), regexp = no_col_msg)
   expect_error(expect_col_vals_equal(tbl, columns = vars(z), value = 3), regexp = no_col_msg)
   expect_error(expect_col_vals_not_equal(tbl, columns = vars(z), value = 3), regexp = no_col_msg)
-  expect_error(expect_col_vals_gte(tbl, columns = vars(z), value = 0), regexp = no_col_msg)
+  expect_error(expect_col_vals_ge(tbl, columns = vars(z), value = 0), regexp = no_col_msg)
   expect_error(expect_col_vals_gt(tbl, columns = vars(z), value = 0), regexp = no_col_msg)
   expect_error(expect_col_vals_between(tbl, columns = vars(z), left = 0, right = 10000), regexp = no_col_msg)
   expect_error(expect_col_vals_not_between(tbl, columns = vars(z), left = 0, right = 10000), regexp = no_col_msg)
@@ -1640,7 +1640,7 @@ test_that("expect errors to be expressed by pointblank under some conditions", {
   expect_error(expect_col_vals_not_in_set(tbl, columns = vars(z), set = LETTERS), regexp = no_col_msg)
   expect_error(expect_col_vals_null(tbl, columns = vars(z)), regexp = no_col_msg)
   expect_error(expect_col_vals_not_null(tbl, columns = vars(z)), regexp = no_col_msg)
-  expect_error(expect_col_vals_regex(tbl, vars(z), regex = "^[0-9]-[a-z]{3}-[0-9]{3}$"), regexp = no_col_msg)
+  expect_error(expect_col_vals_regex(tbl, vars(z), pattern = "^[0-9]-[a-z]{3}-[0-9]{3}$"), regexp = no_col_msg)
   expect_error(expect_col_vals_within_spec(tbl, vars(z), spec = "isbn"), regexp = no_col_msg)
   expect_error(expect_col_is_character(tbl, columns = vars(z)), regexp = no_col_msg)
   expect_error(expect_col_is_numeric(tbl, columns = vars(z)), regexp = no_col_msg)

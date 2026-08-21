@@ -41,7 +41,7 @@ test_that("Getting a multiagent report is possible", {
     ) %>%
     rows_distinct() %>%
     col_vals_gt(vars(d), 100) %>%
-    col_vals_lte(vars(c), 5) %>%
+    col_vals_le(vars(c), 5) %>%
     col_vals_equal(
       vars(d), vars(d),
       na_pass = TRUE

@@ -250,12 +250,12 @@ tt_summary_stats <- function(tbl) {
 #' We see data, and not an error, so both validations were successful!
 #'
 #' Let's use a `tt_string_info()`-transformed table with the
-#' [test_col_vals_lte()] to check that the maximum string length in column `f`
+#' [test_col_vals_le()] to check that the maximum string length in column `f`
 #' of the `small_table` dataset is no greater than `4`.
 #'
 #' ```{r}
 #' tt_string_info(tbl = small_table) |>
-#'   test_col_vals_lte(
+#'   test_col_vals_le(
 #'     columns = f,
 #'     value = 4
 #'   )
@@ -922,7 +922,7 @@ tt_time_slice <- function(
 #' function. So if we wanted to test whether the maximum session duration during
 #' the rest of the time period (the remaining 0.75) is never higher than that of
 #' the first quarter of the year, we can supply a value from `stats_tbl` to
-#' [test_col_vals_lte()]:
+#' [test_col_vals_le()]:
 #'
 #' ```{r}
 #' game_revenue |>
@@ -930,7 +930,7 @@ tt_time_slice <- function(
 #'     slice_point = 0.25,
 #'     keep = "right"
 #'   ) |>
-#'   test_col_vals_lte(
+#'   test_col_vals_le(
 #'     columns = session_duration,
 #'     value = get_tt_param(
 #'       tbl = stats_tbl,

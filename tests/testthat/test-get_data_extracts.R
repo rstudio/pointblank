@@ -39,7 +39,7 @@ test_that("Getting data extracts is possible", {
   # produce a data extract during `interrogate()`
   agent <-
     create_agent(tbl = small_table) %>%
-    col_vals_gte(columns = vars(a), value = 1) %>%
+    col_vals_ge(columns = vars(a), value = 1) %>%
     interrogate()
 
   # Get a summary of the interrogation

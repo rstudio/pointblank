@@ -97,14 +97,14 @@ test_that("Interrogating simply returns the expected results", {
   expect_false(exists("tbl_result"))
 
   #
-  # col_vals_lte()
+  # col_vals_le()
   #
 
-  # Use the `col_vals_lte()` function to perform
+  # Use the `col_vals_le()` function to perform
   # a simple validation step
   tbl_result <-
     tbl %>%
-    col_vals_lte(
+    col_vals_le(
       columns = vars(a),
       value = 8,
       actions = warn_on_fail()
@@ -117,7 +117,7 @@ test_that("Interrogating simply returns the expected results", {
   expect_warning(
     tbl_result <-
       tbl %>%
-      col_vals_lte(
+      col_vals_le(
         columns = vars(a),
         value = 7,
         actions = warn_on_fail()
@@ -133,7 +133,7 @@ test_that("Interrogating simply returns the expected results", {
   expect_error(
     tbl_result <-
       tbl %>%
-      col_vals_lte(
+      col_vals_le(
         columns = vars(a),
         value = 7,
         actions = error_on_fail()
@@ -241,14 +241,14 @@ test_that("Interrogating simply returns the expected results", {
   expect_false(exists("tbl_result"))
 
   #
-  # col_vals_gte()
+  # col_vals_ge()
   #
 
-  # Use the `col_vals_gte()` function to perform
+  # Use the `col_vals_ge()` function to perform
   # a simple validation step
   tbl_result <-
     tbl %>%
-    col_vals_gte(
+    col_vals_ge(
       columns = vars(a),
       value = 1,
       actions = warn_on_fail()
@@ -261,7 +261,7 @@ test_that("Interrogating simply returns the expected results", {
   expect_warning(
     tbl_result <-
       tbl %>%
-      col_vals_gte(
+      col_vals_ge(
         columns = vars(a),
         value = 2,
         actions = warn_on_fail()
@@ -277,7 +277,7 @@ test_that("Interrogating simply returns the expected results", {
   expect_error(
     tbl_result <-
       tbl %>%
-      col_vals_gte(
+      col_vals_ge(
         columns = vars(a),
         value = 3,
         actions = error_on_fail()
@@ -892,7 +892,7 @@ test_that("Interrogating simply returns the expected results", {
     tbl %>%
     col_vals_regex(
       columns = vars(b),
-      regex = "[0-9]-[a-z]*?-[0-9]*?",
+      pattern = "[0-9]-[a-z]*?-[0-9]*?",
       actions = warn_on_fail()
     )
 
@@ -905,7 +905,7 @@ test_that("Interrogating simply returns the expected results", {
       tbl %>%
       col_vals_regex(
         columns = vars(b),
-        regex = "[0-7]-[a-z]*?-[0-9]*?",
+        pattern = "[0-7]-[a-z]*?-[0-9]*?",
         actions = warn_on_fail()
       )
   )
@@ -921,7 +921,7 @@ test_that("Interrogating simply returns the expected results", {
       tbl %>%
       col_vals_regex(
         columns = vars(b),
-        regex = "[0-7]-[a-z]*?-[0-9]*?",
+        pattern = "[0-7]-[a-z]*?-[0-9]*?",
         actions = error_on_fail()
       )
   )
@@ -934,7 +934,7 @@ test_that("Interrogating simply returns the expected results", {
     data.frame(x = c("ab", "ac")) %>%
       col_vals_regex(
         columns = "x",
-        regex = "a(?!d)"
+        pattern = "a(?!d)"
       )
   )
 
@@ -1863,12 +1863,12 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
       )
   )
 
-  # Use the `col_vals_gte()` function to perform
+  # Use the `col_vals_ge()` function to perform
   # simple validation steps with NAs, switching the
   # value of the `na_pass` option
   expect_warning(
     dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
-      col_vals_gte(
+      col_vals_ge(
         columns = vars(a),
         value = 1.0,
         na_pass = FALSE,
@@ -1878,7 +1878,7 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
 
   expect_no_warning(
     dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
-      col_vals_gte(
+      col_vals_ge(
         columns = vars(a),
         value = 1.0,
         na_pass = TRUE,
@@ -1909,12 +1909,12 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
       )
   )
 
-  # Use the `col_vals_lte()` function to perform
+  # Use the `col_vals_le()` function to perform
   # simple validation steps with NAs, switching the
   # value of the `na_pass` option
   expect_warning(
     dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
-      col_vals_lte(
+      col_vals_le(
         columns = vars(a),
         value = 2.5,
         na_pass = FALSE,
@@ -1924,7 +1924,7 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
 
   expect_no_warning(
     dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
-      col_vals_lte(
+      col_vals_le(
         columns = vars(a),
         value = 2.5,
         na_pass = TRUE,
@@ -1985,7 +1985,7 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
     dplyr::tibble(a = c("1-bcd-345", "3-ldm-038", NA)) %>%
       col_vals_regex(
         columns = vars(a),
-        regex = "[0-9]-[a-z]{3}-[0-9]{3}",
+        pattern = "[0-9]-[a-z]{3}-[0-9]{3}",
         na_pass = FALSE,
         actions = warn_on_fail()
       )
@@ -1995,7 +1995,7 @@ test_that("Interrogating simply incorporates the `na_pass` option", {
     dplyr::tibble(a = c("1-bcd-345", "3-ldm-038", NA)) %>%
       col_vals_regex(
         columns = vars(a),
-        regex = "[0-9]-[a-z]{3}-[0-9]{3}",
+        pattern = "[0-9]-[a-z]{3}-[0-9]{3}",
         na_pass = TRUE,
         actions = warn_on_fail()
       )

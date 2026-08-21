@@ -224,7 +224,7 @@ expect_col_vals_str_len <- function(
       max = max,
       na_pass = na_pass,
       preconditions = {{ preconditions }},
-      actions = action_levels(notify_at = threshold)
+      actions = action_levels(critical = threshold)
     ) |>
     interrogate() |>
     (\(x) x$validation_set)()
@@ -303,7 +303,7 @@ test_col_vals_str_len <- function(
       max = max,
       na_pass = na_pass,
       preconditions = {{ preconditions }},
-      actions = action_levels(notify_at = threshold)
+      actions = action_levels(critical = threshold)
     ) |>
     interrogate() |>
     (\(x) x$validation_set)()

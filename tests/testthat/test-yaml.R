@@ -28,7 +28,7 @@ test_that("YAML writing and reading works as expected", {
     col_vals_equal(vars(d), vars(d), na_pass = TRUE) %>%
     col_vals_null(vars(c)) %>%
     col_vals_not_null(matches("^.$")) %>%
-    col_vals_regex("b", regex = "[0-9]-[a-z]{3}-[0-9]{3}") %>%
+    col_vals_regex("b", pattern = "[0-9]-[a-z]{3}-[0-9]{3}") %>%
     col_is_character(vars(b)) %>%
     col_exists(vars(a, b)) %>%
     col_vals_expr(expr(a %% 1 == 0)) %>%
@@ -692,12 +692,12 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   #
 
   expect_equal(
-    get_oneline_expr_str(agent %>% col_vals_regex(vars(b), regex = "[0-9]-[a-z]{3}-[0-9]{3}")),
-    "col_vals_regex(columns = vars(b),regex = \"[0-9]-[a-z]{3}-[0-9]{3}\")"
+    get_oneline_expr_str(agent %>% col_vals_regex(vars(b), pattern = "[0-9]-[a-z]{3}-[0-9]{3}")),
+    "col_vals_regex(columns = vars(b),pattern = \"[0-9]-[a-z]{3}-[0-9]{3}\")"
   )
   expect_equal(
-    get_oneline_expr_str(agent %>% col_vals_regex(vars(b), regex = "[0-9]-[a-z]{3}-[0-9]{3}", label = "my_label")),
-    "col_vals_regex(columns = vars(b),regex = \"[0-9]-[a-z]{3}-[0-9]{3}\",label = \"my_label\")"
+    get_oneline_expr_str(agent %>% col_vals_regex(vars(b), pattern = "[0-9]-[a-z]{3}-[0-9]{3}", label = "my_label")),
+    "col_vals_regex(columns = vars(b),pattern = \"[0-9]-[a-z]{3}-[0-9]{3}\",label = \"my_label\")"
   )
 
   #

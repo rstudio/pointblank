@@ -51,7 +51,7 @@ commonly created with \code{\link[=create_agent]{create_agent()}}.}
 A collection one-sided formulas that consist of validation functions that
 validate row units (the \verb{col_vals_*()} series), column existence
 (\code{\link[=col_exists]{col_exists()}}), or column type (the \verb{col_is_*()} series). An example of
-this is \verb{~ col_vals_gte(., a, 5.5), ~ col_vals_not_null(., b}).}
+this is \verb{~ col_vals_ge(., a, 5.5), ~ col_vals_not_null(., b}).}
 
 \item{.list}{\emph{Alternative to \code{...}}
 

@@ -1,5 +1,7 @@
 # pointblank (development version)
 
+- The `regex` argument of `col_vals_regex()` (and its `expect_*`/`test_*` variants) is renamed to `pattern` to align with Python pointblank. The old `regex` argument remains accepted but emits a soft-deprecation warning. YAML files using a `regex:` key are still read correctly; newly written YAML uses `pattern:`. (#685)
+
 - `col_vals_gte()` and `col_vals_lte()` are renamed to `col_vals_ge()` and `col_vals_le()` to align with Python pointblank naming. The old names remain as soft-deprecated aliases and will continue to work for the foreseeable future. Existing YAML files using `col_vals_gte`/`col_vals_lte` step keys are still accepted. (#684)
 
 - The `stop` and `notify` threshold levels in `action_levels()` are renamed to `error` and `critical` (aligning with Python pointblank), with deprecation warnings for old names; `action_fns()` is now exported. (#611)

@@ -33,7 +33,7 @@
 #' and `right`, states whether each bound is inclusive or not. The default is
 #' `c(TRUE, TRUE)`, where both endpoints are inclusive (i.e., `[left, right]`).
 #' For partially-unbounded versions of this function, we can use the
-#' [col_vals_lt()], [col_vals_lte()], [col_vals_gt()], or [col_vals_gte()]
+#' [col_vals_lt()], [col_vals_le()], [col_vals_gt()], or [col_vals_ge()]
 #' validation functions. The validation function can be used directly on a data
 #' table or with an *agent* object (technically, a `ptblank_agent` object)
 #' whereas the expectation and test functions can only be used with a data

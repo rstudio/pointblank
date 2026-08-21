@@ -59,10 +59,10 @@ test_that("`col_*()`s show expected column selection failure/success behavior", 
     select_expr <- select_exprs[[expr_name]]
 
     agent %>% col_vals_lt({{ select_expr }}, value = 5) %>% check_behaviors(expr_name)
-    agent %>% col_vals_lte({{ select_expr }}, value = 5) %>% check_behaviors(expr_name)
+    agent %>% col_vals_le({{ select_expr }}, value = 5) %>% check_behaviors(expr_name)
     agent %>% col_vals_equal({{ select_expr }}, value = 5) %>% check_behaviors(expr_name)
     agent %>% col_vals_not_equal({{ select_expr }}, value = 5) %>% check_behaviors(expr_name)
-    agent %>% col_vals_gte({{ select_expr }}, value = 5) %>% check_behaviors(expr_name)
+    agent %>% col_vals_ge({{ select_expr }}, value = 5) %>% check_behaviors(expr_name)
     agent %>% col_vals_gt({{ select_expr }}, value = 5) %>% check_behaviors(expr_name)
     agent %>% col_vals_between({{ select_expr }}, 2, 5) %>% check_behaviors(expr_name)
     agent %>% col_vals_not_between({{ select_expr }}, 2, 5) %>% check_behaviors(expr_name)
@@ -74,7 +74,7 @@ test_that("`col_*()`s show expected column selection failure/success behavior", 
     agent %>% col_vals_not_null({{ select_expr }}) %>% check_behaviors(expr_name)
     agent %>% col_vals_increasing({{ select_expr }}) %>% check_behaviors(expr_name)
     agent %>% col_vals_decreasing({{ select_expr }}) %>% check_behaviors(expr_name)
-    agent %>% col_vals_regex({{ select_expr }}, regex = "abc") %>% check_behaviors(expr_name)
+    agent %>% col_vals_regex({{ select_expr }}, pattern = "abc") %>% check_behaviors(expr_name)
     agent %>% col_vals_within_spec({{ select_expr }}, spec = "email") %>% check_behaviors(expr_name)
     agent %>% col_is_character({{ select_expr }}) %>% check_behaviors(expr_name)
     agent %>% col_is_numeric({{ select_expr }}) %>% check_behaviors(expr_name)

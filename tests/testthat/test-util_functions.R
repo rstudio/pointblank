@@ -62,7 +62,7 @@ test_that("Utility functions won't fail us", {
   # function to create an agent with one validation step
   agent <-
     create_agent(tbl = small_table) %>%
-    col_vals_regex(columns = vars(b), regex = "[0-9]-[a-z]*?-[0-9]*?")
+    col_vals_regex(columns = vars(b), pattern = "[0-9]-[a-z]*?-[0-9]*?")
 
   agent %>% get_values_at_idx(idx = 1) %>% expect_type("character")
   agent %>% get_values_at_idx(idx = 1) %>% expect_equal("[0-9]-[a-z]*?-[0-9]*?")
@@ -265,7 +265,7 @@ test_that("Utility functions won't fail us", {
       col_vals_expr(expr(c %% 1 == 0)) %>%
       col_vals_gt(vars(date_time), vars(date), na_pass = TRUE) %>%
       col_vals_gt(vars(b), vars(g), na_pass = TRUE) %>%
-      col_vals_gte(vars(a, b, d), 0, na_pass = TRUE) %>%
+      col_vals_ge(vars(a, b, d), 0, na_pass = TRUE) %>%
       col_vals_regex(vars(b), "[1-9]-[a-z]{3}-[0-9]{3}") %>%
       rows_distinct() %>%
       col_vals_gt(vars(d), 100) %>%
@@ -678,10 +678,10 @@ test_that("Utility functions won't fail us", {
   function_icons <-
     c(
       "col_vals_lt",
-      "col_vals_lte",
+      "col_vals_le",
       "col_vals_equal",
       "col_vals_not_equal",
-      "col_vals_gte",
+      "col_vals_ge",
       "col_vals_gt",
       "col_vals_between",
       "col_vals_not_between",

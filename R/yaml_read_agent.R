@@ -562,6 +562,12 @@ make_validation_steps <- function(steps) {
       FUN = function(x) {
 
         step_i <- steps[[x]]
+
+        # Handle scalar steps (no arguments): `- rows_distinct` in YAML
+        if (is.character(step_i)) {
+          return(paste0("%>%\n", step_i, "()"))
+        }
+
         step_fn <- names(step_i)
 
         args <-

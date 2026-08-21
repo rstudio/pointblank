@@ -181,9 +181,8 @@
 #'     columns: c(date, date_time)
 #' - col_vals_regex:
 #'     columns: c(b)
-#'     regex: '[0-9]-[a-z]{3}-[0-9]{3}'
-#' - rows_distinct:
-#'     columns: ~
+#'     pattern: '[0-9]-[a-z]{3}-[0-9]{3}'
+#' - rows_distinct
 #' - col_vals_gt:
 #'     columns: c(d)
 #'     value: 100.0
@@ -621,9 +620,8 @@ yaml_write <- function(
 #'     columns: vars(date_time)
 #' - col_vals_regex:
 #'     columns: vars(b)
-#'     regex: '[0-9]-[a-z]{3}-[0-9]{3}'
-#' - rows_distinct:
-#'     columns: ~
+#'     pattern: '[0-9]-[a-z]{3}-[0-9]{3}'
+#' - rows_distinct
 #' - col_vals_gt:
 #'     columns: vars(d)
 #'     value: 100.0

@@ -309,8 +309,8 @@ create_autobrief <- function(
   column_text <- prep_column_text(column = column)
 
   if (assertion_type %in%
-      c("col_vals_gt", "col_vals_gte",
-        "col_vals_lt", "col_vals_lte",
+      c("col_vals_gt", "col_vals_gte", "col_vals_ge",
+        "col_vals_lt", "col_vals_lte", "col_vals_le",
         "col_vals_equal", "col_vals_not_equal")) {
 
     values_text <- prep_values_text(values = values, lang = lang)
@@ -639,8 +639,10 @@ prep_operator_text <- function(fn_name) {
     fn_name,
     "col_vals_gt" = ">",
     "col_vals_gte" = ">=",
+    "col_vals_ge" = ">=",
     "col_vals_lt" = "<",
     "col_vals_lte" = "<=",
+    "col_vals_le" = "<=",
     "col_vals_equal" = "==",
     "col_vals_not_equal" = "!=",
     NA_character_
@@ -984,8 +986,10 @@ failure_message_gluestring <- function(
       fn_name,
       "expect_col_vals_gt" =,
       "expect_col_vals_gte" =,
+      "expect_col_vals_ge" =,
       "expect_col_vals_lt" =,
       "expect_col_vals_lte" =,
+      "expect_col_vals_le" =,
       "expect_col_vals_equal" =,
       "expect_col_vals_not_equal" = get_lsv("autobriefs/compare_failure_text")[[lang]],
       "expect_col_vals_between" = get_lsv("autobriefs/between_failure_text")[[lang]],

@@ -19,21 +19,22 @@
 #------------------------------------------------------------------------------#
 
 
-#' Are column data less than a fixed value or data in another column?
+#' Are column data greater than or equal to a fixed value or data in another
+#' column?
 #'
 #' @description
 #'
-#' The `col_vals_lt()` validation function, the `expect_col_vals_lt()`
-#' expectation function, and the `test_col_vals_lt()` test function all check
-#' whether column values in a table are *less than* a specified `value` (the
-#' exact comparison used in this function is `col_val < value`). The `value` can
-#' be specified as a single, literal value or as a column name given in
-#' `vars()`. The validation function can be used directly on a data table or
-#' with an *agent* object (technically, a `ptblank_agent` object) whereas the
-#' expectation and test functions can only be used with a data table. Each
-#' validation step or expectation will operate over the number of test units
-#' that is equal to the number of rows in the table (after any `preconditions`
-#' have been applied).
+#' The `col_vals_ge()` validation function, the `expect_col_vals_ge()`
+#' expectation function, and the `test_col_vals_ge()` test function all check
+#' whether column values in a table are *greater than or equal to* a specified
+#' `value` (the exact comparison used in this function is `col_val >= value`).
+#' The `value` can be specified as a single, literal value or as a column name
+#' given in `vars()`. The validation function can be used directly on a data
+#' table or with an *agent* object (technically, a `ptblank_agent` object)
+#' whereas the expectation and test functions can only be used with a data
+#' table. Each validation step or expectation will operate over the number of
+#' test units that is equal to the number of rows in the table (after any
+#' `preconditions` have been applied).
 #'
 #' @inheritParams col_vals_gt
 #'
@@ -42,8 +43,8 @@
 #'   `<value expression>` // **required**
 #'
 #'   A value used for this comparison. This can be a single value or a
-#'   compatible column given in `vars()`. Any column values less than what is
-#'   specified here will pass validation.
+#'   compatible column given in `vars()`. Any column values greater than or
+#'   equal to what is specified here will pass validation.
 #'
 #' @return For the validation function, the return value is either a
 #'   `ptblank_agent` object or a table object (depending on whether an agent
@@ -142,18 +143,17 @@
 #' @section Actions:
 #'
 #' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list
-#' object that is best produced by the [action_levels()] function. Read that
-#' function's documentation for the lowdown on how to create reactions to
-#' above-threshold failure levels in validation. The basic gist is that you'll
-#' want at least a single threshold level (specified as either the fraction of
-#' test units failed, or, an absolute value), often using the `warn`
-#' argument. This is especially true when `x` is a table object because,
-#' otherwise, nothing happens. For the `col_vals_*()`-type functions, using
-#' `action_levels(warn = 0.25)` or `action_levels(error = 0.25)` are good
-#' choices depending on the situation (the first produces a warning when a
-#' quarter of the total test units fails, the other `stop()`s at the same
-#' threshold level).
+#' present in every validation function, takes a specially-crafted list object
+#' that is best produced by the [action_levels()] function. Read that function's
+#' documentation for the lowdown on how to create reactions to above-threshold
+#' failure levels in validation. The basic gist is that you'll want at least a
+#' single threshold level (specified as either the fraction of test units
+#' failed, or, an absolute value), often using the `warn` argument. This is
+#' especially true when `x` is a table object because, otherwise, nothing
+#' happens. For the `col_vals_*()`-type functions, using `action_levels(warn =
+#' 0.25)` or `action_levels(error = 0.25)` are good choices depending on the
+#' situation (the first produces a warning when a quarter of the total test
+#' units fails, the other raises an error at the same threshold level).
 #'
 #' @section Labels:
 #'
@@ -182,9 +182,9 @@
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
 #' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
 #' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `col_vals_lt()` is represented in YAML (under the top-level `steps` key as a
+#' `col_vals_ge()` is represented in YAML (under the top-level `steps` key as a
 #' list member), the syntax closely follows the signature of the validation
-#' function. Here is an example of how a complex call of `col_vals_lt()` as a
+#' function. Here is an example of how a complex call of `col_vals_ge()` as a
 #' validation step is expressed in R code and in the corresponding YAML
 #' representation.
 #'
@@ -192,14 +192,14 @@
 #'
 #' ```r
 #' agent |>
-#'   col_vals_lt(
+#'   col_vals_ge(
 #'     columns = a,
 #'     value = 1,
 #'     na_pass = TRUE,
 #'     preconditions = \(x) x |> dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn = 0.1, error = 0.2),
-#'     label = "The `col_vals_lt()` step.",
+#'     label = "The `col_vals_ge()` step.",
 #'     active = FALSE
 #'   )
 #' ```
@@ -208,7 +208,7 @@
 #'
 #' ```yaml
 #' steps:
-#' - col_vals_lt:
+#' - col_vals_ge:
 #'     columns: c(a)
 #'     value: 1.0
 #'     na_pass: true
@@ -217,7 +217,7 @@
 #'     actions:
 #'       warn_fraction: 0.1
 #'       error_fraction: 0.2
-#'     label: The `col_vals_lt()` step.
+#'     label: The `col_vals_ge()` step.
 #'     active: false
 #' ```
 #'
@@ -249,14 +249,14 @@
 #'
 #' ## A: Using an `agent` with validation functions and then `interrogate()`
 #'
-#' Validate that values in column `c` are all less than the value of `5`. We'll
-#' determine if this validation has any failing test units (there are 6 test
-#' units, one for each row).
+#' Validate that values in column `a` are all greater than or equal to the value
+#' of `5`. We'll determine if this validation has any failing test units (there
+#' are 6 test units, one for each row).
 #'
 #' ```r
 #' agent <-
 #'   create_agent(tbl = tbl) |>
-#'   col_vals_lt(columns = c, value = 5) |>
+#'   col_vals_ge(columns = a, value = 5) |>
 #'   interrogate()
 #' ```
 #'
@@ -266,7 +266,7 @@
 #'
 #' \if{html}{
 #' \out{
-#' `r pb_get_image_tag(file = "man_col_vals_lt_1.png")`
+#' `r pb_get_image_tag(file = "man_col_vals_ge_1.png")`
 #' }
 #' }
 #'
@@ -277,9 +277,7 @@
 #' behavior of side effects can be customized with the `actions` option.
 #'
 #' ```{r}
-#' tbl |>
-#'   col_vals_lt(columns = c, value = 5) |>
-#'   dplyr::pull(c)
+#' tbl |> col_vals_ge(columns = a, value = 5)
 #' ```
 #'
 #' ## C: Using the expectation function
@@ -288,7 +286,7 @@
 #' time. This is primarily used in **testthat** tests.
 #'
 #' ```r
-#' expect_col_vals_lt(tbl, columns = c, value = 5)
+#' expect_col_vals_ge(tbl, columns = a, value = 5)
 #' ```
 #'
 #' ## D: Using the test function
@@ -297,22 +295,22 @@
 #' us.
 #'
 #' ```{r}
-#' test_col_vals_lt(tbl, columns = c, value = 5)
+#' test_col_vals_ge(tbl, columns = a, value = 5)
 #' ```
 #'
 #' @family validation functions
 #' @section Function ID:
-#' 2-1
+#' 2-5
 #'
-#' @seealso The analogous function with a right-closed bound: [col_vals_le()].
+#' @seealso The analogous function with a left-open bound: [col_vals_gt()].
 #'
-#' @name col_vals_lt
+#' @name col_vals_ge
 NULL
 
-#' @rdname col_vals_lt
+#' @rdname col_vals_ge
 #' @import rlang
 #' @export
-col_vals_lt <- function(
+col_vals_ge <- function(
     x,
     columns,
     value,
@@ -346,7 +344,7 @@ col_vals_lt <- function(
 
     secret_agent <-
       create_agent(x, label = "::QUIET::") |>
-      col_vals_lt(
+      col_vals_ge(
         columns = tidyselect::all_of(columns),
         value = value,
         na_pass = na_pass,
@@ -368,7 +366,7 @@ col_vals_lt <- function(
     brief = brief, agent = agent,
     columns = columns, segments_list = segments_list,
     preconditions = preconditions, values = value,
-    assertion_type = "col_vals_lt"
+    assertion_type = "col_vals_ge"
   )
 
   # Normalize any provided `step_id` value(s)
@@ -393,7 +391,7 @@ col_vals_lt <- function(
       agent <-
         create_validation_step(
           agent = agent,
-          assertion_type = "col_vals_lt",
+          assertion_type = "col_vals_ge",
           i_o = i_o,
           columns_expr = columns_expr,
           column = columns[i],
@@ -415,10 +413,10 @@ col_vals_lt <- function(
   agent
 }
 
-#' @rdname col_vals_lt
+#' @rdname col_vals_ge
 #' @import rlang
 #' @export
-expect_col_vals_lt <- function(
+expect_col_vals_ge <- function(
     object,
     columns,
     value,
@@ -427,11 +425,11 @@ expect_col_vals_lt <- function(
     threshold = 1
 ) {
 
-  fn_name <- "expect_col_vals_lt"
+  fn_name <- "expect_col_vals_ge"
 
   vs <-
     create_agent(tbl = object, label = "::QUIET::") |>
-    col_vals_lt(
+    col_vals_ge(
       columns = {{ columns }},
       value = {{ value }},
       na_pass = na_pass,
@@ -480,7 +478,7 @@ expect_col_vals_lt <- function(
   act <- testthat::quasi_label(enquo(x), arg = "object")
 
   column_text <- prep_column_text(vs$column[[fail_idx]])
-  operator <- "<"
+  operator <- ">="
   values_text <-
     prep_values_text(values = vs$values[[fail_idx]], limit = 3, lang = "en")
 
@@ -498,10 +496,10 @@ expect_col_vals_lt <- function(
   invisible(act$val)
 }
 
-#' @rdname col_vals_lt
+#' @rdname col_vals_ge
 #' @import rlang
 #' @export
-test_col_vals_lt <- function(
+test_col_vals_ge <- function(
     object,
     columns,
     value,
@@ -512,7 +510,7 @@ test_col_vals_lt <- function(
 
   vs <-
     create_agent(tbl = object, label = "::QUIET::") |>
-    col_vals_lt(
+    col_vals_ge(
       columns = {{ columns }},
       value = {{ value }},
       na_pass = na_pass,

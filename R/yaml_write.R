@@ -1055,9 +1055,9 @@ as_agent_yaml_list <- function(agent, expanded) {
     validation_fn <- step_list$assertion_type
 
     if (validation_fn %in% c(
-      "col_vals_lt", "col_vals_lte",
+      "col_vals_lt", "col_vals_lte", "col_vals_le",
       "col_vals_equal", "col_vals_not_equal",
-      "col_vals_gte", "col_vals_gt"
+      "col_vals_gte", "col_vals_ge", "col_vals_gt"
     )) {
 
       column_text <-

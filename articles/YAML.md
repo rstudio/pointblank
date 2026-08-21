@@ -205,8 +205,7 @@ steps:
       pattern: '^[0-9]-[a-z]{3}-[0-9]{3}$'
 
   # rows_distinct()
-  - rows_distinct:
-      columns: ~
+  - rows_distinct
 ```
 
 Arguments that use R expressions (like column selections via

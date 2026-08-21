@@ -920,13 +920,13 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
     all_passed() %>%
     expect_true()
 
-  # Use the `col_vals_gte()` function to perform
+  # Use the `col_vals_ge()` function to perform
   # a validation step with NAs, switching the
   # value of the `na_pass` option
   small_table %>%
     dplyr::mutate(g = ifelse(!is.na(c), 1.5, NA_real_)) %>%
     create_agent() %>%
-    col_vals_gte(
+    col_vals_ge(
       columns = vars(g),
       value = 1.0,
       na_pass = FALSE,
@@ -939,7 +939,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
   small_table %>%
     dplyr::mutate(g = ifelse(!is.na(c), 1.5, NA_real_)) %>%
     create_agent() %>%
-    col_vals_gte(
+    col_vals_ge(
       columns = vars(g),
       value = 1.0,
       na_pass = TRUE,
@@ -978,13 +978,13 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
     all_passed() %>%
     expect_true()
 
-  # Use the `col_vals_lte()` function to perform
+  # Use the `col_vals_le()` function to perform
   # a validation step with NAs, switching the
   # value of the `na_pass` option
   small_table %>%
     dplyr::mutate(g = ifelse(!is.na(c), 1.5, NA_real_)) %>%
     create_agent() %>%
-    col_vals_lte(
+    col_vals_le(
       columns = vars(g),
       value = 1.5,
       na_pass = FALSE,
@@ -997,7 +997,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
   small_table %>%
     dplyr::mutate(g = ifelse(!is.na(c), 1.5, NA_real_)) %>%
     create_agent() %>%
-    col_vals_lte(
+    col_vals_le(
       columns = vars(g),
       value = 1.5,
       na_pass = TRUE,

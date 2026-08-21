@@ -482,7 +482,7 @@ us.
 }
 
 \seealso{
-The analogous function with a left-closed bound: \code{\link[=col_vals_gte]{col_vals_gte()}}.
+The analogous function with a left-closed bound: \code{\link[=col_vals_ge]{col_vals_ge()}}.
 
 Other validation functions: 
 \code{\link{col_count_match}()},
@@ -499,11 +499,11 @@ Other validation functions:
 \code{\link{col_vals_decreasing}()},
 \code{\link{col_vals_equal}()},
 \code{\link{col_vals_expr}()},
-\code{\link{col_vals_gte}()},
+\code{\link{col_vals_ge}()},
 \code{\link{col_vals_in_set}()},
 \code{\link{col_vals_increasing}()},
+\code{\link{col_vals_le}()},
 \code{\link{col_vals_lt}()},
-\code{\link{col_vals_lte}()},
 \code{\link{col_vals_make_set}()},
 \code{\link{col_vals_make_subset}()},
 \code{\link{col_vals_not_between}()},

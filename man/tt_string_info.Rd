@@ -78,6 +78,9 @@ of the \code{small_table} dataset is no greater than \code{4}.
     columns = f,
     value = 4
   )
+#> Warning: `test_col_vals_lte()` is deprecated.
+#> i Please use `test_col_vals_le()` instead.
+#> This warning is displayed once per session.
 #> [1] TRUE
 }\if{html}{\out{</div>}}
 }

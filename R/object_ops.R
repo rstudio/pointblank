@@ -136,11 +136,11 @@
 #'   col_exists(columns = c(date, date_time)) |>
 #'   col_vals_regex(
 #'     columns = b,
-#'     regex = "[0-9]-[a-z]{3}-[0-9]{3}"
+#'     pattern = "[0-9]-[a-z]{3}-[0-9]{3}"
 #'   ) |>
 #'   rows_distinct() |>
 #'   col_vals_gt(columns = d, value = 100) |>
-#'   col_vals_lte(columns = c, value = 5) |>
+#'   col_vals_le(columns = c, value = 5) |>
 #'   interrogate()
 #' ```
 #'
@@ -614,11 +614,11 @@ x_read_disk <- function(
 #'   col_exists(columns = c(date, date_time)) |>
 #'   col_vals_regex(
 #'     columns = b,
-#'     regex = "[0-9]-[a-z]{3}-[0-9]{3}"
+#'     pattern = "[0-9]-[a-z]{3}-[0-9]{3}"
 #'   ) |>
 #'   rows_distinct() |>
 #'   col_vals_gt(columns = d, value = 100) |>
-#'   col_vals_lte(columns = c, value = 5) |>
+#'   col_vals_le(columns = c, value = 5) |>
 #'   interrogate()
 #' ```
 #'
@@ -907,7 +907,7 @@ export_report <- function(
 #'   col_exists(columns = c(date, date_time)) |>
 #'   col_vals_regex(
 #'     columns = b,
-#'     regex = "[0-9]-[a-z]{3}-[0-9]{3}"
+#'     pattern = "[0-9]-[a-z]{3}-[0-9]{3}"
 #'   ) |>
 #'   rows_distinct() |>
 #'   interrogate()

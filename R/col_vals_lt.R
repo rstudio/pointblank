@@ -304,7 +304,7 @@
 #' @section Function ID:
 #' 2-1
 #'
-#' @seealso The analogous function with a right-closed bound: [col_vals_lte()].
+#' @seealso The analogous function with a right-closed bound: [col_vals_le()].
 #'
 #' @name col_vals_lt
 NULL

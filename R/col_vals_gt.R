@@ -425,7 +425,7 @@
 #' @section Function ID:
 #' 2-6
 #'
-#' @seealso The analogous function with a left-closed bound: [col_vals_gte()].
+#' @seealso The analogous function with a left-closed bound: [col_vals_ge()].
 #'
 #' @name col_vals_gt
 NULL

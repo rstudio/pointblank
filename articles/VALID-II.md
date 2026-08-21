@@ -289,7 +289,8 @@ small_table |>
   col_vals_between(d, left = 0, right = 4000, actions = al)
 ```
 
-    ## Warning in rlang::eval_tidy(.): WARN threshold exceeded.
+    ## Warning in rlang::eval_tidy(rlang::f_rhs(actions$fns$warn)): WARN threshold
+    ## exceeded.
 
     ## Error:
     ## ! Exceedance of failed test units where values in `f` should have been in the set of `low`, `mid`.

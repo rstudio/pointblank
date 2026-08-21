@@ -276,7 +276,7 @@ test_that("Agent interrogations with segments yields the correct results", {
 
   # Expect certain values in `validation$validation_set`
   expect_equal(
-    validation$validation_set$assertion_type, rep("col_vals_lte", 2)
+    validation$validation_set$assertion_type, rep("col_vals_le", 2)
   )
   expect_equal(validation$validation_set$column %>% unlist(), rep("b", 2))
   expect_equal(
@@ -387,7 +387,7 @@ test_that("Agent interrogations with segments yields the correct results", {
 
   # Expect certain values in `validation$validation_set`
   expect_equal(
-    validation$validation_set$assertion_type, rep("col_vals_gte", 2)
+    validation$validation_set$assertion_type, rep("col_vals_ge", 2)
   )
   expect_equal(validation$validation_set$column %>% unlist(), rep("b", 2))
   expect_equal(

@@ -954,8 +954,10 @@ check_table_with_assertion <- function(
       assertion_type,
       "col_vals_gt" =,
       "col_vals_gte" =,
+      "col_vals_ge" =,
       "col_vals_lt" =,
       "col_vals_lte" =,
+      "col_vals_le" =,
       "col_vals_equal" =,
       "col_vals_not_equal" = interrogate_comparison(
         agent = agent,
@@ -1087,8 +1089,10 @@ interrogate_comparison <- function(
       assertion_type,
       "col_vals_gt" = ">",
       "col_vals_gte" = ">=",
+      "col_vals_ge" = ">=",
       "col_vals_lt" = "<",
       "col_vals_lte" = "<=",
+      "col_vals_le" = "<=",
       "col_vals_equal" = "==",
       "col_vals_not_equal" = "!="
     )

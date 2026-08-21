@@ -331,11 +331,9 @@ create_autobrief <- function(
 
   if (assertion_type == "col_exists") {
 
-    autobrief <-
-      tidy_gsub(
-        as.character(prep_col_exists_expectation_text(column_text, lang = lang)),
-        "\\s{2,}", " "
-      )
+    col_exists_text <-
+      as.character(prep_col_exists_expectation_text(column_text, lang = lang))
+    autobrief <- tidy_gsub(col_exists_text, "\\s{2,}", " ")
   }
 
   if (assertion_type %in% c("col_vals_in_set", "col_vals_not_in_set")) {

@@ -996,7 +996,9 @@ get_character_nchar_plot <- function(
       htmltools::HTML(
         gsub(
           "height:500px", "width: 100%",
-          gt::local_image(filename = "temp_histogram_ggplot.png", height = "500px")
+          gt::local_image(
+            filename = "temp_histogram_ggplot.png", height = "500px"
+          )
         )
       )
     )
@@ -1524,7 +1526,9 @@ probe_missing <- function(data) {
       htmltools::HTML(
         gsub(
           "height:500px", "width: 100%",
-          gt::local_image(filename = "temp_missing_ggplot.png", height = "500px")
+          gt::local_image(
+            filename = "temp_missing_ggplot.png", height = "500px"
+          )
         )
       )
     )

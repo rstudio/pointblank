@@ -355,7 +355,10 @@ get_informant_report <- function(
             )
 
           column_escaped <-
-            gsub("(\\(|\\)|\\[|\\]|\\||\\.|\\^|\\?|\\+|\\$|\\*)", "\\\\\\1", column)
+            gsub(
+              "(\\(|\\)|\\[|\\]|\\||\\.|\\^|\\?|\\+|\\$|\\*)",
+              "\\\\\\1", column
+            )
 
           row_idx <-
             grep(paste0("^<code.*?>", column_escaped, "<.*?"), tbl$item)

@@ -1769,7 +1769,9 @@ print_time <- function(time_diff_s) {
 
   paste0(
     " {.time_taken (",
-    formatC(round(time_diff_s, 1), format = "f", drop0trailing = FALSE, digits = 1),
+    formatC(
+      round(time_diff_s, 1), format = "f", drop0trailing = FALSE, digits = 1
+    ),
     " s)}"
   )
 }

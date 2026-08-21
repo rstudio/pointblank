@@ -419,7 +419,7 @@ to actually perform the validations and gather intel.
   ) |>
   rows_distinct() |>
   col_vals_gt(columns = d, value = 100) |>
-  col_vals_lte(columns = c, value = 5) |>
+  col_vals_le(columns = c, value = 5) |>
   col_vals_between(
     columns = c,
     left = vars(a), right = vars(d),

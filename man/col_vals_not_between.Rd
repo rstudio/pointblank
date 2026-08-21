@@ -213,7 +213,7 @@ literal values or as column names given in \code{vars()}. The \code{inclusive}
 argument, as a vector of two logical values relating to \code{left} and \code{right},
 states whether each bound is inclusive or not. The default is \code{c(TRUE, TRUE)}, where both endpoints are inclusive (i.e., \verb{[left, right]}). For
 partially-unbounded versions of this function, we can use the
-\code{\link[=col_vals_lt]{col_vals_lt()}}, \code{\link[=col_vals_lte]{col_vals_lte()}}, \code{\link[=col_vals_gt]{col_vals_gt()}}, or \code{\link[=col_vals_gte]{col_vals_gte()}}
+\code{\link[=col_vals_lt]{col_vals_lt()}}, \code{\link[=col_vals_le]{col_vals_le()}}, \code{\link[=col_vals_gt]{col_vals_gt()}}, or \code{\link[=col_vals_ge]{col_vals_ge()}}
 validation functions. The validation function can be used directly on a data
 table or with an \emph{agent} object (technically, a \code{ptblank_agent} object)
 whereas the expectation and test functions can only be used with a data

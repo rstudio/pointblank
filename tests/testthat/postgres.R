@@ -29,8 +29,8 @@ test_that("pointblank agent works with dittodb-mocked Postgres database connecti
           label = "trade_statistics: 'hs07_yrp' table",
           actions = al
         ) %>%
-        col_vals_gte(vars(export_value_usd), 0) %>%
-        col_vals_gte(vars(import_value_usd), 0) %>%
+        col_vals_ge(vars(export_value_usd), 0) %>%
+        col_vals_ge(vars(import_value_usd), 0) %>%
         col_schema_match(
           schema = col_schema(
             year = "integer",

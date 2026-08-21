@@ -123,14 +123,14 @@ function. For that, we can use the `get_tt_param()` function. So if we
 wanted to test whether the maximum session duration during the rest of
 the time period (the remaining 0.75) is never higher than that of the
 first quarter of the year, we can supply a value from `stats_tbl` to
-[`test_col_vals_lte()`](https://rstudio.github.io/pointblank/reference/col_vals_le.md):
+[`test_col_vals_le()`](https://rstudio.github.io/pointblank/reference/col_vals_le.md):
 
     game_revenue |>
       tt_time_slice(
         slice_point = 0.25,
         keep = "right"
       ) |>
-      test_col_vals_lte(
+      test_col_vals_le(
         columns = session_duration,
         value = get_tt_param(
           tbl = stats_tbl,

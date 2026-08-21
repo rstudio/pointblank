@@ -82,7 +82,7 @@ the data.
       col_exists(columns = c(date, date_time)) |>
       col_vals_regex(
         columns = b,
-        regex = "[0-9]-[a-z]{3}-[0-9]{3}"
+        pattern = "[0-9]-[a-z]{3}-[0-9]{3}"
       ) |>
       rows_distinct() |>
       interrogate()

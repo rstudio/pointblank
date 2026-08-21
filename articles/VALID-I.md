@@ -180,6 +180,10 @@ agent <-
   interrogate()
 ```
 
+    ## Warning: The `regex` argument of `col_vals_regex()` is deprecated.
+    ## ℹ Please use `pattern` instead.
+    ## This warning is displayed once per session.
+
     ── Interrogation Started - there are 5 steps ──────────────────────────────────
     ✓ Step 1: OK.
     ✓ Step 2: OK.

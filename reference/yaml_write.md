@@ -170,11 +170,11 @@ plan by using as many validation functions as we want.
       col_exists(columns = c(date, date_time)) |>
       col_vals_regex(
         columns = b,
-        regex = "[0-9]-[a-z]{3}-[0-9]{3}"
+        pattern = "[0-9]-[a-z]{3}-[0-9]{3}"
       ) |>
       rows_distinct() |>
       col_vals_gt(columns = d, value = 100) |>
-      col_vals_lte(columns = c, value = 5)
+      col_vals_le(columns = c, value = 5)
 
 The agent can be written to a **pointblank**-readable YAML file with the
 `yaml_write()` function. Here, we'll use the filename
@@ -210,7 +210,7 @@ function.
     - col_vals_gt:
         columns: c(d)
         value: 100.0
-    - col_vals_lte:
+    - col_vals_le:
         columns: c(c)
         value: 5.0
 

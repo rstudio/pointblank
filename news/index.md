@@ -2,6 +2,15 @@
 
 ## pointblank (development version)
 
+- The `regex` argument of
+  [`col_vals_regex()`](https://rstudio.github.io/pointblank/reference/col_vals_regex.md)
+  (and its `expect_*`/`test_*` variants) is renamed to `pattern` to
+  align with Python pointblank. The old `regex` argument remains
+  accepted but emits a soft-deprecation warning. YAML files using a
+  `regex:` key are still read correctly; newly written YAML uses
+  `pattern:`.
+  ([\#685](https://github.com/rstudio/pointblank/issues/685))
+
 - [`col_vals_gte()`](https://rstudio.github.io/pointblank/reference/col_vals_ge.md)
   and
   [`col_vals_lte()`](https://rstudio.github.io/pointblank/reference/col_vals_le.md)

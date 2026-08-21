@@ -9,7 +9,7 @@ literal values or as column names given in vars(). The inclusive
 argument, as a vector of two logical values relating to left and right,
 states whether each bound is inclusive or not. The default is c(TRUE, TRUE), where both endpoints are inclusive (i.e., [left, right]). For
 partially-unbounded versions of this function, we can use the
-col_vals_lt(), col_vals_lte(), col_vals_gt(), or col_vals_gte()
+col_vals_lt(), col_vals_le(), col_vals_gt(), or col_vals_ge()
 validation functions. The validation function can be used directly on a data
 table or with an agent object (technically, a ptblank_agent object)
 whereas the expectation and test functions can only be used with a data
@@ -25,7 +25,7 @@ literal values or as column names given in vars(). The inclusive
 argument, as a vector of two logical values relating to left and right,
 states whether each bound is inclusive or not. The default is c(TRUE, TRUE), where both endpoints are inclusive (i.e., [left, right]). For
 partially-unbounded versions of this function, we can use the
-col_vals_lt(), col_vals_lte(), col_vals_gt(), or col_vals_gte()
+col_vals_lt(), col_vals_le(), col_vals_gt(), or col_vals_ge()
 validation functions. The validation function can be used directly on a data
 table or with an agent object (technically, a ptblank_agent object)
 whereas the expectation and test functions can only be used with a data
@@ -101,7 +101,7 @@ literal values or as column names given in <code><a href="https://dplyr.tidyvers
 argument, as a vector of two logical values relating to <code>left</code> and <code>right</code>,
 states whether each bound is inclusive or not. The default is <code>c(TRUE, TRUE)</code>, where both endpoints are inclusive (i.e., <code>[left, right]</code>). For
 partially-unbounded versions of this function, we can use the
-<code><a href="col_vals_lt.html">col_vals_lt()</a></code>, <code><a href="col_vals_le.html">col_vals_lte()</a></code>, <code><a href="col_vals_gt.html">col_vals_gt()</a></code>, or <code><a href="col_vals_ge.html">col_vals_gte()</a></code>
+<code><a href="col_vals_lt.html">col_vals_lt()</a></code>, <code><a href="col_vals_le.html">col_vals_le()</a></code>, <code><a href="col_vals_gt.html">col_vals_gt()</a></code>, or <code><a href="col_vals_ge.html">col_vals_ge()</a></code>
 validation functions. The validation function can be used directly on a data
 table or with an <em>agent</em> object (technically, a <code>ptblank_agent</code> object)
 whereas the expectation and test functions can only be used with a data

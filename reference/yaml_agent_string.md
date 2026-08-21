@@ -90,7 +90,7 @@ We can view the contents of the YAML file in the console with the
     - col_vals_gt:
         columns: vars(d)
         value: 100.0
-    - col_vals_lte:
+    - col_vals_le:
         columns: vars(c)
         value: 5.0
 

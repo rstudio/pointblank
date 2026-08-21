@@ -123,11 +123,11 @@ retrieval of the target table.</p>
 <span>  <span class="fu"><a href="../reference/col_exists.html">col_exists</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">date_time</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">b</span>,</span>
-<span>    regex <span class="op">=</span> <span class="st">"[0-9]-[a-z]{3}-[0-9]{3}"</span></span>
+<span>    pattern <span class="op">=</span> <span class="st">"[0-9]-[a-z]{3}-[0-9]{3}"</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/rows_distinct.html">rows_distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">d</span>, value <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/col_vals_le.html">col_vals_lte</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">c</span>, value <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre><p></p></div>
+<span>  <span class="fu"><a href="../reference/col_vals_le.html">col_vals_le</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">c</span>, value <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>The agent can be written to a <strong>pointblank</strong> YAML file with <code><a href="yaml_write.html">yaml_write()</a></code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/yaml_write.html">yaml_write</a></span><span class="op">(</span></span>
 <span>  agent <span class="op">=</span> <span class="va">agent</span>,</span>
@@ -157,14 +157,14 @@ we can use <code>yaml_agent_show_exprs()</code>.</p>
 <span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
 <span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>  <span class="fu">col_vals_regex</span>(</span>
 <span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>    <span class="at">columns =</span> b,</span>
-<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a>    <span class="at">regex =</span> <span class="st">"[0-9]-[a-z]{3}-[0-9]{3}"</span></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a>    <span class="at">pattern =</span> <span class="st">"[0-9]-[a-z]{3}-[0-9]{3}"</span></span>
 <span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
 <span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a>  <span class="fu">rows_distinct</span>() <span class="sc">|&gt;</span></span>
 <span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a>  <span class="fu">col_vals_gt</span>(</span>
 <span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a>    <span class="at">columns =</span> d,</span>
 <span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a>    <span class="at">value =</span> <span class="dv">100</span></span>
 <span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a>  <span class="fu">col_vals_lte</span>(</span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a>  <span class="fu">col_vals_le</span>(</span>
 <span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a>    <span class="at">columns =</span> c,</span>
 <span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a>    <span class="at">value =</span> <span class="dv">5</span></span>
 <span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a>  )</span></code></pre><p></p></div>

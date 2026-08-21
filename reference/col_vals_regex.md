@@ -3,7 +3,7 @@
 The `col_vals_regex()` validation function, the
 `expect_col_vals_regex()` expectation function, and the
 `test_col_vals_regex()` test function all check whether column values in
-a table correspond to a `regex` matching expression. The validation
+a table correspond to a `pattern` matching expression. The validation
 function can be used directly on a data table or with an *agent* object
 (technically, a `ptblank_agent` object) whereas the expectation and test
 functions can only be used with a data table. Each validation step or
@@ -17,7 +17,7 @@ applied).
 col_vals_regex(
   x,
   columns,
-  regex,
+  pattern,
   na_pass = FALSE,
   preconditions = NULL,
   segments = NULL,
@@ -25,25 +25,28 @@ col_vals_regex(
   step_id = NULL,
   label = NULL,
   brief = NULL,
-  active = TRUE
+  active = TRUE,
+  regex = NULL
 )
 
 expect_col_vals_regex(
   object,
   columns,
-  regex,
+  pattern,
   na_pass = FALSE,
   preconditions = NULL,
-  threshold = 1
+  threshold = 1,
+  regex = NULL
 )
 
 test_col_vals_regex(
   object,
   columns,
-  regex,
+  pattern,
   na_pass = FALSE,
   preconditions = NULL,
-  threshold = 1
+  threshold = 1,
+  regex = NULL
 )
 ```
 
@@ -72,7 +75,7 @@ test_col_vals_regex(
   should be applied. See the *Column Names* section for more
   information.
 
-- regex:
+- pattern:
 
   *Regex pattern*
 
@@ -193,6 +196,15 @@ test_col_vals_regex(
   can be used to determine whether to make a validation step active on
   the basis of one or more columns existing in the table (e.g.,
   `\(x) x |> has_columns(c(d, e))`).
+
+- regex:
+
+  **\[deprecated\]**
+
+  `scalar<character>` // **deprecated**
+
+  Deprecated in favor of `pattern`. Providing a value here will work but
+  will emit a warning asking you to switch to `pattern`.
 
 - object:
 
@@ -405,7 +417,7 @@ R statement:
     agent |>
       col_vals_regex(
         columns = a,
-        regex = "[0-9]-[a-z]{3}-[0-9]{3}",
+        pattern = "[0-9]-[a-z]{3}-[0-9]{3}",
         na_pass = TRUE,
         preconditions = \(x) x |> dplyr::filter(a < 10),
         segments = b ~ c("group_1", "group_2"),
@@ -419,7 +431,7 @@ YAML representation:
     steps:
     - col_vals_regex:
         columns: c(a)
-        regex: '[0-9]-[a-z]{3}-[0-9]{3}'
+        pattern: '[0-9]-[a-z]{3}-[0-9]{3}'
         na_pass: true
         preconditions: ~. %>% dplyr::filter(a < 10)
         segments: b ~ c("group_1", "group_2")
@@ -430,7 +442,7 @@ YAML representation:
         active: false
 
 In practice, both of these will often be shorter as only the `columns`
-and `regex` arguments require values. Arguments with default values
+and `pattern` arguments require values. Arguments with default values
 won't be written to YAML when using
 [`yaml_write()`](https://rstudio.github.io/pointblank/reference/yaml_write.md)
 (though it is acceptable to include them with their default when
@@ -439,6 +451,9 @@ transformation of an agent to YAML without any writing to disk by using
 the
 [`yaml_agent_string()`](https://rstudio.github.io/pointblank/reference/yaml_agent_string.md)
 function.
+
+Note that YAML files previously written with a `regex:` key are still
+accepted — the value will be used as the `pattern`.
 
 ## Examples
 
@@ -477,7 +492,7 @@ test units, one for each row).
 
     agent <-
       create_agent(tbl = small_table) |>
-      col_vals_regex(columns = b, regex = pattern) |>
+      col_vals_regex(columns = b, pattern = pattern) |>
       interrogate()
 
 Printing the `agent` in the console shows the validation report in the
@@ -496,7 +511,7 @@ if there is a single test unit failing. The behavior of side effects can
 be customized with the `actions` option.
 
     small_table |>
-      col_vals_regex(columns = b, regex = pattern) |>
+      col_vals_regex(columns = b, pattern = pattern) |>
       dplyr::slice(1:5)
     #> # A tibble: 5 x 8
     #>   date_time           date           a b             c      d e     f
@@ -512,14 +527,14 @@ be customized with the `actions` option.
 With the `expect_*()` form, we would typically perform one validation at
 a time. This is primarily used in **testthat** tests.
 
-    expect_col_vals_regex(small_table, columns = b, regex = pattern)
+    expect_col_vals_regex(small_table, columns = b, pattern = pattern)
 
 ### D: Using the test function
 
 With the `test_*()` form, we should get a single logical value returned
 to us.
 
-    small_table |> test_col_vals_regex(columns = b, regex = pattern)
+    small_table |> test_col_vals_regex(columns = b, pattern = pattern)
     #> [1] TRUE
 
 ## Function ID

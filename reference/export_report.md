@@ -105,11 +105,11 @@ using as many validation functions as we want. Then, we
       col_exists(columns = c(date, date_time)) |>
       col_vals_regex(
         columns = b,
-        regex = "[0-9]-[a-z]{3}-[0-9]{3}"
+        pattern = "[0-9]-[a-z]{3}-[0-9]{3}"
       ) |>
       rows_distinct() |>
       col_vals_gt(columns = d, value = 100) |>
-      col_vals_lte(columns = c, value = 5) |>
+      col_vals_le(columns = c, value = 5) |>
       interrogate()
 
 The agent report can be written to an HTML file with `export_report()`.

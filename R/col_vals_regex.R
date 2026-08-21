@@ -25,9 +25,9 @@
 #'
 #' The `col_vals_regex()` validation function, the `expect_col_vals_regex()`
 #' expectation function, and the `test_col_vals_regex()` test function all check
-#' whether column values in a table correspond to a `regex` matching expression.
-#' The validation function can be used directly on a data table or with an
-#' *agent* object (technically, a `ptblank_agent` object) whereas the
+#' whether column values in a table correspond to a `pattern` matching
+#' expression. The validation function can be used directly on a data table or
+#' with an *agent* object (technically, a `ptblank_agent` object) whereas the
 #' expectation and test functions can only be used with a data table. Each
 #' validation step or expectation will operate over the number of test units
 #' that is equal to the number of rows in the table (after any `preconditions`
@@ -35,12 +35,19 @@
 #'
 #' @inheritParams col_vals_gt
 #'
-#' @param regex *Regex pattern*
+#' @param pattern *Regex pattern*
 #'
 #'   `scalar<character>` // **required**
 #'
 #'   A regular expression pattern to test for a match to the target column. Any
 #'   regex matches to values in the target `columns` will pass validation.
+#'
+#' @param regex `r lifecycle::badge("deprecated")`
+#'
+#'   `scalar<character>` // **deprecated**
+#'
+#'   Deprecated in favor of `pattern`. Providing a value here will work but
+#'   will emit a warning asking you to switch to `pattern`.
 #'
 #' @return For the validation function, the return value is either a
 #'   `ptblank_agent` object or a table object (depending on whether an agent
@@ -187,11 +194,11 @@
 #'
 #' R statement:
 #'
-#' ```
+#' ```r
 #' agent |>
 #'   col_vals_regex(
 #'     columns = a,
-#'     regex = "[0-9]-[a-z]{3}-[0-9]{3}",
+#'     pattern = "[0-9]-[a-z]{3}-[0-9]{3}",
 #'     na_pass = TRUE,
 #'     preconditions = \(x) x |> dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
@@ -207,7 +214,7 @@
 #' steps:
 #' - col_vals_regex:
 #'     columns: c(a)
-#'     regex: '[0-9]-[a-z]{3}-[0-9]{3}'
+#'     pattern: '[0-9]-[a-z]{3}-[0-9]{3}'
 #'     na_pass: true
 #'     preconditions: ~. %>% dplyr::filter(a < 10)
 #'     segments: b ~ c("group_1", "group_2")
@@ -219,11 +226,14 @@
 #' ```
 #'
 #' In practice, both of these will often be shorter as only the `columns` and
-#' `regex` arguments require values. Arguments with default values won't be
+#' `pattern` arguments require values. Arguments with default values won't be
 #' written to YAML when using [yaml_write()] (though it is acceptable to include
 #' them with their default when generating the YAML by other means). It is also
 #' possible to preview the transformation of an agent to YAML without any
 #' writing to disk by using the [yaml_agent_string()] function.
+#'
+#' Note that YAML files previously written with a `regex:` key are still
+#' accepted — the value will be used as the `pattern`.
 #'
 #' @section Examples:
 #'
@@ -250,7 +260,7 @@
 #' ```r
 #' agent <-
 #'   create_agent(tbl = small_table) |>
-#'   col_vals_regex(columns = b, regex = pattern) |>
+#'   col_vals_regex(columns = b, pattern = pattern) |>
 #'   interrogate()
 #' ```
 #'
@@ -272,7 +282,7 @@
 #'
 #' ```{r}
 #' small_table |>
-#'   col_vals_regex(columns = b, regex = pattern) |>
+#'   col_vals_regex(columns = b, pattern = pattern) |>
 #'   dplyr::slice(1:5)
 #' ```
 #'
@@ -282,7 +292,7 @@
 #' time. This is primarily used in **testthat** tests.
 #'
 #' ```r
-#' expect_col_vals_regex(small_table, columns = b, regex = pattern)
+#' expect_col_vals_regex(small_table, columns = b, pattern = pattern)
 #' ```
 #'
 #' ## D: Using the test function
@@ -291,7 +301,7 @@
 #' us.
 #'
 #' ```{r}
-#' small_table |> test_col_vals_regex(columns = b, regex = pattern)
+#' small_table |> test_col_vals_regex(columns = b, pattern = pattern)
 #' ```
 #'
 #' @family validation functions
@@ -307,7 +317,7 @@ NULL
 col_vals_regex <- function(
     x,
     columns,
-    regex,
+    pattern,
     na_pass = FALSE,
     preconditions = NULL,
     segments = NULL,
@@ -315,8 +325,25 @@ col_vals_regex <- function(
     step_id = NULL,
     label = NULL,
     brief = NULL,
-    active = TRUE
+    active = TRUE,
+    regex = NULL
 ) {
+
+  # Handle deprecated `regex` argument
+  if (!is.null(regex)) {
+    rlang::warn(
+      c(
+        "The `regex` argument of `col_vals_regex()` is deprecated.",
+        "i" = "Please use `pattern` instead."
+      ),
+      class = "pointblank_soft_deprecated",
+      .frequency = "once",
+      .frequency_id = "pointblank-col_vals_regex-regex-deprecation"
+    )
+    if (missing(pattern)) {
+      pattern <- regex
+    }
+  }
 
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
@@ -340,7 +367,7 @@ col_vals_regex <- function(
       create_agent(x, label = "::QUIET::") |>
       col_vals_regex(
         columns = tidyselect::all_of(columns),
-        regex = regex,
+        pattern = pattern,
         na_pass = na_pass,
         preconditions = preconditions,
         segments = segments,
@@ -359,7 +386,7 @@ col_vals_regex <- function(
   brief <- resolve_brief(
     brief = brief, agent = agent,
     columns = columns, segments_list = segments_list,
-    preconditions = preconditions, values = regex,
+    preconditions = preconditions, values = pattern,
     assertion_type = "col_vals_regex"
   )
 
@@ -389,7 +416,7 @@ col_vals_regex <- function(
           i_o = i_o,
           columns_expr = columns_expr,
           column = columns[i],
-          values = regex,
+          values = pattern,
           na_pass = na_pass,
           preconditions = preconditions,
           seg_expr = segments,
@@ -413,11 +440,28 @@ col_vals_regex <- function(
 expect_col_vals_regex <- function(
     object,
     columns,
-    regex,
+    pattern,
     na_pass = FALSE,
     preconditions = NULL,
-    threshold = 1
+    threshold = 1,
+    regex = NULL
 ) {
+
+  # Handle deprecated `regex` argument
+  if (!is.null(regex)) {
+    rlang::warn(
+      c(
+        "The `regex` argument of `expect_col_vals_regex()` is deprecated.",
+        "i" = "Please use `pattern` instead."
+      ),
+      class = "pointblank_soft_deprecated",
+      .frequency = "once",
+      .frequency_id = "pointblank-expect_col_vals_regex-regex-deprecation"
+    )
+    if (missing(pattern)) {
+      pattern <- regex
+    }
+  }
 
   fn_name <- "expect_col_vals_regex"
 
@@ -425,7 +469,7 @@ expect_col_vals_regex <- function(
     create_agent(tbl = object, label = "::QUIET::") |>
     col_vals_regex(
       columns = {{ columns }},
-      regex = {{ regex }},
+      pattern = pattern,
       na_pass = na_pass,
       preconditions = {{ preconditions }},
       actions = action_levels(critical = threshold)
@@ -495,17 +539,34 @@ expect_col_vals_regex <- function(
 test_col_vals_regex <- function(
     object,
     columns,
-    regex,
+    pattern,
     na_pass = FALSE,
     preconditions = NULL,
-    threshold = 1
+    threshold = 1,
+    regex = NULL
 ) {
+
+  # Handle deprecated `regex` argument
+  if (!is.null(regex)) {
+    rlang::warn(
+      c(
+        "The `regex` argument of `test_col_vals_regex()` is deprecated.",
+        "i" = "Please use `pattern` instead."
+      ),
+      class = "pointblank_soft_deprecated",
+      .frequency = "once",
+      .frequency_id = "pointblank-test_col_vals_regex-regex-deprecation"
+    )
+    if (missing(pattern)) {
+      pattern <- regex
+    }
+  }
 
   vs <-
     create_agent(tbl = object, label = "::QUIET::") |>
     col_vals_regex(
       columns = {{ columns }},
-      regex = {{ regex }},
+      pattern = pattern,
       na_pass = na_pass,
       preconditions = {{ preconditions }},
       actions = action_levels(critical = threshold)

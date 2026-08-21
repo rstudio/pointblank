@@ -2,6 +2,19 @@
 
 ## pointblank (development version)
 
+- [`col_vals_gte()`](https://rstudio.github.io/pointblank/reference/col_vals_ge.md)
+  and
+  [`col_vals_lte()`](https://rstudio.github.io/pointblank/reference/col_vals_le.md)
+  are renamed to
+  [`col_vals_ge()`](https://rstudio.github.io/pointblank/reference/col_vals_ge.md)
+  and
+  [`col_vals_le()`](https://rstudio.github.io/pointblank/reference/col_vals_le.md)
+  to align with Python pointblank naming. The old names remain as
+  soft-deprecated aliases and will continue to work for the foreseeable
+  future. Existing YAML files using `col_vals_gte`/`col_vals_lte` step
+  keys are still accepted.
+  ([\#684](https://github.com/rstudio/pointblank/issues/684))
+
 - The `stop` and `notify` threshold levels in
   [`action_levels()`](https://rstudio.github.io/pointblank/reference/action_levels.md)
   are renamed to `error` and `critical` (aligning with Python

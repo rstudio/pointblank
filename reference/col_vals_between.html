@@ -101,7 +101,7 @@ specified as single, literal values or as column names given in <code><a href="h
 and <code>right</code>, states whether each bound is inclusive or not. The default is
 <code>c(TRUE, TRUE)</code>, where both endpoints are inclusive (i.e., <code>[left, right]</code>).
 For partially-unbounded versions of this function, we can use the
-<code><a href="col_vals_lt.html">col_vals_lt()</a></code>, <code><a href="col_vals_lte.html">col_vals_lte()</a></code>, <code><a href="col_vals_gt.html">col_vals_gt()</a></code>, or <code><a href="col_vals_gte.html">col_vals_gte()</a></code>
+<code><a href="col_vals_lt.html">col_vals_lt()</a></code>, <code><a href="col_vals_le.html">col_vals_lte()</a></code>, <code><a href="col_vals_gt.html">col_vals_gt()</a></code>, or <code><a href="col_vals_ge.html">col_vals_gte()</a></code>
 validation functions. The validation function can be used directly on a data
 table or with an <em>agent</em> object (technically, a <code>ptblank_agent</code> object)
 whereas the expectation and test functions can only be used with a data
@@ -626,12 +626,12 @@ values are <code>9</code> and they now fall outside of the upper (or right) boun
 <code><a href="col_vals_decreasing.html">col_vals_decreasing()</a></code>,
 <code><a href="col_vals_equal.html">col_vals_equal()</a></code>,
 <code><a href="col_vals_expr.html">col_vals_expr()</a></code>,
+<code><a href="col_vals_ge.html">col_vals_ge()</a></code>,
 <code><a href="col_vals_gt.html">col_vals_gt()</a></code>,
-<code><a href="col_vals_gte.html">col_vals_gte()</a></code>,
 <code><a href="col_vals_in_set.html">col_vals_in_set()</a></code>,
 <code><a href="col_vals_increasing.html">col_vals_increasing()</a></code>,
+<code><a href="col_vals_le.html">col_vals_le()</a></code>,
 <code><a href="col_vals_lt.html">col_vals_lt()</a></code>,
-<code><a href="col_vals_lte.html">col_vals_lte()</a></code>,
 <code><a href="col_vals_make_set.html">col_vals_make_set()</a></code>,
 <code><a href="col_vals_make_subset.html">col_vals_make_subset()</a></code>,
 <code><a href="col_vals_not_between.html">col_vals_not_between()</a></code>,

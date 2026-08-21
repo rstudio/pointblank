@@ -145,13 +145,16 @@ numbers of characters (<code>15</code> and <code>24</code>, respectively) throug
 <span><span class="co">#&gt; 3 length_max         15         24      3        11          14      14</span></span></code></pre><p></p></div>
 <p>We see data, and not an error, so both validations were successful!</p>
 <p>Let's use a <code>tt_string_info()</code>-transformed table with the
-<code><a href="col_vals_lte.html">test_col_vals_lte()</a></code> to check that the maximum string length in column <code>f</code>
+<code><a href="col_vals_le.html">test_col_vals_lte()</a></code> to check that the maximum string length in column <code>f</code>
 of the <code>small_table</code> dataset is no greater than <code>4</code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/tt_string_info.html">tt_string_info</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">small_table</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/col_vals_lte.html">test_col_vals_lte</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="../reference/col_vals_le.html">test_col_vals_lte</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">f</span>,</span>
 <span>    value <span class="op">=</span> <span class="fl">4</span></span>
 <span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: `test_col_vals_lte()` is deprecated.</span></span>
+<span><span class="co">#&gt; i Please use `test_col_vals_le()` instead.</span></span>
+<span><span class="co">#&gt; This warning is displayed once per session.</span></span>
 <span><span class="co">#&gt; [1] TRUE</span></span></code></pre><p></p></div>
     </div>
     <div class="section level2">

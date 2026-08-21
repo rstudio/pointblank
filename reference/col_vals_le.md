@@ -1,23 +1,29 @@
-# Do the columns contain numeric values?
+# Are column data less than or equal to a fixed value or data in another column?
 
-The `col_is_numeric()` validation function, the
-`expect_col_is_numeric()` expectation function, and the
-`test_col_is_numeric()` test function all check whether one or more
-columns in a table is of the numeric type. Like many of the
-`col_is_*()`-type functions in **pointblank**, the only requirement is a
-specification of the column names. The validation function can be used
-directly on a data table or with an *agent* object (technically, a
-`ptblank_agent` object) whereas the expectation and test functions can
-only be used with a data table. Each validation step or expectation will
-operate over a single test unit, which is whether the column is a
-numeric-type column or not.
+The `col_vals_le()` validation function, the `expect_col_vals_le()`
+expectation function, and the `test_col_vals_le()` test function all
+check whether column values in a table are *less than or equal to* a
+specified `value` (the exact comparison used in this function is
+`col_val <= value`). The `value` can be specified as a single, literal
+value or as a column name given in
+[`vars()`](https://dplyr.tidyverse.org/reference/vars.html). The
+validation function can be used directly on a data table or with an
+*agent* object (technically, a `ptblank_agent` object) whereas the
+expectation and test functions can only be used with a data table. Each
+validation step or expectation will operate over the number of test
+units that is equal to the number of rows in the table (after any
+`preconditions` have been applied).
 
 ## Usage
 
 ``` r
-col_is_numeric(
+col_vals_le(
   x,
   columns,
+  value,
+  na_pass = FALSE,
+  preconditions = NULL,
+  segments = NULL,
   actions = NULL,
   step_id = NULL,
   label = NULL,
@@ -25,9 +31,55 @@ col_is_numeric(
   active = TRUE
 )
 
-expect_col_is_numeric(object, columns, threshold = 1)
+expect_col_vals_le(
+  object,
+  columns,
+  value,
+  na_pass = FALSE,
+  preconditions = NULL,
+  threshold = 1
+)
 
-test_col_is_numeric(object, columns, threshold = 1)
+test_col_vals_le(
+  object,
+  columns,
+  value,
+  na_pass = FALSE,
+  preconditions = NULL,
+  threshold = 1
+)
+
+col_vals_lte(
+  x,
+  columns,
+  value,
+  na_pass = FALSE,
+  preconditions = NULL,
+  segments = NULL,
+  actions = NULL,
+  step_id = NULL,
+  label = NULL,
+  brief = NULL,
+  active = TRUE
+)
+
+expect_col_vals_lte(
+  object,
+  columns,
+  value,
+  na_pass = FALSE,
+  preconditions = NULL,
+  threshold = 1
+)
+
+test_col_vals_lte(
+  object,
+  columns,
+  value,
+  na_pass = FALSE,
+  preconditions = NULL,
+  threshold = 1
+)
 ```
 
 ## Arguments
@@ -54,6 +106,54 @@ test_col_is_numeric(object, columns, threshold = 1)
   Specifies the column (or a set of columns) to which this validation
   should be applied. See the *Column Names* section for more
   information.
+
+- value:
+
+  *Value for comparison*
+
+  `<value expression>` // **required**
+
+  A value used for this comparison. This can be a single value or a
+  compatible column given in
+  [`vars()`](https://dplyr.tidyverse.org/reference/vars.html). Any
+  column values less than or equal to what is specified here will pass
+  validation.
+
+- na_pass:
+
+  *Allow missing values to pass validation*
+
+  `scalar<logical>` // *default:* `FALSE`
+
+  Should any encountered `NA` values be considered as passing test
+  units? By default, this is `FALSE`. Set to `TRUE` to give `NA`s a
+  pass.
+
+- preconditions:
+
+  *Input table modification prior to validation*
+
+  `<table mutation expression>` // *default:* `NULL` (`optional`)
+
+  An optional expression for mutating the input table before proceeding
+  with the validation. This can either be provided as a one-sided R
+  formula using a leading `~` (e.g.,
+  `\(x) x |> dplyr::mutate(col = col + 10)` or as a function (e.g.,
+  `function(x) dplyr::mutate(x, col = col + 10)`. See the
+  *Preconditions* section for more information.
+
+- segments:
+
+  *Expressions for segmenting the target table*
+
+  `<segmentation expressions>` // *default:* `NULL` (`optional`)
+
+  An optional expression or set of expressions (held in a list) that
+  serve to segment the target table by column values. Each expression
+  can be given in one of two ways: (1) as column names, or (2) as a
+  two-sided formula where the LHS holds a column name and the RHS
+  contains the column values to segment on. See the *Segments* section
+  for more details on this.
 
 - actions:
 
@@ -217,6 +317,67 @@ same capability and supersedes
 [`vars()`](https://dplyr.tidyverse.org/reference/vars.html) in
 `columns`.
 
+## Missing Values
+
+This validation function supports special handling of `NA` values. The
+`na_pass` argument will determine whether an `NA` value appearing in a
+test unit should be counted as a *pass* or a *fail*. The default of
+`na_pass = FALSE` means that any `NA`s encountered will accumulate
+failing test units.
+
+## Preconditions
+
+Providing expressions as `preconditions` means **pointblank** will
+preprocess the target table during interrogation as a preparatory step.
+It might happen that a particular validation requires a calculated
+column, some filtering of rows, or the addition of columns via a join,
+etc. Especially for an *agent*-based report this can be advantageous
+since we can develop a large validation plan with a single target table
+and make minor adjustments to it, as needed, along the way.
+
+The table mutation is totally isolated in scope to the validation
+step(s) where `preconditions` is used. Using **dplyr** code is suggested
+here since the statements can be translated to SQL if necessary (i.e.,
+if the target table resides in a database). The code is most easily
+supplied as a one-sided anonymous function, where `x` represents the
+input data table to be transformed (e.g.,
+`\(x) x |> dplyr::mutate(col_b = col_a + 10)`).
+
+## Segments
+
+By using the `segments` argument, it's possible to define a particular
+validation with segments (or row slices) of the target table. An
+optional expression or set of expressions that serve to segment the
+target table by column values. Each expression can be given in one of
+two ways: (1) as column names, or (2) as a two-sided formula where the
+LHS holds a column name and the RHS contains the column values to
+segment on.
+
+As an example of the first type of expression that can be used,
+`vars(a_column)` will segment the target table in however many unique
+values are present in the column called `a_column`. This is great if
+every unique value in a particular column (like different locations, or
+different dates) requires it's own repeating validation.
+
+With a formula, we can be more selective with which column values should
+be used for segmentation. Using `a_column ~ c("group_1", "group_2")`
+will attempt to obtain two segments where one is a slice of data where
+the value `"group_1"` exists in the column named `"a_column"`, and, the
+other is a slice where `"group_2"` exists in the same column. Each group
+of rows resolved from the formula will result in a separate validation
+step.
+
+If there are multiple `columns` specified then the potential number of
+validation steps will be `m` columns multiplied by `n` segments
+resolved.
+
+Segmentation will always occur after `preconditions` (i.e., statements
+that mutate the target table), if any, are applied. With this type of
+one-two combo, it's possible to generate labels for segmentation using
+an expression for `preconditions` and refer to those labels in
+`segments` without having to generate a separate version of the target
+table.
+
 ## Actions
 
 Often, we will want to specify `actions` for the validation. This
@@ -229,10 +390,11 @@ basic gist is that you'll want at least a single threshold level
 (specified as either the fraction of test units failed, or, an absolute
 value), often using the `warn` argument. This is especially true when
 `x` is a table object because, otherwise, nothing happens. For the
-`col_is_*()`-type functions, using `action_levels(warn = 1)` or
-`action_levels(error = 1)` are good choices depending on the situation
-(the first produces a warning, the other will
-[`stop()`](https://rdrr.io/r/base/stop.html)).
+`col_vals_*()`-type functions, using `action_levels(warn = 0.25)` or
+`action_levels(error = 0.25)` are good choices depending on the
+situation (the first produces a warning when a quarter of the total test
+units fails, the other [`stop()`](https://rdrr.io/r/base/stop.html)s at
+the same threshold level).
 
 ## Labels
 
@@ -244,6 +406,10 @@ step:
 - `"{.step}"`: The validation step name
 
 - `"{.col}"`: The current column name
+
+- `"{.seg_col}"`: The current segment's column name
+
+- `"{.seg_val}"`: The current segment's value/group
 
 The glue context also supports ordinary expressions for further
 flexibility (e.g., `"{toupper(.step)}"`) as long as they return a
@@ -265,36 +431,44 @@ and the resulting YAML can be used to regenerate an agent (with
 [`yaml_read_agent()`](https://rstudio.github.io/pointblank/reference/yaml_read_agent.md))
 or interrogate the target table (via
 [`yaml_agent_interrogate()`](https://rstudio.github.io/pointblank/reference/yaml_agent_interrogate.md)).
-When `col_is_numeric()` is represented in YAML (under the top-level
-`steps` key as a list member), the syntax closely follows the signature
-of the validation function. Here is an example of how a complex call of
-`col_is_numeric()` as a validation step is expressed in R code and in
-the corresponding YAML representation.
+When `col_vals_le()` is represented in YAML (under the top-level `steps`
+key as a list member), the syntax closely follows the signature of the
+validation function. Here is an example of how a complex call of
+`col_vals_le()` as a validation step is expressed in R code and in the
+corresponding YAML representation.
 
 R statement:
 
     agent |>
-      col_is_numeric(
+      col_vals_le(
         columns = a,
+        value = 1,
+        na_pass = TRUE,
+        preconditions = \(x) x |> dplyr::filter(a < 10),
+        segments = b ~ c("group_1", "group_2"),
         actions = action_levels(warn = 0.1, error = 0.2),
-        label = "The `col_is_numeric()` step.",
+        label = "The `col_vals_le()` step.",
         active = FALSE
       )
 
 YAML representation:
 
     steps:
-    - col_is_numeric:
+    - col_vals_le:
         columns: c(a)
+        value: 1.0
+        na_pass: true
+        preconditions: ~. %>% dplyr::filter(a < 10)
+        segments: b ~ c("group_1", "group_2")
         actions:
           warn_fraction: 0.1
           error_fraction: 0.2
-        label: The `col_is_numeric()` step.
+        label: The `col_vals_le()` step.
         active: false
 
 In practice, both of these will often be shorter as only the `columns`
-argument requires a value. Arguments with default values won't be
-written to YAML when using
+and `value` arguments require values. Arguments with default values
+won't be written to YAML when using
 [`yaml_write()`](https://rstudio.github.io/pointblank/reference/yaml_write.md)
 (though it is acceptable to include them with their default when
 generating the YAML by other means). It is also possible to preview the
@@ -305,35 +479,40 @@ function.
 
 ## Examples
 
-The `small_table` dataset in the package has a `d` column that is known
-to be numeric. The following examples will validate that that column is
-indeed of the `numeric` class.
+For all of the examples here, we'll use a simple table with three
+numeric columns (`a`, `b`, and `c`) and three character columns (`d`,
+`e`, and `f`).
 
-    small_table
-    #> # A tibble: 13 x 8
-    #>    date_time           date           a b             c      d e     f
-    #>    <dttm>              <date>     <int> <chr>     <dbl>  <dbl> <lgl> <chr>
-    #>  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high
-    #>  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-163     8 10000. TRUE  low
-    #>  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3  2343. TRUE  high
-    #>  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-903    NA  3892. FALSE mid
-    #>  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-038     7   284. TRUE  low
-    #>  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-923     4  3291. TRUE  mid
-    #>  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3   843. TRUE  high
-    #>  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-639     2  1036. FALSE low
-    #>  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high
-    #> 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high
-    #> 11 2016-01-26 20:07:00 2016-01-26     4 2-dmx-010     7   834. TRUE  low
-    #> 12 2016-01-28 02:51:00 2016-01-28     2 7-dmx-010     8   108. FALSE low
-    #> 13 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA  2230. TRUE  high
+    tbl <-
+      dplyr::tibble(
+          a = c(5, 5, 5, 5, 5, 5),
+          b = c(1, 1, 1, 2, 2, 2),
+          c = c(1, 1, 1, 2, 3, 4),
+          d = LETTERS[a],
+          e = LETTERS[b],
+          f = LETTERS[c]
+      )
+
+    tbl
+    #> # A tibble: 6 x 6
+    #>       a     b     c d     e     f
+    #>   <dbl> <dbl> <dbl> <chr> <chr> <chr>
+    #> 1     5     1     1 E     A     A
+    #> 2     5     1     1 E     A     A
+    #> 3     5     1     1 E     A     A
+    #> 4     5     2     2 E     B     B
+    #> 5     5     2     3 E     B     C
+    #> 6     5     2     4 E     B     D
 
 ### A: Using an `agent` with validation functions and then [`interrogate()`](https://rstudio.github.io/pointblank/reference/interrogate.md)
 
-Validate that the column `d` has the `numeric` class.
+Validate that values in column `c` are all less than or equal to the
+value of `4`. We'll determine if this validation has any failing test
+units (there are 6 test units, one for each row).
 
     agent <-
-      create_agent(tbl = small_table) |>
-      col_is_numeric(columns = d) |>
+      create_agent(tbl = tbl) |>
+      col_vals_le(columns = c, value = 4) |>
       interrogate()
 
 Printing the `agent` in the console shows the validation report in the
@@ -341,8 +520,8 @@ Viewer. Here is an excerpt of validation report, showing the single
 entry that corresponds to the validation step demonstrated here.
 
 ![This image was generated from the first code example in the
-\`col_is_numeric()\` help
-file.](https://raw.githubusercontent.com/rstudio/pointblank/main/images/man_col_is_numeric_1.png)
+\`col_vals_le()\` help
+file.](https://raw.githubusercontent.com/rstudio/pointblank/main/images/man_col_vals_le_1.png)
 
 ### B: Using the validation function directly on the data (no `agent`)
 
@@ -351,38 +530,34 @@ passed through but should [`stop()`](https://rdrr.io/r/base/stop.html)
 if there is a single test unit failing. The behavior of side effects can
 be customized with the `actions` option.
 
-    small_table |>
-      col_is_numeric(columns = d) |>
-      dplyr::slice(1:5)
-    #> # A tibble: 5 x 8
-    #>   date_time           date           a b             c      d e     f
-    #>   <dttm>              <date>     <int> <chr>     <dbl>  <dbl> <lgl> <chr>
-    #> 1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high
-    #> 2 2016-01-04 00:32:00 2016-01-04     3 5-egh-163     8 10000. TRUE  low
-    #> 3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3  2343. TRUE  high
-    #> 4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-903    NA  3892. FALSE mid
-    #> 5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-038     7   284. TRUE  low
+    tbl |>
+      col_vals_le(columns = c, value = 4) |>
+      dplyr::pull(c)
+    #> [1] 1 1 1 2 3 4
 
 ### C: Using the expectation function
 
 With the `expect_*()` form, we would typically perform one validation at
 a time. This is primarily used in **testthat** tests.
 
-    expect_col_is_numeric(small_table, columns = d)
+    expect_col_vals_le(tbl, columns = c, value = 4)
 
 ### D: Using the test function
 
 With the `test_*()` form, we should get a single logical value returned
 to us.
 
-    small_table |> test_col_is_numeric(columns = d)
+    test_col_vals_le(tbl, columns = c, value = 4)
     #> [1] TRUE
 
 ## Function ID
 
-2-23
+2-2
 
 ## See also
+
+The analogous function with a right-open bound:
+[`col_vals_lt()`](https://rstudio.github.io/pointblank/reference/col_vals_lt.md).
 
 Other validation functions:
 [`col_count_match()`](https://rstudio.github.io/pointblank/reference/col_count_match.md),
@@ -392,6 +567,7 @@ Other validation functions:
 [`col_is_factor()`](https://rstudio.github.io/pointblank/reference/col_is_factor.md),
 [`col_is_integer()`](https://rstudio.github.io/pointblank/reference/col_is_integer.md),
 [`col_is_logical()`](https://rstudio.github.io/pointblank/reference/col_is_logical.md),
+[`col_is_numeric()`](https://rstudio.github.io/pointblank/reference/col_is_numeric.md),
 [`col_is_posix()`](https://rstudio.github.io/pointblank/reference/col_is_posix.md),
 [`col_schema_match()`](https://rstudio.github.io/pointblank/reference/col_schema_match.md),
 [`col_vals_between()`](https://rstudio.github.io/pointblank/reference/col_vals_between.md),
@@ -402,7 +578,6 @@ Other validation functions:
 [`col_vals_gt()`](https://rstudio.github.io/pointblank/reference/col_vals_gt.md),
 [`col_vals_in_set()`](https://rstudio.github.io/pointblank/reference/col_vals_in_set.md),
 [`col_vals_increasing()`](https://rstudio.github.io/pointblank/reference/col_vals_increasing.md),
-[`col_vals_le()`](https://rstudio.github.io/pointblank/reference/col_vals_le.md),
 [`col_vals_lt()`](https://rstudio.github.io/pointblank/reference/col_vals_lt.md),
 [`col_vals_make_set()`](https://rstudio.github.io/pointblank/reference/col_vals_make_set.md),
 [`col_vals_make_subset()`](https://rstudio.github.io/pointblank/reference/col_vals_make_subset.md),

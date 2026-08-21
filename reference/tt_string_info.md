@@ -73,7 +73,7 @@ table.
 We see data, and not an error, so both validations were successful!
 
 Let's use a `tt_string_info()`-transformed table with the
-[`test_col_vals_lte()`](https://rstudio.github.io/pointblank/reference/col_vals_lte.md)
+[`test_col_vals_lte()`](https://rstudio.github.io/pointblank/reference/col_vals_le.md)
 to check that the maximum string length in column `f` of the
 `small_table` dataset is no greater than `4`.
 
@@ -82,6 +82,9 @@ to check that the maximum string length in column `f` of the
         columns = f,
         value = 4
       )
+    #> Warning: `test_col_vals_lte()` is deprecated.
+    #> i Please use `test_col_vals_le()` instead.
+    #> This warning is displayed once per session.
     #> [1] TRUE
 
 ## Function ID

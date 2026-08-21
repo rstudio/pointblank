@@ -14,10 +14,10 @@ default is `c(TRUE, TRUE)`, where both endpoints are inclusive (i.e.,
 `[left, right]`). For partially-unbounded versions of this function, we
 can use the
 [`col_vals_lt()`](https://rstudio.github.io/pointblank/reference/col_vals_lt.md),
-[`col_vals_lte()`](https://rstudio.github.io/pointblank/reference/col_vals_lte.md),
+[`col_vals_lte()`](https://rstudio.github.io/pointblank/reference/col_vals_le.md),
 [`col_vals_gt()`](https://rstudio.github.io/pointblank/reference/col_vals_gt.md),
 or
-[`col_vals_gte()`](https://rstudio.github.io/pointblank/reference/col_vals_gte.md)
+[`col_vals_gte()`](https://rstudio.github.io/pointblank/reference/col_vals_ge.md)
 validation functions. The validation function can be used directly on a
 data table or with an *agent* object (technically, a `ptblank_agent`
 object) whereas the expectation and test functions can only be used with
@@ -620,12 +620,12 @@ Other validation functions:
 [`col_vals_decreasing()`](https://rstudio.github.io/pointblank/reference/col_vals_decreasing.md),
 [`col_vals_equal()`](https://rstudio.github.io/pointblank/reference/col_vals_equal.md),
 [`col_vals_expr()`](https://rstudio.github.io/pointblank/reference/col_vals_expr.md),
+[`col_vals_ge()`](https://rstudio.github.io/pointblank/reference/col_vals_ge.md),
 [`col_vals_gt()`](https://rstudio.github.io/pointblank/reference/col_vals_gt.md),
-[`col_vals_gte()`](https://rstudio.github.io/pointblank/reference/col_vals_gte.md),
 [`col_vals_in_set()`](https://rstudio.github.io/pointblank/reference/col_vals_in_set.md),
 [`col_vals_increasing()`](https://rstudio.github.io/pointblank/reference/col_vals_increasing.md),
+[`col_vals_le()`](https://rstudio.github.io/pointblank/reference/col_vals_le.md),
 [`col_vals_lt()`](https://rstudio.github.io/pointblank/reference/col_vals_lt.md),
-[`col_vals_lte()`](https://rstudio.github.io/pointblank/reference/col_vals_lte.md),
 [`col_vals_make_set()`](https://rstudio.github.io/pointblank/reference/col_vals_make_set.md),
 [`col_vals_make_subset()`](https://rstudio.github.io/pointblank/reference/col_vals_make_subset.md),
 [`col_vals_not_equal()`](https://rstudio.github.io/pointblank/reference/col_vals_not_equal.md),

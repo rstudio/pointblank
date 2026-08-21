@@ -39,13 +39,13 @@ questioning phrase for each function’s purpose:
 
 - [`col_vals_lt()`](https://rstudio.github.io/pointblank/reference/col_vals_lt.md):
   Are column data less than a specified value?
-- [`col_vals_lte()`](https://rstudio.github.io/pointblank/reference/col_vals_lte.md):
+- [`col_vals_lte()`](https://rstudio.github.io/pointblank/reference/col_vals_le.md):
   Are column data less than or equal to a specified value?
 - [`col_vals_equal()`](https://rstudio.github.io/pointblank/reference/col_vals_equal.md):
   Are column data equal to a specified value?
 - [`col_vals_not_equal()`](https://rstudio.github.io/pointblank/reference/col_vals_not_equal.md):
   Are column data not equal to a specified value?
-- [`col_vals_gte()`](https://rstudio.github.io/pointblank/reference/col_vals_gte.md):
+- [`col_vals_gte()`](https://rstudio.github.io/pointblank/reference/col_vals_ge.md):
   Are column data greater than or equal to a specified value?
 - [`col_vals_gt()`](https://rstudio.github.io/pointblank/reference/col_vals_gt.md):
   Are column data greater than a specified value?

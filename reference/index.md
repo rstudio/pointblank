@@ -96,10 +96,13 @@ the form `test_*()`) that always returns a logical value.
   [`test_col_vals_lt()`](https://rstudio.github.io/pointblank/reference/col_vals_lt.md)
   : Are column data less than a fixed value or data in another column?
 
-- [![](icons/col_vals_lte.png)](https://rstudio.github.io/pointblank/reference/col_vals_lte.md)
-  [`col_vals_lte()`](https://rstudio.github.io/pointblank/reference/col_vals_lte.md)
-  [`expect_col_vals_lte()`](https://rstudio.github.io/pointblank/reference/col_vals_lte.md)
-  [`test_col_vals_lte()`](https://rstudio.github.io/pointblank/reference/col_vals_lte.md)
+- [![](icons/col_vals_lte.png)](https://rstudio.github.io/pointblank/reference/col_vals_le.md)
+  [`col_vals_le()`](https://rstudio.github.io/pointblank/reference/col_vals_le.md)
+  [`expect_col_vals_le()`](https://rstudio.github.io/pointblank/reference/col_vals_le.md)
+  [`test_col_vals_le()`](https://rstudio.github.io/pointblank/reference/col_vals_le.md)
+  [`col_vals_lte()`](https://rstudio.github.io/pointblank/reference/col_vals_le.md)
+  [`expect_col_vals_lte()`](https://rstudio.github.io/pointblank/reference/col_vals_le.md)
+  [`test_col_vals_lte()`](https://rstudio.github.io/pointblank/reference/col_vals_le.md)
   : Are column data less than or equal to a fixed value or data in
   another column?
 
@@ -116,10 +119,13 @@ the form `test_*()`) that always returns a logical value.
   : Are column data not equal to a fixed value or data in another
   column?
 
-- [![](icons/col_vals_gte.png)](https://rstudio.github.io/pointblank/reference/col_vals_gte.md)
-  [`col_vals_gte()`](https://rstudio.github.io/pointblank/reference/col_vals_gte.md)
-  [`expect_col_vals_gte()`](https://rstudio.github.io/pointblank/reference/col_vals_gte.md)
-  [`test_col_vals_gte()`](https://rstudio.github.io/pointblank/reference/col_vals_gte.md)
+- [![](icons/col_vals_gte.png)](https://rstudio.github.io/pointblank/reference/col_vals_ge.md)
+  [`col_vals_ge()`](https://rstudio.github.io/pointblank/reference/col_vals_ge.md)
+  [`expect_col_vals_ge()`](https://rstudio.github.io/pointblank/reference/col_vals_ge.md)
+  [`test_col_vals_ge()`](https://rstudio.github.io/pointblank/reference/col_vals_ge.md)
+  [`col_vals_gte()`](https://rstudio.github.io/pointblank/reference/col_vals_ge.md)
+  [`expect_col_vals_gte()`](https://rstudio.github.io/pointblank/reference/col_vals_ge.md)
+  [`test_col_vals_gte()`](https://rstudio.github.io/pointblank/reference/col_vals_ge.md)
   : Are column data greater than or equal to a fixed value or data in
   another column?
 

@@ -1,0 +1,199 @@
+---
+title: "Schema Validation with pointblank"
+output: html_document
+---
+
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+#| include: false
+library(pointblank)
+```
+
+Schema validation ensures your data has the expected structure before you analyze it. This vignette shows how to use pointblank's `col_schema()` and `col_schema_match()` functions to validate column names, types, and ordering.
+
+## Why Schema Validation Matters
+
+Data pipelines often fail silently when the structure of incoming data changes unexpectedly. A column might be renamed, a data type might shift from integer to character, or new columns might appear. Schema validation catches these structural issues early, before they propagate through your analysis workflow and cause downstream errors.
+
+Unlike content validation (which checks the values inside your data), schema validation focuses on the "shape" of your data — the column names, their types, and their arrangement. This makes it an essential first line of defense when working with external data sources, APIs that evolve over time, or databases where schema changes happen independently of your analysis code.
+
+## The Basics
+
+The core principle for schema validation with pointblank is to create a schema defintion with `col_schema()` and then use `col_schema_match()` to validate a table against that schema.
+
+```{r}
+#| label: basics
+
+tbl <- dplyr::tibble(
+  a = 1:5,
+  b = letters[1:5]
+)
+
+# define the schema
+schema <- col_schema(
+  a = "integer",
+  b = "character"
+)
+
+# validate the schema
+agent <- create_agent(tbl) %>%
+  col_schema_match(schema) %>%
+  interrogate()
+
+agent
+```
+
+
+## Creating Schema Definitions with `col_schema()`
+
+Writing out the schema manually is often the most straightforward approach, especially for smaller tables or when you have a clear understanding of the expected structure. For larger datasets or when working with existing tables, extracting the schema from a reference table can save time and ensure accuracy.
+
+```{r}
+#| label: schema-from-reference
+
+mock_reference <- game_revenue[1:10, ]
+schema_gr <- col_schema(mock_reference)
+
+agent <- create_agent(game_revenue) %>%
+  col_schema_match(schema_gr) %>%
+  interrogate()
+
+agent
+```
+
+The default is to define the schema in R types like `"numeric"` or `"character"` and you can use it to validate any of the tables pointblank supports, so not just data frames in R but also tables in databases. While it may be convienent to define the schema in R types, note that this requires the data to be pulled into R first, which may not be efficient for large datasets. Alternatively, you can use the `.db_col_types` argument to define the schema in SQL types (like `BIGINT` and `VARCHAR`) and validate directly against the SQL table without pulling data into R.
+
+```{r}
+#| label: types-sql
+
+library(duckdb)
+
+con <- dbConnect(duckdb())
+
+sales <- dplyr::tibble(
+  amount = c(100, 200, 300),
+  customer_name = c("Alice", "Bianca", "Charlie"),
+  sale_date = as.POSIXct(c("2023-01-01", "2023-01-02", "2023-01-03"))
+)
+
+dbWriteTable(con, "sales_data", sales)
+
+sales_db <- dplyr::tbl(con, "sales_data")
+
+schema_sql <- col_schema(
+  amount = "REAL",
+  customer_name = "TEXT",
+  sale_date = "DATE",
+  .db_col_types = "sql"
+)
+
+agent <- create_agent(sales_db) %>%
+  col_schema_match(schema_sql) %>%
+  interrogate()
+
+dbDisconnect(con)
+
+agent
+```
+
+
+## Matching Schemas with `col_schema_match()`
+
+By default, pointblank is strict in the validations it performs, ensuring that the target table matches the schema exactly. However, you can relax these constraints to allow for more flexibility in your validation process.
+
+- With `complete = FALSE` you can allow extra columns in target table that are not defined in the schema.
+- With `in_order = FALSE` you can allow the column order to differ between the schema and the target table.
+- With `is_exact = FALSE` you can allow partial type matching and even skip type matching if you only want to validate the column names.
+
+Let's look at an example for the partial type matching. If we write the schema for the `sales` data frame from above as follows, the default strict validation fails. To make that very obvious, we set `stop_at = 1` in the agent's `actions`. Actions are commonly a way to trigger downstream effects (like sending an email notification) but here we simply use them to turn the color on the lefthand side of the validation report red.
+
+```{r}
+#| label: type-matching-strict
+
+schema <- col_schema(
+  amount = "numeric",
+  customer_name = "character",
+  sale_date = "POSIXct"
+)
+
+agent <- create_agent(sales, actions = action_levels(stop_at = 1)) %>%
+  col_schema_match(schema) %>%
+  interrogate()
+
+agent
+```
+
+This is because the `sale_date` column has two classes and thus the schema and table do not match exactly. 
+
+```{r}
+#| label: sale-date-class
+
+class(sales$sale_date)
+```
+
+However, if we relax the validation to allow partial type matching, it passes.
+
+```{r}
+#| label: type-matching-partial
+
+agent <- create_agent(sales, actions = action_levels(stop_at = 1)) %>%
+  col_schema_match(schema, is_exact = FALSE) %>%
+  interrogate()
+
+agent
+```
+
+<!-- You can relax the validation further by allowing `NULL` types in the schema, which means that the column can be of any type or even missing from the table.  -->
+<!-- This is useful when you want to validate the presence of a column without enforcing a specific type or the column -->
+
+```{r}
+#| label: type-matching-null
+#| include: false
+
+schema <- col_schema(
+  amount = "numeric",
+  customer_name = "character",
+  sale_date = NULL
+)
+
+agent <- create_agent(sales[, 1:2], actions = action_levels(stop_at = 1)) %>%
+  col_schema_match(schema, is_exact = FALSE) %>%
+  interrogate()
+
+agent
+```
+
+If you want to maintain a strict validation, also of the `sale_date` column, you can define the schema with all its classes.
+
+```{r}
+#| label: type-matching-full
+
+schema <- col_schema(
+  amount = "numeric",
+  customer_name = "character",
+  sale_date = c("POSIXct", "POSIXt")
+)
+
+agent <- create_agent(sales, actions = action_levels(stop_at = 1)) %>%
+  col_schema_match(schema, is_exact = TRUE) %>%
+  interrogate()
+
+agent
+```
+
+In general, relaxing the strictness of the validation is useful when you need to validate only a subset of the table. For example, you only work with a subset of columns or you don't mind if the table contains -- or gains in future -- additional columns that are not part of your schema.
+
+
+## Best Practices
+
+To wrap up, here are some best practices for schema validation with pointblank:
+
+- Define schemas early: bring everyone involved on the same page early in your data workflow. 
+- Check schemas early: check schemas early to catch structural issues before they propagate.
+- Choose your schema creation method: do you have a reference table or do you want to define the schema manually?
+- Be deliberate about strictness: use strict validation for critical data components and flexible validation for additional or evolving data components.
+- Reuse schemas: create schema definitions that can be reused across multiple validation contexts. The schema can be written into the agent and the agent saved as a YAML file, making it easier to share. See the [YAML](https://rstudio.github.io/pointblank/reference/col_schema_match.html#yaml) section of `col_schema_match` for an example.
+- Version control schemas: as your data evolves, maintain versions of your schemas to track changes. When `col_schema_match` is saved as a YAML file (see point above), it can easily be managed with a version control system.
+- Make use of `action_levels` to set thresholds for actions. If the schema validation fails, trigger a `stop` action, which can then be used to trigger other downstream effects (e.g., an email notification, termination of a data processing pipeline).

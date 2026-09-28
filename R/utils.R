@@ -1846,3 +1846,70 @@ truncate_expr <- function(x) {
     rlang::expr_deparse(truncated)
   }
 }
+
+# Get the provider of the web fonts used in the HTML reports, set with the
+# `pointblank.web_fonts` option: `"google"` (the default) for Google Fonts,
+# `"bunny"` for Bunny Fonts, or `"none"` to not import any web fonts (the
+# fonts are then used only if they are installed locally)
+get_web_fonts_provider <- function() {
+
+  provider <- getOption("pointblank.web_fonts", default = "google")
+
+  if (
+    !rlang::is_scalar_character(provider) ||
+      !(provider %in% c("google", "bunny", "none"))
+  ) {
+    cli::cli_abort(c(
+      "The {.code pointblank.web_fonts} option must be one of
+      {.val google}, {.val bunny}, or {.val none}.",
+      "x" = "It is currently set to {.val {provider}}."
+    ))
+  }
+
+  provider
+}
+
+# Set IBM Plex Sans as the font of a report table, imported from the web
+# fonts provider
+opt_report_font <- function(data) {
+
+  provider <- get_web_fonts_provider()
+
+  if (provider == "google") {
+    return(gt::opt_table_font(data, font = gt::google_font("IBM Plex Sans")))
+  }
+
+  data <- gt::opt_table_font(data, font = "IBM Plex Sans")
+
+  if (provider == "bunny") {
+    data <-
+      gt::opt_css(
+        data,
+        paste0(
+          "@import url(\"https://fonts.bunny.net/",
+          "css?family=ibm-plex-sans:400,500,700\");"
+        )
+      )
+  }
+
+  data
+}
+
+# Import IBM Plex Mono from the web fonts provider, for report tables that
+# use it in their CSS
+opt_report_mono_font <- function(data) {
+
+  import_url <-
+    switch(
+      get_web_fonts_provider(),
+      google = "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap",
+      bunny = "https://fonts.bunny.net/css?family=ibm-plex-mono:400",
+      none = NULL
+    )
+
+  if (is.null(import_url)) {
+    return(data)
+  }
+
+  gt::opt_css(data, paste0("@import url(\"", import_url, "\");"))
+}

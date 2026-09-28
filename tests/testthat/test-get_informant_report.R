@@ -46,6 +46,35 @@ test_that("Getting an information report is possible", {
   expect_s3_class(report, "gt_tbl")
 })
 
+test_that("The web fonts provider of the information report can be set with an option", {
+
+  informant <-
+    create_informant(tbl = ~ small_table, tbl_name = "small_table") %>%
+    info_tabular(info = "A small table.") %>%
+    incorporate()
+
+  report_html <- function() {
+    as.character(
+      gt::as_raw_html(get_informant_report(informant), inline_css = FALSE)
+    )
+  }
+
+  old_options <- options(pointblank.web_fonts = NULL)
+  on.exit(options(old_options), add = TRUE)
+
+  expect_match(report_html(), "fonts.googleapis.com", fixed = TRUE)
+
+  options(pointblank.web_fonts = "bunny")
+  html <- report_html()
+  expect_match(html, "fonts.bunny.net", fixed = TRUE)
+  expect_no_match(html, "fonts.googleapis.com", fixed = TRUE)
+
+  options(pointblank.web_fonts = "none")
+  html <- report_html()
+  expect_no_match(html, "fonts.googleapis.com", fixed = TRUE)
+  expect_no_match(html, "fonts.bunny.net", fixed = TRUE)
+})
+
 test_that("Getting a more advanced information report is possible", {
 
   # Generate an informant object, add several snippets with `info_snippet()`,

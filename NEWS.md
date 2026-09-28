@@ -1,5 +1,7 @@
 # pointblank (development version)
 
+- The provider of the web fonts used in the HTML reports of `get_agent_report()`, `get_informant_report()`, and `get_multiagent_report()` can now be set with the `pointblank.web_fonts` option: `"google"` (the default, as before), `"bunny"` for [Bunny Fonts](https://fonts.bunny.net), a privacy-friendly drop-in replacement for Google Fonts, or `"none"` to not import any web fonts.
+
 - The `regex` argument of `col_vals_regex()` (and its `expect_*`/`test_*` variants) is renamed to `pattern` to align with Python pointblank. The old `regex` argument remains accepted but emits a soft-deprecation warning. YAML files using a `regex:` key are still read correctly; newly written YAML uses `pattern:`. (#685)
 
 - `col_vals_gte()` and `col_vals_lte()` are renamed to `col_vals_ge()` and `col_vals_le()` to align with Python pointblank naming. The old names remain as soft-deprecated aliases and will continue to work for the foreseeable future. Existing YAML files using `col_vals_gte`/`col_vals_lte` step keys are still accepted. (#684)

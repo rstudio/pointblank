@@ -111,6 +111,8 @@
 #' interrogation from an *agent* object. The time stamp for the completion of
 #' each interrogation is shown as the column label.
 #'
+#' @inheritSection get_agent_report Web fonts
+#'
 #' @section Examples:
 #'
 #' Let's walk through several theoretical data quality analyses of an extremely
@@ -862,19 +864,14 @@ get_multiagent_report <- function(
     ) |>
     gt::cols_label(.list = date_time) |>
     gt::opt_align_table_header(align = "left") |>
-    gt::opt_table_font(font = gt::google_font("IBM Plex Sans")) |>
+    opt_report_font() |>
     gt::opt_css(
       paste0(
         "@import url(\"https://unpkg.com/",
         "balloon-css/balloon.min.css\");"
       )
     ) |>
-    gt::opt_css(
-      paste0(
-        "@import url(\"https://fonts.googleapis.com/",
-        "css2?family=IBM+Plex+Mono&display=swap\");"
-      )
-    ) |>
+    opt_report_mono_font() |>
     gt::opt_css(
       css = "
           #pb_information {

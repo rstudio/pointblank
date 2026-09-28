@@ -115,3 +115,44 @@ test_that("Getting a multiagent report is possible", {
     expect_type(tbl_c$stop, "logical")
   }
 })
+
+test_that("The web fonts provider of the multiagent report can be set with an option", {
+
+  agent <-
+    create_agent(tbl = ~ small_table) %>%
+    col_vals_gt(vars(d), 100) %>%
+    interrogate()
+
+  multiagent <- create_multiagent(agent, agent)
+
+  # the wide report is the one that imports IBM Plex Mono as well
+  report_html <- function() {
+    as.character(
+      gt::as_raw_html(
+        get_multiagent_report(multiagent, display_mode = "wide"),
+        inline_css = FALSE
+      )
+    )
+  }
+
+  old_options <- options(pointblank.web_fonts = NULL)
+  on.exit(options(old_options), add = TRUE)
+
+  # Google Fonts is the default, for both IBM Plex Sans and IBM Plex Mono
+  html <- report_html()
+  expect_match(html, "family=IBM+Plex+Sans", fixed = TRUE)
+  expect_match(html, "family=IBM+Plex+Mono", fixed = TRUE)
+
+  # Bunny Fonts
+  options(pointblank.web_fonts = "bunny")
+  html <- report_html()
+  expect_match(html, "fonts.bunny.net/css?family=ibm-plex-sans", fixed = TRUE)
+  expect_match(html, "fonts.bunny.net/css?family=ibm-plex-mono", fixed = TRUE)
+  expect_no_match(html, "fonts.googleapis.com", fixed = TRUE)
+
+  # No web fonts
+  options(pointblank.web_fonts = "none")
+  html <- report_html()
+  expect_no_match(html, "fonts.googleapis.com", fixed = TRUE)
+  expect_no_match(html, "fonts.bunny.net", fixed = TRUE)
+})

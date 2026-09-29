@@ -189,6 +189,24 @@
 #' @return A `ptblank_agent_report` object if `display_table = TRUE` or a tibble
 #'   if `display_table = FALSE`.
 #'
+#' @section Web fonts:
+#'
+#' The HTML reports use the IBM Plex Sans and IBM Plex Mono fonts, which are
+#' imported from Google Fonts by default. The provider of the web fonts can be
+#' set with the `pointblank.web_fonts` option:
+#'
+#' - `"google"` (the default): import the fonts from Google Fonts.
+#' - `"bunny"`: import the fonts from [Bunny Fonts](https://fonts.bunny.net), a
+#' drop-in replacement for Google Fonts that does not log or track the
+#' viewers of the report. This can help with privacy regulations such as the
+#' GDPR.
+#' - `"none"`: do not import any web fonts. The fonts are then used only if
+#' they are installed on the viewer's system, and the system fonts are used
+#' otherwise.
+#'
+#' For example, `options(pointblank.web_fonts = "bunny")` uses Bunny Fonts for
+#' all reports in the session.
+#'
 #' @section Examples:
 #'
 #' For the example here, we'll use a simple table with a single numerical column
@@ -1975,7 +1993,7 @@ get_agent_report <- function(
         locations = gt::cells_body(columns = gt::everything()),
         style = "height: 40px"
       ) |>
-      gt::opt_table_font(font = gt::google_font("IBM Plex Sans")) |>
+      opt_report_font() |>
       gt::opt_css(
         paste0(
           "@import url(\"https://unpkg.com/",

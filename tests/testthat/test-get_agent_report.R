@@ -384,3 +384,44 @@ test_that("rows of report can be shuffled or dropped", {
 
 
 })
+
+test_that("The web fonts provider of the report can be set with an option", {
+
+  agent <-
+    create_agent(tbl = small_table) %>%
+    col_is_character(columns = "b") %>%
+    interrogate()
+
+  report_html <- function() {
+    as.character(gt::as_raw_html(get_agent_report(agent), inline_css = FALSE))
+  }
+
+  old_options <- options(pointblank.web_fonts = NULL)
+  on.exit(options(old_options), add = TRUE)
+
+  # Google Fonts is the default
+  html <- report_html()
+  expect_match(html, "fonts.googleapis.com", fixed = TRUE)
+  expect_no_match(html, "fonts.bunny.net", fixed = TRUE)
+
+  options(pointblank.web_fonts = "google")
+  expect_match(report_html(), "fonts.googleapis.com", fixed = TRUE)
+
+  # Bunny Fonts
+  options(pointblank.web_fonts = "bunny")
+  html <- report_html()
+  expect_match(html, "fonts.bunny.net", fixed = TRUE)
+  expect_no_match(html, "fonts.googleapis.com", fixed = TRUE)
+  expect_match(html, "IBM Plex Sans", fixed = TRUE)
+
+  # No web fonts, but the font is still used if installed locally
+  options(pointblank.web_fonts = "none")
+  html <- report_html()
+  expect_no_match(html, "fonts.googleapis.com", fixed = TRUE)
+  expect_no_match(html, "fonts.bunny.net", fixed = TRUE)
+  expect_match(html, "IBM Plex Sans", fixed = TRUE)
+
+  # An unknown provider is an error
+  options(pointblank.web_fonts = "unknown")
+  expect_error(get_agent_report(agent), "pointblank.web_fonts")
+})

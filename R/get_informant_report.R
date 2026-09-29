@@ -106,6 +106,8 @@
 #' report <- get_informant_report(informant)
 #' class(report)
 #'
+#' @inheritSection get_agent_report Web fonts
+#'
 #' @family Incorporate and Report
 #' @section Function ID:
 #' 7-2
@@ -594,7 +596,7 @@ get_informant_report <- function(
         table.width = width_px,
         table.font.size = gt::pct(130)
       ) |>
-      gt::opt_table_font(font = gt::google_font("IBM Plex Sans")) |>
+      opt_report_font() |>
       gt::opt_css(
         css = "
           #pb_information {
